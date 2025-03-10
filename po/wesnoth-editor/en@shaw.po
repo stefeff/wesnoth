@@ -1,0 +1,718 @@
+# #-#-#-#-#  wesnoth-editor.cpp.pot (Battle for Wesnoth VERSION)  #-#-#-#-#
+# Shavian English translations for Battle for Wesnoth package.
+# Copyright (C) 2009 Wesnoth development team
+# This file is distributed under the same license as the Battle for Wesnoth package.
+#
+# Contributors:
+#   Arc Riley <arcriley@ubuntu.com>
+#   Thomas Thurman <thomas@thurman.org.uk>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: en@shaw\n"
+"Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
+"POT-Creation-Date: 2024-10-28 12:38-0500\n"
+"PO-Revision-Date: 2009-10-08 21:45-0400\n"
+"Last-Translator: Arc Riley <arcriley@ubuntu.com>\n"
+"Language-Team: Shavian English <ubuntu-l10n-en-shaw@lists.launchpad.net>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. [brush]: id=brush-1
+#: data/core/editor/brushes.cfg:6
+msgid "Single Hex"
+msgstr "𐑕𐑦𐑙𐑜𐑩𐑤 𐑣𐑧𐑒𐑕"
+
+#. [brush]: id=brush-2
+#: data/core/editor/brushes.cfg:16
+msgid "Radius 1 Hex"
+msgstr "𐑮𐑱𐑛𐑦𐑩𐑕 1 𐑣𐑧𐑒𐑕"
+
+#. [brush]: id=brush-3
+#: data/core/editor/brushes.cfg:26
+msgid "Radius 2 Hex"
+msgstr "𐑮𐑱𐑛𐑦𐑩𐑕 2 𐑣𐑧𐑒𐑕"
+
+#. [brush]: id=brush-nw-se
+#: data/core/editor/brushes.cfg:47
+msgid "Hex Line NW-SE"
+msgstr "𐑣𐑧𐑒𐑕 𐑤𐑲𐑯 NW-SE"
+
+#. [brush]: id=brush-sw-ne
+#: data/core/editor/brushes.cfg:63
+#, fuzzy
+#| msgid "Hex Line NW-SE"
+msgid "Hex Line SW-NE"
+msgstr "𐑣𐑧𐑒𐑕 𐑤𐑲𐑯 NW-SE"
+
+#. [editor_group]: id=all
+#: data/core/editor/terrain-groups.cfg:11
+msgid "all"
+msgstr "𐑷𐑤"
+
+#. [editor_group]: id=water
+#: data/core/editor/terrain-groups.cfg:17
+msgid "water"
+msgstr "𐑢𐑷𐑑𐑼"
+
+#. [editor_group]: id=flat
+#: data/core/editor/terrain-groups.cfg:24
+msgid "flat"
+msgstr "𐑓𐑤𐑨𐑑"
+
+#. [editor_group]: id=desert
+#: data/core/editor/terrain-groups.cfg:31
+msgid "desert"
+msgstr "𐑛𐑧𐑟𐑼𐑑"
+
+#. [editor_group]: id=embellishments
+#: data/core/editor/terrain-groups.cfg:38
+msgid "embellishments"
+msgstr ""
+
+#. [editor_group]: id=forest
+#: data/core/editor/terrain-groups.cfg:45
+msgid "forest"
+msgstr "𐑓𐑹𐑦𐑕𐑑"
+
+#. [editor_group]: id=fall
+#: data/core/editor/terrain-groups.cfg:52
+msgid "fall"
+msgstr ""
+
+#. [editor_group]: id=frozen
+#: data/core/editor/terrain-groups.cfg:59
+msgid "frozen"
+msgstr "𐑓𐑮𐑴𐑟𐑩𐑯"
+
+#. [editor_group]: id=rough
+#: data/core/editor/terrain-groups.cfg:66
+msgid "rough"
+msgstr "𐑮𐑳𐑓"
+
+#. [editor_group]: id=cave
+#: data/core/editor/terrain-groups.cfg:73
+msgid "cave"
+msgstr "𐑒𐑱𐑝"
+
+#. [editor_group]: id=obstacle
+#: data/core/editor/terrain-groups.cfg:80
+msgid "obstacle"
+msgstr ""
+
+#. [editor_group]: id=village
+#: data/core/editor/terrain-groups.cfg:87
+msgid "village"
+msgstr "𐑝𐑦𐑤𐑦𐑡"
+
+#. [editor_group]: id=castle
+#: data/core/editor/terrain-groups.cfg:94
+msgid "castle"
+msgstr "𐑒𐑨𐑕𐑩𐑤"
+
+#. [editor_group]: id=bridge
+#: data/core/editor/terrain-groups.cfg:101
+msgid "bridge"
+msgstr ""
+
+#. [editor_group]: id=special
+#: data/core/editor/terrain-groups.cfg:108
+msgid "special"
+msgstr "𐑕𐑐𐑧𐑖𐑩𐑤"
+
+#. [editor_group]: id=elevation
+#: data/core/editor/terrain-groups.cfg:115
+msgid "elevation"
+msgstr ""
+
+#. [editor_times]: id=empty
+#. Describes a scenario in the editor that has not set a time of day schedule
+#: data/core/editor/time-of-day.cfg:6
+msgid "time of day^None"
+msgstr ""
+
+#. [editor_times]: id=test
+#: data/core/editor/time-of-day.cfg:11
+msgid "Test"
+msgstr ""
+
+#. [editor_times]: id=default
+#: data/core/editor/time-of-day.cfg:22
+msgid "Default"
+msgstr ""
+
+#. [editor_times]: id=summer
+#: data/core/editor/time-of-day.cfg:28
+msgid "Summer"
+msgstr ""
+
+#. [editor_times]: id=winter
+#: data/core/editor/time-of-day.cfg:34
+msgid "Winter"
+msgstr ""
+
+#. [editor_times]: id=24
+#: data/core/editor/time-of-day.cfg:60
+msgid "24 Hour Schedule"
+msgstr ""
+
+#. [editor_times]: id=after_the_fall
+#: data/core/editor/time-of-day.cfg:66
+msgid "After the Fall"
+msgstr ""
+
+#. [theme]: id=editor
+#: data/themes/editor.cfg:11
+#, fuzzy
+#| msgid "Quit Editor"
+msgid "theme^Editor"
+msgstr "𐑒𐑢𐑦𐑑 𐑧𐑛𐑦𐑑𐑹"
+
+#. [menu]: id=menu-editor-file, type=turbo
+#: data/themes/editor.cfg:61
+msgid "File"
+msgstr "𐑓𐑲𐑤"
+
+#. [menu]: id=menu-editor-recent
+#: data/themes/editor.cfg:72
+msgid "Load Recent"
+msgstr ""
+
+#. [menu]: id=menu-editor-map
+#: data/themes/editor.cfg:80
+msgid "Map"
+msgstr "𐑥𐑨𐑐"
+
+#. [menu]: id=menu-unit-facing
+#: data/themes/editor.cfg:88
+msgid "Unit Facing"
+msgstr ""
+
+#. [menu]: id=menu-editor-transitions
+#: data/themes/editor.cfg:94
+msgid "Transition Update"
+msgstr ""
+
+#. [menu]: id=menu-editor-window
+#: data/themes/editor.cfg:101
+msgid "Window"
+msgstr "𐑢𐑦𐑯𐑛𐑴"
+
+#. [menu]: id=menu-editor-addon
+#: data/themes/editor.cfg:110
+msgid "Add-on"
+msgstr ""
+
+#. [menu]: id=menu-editor-areas
+#: data/themes/editor.cfg:119
+msgid "Areas"
+msgstr ""
+
+#. [menu]: id=menu-editor-local-time
+#: data/themes/editor.cfg:127
+msgid "Assign Local Time"
+msgstr ""
+
+#. [menu]: id=menu-editor-local-schedule
+#: data/themes/editor.cfg:133
+msgid "Assign Local Time Schedule"
+msgstr ""
+
+#. [menu]: id=menu-editor-side
+#: data/themes/editor.cfg:141
+msgid "Side"
+msgstr ""
+
+#. [label]: id=villages-icon
+#: data/themes/editor.cfg:158
+msgid "villages"
+msgstr "𐑝𐑦𐑤𐑦𐑡𐑦𐑟"
+
+#. [label]: id=units-icon
+#: data/themes/editor.cfg:174
+msgid "units"
+msgstr ""
+
+#. [menu]: id=switch_time
+#: data/themes/editor.cfg:469
+msgid "Time Schedule Menu"
+msgstr ""
+
+#. [menu]: id=menu-playlist
+#: data/themes/editor.cfg:480
+msgid "Playlist"
+msgstr ""
+
+#. [menu]: id=menu-editor-schedule
+#: data/themes/editor.cfg:486
+msgid "Assign Time Schedule"
+msgstr ""
+
+#: src/editor/action/mouse/mouse_action_unit.cpp:64
+msgid "Identifier: "
+msgstr ""
+
+#: src/editor/action/mouse/mouse_action_unit.cpp:66
+msgid "Name: "
+msgstr ""
+
+#: src/editor/action/mouse/mouse_action_unit.cpp:68
+msgid "Type: "
+msgstr ""
+
+#: src/editor/action/mouse/mouse_action_unit.cpp:69
+msgid "Level: "
+msgstr ""
+
+#: src/editor/action/mouse/mouse_action_unit.cpp:70
+msgid "Cost: "
+msgstr ""
+
+#: src/editor/controller/editor_controller.cpp:188
+msgid "Fatal error"
+msgstr "𐑓𐑱𐑑𐑩𐑤 𐑻𐑹"
+
+#: src/editor/controller/editor_controller.cpp:218
+msgid "Do you really want to quit?"
+msgstr "𐑛𐑵 𐑿 𐑮𐑾𐑤𐑦 𐑢𐑪𐑯𐑑 𐑑 𐑒𐑢𐑦𐑑?"
+
+#: src/editor/controller/editor_controller.cpp:220
+#, fuzzy
+#| msgid ""
+#| "Do you really want to quit? Changes in the map since the last save will "
+#| "be lost."
+msgid ""
+"Do you really want to quit? Changes to this map since the last save will be "
+"lost."
+msgstr "𐑛𐑵 𐑿 𐑮𐑾𐑤𐑦 𐑢𐑪𐑯𐑑 𐑑 𐑒𐑢𐑦𐑑? 𐑗𐑱𐑯𐑡𐑩𐑟 𐑦𐑯 𐑞 𐑥𐑨𐑐 𐑕𐑦𐑯𐑕 𐑞 𐑤𐑭𐑕𐑑 𐑕𐑱𐑝 𐑢𐑦𐑤 𐑚𐑰 𐑤𐑪𐑕𐑑."
+
+#: src/editor/controller/editor_controller.cpp:222
+msgid ""
+"Do you really want to quit? The following maps were modified and all changes "
+"since the last save will be lost:"
+msgstr ""
+"𐑛𐑵 𐑿 𐑮𐑾𐑤𐑦 𐑢𐑪𐑯𐑑 𐑑 𐑒𐑢𐑦𐑑? 𐑞 𐑓𐑪𐑤𐑴𐑦𐑙 𐑥𐑨𐑐𐑕 𐑢𐑻 𐑥𐑪𐑛𐑦𐑓𐑲𐑛 𐑯 𐑷𐑤 𐑗𐑱𐑯𐑡𐑩𐑟 𐑕𐑦𐑯𐑕 𐑞 𐑤𐑭𐑕𐑑 𐑕𐑱𐑝 "
+"𐑢𐑦𐑤 𐑚𐑰 𐑤𐑪𐑕𐑑:"
+
+#: src/editor/controller/editor_controller.cpp:231
+msgid "No editor time-of-day found."
+msgstr "𐑯𐑴 𐑧𐑛𐑦𐑑𐑹 𐑑𐑲𐑥-𐑝-𐑛𐑱 𐑓𐑬𐑯𐑛."
+
+#: src/editor/controller/editor_controller.cpp:1270
+msgid "Change Unit ID"
+msgstr ""
+
+#: src/editor/controller/editor_controller.cpp:1271
+msgid "ID:"
+msgstr ""
+
+#: src/editor/controller/editor_controller.cpp:1287
+msgid "Rename Unit"
+msgstr ""
+
+#: src/editor/controller/editor_controller.cpp:1288
+msgid "Name:"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:222
+msgid "Load Map"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:318 src/editor/map/map_context.cpp:1112
+#, fuzzy
+#| msgid "(New Map)"
+msgid "New Map"
+msgstr "(𐑯𐑿 𐑥𐑨𐑐)"
+
+#: src/editor/map/context_manager.cpp:331 src/editor/map/map_context.cpp:1112
+#, fuzzy
+#| msgid "(New Map)"
+msgid "New Scenario"
+msgstr "(𐑯𐑿 𐑥𐑨𐑐)"
+
+#: src/editor/map/context_manager.cpp:387
+msgid "No Recent Files"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:425
+#, fuzzy
+#| msgid "(New Map)"
+msgid "Unnamed Area"
+msgstr "(𐑯𐑿 𐑥𐑨𐑐)"
+
+#: src/editor/map/context_manager.cpp:456
+#, fuzzy
+#| msgid "(New Map)"
+msgid "New Side"
+msgstr "(𐑯𐑿 𐑥𐑨𐑐)"
+
+#: src/editor/map/context_manager.cpp:512
+msgid "Apply Mask"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:521
+msgid "Error loading mask"
+msgstr "𐑻𐑹 𐑤𐑴𐑛𐑦𐑙 𐑥𐑭𐑕𐑒"
+
+#: src/editor/map/context_manager.cpp:541
+msgid "Identifier:"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:541
+msgid "Rename Area"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:555
+msgid "Choose Target Map"
+msgstr "𐑗𐑵𐑟 𐑑𐑸𐑜𐑧𐑑 𐑥𐑨𐑐"
+
+#: src/editor/map/context_manager.cpp:564
+#: src/editor/map/context_manager.cpp:996
+msgid "Error loading map"
+msgstr "𐑻𐑹 𐑤𐑴𐑛𐑦𐑙 𐑥𐑨𐑐"
+
+#: src/editor/map/context_manager.cpp:696
+#, fuzzy
+#| msgid "Save the Map As"
+msgid "Save Map As"
+msgstr "𐑕𐑱𐑝 𐑞 𐑥𐑨𐑐 𐑨𐑟"
+
+#: src/editor/map/context_manager.cpp:712
+#: src/editor/map/context_manager.cpp:761 src/editor/map/map_context.cpp:266
+#: src/editor/palette/location_palette.cpp:265
+msgid "Error"
+msgstr ""
+
+#: src/editor/map/context_manager.cpp:713
+#: src/editor/map/context_manager.cpp:762
+#, fuzzy
+#| msgid "Do you really want to quit?"
+msgid "Do you really want to save $type1 in $type2 folder?"
+msgstr "𐑛𐑵 𐑿 𐑮𐑾𐑤𐑦 𐑢𐑪𐑯𐑑 𐑑 𐑒𐑢𐑦𐑑?"
+
+#: src/editor/map/context_manager.cpp:721
+#: src/editor/map/context_manager.cpp:939
+msgid "This map is already open."
+msgstr "𐑞𐑦𐑕 𐑥𐑨𐑐 𐑦𐑟 𐑷𐑤𐑮𐑧𐑛𐑦 𐑴𐑐𐑩𐑯."
+
+#: src/editor/map/context_manager.cpp:744
+#, fuzzy
+#| msgid "Save the Map As"
+msgid "Save Scenario As"
+msgstr "𐑕𐑱𐑝 𐑞 𐑥𐑨𐑐 𐑨𐑟"
+
+#: src/editor/map/context_manager.cpp:770
+#, fuzzy
+#| msgid "This map is already open."
+msgid "This scenario is already open."
+msgstr "𐑞𐑦𐑕 𐑥𐑨𐑐 𐑦𐑟 𐑷𐑤𐑮𐑧𐑛𐑦 𐑴𐑐𐑩𐑯."
+
+#: src/editor/map/context_manager.cpp:804
+msgid "No random map generators found."
+msgstr "𐑯𐑴 𐑮𐑨𐑯𐑛𐑩𐑥 𐑥𐑨𐑐 𐑡𐑧𐑯𐑻𐑱𐑑𐑻𐑟 𐑓𐑬𐑯𐑛."
+
+#: src/editor/map/context_manager.cpp:817
+#: src/editor/map/context_manager.cpp:822
+msgid "Map creation failed."
+msgstr "𐑥𐑨𐑐 𐑒𐑮𐑰𐑱𐑖𐑩𐑯 𐑓𐑱𐑤𐑛."
+
+#: src/editor/map/context_manager.cpp:837
+msgid "Unsaved Changes"
+msgstr "𐑳𐑯𐑕𐑱𐑝𐑛 𐑗𐑱𐑯𐑡𐑩𐑟"
+
+#: src/editor/map/context_manager.cpp:838
+#, fuzzy
+#| msgid ""
+#| "Do you want to discard all changes you made to the map since the last "
+#| "save?"
+msgid "Do you want to discard all changes made to the map since the last save?"
+msgstr "𐑛𐑵 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑛𐑦𐑕𐑒𐑸𐑛 𐑷𐑤 𐑗𐑱𐑯𐑡𐑩𐑟 𐑿 𐑥𐑱𐑛 𐑑 𐑞 𐑥𐑨𐑐 𐑕𐑦𐑯𐑕 𐑞 𐑤𐑭𐑕𐑑 𐑕𐑱𐑝?"
+
+#: src/editor/map/context_manager.cpp:900
+#, fuzzy
+#| msgid "Map saved."
+msgid "Scenario saved."
+msgstr "𐑥𐑨𐑐 𐑕𐑱𐑝𐑛."
+
+#: src/editor/map/context_manager.cpp:915
+msgid "Map saved."
+msgstr "𐑥𐑨𐑐 𐑕𐑱𐑝𐑛."
+
+#: src/editor/map/context_manager.cpp:988
+msgid "Loaded embedded map data"
+msgstr "𐑤𐑴𐑛𐑩𐑛 𐑧𐑥𐑚𐑧𐑛𐑦𐑛 𐑥𐑨𐑐 𐑛𐑱𐑑𐑩"
+
+#: src/editor/map/context_manager.cpp:989
+#: src/editor/map/context_manager.cpp:992
+msgid "Map loaded from scenario"
+msgstr "𐑥𐑨𐑐 𐑤𐑴𐑛𐑩𐑛 𐑓𐑮𐑪𐑥 𐑕𐑦𐑯𐑺𐑰𐑴"
+
+#: src/editor/map/context_manager.cpp:992
+#, fuzzy
+#| msgid ""
+#| "Loaded referenced map file:\n"
+#| "$new"
+msgid "Loaded referenced map file:"
+msgstr ""
+"𐑤𐑴𐑛𐑩𐑛 𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑑 𐑥𐑨𐑐 𐑓𐑲𐑤:\n"
+"$new"
+
+#: src/editor/map/editor_map.cpp:146
+#: src/editor/palette/location_palette.cpp:119
+msgid "Player $side_num"
+msgstr ""
+
+#: src/editor/map/editor_map.cpp:281
+msgid "The size of the target map is different from the current map"
+msgstr "𐑞 𐑕𐑲𐑟 𐑝 𐑞 𐑑𐑸𐑜𐑧𐑑 𐑥𐑨𐑐 𐑦𐑟 𐑛𐑦𐑓𐑼𐑩𐑯𐑑 𐑓𐑮𐑪𐑥 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑥𐑨𐑐"
+
+#: src/editor/map/map_context.cpp:183
+msgid "File not found"
+msgstr "𐑓𐑲𐑤 𐑯𐑪𐑑 𐑓𐑬𐑯𐑛"
+
+#: src/editor/map/map_context.cpp:190
+#, fuzzy
+#| msgid "Empty map file"
+msgid "Empty file"
+msgstr "𐑧𐑥𐑐𐑑𐑦 𐑥𐑨𐑐 𐑓𐑲𐑤"
+
+#: src/editor/map/map_context.cpp:196
+msgid "File does not have .map or .cfg extension"
+msgstr ""
+
+#: src/editor/map/map_context.cpp:242
+msgid ""
+"The map file looks like a scenario, but the map_data value does not point to "
+"an existing file"
+msgstr ""
+"𐑞 𐑥𐑨𐑐 𐑓𐑲𐑤 𐑤𐑫𐑒𐑕 𐑤𐑲𐑒 𐑩 𐑕𐑦𐑯𐑺𐑰𐑴, 𐑚𐑳𐑑 𐑞 map_data 𐑝𐑨𐑤𐑿 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑐𐑶𐑯𐑑 𐑑 𐑩𐑯 𐑧𐑒𐑟𐑦𐑕𐑑𐑦𐑙 "
+"𐑓𐑲𐑤"
+
+#: src/editor/map/map_context.cpp:261
+msgid "Found the characters '<<' indicating inline lua is present - aborting"
+msgstr ""
+
+#: src/editor/map/map_context.cpp:266
+msgid "Failed to load the scenario, attempting to load only the map."
+msgstr ""
+
+#: src/editor/map/map_context.cpp:273
+#, fuzzy
+#| msgid ""
+#| "The map file looks like a scenario, but the map_data value does not point "
+#| "to an existing file"
+msgid ""
+"The map file looks like a scenario, but the map_file value does not point to "
+"an existing file"
+msgstr ""
+"𐑞 𐑥𐑨𐑐 𐑓𐑲𐑤 𐑤𐑫𐑒𐑕 𐑤𐑲𐑒 𐑩 𐑕𐑦𐑯𐑺𐑰𐑴, 𐑚𐑳𐑑 𐑞 map_data 𐑝𐑨𐑤𐑿 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑐𐑶𐑯𐑑 𐑑 𐑩𐑯 𐑧𐑒𐑟𐑦𐑕𐑑𐑦𐑙 "
+"𐑓𐑲𐑤"
+
+#: src/editor/map/map_context.cpp:288
+msgid "Unable to parse file to find map data"
+msgstr ""
+
+#: src/editor/map/map_context.cpp:806 src/editor/map/map_context.cpp:845
+#: src/editor/map/map_context.cpp:886
+#, fuzzy
+#| msgid "Could not save the map: $msg"
+msgid "Could not save the scenario: $msg"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑱𐑝 𐑞 𐑥𐑨𐑐: $msg"
+
+#: src/editor/map/map_context.cpp:917
+msgid "Could not save into scenario"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑱𐑝 𐑦𐑯𐑑𐑫 𐑕𐑦𐑯𐑺𐑰𐑴"
+
+#: src/editor/map/map_context.cpp:927
+msgid "Could not save the map: $msg"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑱𐑝 𐑞 𐑥𐑨𐑐: $msg"
+
+#: src/editor/palette/editor_palettes.cpp:52
+msgid "(Unknown Group)"
+msgstr ""
+
+#: src/editor/palette/editor_palettes.cpp:311
+msgid "(non-core)"
+msgstr "(𐑯𐑪𐑯-𐑒𐑴𐑮)"
+
+#: src/editor/palette/editor_palettes.cpp:312
+msgid "Will not work in game without extra care."
+msgstr "𐑢𐑦𐑤 𐑯𐑪𐑑 𐑢𐑻𐑒 𐑦𐑯 𐑜𐑱𐑥 𐑢𐑦𐑞𐑬𐑑 𐑧𐑒𐑕𐑑𐑮𐑩 𐑒𐑺."
+
+#: src/editor/palette/item_palette.cpp:32
+msgid " | Right-click to remove"
+msgstr ""
+
+#: src/editor/palette/item_palette.cpp:32
+msgid "Left-click: Place item "
+msgstr ""
+
+#: src/editor/palette/location_palette.cpp:249
+msgid "Go To"
+msgstr ""
+
+#: src/editor/palette/location_palette.cpp:256
+msgid "Add"
+msgstr ""
+
+#: src/editor/palette/location_palette.cpp:258
+msgid "New Location Identifier"
+msgstr ""
+
+#: src/editor/palette/location_palette.cpp:266
+msgid "Invalid location id"
+msgstr ""
+
+#: src/editor/palette/location_palette.cpp:273
+msgid "Delete"
+msgstr ""
+
+#: src/editor/palette/terrain_palettes.cpp:224
+msgid "Left-click: "
+msgstr ""
+
+#: src/editor/palette/terrain_palettes.cpp:225
+msgid "Right-click: "
+msgstr ""
+
+#. TRANSLATORS: Similar behavior applies to shift + right-click. This message specifies left-click
+#. because the logic of whether to show the "overlay only" or "base only" version depends on the
+#. terrain currently selected for the left button.
+#: src/editor/palette/terrain_palettes.cpp:230
+msgid "Shift + left-click: paint overlay layer only"
+msgstr ""
+
+#: src/editor/palette/terrain_palettes.cpp:232
+msgid "Shift + left-click: paint base layer only"
+msgstr ""
+
+#: src/editor/palette/terrain_palettes.cpp:235
+msgid "Cmd + click: copy terrain"
+msgstr ""
+
+#: src/editor/palette/terrain_palettes.cpp:237
+msgid "Ctrl + click: copy terrain"
+msgstr ""
+
+#: src/gui/dialogs/editor/custom_tod.cpp:95
+msgid "Clipboard support not found, contact your packager"
+msgstr ""
+
+#: src/gui/dialogs/editor/custom_tod.cpp:163
+#, fuzzy
+#| msgid "Choose player"
+msgid "Choose File"
+msgstr "𐑗𐑵𐑟 𐑐𐑤𐑱𐑻"
+
+#: src/gui/dialogs/editor/custom_tod.cpp:164
+msgid "Select"
+msgstr ""
+
+#, fuzzy
+#~| msgid "(Player)^None"
+#~ msgid "player^None"
+#~ msgstr "𐑯𐑳𐑯"
+
+#~ msgid "(New Map)"
+#~ msgstr "(𐑯𐑿 𐑥𐑨𐑐)"
+
+#, fuzzy
+#~| msgid "(New Map)"
+#~ msgid "(New Scenario)"
+#~ msgstr "(𐑯𐑿 𐑥𐑨𐑐)"
+
+#, fuzzy
+#~| msgid "Choose a Map to Open"
+#~ msgid "Choose a File to Open"
+#~ msgstr "𐑗𐑵𐑟 𐑩 𐑥𐑨𐑐 𐑑 𐑴𐑐𐑩𐑯"
+
+#~ msgid "Choose a Mask to Apply"
+#~ msgstr "𐑗𐑵𐑟 𐑩 𐑥𐑭𐑕𐑒 𐑑 𐑩𐑐𐑤𐑲"
+
+#~ msgid "The file already exists. Do you want to overwrite it?"
+#~ msgstr "𐑞 𐑓𐑲𐑤 𐑷𐑤𐑮𐑧𐑛𐑦 𐑧𐑒𐑟𐑦𐑕𐑑𐑕. 𐑛𐑵 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑴𐑝𐑼𐑮𐑲𐑑 𐑦𐑑?"
+
+#~ msgid "Player"
+#~ msgstr "𐑐𐑤𐑱𐑻"
+
+#~ msgid "Quit"
+#~ msgstr "𐑒𐑢𐑦𐑑"
+
+#~ msgid ""
+#~ "Use left/right mouse button to draw fore-/background terrain. Hold Shift "
+#~ "to paint base layer only. Ctrl+click to sample terrain under cursor."
+#~ msgstr ""
+#~ "𐑿𐑟 𐑤𐑧𐑓𐑑/𐑮𐑲𐑑 𐑥𐑬𐑕 𐑚𐑳𐑑𐑩𐑯 𐑑 𐑛𐑮𐑷 𐑓𐑹-/𐑚𐑨𐑒𐑜𐑮𐑬𐑯𐑛 𐑑𐑻𐑱𐑯. 𐑣𐑴𐑤𐑛 𐑖𐑦𐑓𐑑 𐑑 𐑐𐑱𐑯𐑑 𐑚𐑱𐑕 𐑤𐑱𐑼 "
+#~ "𐑴𐑯𐑤𐑦. Ctrl+𐑒𐑤𐑦𐑒 𐑑 𐑕𐑭𐑥𐑐𐑩𐑤 𐑑𐑻𐑱𐑯 𐑳𐑯𐑛𐑼 𐑒𐑻𐑕𐑼."
+
+#~ msgid ""
+#~ "Left mouse button selects, right deselects. Hold Shift for magic-wand "
+#~ "selection of tiles with same terrain."
+#~ msgstr ""
+#~ "𐑤𐑧𐑓𐑑 𐑥𐑬𐑕 𐑚𐑳𐑑𐑩𐑯 𐑕𐑩𐑤𐑧𐑒𐑑𐑕, 𐑮𐑲𐑑 𐑛𐑰𐑕𐑩𐑤𐑧𐑒𐑑𐑕. 𐑣𐑴𐑤𐑛 Shift 𐑓𐑹 𐑥𐑨𐑡𐑦𐑒-𐑢𐑭𐑯𐑛 𐑕𐑦𐑤𐑧𐑒𐑖𐑩𐑯 "
+#~ "𐑝 𐑑𐑲𐑤𐑟 𐑢𐑦𐑞 𐑕𐑱𐑥 𐑑𐑻𐑱𐑯."
+
+#~ msgid ""
+#~ "Left mouse button displays player selection, right clears. Number keys "
+#~ "scroll to the starting position, alt+number sets respective starting "
+#~ "position under cursor, delete clears."
+#~ msgstr ""
+#~ "𐑤𐑧𐑓𐑑 𐑥𐑬𐑕 𐑚𐑳𐑑𐑩𐑯 𐑛𐑦𐑕𐑐𐑤𐑱𐑟 𐑐𐑤𐑱𐑻 𐑕𐑦𐑤𐑧𐑒𐑖𐑩𐑯, 𐑮𐑲𐑑 𐑒𐑤𐑽𐑟. 𐑯𐑳𐑥𐑚𐑻 𐑒𐑰𐑟 𐑕𐑒𐑮𐑴𐑤 𐑑 𐑞 "
+#~ "𐑕𐑑𐑸𐑑𐑦𐑙 𐑐𐑩𐑟𐑦𐑖𐑩𐑯, Alt+𐑯𐑳𐑥𐑚𐑻 𐑕𐑧𐑑𐑕 𐑮𐑦𐑕𐑐𐑧𐑒𐑑𐑦𐑝 𐑕𐑑𐑸𐑑𐑦𐑙 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑳𐑯𐑛𐑼 𐑒𐑻𐑕𐑼, 𐑛𐑦𐑤𐑰𐑑 "
+#~ "𐑒𐑤𐑽𐑟."
+
+#~ msgid ""
+#~ "Click to paste, zoom out for more accuracy when pasting large areas. Use "
+#~ "the edit menu to transform the clipboard (rotate, mirror)."
+#~ msgstr ""
+#~ "𐑒𐑤𐑦𐑒 𐑑 𐑐𐑱𐑕𐑑, 𐑟𐑵𐑥 𐑬𐑑 𐑓𐑹 𐑥𐑹 𐑨𐑒𐑘𐑻𐑩𐑕𐑰 𐑢𐑧𐑯 𐑐𐑭𐑕𐑑𐑦𐑙 𐑤𐑸𐑡 𐑺𐑰𐑩𐑟. 𐑿𐑟 𐑞 𐑧𐑛𐑦𐑑 𐑥𐑧𐑯𐑿 𐑑 "
+#~ "𐑑𐑮𐑨𐑯𐑕𐑓𐑹𐑥 𐑞 𐑒𐑤𐑦𐑐𐑚𐑹𐑛 (𐑮𐑴𐑑𐑱𐑑, 𐑥𐑦𐑮𐑼)."
+
+#~ msgid "Empty map file"
+#~ msgstr "𐑧𐑥𐑐𐑑𐑦 𐑥𐑨𐑐 𐑓𐑲𐑤"
+
+#~ msgid "Custom setting"
+#~ msgstr "𐑒𐑳𐑕𐑑𐑩𐑥 𐑕𐑧𐑑𐑦𐑙"
+
+#~ msgid "Edit"
+#~ msgstr "𐑧𐑛𐑦𐑑"
+
+#~ msgid "Undo"
+#~ msgstr "𐑳𐑯𐑛𐑵"
+
+#~ msgid "Can’t Undo"
+#~ msgstr "𐑒𐑭𐑯𐑑 𐑳𐑯𐑛𐑵"
+
+#~ msgid "Redo"
+#~ msgstr "𐑮𐑰𐑛𐑵"
+
+#~ msgid "Can’t Redo"
+#~ msgstr "𐑒𐑭𐑯𐑑 𐑮𐑰𐑛𐑵"
+
+#~ msgid "Auto-update Terrain Transitions: Yes"
+#~ msgstr "𐑷𐑑𐑴-𐑳𐑐𐑛𐑱𐑑 𐑑𐑻𐑱𐑯 𐑑𐑮𐑨𐑯𐑟𐑦𐑖𐑩𐑯𐑟: 𐑘𐑧𐑕"
+
+#~ msgid "Auto-update Terrain Transitions: Partial"
+#~ msgstr "𐑷𐑑𐑴-𐑳𐑐𐑛𐑱𐑑 𐑑𐑻𐑱𐑯 𐑑𐑮𐑨𐑯𐑟𐑦𐑖𐑩𐑯𐑟: 𐑐𐑸𐑑𐑦𐑨𐑤"
+
+#~ msgid "Auto-update Terrain Transitions: No"
+#~ msgstr "𐑷𐑑𐑴-𐑳𐑐𐑛𐑱𐑑 𐑑𐑻𐑱𐑯 𐑑𐑮𐑨𐑯𐑟𐑦𐑖𐑩𐑯𐑟: 𐑯𐑴"
+
+#~ msgid ""
+#~ "Which player should start here? You can use alt and a number key to set "
+#~ "the starting position for a player, and del to clear the starting "
+#~ "position under the cursor. Pressing a number key by itself will scroll to "
+#~ "that player’s starting position."
+#~ msgstr ""
+#~ "𐑢𐑦𐑗 𐑐𐑤𐑱𐑻 𐑖𐑫𐑛 𐑕𐑑𐑸𐑑 𐑣𐑽? 𐑿 𐑒𐑨𐑯 𐑿𐑕 Alt 𐑯 𐑩 𐑯𐑳𐑥𐑚𐑻 𐑒𐑰 𐑑 𐑕𐑧𐑑 𐑞 𐑕𐑑𐑸𐑑𐑦𐑙 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑓𐑹 "
+#~ "𐑩 𐑐𐑤𐑱𐑻, 𐑯 𐑛𐑧𐑤 𐑑 𐑒𐑤𐑽 𐑞 𐑕𐑑𐑸𐑑𐑦𐑙 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑳𐑯𐑛𐑼 𐑞 𐑒𐑻𐑕𐑼. 𐑐𐑮𐑧𐑕𐑦𐑙 𐑩 𐑯𐑳𐑥𐑚𐑻 𐑒𐑰 𐑚𐑲 "
+#~ "𐑦𐑑𐑕𐑧𐑤𐑓 𐑢𐑦𐑤 𐑕𐑒𐑮𐑴𐑤 𐑑 𐑞𐑨𐑑 𐑐𐑤𐑱𐑻𐑟 𐑕𐑑𐑸𐑑𐑦𐑙 𐑐𐑩𐑟𐑦𐑖𐑩𐑯."
+
+#~ msgid "FG"
+#~ msgstr "FG"
+
+#~ msgid "BG"
+#~ msgstr "BG"

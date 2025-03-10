@@ -1,0 +1,4495 @@
+# #-#-#-#-#  wesnoth-l.cpp.pot (Battle for Wesnoth VERSION)  #-#-#-#-#
+# Shavian English translations for Battle for Wesnoth package.
+# Copyright (C) 2009 Wesnoth development team
+# This file is distributed under the same license as the Battle for Wesnoth package
+#
+# Contributors:
+#   Arc Riley <arcriley@ubuntu.com>
+#   Thomas Thurman <thomas@thurman.org.uk>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: en@shaw\n"
+"Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
+"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
+"PO-Revision-Date: 2009-10-13 11:20-0400\n"
+"Last-Translator: Arc Riley <arcriley@ubuntu.com>\n"
+"Language-Team: Shavian English <ubuntu-l10n-en-shaw@lists.launchpad.net>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. [campaign]: id=Liberty
+#. [achievement_group]
+#: data/campaigns/Liberty/_main.cfg:10 data/campaigns/Liberty/_main.cfg:11
+#: data/campaigns/Liberty/achievements.cfg:3
+msgid "Liberty"
+msgstr "𐑤𐑦𐑚𐑼𐑑𐑦"
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:19
+#, fuzzy
+#| msgid "(Easy)"
+msgid "Easy"
+msgstr "(𐑰𐑟𐑦)"
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:19
+msgid "Peasant"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑"
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:20
+#, fuzzy
+#| msgid "(Normal)"
+msgid "Normal"
+msgstr "(𐑯𐑹𐑥𐑩𐑤)"
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:20
+msgid "Outlaw"
+msgstr "𐑬𐑑𐑤𐑷"
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:21
+msgid "Challenging"
+msgstr ""
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:21
+msgid "Fugitive"
+msgstr "𐑓𐑿𐑡𐑩𐑑𐑦𐑝"
+
+#. [campaign]: id=Liberty
+#. "marchlander" is archaic English for an inhabitant of a border region, not to be confused with "marshlander"
+#: data/campaigns/Liberty/_main.cfg:25
+#, fuzzy
+msgid ""
+"As the shadow of civil war deepens across Wesnoth, a band of hardy "
+"marchlanders revolts against the governance of the new queen. To win their "
+"way to freedom, they must learn to use shadows and deception to rout the "
+"trained blades of the Wesnothian army.\n"
+"\n"
+msgstr ""
+"𐑨𐑟 𐑞 𐑖𐑨𐑛𐑴 𐑝 𐑕𐑦𐑝𐑦𐑤 𐑢𐑹 𐑤𐑧𐑙𐑔𐑩𐑯𐑟 𐑩𐑒𐑮𐑪𐑕 ·𐑢𐑧𐑕𐑯𐑷𐑔, 𐑩 𐑚𐑨𐑯𐑛 𐑝 𐑣𐑸𐑛𐑰 marchlanders "
+"𐑮𐑰𐑝𐑴𐑤𐑑𐑕 𐑩𐑜𐑱𐑯𐑕𐑑 𐑞 𐑑𐑽𐑩𐑯𐑰 𐑝 𐑒𐑢𐑰𐑯 ·𐑨𐑖𐑧𐑝𐑽. 𐑑 𐑢𐑦𐑯 𐑞𐑺 𐑢𐑱 𐑑 𐑓𐑮𐑰𐑛𐑩𐑥, 𐑞𐑱 𐑥𐑳𐑕𐑑 𐑛𐑦𐑓𐑰𐑑 "
+"𐑯𐑪𐑑 𐑡𐑳𐑕𐑑 𐑞 𐑑𐑮𐑱𐑯𐑛 𐑚𐑤𐑱𐑛𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔𐑾𐑯 𐑑𐑮𐑵𐑐𐑕 𐑚𐑳𐑑 𐑛𐑸𐑒𐑻 𐑓𐑴𐑟 𐑦𐑯𐑒𐑤𐑵𐑛𐑦𐑙 𐑹𐑒𐑕 𐑯 𐑳𐑯𐑛𐑧𐑛.\n"
+"\n"
+
+#. [campaign]: id=Liberty
+#: data/campaigns/Liberty/_main.cfg:27
+#, fuzzy
+msgid "(Novice level, 7 scenarios.)"
+msgstr "(𐑦𐑯𐑑𐑼𐑥𐑰𐑛𐑦𐑩𐑑 𐑤𐑧𐑝𐑩𐑤, 9 𐑕𐑦𐑯𐑺𐑰𐑴𐑟)"
+
+#. [about]
+#: data/campaigns/Liberty/_main.cfg:30
+#, fuzzy
+#| msgid "Campaign Design"
+msgid "Original Campaign Design"
+msgstr "𐑒𐑨𐑥𐑐𐑱𐑯 𐑛𐑩𐑟𐑲𐑯"
+
+#. [about]
+#: data/campaigns/Liberty/_main.cfg:36
+msgid "Latest Rewrite"
+msgstr ""
+
+#. [about]
+#: data/campaigns/Liberty/_main.cfg:42
+msgid "Campaign Maintenance"
+msgstr "𐑒𐑨𐑥𐑐𐑱𐑯 𐑥𐑱𐑯𐑑𐑩𐑯𐑩𐑯𐑕"
+
+#. [about]
+#: data/campaigns/Liberty/_main.cfg:52
+msgid "Artwork and Graphics Design"
+msgstr "𐑸𐑑𐑢𐑻𐑒 𐑯 𐑜𐑮𐑨𐑓𐑦𐑒𐑕 𐑛𐑩𐑟𐑲𐑯"
+
+#. [achievement]: id=liberty_or_death
+#: data/campaigns/Liberty/achievements.cfg:7
+msgid "Give Me Liberty or Give Me Death!"
+msgstr ""
+
+#. [achievement]: id=liberty_or_death
+#: data/campaigns/Liberty/achievements.cfg:8
+msgid "Complete Civil Disobedience with at least 3 peasants remaining."
+msgstr ""
+
+#. [achievement]: id=liberty_nameless
+#: data/campaigns/Liberty/achievements.cfg:14
+msgid "The Nameless General"
+msgstr ""
+
+#. [achievement]: id=liberty_nameless
+#: data/campaigns/Liberty/achievements.cfg:15
+msgid "Find out the name of the general in Unlawful Orders."
+msgstr ""
+
+#. [achievement]: id=liberty_iron
+#: data/campaigns/Liberty/achievements.cfg:21
+msgid "Harper vs. Goliath"
+msgstr ""
+
+#. [achievement]: id=liberty_iron
+#: data/campaigns/Liberty/achievements.cfg:22
+msgid "Defeat an Iron Mauler with Harper in Hide and Seek."
+msgstr ""
+
+#. [achievement]: id=liberty_hunter
+#. this is the achievement for the scenario The Hunters
+#: data/campaigns/Liberty/achievements.cfg:29
+#, fuzzy
+#| msgid "Peasant Hunter"
+msgid "Perfect Hunter"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑 𐑣𐑳𐑯𐑑𐑼"
+
+#. [achievement]: id=liberty_hunter
+#: data/campaigns/Liberty/achievements.cfg:30
+msgid "Complete The Hunters with no losses"
+msgstr ""
+
+#. [achievement]: id=liberty_army
+#: data/campaigns/Liberty/achievements.cfg:36
+msgid "Force of Arms is Pointless Without Strategy"
+msgstr ""
+
+#. [achievement]: id=liberty_army
+#: data/campaigns/Liberty/achievements.cfg:37
+msgid "On Challenging difficulty, defeat Dommel in Glory."
+msgstr ""
+
+#. [scenario]: id=01_The_Raid
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:4
+msgid "The Raid"
+msgstr "𐑞 𐑮𐑱𐑛"
+
+#. [label]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:15
+msgid "Dallben"
+msgstr "·𐑛𐑨𐑤𐑚𐑧𐑯"
+
+#. [part]
+#. Baldras is an old man from the country and both speaks and writes with many grammatical errors due to his relative lack of education
+#. He is also a little bit rude and grumpy, so languages with ruder or more informal variants of words should use those where appropriate
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:22
+msgid ""
+"From the journal of Baldras, 21 Scatterseed, 501 YW\n"
+"\n"
+"Months... seven months it’s been since the Crown did send a single guard "
+"here to help us. This Garard II be a pompous stinker, even worser than his "
+"pa! Us of these border towns Delwyn and Dallben already be poor and needy, "
+"yet alls ‘His Majesty’ can think of is tax, tax, tax, takin’ all our hard "
+"earned gold from us. Then he uses our gold to provoke more wars with more "
+"orcs just for personal glory and more land for them grubby nobles to lord "
+"over."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:28
+msgid ""
+"To abbadon with the Crown! We got no armies and we don’t even got real "
+"weapons, but we of the Western Marches make do just fine with our slings and "
+"clubs. In all Annuvin Province, there won’t be nobody besting us in these "
+"swamps. We’re self-reliant out here. We gots our own trade routes and pacts "
+"of mutual defense. No need for them Wesnothians. Not a single bit."
+msgstr ""
+
+#. [part]
+#. Some languages, including Norwegian and Old English, don't have a single word for "uncle", dividing it into
+#. mother's-brother vs. father's-brother. Baldras is Harper's mother's brother.
+#. Erwen is Baldras' younger sister, so languages with a special word for that should use it
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:35
+msgid ""
+"The sun were out today, but it were raining too. Weird mix of brightness and "
+"woe. Reminds me of the day Harper’s pa died in that orc raid. Since my sis "
+"Erwen passed when she were young, poor lass had nobody but me. Never wanted "
+"no kid of my own but... she’s mine to take care of now. Fine lass, that one, "
+"just a bit careless like her pa. I needs to keep a good eye on her now, with "
+"all them orcs running round here of late."
+msgstr ""
+
+#. [side]: type=Bandit_Peasant, id=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:47
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:37
+msgid "Baldras"
+msgstr "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕"
+
+#. [side]: type=Goblin Pillager, id=Fal Khag
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:78
+msgid "Fal Khag"
+msgstr "·𐑓𐑭𐑤 ·𐑒𐑣𐑨𐑜"
+
+#. [side]: type=Goblin Pillager, id=Fal Khag
+#. [side]: type=Orcish Warrior, id=Urk Delek
+#. [side]: type=Saurian Oracle, id=Thhsthss
+#. [side]: type=Orcish Warlord, id=Vashna
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:85
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:106
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:131
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:119
+msgid "Orcs"
+msgstr "𐑹𐑒𐑕"
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:108
+msgid "Defeat all of the Goblin marauders"
+msgstr "𐑛𐑦𐑓𐑰𐑑 𐑷𐑤 𐑝 𐑞 𐑜𐑭𐑚𐑤𐑦𐑯 𐑥𐑻𐑪𐑛𐑻𐑟"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:112
+msgid "Goblins reach the village of Dallben"
+msgstr "𐑜𐑭𐑚𐑤𐑦𐑯𐑟 𐑮𐑰𐑗 𐑞 𐑝𐑦𐑤𐑦𐑡 𐑝 ·𐑛𐑨𐑤𐑚𐑧𐑯"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:116
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:100
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:161
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:129
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:155
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:186
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:156
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:225
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:420
+msgid "Death of Baldras"
+msgstr "𐑛𐑧𐑔 𐑝 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:120
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:104
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:165
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:133
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:159
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:190
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:160
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:229
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:424
+msgid "Death of Harper"
+msgstr "𐑛𐑧𐑔 𐑝 𐑣𐑸𐑐𐑻"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:166
+#, fuzzy
+msgid "Gatrakh"
+msgstr "Gatrakh"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:167
+#, fuzzy
+msgid "Thurg"
+msgstr "Thurg"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:170
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:175
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:180
+#, fuzzy
+msgid "Krung"
+msgstr "Krung"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:171
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:176
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:181
+#, fuzzy
+msgid "Gorokh"
+msgstr "Gorokh"
+
+#. [message]: speaker=Fal Khag
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:203
+msgid ""
+"I long to burn human cities, but that weaselly witch thinks we’re only good "
+"enough for these puny villages. These hapless clods barely have anything, "
+"but at least the witch’s gold is good."
+msgstr ""
+
+#. [message]: speaker=Fal Khag
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:207
+#, fuzzy
+#| msgid ""
+#| "Ride, you worms, I want to finish our raid before the hunting party "
+#| "returns to the human village."
+msgid "Ride, you worms! Let’s finish our raid before their hunters return."
+msgstr ""
+"𐑮𐑲𐑛, 𐑿 𐑢𐑻𐑥𐑟, 𐑲 𐑢𐑪𐑯𐑑 𐑑 𐑓𐑦𐑯𐑦𐑖 𐑬𐑼 𐑮𐑱𐑛 𐑚𐑦𐑓𐑹 𐑞 𐑣𐑳𐑯𐑑𐑦𐑙 𐑐𐑸𐑑𐑦 𐑮𐑦𐑑𐑻𐑯𐑟 𐑑 𐑞 𐑣𐑿𐑥𐑩𐑯 𐑝𐑦𐑤𐑦𐑡."
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:216
+#, fuzzy
+msgid "Jalak"
+msgstr "Jalak"
+
+#. [unit]: type=Footpad_Peasant, id=Delurin
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:220
+#, fuzzy
+msgid "Delurin"
+msgstr "Delurin"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:228
+msgid "Red"
+msgstr "𐑮𐑧𐑛"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:229
+#, fuzzy
+msgid "Ordo"
+msgstr "Ordo"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:230
+#, fuzzy
+msgid "Novus"
+msgstr "Novus"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:231
+#, fuzzy
+msgid "Teneor"
+msgstr "Teneor"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:232
+#, fuzzy
+msgid "Kembe"
+msgstr "Kembe"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:233
+#, fuzzy
+msgid "Treagh"
+msgstr "Treagh"
+
+#. [unit]: type=Footpad_Peasant, id=Harper, gender=female
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:240
+msgid "Harper"
+msgstr "𐑣𐑸𐑐𐑻"
+
+#. [message]: speaker=Red
+#. Other country folk also have accents
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:268
+#, fuzzy
+#| msgid ""
+#| "Look, goblin riders approach! You were right, they were going to raid "
+#| "Dallben while we were gone."
+msgid ""
+"Look, goblin riders approach! You was right, they was going to raid Dallben "
+"while we was gone."
+msgstr ""
+"𐑤𐑫𐑒, 𐑜𐑭𐑚𐑤𐑦𐑯 𐑮𐑲𐑛𐑼𐑟 𐑩𐑐𐑮𐑴𐑗! 𐑿 𐑢𐑻 𐑮𐑲𐑑, 𐑞𐑱 𐑢𐑻 𐑜𐑴𐑦𐑙 𐑑 𐑮𐑱𐑛 ·𐑛𐑨𐑤𐑚𐑧𐑯 𐑢𐑲𐑤 𐑢𐑰 𐑢𐑻 𐑜𐑪𐑯."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:272
+msgid ""
+"We gots to stop them or they’ll burn down the whole village. Damn these "
+"goblins and damn the Crown. We always be havin’ to fight for ourselves."
+msgstr ""
+
+#. [message]: speaker=Harper
+#. Harper has a bit of an accent, but not as much as Baldras. She's a bit reckless as Baldras alludes to, but is more polite.
+#. Harper is quite the tomboy and her personality should reflect that, she should use words that are exciting and high spirited
+#. She's also pretty young (teenagerish) so her dialogue should reflect some lack of experience or immaturity
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:279
+#, fuzzy
+msgid ""
+"Uncle, we got no time to talk! Them riders are heading full speed straight "
+"for Dallben. We’ll need to chase them down through those woods, and fast, or "
+"we won’t be able to catch up."
+msgstr ""
+"𐑞𐑨𐑑 𐑜𐑭𐑚𐑤𐑦𐑯 𐑤𐑰𐑛𐑻 𐑦𐑟 𐑣𐑧𐑛𐑦𐑙 𐑓𐑫𐑤-𐑕𐑐𐑰𐑛 𐑕𐑑𐑮𐑱𐑑 𐑓𐑹 ·𐑛𐑨𐑤𐑚𐑧𐑯. 𐑚𐑳𐑑 𐑢𐑰'𐑤 𐑯𐑰𐑛 𐑑 𐑗𐑱𐑕 𐑞𐑧𐑥 "
+"𐑷𐑤 𐑛𐑬𐑯 𐑦𐑓 𐑢𐑰'𐑼 𐑜𐑴𐑦𐑙 𐑑 𐑕𐑑𐑪𐑐 𐑞𐑧𐑥."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:283
+#, fuzzy
+#| msgid ""
+#| "Do it. Try to hold them back until us old-timers can get there and finish "
+#| "them off."
+msgid ""
+"Do it. Hold them beasts back till us old-timers get there to finish ‘em off."
+msgstr ""
+"𐑛𐑵 𐑦𐑑. 𐑑𐑮𐑲 𐑑 𐑣𐑴𐑤𐑛 𐑞𐑧𐑥 𐑚𐑨𐑒 𐑳𐑯𐑑𐑦𐑤 𐑳𐑕 𐑴𐑤𐑛-𐑑𐑲𐑥𐑻𐑟 𐑒𐑨𐑯 𐑜𐑧𐑑 𐑞𐑺 𐑯 𐑓𐑦𐑯𐑦𐑖 𐑞𐑧𐑥 𐑪𐑓."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:287
+msgid ""
+"And Harper... don’t be getting reckless on me today. Your old man died like "
+"that, charging into a pack of goblins by ‘imself. I won’t lose ya the same "
+"way."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:291
+msgid "I know, I know, no need to worry so much. All right, let’s go!"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:305
+msgid ""
+"These orc raids keep getting harder and harder to hold off. Feels like every "
+"new day’s just another chance for us to lose everything..."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:309
+msgid ""
+"That Garard II stopped sendin’ patrols out here a while back. Stinker "
+"probably sent his troops on some new war against them orcs. Don’t really "
+"matter. Technically Annuvin be under the charge of Elensefar, but you don’t "
+"see ‘em coming to help us either."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:313
+msgid ""
+"Then why do we got to pay taxes to the King? Maybe Elensefar doesn’t help "
+"us, but at least they don’t take our gold."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:317
+msgid ""
+"We don’t got no choice, lass. If I don’t gives them what they want, they’ll "
+"make trouble for everyone in Dallben."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:321
+msgid ""
+"But we can’t keep doing this forever, Uncle. If we stay like this, those "
+"orcs will eventually overrun us. What should we do?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:325
+msgid ""
+"I don’t know, Harper. I just don’t know. Alls I can say is we’re on our own "
+"out here."
+msgstr ""
+
+#. [message]: speaker=Harper
+#. Harper has a scar from a fire burn on the right side of her face
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:347
+msgid "My face kinda itches... I gotta be careful around these big ones."
+msgstr ""
+
+#. [message]: speaker=Fal Khag
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:364
+msgid "Time to feast on these puny pinkskins."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:369
+msgid "Hey! Who ya calling puny?"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:384
+msgid "Ahh! I <i>really</i> don’t like fire..."
+msgstr ""
+
+#. [message]: speaker=Fal Khag
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:396
+msgid "I was... too weak..?"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:401
+msgid "Silly goblin."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:416
+msgid ""
+"Hey, someone left their pack here. I could use it to carry some more rocks."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:449
+msgid "Spooky."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:489
+#, fuzzy
+#| msgid ""
+#| "They’re getting closer to our village! What about the town guards, can "
+#| "they help us?"
+msgid "They’re getting close to Dallben! What should we do?"
+msgstr "𐑞𐑱'𐑼 𐑜𐑧𐑑𐑦𐑙 𐑒𐑤𐑴𐑕𐑼 𐑑 𐑬𐑼 𐑝𐑦𐑤𐑦𐑡! 𐑢𐑪𐑑 𐑩𐑚𐑬𐑑 𐑞 𐑑𐑬𐑯 𐑜𐑸𐑛𐑟, 𐑒𐑨𐑯 𐑞𐑱 𐑣𐑧𐑤𐑐 𐑳𐑕?"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:493
+msgid ""
+"There be a couple guards in the village. Might be able to slow them wolves "
+"down if they gets closer."
+msgstr ""
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:506
+#, fuzzy
+msgid "Remald"
+msgstr "Remald"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:507
+#, fuzzy
+msgid "Wolmas"
+msgstr "Wolmas"
+
+#. [event]
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:512
+#, fuzzy
+msgid "Jasken"
+msgstr "Jasken"
+
+#. [message]: speaker=Wolmas
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:519
+#, fuzzy
+#| msgid "What’s happening here? Why are you running like mad, $unit.name|?"
+msgid "What’s happening here? Why be you running like mad, $unit.name|?"
+msgstr "𐑢𐑪𐑑'𐑕 𐑣𐑨𐑐𐑩𐑯𐑦𐑙 𐑣𐑽? 𐑢𐑲 𐑸 𐑿 𐑮𐑳𐑯𐑦𐑙 𐑤𐑲𐑒 𐑥𐑨𐑛, $unit.name|?"
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:523
+#, fuzzy
+#| msgid "Look! Goblin riders are on the hunt — and heading right for Dallben!"
+msgid ""
+"Goblin riders be on the hunt, headed right for Dallben. We gots to stop them!"
+msgstr "𐑤𐑫𐑒! 𐑜𐑭𐑚𐑤𐑦𐑯 𐑮𐑲𐑛𐑼𐑟 𐑸 𐑪𐑯 𐑞 𐑣𐑳𐑯𐑑 - 𐑯 𐑣𐑧𐑛𐑦𐑙 𐑮𐑲𐑑 𐑓𐑹 ·𐑛𐑨𐑤𐑚𐑧𐑯!"
+
+#. [message]: speaker=Wolmas
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:530
+#, fuzzy
+#| msgid "Look! Goblin riders are on the hunt — and heading right for Dallben!"
+msgid "Look! Goblin riders be on the hunt, headed right for Dallben!"
+msgstr "𐑤𐑫𐑒! 𐑜𐑭𐑚𐑤𐑦𐑯 𐑮𐑲𐑛𐑼𐑟 𐑸 𐑪𐑯 𐑞 𐑣𐑳𐑯𐑑 - 𐑯 𐑣𐑧𐑛𐑦𐑙 𐑮𐑲𐑑 𐑓𐑹 ·𐑛𐑨𐑤𐑚𐑧𐑯!"
+
+#. [message]: speaker=Remald
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:534
+msgid "We gots to stop them!"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/01_The_Raid.cfg:554
+#, fuzzy
+#| msgid ""
+#| "The goblins reached the village! There will surely be nothing left when "
+#| "they are done pillaging it."
+msgid ""
+"The goblins reached the village! Now there’ll be nothing left after they "
+"raid our homes..."
+msgstr ""
+"𐑞 𐑜𐑭𐑚𐑤𐑦𐑯𐑟 𐑮𐑰𐑗𐑑 𐑞 𐑝𐑦𐑤𐑦𐑡! 𐑞𐑺 𐑢𐑦𐑤 𐑖𐑫𐑼𐑤𐑦 𐑚𐑰 𐑯𐑳𐑔𐑦𐑙 𐑤𐑧𐑓𐑑 𐑢𐑧𐑯 𐑞𐑱 𐑸 𐑛𐑳𐑯 𐑐𐑦𐑤𐑦𐑡𐑦𐑙 𐑦𐑑."
+
+#. [scenario]: id=02_Civil_Disobedience
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:4
+msgid "Civil Disobedience"
+msgstr "𐑕𐑦𐑝𐑦𐑤 𐑛𐑦𐑕𐑴𐑚𐑰𐑛𐑾𐑯𐑕"
+
+#. [label]
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:16
+#, fuzzy
+#| msgid "Baldras"
+msgid "Baldras’ farm"
+msgstr "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕"
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:21
+msgid ""
+"Baldras’ journal, 6 Deeproot, 501 YW:\n"
+"\n"
+"Me and Harper visited Erwen’s grave today. I helped the lass pick her a "
+"bunch of flowers — we even found some of her favorite, blue lilies. Harper "
+"don’t remember her much, but still thinks lots about her. Lass reminds me so "
+"much of her ma often times, real bright and brassy, even if she don’t got "
+"the same sense or wits. I’m just hoping she be learning more with time."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:27
+msgid ""
+"Speaking of sense, I gots me a bad feeling in my gut about today. I’d better "
+"ready our hunting troop when I get back to the village, just in case..."
+msgstr ""
+
+#. [side]: type=Bandit_Peasant, id=Baldras
+#. [side]
+#. [side]: type=Bandit, id=Baldras
+#. [side]: type=Highwayman_Peasant, gender=female, id=Relana
+#. [side]: type=General, id=Lord Maddock
+#. [side]: type=Rogue, id=Hans
+#. [side]: type=Highwayman, id=Baldras
+#. [side]: type=Shadow Lord, id=Helicrom
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:44
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:83
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:48
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:78
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:38
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:59
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:71
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:128
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:82
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:103
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:46
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:132
+msgid "Rebels"
+msgstr "𐑮𐑩𐑚𐑧𐑤𐑟"
+
+#. [side]: type=Cavalier, id=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:53
+msgid "Tarwen"
+msgstr "·𐑑𐑸𐑢𐑧𐑯"
+
+#. [side]: type=Cavalier, id=Tarwen
+#. [side]: type=General, id=Kestrel
+#. [side]: type=Master Bowman, id=Quentin
+#. [side]
+#. [side]: type=Shock Trooper, id=Linneus
+#. [side]: type=Lieutenant, id=Archarel
+#. [side]: type=General, id=Dommel
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:60
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:82
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:85
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:101
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:121
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:140
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:88
+msgid "Weldyn"
+msgstr ""
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:96
+msgid "Kill the Wesnoth army captain, Tarwen"
+msgstr "𐑒𐑦𐑤 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑒𐑨𐑐𐑑𐑩𐑯, ·𐑑𐑸𐑢𐑧𐑯"
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:152
+msgid "Look, riders approach."
+msgstr "𐑤𐑫𐑒, 𐑮𐑲𐑛𐑼𐑟 𐑩𐑐𐑮𐑴𐑗."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:156
+#, fuzzy
+#| msgid "Stand fast, nephew."
+msgid "Stand fast, Harper."
+msgstr "𐑕𐑑𐑨𐑯𐑛 𐑓𐑭𐑕𐑑, 𐑯𐑧𐑓𐑿."
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:169
+#, fuzzy
+#| msgid ""
+#| "By order of the Queen, the magistrate of this town is ordered to travel "
+#| "with us to Elensefar for vetting."
+msgid ""
+"By order of the Queen, the magistrate of this town is to travel with us to "
+"Elensefar for vetting."
+msgstr ""
+"𐑚𐑲 𐑹𐑛𐑼 𐑝 𐑞 𐑒𐑢𐑰𐑯, 𐑞 𐑥𐑨𐑡𐑩𐑕𐑑𐑮𐑱𐑑 𐑝 𐑞𐑦𐑕 𐑑𐑬𐑯 𐑦𐑟 𐑹𐑛𐑼𐑛 𐑑 𐑑𐑮𐑨𐑝𐑩𐑤 𐑢𐑦𐑞 𐑳𐑕 𐑑 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑓𐑹 "
+"𐑝𐑧𐑑𐑦𐑙."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:173
+msgid ""
+"The Crown did long since abandon our village. You Wesnothians be too busy "
+"countin’ the gold from our taxes to be sending aid against them orcs. Nobody "
+"here be leaving to nowhere."
+msgstr ""
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:177
+msgid ""
+"Insolent peasant. Try not my patience, else I shall be forced to drag thy "
+"deceased corpse back with me to the city."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:181
+msgid "Try it then, stinker."
+msgstr ""
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:185
+msgid "As you wish."
+msgstr ""
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:219
+msgid "Guard the gate."
+msgstr "𐑜𐑸𐑛 𐑞 𐑜𐑱𐑑."
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:232
+msgid "<i>Uncle, since when did we have a queen?</i>"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:236
+msgid ""
+"<i>Since a few years back, I thinks, but weren’t never her giving out no "
+"orders...</i>"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:240
+msgid ""
+"<i>It don’t really matter right now. Harper, get yerself out o’ here. This "
+"be no kind of battle for you.</i>"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:244
+msgid "I can fight!"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:248
+msgid "<i>Harper, do what I says to ya.</i>"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:252
+msgid "We’re in this together. Death to the Wesnothians!"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:256
+msgid "Impulsive lass..."
+msgstr ""
+
+#. [message]: speaker=second_unit
+#. this is from Monty Python and the Holy Grail :)
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:269
+msgid "Help, help! I’m being repressed!"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:281
+msgid "They just killed an innocent man! Murderers!"
+msgstr ""
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:286
+msgid "Cry thine eyes out for me, peasant."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:299
+msgid "I oughta bring out the good mace to fight off these thugs."
+msgstr ""
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:345
+#, fuzzy
+#| msgid "Get back, you cur!"
+msgid "Back, back ye curs!"
+msgstr "𐑜𐑧𐑑 𐑚𐑨𐑒, 𐑿 𐑒𐑻!"
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:357
+msgid "Take that, you bullies!"
+msgstr ""
+
+#. [message]: speaker=second_unit
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:371
+msgid "Get out of my village!"
+msgstr "𐑜𐑧𐑑 𐑬𐑑 𐑝 𐑥𐑲 𐑝𐑦𐑤𐑦𐑡!"
+
+#. [message]: role=Advisor
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:405
+msgid ""
+"We beat their leader, but a couple of them riders escaped. What should we do?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:410
+msgid ""
+"Somethin’ be very wrong here. That Garard weren’t never no hero or nothing, "
+"but his men never would’ve attacked us. The Queen must’ve did something to "
+"him."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:416
+#, fuzzy
+#| msgid "We must tell the people of Delwyn about this."
+msgid ""
+"We’ve got to tell the people of Delwyn about this. Ol’ magistrate Relana "
+"will have some ideas."
+msgstr "𐑢𐑰 𐑥𐑳𐑕𐑑 𐑑𐑧𐑤 𐑞 𐑐𐑰𐑐𐑩𐑤 𐑝 𐑛𐑧𐑤𐑢𐑦𐑯 𐑩𐑚𐑬𐑑 𐑞𐑦𐑕."
+
+#. [message]: role=Advisor
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:421
+msgid ""
+"That’s true. Whenever there’s been troubles, we’ve always looked to her for "
+"help."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:426
+msgid ""
+"Fine. We’ll go to Delwyn, see what Relana gots to say. With them riders so "
+"eagerly attackin’ us today, I’m thinking Delwyn will be under threat too."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:431
+msgid "So we’ll have to fight them Wesnothians again?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:436
+msgid ""
+"Alls I can say for certain is we’ve made ourselves enemies of the Crown. "
+"They’ll be hunting us now."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:441
+msgid "Then we’re outlaws."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:446
+msgid "Aye, outlaws."
+msgstr ""
+
+#. [message]: speaker=Reinforcement Knight
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:539
+msgid "At your order, Captain."
+msgstr ""
+
+#. [message]: speaker=Tarwen
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:543
+msgid "Slay them all."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/02_Civil_Disobedience.cfg:547
+msgid ""
+"Curses! Their reinforcements has arrived. We gots no chance to fight ‘em off "
+"now..."
+msgstr ""
+
+#. [scenario]: id=03_A_Strategy_of_Hope
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:4
+msgid "A Strategy of Hope"
+msgstr "𐑩 𐑕𐑑𐑮𐑨𐑑𐑩𐑡𐑰 𐑝 𐑣𐑴𐑐"
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:17
+msgid ""
+"Baldras’ journal, 10 Deeproot, 501 YW:\n"
+"\n"
+"Been a strange few days. Had to leave Dallben real quick. We grabbed "
+"whatever we could in just a day, some food, some clothes, sis’s lucky "
+"bracelet... and made off for Delwyn as quick as these old bones would let "
+"me. It be a three day journey there for me, but I sended Harper ahead for "
+"Relana first. Said we’d meet her in the usual hiding spot in the swamp."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:23
+msgid ""
+"This whole mess be utter stupidness. Of all the things to be driving us from "
+"our home, how did it ended up being those accursed Wesnothians? Blasted "
+"Crown. Don’t matter whoever’s the one giving out them orders, those stinkers "
+"in Weldyn always be making trouble for us countryfolk."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:27
+msgid ""
+"I’m too old for all this. Them orc raids already be plenty for me to deal "
+"with. I don’t be keen on fighting no war with Wesnoth. But... I guess, I "
+"don’t really got no choice either. Harper’s still too young to be leading "
+"anyone, and it don’t seem like anyone else in the village be suitable."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:31
+msgid ""
+"In times like these... I still wish Erwen was here with us. Little sis were "
+"always the better of us two. She always knew how to keep her temper and her "
+"wits about her. What would she say to me now? Probably something like, “Quit "
+"yapping ya old dog and focus on what you’re doing. What’s done is done. Just "
+"look at what’s ahead of ya and get them people to safety.” Cheeky, that one. "
+"But, she’d be right, I has me a responsibility to our people. Got a lot of "
+"trouble ahead of us..."
+msgstr ""
+
+#. [side]: type=Highwayman_Peasant, gender=female, id=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:57
+msgid "Relana"
+msgstr ""
+
+#. [side]: type=Orcish Warrior, id=Urk Delek
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:86
+#, fuzzy
+msgid "Urk Delek"
+msgstr "Urk Delek"
+
+#. [side]: type=Saurian Oracle, id=Thhsthss
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:115
+#, fuzzy
+msgid "Thhsthss"
+msgstr "Thhsthss"
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:157
+msgid "Defeat both enemy leaders"
+msgstr "𐑛𐑦𐑓𐑰𐑑 𐑚𐑴𐑔 𐑧𐑯𐑩𐑥𐑦 𐑤𐑰𐑛𐑼𐑟"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:169
+#, fuzzy
+msgid "Death of Relana"
+msgstr "𐑛𐑧𐑔 𐑝 ·𐑮𐑧𐑤𐑯𐑨𐑯"
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:203
+msgid "Baldras! Ya made it! Lil Harper here told me all about what happened."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:207
+msgid ""
+"Aye, Relana. It were one o’ the Queen’s patrol, strange as it do sound. "
+"Turns out they was itchin’ to attack us soon as I wasn’t willing to leave "
+"with ‘em."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:211
+msgid "But we fought those ugly scoundrels off!"
+msgstr ""
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:215
+msgid ""
+"Queen’s patrol, ya say? They sent them a messenger our way a couple days "
+"ago, demanding our allegiance to some ‘Asheviere’. Weren’t that Garard’s "
+"young bride or something? Why’s she the one in charge now?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:219
+msgid ""
+"I don’t know, but some of them riders escaped us. Bet they’ll report back to "
+"their local garrison, tell them we’re a bunch o’ traitors."
+msgstr ""
+
+#. [message]: role=Advisor
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:223
+#, fuzzy
+#| msgid "Then they’ll be back in force."
+msgid "Then they’ll be comin’ back in force."
+msgstr "𐑞𐑧𐑯 𐑞𐑱𐑤 𐑚𐑰 𐑚𐑨𐑒 𐑦𐑯 𐑓𐑹𐑕."
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:227
+msgid ""
+"We needs more information. We should consult ourselves with Elensefar. Lord "
+"Maddock surely gots to know more than us."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:231
+#, fuzzy
+#| msgid "Elensefar"
+msgid "Elensefar? Why him?"
+msgstr "·𐑧𐑤𐑧𐑯𐑕𐑓𐑸"
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:235
+msgid ""
+"Well all Annuvin be ruled by Elensefar, right? We don’t gots to heed "
+"anything Wesnoth says. Lord Maddock’s technically the one we answer to."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:239
+msgid ""
+"It don’t matter. Weldyn be doing whatever it likes while Maddock says "
+"nothing. He knows, but he don’t care."
+msgstr ""
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:243
+msgid ""
+"But we still need that knowledge, Baldras. We can’t be coming up with any "
+"great plan without no information. We both knows that if Weldyn brings one "
+"o’ their armies here, there be no way we can fight them off."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:247
+msgid ""
+"Perhaps, but — hold there. Did ya hear that? Sounded like some wolf howl."
+msgstr ""
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:251
+msgid "Somethin’ smells like lizard too. We’re not alone here."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:255
+msgid "Finally, some action!"
+msgstr ""
+
+#. [message]: speaker=Urk Delek
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:263
+msgid ""
+"Blasted humans and blasted Fal Khag! Stupid goblin was only supposed to "
+"scout that puny village, not fight it by himself. Then those damned humans "
+"rejected our help and look where that got them."
+msgstr ""
+
+#. [message]: speaker=Urk Delek
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:267
+msgid ""
+"“Don’t know why the Queen hired some stinkin’ orcs, we don’t need you here.” "
+"Yeah, well now they’re dead like a bunch of beasts."
+msgstr ""
+
+#. [message]: speaker=Thhsthss
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:273
+#, fuzzy
+msgid "Your ordersss mean nothing to usss, orc. You promissed uss gold."
+msgstr "·𐑓𐑭𐑤 ·𐑒𐑣𐑨𐑜 𐑦𐑟 𐑯𐑳𐑔𐑦𐑙 𐑑 usss, 𐑹𐑒. 𐑿 promissed 𐑿𐑧𐑕𐑧𐑕 𐑜𐑴𐑤𐑛. 𐑚𐑮𐑲𐑑 𐑜𐑴𐑤𐑛."
+
+#. [message]: speaker=Urk Delek
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:277
+msgid ""
+"Shut your trap, lizard. You’ll get your gold as soon as my wolves get their "
+"meat."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:286
+msgid ""
+"We gots to be headin’ for Elensefar soon before them Wesnothians come back."
+msgstr ""
+
+#. [message]: speaker=unit
+#. fishperson is the same as merfolk
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:300
+msgid "Looks like some fishperson used to live here."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:318
+msgid "Looks like they still do. Ick."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:330
+msgid "Ewww, I think it be smelling even worse now. Least it’s stopped moving."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:358
+msgid "I don’t likes me the look of that water."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:391
+msgid "Ahh! Help, it’s a tentacle monster!"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:404
+msgid "That’s some fresh tasty water. Mmm!"
+msgstr ""
+
+#. [message]: speaker=Urk Delek
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:435
+msgid "Blasted pinkskins..."
+msgstr ""
+
+#. [message]: speaker=Thhsthss
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:448
+msgid "Thissss was not part of the deal..."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:457
+#, fuzzy
+#| msgid ""
+#| "Something is very wrong here. Those orcs were carrying weapons with Army "
+#| "forge-markings."
+msgid ""
+"Something be very wrong here. These orcs has weapons with army forge-"
+"markings."
+msgstr "𐑕𐑳𐑥𐑔𐑦𐑙 𐑦𐑟 𐑝𐑧𐑮𐑦 𐑮𐑪𐑙 𐑣𐑽. 𐑞𐑴𐑟 𐑹𐑒𐑕 𐑢𐑻 𐑒𐑨𐑮𐑦𐑦𐑙 𐑢𐑧𐑐𐑩𐑯𐑟 𐑢𐑦𐑞 𐑸𐑥𐑦 𐑓𐑹𐑡-𐑥𐑸𐑒𐑦𐑙𐑟."
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:461
+#, fuzzy
+#| msgid "Aye. And the gold in their pouches looked new from the mint."
+msgid ""
+"Aye, and the gold in their pouches looks new from mint. Could just be "
+"plunder, but..."
+msgstr "𐑲. 𐑯 𐑞 𐑜𐑴𐑤𐑛 𐑦𐑯 𐑞𐑺 𐑐𐑬𐑗𐑩𐑟 𐑤𐑫𐑒𐑑 𐑯𐑿 𐑓𐑮𐑪𐑥 𐑞 𐑥𐑦𐑯𐑑."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:465
+msgid ""
+"Don’t seem like it. I be thinking these orcs were hired to scout us. But for "
+"what? Of all the alliances to be making, why would Weldyn be hiring orcs?"
+msgstr ""
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:469
+#, fuzzy
+#| msgid ""
+#| "I think your mission to Lord Maddock just became more urgent than we "
+#| "knew, Baldras. I must remain here to see to the defense of Delwyn and "
+#| "Dallben, but you should fly to Elensefar with all speed."
+msgid ""
+"I thinks your mission to Lord Maddock just became even more urgent. We needs "
+"to know the Queen’s motives."
+msgstr ""
+"𐑲 𐑔𐑦𐑙𐑒 𐑿𐑼 𐑥𐑦𐑖𐑩𐑯 𐑑 𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒 𐑡𐑳𐑕𐑑 𐑚𐑦𐑒𐑱𐑥 𐑥𐑹 𐑻𐑡𐑩𐑯𐑑 𐑞𐑨𐑯 𐑢𐑰 𐑯𐑿, ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕. 𐑲 𐑥𐑳𐑕𐑑 "
+"𐑮𐑦𐑥𐑱𐑯 𐑣𐑽 𐑑 𐑕𐑰 𐑑 𐑞 𐑛𐑦𐑓𐑧𐑯𐑕 𐑝 𐑛𐑧𐑤𐑢𐑦𐑯 𐑯 ·𐑛𐑨𐑤𐑚𐑧𐑯, 𐑚𐑳𐑑 𐑿 𐑖𐑫𐑛 𐑓𐑤𐑲 𐑑 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑢𐑦𐑞 𐑷𐑤 "
+"𐑕𐑐𐑰𐑛."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:473
+msgid ""
+"I don’t like leaving our people here alone, but I sees your point. If we "
+"wait, more will be coming."
+msgstr ""
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:477
+msgid ""
+"For now, I can stay here and perhaps talk them Wesnothians out of attacking "
+"us directly, but I don’t thinks it will work forever. To survive this, we "
+"needs to act quick, Baldras."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:481
+msgid "Then we’ll go to Elensefar as fast as we can. Luck be with ya, Relana."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:499
+msgid ""
+"We gots no more time to be spending here nor to be traveling to Elensefar... "
+"them Wesnothians probably already be mobilizing against us. We’ve got to "
+"head back to Dallben!"
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/03_A_Strategy_Of_Hope.cfg:505
+#, fuzzy
+msgid ""
+"Baldras and Relana returned to their villages to find them destroyed, with "
+"any survivors borne away to unknown fates. It was a bitter doom, and as "
+"Wesnoth descended into chaos, they would live to see worse."
+msgstr ""
+"·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑯 ·𐑮𐑧𐑤𐑯𐑨𐑯 𐑮𐑦𐑑𐑻𐑯𐑛 𐑑 𐑞𐑺 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑑 𐑓𐑲𐑯𐑛 𐑞𐑧𐑥 𐑛𐑩𐑕𐑑𐑮𐑶𐑛, 𐑢𐑦𐑞 𐑞𐑴𐑟 𐑣𐑵 𐑓𐑷𐑑 "
+"𐑤𐑧𐑓𐑑 𐑛𐑧𐑛 𐑯 𐑞 𐑓𐑿 𐑕𐑻𐑝𐑲𐑝𐑻𐑟 𐑚𐑹𐑯 𐑩𐑢𐑱 𐑑 𐑩𐑯𐑜𐑧𐑕𐑩𐑚𐑩𐑤 𐑓𐑱𐑑𐑕. 𐑦𐑑 𐑢𐑪𐑟 𐑩 𐑚𐑦𐑑𐑼 𐑛𐑵𐑥, 𐑯 𐑨𐑟 "
+"·𐑢𐑧𐑕𐑯𐑷𐑔 𐑛𐑦𐑕𐑧𐑯𐑛𐑩𐑛 𐑦𐑯𐑑𐑫 𐑛𐑸𐑒𐑯𐑩𐑕 𐑞𐑱 𐑢𐑫𐑛 𐑤𐑲𐑝 𐑑 𐑕𐑰 𐑢𐑻𐑕."
+
+#. [scenario]: id=04_Unlawful_Orders
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:4
+msgid "Unlawful Orders"
+msgstr "𐑩𐑯𐑤𐑪𐑓𐑩𐑤 𐑹𐑛𐑼𐑟"
+
+#. [label]
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:18
+msgid "Elensefar"
+msgstr "·𐑧𐑤𐑧𐑯𐑕𐑓𐑸"
+
+#. [label]
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:23
+msgid "Port of Elensefar"
+msgstr "𐑐𐑹𐑑 𐑝 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸"
+
+#. [side]: type=General, id=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:45
+msgid "Lord Maddock"
+msgstr "𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒"
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:125
+msgid "Defeat the enemy general"
+msgstr "𐑛𐑦𐑓𐑰𐑑 𐑞 𐑧𐑯𐑩𐑥𐑦 𐑡𐑧𐑯𐑼𐑩𐑤"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:137
+msgid "Death of Maddock"
+msgstr "𐑛𐑧𐑔 𐑝 𐑥𐑨𐑛𐑩𐑒"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:212
+msgid "Maddock, I be coming to report—"
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:216
+msgid ""
+"I am already aware of your altercation in Dallben, Baldras. Your dissent was "
+"not wise."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#. pigdirt is slang for bullshit or hogwash
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:221
+msgid ""
+"Dissent? Maddock, I’m not trusting no strange riders who show up out of "
+"nowhere claimin’ to be from the Queen. Seems like a bunch of pigdirt to me."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:225
+msgid ""
+"That was partially my fault, since I was not able to send a messenger to you "
+"in time. I shall have to inform you now. Five weeks ago, at the Ford of "
+"Abez, Queen Asheviere’s men allied themselves with the northern orcs and "
+"betrayed King Garard II."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:229
+msgid ""
+"Since Prince Eldred died in the battle, the Queen took the throne and has "
+"been consolidating her power. Part of that has been bringing the elders from "
+"the local villages here, forcing them to swear allegiance to her. That was "
+"the purpose of that patrol."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:233
+msgid "Annuvin province be ruled by Elensefar! We has no duty to Weldyn."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:237
+msgid ""
+"You do now. I do not really need to tell you what will happen should you "
+"refuse Her Majesty’s offer."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:241
+msgid ""
+"Grow a spine, Maddock. If they come to ya and make you swear fealty to this "
+"Asheviere, would ya really give up that easy?"
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:245
+msgid ""
+"Well, they do not come within the walls of my city. There is a large "
+"garrison south at the great fortress of Halstead, but even should they "
+"mobilize all their troops, I doubt they could take Elensefar. It is true "
+"that for now, the majority of my forces are still returning from the battle "
+"of Abez, but unless we are attacked within the next few days, I shall be "
+"able to hold the city."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:249
+msgid "And what abouts us? Throw us like dogs to those Wesnothians?"
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:253
+msgid ""
+"We have an uneasy peace to maintain. The treaty between Elensefar and "
+"Wesnoth is ancient, and I do not think Her Majesty means to break it. At the "
+"same time, I have some concessions that I shall have to make. I cannot "
+"afford a war with Weldyn, as you can surely understand."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:257
+msgid ""
+"But we can’t do nothing! The Queen even be sending them beast orcs against "
+"us, that’s how evil she is! Surely you can’t stand for this..."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:261
+msgid ""
+"Yes, I am aware of Queen Asheviere’s propensity for hiring orcs to "
+"supplement her forces. That does not mean I could do anything about it, even "
+"if I were so inclined. The best advice I can give you is to just apologize. "
+"Even if they may want your head, Baldras, you still have the chance to "
+"preserve your village. Think of the bigger picture."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:265
+msgid ""
+"The bigger picture of you idly sittin’ here waiting till them Wesnothians "
+"come to take the city right from your hands."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:269
+msgid "I very much doubt they would be bold enough to attack us outright—"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:273
+msgid ""
+"Head out of your behind, Maddock. Open your eyes! Look south and tell me "
+"that again!"
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:286
+msgid ""
+"An invading army? No, something is not right with those soldiers... but I "
+"presume we have no time to ponder that. To arms!"
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:309
+msgid "Hey, look! Some buried treasure!"
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:334
+msgid "Looks like someone left some supplies here."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:359
+msgid ""
+"It says, “Here lies Daneth, child of the Light, loyal defender of Lord and "
+"Land.” Whoever that was."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:363
+msgid "Maddock’s firstborn son."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:367
+msgid "Oh."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:380
+msgid ""
+"That’s a deep well! Wonder how far down it goes. Guess I’ll chuck a rock "
+"down and find out."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:384
+msgid ""
+"...\n"
+"...\n"
+"..."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:390
+msgid "Plunk!"
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:423
+msgid "Hold there, soldier! Can we not come to terms without bloodshed?"
+msgstr ""
+
+#. [message]: speaker=unit
+#. [message]: speaker=Lord Maddock
+#. [message]: type=Spearman
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:427
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:871
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:885
+msgid "..."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:431
+msgid "Hmm. Something is quite wrong indeed..."
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:444
+msgid "<i>The sun sets...</i>"
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:449
+msgid ""
+"Baldras and Harper watch, petrified, as the skin and flesh of their "
+"adversaries begin to rot away."
+msgstr ""
+
+#. [wml_message]
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:530
+msgid "Could not convert a $stored_changers[$i].type, please report!"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:793
+msgid ""
+"Them things look like evil spirits! Are they those undead you told me about, "
+"Uncle?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:797
+msgid ""
+"They bears some likeness, but these men almost seem half alive. This be some "
+"kind of truly dreadful sorcery."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:806
+msgid ""
+"So, their human aspect returns. Whatever these creatures are, we shall crush "
+"them all under the light of the sun."
+msgstr ""
+
+#. [modify_unit]
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:828
+#, fuzzy
+msgid "General Kestrel"
+msgstr "Kestrel"
+
+#. [message]: speaker=second_unit
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:835
+msgid "Who are you? What are you?"
+msgstr "𐑣𐑵 𐑸 𐑿? 𐑢𐑪𐑑 𐑸 𐑿?"
+
+#. [message]: speaker=Kestrel
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:839
+#, fuzzy
+msgid ""
+"We... are accursed. We were the soldiers of Prince Eldred, the King’s son "
+"and betrayer... when the Prince was slain at the hands of the mage Delfador, "
+"those of us who bore witness to it were warped into these twisted forms. "
+"Now, our mortal bodies pass... into another plane of hellish existence..."
+msgstr ""
+"𐑢𐑰 𐑸 𐑩𐑒𐑻𐑕𐑑. 𐑢𐑰 𐑢𐑻 𐑢𐑳𐑯𐑕 𐑳𐑯𐑛𐑼 𐑞 𐑒𐑩𐑥𐑭𐑯𐑛 𐑝 𐑐𐑮𐑦𐑯𐑕 𐑧𐑤𐑛𐑻𐑛, 𐑞 𐑒𐑦𐑙'𐑟 𐑕𐑳𐑯 𐑯 betrayer. "
+"𐑞 𐑐𐑮𐑲𐑕 𐑓𐑹 𐑬𐑼 𐑑𐑮𐑰𐑟𐑩𐑯 𐑦𐑟 𐑞𐑦𐑕 𐑣𐑧𐑤𐑦𐑖 𐑧𐑒𐑟𐑦𐑕𐑑𐑩𐑯𐑕. 𐑢𐑰 𐑯𐑴 𐑯𐑪𐑑 𐑣𐑵 𐑹 𐑢𐑪𐑑 𐑦𐑯𐑓𐑤𐑦𐑒𐑑𐑦𐑛 𐑞𐑦𐑕 "
+"𐑒𐑻𐑕 𐑩𐑐𐑪𐑯 𐑳𐑕, 𐑚𐑳𐑑 𐑬𐑼 𐑥𐑹𐑑𐑩𐑤 𐑛𐑧𐑔𐑕 𐑥𐑱 𐑚𐑰 𐑴𐑯𐑤𐑦 𐑞 𐑚𐑩𐑜𐑦𐑯𐑦𐑙 𐑝 𐑞 𐑐𐑧𐑯𐑩𐑯𐑕 𐑢𐑰 𐑸 𐑛𐑵𐑥𐑛 𐑑 "
+"𐑐𐑱."
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:862
+msgid "Such is the price for treachery."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:866
+#, fuzzy
+#| msgid "Lord Maddock, now that we are victorious, will you help us?"
+msgid "Maddock, we helped you defend your city. Will you help us now?"
+msgstr "𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒, 𐑯𐑬 𐑞𐑨𐑑 𐑢𐑰 𐑸 𐑝𐑦𐑒𐑑𐑹𐑦𐑩𐑕, 𐑢𐑦𐑤 𐑿 𐑣𐑧𐑤𐑐 𐑳𐑕?"
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:876
+msgid ""
+"<i>Listen carefully. I shall not openly speak against Asheviere seeing as "
+"some of her spies are in the city... however, rest assured, I certainly do "
+"not trust the Queen and her questionable tactics.</i>"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:880
+msgid "<i>What can ya offer us then?</i>"
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:884
+msgid ""
+"<i>Well, I do not normally make my relationship with them known, but I can "
+"make an exception. Southeast of here, in Carcyn, you may find assistance "
+"from one of my... contacts. Their methods should be better suited to your "
+"needs. As for your homes, I cannot offer you protection against Weldyn, but "
+"I can arrange for some roads to be closed to delay their patrols. That is "
+"the most I can do for you.</i>"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:888
+msgid ""
+"<i>Hmph. Clear that you won’t help us fight, but I gots no more time to be "
+"stayin’ here. If we is going to resist the Crown a second time, we needs "
+"ourselves a good plan. Hope that you’re not sending us to our deaths, "
+"Maddock.</i>"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:908
+msgid ""
+"More troops be coming from the south! With all them reinforcements, we gots "
+"no chance to defend Elensefar!"
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/04_Unlawful_Orders.cfg:921
+#, fuzzy
+#| msgid ""
+#| "Indeed, Asheviere’s armies had mustered and struck before the nascent "
+#| "rebellion could even be planned. Her power and ruthlessness — and their "
+#| "toll of death — would only grow greater with time."
+msgid ""
+"Asheviere’s armies assembled and struck before the nascent rebellion could "
+"even be planned. Without the necessary forces, Annuvin soon fell under "
+"Weldyn’s absolute control."
+msgstr ""
+"𐑦𐑯𐑛𐑰𐑛, ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑸𐑥𐑰𐑟 𐑣𐑨𐑛 𐑥𐑩𐑕𐑑𐑻𐑛 𐑯 𐑕𐑑𐑮𐑳𐑒 𐑚𐑦𐑓𐑹 𐑞 𐑯𐑱𐑕𐑩𐑯𐑑 𐑮𐑦𐑚𐑧𐑤𐑘𐑩𐑯 𐑒𐑫𐑛 𐑰𐑝𐑩𐑯 𐑚𐑰 "
+"𐑐𐑤𐑨𐑯𐑛. 𐑣𐑻 𐑐𐑬𐑼 𐑯 𐑮𐑵𐑔𐑤𐑩𐑕𐑯𐑩𐑕 - 𐑯 𐑞𐑺 𐑑𐑴𐑤 𐑝 𐑛𐑧𐑔 - 𐑢𐑫𐑛 𐑴𐑯𐑤𐑦 𐑜𐑮𐑴 𐑜𐑮𐑱𐑑𐑼 𐑢𐑦𐑞 𐑑𐑲𐑥."
+
+#. [scenario]: id=05_Hide_and_Seek
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:6
+msgid "Hide and Seek"
+msgstr "𐑣𐑲𐑛 𐑯 𐑕𐑰𐑒"
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:46
+msgid ""
+"22 Deeproot, 501 YW\n"
+"\n"
+"Been a tough few days since we left Elensefar with all them patrols running "
+"around. Going by boat along the Great River, we has been managing to avoid "
+"them Wesnothians, but being constantly on the lookout be real taxing. I "
+"truly be starting to feel that tiredness in my bones... old men like me "
+"should be sitting back at home, resting our grey bodies and watchin’ over "
+"them younger folk growing up. I don’t got no business here, running around "
+"as some outlaw. Maybe if I was ten years younger..."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:52
+msgid ""
+"Anyway, the messenger I sent back to Relana should be in Delwyn already. We "
+"should be arriving to Carcyn soon too, to where that coward Maddock said his "
+"‘contact’ be. Truths be told, I don’t know how this’ll be turning out, "
+"especially since I don’t be no social butterfly like sis were. Don’t like me "
+"no city folk really. But I’ll deal with them if I gots to."
+msgstr ""
+
+#. [side]: type=Master Bowman, id=Quentin
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:80
+msgid "Quentin"
+msgstr "𐑒𐑢𐑧𐑯𐑑𐑦𐑯"
+
+#. [side]: type=Rogue, id=Hans
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:118
+msgid "Hans"
+msgstr "𐑣𐑭𐑯𐑕"
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:151
+#, fuzzy
+#| msgid "The Grey Woods"
+msgid "Enter the Grey Woods with Hans"
+msgstr "𐑞 𐑜𐑮𐑱 𐑢𐑫𐑛𐑟"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:163
+#, fuzzy
+#| msgid "Death of Harper"
+msgid "Death of Hans"
+msgstr "𐑛𐑧𐑔 𐑝 𐑣𐑸𐑐𐑻"
+
+#. [note]
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:168
+msgid "In fog, units always see one hex further than they can move."
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:349
+#, fuzzy
+#| msgid ""
+#| "Relentlessly pursued by riders patrolling the road to Elensefar, Baldras "
+#| "and his men traveled unseen along the swampy banks of the Great River to "
+#| "the city of Carcyn."
+msgid ""
+"Relentlessly pursued by riders patrolling the road to Elensefar, Baldras and "
+"the villagers traveled unseen along the swampy banks of the Great River to "
+"the city of Carcyn. They hid until nightfall, then crept out to find the "
+"help Lord Maddock hinted was here."
+msgstr ""
+"𐑮𐑦𐑤𐑧𐑯𐑑𐑤𐑩𐑕𐑤𐑰 𐑐𐑼𐑕𐑿𐑛 𐑚𐑲 𐑮𐑲𐑛𐑼𐑟 𐑐𐑩𐑑𐑮𐑴𐑤𐑦𐑙 𐑞 𐑮𐑴𐑛 𐑑 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸, ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑯 𐑣𐑦𐑟 𐑥𐑧𐑯 "
+"𐑑𐑮𐑨𐑝𐑩𐑤𐑛 𐑩𐑯𐑕𐑰𐑯 𐑩𐑤𐑪𐑙 𐑞 𐑕𐑢𐑭𐑥𐑐𐑰 𐑚𐑨𐑙𐑒𐑕 𐑝 𐑞 𐑜𐑮𐑱𐑑 𐑮𐑦𐑝𐑼 𐑑 𐑞 𐑕𐑦𐑑𐑦 𐑝 ·𐑒𐑸𐑒𐑦𐑯."
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:397
+msgid ""
+"Wow, is that Carcyn in the distance? Look at how grand some of them spires "
+"be!"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:402
+msgid ""
+"Not since I were a young lad did I come this far south. Maybe it looks "
+"impressive now, but city life weren’t never something real nice. Them city "
+"folk be real impatient and mean. Always wantin’ some price for their help, "
+"too."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:407
+msgid ""
+"Well, we need their help now, don’t we? So we got to figure out a way to get "
+"to Lord Maddock’s friend. But he didn’t say anything about who that was."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:412
+msgid ""
+"Harper, when a noble lord says he don’t want some kind of relationship "
+"known, it means some kind o’ connection with the black market. We be looking "
+"for criminals, probably some thieves’ den. Or, maybe they be looking for us."
+msgstr ""
+
+#. [unit]: type=Thief, id=Link
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:428
+msgid "Link"
+msgstr "𐑤𐑦𐑙𐑒"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:433
+msgid "Right on time."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:438
+msgid "How do we know we can trust him?"
+msgstr ""
+
+#. [message]: speaker=Link
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:443
+msgid ""
+"If you were one of my quarries, your throat would be slit by now. As it is, "
+"you two are still in imminent danger. Just a week ago, the Crown sent a "
+"contingent of heavy infantry here to supervise the city. They’re patrolling "
+"the streets and forests for us."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:448
+msgid "I be assuming they’ll also try to stop us if they see us."
+msgstr ""
+
+#. [message]: speaker=Link
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:453
+#, fuzzy
+#| msgid ""
+#| "Well, good thing I found you first. Now hurry, you must make it past the "
+#| "city into the Grey Woods. There is a small path in the southeast that "
+#| "leads into the forest; look for the signpost. My brother Hans is waiting "
+#| "for you there and will take you to our master. Try to avoid the soldiers "
+#| "if you can."
+msgid ""
+"Very likely. Now hurry, you must make it past the city into the Grey Woods. "
+"There is a small path in the southeast that leads into the forest. Look for "
+"the signpost. My brother Hans will guide you from there. Avoid the soldiers "
+"if you can."
+msgstr ""
+"𐑢𐑧𐑤, 𐑜𐑫𐑛 𐑔𐑦𐑙 𐑲 𐑓𐑬𐑯𐑛 𐑿 𐑓𐑻𐑕𐑑. 𐑯𐑬 𐑣𐑳𐑮𐑦, 𐑿 𐑥𐑳𐑕𐑑 𐑥𐑱𐑒 𐑦𐑑 𐑐𐑭𐑕𐑑 𐑞 𐑕𐑦𐑑𐑦 𐑦𐑯𐑑𐑫 𐑞 𐑜𐑮𐑱 "
+"𐑢𐑫𐑛𐑟. 𐑞𐑺 𐑦𐑟 𐑩 𐑕𐑥𐑷𐑤 𐑐𐑭𐑔 𐑦𐑯 𐑞 𐑕𐑬𐑔𐑰𐑕𐑑 𐑞𐑨𐑑 𐑤𐑰𐑛𐑟 𐑦𐑯𐑑𐑫 𐑞 𐑓𐑹𐑦𐑕𐑑; 𐑤𐑫𐑒 𐑓𐑹 𐑞 𐑕𐑲𐑯𐑐𐑴𐑕𐑑. "
+"𐑥𐑲 𐑚𐑮𐑳𐑞𐑼 𐑣𐑭𐑯𐑕 𐑦𐑟 𐑢𐑱𐑑𐑦𐑙 𐑓𐑹 𐑿 𐑞𐑺 𐑯 𐑢𐑦𐑤 𐑑𐑱𐑒 𐑿 𐑑 𐑬𐑼 𐑥𐑭𐑕𐑑𐑼. 𐑑𐑮𐑲 𐑑 𐑩𐑝𐑶𐑛 𐑞 𐑕𐑴𐑤𐑡𐑼𐑟 "
+"𐑦𐑓 𐑿 𐑒𐑨𐑯."
+
+#. [message]: speaker=second_unit
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:491
+#, fuzzy
+#| msgid ""
+#| "Looks like these guards hold stationary posts, so if we’re careful enough "
+#| "we should be able to slip our way around them unnoticed."
+msgid ""
+"Looks like these guards be holding stationary posts. If we’re careful, we "
+"can get ourselves around them unnoticed."
+msgstr ""
+"𐑤𐑫𐑒𐑕 𐑤𐑲𐑒 𐑞𐑰𐑟 𐑜𐑸𐑛𐑟 𐑣𐑴𐑤𐑛 𐑕𐑑𐑱𐑖𐑩𐑯𐑺𐑰 𐑐𐑴𐑕𐑑𐑕, 𐑕𐑴 𐑦𐑓 𐑢𐑰'𐑼 𐑒𐑺𐑓𐑩𐑤 𐑦𐑯𐑳𐑓 𐑢𐑰 𐑖𐑫𐑛 𐑚𐑰 𐑱𐑚𐑩𐑤 "
+"𐑑 𐑕𐑤𐑦𐑐 𐑬𐑼 𐑢𐑱 𐑩𐑮𐑬𐑯𐑛 𐑞𐑧𐑥 𐑩𐑯𐑯𐑴𐑑𐑦𐑕𐑑."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:495
+#, fuzzy
+#| msgid ""
+#| "Harper, you younger and faster folks need to be our eyes now. Scout ahead "
+#| "and try to find a way for us to get past the guards, but make sure to not "
+#| "stay where they can see you or we’re all in big trouble..."
+msgid ""
+"Harper, you younger and faster folks needs to be our eyes. Scout ahead and "
+"find a way past them guards, but make sure ya don’t get yourselves spotted..."
+msgstr ""
+"𐑣𐑸𐑐𐑻, 𐑿 𐑘𐑳𐑙𐑼 𐑯 𐑓𐑭𐑕𐑑𐑼 𐑓𐑴𐑒𐑕 𐑯𐑰𐑛 𐑑 𐑚𐑰 𐑬𐑼 𐑲𐑟 𐑯𐑬. 𐑕𐑒𐑬𐑑 𐑩𐑣𐑧𐑛 𐑯 𐑑𐑮𐑲 𐑑 𐑓𐑲𐑯𐑛 𐑩 𐑢𐑱 𐑓𐑹 "
+"𐑳𐑕 𐑑 𐑜𐑧𐑑 𐑐𐑭𐑕𐑑 𐑞 𐑜𐑸𐑛𐑟, 𐑚𐑳𐑑 𐑥𐑱𐑒 𐑖𐑫𐑼 𐑑 𐑯𐑪𐑑 𐑕𐑑𐑱 𐑢𐑺 𐑞𐑱 𐑒𐑨𐑯 𐑕𐑰 𐑿 𐑹 𐑢𐑰'𐑼 𐑷𐑤 𐑦𐑯 𐑚𐑦𐑜 "
+"𐑑𐑮𐑳𐑚𐑩𐑤..."
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:566
+msgid "Who goes there? Halt!"
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:570
+#, fuzzy
+msgid "They’ve seen us! <i>Run</i>!"
+msgstr "𐑞𐑱'𐑝 𐑕𐑰𐑯 𐑳𐑕, 𐑮𐑳𐑯!"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:587
+#, fuzzy
+#| msgid "Fall back, quickly! Maybe we can yet lose them!"
+msgid "Quick, back into the shadows! Maybe we can still lose them!"
+msgstr "𐑓𐑷𐑤 𐑚𐑨𐑒, 𐑒𐑢𐑦𐑒𐑤𐑦! 𐑥𐑱𐑚𐑰 𐑢𐑰 𐑒𐑨𐑯 𐑘𐑧𐑑 𐑤𐑵𐑟 𐑞𐑧𐑥!"
+
+#. [message]: speaker=Harper
+#. Harper defeats an Iron Mauler
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:605
+msgid "Uncle, we did it! We beat one of them iron monsters!"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:609
+msgid "A fine job lass, but more sure gots to be coming. Let’s keep movin’."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:628
+#, fuzzy
+#| msgid "Fly, and we may yet evade them in the Grey Woods."
+msgid ""
+"This way, into the forest! We’ll be able to lose them in the Grey Woods."
+msgstr "𐑓𐑤𐑲, 𐑯 𐑢𐑰 𐑥𐑱 𐑘𐑧𐑑 𐑦𐑝𐑱𐑛 𐑞𐑧𐑥 𐑦𐑯 𐑞 𐑜𐑮𐑱 𐑢𐑫𐑛𐑟."
+
+#. [message]: speaker=Hans
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:653
+#, fuzzy
+#| msgid ""
+#| "You can come if you wish, but the leader is only interested in speaking "
+#| "to Baldras."
+msgid ""
+"You can come if you wish, but we are mostly interested in speaking to "
+"Baldras."
+msgstr "𐑿 𐑒𐑨𐑯 𐑒𐑳𐑥 𐑦𐑓 𐑿 𐑢𐑦𐑖, 𐑚𐑳𐑑 𐑞 𐑤𐑰𐑛𐑻 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑦𐑯𐑑𐑼𐑩𐑕𐑑𐑩𐑛 𐑦𐑯 𐑕𐑐𐑰𐑒𐑦𐑙 𐑑 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:673
+#, fuzzy
+#| msgid ""
+#| "I haven’t run this much in years. If you were to ask me to infiltrate a "
+#| "heavily guarded city relying on nothing but the cover of darkness and my "
+#| "wits, I would say you were crazy."
+msgid ""
+"I haven’t run so much in years. Feels like I be a real outlaw now, "
+"infiltrating a heavily guarded city relyin’ on nothing but the cover of "
+"darkness and my wits."
+msgstr ""
+"𐑲 𐑣𐑨𐑝𐑯𐑑 𐑮𐑳𐑯 𐑞𐑦𐑕 𐑥𐑳𐑗 𐑦𐑯 𐑘𐑽𐑟. 𐑦𐑓 𐑿 𐑢𐑻 𐑑 𐑭𐑕𐑒 𐑥𐑰 𐑑 𐑦𐑯𐑓𐑦𐑤𐑑𐑮𐑱𐑑 𐑩 𐑣𐑧𐑝𐑦𐑤𐑦 𐑜𐑸𐑛𐑩𐑛 𐑕𐑦𐑑𐑦 "
+"𐑮𐑰𐑤𐑲𐑦𐑙 𐑪𐑯 𐑯𐑳𐑔𐑦𐑙 𐑚𐑳𐑑 𐑞 𐑒𐑳𐑝𐑼 𐑝 𐑛𐑸𐑒𐑯𐑩𐑕 𐑯 𐑥𐑲 𐑢𐑦𐑑𐑕, 𐑲 𐑢𐑫𐑛 𐑕𐑱 𐑿 𐑢𐑻 𐑒𐑮𐑱𐑟𐑦."
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:678
+msgid "It was fun, wasn’t it?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:683
+msgid "Perhaps a little."
+msgstr ""
+
+#. [message]: speaker=Hans
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:688
+msgid ""
+"Enough chatter, you still have some guards on your tail. We need to head "
+"deeper into the Grey Woods to lose them."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:693
+#, fuzzy
+msgid "Lead the way."
+msgstr "𐑤𐑰𐑛 𐑞 𐑢𐑱..."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:717
+msgid ""
+"Blast it, we was too slow! With the sun rising already, them guards will "
+"have no trouble spotting us now..."
+msgstr ""
+
+#. [message]: speaker=Hans
+#: data/campaigns/Liberty/scenarios/05_Hide_and_Seek.cfg:734
+msgid "You fools! You weren’t supposed to lead them to me..."
+msgstr ""
+
+#. [scenario]: id=06_The_Hunters
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:4
+msgid "The Hunters"
+msgstr "𐑞 𐑣𐑩𐑯𐑑𐑻𐑟"
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:45
+msgid ""
+"24 Deeproot, 501 YW\n"
+"\n"
+"The sun don’t really shine at all in these Grey Woods, but truth be told, I "
+"has been getting used to it more and more. Lounging out in the warm "
+"daylight, talkin’ with Erwen while watching them kids play out in the "
+"fields... those times were so long ago. Our lives weren’t never real "
+"peaceful, but back then, we had our homes and our friends and our family... "
+"now we be creatures of the dark."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:51
+msgid ""
+"It be real lonesome like this. I still has me Harper, and I be grateful for "
+"the lass, but she don’t really understand an old man like me. I know the "
+"past be the past, but I just can’t help but think of sis in times like "
+"these. How she used to be dragging me out on some silly little romp, a "
+"little job here and there for some gold or lil trinket, or sometimes just "
+"for fun... I never wanted to go, of course. I were always real lazy. Still "
+"am, even now."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:55
+msgid ""
+"Then, Harper tells me, “Come on Uncle, we’re on an adventure! Don’t be so "
+"mopey, live a little!” I know she be trying to be cheery, but she really "
+"don’t know how much she be reminding me of Erwen sometimes..."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:59
+msgid ""
+"I must be strong. That’s what I tells myself. I should be strong, but... I "
+"don’t know what be keeping me going, if it be this misguided sense of pride, "
+"or my duties to the village, or Harper, or even just remembering the past, "
+"making some futile attempts to go back to better times."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:63
+msgid "Either way, I be here now, on this adventure."
+msgstr ""
+
+#. [side]: type=Shadow Lord, id=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:90
+msgid "Helicrom"
+msgstr "·𐑣𐑧𐑤𐑦𐑒𐑮𐑪𐑥"
+
+#. [side]: type=Shock Trooper, id=Linneus
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:111
+#, fuzzy
+msgid "Linneus"
+msgstr "Linneus"
+
+#. [side]: type=Lieutenant, id=Archarel
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:130
+#, fuzzy
+msgid "Archarel"
+msgstr "Archarel"
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:182
+msgid "Kill all enemy patrols before they reach the outpost"
+msgstr ""
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:194
+#, fuzzy
+#| msgid "Death of Harper"
+msgid "Death of Helicrom"
+msgstr "𐑛𐑧𐑔 𐑝 𐑣𐑸𐑐𐑻"
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:198
+msgid "Any patrol units survive when turns run out"
+msgstr ""
+
+#. [objective]: condition=lose
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:202
+msgid "Any allied unit is sighted by the outpost guards"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:255
+#, fuzzy
+#| msgid "The leader, I presume."
+msgid "The leader, I presumes."
+msgstr "𐑞 𐑤𐑰𐑛𐑻, 𐑲 𐑐𐑮𐑦𐑟𐑵𐑥."
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:259
+msgid ""
+"Indeed, I am Lord Helicrom, the Crow of the Grey Woods. We are acquaintances "
+"of Lord Maddock, who sent word to us of your predicament. I believe we can "
+"work something out for your situation."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:263
+#, fuzzy
+#| msgid "Your pursuits?"
+msgid "What be your pursuits?"
+msgstr "𐑿𐑼 𐑐𐑻𐑕𐑵𐑑𐑕?"
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:267
+#, fuzzy
+#| msgid ""
+#| "The former King’s magic ministry kept a tight control on the training and "
+#| "employment of mages in Wesnoth. Those of us who dared to... depart from "
+#| "the curriculum, you might say, were dealt with harshly. We are outcasts "
+#| "because we seek to master shadow magic. Our secrecy and security are not "
+#| "cheap."
+msgid ""
+"The former king’s magic ministry kept a tight control on the training and "
+"employment of mages in Wesnoth. Those of us who dared to... depart from the "
+"curriculum were dealt with harshly. Many of us were forced to escape here to "
+"continue our study of our brand of magic. Our security and secrecy are not "
+"cheap."
+msgstr ""
+"𐑞 𐑓𐑹𐑥𐑼 𐑒𐑦𐑙'𐑟 𐑥𐑨𐑡𐑦𐑒 𐑥𐑦𐑯𐑩𐑕𐑑𐑮𐑰 𐑒𐑧𐑐𐑑 𐑩 𐑑𐑲𐑑 𐑒𐑩𐑯𐑑𐑮𐑴𐑤 𐑪𐑯 𐑞 𐑑𐑮𐑱𐑯𐑦𐑙 𐑯 𐑦𐑥𐑐𐑤𐑶𐑥𐑩𐑯𐑑 𐑝 "
+"𐑥𐑱𐑡𐑦𐑟 𐑦𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔. 𐑞𐑴𐑟 𐑝 𐑳𐑕 𐑣𐑵 𐑛𐑺𐑛 𐑑... 𐑛𐑦𐑐𐑸𐑑 𐑓𐑮𐑪𐑥 𐑞 𐑒𐑻𐑦𐑒𐑘𐑩𐑤𐑩𐑥, 𐑿 𐑥𐑲𐑑 𐑕𐑱, 𐑢𐑻 "
+"𐑛𐑧𐑤𐑑 𐑢𐑦𐑞 𐑣𐑸𐑖𐑤𐑦. 𐑢𐑰 𐑸 𐑬𐑑𐑒𐑨𐑕𐑑𐑕 𐑚𐑦𐑒𐑪𐑟 𐑢𐑰 𐑕𐑰𐑒 𐑑 𐑥𐑭𐑕𐑑𐑼 𐑖𐑨𐑛𐑴 𐑥𐑨𐑡𐑦𐑒. 𐑬𐑼 𐑕𐑰𐑒𐑮𐑩𐑕𐑦 𐑯 "
+"𐑕𐑦𐑒𐑘𐑫𐑼𐑦𐑑𐑦 𐑸 𐑯𐑪𐑑 𐑗𐑰𐑐."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:271
+msgid "Then you be fellow outlaws. But why do you wants to help us?"
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:275
+msgid ""
+"<i>Quid pro quo.</i> Our aid is never given freely. You have something that "
+"may be useful to us."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:279
+msgid "Manpower. Mages be no good at fighting, I knows. But what for?"
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:283
+msgid ""
+"Understand this. Any weakening of the Throne of Wesnoth, whether it be "
+"occupied by king or queen, aids us. To accomplish that, we must destabilize "
+"their forces in this region. The key is Halstead."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:287
+msgid "That big ol’ fort between Aldril and Elensefar?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:291
+msgid ""
+"Aye, Harper. What the mage says be no surprise. It be a bastion of central "
+"importance, rivalin’ Elensefar even. Maddock said the Queen’s troops were "
+"gathering there. But we gots no way to fight a war with them, not since "
+"Maddock won’t send his soldiers to battle."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:295
+msgid ""
+"Know this, Baldras. During the past week, several patrols have again "
+"ventured across the Great River into Annuvin. A woman named Relana opposed "
+"them with a small militia and was victorious, but with heavy losses. The "
+"Crown, however, has begun to take notice of this rebellion and is massing "
+"forces within Halstead. When its armies are raised, none of your little "
+"villages will be able to resist them. Your only choice would be to flee "
+"farther north into orcish territory."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:299
+msgid ""
+"We’d never survive there. But would it be so bad if we just swore fealty to "
+"the Queen?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:303
+msgid "Only if we gots no other choice. Let’s hear the mage’s plan first."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:307
+msgid ""
+"I’m not asking you to fight a war. A direct fight against Weldyn’s armies "
+"would be undoubtedly foolish. However, we have other means within our grasp. "
+"From Dan’Tonk to Halstead, the fastest path lies through the pass between "
+"the Brown Hills and the Gryphon Mountains followed by the trek through these "
+"Grey Woods. We are in prime position to gnaw away at their troops, crippling "
+"their forces before they ever arrive at their destination."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:311
+msgid "Then what?"
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:315
+msgid "I am sure you can guess, magistrate."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:319
+msgid "You means to sack Halstead itself."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:323
+msgid "There’s no way we can fight them all... can we?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:327
+msgid ""
+"I don’t know. But, for now, ambushing them patrols be easy enough. That’ll "
+"slow them Wesnothians down enough for us to figure out the next step."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:331
+msgid ""
+"In the last day, my scouts have counted five platoons of troops marching "
+"towards the garrison. We must eliminate them all before they reach the "
+"outpost at the end of the woods. The outpost also must not be alerted to our "
+"presence, or we will have the bulk of their forces upon us."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:342
+#, fuzzy
+#| msgid "Another platoon approaches..."
+msgid "The first platoon approaches..."
+msgstr "𐑩𐑯𐑳𐑞𐑼 𐑐𐑤𐑩𐑑𐑵𐑯 𐑩𐑐𐑮𐑴𐑗𐑩𐑟..."
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:386
+#, fuzzy
+msgid ""
+"We shall pincer them from the other side of this path. When we are done, no "
+"one shall fear the open roads and night sky more than the armies of Weldyn. "
+"Strike quickly, strike silently... and leave no one alive."
+msgstr ""
+"𐑢𐑧𐑯 𐑢𐑰 𐑸 𐑛𐑳𐑯, 𐑯𐑴 𐑢𐑳𐑯 𐑢𐑦𐑤 𐑓𐑽 𐑞 𐑴𐑐𐑩𐑯 𐑮𐑴𐑛𐑟 𐑯 𐑯𐑲𐑑 𐑕𐑒𐑲 𐑥𐑹 𐑞𐑨𐑯 𐑞 𐑸𐑥𐑦 𐑝 𐑞 usurper. "
+"𐑕𐑑𐑮𐑲𐑒 𐑓𐑭𐑕𐑑, 𐑕𐑑𐑮𐑲𐑒 𐑕𐑲𐑤𐑩𐑯𐑑𐑤𐑦... 𐑯 𐑤𐑰𐑝 𐑯𐑴 𐑢𐑳𐑯 𐑩𐑤𐑲𐑝."
+
+#. [message]: speaker=Linneus
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:508
+#, fuzzy
+#| msgid "It’s an ambush! Hold your ground!"
+msgid "It’s an ambush! Run!"
+msgstr "𐑦𐑑'𐑕 𐑩𐑯 𐑨𐑥𐑚𐑫𐑖! 𐑣𐑴𐑤𐑛 𐑿𐑼 𐑜𐑮𐑬𐑯𐑛!"
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:523
+msgid ""
+"Ah, here it is. I was wondering where I had misplaced my favorite blade."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:557
+msgid "Hey, I found some old coins in this shack."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:593
+msgid "Bleagh, a slimy tentacle. Why’s it so big?"
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:606
+msgid "There’s a rusty key here. I wonder if it could be useful?"
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:633
+msgid "There is a waterlogged coffin here."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:646
+msgid "Hey, that key fits in this coffin. Should I open it?"
+msgstr ""
+
+#. [option]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:651
+msgid "No, that be a terrible idea."
+msgstr ""
+
+#. [option]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:658
+msgid "Fine, do it."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:673
+msgid "What is this disgusting monster?"
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:678
+msgid ""
+"A ghoul, a creature of disease and pestilence. Kill the putrid thing. Its "
+"stench is making me sick."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:703
+msgid ""
+"Disgusting though it may be, perhaps that creature’s corpse could be useful."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:718
+msgid "Should I use this potion?"
+msgstr ""
+
+#. [option]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:720
+msgid "Yes, I’ll use it."
+msgstr ""
+
+#. [object]: id=poison_weapon
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:728
+msgid "Vile Concoction"
+msgstr ""
+
+#. [object]: id=poison_weapon
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:730
+msgid ""
+"This unit’s melee weapons gain the poison special and this unit gains a "
+"small number of hitpoints."
+msgstr ""
+
+#. [option]
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:764
+msgid "No, I’ll leave it for someone else."
+msgstr ""
+
+#. [message]: type=Spearman
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:877
+msgid "Doesn’t something about these woods feel weird to you, sir?"
+msgstr ""
+
+#. [message]: type=Pikeman
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:881
+msgid "Afraid of ghosts, soldier?"
+msgstr ""
+
+#. [message]: type=Master at Arms
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:991
+msgid ""
+"Woods, woods, woods and more woods! Bah, that general had better have a good "
+"reason for dragging me out to Halstead with all these oafs."
+msgstr ""
+
+#. [message]: type=Duelist
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:995
+msgid "But cap’n, we’re your loyal troops..."
+msgstr ""
+
+#. [message]: type=Master at Arms
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:999
+msgid "Shut it and keep moving."
+msgstr ""
+
+#. [message]: speaker=Archarel
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1020
+msgid ""
+"Several platoons of troops were supposed to arrive today. I wonder if "
+"something happened to them."
+msgstr ""
+
+#. [message]: speaker=Archarel
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1037
+msgid ""
+"Something about these woods seems quite unnatural. Perhaps we should stop "
+"sending our soldiers this way."
+msgstr ""
+
+#. [message]: speaker=Archarel
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1053
+#, fuzzy
+#| msgid ""
+#| "Troops, to arms! These peasant scum think they are above the law. We will "
+#| "show them the law!"
+msgid ""
+"Troops, to arms! Show these fugitive scum the meaning of the Queen’s law!"
+msgstr "𐑑𐑮𐑵𐑐𐑕, 𐑑 𐑸𐑥𐑟! 𐑞𐑰𐑟 𐑐𐑧𐑟𐑩𐑯𐑑 𐑕𐑒𐑩𐑥 𐑔𐑦𐑙𐑒 𐑞𐑱 𐑸 𐑩𐑚𐑳𐑝 𐑞 𐑤𐑷. 𐑢𐑰 𐑢𐑦𐑤 𐑖𐑴 𐑞𐑧𐑥 𐑞 𐑤𐑷!"
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1057
+msgid ""
+"With the outpost aware of our presence, we can no longer harry their "
+"reinforcements. Their forces will soon grow too powerful for us to resist."
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1073
+msgid ""
+"The next morning, the local night patrol returned to the nearby outpost. "
+"They were surprised to see their fellow soldiers engaged in combat with the "
+"band of thugs of which they had heard so much."
+msgstr ""
+"𐑞 𐑯𐑧𐑒𐑕𐑑 𐑥𐑹𐑯𐑦𐑙, 𐑞 𐑤𐑴𐑒𐑩𐑤 𐑯𐑲𐑑 𐑐𐑩𐑑𐑮𐑴𐑤 𐑮𐑦𐑑𐑻𐑯𐑛 𐑑 𐑞 𐑯𐑽𐑚𐑲 𐑬𐑑𐑐𐑴𐑕𐑑. 𐑞𐑱 𐑢𐑻 𐑕𐑼𐑐𐑮𐑲𐑟𐑛 𐑑 𐑕𐑰 "
+"𐑞𐑺 𐑓𐑧𐑤𐑴 𐑕𐑴𐑤𐑡𐑼𐑟 𐑧𐑯𐑜𐑱𐑡𐑛 𐑦𐑯 𐑒𐑪𐑥𐑚𐑨𐑑 𐑢𐑦𐑞 𐑞 𐑚𐑨𐑯𐑛 𐑝 𐑔𐑩𐑜𐑟 𐑝 𐑢𐑦𐑗 𐑞𐑱 𐑣𐑨𐑛 𐑣𐑻𐑛 𐑕𐑴 𐑥𐑳𐑗."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1133
+msgid "It be done. Their patrols be shattered and broken."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1138
+msgid ""
+"Well done, but the fight is far from over. We will not be able to employ "
+"these tactics when more platoons arrive. You must make your choice. Will you "
+"fight? Or will you return to your village and beg for amnesty?"
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1143
+msgid ""
+"Amnesty? Knowing these Wesnothians, they’ll have my head. Then again, if I "
+"could gives my life to save my whole village, I would."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1148
+msgid "We need you! Uncle..."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1153
+msgid ""
+"I know what you is going to say, Harper. That we should be fighting for our "
+"homes, just like we do against them orcs. But we be risking everything on "
+"this, lass."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1158
+msgid ""
+"If we go back like this, that means we’ll surrender to them Wesnothians and "
+"live our whole lives in oppression. You saw how they were sending so many "
+"soldiers and even orcs against us."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1163
+msgid ""
+"The girl is naive, but her spirit is in the right place. You risk your homes "
+"and the lives of your people, yes, but what good will they be if you live in "
+"tyranny? Believe me, I have been there. I would rather die than go back."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1168
+msgid ""
+"Yes... Erwen would’ve said the same. If we march on Halstead, we gots to "
+"burn it to the ground before the Queen’s forces rally. If we does that, "
+"Weldyn won’t have no foothold in Annuvin no more."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1173
+msgid ""
+"It would be months before they could reassemble their forces here. Enough "
+"time for you to secure your homes, or relocate."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1178
+msgid "Then it be decided. We’ll attack the fort together. Luck be with us."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1219
+msgid ""
+"Lieutenant, we were assaulted by a band of outlaws en route to the outpost. "
+"We were barely able to evade them and make it here!"
+msgstr ""
+
+#. [message]: speaker=second_unit
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1239
+msgid "Look there! Outlaws and bandits roam these woods, harrying our patrols!"
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/06_The_Hunters.cfg:1256
+msgid "This is the end for me..."
+msgstr ""
+
+#. [scenario]: id=07_Glory
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:4
+msgid "Glory"
+msgstr "𐑜𐑤𐑹𐑦"
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:20
+msgid ""
+"From the Annals of Alduin, 98 YW\n"
+"\n"
+"One score and eight years ago, in 70 YW, the King of Wesnoth and the Lord of "
+"Elensefar signed a treaty of trade and alliance in order to further the "
+"security of humankind. The realization of this treaty required the creation "
+"of a safe path between Weldyn and Elensefar, with all manner of hostile "
+"creature or beast scoured from these civilized lands. From Dan’Tonk, the "
+"establishment of Aldril and Carcyn secured the once hazardous passage "
+"alongside the Grey Woods, completing the way between the two cities. With "
+"this, the alliance can truly be deemed a coalition of men."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:26
+msgid ""
+"To commemorate the concordat, six years ago, the Lords of Weldyn and "
+"Elensefar decreed that a monument be erected in the heart of these once "
+"wildlands. We, the magi of Alduin, lent our services to demonstrate the full "
+"prowess and might of human magic. Above a series of old catacombs in a scant "
+"hill, we spent these years raising an immense stronghold from the earth’s "
+"living rock."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:30
+msgid ""
+"Completed, as it is on this day, this sentinel of the west now towers "
+"hundreds of paces tall, a great monolith looming sheer above the plains. The "
+"sight of these colossal walls, to even us magi, is both awe-inspiring and "
+"terrifying. So tall these towers peak and so mighty these walls arise that "
+"such a feat seems more like a force of nature than a work of man. That we "
+"have fashioned this mountain as insignificant humans is almost "
+"inconceivable. Halstead, as we have named it, is impenetrable. No one shall "
+"ever overcome these tidal waves of stone."
+msgstr ""
+
+#. [side]: type=General, id=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:56
+#, fuzzy
+msgid "Dommel"
+msgstr "Dommel"
+
+#. [side]: type=Orcish Warlord, id=Vashna
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:99
+#, fuzzy
+msgid "Vashna"
+msgstr "Vashna"
+
+#. [objective]: condition=win
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:152
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:221
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:416
+msgid "Destroy the stronghold of Halstead"
+msgstr "𐑛𐑩𐑕𐑑𐑮𐑶 𐑞 𐑕𐑑𐑮𐑪𐑙𐑣𐑴𐑤𐑛 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:252
+#, fuzzy
+#| msgid "There it is. The stronghold of Halstead."
+msgid "There be it. The stronghold of Halstead."
+msgstr "𐑞𐑺 𐑦𐑑 𐑦𐑟. 𐑞 𐑕𐑑𐑮𐑪𐑙𐑣𐑴𐑤𐑛 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛."
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:265
+#, fuzzy
+#| msgid ""
+#| "Look at how tall it is! Those towers rise sheer out of the ground, as if "
+#| "called forth out of the earth."
+msgid ""
+"Look at how tall it is! Those towers be so sheer and smooth, it almost looks "
+"like magic called them up out of the earth!"
+msgstr ""
+"𐑤𐑫𐑒 𐑨𐑑 𐑣𐑬 𐑑𐑷𐑤 𐑦𐑑 𐑦𐑟! 𐑞𐑴𐑟 𐑑𐑬𐑼𐑟 𐑮𐑲𐑟 𐑖𐑽 𐑬𐑑 𐑝 𐑞 𐑜𐑮𐑬𐑯𐑛, 𐑨𐑟 𐑦𐑓 𐑒𐑷𐑤𐑛 𐑓𐑹𐑔 𐑬𐑑 𐑝 𐑞 𐑻𐑔."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:270
+msgid ""
+"Aye, there may be some truths in that. Old stories tells us that in times "
+"past, Elensefar and Weldyn had some real strong mages, much more adept than "
+"them ones who only be politicking nowadays. They helped tame the lands "
+"between the cities and forged the walls of Halstead itself to honor the "
+"alliance."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:275
+#, fuzzy
+#| msgid ""
+#| "I don’t see how we can bring it down. They are already invincible in "
+#| "there!"
+msgid "I don’t see how we can bring it down. They seem invincible in there!"
+msgstr "𐑲 𐑛𐑴𐑯𐑑 𐑕𐑰 𐑣𐑬 𐑢𐑰 𐑒𐑨𐑯 𐑚𐑮𐑦𐑙 𐑦𐑑 𐑛𐑬𐑯. 𐑞𐑱 𐑸 𐑷𐑤𐑮𐑧𐑛𐑦 𐑦𐑯𐑝𐑦𐑯𐑕𐑩𐑚𐑩𐑤 𐑦𐑯 𐑞𐑺!"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:279
+msgid "Indeed..."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:283
+msgid ""
+"Worry not, Halstead has a weakness. What Baldras spoke was partly true. "
+"Previous orders of magi did help erect the fortress. What is not made known "
+"to most is that the original construction of the castle was flawed."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:287
+msgid ""
+"These walls were raised over a system of catacombs, which connect the four "
+"towers to the central keep. Though they appear impressive, the tunnels were "
+"never meant to hold up such a tremendous weight. Supports were added later "
+"to hold up the middle, which eventually began to collapse without them. "
+"Naturally, this was made secret by the magi, who did not want others to "
+"learn of their error."
+msgstr ""
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:291
+#, fuzzy
+#| msgid ""
+#| "So... we can knock out the supports and bring down the stronghold of "
+#| "Halstead. Would it really work?"
+msgid ""
+"So... we can knock out the supports and bring down the main keep. Would it "
+"really work?"
+msgstr ""
+"𐑕𐑴... 𐑢𐑰 𐑒𐑨𐑯 𐑯𐑪𐑒 𐑬𐑑 𐑞 𐑕𐑩𐑐𐑹𐑑𐑕 𐑯 𐑚𐑮𐑦𐑙 𐑛𐑬𐑯 𐑞 𐑕𐑑𐑮𐑪𐑙𐑣𐑴𐑤𐑛 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛. 𐑢𐑫𐑛 𐑦𐑑 𐑮𐑾𐑤𐑦 "
+"𐑢𐑻𐑒?"
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:295
+#, fuzzy
+#| msgid ""
+#| "I believe it will. Each tower has a passage down to the catacombs. If we "
+#| "can reach the center of each tower, one of our men can escape down to the "
+#| "bowels of the mountain and destroy its support. I am sure we will need to "
+#| "demolish no less than all four supports to raze the fortress."
+msgid ""
+"I believe it will. Each tower has a passage down to the catacombs. We must "
+"enter the tunnels and demolish all four supports, then the fortress should "
+"crumble."
+msgstr ""
+"𐑲 𐑚𐑦𐑤𐑰𐑝 𐑦𐑑 𐑢𐑦𐑤. 𐑰𐑗 𐑑𐑬𐑼 𐑣𐑨𐑟 𐑩 𐑐𐑨𐑕𐑦𐑡 𐑛𐑬𐑯 𐑑 𐑞 𐑒𐑨𐑑𐑩𐑒𐑴𐑥𐑟. 𐑦𐑓 𐑢𐑰 𐑒𐑨𐑯 𐑮𐑰𐑗 𐑞 𐑕𐑧𐑯𐑑𐑼 𐑝 "
+"𐑰𐑗 𐑑𐑬𐑼, 𐑢𐑳𐑯 𐑝 𐑬𐑼 𐑥𐑧𐑯 𐑒𐑨𐑯 𐑦𐑕𐑒𐑱𐑐 𐑛𐑬𐑯 𐑑 𐑞 𐑚𐑬𐑩𐑤𐑟 𐑝 𐑞 𐑥𐑬𐑯𐑑𐑩𐑯 𐑯 𐑛𐑩𐑕𐑑𐑮𐑶 𐑦𐑑𐑕 𐑕𐑩𐑐𐑹𐑑. "
+"𐑲 𐑨𐑥 𐑖𐑫𐑼 𐑢𐑰 𐑢𐑦𐑤 𐑯𐑰𐑛 𐑑 𐑛𐑦𐑥𐑭𐑤𐑦𐑖 𐑯𐑴 𐑤𐑧𐑕 𐑞𐑨𐑯 𐑷𐑤 𐑓𐑹 𐑕𐑩𐑐𐑹𐑑𐑕 𐑑 𐑮𐑱𐑟 𐑞 𐑓𐑹𐑑𐑮𐑩𐑕."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:299
+msgid "Let’s hope you be right. Everything be hinging on this battle."
+msgstr ""
+
+#. [message]: speaker=Vashna
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:308
+msgid ""
+"Dommel! The Queen has sent me and my warriors to support your forces. We "
+"come to squash the puny peasant rebellion."
+msgstr ""
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:312
+msgid "I received no word from Her Majesty of your arrival, orc."
+msgstr ""
+
+#. [message]: speaker=Vashna
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:316
+msgid "I have the orders right here."
+msgstr ""
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:320
+msgid ""
+"As if those could possibly be real. I would be a fool and an oaf to let a "
+"band of stinky raider orcs into Halstead without a fight."
+msgstr ""
+
+#. [message]: speaker=Vashna
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:324
+msgid ""
+"What? Now look here, you coddled pinkskin. Your helpless ‘soldiers’ have "
+"been getting bested by a filthy bunch of vagrant bandits. Your army is as "
+"useless as you are pink. The Queen sent us here to clean up the mess that "
+"you are clearly too stupid to fix on your own."
+msgstr ""
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:328
+msgid ""
+"A fine story. Most likely, this is a pitiful excuse for you to enter our "
+"fortress to plunder our armory. Even if Her Majesty did order you here, we "
+"have no need for the help of you uncouth orcs. We have always managed just "
+"fine without you."
+msgstr ""
+
+#. [message]: speaker=Vashna
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:332
+msgid ""
+"Yeah? Well, we will see how fine you manage <i>against</i> us. I’ll show you "
+"just how weak you pinkskins are."
+msgstr ""
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:336
+msgid "Come try it, cretin."
+msgstr ""
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:340
+msgid ""
+"Infighting among the forces of Weldyn does not bode well for the new queen, "
+"but is awfully convenient for us..."
+msgstr ""
+
+#. [message]: role=farseer
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:358
+msgid "Look in the distance... riders approach!"
+msgstr "𐑤𐑫𐑒 𐑦𐑯 𐑞 𐑛𐑦𐑕𐑑𐑩𐑯𐑕... 𐑮𐑲𐑛𐑼𐑟 𐑩𐑐𐑮𐑴𐑗!"
+
+#. [unit]: type=Paladin, id=Sir Gwydion
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:365
+msgid "Sir Gwydion"
+msgstr "𐑕𐑻 ·𐑜𐑢𐑦𐑛𐑾𐑯"
+
+#. [message]: type=Lancer
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:380
+msgid "Sound the advance!"
+msgstr "𐑕𐑬𐑯𐑛 𐑞 𐑩𐑛𐑝𐑭𐑯𐑕!"
+
+#. [message]: type=Lancer
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:384
+msgid "At your order, my liege."
+msgstr ""
+
+#. [message]: speaker=Sir Gwydion
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:388
+msgid ""
+"Lo, Knights of Elensefar, the battle hath begun ere our arrival. Though I "
+"disobey my father in this endeavor, our presence surely is much needed."
+msgstr ""
+
+#. [message]: speaker=Sir Gwydion
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:392
+msgid ""
+"Ready thy lances! Let us trample the armies of Weldyn beneath our steeds!"
+msgstr ""
+
+#. [message]: role=farseer
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:405
+msgid ""
+"A horde of knights, bearing the emblem of Elensefar! Amazing. I’ve never "
+"seen me so many riders in one place."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:410
+#, fuzzy
+msgid ""
+"Gwydion be Lord Maddock’s son... more be hinging on victory than I thought. "
+"This battle don’t just be about our little villages no more."
+msgstr ""
+"·𐑚𐑨𐑤𐑛𐑮𐑨𐑕, ·𐑜𐑢𐑦𐑛𐑾𐑯 𐑦𐑟 𐑤𐑹𐑛 ·𐑥𐑨𐑛𐑩𐑒𐑕 𐑕𐑳𐑯. 𐑞𐑦𐑕 𐑚𐑨𐑑𐑩𐑤 𐑦𐑟𐑯𐑑 𐑡𐑳𐑕𐑑 𐑩𐑚𐑬𐑑 ·𐑩𐑯𐑳𐑝𐑦𐑯 𐑧𐑯𐑰𐑥𐑹."
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:447
+msgid ""
+"Not even a full day had passed before the first advance elements of "
+"Wesnoth’s main army began to arrive..."
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:454
+#, fuzzy
+#| msgid ""
+#| "That afternoon, another advance element of the main Wesnoth army "
+#| "arrived..."
+msgid ""
+"That morning, another advance element of the main Wesnoth army arrived..."
+msgstr "𐑞𐑨𐑑 𐑭𐑓𐑑𐑼𐑯𐑵𐑯, 𐑩𐑯𐑳𐑞𐑼 𐑩𐑛𐑝𐑭𐑯𐑕 𐑧𐑤𐑩𐑥𐑩𐑯𐑑 𐑝 𐑞 𐑥𐑱𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑩𐑮𐑲𐑝𐑛..."
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:519
+msgid ""
+"I think... I think they’re trying to storm Halstead itself... the fools!"
+msgstr "𐑲 𐑔𐑦𐑙𐑒... 𐑲 𐑔𐑦𐑙𐑒 𐑞𐑱'𐑼 𐑑𐑮𐑲𐑦𐑙 𐑑 𐑕𐑑𐑹𐑥 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑦𐑑𐑕𐑧𐑤𐑓... 𐑞 𐑓𐑵𐑤𐑟!"
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:538
+msgid "They have breached the fortress gate! Repulse them!"
+msgstr "𐑞𐑱 𐑣𐑨𐑝 𐑚𐑮𐑰𐑗𐑑 𐑞 𐑓𐑹𐑑𐑮𐑩𐑕 𐑜𐑱𐑑! 𐑮𐑦𐑐𐑳𐑤𐑕 𐑞𐑧𐑥!"
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:560
+#, fuzzy
+#| msgid "I’m inside the tower! I’m going down to the catacombs — cover me."
+msgid "I’m inside! I’m heading down to the catacombs."
+msgstr "𐑲'𐑧𐑥 𐑦𐑯𐑕𐑲𐑛 𐑞 𐑑𐑬𐑼! 𐑲'𐑧𐑥 𐑜𐑴𐑦𐑙 𐑛𐑬𐑯 𐑑 𐑞 𐑒𐑨𐑑𐑩𐑒𐑴𐑥𐑟 - 𐑒𐑳𐑝𐑼 𐑥𐑰."
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:578
+msgid "After some time..."
+msgstr ""
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:598
+msgid "It’s done."
+msgstr "𐑦𐑑'𐑕 𐑛𐑳𐑯."
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:625
+msgid "The stronghold of Halstead began to shake..."
+msgstr "𐑞 𐑕𐑑𐑮𐑪𐑙𐑣𐑴𐑤𐑛 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑚𐑩𐑜𐑨𐑯 𐑑 𐑖𐑱𐑒..."
+
+#. [message]: speaker=unit
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:631
+#, fuzzy
+#| msgid "We cannot stay here. The fortress has started to collapse!"
+msgid "We can’t stay here. The fortress is starting to collapse!"
+msgstr "𐑢𐑰 𐑒𐑨𐑯𐑪𐑑 𐑕𐑑𐑱 𐑣𐑽. 𐑞 𐑓𐑹𐑑𐑮𐑩𐑕 𐑣𐑨𐑟 𐑕𐑑𐑸𐑑𐑩𐑛 𐑑 𐑒𐑩𐑤𐑨𐑐𐑕!"
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:666
+#, fuzzy
+msgid "I think it be working! Everybody get clear!"
+msgstr "𐑲 𐑔𐑦𐑙𐑒 𐑦𐑑'𐑕 𐑢𐑻𐑒𐑦𐑙! 𐑧𐑝𐑮𐑦𐑚𐑪𐑛𐑦 𐑜𐑧𐑑 𐑒𐑤𐑽 𐑯𐑬!"
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:707
+#, fuzzy
+msgid ""
+"With a thunderous roar and a vast billowing of dust, thousands of tons of "
+"stone and wood crashed in on itself. Some of the wreckage tumbled down the "
+"steep sides, while the remainder came to rest several hundred feet below "
+"ground, in the bowels of the hollowed-out mountain."
+msgstr ""
+"𐑢𐑦𐑞 𐑩 𐑔𐑩𐑯𐑛𐑻𐑩𐑕 𐑻𐑔𐑒𐑢𐑨𐑒 𐑯 𐑩 𐑝𐑭𐑕𐑑 𐑚𐑦𐑤𐑴𐑦𐑙 𐑝 𐑛𐑳𐑕𐑑, 𐑔𐑬𐑟𐑩𐑯𐑛𐑟 𐑝 𐑑𐑳𐑯𐑟 𐑝 𐑕𐑑𐑴𐑯 𐑯 𐑢𐑫𐑛 "
+"𐑒𐑮𐑨𐑖𐑑 𐑦𐑯 𐑪𐑯 𐑦𐑑𐑕𐑧𐑤𐑓. 𐑕𐑳𐑥 𐑝 𐑦𐑑 𐑑𐑳𐑥𐑚𐑩𐑤𐑛 𐑛𐑬𐑯 𐑞 𐑕𐑑𐑰𐑐 𐑕𐑲𐑛𐑟, 𐑢𐑲𐑤 𐑞 𐑮𐑦𐑥𐑱𐑯𐑛𐑼 𐑒𐑱𐑥 𐑑 "
+"𐑮𐑧𐑕𐑑 𐑕𐑧𐑝𐑼𐑩𐑤 𐑣𐑳𐑯𐑛𐑮𐑧𐑛 𐑓𐑰𐑑 𐑚𐑩𐑤𐑴 𐑜𐑮𐑬𐑯𐑛, 𐑦𐑯 𐑞 𐑚𐑬𐑩𐑤𐑟 𐑝 𐑞 𐑣𐑭𐑤𐑴𐑛-𐑬𐑑 𐑥𐑬𐑯𐑑𐑩𐑯."
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:715
+msgid "No one inside the fortress would make it out alive."
+msgstr "𐑯𐑴 𐑢𐑳𐑯 𐑦𐑯𐑕𐑲𐑛 𐑞 𐑓𐑹𐑑𐑮𐑩𐑕 𐑢𐑫𐑛 𐑥𐑱𐑒 𐑦𐑑 𐑬𐑑 𐑩𐑤𐑲𐑝."
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:800
+#, fuzzy
+#| msgid ""
+#| "After more than a week of fierce fighting, the main body of Asheviere’s "
+#| "host arrived from Weldyn. The battle was soon finished. Every last man "
+#| "from the province of Annuvin was executed."
+msgid ""
+"After several days of fierce fighting, the main body of Weldyn’s host "
+"arrived. The battle was soon finished. Every last man from the rebellion was "
+"executed."
+msgstr ""
+"𐑭𐑓𐑑𐑼 𐑥𐑹 𐑞𐑨𐑯 𐑩 𐑢𐑰𐑒 𐑝 𐑓𐑽𐑕 𐑓𐑲𐑑𐑦𐑙, 𐑞 𐑥𐑱𐑯 𐑚𐑪𐑛𐑦 𐑝 ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑣𐑴𐑕𐑑 𐑩𐑮𐑲𐑝𐑛 𐑓𐑮𐑪𐑥 ·𐑢𐑧𐑤𐑛𐑦𐑯. "
+"𐑞 𐑚𐑨𐑑𐑩𐑤 𐑢𐑪𐑟 𐑕𐑵𐑯 𐑓𐑦𐑯𐑦𐑖𐑑. 𐑧𐑝𐑮𐑦 𐑤𐑭𐑕𐑑 𐑥𐑨𐑯 𐑓𐑮𐑪𐑥 𐑞 𐑐𐑮𐑪𐑝𐑦𐑯𐑕 𐑝 ·𐑩𐑯𐑳𐑝𐑦𐑯 𐑢𐑪𐑟 𐑧𐑒𐑕𐑩𐑒𐑿𐑑𐑩𐑛."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:829
+msgid "The fort be done with... but I be crushed... under this rubble..."
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:833
+msgid ""
+"No one was able to get to Baldras in time. He and many of his companions "
+"died that day beneath the stronghold of Halstead."
+msgstr ""
+"𐑯𐑴 𐑢𐑳𐑯 𐑢𐑪𐑟 𐑱𐑚𐑩𐑤 𐑑 𐑜𐑧𐑑 𐑑 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑦𐑯 𐑑𐑲𐑥. 𐑣𐑰 𐑯 𐑥𐑧𐑯𐑦 𐑝 𐑣𐑦𐑟 𐑒𐑩𐑥𐑐𐑨𐑯𐑦𐑩𐑯𐑟 𐑛𐑲𐑛 𐑞𐑨𐑑 "
+"𐑛𐑱 𐑚𐑦𐑯𐑰𐑔 𐑞 𐑕𐑑𐑮𐑪𐑙𐑣𐑴𐑤𐑛 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:840
+msgid "I knew... this wouldn’t work..."
+msgstr ""
+
+#. [message]: speaker=narrator
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:845
+#, fuzzy
+msgid ""
+"The rebellion had staked its all on victory at Halstead, but win or lose, "
+"there would be no help for the doomed villagers."
+msgstr ""
+"𐑞 𐑮𐑦𐑚𐑧𐑤𐑘𐑩𐑯 𐑣𐑨𐑛 𐑕𐑑𐑱𐑒𐑕 𐑦𐑑𐑕 𐑷𐑤 𐑪𐑯 𐑝𐑦𐑒𐑑𐑼𐑦 𐑨𐑑 𐑣𐑨𐑤𐑕𐑑𐑧𐑛, 𐑚𐑳𐑑 𐑢𐑦𐑯 𐑹 𐑤𐑵𐑟, 𐑞𐑺 𐑢𐑫𐑛 𐑚𐑰 "
+"𐑯𐑴 𐑣𐑧𐑤𐑐 𐑓𐑹 𐑞 𐑝𐑦𐑤𐑦𐑡𐑻𐑟, 𐑜𐑮𐑬𐑯𐑛 𐑚𐑦𐑯𐑰𐑔 𐑞 𐑢𐑰𐑤𐑟 𐑝 ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑮𐑪𐑔."
+
+#. [message]: speaker=Harper
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:864
+#: data/campaigns/Liberty/utils/utils.cfg:34
+msgid "Unngh..."
+msgstr ""
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:868
+#: data/campaigns/Liberty/utils/utils.cfg:38
+#, fuzzy
+#| msgid "Harper"
+msgid "Harper, no!"
+msgstr "𐑣𐑸𐑐𐑻"
+
+#. [message]: speaker=Helicrom
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:884
+msgid "Ended... like this? Fight on without me..."
+msgstr ""
+
+#. [message]: speaker=second_unit
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:931
+#, fuzzy
+#| msgid "Your reign of terror is over, General."
+msgid "Your time is over, General."
+msgstr "𐑿𐑼 𐑮𐑱𐑯 𐑝 𐑑𐑧𐑮𐑼 𐑦𐑟 𐑴𐑝𐑼, 𐑡𐑧𐑯𐑼𐑩𐑤."
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:936
+msgid ""
+"I may be done... but my death shall only bring the full wrath of the Crown "
+"upon you... relish your small victory, peasants, while you still can..."
+msgstr ""
+
+#. [message]: speaker=Vashna
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:956
+msgid "Grrarrghh... you... fools..."
+msgstr ""
+
+#. [message]: speaker=Dommel
+#: data/campaigns/Liberty/scenarios/07_Glory.cfg:961
+msgid "Idiot orc. Know your place."
+msgstr ""
+
+#. [scenario]: id=08_Epilogue
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:4
+msgid "Liberty — Epilogue"
+msgstr "𐑤𐑦𐑚𐑼𐑑𐑦 - 𐑧𐑐𐑩𐑤𐑪𐑜"
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:14
+msgid ""
+"03 Scryer’s Bloom, 501 YW\n"
+"\n"
+"It were a real shock. I were so stunned, I barely even remember what "
+"happened after."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:19
+msgid ""
+"Helicrom, I don’t know what happened to him, didn’t see what happened to "
+"Maddock’s son either. Me and Harper and the few of us who survived got up "
+"and ran. We be heading back north now, toward Carcyn and Elensefar. Them "
+"patrols seems to be in real disarray, mostly seeming to be riding back south "
+"to regroup. It be looking like we really did disrupt Weldyn’s chain of "
+"command."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:22
+msgid ""
+"I’m sure them Wesnothians will come back in time and with Maddock holed up "
+"in his stupid tower, they’ll eventually siege Elensefar and take the city... "
+"but that don’t be my problem anymore. I has me a village to worry about. I "
+"need to get back, consult myself with Relana and figure out what to do next. "
+"We gots some more time now, but we can’t wait forever."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:25
+msgid ""
+"10 Scryer’s Bloom, 501 YW\n"
+"\n"
+"We got back to Dallben today, but the village were empty. There were a few "
+"bodies and some burned houses, but it weren’t raided or nothing. Must’ve "
+"been one of them Wesnoth patrols, curse those damned stinkers! When I first "
+"saw the scene with my eyes, I thoughts that we failed, that we was too "
+"late... but now that I thinks of it, it be real weird that so few died. The "
+"others must’ve escaped to somewhere. But I didn’t see any clues here."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:31
+msgid ""
+"I sended Harper off to Delwyn. Hope she’ll find something there. In the "
+"meantimes, I’ll rest this tired body for a little and go see sis, maybe pick "
+"her up some lilies. Seems like this’ll probably be the last time I gets to "
+"see her..."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:34
+msgid ""
+"She’ll tell me not to be sad, of course. That life just be a big adventure "
+"and filled with fun, that I shouldn’t think about stuffs I can’t change. The "
+"world be huge and vast, much bigger than small little people like me. I "
+"don’t got the power to change it, so why not try to live as best I can? "
+"Besides, she’ll say that I still gots me a little piece of her in Harper, so "
+"I should cherish the lass."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:37
+msgid ""
+"I do, Erwen, I really do. This all be real hard. I don’t be no brave soul, "
+"nor some great warrior, but I does my best. And I haven’t forgotten about "
+"all them good times we had together ― somehow, some way, they keeps me "
+"going. Me and Harper, we won’t give up till the very end."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:40
+msgid ""
+"14 Scryer’s Bloom, 501 YW\n"
+"\n"
+"Harper got back today from Delwyn. Said she didn’t find no one alive there, "
+"but she did bring back a note she found. Let’s see what it says."
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:47
+msgid ""
+"<i>“Baldras, you would’ve been proud. We fought them soldiers off twice, "
+"gave them a good ol’ thrashing they won’t ever forget. But in the end, it "
+"weren’t enough. We had to run like criminals before they killed us all.”</i>"
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:51
+msgid ""
+"<i>“I don’t know if you and Harper will see this note, but if you do, I’m "
+"expecting ya to come find us. Remember them ol’ pirate islands we used to "
+"hear some of them Elensefar sailors talk about? We be heading there, "
+"southwest of the city and past the land’s end. See you in the Three Sisters, "
+"old friend. ― Relana”</i>"
+msgstr ""
+
+#. [part]
+#: data/campaigns/Liberty/scenarios/08_Epilogue.cfg:55
+msgid ""
+"So they survived! Them islands be a bit far, but I suppose this sack of old "
+"bones has one more adventure left in it..."
+msgstr ""
+
+#. [unit_type]: id=Rogue Mage, race=human
+#: data/campaigns/Liberty/units/Rogue_Mage.cfg:5
+msgid "Rogue Mage"
+msgstr "𐑮𐑴𐑜 𐑥𐑱𐑡"
+
+#. [unit_type]: id=Rogue Mage, race=human
+#: data/campaigns/Liberty/units/Rogue_Mage.cfg:17
+#, fuzzy
+#| msgid ""
+#| "Some mages are thrown out of the mage’s guild for attempting to practice "
+#| "forbidden arts. Now completely outside the law, these rogue mages do "
+#| "whatever necessary to support their study of black magic. Although not as "
+#| "skilled as mages with more formal training, their magic can be quite "
+#| "lethal, while their banditry has resulted in moderate skill with the "
+#| "short sword."
+msgid ""
+"Some mages are thrown out of the mages’ guild for attempting to practice "
+"forbidden arts. Now completely outside the law, these rogue mages do "
+"whatever is necessary to support their study of black magic. Although not as "
+"skilled as mages with more formal training, their magic can be quite lethal, "
+"while their banditry has resulted in moderate skill with the short sword."
+msgstr ""
+"𐑕𐑳𐑥 𐑥𐑱𐑡𐑦𐑟 𐑸 𐑔𐑮𐑴𐑯 𐑬𐑑 𐑝 𐑞 𐑥𐑱𐑡𐑟 𐑜𐑦𐑤𐑛 𐑓𐑹 𐑩𐑑𐑧𐑥𐑐𐑑𐑦𐑙 𐑑 𐑐𐑮𐑨𐑒𐑑𐑦𐑕 𐑓𐑹𐑚𐑦𐑛𐑧𐑯 𐑸𐑑𐑕. 𐑯𐑬 "
+"𐑒𐑩𐑥𐑐𐑤𐑰𐑑𐑤𐑦 𐑬𐑑𐑕𐑲𐑛 𐑞 𐑤𐑷, 𐑞𐑰𐑟 𐑮𐑴𐑜 𐑥𐑱𐑡𐑦𐑟 𐑛𐑵 𐑢𐑪𐑑𐑧𐑝𐑼 𐑯𐑧𐑕𐑩𐑕𐑼𐑦 𐑑 𐑕𐑩𐑐𐑹𐑑 𐑞𐑺 𐑕𐑑𐑳𐑛𐑦 𐑝 "
+"𐑚𐑤𐑨𐑒 𐑥𐑨𐑡𐑦𐑒. 𐑷𐑤𐑞𐑴 𐑯𐑪𐑑 𐑨𐑟 𐑕𐑒𐑦𐑤𐑛 𐑨𐑟 𐑥𐑱𐑡𐑦𐑟 𐑢𐑦𐑞 𐑥𐑹 𐑓𐑹𐑥𐑩𐑤 𐑑𐑮𐑱𐑯𐑦𐑙, 𐑞𐑺 𐑥𐑨𐑡𐑦𐑒 𐑒𐑨𐑯 𐑚𐑰 "
+"𐑒𐑢𐑲𐑑 𐑤𐑰𐑔𐑩𐑤, 𐑢𐑲𐑤 𐑞𐑺 𐑚𐑨𐑯𐑛𐑩𐑑𐑮𐑰 𐑣𐑨𐑟 𐑮𐑦𐑟𐑳𐑤𐑑𐑩𐑛 𐑦𐑯 𐑥𐑴𐑛𐑮𐑱𐑑 𐑕𐑒𐑦𐑤 𐑢𐑦𐑞 𐑞 𐑖𐑹𐑑 𐑕𐑹𐑛."
+
+#. [attack]: type=cold
+#: data/campaigns/Liberty/units/Rogue_Mage.cfg:33
+msgid "ice blast"
+msgstr "𐑲𐑕 𐑚𐑤𐑶𐑕𐑑"
+
+#. [unit_type]: id=Shadow Lord, race=human
+#: data/campaigns/Liberty/units/Shadow_Lord.cfg:5
+msgid "Shadow Lord"
+msgstr "𐑖𐑨𐑛𐑴 𐑤𐑹𐑛"
+
+#. [unit_type]: id=Shadow Lord, race=human
+#: data/campaigns/Liberty/units/Shadow_Lord.cfg:21
+msgid ""
+"Few humans fathom the secrets of light and dark magic and retain their "
+"sanity. Those that can master that balance become Shadow Lords, fully "
+"existing neither in the world of light nor the world of darkness. No longer "
+"needing physical weapons, they are fearsome to both their enemies and those "
+"they lord over."
+msgstr ""
+"𐑓𐑿 𐑣𐑿𐑥𐑩𐑯𐑟 𐑓𐑨𐑞𐑩𐑥 𐑞 𐑕𐑰𐑒𐑮𐑩𐑑𐑕 𐑝 𐑤𐑲𐑑 𐑯 𐑛𐑸𐑒 𐑥𐑨𐑡𐑦𐑒 𐑯 𐑮𐑦𐑑𐑱𐑯 𐑞𐑺 𐑕𐑨𐑯𐑩𐑑𐑰. 𐑞𐑴𐑟 𐑞𐑨𐑑 𐑒𐑨𐑯 "
+"𐑥𐑭𐑕𐑑𐑼 𐑞𐑨𐑑 𐑚𐑨𐑤𐑩𐑯𐑕 𐑚𐑦𐑒𐑳𐑥 𐑖𐑨𐑛𐑴 𐑤𐑹𐑛𐑟, 𐑓𐑫𐑤𐑦 𐑧𐑒𐑟𐑦𐑕𐑑𐑦𐑙 𐑯𐑲𐑞𐑼 𐑦𐑯 𐑞 𐑢𐑻𐑤𐑛 𐑝 𐑤𐑲𐑑 𐑯𐑹 𐑞 "
+"𐑢𐑻𐑤𐑛 𐑝 𐑛𐑸𐑒𐑯𐑩𐑕. 𐑯𐑴 𐑤𐑪𐑙𐑜𐑼 𐑯𐑰𐑛𐑦𐑙 𐑓𐑦𐑟𐑦𐑒𐑩𐑤 𐑢𐑧𐑐𐑩𐑯𐑟, 𐑞𐑱 𐑸 𐑓𐑽𐑕𐑩𐑥 𐑑 𐑚𐑴𐑔 𐑞𐑺 𐑧𐑯𐑦𐑥𐑦𐑟 𐑯 "
+"𐑞𐑴𐑟 𐑞𐑱 𐑤𐑹𐑛 𐑴𐑝𐑼."
+
+#. [attack]: type=blade
+#: data/campaigns/Liberty/units/Shadow_Lord.cfg:33
+msgid "astral blade"
+msgstr "𐑨𐑕𐑑𐑮𐑩𐑤 𐑚𐑤𐑱𐑛"
+
+#. [attack]: type=cold
+#: data/campaigns/Liberty/units/Shadow_Lord.cfg:44
+#: data/campaigns/Liberty/units/Shadow_Mage.cfg:45
+msgid "shadow bolt"
+msgstr "𐑖𐑨𐑛𐑴 𐑚𐑴𐑤𐑑"
+
+#. [attack]: type=impact
+#: data/campaigns/Liberty/units/Shadow_Lord.cfg:56
+msgid "shadow blast"
+msgstr "𐑖𐑨𐑛𐑴 𐑚𐑤𐑶𐑕𐑑"
+
+#. [unit_type]: id=Shadow Mage, race=human
+#: data/campaigns/Liberty/units/Shadow_Mage.cfg:5
+msgid "Shadow Mage"
+msgstr "𐑖𐑨𐑛𐑴 𐑥𐑱𐑡"
+
+#. [unit_type]: id=Shadow Mage, race=human
+#: data/campaigns/Liberty/units/Shadow_Mage.cfg:20
+#, fuzzy
+msgid ""
+"Years of violence and brutality to support the study of forbidden magical "
+"arts have turned the shadow mages into feared fighters. Now completely "
+"enthralled with power, they have been known to command small followings of "
+"henchmen. They are outmatched in direct magical combat with their magic-"
+"using peers, instead channeling their energies into devastating melee "
+"attacks. Despite their offensive power, the corruption in their souls has "
+"begun to adversely affect their health."
+msgstr ""
+"𐑘𐑽𐑟 𐑝 𐑝𐑲𐑩𐑤𐑩𐑯𐑕 𐑯 𐑚𐑮𐑵𐑑𐑨𐑤𐑩𐑑𐑰 𐑑 𐑕𐑩𐑐𐑹𐑑 𐑞 𐑕𐑑𐑳𐑛𐑦 𐑝 𐑓𐑹𐑚𐑦𐑛𐑧𐑯 𐑥𐑨𐑡𐑦𐑒𐑩𐑤 𐑸𐑑𐑕 𐑣𐑨𐑝 𐑑𐑻𐑯𐑛 𐑞 "
+"𐑖𐑨𐑛𐑴 𐑥𐑱𐑡𐑦𐑟 𐑦𐑯𐑑𐑫 𐑓𐑽𐑛 𐑓𐑲𐑑𐑻𐑟. 𐑯𐑬 𐑒𐑩𐑥𐑐𐑤𐑰𐑑𐑤𐑦 𐑧𐑯𐑔𐑮𐑪𐑤𐑛 𐑢𐑦𐑞 𐑐𐑬𐑼, 𐑞𐑱 𐑣𐑨𐑝 𐑚𐑰𐑯 𐑯𐑴𐑯 𐑑 "
+"𐑒𐑩𐑥𐑭𐑯𐑛 𐑕𐑥𐑷𐑤 𐑓𐑭𐑤𐑴𐑦𐑙𐑟 𐑝 𐑣𐑧𐑯𐑗𐑥𐑩𐑯. 𐑞𐑱 𐑸 outmatched 𐑦𐑯 𐑛𐑲𐑮𐑧𐑒𐑑 𐑥𐑨𐑡𐑦𐑒𐑩𐑤 𐑒𐑪𐑥𐑚𐑨𐑑 𐑢𐑦𐑞 "
+"𐑞𐑺 𐑥𐑨𐑡𐑦𐑒-𐑿𐑟𐑦𐑙 𐑐𐑽𐑟, 𐑦𐑯𐑕𐑑𐑧𐑛 𐑗𐑨𐑯𐑩𐑤𐑦𐑙 𐑞𐑺 𐑧𐑯𐑻𐑡𐑰𐑟 𐑦𐑯𐑑𐑫 devastating 𐑥𐑱𐑤𐑱 𐑩𐑑𐑨𐑒𐑕. "
+"𐑛𐑦𐑕𐑐𐑲𐑑 𐑞𐑺 𐑩𐑓𐑧𐑯𐑕𐑦𐑝 𐑐𐑬𐑼, 𐑞 𐑒𐑻𐑩𐑐𐑖𐑩𐑯 𐑦𐑯 𐑞𐑺 𐑕𐑴𐑤𐑟 𐑣𐑨𐑟 𐑚𐑩𐑜𐑳𐑯 𐑑 𐑨𐑛𐑝𐑻𐑕𐑤𐑰 𐑩𐑓𐑧𐑒𐑑 𐑞𐑺 "
+"𐑣𐑧𐑤𐑔."
+
+#. [unit_type]: id=Thug_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:20
+msgid "Villager"
+msgstr "𐑝𐑦𐑤𐑦𐑡𐑻"
+
+#. [unit_type]: id=Thug_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:23
+msgid ""
+"Peasants live in the small hamlets and villages scattered across the Wesnoth "
+"countryside."
+msgstr ""
+"𐑐𐑧𐑟𐑩𐑯𐑑𐑕 𐑤𐑦𐑝 𐑦𐑯 𐑞 𐑕𐑥𐑷𐑤 𐑣𐑨𐑥𐑤𐑩𐑑𐑕 𐑯 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑕𐑒𐑨𐑑𐑼𐑛 𐑩𐑒𐑮𐑪𐑕 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛."
+
+#. [unit_type]: id=Bandit_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:36
+msgid "Village Elder"
+msgstr "𐑝𐑦𐑤𐑦𐑡 𐑧𐑤𐑛𐑼"
+
+#. [unit_type]: id=Bandit_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:39
+msgid ""
+"Each of the villages scattered across the Wesnoth countryside is normally "
+"guided by a group of elders, who are the village’s wisest and most "
+"experienced residents."
+msgstr ""
+"𐑰𐑗 𐑝 𐑞 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑕𐑒𐑨𐑑𐑼𐑛 𐑩𐑒𐑮𐑪𐑕 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛 𐑦𐑟 𐑯𐑹𐑥𐑩𐑤𐑦 𐑜𐑲𐑛𐑩𐑛 𐑚𐑲 𐑩 𐑜𐑮𐑵𐑐 𐑝 "
+"𐑧𐑤𐑛𐑼𐑟, 𐑣𐑵 𐑸 𐑞 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑢𐑲𐑟𐑩𐑕𐑑 𐑯 𐑥𐑴𐑕𐑑 𐑦𐑒𐑕𐑐𐑽𐑦𐑩𐑯𐑕𐑑 𐑮𐑧𐑟𐑦𐑛𐑩𐑯𐑑𐑕."
+
+#. [unit_type]: id=Highwayman_Peasant, gender=male,female
+#: data/campaigns/Liberty/units/Villagers.cfg:53
+msgid "Senior Village Elder"
+msgstr "𐑕𐑰𐑯𐑘𐑻 𐑝𐑦𐑤𐑦𐑡 𐑧𐑤𐑛𐑼"
+
+#. [unit_type]: id=Highwayman_Peasant, gender=male,female
+#: data/campaigns/Liberty/units/Villagers.cfg:57
+msgid ""
+"The entire village looks to the senior elder for guidance. Strong and wise, "
+"the senior elders take responsibility for the community’s well-being on "
+"their shoulders. Provincial officials tend to choose senior village elders "
+"as magistrates so that legal and customary authority will coincide."
+msgstr ""
+"𐑞 𐑧𐑯𐑑𐑲𐑼 𐑝𐑦𐑤𐑦𐑡 𐑤𐑫𐑒𐑕 𐑑 𐑞 𐑕𐑰𐑯𐑘𐑻 𐑧𐑤𐑛𐑼 𐑓𐑹 𐑜𐑲𐑛𐑩𐑯𐑕. 𐑕𐑑𐑮𐑪𐑙 𐑯 𐑢𐑲𐑟, 𐑞 𐑕𐑰𐑯𐑘𐑻 𐑧𐑤𐑛𐑼𐑟 𐑑𐑱𐑒 "
+"𐑮𐑦𐑕𐑐𐑪𐑯𐑕𐑦𐑚𐑦𐑤𐑦𐑑𐑦 𐑓𐑹 𐑞 𐑒𐑩𐑥𐑿𐑯𐑦𐑑𐑰𐑟 𐑢𐑧𐑤-𐑚𐑰𐑦𐑙 𐑪𐑯 𐑞𐑺 𐑖𐑴𐑤𐑛𐑼𐑟. 𐑐𐑮𐑩𐑝𐑦𐑯𐑖𐑩𐑤 𐑩𐑓𐑦𐑖𐑩𐑤𐑟 𐑑𐑧𐑯𐑛 "
+"𐑑 𐑗𐑵𐑟 𐑕𐑰𐑯𐑘𐑻 𐑝𐑦𐑤𐑦𐑡 𐑧𐑤𐑛𐑼𐑟 𐑨𐑟 𐑥𐑨𐑡𐑦𐑕𐑑𐑮𐑱𐑑𐑕 𐑕𐑴 𐑞𐑨𐑑 𐑤𐑰𐑜𐑩𐑤 𐑯 𐑒𐑳𐑕𐑑𐑩𐑥𐑼𐑦 𐑷𐑔𐑪𐑮𐑦𐑑𐑰 𐑢𐑦𐑤 "
+"𐑒𐑴𐑦𐑯𐑕𐑲𐑛."
+
+#. [female]: gender=female
+#: data/campaigns/Liberty/units/Villagers.cfg:59
+#, fuzzy
+msgid "female^Senior Village Elder"
+msgstr "𐑕𐑰𐑯𐑘𐑻 𐑝𐑦𐑤𐑦𐑡 𐑧𐑤𐑛𐑼"
+
+#. [unit_type]: id=Footpad_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:92
+msgid "Peasant Youth"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑 𐑿𐑔"
+
+#. [unit_type]: id=Footpad_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:96
+msgid ""
+"The scruffy-haired peasant youth are much like the young people living "
+"elsewhere in Wesnoth: reckless, cocky, and eager to explore."
+msgstr ""
+"𐑞 𐑕𐑒𐑮𐑩𐑓𐑰-𐑣𐑺𐑛 𐑐𐑧𐑟𐑩𐑯𐑑 𐑿𐑔 𐑸 𐑥𐑳𐑗 𐑤𐑲𐑒 𐑞 𐑘𐑳𐑙 𐑐𐑰𐑐𐑩𐑤 𐑤𐑦𐑝𐑦𐑙 𐑧𐑤𐑕𐑢𐑺 𐑦𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔: 𐑮𐑧𐑒𐑤𐑩𐑕, "
+"𐑒𐑭𐑒𐑰, 𐑯 𐑰𐑜𐑼 𐑑 𐑦𐑒𐑕𐑐𐑤𐑹."
+
+#. [female]
+#: data/campaigns/Liberty/units/Villagers.cfg:102
+msgid "female^Peasant Youth"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑 𐑿𐑔"
+
+#. [unit_type]: id=Outlaw_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:116
+msgid "Watchman"
+msgstr "𐑢𐑪𐑡𐑥𐑨𐑯"
+
+#. [unit_type]: id=Outlaw_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:121
+msgid ""
+"The watchmen are men and women who protect the villages from marauders, both "
+"human and otherwise, that prowl the Wesnoth countryside at night."
+msgstr ""
+"𐑞 𐑢𐑭𐑗𐑥𐑧𐑯 𐑸 𐑥𐑧𐑯 𐑯 𐑢𐑦𐑥𐑦𐑯 𐑣𐑵 𐑐𐑮𐑩𐑑𐑧𐑒𐑑 𐑞 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑓𐑮𐑪𐑥 𐑥𐑻𐑪𐑛𐑻𐑟, 𐑚𐑴𐑔 𐑣𐑿𐑥𐑩𐑯 𐑯 𐑳𐑞𐑼𐑢𐑲𐑟, "
+"𐑞𐑨𐑑 𐑐𐑮𐑬𐑤 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛 𐑨𐑑 𐑯𐑲𐑑."
+
+#. [female]
+#: data/campaigns/Liberty/units/Villagers.cfg:123
+#, fuzzy
+msgid "female^Watchwoman"
+msgstr "Watchwoman"
+
+#. [unit_type]: id=Fugitive_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:137
+msgid "Borderer"
+msgstr "𐑚𐑹𐑛𐑼𐑻"
+
+#. [unit_type]: id=Fugitive_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:142
+#, fuzzy
+msgid ""
+"Border villages maintain militias dedicated to fending off hostiles. While "
+"these borderers are not trained and armed to up to military standards, their "
+"native toughness and knowledge of local conditions make them formidable on "
+"their home ground."
+msgstr ""
+"𐑚𐑹𐑛𐑼 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑥𐑱𐑯𐑑𐑱𐑯 𐑥𐑩𐑤𐑦𐑖𐑩𐑟 𐑛𐑧𐑛𐑩𐑒𐑱𐑑𐑩𐑛 𐑑 𐑓𐑧𐑯𐑛𐑦𐑙 𐑪𐑓 hostiles. 𐑢𐑲𐑤 𐑞𐑰𐑟 𐑚𐑹𐑛𐑼𐑻𐑟 𐑸 "
+"𐑯𐑪𐑑 𐑑𐑮𐑱𐑯𐑛 𐑯 𐑸𐑥𐑛 𐑑 𐑳𐑐 𐑑 𐑥𐑦𐑤𐑦𐑑𐑼𐑦 𐑕𐑑𐑨𐑯𐑛𐑼𐑛𐑟, 𐑞𐑺 𐑯𐑱𐑑𐑦𐑝 𐑑𐑩𐑓𐑯𐑩𐑕 𐑯 𐑯𐑪𐑤𐑦𐑡 𐑝 𐑤𐑴𐑒𐑩𐑤 "
+"𐑒𐑩𐑯𐑛𐑦𐑖𐑩𐑯𐑟 𐑥𐑱𐑒 𐑞𐑧𐑥 𐑓𐑹𐑥𐑦𐑛𐑩𐑚𐑩𐑤 𐑪𐑯 𐑞𐑺 𐑣𐑴𐑥 𐑜𐑮𐑬𐑯𐑛."
+
+#. [female]
+#: data/campaigns/Liberty/units/Villagers.cfg:144
+msgid "female^Borderer"
+msgstr "𐑚𐑹𐑛𐑼𐑻"
+
+#. [unit_type]: id=Poacher_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:163
+msgid "Peasant Hunter"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑 𐑣𐑳𐑯𐑑𐑼"
+
+#. [unit_type]: id=Poacher_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:166
+msgid ""
+"Villages, especially in wilder areas near frontiers, rely on hunters to "
+"bring in much of their food supply. Their stealth and intimate knowledge of "
+"local terrain can be valuable assets in combat."
+msgstr ""
+"𐑝𐑦𐑤𐑦𐑡𐑦𐑟, 𐑦𐑕𐑐𐑧𐑖𐑩𐑤𐑦 𐑦𐑯 𐑢𐑲𐑤𐑛𐑻 𐑺𐑰𐑩𐑟 𐑯𐑽 𐑓𐑮𐑩𐑯𐑑𐑽𐑟, 𐑮𐑦𐑤𐑲 𐑪𐑯 𐑣𐑩𐑯𐑑𐑻𐑟 𐑑 𐑚𐑮𐑦𐑙 𐑦𐑯 𐑥𐑳𐑗 𐑝 "
+"𐑞𐑺 𐑓𐑵𐑛 𐑕𐑩𐑐𐑤𐑲. 𐑞𐑺 𐑕𐑑𐑧𐑤𐑔 𐑯 𐑦𐑯𐑑𐑦𐑥𐑩𐑑 𐑯𐑪𐑤𐑦𐑡 𐑝 𐑤𐑴𐑒𐑩𐑤 𐑑𐑻𐑱𐑯 𐑒𐑨𐑯 𐑚𐑰 𐑝𐑨𐑤𐑿𐑚𐑩𐑤 𐑨𐑕𐑩𐑑𐑕 𐑦𐑯 "
+"𐑒𐑪𐑥𐑚𐑨𐑑."
+
+#. [unit_type]: id=Trapper_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:179
+msgid "Peasant Trapper"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑 𐑑𐑮𐑨𐑐𐑻"
+
+#. [unit_type]: id=Trapper_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:183
+msgid ""
+"Trappers are skilled hunters who supply food and furs for several villages. "
+"Their hunting experience makes them most valuable at night and in forests "
+"and swamps."
+msgstr ""
+"𐑑𐑮𐑨𐑐𐑻𐑟 𐑸 𐑕𐑒𐑦𐑤𐑛 𐑣𐑩𐑯𐑑𐑻𐑟 𐑣𐑵 𐑕𐑩𐑐𐑤𐑲 𐑓𐑵𐑛 𐑯 𐑓𐑻𐑟 𐑓𐑹 𐑕𐑧𐑝𐑼𐑩𐑤 𐑝𐑦𐑤𐑦𐑡𐑦𐑟. 𐑞𐑺 𐑣𐑳𐑯𐑑𐑦𐑙 "
+"𐑦𐑒𐑕𐑐𐑽𐑦𐑩𐑯𐑕 𐑥𐑱𐑒𐑕 𐑞𐑧𐑥 𐑥𐑴𐑕𐑑 𐑝𐑨𐑤𐑿𐑚𐑩𐑤 𐑨𐑑 𐑯𐑲𐑑 𐑯 𐑦𐑯 𐑓𐑪𐑮𐑦𐑕𐑑𐑕 𐑯 𐑕𐑢𐑭𐑥𐑐𐑕."
+
+#. [unit_type]: id=Huntsman_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:196
+msgid "Peasant Huntsman"
+msgstr "𐑐𐑧𐑟𐑩𐑯𐑑 𐑣𐑳𐑯𐑑𐑕𐑥𐑨𐑯"
+
+#. [unit_type]: id=Huntsman_Peasant
+#: data/campaigns/Liberty/units/Villagers.cfg:201
+#, fuzzy
+msgid ""
+"Huntsmen have spent their lives in the backwoods and swamps of their "
+"wilderness homes. They can bullseye ferocious swamp rats and track anything "
+"that moves in their territory."
+msgstr ""
+"𐑣𐑳𐑯𐑑𐑕𐑥𐑧𐑯 𐑣𐑨𐑝 𐑕𐑐𐑧𐑯𐑑 𐑞𐑺 𐑤𐑦𐑝𐑟 𐑦𐑯 𐑞 𐑚𐑨𐑒𐑢𐑫𐑛𐑟 𐑯 𐑕𐑢𐑭𐑥𐑐𐑕 𐑝 𐑞𐑺 𐑢𐑦𐑤𐑛𐑼𐑯𐑧𐑕 𐑣𐑴𐑥𐑟. 𐑞𐑱 𐑒𐑨𐑯 "
+"𐑚𐑵𐑤𐑟𐑲 wamprats 𐑯 𐑑𐑮𐑨𐑒 𐑧𐑯𐑦𐑔𐑦𐑙 𐑞𐑨𐑑 𐑥𐑵𐑝𐑟 𐑦𐑯 𐑞𐑺 𐑑𐑧𐑮𐑦𐑑𐑼𐑦."
+
+#. [message]: speaker=Baldras
+#: data/campaigns/Liberty/utils/utils.cfg:19
+msgid "I’m coming... Erwen..."
+msgstr ""
+
+#. [message]: speaker=Relana
+#: data/campaigns/Liberty/utils/utils.cfg:52
+msgid "I’m finished..."
+msgstr ""
+
+#. [message]: speaker=Lord Maddock
+#: data/campaigns/Liberty/utils/utils.cfg:66
+#, fuzzy
+#| msgid "How can this be? We have lost."
+msgid "How can this be?"
+msgstr "𐑣𐑬 𐑒𐑨𐑯 𐑞𐑦𐑕 𐑚𐑰? 𐑢𐑰 𐑣𐑨𐑝 𐑤𐑪𐑕𐑑."
+
+#, fuzzy
+#~ msgid "Rothel"
+#~ msgstr "Rothel"
+
+#~ msgid "Bone Knight"
+#~ msgstr "𐑚𐑴𐑯 𐑯𐑲𐑑"
+
+#~ msgid ""
+#~ "Once great warriors across the plains, these mounted riders atop their "
+#~ "skeletal horses were raised from the ground by unholy magic to spread "
+#~ "fear and destruction."
+#~ msgstr ""
+#~ "𐑢𐑳𐑯𐑕 𐑜𐑮𐑱𐑑 𐑢𐑪𐑮𐑦𐑼𐑟 𐑩𐑒𐑮𐑪𐑕 𐑞 𐑐𐑤𐑱𐑯𐑟, 𐑞𐑰𐑟 𐑥𐑬𐑯𐑑𐑩𐑛 𐑮𐑲𐑛𐑼𐑟 𐑩𐑑𐑭𐑐 𐑞𐑺 𐑕𐑒𐑧𐑤𐑩𐑑𐑩𐑤 𐑣𐑹𐑕𐑩𐑟 "
+#~ "𐑢𐑻 𐑮𐑱𐑟𐑛 𐑓𐑮𐑪𐑥 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑚𐑲 𐑩𐑯𐑣𐑴𐑤𐑰 𐑥𐑨𐑡𐑦𐑒 𐑑 𐑕𐑐𐑮𐑧𐑛 𐑓𐑽 𐑯 𐑛𐑩𐑕𐑑𐑮𐑳𐑒𐑖𐑩𐑯."
+
+#~ msgid "trample"
+#~ msgstr "𐑑𐑮𐑨𐑥𐑐𐑩𐑤"
+
+#~ msgid "Death Squire"
+#~ msgstr "𐑛𐑧𐑔 𐑕𐑒𐑢𐑲𐑼"
+
+#, fuzzy
+#~ msgid ""
+#~ "Sometimes the mightiest warriors and generals, cursed with hate and "
+#~ "angst, came back to this world as Death Knights. Death Squires serve them "
+#~ "whilst accruing enough unholy power to become Death Knights. In the "
+#~ "process they pick up a good deal of the Knight’s power, including the "
+#~ "ability to command underlings."
+#~ msgstr ""
+#~ "𐑕𐑳𐑥𐑑𐑲𐑥𐑟 𐑞 𐑥𐑲𐑑𐑰𐑩𐑕𐑑 𐑢𐑪𐑮𐑦𐑼𐑟 𐑯 𐑡𐑧𐑯𐑼𐑩𐑤𐑟, 𐑒𐑻𐑕𐑛 𐑢𐑦𐑞 𐑣𐑱𐑑 𐑯 𐑭𐑙𐑒𐑕𐑑, 𐑒𐑱𐑥 𐑚𐑨𐑒 𐑑 𐑞𐑦𐑕 "
+#~ "𐑢𐑻𐑤𐑛 𐑨𐑟 𐑛𐑧𐑔 𐑯𐑲𐑑𐑕. 𐑛𐑧𐑔 𐑕𐑒𐑢𐑲𐑼𐑟 𐑕𐑻𐑝 𐑞𐑧𐑥 𐑢𐑲𐑤𐑕𐑑 𐑩𐑒𐑮𐑵𐑦𐑙 𐑦𐑯𐑳𐑓 𐑩𐑯𐑣𐑴𐑤𐑰 𐑐𐑬𐑼 𐑑 𐑚𐑦𐑒𐑳𐑥 "
+#~ "𐑛𐑧𐑔 𐑯𐑲𐑑𐑕. 𐑦𐑯 𐑞 𐑐𐑮𐑴𐑕𐑧𐑕 𐑞𐑱 𐑐𐑦𐑒 𐑳𐑐 𐑩 𐑜𐑫𐑛 𐑛𐑰𐑤 𐑝 𐑞 𐑯𐑲𐑑𐑕 𐑐𐑬𐑼, 𐑦𐑯𐑒𐑤𐑵𐑛𐑦𐑙 𐑞 "
+#~ "𐑩𐑚𐑦𐑤𐑦𐑑𐑦 𐑑 𐑒𐑩𐑥𐑭𐑯𐑛 𐑩𐑯𐑛𐑻𐑤𐑦𐑙𐑟."
+
+#~ msgid "Skeleton Rider"
+#~ msgstr "𐑕𐑒𐑧𐑤𐑩𐑑𐑩𐑯 𐑮𐑲𐑛𐑼"
+
+#~ msgid ""
+#~ "Once great warriors thundering across the plains, these mounted riders "
+#~ "atop their skeletal horses were raised from the grave by unholy magic to "
+#~ "spread fear and destruction."
+#~ msgstr ""
+#~ "𐑢𐑳𐑯𐑕 𐑜𐑮𐑱𐑑 𐑢𐑪𐑮𐑦𐑼𐑟 𐑔𐑳𐑯𐑛𐑼𐑦𐑙 𐑩𐑒𐑮𐑪𐑕 𐑞 𐑐𐑤𐑱𐑯𐑟, 𐑞𐑰𐑟 𐑥𐑬𐑯𐑑𐑩𐑛 𐑮𐑲𐑛𐑼𐑟 𐑩𐑑𐑭𐑐 𐑞𐑺 𐑕𐑒𐑧𐑤𐑩𐑑𐑩𐑤 "
+#~ "𐑣𐑹𐑕𐑩𐑟 𐑢𐑻 𐑮𐑱𐑟𐑛 𐑓𐑮𐑪𐑥 𐑞 𐑜𐑮𐑱𐑝 𐑚𐑲 𐑩𐑯𐑣𐑴𐑤𐑰 𐑥𐑨𐑡𐑦𐑒 𐑑 𐑕𐑐𐑮𐑧𐑛 𐑓𐑽 𐑯 𐑛𐑩𐑕𐑑𐑮𐑳𐑒𐑖𐑩𐑯."
+
+#, fuzzy
+#~| msgid "(Difficult)"
+#~ msgid "Difficult"
+#~ msgstr "(𐑛𐑦𐑓𐑦𐑒𐑩𐑤𐑑)"
+
+#~ msgid ""
+#~ "They hid until nightfall, then crept out to find the help Lord Maddock "
+#~ "hinted was here."
+#~ msgstr ""
+#~ "𐑞𐑱 𐑣𐑦𐑛 𐑳𐑯𐑑𐑦𐑤 𐑯𐑲𐑑𐑓𐑷𐑤, 𐑞𐑧𐑯 𐑒𐑮𐑧𐑐𐑑 𐑬𐑑 𐑑 𐑓𐑲𐑯𐑛 𐑞 𐑣𐑧𐑤𐑐 𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒 𐑣𐑦𐑯𐑑𐑩𐑛 𐑢𐑪𐑟 𐑣𐑽."
+
+#~ msgid "Prose-doctoring and preparation for mainline"
+#~ msgstr "𐑐𐑮𐑴𐑟-𐑛𐑭𐑒𐑑𐑻𐑦𐑙 𐑯 𐑐𐑮𐑧𐑐𐑼𐑱𐑕𐑩𐑯 𐑓𐑹 𐑥𐑱𐑯𐑤𐑲𐑯"
+
+#, fuzzy
+#~| msgid ""
+#~| "In the Era of Turmoil, during the reign of King Garard II, the border "
+#~| "towns of Delwyn and Dallben in the province of Annuvin grew increasingly "
+#~| "dissatisfied with the King’s rule. Being preoccupied with the great "
+#~| "wars, the King was unable to send adequate forces to protect the "
+#~| "frontier."
+#~ msgid ""
+#~ "In the Era of Turmoil, during the reign of King Garard II, the border "
+#~ "towns of Delwyn and Dallben in the Province of Annuvin grew increasingly "
+#~ "dissatisfied with the King’s rule. Being preoccupied with the great wars, "
+#~ "the King was unable to send adequate forces to protect the frontier."
+#~ msgstr ""
+#~ "𐑦𐑯 𐑞 𐑽𐑩 𐑝 𐑑𐑻𐑥𐑶𐑤, 𐑛𐑘𐑫𐑼𐑦𐑙 𐑞 𐑮𐑱𐑯 𐑝 𐑒𐑦𐑙 𐑜𐑻𐑸𐑛 𐑞 𐑕𐑧𐑒𐑩𐑯𐑛, 𐑞 𐑚𐑹𐑛𐑼 𐑑𐑬𐑯𐑟 𐑝 𐑛𐑧𐑤𐑢𐑦𐑯 𐑯 "
+#~ "·𐑛𐑨𐑤𐑚𐑧𐑯 𐑦𐑯 𐑞 𐑐𐑮𐑪𐑝𐑦𐑯𐑕 𐑝 ·𐑩𐑯𐑳𐑝𐑦𐑯 𐑜𐑮𐑵 𐑦𐑯𐑒𐑮𐑰𐑕𐑦𐑙𐑤𐑰 𐑛𐑦𐑕𐑕𐑨𐑑𐑦𐑕𐑓𐑲𐑛 𐑢𐑦𐑞 𐑞 𐑒𐑦𐑙'𐑟 "
+#~ "𐑮𐑵𐑤. 𐑚𐑰𐑦𐑙 𐑐𐑮𐑰𐑪𐑒𐑿𐑐𐑲𐑛 𐑢𐑦𐑞 𐑞 𐑜𐑮𐑱𐑑 𐑢𐑹𐑟, 𐑞 𐑒𐑦𐑙 𐑢𐑪𐑟 𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑕𐑧𐑯𐑛 𐑨𐑛𐑩𐑒𐑢𐑩𐑑 𐑓𐑹𐑕𐑩𐑟 "
+#~ "𐑑 𐑐𐑮𐑩𐑑𐑧𐑒𐑑 𐑞 𐑓𐑮𐑪𐑯𐑑𐑽."
+
+#, fuzzy
+#~ msgid ""
+#~ "I long to burn human cities, but until our great chieftains provide us "
+#~ "with sufficient forces we must look to these villagers to feed our wolves "
+#~ "and slake the thirst of our blades."
+#~ msgstr ""
+#~ "𐑲 𐑤𐑪𐑙 𐑑 𐑚𐑻𐑯 𐑣𐑿𐑥𐑩𐑯 𐑕𐑦𐑑𐑦𐑟, 𐑚𐑳𐑑 𐑳𐑯𐑑𐑦𐑤 𐑬𐑼 𐑜𐑮𐑱𐑑 𐑗𐑰𐑓𐑑𐑩𐑯𐑟 𐑐𐑮𐑩𐑝𐑲𐑛 𐑳𐑕 𐑢𐑦𐑞 𐑕𐑩𐑓𐑦𐑖𐑩𐑯𐑑 "
+#~ "𐑓𐑹𐑕𐑩𐑟 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑤𐑫𐑒 𐑑 𐑞𐑰𐑟 𐑝𐑦𐑤𐑦𐑡𐑻𐑟 𐑑 𐑓𐑰𐑛 𐑬𐑼 𐑢𐑫𐑤𐑝𐑟 𐑯 slake 𐑞 𐑔𐑻𐑕𐑑 𐑝 𐑬𐑼 𐑚𐑤𐑱𐑛𐑟."
+
+#~ msgid ""
+#~ "We must stop them before they reach the village. Damn the crown, they "
+#~ "have long since forgotten about us out here."
+#~ msgstr ""
+#~ "𐑢𐑰 𐑥𐑳𐑕𐑑 𐑕𐑑𐑪𐑐 𐑞𐑧𐑥 𐑚𐑦𐑓𐑹 𐑞𐑱 𐑮𐑰𐑗 𐑞 𐑝𐑦𐑤𐑦𐑡. 𐑛𐑨𐑥 𐑞 𐑒𐑮𐑬𐑯, 𐑞𐑱 𐑣𐑨𐑝 𐑤𐑪𐑙 𐑕𐑦𐑯𐑕 𐑓𐑼𐑜𐑪𐑑𐑩𐑯 "
+#~ "𐑩𐑚𐑬𐑑 𐑳𐑕 𐑬𐑑 𐑣𐑽."
+
+#, fuzzy
+#~ msgid ""
+#~ "And Harper... don’t get yourself killed. I’m responsible for you now that "
+#~ "your father is gone, and I won’t dishonor his memory by breaking my "
+#~ "promise to keep you safe."
+#~ msgstr ""
+#~ "𐑯 𐑣𐑸𐑐𐑻... 𐑛𐑴𐑯𐑑 𐑜𐑧𐑑 𐑿𐑼𐑕𐑧𐑤𐑓 𐑒𐑦𐑤𐑛. 𐑲'𐑧𐑥 𐑮𐑦𐑕𐑐𐑪𐑯𐑕𐑦𐑚𐑩𐑤 𐑓𐑹 𐑿 𐑯𐑬 𐑞𐑨𐑑 𐑿𐑼 𐑓𐑭𐑞𐑼 𐑦𐑟 "
+#~ "𐑜𐑪𐑯, 𐑯 𐑲 𐑢𐑴𐑯𐑑 𐑛𐑦𐑕𐑭𐑯𐑻 𐑣𐑦𐑟 𐑥𐑧𐑥𐑼𐑦 𐑚𐑲 𐑚𐑮𐑱𐑒𐑦𐑙 𐑥𐑲 𐑐𐑮𐑪𐑥𐑦𐑕 𐑑 𐑒𐑰𐑐 𐑿 𐑕𐑱𐑓."
+
+#, fuzzy
+#~ msgid "... I know... All right now, let’s stop these goblins!"
+#~ msgstr "...𐑲 𐑯𐑴... 𐑷𐑤 𐑮𐑲𐑑 𐑯𐑬, 𐑤𐑧𐑑'𐑕 𐑕𐑑𐑪𐑐 𐑞𐑰𐑟 𐑜𐑭𐑚𐑤𐑦𐑯𐑟!"
+
+#~ msgid ""
+#~ "We are barely able to survive these orc raids. We lost two men last week, "
+#~ "more today... yet Weldyn does nothing!"
+#~ msgstr ""
+#~ "𐑢𐑰 𐑸 𐑚𐑺𐑤𐑦 𐑱𐑚𐑩𐑤 𐑑 𐑕𐑻𐑝𐑲𐑝 𐑞𐑰𐑟 𐑹𐑒 𐑮𐑱𐑛𐑟. 𐑢𐑰 𐑤𐑪𐑕𐑑 𐑑𐑵 𐑥𐑧𐑯 𐑤𐑭𐑕𐑑 𐑢𐑰𐑒, 𐑥𐑹 𐑑𐑫𐑛𐑱... "
+#~ "𐑘𐑧𐑑 ·𐑢𐑧𐑤𐑛𐑦𐑯 𐑛𐑳𐑟 𐑯𐑳𐑔𐑦𐑙!"
+
+#~ msgid ""
+#~ "We are barely able to survive these orc raids. We lost two men last week, "
+#~ "more could have died today... yet Weldyn does nothing!"
+#~ msgstr ""
+#~ "𐑢𐑰 𐑸 𐑚𐑺𐑤𐑦 𐑱𐑚𐑩𐑤 𐑑 𐑕𐑻𐑝𐑲𐑝 𐑞𐑰𐑟 𐑹𐑒 𐑮𐑱𐑛𐑟. 𐑢𐑰 𐑤𐑪𐑕𐑑 𐑑𐑵 𐑥𐑧𐑯 𐑤𐑭𐑕𐑑 𐑢𐑰𐑒, 𐑥𐑹 𐑒𐑫𐑛 𐑣𐑨𐑝 "
+#~ "𐑛𐑲𐑛 𐑑𐑫𐑛𐑱... 𐑘𐑧𐑑 ·𐑢𐑧𐑤𐑛𐑦𐑯 𐑛𐑳𐑟 𐑯𐑳𐑔𐑦𐑙!"
+
+#~ msgid ""
+#~ "The King stopped sending patrols out here once the war started. Once that "
+#~ "happened, the burden fell to us. We are citizens of Wesnoth, and as long "
+#~ "as her banner flies we will resist the horde."
+#~ msgstr ""
+#~ "𐑞 𐑒𐑦𐑙 𐑕𐑑𐑪𐑐𐑑 𐑕𐑧𐑯𐑛𐑦𐑙 𐑐𐑩𐑑𐑮𐑴𐑤𐑟 𐑬𐑑 𐑣𐑽 𐑢𐑳𐑯𐑕 𐑞 𐑢𐑹 𐑕𐑑𐑸𐑑𐑩𐑛. 𐑢𐑳𐑯𐑕 𐑞𐑨𐑑 𐑣𐑨𐑐𐑩𐑯𐑛, 𐑞 "
+#~ "𐑚𐑻𐑛𐑩𐑯 𐑓𐑧𐑤 𐑑 𐑳𐑕. 𐑢𐑰 𐑸 𐑕𐑦𐑑𐑦𐑟𐑩𐑯𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔, 𐑯 𐑨𐑟 𐑤𐑪𐑙 𐑨𐑟 𐑣𐑻 𐑚𐑨𐑯𐑻 𐑓𐑤𐑲𐑟 𐑢𐑰 𐑢𐑦𐑤 "
+#~ "𐑮𐑦𐑟𐑦𐑕𐑑 𐑞 𐑣𐑹𐑛."
+
+#~ msgid "The banner will fly over a ghost town if help does not come soon."
+#~ msgstr "𐑞 𐑚𐑨𐑯𐑻 𐑢𐑦𐑤 𐑓𐑤𐑲 𐑴𐑝𐑼 𐑩 𐑜𐑴𐑕𐑑 𐑑𐑬𐑯 𐑦𐑓 𐑣𐑧𐑤𐑐 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑒𐑳𐑥 𐑕𐑵𐑯."
+
+#, fuzzy
+#~ msgid ""
+#~ "They’ll come out when they see those riders, or us, approaching, but "
+#~ "there aren’t many of them... I wouldn’t count on them being able to "
+#~ "protect the village alone for long."
+#~ msgstr ""
+#~ "𐑞𐑱𐑤 𐑒𐑳𐑥 𐑬𐑑 𐑢𐑧𐑯 𐑞𐑱 𐑕𐑰 𐑞𐑴𐑟 𐑮𐑲𐑛𐑼𐑟, 𐑹 𐑳𐑕, 𐑩𐑐𐑮𐑴𐑗𐑦𐑙, 𐑚𐑳𐑑 𐑞𐑺 𐑸𐑯𐑑 𐑥𐑧𐑯𐑦 𐑝 𐑞𐑧𐑥... 𐑲 "
+#~ "𐑢𐑫𐑛𐑯𐑑 𐑒𐑬𐑯𐑑 𐑪𐑯 𐑞𐑧𐑥 𐑚𐑰𐑦𐑙 𐑱𐑚𐑩𐑤 𐑑 𐑐𐑮𐑩𐑑𐑧𐑒𐑑 𐑞 𐑝𐑦𐑤𐑦𐑡 𐑩𐑤𐑴𐑯 𐑓𐑹 𐑤𐑪𐑙."
+
+#~ msgid ""
+#~ "Goblin riders on the hunt. We must not let any of them to the village!"
+#~ msgstr "𐑜𐑭𐑚𐑤𐑦𐑯 𐑮𐑲𐑛𐑼𐑟 𐑪𐑯 𐑞 𐑣𐑳𐑯𐑑. 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑯𐑪𐑑 𐑤𐑧𐑑 𐑧𐑯𐑦 𐑝 𐑞𐑧𐑥 𐑑 𐑞 𐑝𐑦𐑤𐑦𐑡!"
+
+#~ msgid "Halt!"
+#~ msgstr "𐑣𐑷𐑤𐑑!"
+
+#~ msgid ""
+#~ "None remarked on the passing of the tiny, isolated frontier town. It was "
+#~ "but a harbinger of the evil to come under the tyranny of Asheviere."
+#~ msgstr ""
+#~ "𐑯𐑳𐑯 𐑮𐑦𐑥𐑸𐑒𐑑 𐑪𐑯 𐑞 𐑐𐑭𐑕𐑦𐑙 𐑝 𐑞 𐑑𐑲𐑯𐑦, 𐑲𐑕𐑩𐑤𐑱𐑑𐑩𐑛 𐑓𐑮𐑪𐑯𐑑𐑽 𐑑𐑬𐑯. 𐑦𐑑 𐑢𐑪𐑟 𐑚𐑳𐑑 𐑩 𐑣𐑸𐑚𐑦𐑯𐑡𐑻 "
+#~ "𐑝 𐑞 𐑰𐑝𐑩𐑤 𐑑 𐑒𐑳𐑥 𐑳𐑯𐑛𐑼 𐑞 𐑑𐑽𐑩𐑯𐑰 𐑝 ·𐑨𐑖𐑧𐑝𐑽."
+
+#~ msgid "Asheviere"
+#~ msgstr "·𐑨𐑖𐑧𐑝𐑽"
+
+#, fuzzy
+#~| msgid "Garard is the King of Wesnoth. We are ruled by no queen."
+#~ msgid "Besides, Garard is the King of Wesnoth. We are ruled by no queen."
+#~ msgstr "𐑜𐑻𐑸𐑛 𐑦𐑟 𐑞 𐑒𐑦𐑙 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔. 𐑢𐑰 𐑸 𐑮𐑵𐑤𐑛 𐑚𐑲 𐑯𐑴 𐑒𐑢𐑰𐑯."
+
+#, fuzzy
+#~| msgid ""
+#~| "Insolent peasants, you will kneel before your betters! Asheviere is the "
+#~| "queen of Wesnoth. The King fell three weeks ago at Abez. I shall not "
+#~| "bandy words with you. Your magistrate will be coming with us, and we do "
+#~| "not care if it is dead or alive."
+#~ msgid ""
+#~ "Insolent peasants, you will kneel before your betters! Asheviere is the "
+#~ "Queen of Wesnoth. The King fell three weeks ago at Abez. I shall not "
+#~ "bandy words with you. Your magistrate will be coming with us, and we do "
+#~ "not care if it is dead or alive."
+#~ msgstr ""
+#~ "𐑦𐑯𐑕𐑩𐑤𐑩𐑯𐑑 𐑐𐑧𐑟𐑩𐑯𐑑𐑕, 𐑿 𐑢𐑦𐑤 𐑯𐑰𐑤 𐑚𐑦𐑓𐑹 𐑿𐑼 𐑚𐑧𐑑𐑻𐑟! ·𐑨𐑖𐑧𐑝𐑽 𐑦𐑟 𐑞 𐑒𐑢𐑰𐑯 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔. 𐑞 "
+#~ "𐑒𐑦𐑙 𐑓𐑧𐑤 𐑔𐑮𐑰 𐑢𐑰𐑒𐑕 𐑩𐑜𐑴 𐑨𐑑 ·𐑱𐑚𐑧𐑟. 𐑲 𐑖𐑨𐑤 𐑯𐑪𐑑 𐑚𐑨𐑯𐑛𐑰 𐑢𐑻𐑛𐑟 𐑢𐑦𐑞 𐑿. 𐑿𐑼 𐑥𐑨𐑡𐑩𐑕𐑑𐑮𐑱𐑑 "
+#~ "𐑢𐑦𐑤 𐑚𐑰 𐑒𐑳𐑥𐑦𐑙 𐑢𐑦𐑞 𐑳𐑕, 𐑯 𐑢𐑰 𐑛𐑵 𐑯𐑪𐑑 𐑒𐑺 𐑦𐑓 𐑦𐑑 𐑦𐑟 𐑛𐑧𐑛 𐑹 𐑩𐑤𐑲𐑝."
+
+#~ msgid "Harper, get out of here. This is no battle for you."
+#~ msgstr "𐑣𐑸𐑐𐑻, 𐑜𐑧𐑑 𐑬𐑑 𐑝 𐑣𐑽. 𐑞𐑦𐑕 𐑦𐑟 𐑯𐑴 𐑚𐑨𐑑𐑩𐑤 𐑓𐑹 𐑿."
+
+#, fuzzy
+#~ msgid ""
+#~ "I am the magistrate of Dallben, and it is <i>you</i> who will be leaving "
+#~ "Dallben, be it dead or alive."
+#~ msgstr ""
+#~ "𐑲 𐑨𐑥 𐑞 𐑥𐑨𐑡𐑩𐑕𐑑𐑮𐑱𐑑 𐑝 ·𐑛𐑨𐑤𐑚𐑧𐑯, 𐑯 𐑦𐑑 𐑦𐑟 𐑿 𐑣𐑵 𐑢𐑦𐑤 𐑚𐑰 𐑤𐑰𐑝𐑦𐑙 ·𐑛𐑨𐑤𐑚𐑧𐑯, 𐑚𐑰 𐑦𐑑 𐑛𐑧𐑛 "
+#~ "𐑹 𐑩𐑤𐑲𐑝."
+
+#~ msgid ""
+#~ "Our lives were hard enough when we were beneath the attention of the "
+#~ "Crown. But now I fear things will be worse."
+#~ msgstr ""
+#~ "𐑬𐑼 𐑤𐑦𐑝𐑟 𐑢𐑻 𐑣𐑸𐑛 𐑦𐑯𐑳𐑓 𐑢𐑧𐑯 𐑢𐑰 𐑢𐑻 𐑚𐑦𐑯𐑰𐑔 𐑞 𐑩𐑑𐑧𐑯𐑖𐑩𐑯 𐑝 𐑞 𐑒𐑮𐑬𐑯. 𐑚𐑳𐑑 𐑯𐑬 𐑲 𐑓𐑽 𐑔𐑦𐑙𐑟 "
+#~ "𐑢𐑦𐑤 𐑚𐑰 𐑢𐑻𐑕."
+
+#~ msgid ""
+#~ "That is true. We have always flown to their aid, and they to ours. This "
+#~ "is something we should face together."
+#~ msgstr ""
+#~ "𐑞𐑨𐑑 𐑦𐑟 𐑑𐑮𐑵. 𐑢𐑰 𐑣𐑨𐑝 𐑷𐑤𐑢𐑱𐑟 𐑓𐑤𐑴𐑯 𐑑 𐑞𐑺 𐑲𐑛, 𐑯 𐑞𐑱 𐑑 𐑬𐑼𐑟. 𐑞𐑦𐑕 𐑦𐑟 𐑕𐑳𐑥𐑔𐑦𐑙 𐑢𐑰 𐑖𐑫𐑛 "
+#~ "𐑓𐑱𐑕 𐑑𐑫𐑜𐑧𐑞𐑼."
+
+#~ msgid ""
+#~ "Very well. We will go to Delwyn and share counsel with them. I never "
+#~ "thought Wesnoth would fall into darkness. Now, not only do the orcs "
+#~ "threaten our lands, but some sinister thing is happening with the ascent "
+#~ "of the Queen to the throne."
+#~ msgstr ""
+#~ "𐑝𐑧𐑮𐑦 𐑢𐑧𐑤. 𐑢𐑰 𐑢𐑦𐑤 𐑜𐑴 𐑑 𐑛𐑧𐑤𐑢𐑦𐑯 𐑯 𐑖𐑺 𐑒𐑬𐑯𐑕𐑩𐑤 𐑢𐑦𐑞 𐑞𐑧𐑥. 𐑲 𐑯𐑧𐑝𐑼 𐑔𐑷𐑑 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑢𐑫𐑛 "
+#~ "𐑓𐑷𐑤 𐑦𐑯𐑑𐑫 𐑛𐑸𐑒𐑯𐑩𐑕. 𐑯𐑬, 𐑯𐑪𐑑 𐑴𐑯𐑤𐑦 𐑛𐑵 𐑞 𐑹𐑒𐑕 𐑔𐑮𐑧𐑑𐑩𐑯 𐑬𐑼 𐑤𐑨𐑯𐑛𐑟, 𐑚𐑳𐑑 𐑕𐑳𐑥 𐑕𐑦𐑯𐑦𐑕𐑑𐑻 "
+#~ "𐑔𐑦𐑙 𐑦𐑟 𐑣𐑨𐑐𐑩𐑯𐑦𐑙 𐑢𐑦𐑞 𐑞 𐑨𐑟𐑕𐑧𐑯𐑑 𐑝 𐑞 𐑒𐑢𐑰𐑯 𐑑 𐑞 𐑔𐑮𐑴𐑯."
+
+#~ msgid ""
+#~ "Today we may no longer be citizens of Wesnoth. I wish it could be "
+#~ "otherwise, but we are now outlaws."
+#~ msgstr ""
+#~ "𐑑𐑫𐑛𐑱 𐑢𐑰 𐑥𐑱 𐑯𐑴 𐑤𐑪𐑙𐑜𐑼 𐑚𐑰 𐑕𐑦𐑑𐑦𐑟𐑩𐑯𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔. 𐑲 𐑢𐑦𐑖 𐑦𐑑 𐑒𐑫𐑛 𐑚𐑰 𐑳𐑞𐑼𐑢𐑲𐑟, 𐑚𐑳𐑑 𐑢𐑰 "
+#~ "𐑸 𐑯𐑬 𐑬𐑑𐑤𐑷𐑟."
+
+#~ msgid ""
+#~ "Oh, no! We have run out of time, they have arrived with reinforcements..."
+#~ msgstr "𐑴, 𐑯𐑴! 𐑢𐑰 𐑣𐑨𐑝 𐑮𐑳𐑯 𐑬𐑑 𐑝 𐑑𐑲𐑥, 𐑞𐑱 𐑣𐑨𐑝 𐑩𐑮𐑲𐑝𐑛 𐑢𐑦𐑞 𐑮𐑦𐑦𐑯𐑓𐑹𐑕𐑥𐑩𐑯𐑑𐑕..."
+
+#, fuzzy
+#~| msgid ""
+#~| "They would be remembered only traitors rightly put down by the Queen’s "
+#~| "lances. And in the dark years to come, woe betide any who questioned it."
+#~ msgid ""
+#~ "They would be remembered only as traitors rightly put down by the Queen’s "
+#~ "lances. And in the dark years to come, woe betide any who questioned it."
+#~ msgstr ""
+#~ "𐑞𐑱 𐑢𐑫𐑛 𐑚𐑰 𐑮𐑦𐑥𐑧𐑥𐑚𐑼𐑛 𐑴𐑯𐑤𐑦 𐑑𐑮𐑱𐑑𐑼𐑟 𐑮𐑲𐑑𐑤𐑦 𐑐𐑫𐑑 𐑛𐑬𐑯 𐑚𐑲 𐑞 𐑒𐑢𐑰𐑯'𐑟 𐑤𐑭𐑯𐑕𐑧𐑕. 𐑯 𐑦𐑯 𐑞 "
+#~ "𐑛𐑸𐑒 𐑘𐑽𐑟 𐑑 𐑒𐑳𐑥, 𐑢𐑴 𐑚𐑦𐑑𐑲𐑛 𐑧𐑯𐑦 𐑣𐑵 𐑒𐑢𐑧𐑕𐑗𐑩𐑯𐑛 𐑦𐑑."
+
+#~ msgid "Evil"
+#~ msgstr "𐑰𐑝𐑩𐑤"
+
+#, fuzzy
+#~ msgid ""
+#~ "Relana, thank you for welcoming our messenger and agreeing to meet with "
+#~ "us. In your many years as Delwyn’s magistrate I have never known your "
+#~ "judgment to err."
+#~ msgstr ""
+#~ "·𐑮𐑧𐑤𐑯𐑨𐑯, 𐑔𐑨𐑙𐑒 𐑿 𐑓𐑹 𐑢𐑧𐑤𐑒𐑩𐑥𐑦𐑙 𐑬𐑼 𐑥𐑧𐑕𐑩𐑯𐑡𐑼 𐑯 𐑩𐑜𐑮𐑰𐑦𐑙 𐑑 𐑥𐑰𐑑 𐑢𐑦𐑞 𐑳𐑕. 𐑦𐑯 𐑿𐑼 𐑥𐑧𐑯𐑦 "
+#~ "𐑘𐑽𐑟 𐑨𐑟 Delwyn's 𐑥𐑨𐑡𐑩𐑕𐑑𐑮𐑱𐑑 𐑲 𐑣𐑨𐑝 𐑯𐑧𐑝𐑼 𐑯𐑴𐑯 𐑿𐑼 𐑡𐑳𐑡𐑥𐑩𐑯𐑑 𐑑 𐑺."
+
+#, fuzzy
+#~| msgid ""
+#~| "It has been a long time, old friend. Your news worries us. Yet, there is "
+#~| "no problem we have not worked out here at our secret meeting place."
+#~ msgid ""
+#~ "It has been a long time, old friend. Your news worries us. Yet, there is "
+#~ "no problem we have not worked out together."
+#~ msgstr ""
+#~ "𐑦𐑑 𐑣𐑨𐑟 𐑚𐑰𐑯 𐑩 𐑤𐑪𐑙 𐑑𐑲𐑥, 𐑴𐑤𐑛 𐑓𐑮𐑧𐑯𐑛. 𐑿𐑼 𐑯𐑿𐑟 𐑢𐑳𐑮𐑦𐑟 𐑳𐑕. 𐑘𐑧𐑑, 𐑞𐑺 𐑦𐑟 𐑯𐑴 𐑐𐑮𐑪𐑚𐑤𐑩𐑥 "
+#~ "𐑢𐑰 𐑣𐑨𐑝 𐑯𐑪𐑑 𐑢𐑻𐑒𐑑 𐑬𐑑 𐑣𐑽 𐑨𐑑 𐑬𐑼 𐑕𐑰𐑒𐑮𐑩𐑑 𐑥𐑰𐑑𐑦𐑙 𐑐𐑤𐑱𐑕."
+
+#, fuzzy
+#~| msgid ""
+#~| "You do not understand. We attacked a Wesnoth army patrol. Not only that, "
+#~| "the leader was no man I had ever seen in Annuvin province before. Never "
+#~| "has one been sent out here as a patrol captain who was so ruthless and "
+#~| "cruel."
+#~ msgid ""
+#~ "You do not understand. We attacked a Wesnoth army patrol. Not only that, "
+#~ "the leader was no man I had ever seen in Annuvin Province before. Never "
+#~ "has one been sent out here as a patrol captain who was so ruthless and "
+#~ "cruel."
+#~ msgstr ""
+#~ "𐑿 𐑛𐑵 𐑯𐑪𐑑 𐑳𐑯𐑛𐑼𐑕𐑑𐑨𐑯𐑛. 𐑢𐑰 𐑩𐑑𐑨𐑒𐑑 𐑩 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑐𐑩𐑑𐑮𐑴𐑤. 𐑯𐑪𐑑 𐑴𐑯𐑤𐑦 𐑞𐑨𐑑, 𐑞 𐑤𐑰𐑛𐑻 "
+#~ "𐑢𐑪𐑟 𐑯𐑴 𐑥𐑨𐑯 𐑲 𐑣𐑨𐑛 𐑧𐑝𐑼 𐑕𐑰𐑯 𐑦𐑯 ·𐑩𐑯𐑳𐑝𐑦𐑯 𐑐𐑮𐑪𐑝𐑦𐑯𐑕 𐑚𐑦𐑓𐑹. 𐑯𐑧𐑝𐑼 𐑣𐑨𐑟 𐑢𐑳𐑯 𐑚𐑰𐑯 𐑕𐑧𐑯𐑑 "
+#~ "𐑬𐑑 𐑣𐑽 𐑨𐑟 𐑩 𐑐𐑩𐑑𐑮𐑴𐑤 𐑒𐑨𐑐𐑑𐑩𐑯 𐑣𐑵 𐑢𐑪𐑟 𐑕𐑴 𐑮𐑵𐑔𐑤𐑩𐑕 𐑯 𐑒𐑮𐑫𐑩𐑤."
+
+#~ msgid ""
+#~ "Had they taken my uncle, they would have surely shown up in Delwyn today "
+#~ "with the same ultimatum. As it is, several riders escaped."
+#~ msgstr ""
+#~ "𐑣𐑨𐑛 𐑞𐑱 𐑑𐑱𐑒𐑩𐑯 𐑥𐑲 𐑳𐑙𐑒𐑩𐑤, 𐑞𐑱 𐑢𐑫𐑛 𐑣𐑨𐑝 𐑖𐑫𐑼𐑤𐑦 𐑖𐑴𐑯 𐑳𐑐 𐑦𐑯 𐑛𐑧𐑤𐑢𐑦𐑯 𐑑𐑫𐑛𐑱 𐑢𐑦𐑞 𐑞 𐑕𐑱𐑥 "
+#~ "𐑩𐑤𐑑𐑩𐑥𐑱𐑑𐑩𐑥. 𐑨𐑟 𐑦𐑑 𐑦𐑟, 𐑕𐑧𐑝𐑼𐑩𐑤 𐑮𐑲𐑛𐑼𐑟 𐑦𐑕𐑒𐑱𐑐𐑑."
+
+#, fuzzy
+#~ msgid ""
+#~ "Well, it won’t be long until they report back to the local garrison with "
+#~ "the details of your encounter."
+#~ msgstr ""
+#~ "𐑢𐑧𐑤, 𐑦𐑑 𐑢𐑴𐑯𐑑 𐑚𐑰 𐑤𐑪𐑙 𐑳𐑯𐑑𐑦𐑤 𐑞𐑱 𐑮𐑩𐑐𐑹𐑑 𐑚𐑨𐑒 𐑑 𐑞 𐑤𐑴𐑒𐑩𐑤 𐑜𐑨𐑮𐑦𐑕𐑩𐑯 𐑢𐑦𐑞 𐑞 𐑛𐑰𐑑𐑱𐑤𐑟 𐑝 "
+#~ "𐑿𐑼 𐑦𐑯𐑒𐑬𐑯𐑑𐑻."
+
+#~ msgid ""
+#~ "An offense to decency, this is! Since when has Wesnoth been ruled by fear "
+#~ "and treachery? We should consult with Lord Maddock of Elensefar. We have "
+#~ "known him for years to be noble in deed as well as in name."
+#~ msgstr ""
+#~ "𐑩𐑯 𐑩𐑓𐑧𐑯𐑕 𐑑 𐑛𐑰𐑕𐑩𐑯𐑕𐑰, 𐑞𐑦𐑕 𐑦𐑟! 𐑕𐑦𐑯𐑕 𐑢𐑧𐑯 𐑣𐑨𐑟 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑚𐑰𐑯 𐑮𐑵𐑤𐑛 𐑚𐑲 𐑓𐑽 𐑯 𐑑𐑮𐑧𐑗𐑻𐑰? "
+#~ "𐑢𐑰 𐑖𐑫𐑛 𐑒𐑩𐑯𐑕𐑩𐑤𐑑 𐑢𐑦𐑞 𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒 𐑝 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸. 𐑢𐑰 𐑣𐑨𐑝 𐑯𐑴𐑯 𐑣𐑦𐑥 𐑓𐑹 𐑘𐑽𐑟 𐑑 𐑚𐑰 𐑯𐑴𐑚𐑤 "
+#~ "𐑦𐑯 𐑛𐑰𐑛 𐑨𐑟 𐑢𐑧𐑤 𐑨𐑟 𐑦𐑯 𐑯𐑱𐑥."
+
+#, fuzzy
+#~ msgid ""
+#~ "I agree. But, Baldras, what will you tell him? We know something has been "
+#~ "going badly wrong in Wesnoth of late, that more than ordinary corruption "
+#~ "and incompetence is afoot. But when the effects fall on mere peasants, "
+#~ "the wrong of it may not seem so obvious from a noble’s chair."
+#~ msgstr ""
+#~ "𐑲 𐑩𐑜𐑮𐑰. 𐑚𐑳𐑑, ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕, 𐑢𐑪𐑑 𐑢𐑦𐑤 𐑿 𐑑𐑧𐑤 𐑣𐑦𐑥? 𐑢𐑰 𐑯𐑴 𐑕𐑳𐑥𐑔𐑦𐑙 𐑣𐑨𐑟 𐑚𐑰𐑯 𐑜𐑴𐑦𐑙 𐑚𐑨𐑛𐑤𐑰 "
+#~ "𐑮𐑪𐑙 𐑦𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑝 𐑤𐑱𐑑, 𐑞𐑨𐑑 𐑥𐑹 𐑞𐑨𐑯 𐑹𐑛𐑦𐑯𐑼𐑦 𐑒𐑻𐑩𐑐𐑖𐑩𐑯 𐑯 𐑦𐑯𐑒𐑭𐑥𐑐𐑩𐑑𐑩𐑯𐑕 𐑦𐑟 𐑩𐑓𐑫𐑑. "
+#~ "𐑚𐑳𐑑 𐑢𐑧𐑯 𐑞 𐑦𐑓𐑧𐑒𐑑𐑕 𐑓𐑷𐑤 𐑪𐑯 𐑥𐑽 𐑐𐑧𐑟𐑩𐑯𐑑𐑕, 𐑞 𐑮𐑪𐑙 𐑝 𐑦𐑑 𐑥𐑱 𐑯𐑪𐑑 𐑕𐑰𐑥 𐑕𐑴 𐑪𐑚𐑝𐑦𐑩𐑕 𐑓𐑮𐑪𐑥 "
+#~ "𐑩 𐑯𐑴𐑚𐑩𐑤𐑟 𐑗𐑺."
+
+#, fuzzy
+#~ msgid ""
+#~ "We need evidence. Hard evidence... but wait— Are those orcish war drums I "
+#~ "hear?"
+#~ msgstr "𐑢𐑰 𐑯𐑰𐑛 𐑧𐑝𐑦𐑛𐑩𐑯𐑕. 𐑣𐑸𐑛 𐑧𐑝𐑦𐑛𐑩𐑯𐑕...𐑚𐑳𐑑 𐑢𐑱𐑑, 𐑸 𐑞𐑴𐑟 𐑹𐑒𐑦𐑖 𐑢𐑹 𐑛𐑮𐑩𐑥𐑟 𐑲 𐑣𐑽?"
+
+#, fuzzy
+#~| msgid ""
+#~| "I think they are, old friend. And that rank smell on the wind tells "
+#~| "another tale; saurians approach. To arms!"
+#~ msgid ""
+#~ "I think they are, old friend. And that rank smell on the wind tells "
+#~ "another tale: saurians approach. To arms!"
+#~ msgstr ""
+#~ "𐑲 𐑔𐑦𐑙𐑒 𐑞𐑱 𐑸, 𐑴𐑤𐑛 𐑓𐑮𐑧𐑯𐑛. 𐑯 𐑞𐑨𐑑 𐑮𐑨𐑙𐑒 𐑕𐑥𐑧𐑤 𐑪𐑯 𐑞 𐑢𐑦𐑯𐑛 𐑑𐑧𐑤𐑟 𐑩𐑯𐑳𐑞𐑼 𐑑𐑱𐑤; 𐑕𐑸𐑾𐑯𐑟 "
+#~ "𐑩𐑐𐑮𐑴𐑗. 𐑑 𐑸𐑥𐑟!"
+
+#~ msgid ""
+#~ "By the sound of the wolves, the scent trail of Fal Khag’s killers ends "
+#~ "here."
+#~ msgstr "𐑚𐑲 𐑞 𐑕𐑬𐑯𐑛 𐑝 𐑞 𐑢𐑫𐑤𐑝𐑟, 𐑞 𐑕𐑧𐑯𐑑 𐑑𐑮𐑱𐑤 𐑝 ·𐑓𐑭𐑤 ·𐑒𐑣𐑨𐑜𐑟 𐑒𐑦𐑤𐑻𐑟 𐑧𐑯𐑛𐑟 𐑣𐑽."
+
+#~ msgid "You will get gold. And our wolves will get meat."
+#~ msgstr "𐑿 𐑢𐑦𐑤 𐑜𐑧𐑑 𐑜𐑴𐑤𐑛. 𐑯 𐑬𐑼 𐑢𐑫𐑤𐑝𐑟 𐑢𐑦𐑤 𐑜𐑧𐑑 𐑥𐑰𐑑."
+
+#, fuzzy
+#~ msgid ""
+#~ "Can the darkest rumors be true, then? Does the Kingdom— Does Queen "
+#~ "Asheviere... send orcs against her own people?"
+#~ msgstr ""
+#~ "𐑒𐑨𐑯 𐑞 𐑛𐑸𐑒𐑩𐑕𐑑 𐑮𐑵𐑥𐑼𐑟 𐑚𐑰 𐑑𐑮𐑵, 𐑞𐑧𐑯? 𐑛𐑳𐑟 𐑞 𐑒𐑦𐑙𐑛𐑩𐑥...𐑛𐑳𐑟 𐑒𐑢𐑰𐑯 ·𐑨𐑖𐑧𐑝𐑽...𐑕𐑧𐑯𐑛 𐑹𐑒𐑕 "
+#~ "𐑩𐑜𐑱𐑯𐑕𐑑 𐑣𐑻 𐑴𐑯 𐑐𐑰𐑐𐑩𐑤?"
+
+#, fuzzy
+#~ msgid ""
+#~ "We have tarried here for far too long... There is no way we can reach "
+#~ "Elensefar and return with help before the Wesnoth army destroys our "
+#~ "homes. Retreat!"
+#~ msgstr ""
+#~ "𐑢𐑰 𐑣𐑨𐑝 tarried 𐑣𐑽 𐑓𐑹 𐑓𐑸 𐑑𐑵 𐑤𐑪𐑙... 𐑞𐑺 𐑦𐑟 𐑯𐑴 𐑢𐑱 𐑢𐑰 𐑒𐑨𐑯 𐑮𐑰𐑗 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑯 𐑮𐑦𐑑𐑻𐑯 "
+#~ "𐑢𐑦𐑞 𐑣𐑧𐑤𐑐 𐑚𐑦𐑓𐑹 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑛𐑩𐑕𐑑𐑮𐑶𐑟 𐑬𐑼 𐑣𐑴𐑥𐑟. 𐑮𐑦𐑑𐑮𐑰𐑑!!"
+
+#, fuzzy
+#~ msgid ""
+#~ "Baldras, your trip here was not wise. The Queen’s patrols have been "
+#~ "visiting the local villages and bringing the elders here. Those that "
+#~ "swear allegiance to the Queen are allowed to return home. Those that do "
+#~ "not—"
+#~ msgstr ""
+#~ "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕, 𐑿𐑼 𐑑𐑮𐑦𐑐 𐑣𐑽 𐑢𐑪𐑟 𐑯𐑪𐑑 𐑢𐑲𐑟. 𐑞 𐑒𐑢𐑰𐑯'𐑟 𐑐𐑩𐑑𐑮𐑴𐑤𐑟 𐑣𐑨𐑝 𐑚𐑰𐑯 𐑝𐑦𐑟𐑩𐑑𐑦𐑙 𐑞 "
+#~ "𐑤𐑴𐑒𐑩𐑤 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑯 𐑚𐑮𐑦𐑙𐑦𐑙 𐑞 𐑧𐑤𐑛𐑼𐑟 𐑣𐑽. 𐑞𐑴𐑟 𐑞𐑨𐑑 𐑕𐑢𐑺 𐑩𐑤𐑰𐑡𐑩𐑯𐑕 𐑑 𐑞 𐑒𐑢𐑰𐑯 𐑸 𐑩𐑤𐑬𐑛 𐑑 "
+#~ "𐑮𐑦𐑑𐑻𐑯 𐑣𐑴𐑥. 𐑞𐑴𐑟 𐑞𐑨𐑑 𐑛𐑵 𐑯𐑪𐑑..."
+
+#, fuzzy
+#~ msgid ""
+#~ "— Are dispatched on the spot. I know the price of dissent. But what of "
+#~ "you?"
+#~ msgstr "...𐑸 𐑛𐑦𐑕𐑐𐑨𐑗𐑑 𐑪𐑯 𐑞 𐑕𐑐𐑪𐑑. 𐑲 𐑯𐑴 𐑞 𐑐𐑮𐑲𐑕 𐑝 𐑛𐑦𐑕𐑧𐑯𐑑. 𐑚𐑳𐑑 𐑢𐑪𐑑 𐑝 𐑿?"
+
+#~ msgid ""
+#~ "Well, they do not come within the walls of my city. They are actually "
+#~ "camped nearby, and the main garrison is further south at Halstead. I know "
+#~ "my time will soon come to swear allegiance, but they do not press me. "
+#~ "They are afraid I will refuse."
+#~ msgstr ""
+#~ "𐑢𐑧𐑤, 𐑞𐑱 𐑛𐑵 𐑯𐑪𐑑 𐑒𐑳𐑥 𐑢𐑦𐑞𐑦𐑯 𐑞 𐑢𐑷𐑤𐑟 𐑝 𐑥𐑲 𐑕𐑦𐑑𐑦. 𐑞𐑱 𐑸 𐑨𐑒𐑗𐑫𐑩𐑤𐑦 𐑒𐑨𐑥𐑐𐑑 𐑯𐑽𐑚𐑲, 𐑯 𐑞 "
+#~ "𐑥𐑱𐑯 𐑜𐑨𐑮𐑦𐑕𐑩𐑯 𐑦𐑟 𐑓𐑻𐑞𐑼 𐑕𐑬𐑔 𐑨𐑑 𐑣𐑨𐑤𐑕𐑑𐑧𐑛. 𐑲 𐑯𐑴 𐑥𐑲 𐑑𐑲𐑥 𐑢𐑦𐑤 𐑕𐑵𐑯 𐑒𐑳𐑥 𐑑 𐑕𐑢𐑺 "
+#~ "𐑩𐑤𐑰𐑡𐑩𐑯𐑕, 𐑚𐑳𐑑 𐑞𐑱 𐑛𐑵 𐑯𐑪𐑑 𐑐𐑮𐑧𐑕 𐑥𐑰. 𐑞𐑱 𐑸 𐑩𐑓𐑮𐑱𐑛 𐑲 𐑢𐑦𐑤 𐑮𐑧𐑓𐑿𐑕."
+
+#~ msgid "Will you?"
+#~ msgstr "𐑢𐑦𐑤 𐑿?"
+
+#~ msgid ""
+#~ "Yes. The Queen ascended to the throne through the vilest of treachery. "
+#~ "However, while most of my forces were sent with the King to fight the "
+#~ "orcs, we have a strong enough contingent here to make the Queen’s forces "
+#~ "think twice about attacking Elensefar outright."
+#~ msgstr ""
+#~ "𐑘𐑧𐑕. 𐑞 𐑒𐑢𐑰𐑯 𐑩𐑕𐑧𐑯𐑛𐑩𐑛 𐑑 𐑞 𐑔𐑮𐑴𐑯 𐑔𐑮𐑵 𐑞 𐑝𐑲𐑤𐑩𐑕𐑑 𐑝 𐑑𐑮𐑧𐑗𐑻𐑰. 𐑣𐑬𐑧𐑝𐑼, 𐑢𐑲𐑤 𐑥𐑴𐑕𐑑 𐑝 𐑥𐑲 "
+#~ "𐑓𐑹𐑕𐑩𐑟 𐑢𐑻 𐑕𐑧𐑯𐑑 𐑢𐑦𐑞 𐑞 𐑒𐑦𐑙 𐑑 𐑓𐑲𐑑 𐑞 𐑹𐑒𐑕, 𐑢𐑰 𐑣𐑨𐑝 𐑩 𐑕𐑑𐑮𐑪𐑙 𐑦𐑯𐑳𐑓 𐑒𐑩𐑯𐑑𐑦𐑯𐑡𐑩𐑯𐑑 𐑣𐑽 𐑑 "
+#~ "𐑥𐑱𐑒 𐑞 𐑒𐑢𐑰𐑯'𐑟 𐑓𐑹𐑕𐑩𐑟 𐑔𐑦𐑙𐑒 𐑑𐑢𐑲𐑕 𐑩𐑚𐑬𐑑 𐑩𐑑𐑨𐑒𐑦𐑙 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑬𐑑𐑮𐑲𐑑."
+
+#~ msgid ""
+#~ "We have an uneasy peace until they are done with the smaller villages and "
+#~ "finally come around to obtaining my oath. The treaty between Elensefar "
+#~ "and Wesnoth is ancient, but I am not so naïve as to place my full trust "
+#~ "in it. Not in these wicked times."
+#~ msgstr ""
+#~ "𐑢𐑰 𐑣𐑨𐑝 𐑩𐑯 𐑳𐑯𐑰𐑟𐑦 𐑐𐑰𐑕 𐑳𐑯𐑑𐑦𐑤 𐑞𐑱 𐑸 𐑛𐑳𐑯 𐑢𐑦𐑞 𐑞 𐑕𐑥𐑷𐑤𐑼 𐑝𐑦𐑤𐑦𐑡𐑦𐑟 𐑯 𐑓𐑲𐑯𐑩𐑤𐑦 𐑒𐑳𐑥 𐑩𐑮𐑬𐑯𐑛 "
+#~ "𐑑 𐑪𐑚𐑑𐑱𐑯𐑦𐑙 𐑥𐑲 𐑴𐑔. 𐑞 𐑑𐑮𐑰𐑑𐑦 𐑚𐑦𐑑𐑢𐑰𐑯 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑦𐑟 𐑱𐑯𐑖𐑩𐑯𐑑, 𐑚𐑳𐑑 𐑲 𐑨𐑥 "
+#~ "𐑯𐑪𐑑 𐑕𐑴 𐑯𐑲𐑰𐑝 𐑨𐑟 𐑑 𐑐𐑤𐑱𐑕 𐑥𐑲 𐑓𐑫𐑤 𐑑𐑮𐑳𐑕𐑑 𐑦𐑯 𐑦𐑑. 𐑯𐑪𐑑 𐑦𐑯 𐑞𐑰𐑟 𐑢𐑦𐑒𐑩𐑛 𐑑𐑲𐑥𐑟."
+
+#, fuzzy
+#~| msgid ""
+#~| "What can we do then? We have brought with us many from Annuvin province "
+#~| "who are willing to fight, but our families are still at home. They will "
+#~| "not last long if the Queen’s patrols return."
+#~ msgid ""
+#~ "What can we do then? We have brought with us many from Annuvin Province "
+#~ "who are willing to fight, but our families are still at home. They will "
+#~ "not last long if the Queen’s patrols return."
+#~ msgstr ""
+#~ "𐑢𐑪𐑑 𐑒𐑨𐑯 𐑢𐑰 𐑛𐑵 𐑞𐑧𐑯? 𐑢𐑰 𐑣𐑨𐑝 𐑚𐑮𐑷𐑑 𐑢𐑦𐑞 𐑳𐑕 𐑥𐑧𐑯𐑦 𐑓𐑮𐑪𐑥 ·𐑩𐑯𐑳𐑝𐑦𐑯 𐑐𐑮𐑪𐑝𐑦𐑯𐑕 𐑣𐑵 𐑸 "
+#~ "𐑢𐑦𐑤𐑦𐑙 𐑑 𐑓𐑲𐑑, 𐑚𐑳𐑑 𐑬𐑼 𐑓𐑨𐑥𐑦𐑤𐑦𐑟 𐑸 𐑕𐑑𐑦𐑤 𐑨𐑑 𐑣𐑴𐑥. 𐑞𐑱 𐑢𐑦𐑤 𐑯𐑪𐑑 𐑤𐑭𐑕𐑑 𐑤𐑪𐑙 𐑦𐑓 𐑞 "
+#~ "𐑒𐑢𐑰𐑯'𐑟 𐑐𐑩𐑑𐑮𐑴𐑤𐑟 𐑮𐑦𐑑𐑻𐑯."
+
+#~ msgid ""
+#~ "I am unwilling to start a civil war. I believe the Queen will remain "
+#~ "preoccupied with order throughout the kingdom and, more importantly, with "
+#~ "quelling the Northerner threat. We are a matter she will choose to deal "
+#~ "with later rather than sooner, if she can."
+#~ msgstr ""
+#~ "𐑲 𐑨𐑥 𐑩𐑯𐑢𐑦𐑤𐑦𐑙 𐑑 𐑕𐑑𐑸𐑑 𐑩 𐑕𐑦𐑝𐑦𐑤 𐑢𐑹. 𐑲 𐑚𐑦𐑤𐑰𐑝 𐑞 𐑒𐑢𐑰𐑯 𐑢𐑦𐑤 𐑮𐑦𐑥𐑱𐑯 𐑐𐑮𐑰𐑪𐑒𐑿𐑐𐑲𐑛 𐑢𐑦𐑞 "
+#~ "𐑹𐑛𐑼 𐑔𐑮𐑵𐑬𐑑 𐑞 𐑒𐑦𐑙𐑛𐑩𐑥 𐑯, 𐑥𐑹 𐑦𐑥𐑐𐑹𐑑𐑩𐑯𐑑𐑤𐑦, 𐑢𐑦𐑞 𐑒𐑢𐑧𐑤𐑦𐑙 𐑞 𐑯𐑹𐑞𐑻𐑯𐑻 𐑔𐑮𐑧𐑑. 𐑢𐑰 𐑸 𐑩 "
+#~ "𐑥𐑨𐑑𐑼 𐑖𐑰 𐑢𐑦𐑤 𐑗𐑵𐑟 𐑑 𐑛𐑰𐑤 𐑢𐑦𐑞 𐑤𐑱𐑑𐑼 𐑮𐑭𐑞𐑼 𐑞𐑨𐑯 𐑕𐑵𐑯𐑼, 𐑦𐑓 𐑖𐑰 𐑒𐑨𐑯."
+
+#~ msgid ""
+#~ "A foolish miscalculation, Lord Maddock. These men with which you consort "
+#~ "are outlaws and fugitives. They are a well-organized gang of criminals "
+#~ "and murderers. We will kill them and then expect your oath of allegiance "
+#~ "to Queen Asheviere."
+#~ msgstr ""
+#~ "𐑩 𐑓𐑵𐑤𐑦𐑖 𐑥𐑦𐑕𐑒𐑨𐑤𐑒𐑘𐑩𐑤𐑱𐑖𐑩𐑯, 𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒. 𐑞𐑰𐑟 𐑥𐑧𐑯 𐑢𐑦𐑞 𐑢𐑦𐑗 𐑿 𐑒𐑩𐑯𐑕𐑹𐑑 𐑸 𐑬𐑑𐑤𐑷𐑟 𐑯 "
+#~ "𐑓𐑿𐑡𐑦𐑑𐑦𐑝𐑟. 𐑞𐑱 𐑸 𐑩 𐑢𐑧𐑤-𐑹𐑜𐑩𐑯𐑲𐑟𐑛 𐑜𐑨𐑙 𐑝 𐑒𐑮𐑦𐑥𐑦𐑯𐑩𐑤𐑟 𐑯 𐑥𐑻𐑛𐑼𐑼𐑟. 𐑢𐑰 𐑢𐑦𐑤 𐑒𐑦𐑤 𐑞𐑧𐑥 𐑯 "
+#~ "𐑞𐑧𐑯 𐑦𐑒𐑕𐑐𐑧𐑒𐑑 𐑿𐑼 𐑴𐑔 𐑝 𐑩𐑤𐑰𐑡𐑩𐑯𐑕 𐑑 𐑒𐑢𐑰𐑯 ·𐑨𐑖𐑧𐑝𐑽."
+
+#~ msgid "Men, to arms! The defense of Elensefar has begun!"
+#~ msgstr "𐑥𐑧𐑯, 𐑑 𐑸𐑥𐑟! 𐑞 𐑛𐑦𐑓𐑧𐑯𐑕 𐑝 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑣𐑨𐑟 𐑚𐑩𐑜𐑳𐑯!"
+
+#~ msgid ""
+#~ "As the sun set, a horrific change began to take place to the human "
+#~ "adversaries of Baldras and his allies..."
+#~ msgstr ""
+#~ "𐑨𐑟 𐑞 𐑕𐑳𐑯 𐑕𐑧𐑑, 𐑩 𐑣𐑹𐑦𐑓𐑦𐑒 𐑗𐑱𐑯𐑡 𐑚𐑩𐑜𐑨𐑯 𐑑 𐑑𐑱𐑒 𐑐𐑤𐑱𐑕 𐑑 𐑞 𐑣𐑿𐑥𐑩𐑯 𐑨𐑛𐑝𐑼𐑕𐑩𐑮𐑦𐑟 𐑝 "
+#~ "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑯 𐑣𐑦𐑟 𐑨𐑤𐑲𐑟..."
+
+#~ msgid ""
+#~ "I cannot believe what my eyes are seeing! The flesh runs from their "
+#~ "bones... these are not human warriors we fight. They are evil spirits "
+#~ "masquerading as human!"
+#~ msgstr ""
+#~ "𐑲 𐑒𐑨𐑯𐑪𐑑 𐑚𐑦𐑤𐑰𐑝 𐑢𐑪𐑑 𐑥𐑲 𐑲𐑟 𐑸 𐑕𐑰𐑦𐑙! 𐑞 𐑓𐑤𐑧𐑖 𐑮𐑳𐑯𐑟 𐑓𐑮𐑪𐑥 𐑞𐑺 𐑚𐑴𐑯𐑟... 𐑞𐑰𐑟 𐑸 𐑯𐑪𐑑 "
+#~ "𐑣𐑿𐑥𐑩𐑯 𐑢𐑪𐑮𐑦𐑼𐑟 𐑢𐑰 𐑓𐑲𐑑. 𐑞𐑱 𐑸 𐑰𐑝𐑩𐑤 𐑕𐑐𐑦𐑮𐑦𐑑𐑕 𐑥𐑨𐑕𐑒𐑻𐑱𐑛𐑦𐑙 𐑨𐑟 𐑣𐑿𐑥𐑩𐑯!"
+
+#~ msgid ""
+#~ "Their human aspect is returning! This is an evil manner of sorcery we "
+#~ "face, but one that we may yet overcome. CHARGE!"
+#~ msgstr ""
+#~ "𐑞𐑺 𐑣𐑿𐑥𐑩𐑯 𐑨𐑕𐑐𐑧𐑒𐑑 𐑦𐑟 𐑮𐑦𐑑𐑻𐑯𐑦𐑙! 𐑞𐑦𐑕 𐑦𐑟 𐑩𐑯 𐑰𐑝𐑩𐑤 𐑥𐑨𐑯𐑼 𐑝 𐑕𐑹𐑕𐑻𐑰 𐑢𐑰 𐑓𐑱𐑕, 𐑚𐑳𐑑 𐑢𐑳𐑯 "
+#~ "𐑞𐑨𐑑 𐑢𐑰 𐑥𐑱 𐑘𐑧𐑑 𐑴𐑝𐑼𐑒𐑳𐑥. 𐑗𐑸𐑡!"
+
+#~ msgid ""
+#~ "I will not. Unless you want me to round up the city’s thieves to fight "
+#~ "for you, I do not have the troops to spare. However, I am not the only "
+#~ "one who commands men in this corner of Wesnoth."
+#~ msgstr ""
+#~ "𐑲 𐑢𐑦𐑤 𐑯𐑪𐑑. 𐑳𐑯𐑤𐑧𐑕 𐑿 𐑢𐑪𐑯𐑑 𐑥𐑰 𐑑 𐑮𐑬𐑯𐑛 𐑳𐑐 𐑞 𐑕𐑦𐑑𐑰𐑟 𐑔𐑰𐑝𐑟 𐑑 𐑓𐑲𐑑 𐑓𐑹 𐑿, 𐑲 𐑛𐑵 𐑯𐑪𐑑 "
+#~ "𐑣𐑨𐑝 𐑞 𐑑𐑮𐑵𐑐𐑕 𐑑 𐑕𐑐𐑺. 𐑣𐑬𐑧𐑝𐑼, 𐑲 𐑨𐑥 𐑯𐑪𐑑 𐑞 𐑴𐑯𐑤𐑦 𐑢𐑳𐑯 𐑣𐑵 𐑒𐑩𐑥𐑭𐑯𐑛𐑟 𐑥𐑧𐑯 𐑦𐑯 𐑞𐑦𐑕 𐑒𐑹𐑯𐑻 "
+#~ "𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔."
+
+#~ msgid "I don’t understand. There are no other noble lords in this area."
+#~ msgstr "𐑲 𐑛𐑴𐑯𐑑 𐑳𐑯𐑛𐑼𐑕𐑑𐑨𐑯𐑛. 𐑞𐑺 𐑸 𐑯𐑴 𐑳𐑞𐑼 𐑯𐑴𐑚𐑤 𐑤𐑹𐑛𐑟 𐑦𐑯 𐑞𐑦𐑕 𐑺𐑦𐑩."
+
+#~ msgid ""
+#~ "Southeast of here there is a town, and there you may find assistance of "
+#~ "the type I cannot give."
+#~ msgstr ""
+#~ "𐑕𐑬𐑔𐑰𐑕𐑑 𐑝 𐑣𐑽 𐑞𐑺 𐑦𐑟 𐑩 𐑑𐑬𐑯, 𐑯 𐑞𐑺 𐑿 𐑥𐑱 𐑓𐑲𐑯𐑛 𐑩𐑕𐑦𐑕𐑑𐑩𐑯𐑕 𐑝 𐑞 𐑑𐑲𐑐 𐑲 𐑒𐑨𐑯𐑪𐑑 𐑜𐑦𐑝."
+
+#~ msgid ""
+#~ "Wish us well. If we are to resist the Wesnoth army a second time, we’re "
+#~ "going to need more than clubs and slings against steel."
+#~ msgstr ""
+#~ "𐑢𐑦𐑖 𐑳𐑕 𐑢𐑧𐑤. 𐑦𐑓 𐑢𐑰 𐑸 𐑑 𐑮𐑦𐑟𐑦𐑕𐑑 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑩 𐑕𐑧𐑒𐑩𐑯𐑛 𐑑𐑲𐑥, 𐑢𐑰'𐑼 𐑜𐑴𐑦𐑙 𐑑 𐑯𐑰𐑛 "
+#~ "𐑥𐑹 𐑞𐑨𐑯 𐑒𐑤𐑳𐑚𐑟 𐑯 𐑕𐑤𐑦𐑙𐑟 𐑩𐑜𐑱𐑯𐑕𐑑 𐑕𐑑𐑰𐑤."
+
+#~ msgid ""
+#~ "Look, more riders come from the southeast. We cannot survive another "
+#~ "assault. We are finished!"
+#~ msgstr ""
+#~ "𐑤𐑫𐑒, 𐑥𐑹 𐑮𐑲𐑛𐑼𐑟 𐑒𐑳𐑥 𐑓𐑮𐑪𐑥 𐑞 𐑕𐑬𐑔𐑰𐑕𐑑. 𐑢𐑰 𐑒𐑨𐑯𐑪𐑑 𐑕𐑻𐑝𐑲𐑝 𐑩𐑯𐑳𐑞𐑼 𐑩𐑕𐑪𐑤𐑑. 𐑢𐑰 𐑸 𐑓𐑦𐑯𐑦𐑖𐑑!"
+
+#~ msgid "Midnight"
+#~ msgstr "𐑥𐑦𐑛𐑯𐑲𐑑"
+
+#~ msgid "Take Baldras to meet the leader of the insurgency"
+#~ msgstr "𐑑𐑱𐑒 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑑 𐑥𐑰𐑑 𐑞 𐑤𐑰𐑛𐑻 𐑝 𐑞 𐑦𐑯𐑕𐑻𐑡𐑩𐑯𐑕𐑰"
+
+#, fuzzy
+#~ msgid ""
+#~ "I’m not sure where we’re supposed to go now. If we go into town we can "
+#~ "start asking around for information."
+#~ msgstr ""
+#~ "𐑲'𐑧𐑥 𐑯𐑪𐑑 𐑖𐑫𐑼 𐑢𐑺 𐑢𐑰'𐑼 𐑕𐑩𐑐𐑴𐑟𐑛 𐑑 𐑜𐑴 𐑯𐑬. 𐑦𐑓 𐑢𐑰 𐑜𐑴 𐑦𐑯𐑑𐑫 𐑑𐑬𐑯 𐑢𐑰 𐑒𐑨𐑯 𐑕𐑑𐑸𐑑 𐑭𐑕𐑒𐑦𐑙 "
+#~ "𐑩𐑮𐑬𐑯𐑛 𐑓𐑹 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑑𐑦𐑪𐑯."
+
+#~ msgid "Who are you?"
+#~ msgstr "𐑣𐑵 𐑸 𐑿?"
+
+#~ msgid ""
+#~ "I have come to find you. You must make it through the city without being "
+#~ "seen. The soldiers are normally out hunting for my kind, but a company of "
+#~ "heavy infantry arrived three days ago and took over the patrols."
+#~ msgstr ""
+#~ "𐑲 𐑣𐑨𐑝 𐑒𐑳𐑥 𐑑 𐑓𐑲𐑯𐑛 𐑿. 𐑿 𐑥𐑳𐑕𐑑 𐑥𐑱𐑒 𐑦𐑑 𐑔𐑮𐑵 𐑞 𐑕𐑦𐑑𐑦 𐑢𐑦𐑞𐑬𐑑 𐑚𐑰𐑦𐑙 𐑕𐑰𐑯. 𐑞 𐑕𐑴𐑤𐑡𐑼𐑟 𐑸 "
+#~ "𐑯𐑹𐑥𐑩𐑤𐑦 𐑬𐑑 𐑣𐑳𐑯𐑑𐑦𐑙 𐑓𐑹 𐑥𐑲 𐑒𐑲𐑯𐑛, 𐑚𐑳𐑑 𐑩 𐑒𐑳𐑥𐑐𐑩𐑯𐑦 𐑝 𐑣𐑧𐑝𐑦 𐑦𐑯𐑓𐑩𐑯𐑑𐑮𐑦 𐑩𐑮𐑲𐑝𐑛 𐑔𐑮𐑰 𐑛𐑱𐑟 "
+#~ "𐑩𐑜𐑴 𐑯 𐑑𐑫𐑒 𐑴𐑝𐑼 𐑞 𐑐𐑩𐑑𐑮𐑴𐑤𐑟."
+
+#~ msgid "They’re looking for us."
+#~ msgstr "𐑞𐑱'𐑼 𐑤𐑫𐑒𐑦𐑙 𐑓𐑹 𐑳𐑕."
+
+#~ msgid ""
+#~ "Gentlemen, please come this way and follow the path into the forest. Our "
+#~ "leader is anxious to meet you."
+#~ msgstr ""
+#~ "𐑡𐑧𐑯𐑑𐑩𐑤𐑥𐑧𐑯, 𐑐𐑤𐑰𐑟 𐑒𐑳𐑥 𐑞𐑦𐑕 𐑢𐑱 𐑯 𐑓𐑪𐑤𐑴 𐑞 𐑐𐑭𐑔 𐑦𐑯𐑑𐑫 𐑞 𐑓𐑹𐑦𐑕𐑑. 𐑬𐑼 𐑤𐑰𐑛𐑻 𐑦𐑟 𐑨𐑙𐑖𐑩𐑕 𐑑 "
+#~ "𐑥𐑰𐑑 𐑿."
+
+#~ msgid ""
+#~ "As soon as we escape the Wesnoth death squad, we will be happy to oblige."
+#~ msgstr "𐑨𐑟 𐑕𐑵𐑯 𐑨𐑟 𐑢𐑰 𐑦𐑕𐑒𐑱𐑐 𐑞 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑛𐑧𐑔 𐑕𐑒𐑢𐑪𐑛, 𐑢𐑰 𐑢𐑦𐑤 𐑚𐑰 𐑣𐑨𐑐𐑦 𐑑 𐑩𐑚𐑤𐑲𐑡."
+
+#~ msgid "As it turns out, I’m the crazy one. Let’s finish this folly."
+#~ msgstr "𐑨𐑟 𐑦𐑑 𐑑𐑻𐑯𐑟 𐑬𐑑, 𐑲'𐑧𐑥 𐑞 𐑒𐑮𐑱𐑟𐑦 𐑢𐑳𐑯. 𐑤𐑧𐑑'𐑕 𐑓𐑦𐑯𐑦𐑖 𐑞𐑦𐑕 𐑓𐑪𐑤𐑦."
+
+#~ msgid ""
+#~ "We have spent too much time here. Surely the Queen’s forces have returned "
+#~ "to Dallben. Our mission is unfinished, but we must return to fight a "
+#~ "suicide battle."
+#~ msgstr ""
+#~ "𐑢𐑰 𐑣𐑨𐑝 𐑕𐑐𐑧𐑯𐑑 𐑑𐑵 𐑥𐑳𐑗 𐑑𐑲𐑥 𐑣𐑽. 𐑖𐑫𐑼𐑤𐑦 𐑞 𐑒𐑢𐑰𐑯'𐑟 𐑓𐑹𐑕𐑩𐑟 𐑣𐑨𐑝 𐑮𐑦𐑑𐑻𐑯𐑛 𐑑 ·𐑛𐑨𐑤𐑚𐑧𐑯. 𐑬𐑼 "
+#~ "𐑥𐑦𐑖𐑩𐑯 𐑦𐑟 𐑩𐑯𐑓𐑦𐑯𐑦𐑖𐑑, 𐑚𐑳𐑑 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑮𐑦𐑑𐑻𐑯 𐑑 𐑓𐑲𐑑 𐑩 𐑕𐑿𐑦𐑕𐑲𐑛 𐑚𐑨𐑑𐑩𐑤."
+
+#, fuzzy
+#~ msgid ""
+#~ "I am Helicrom, and you should not be so glib. I control dangerous men. My "
+#~ "henchmen can slip unseen through any city, rob a man while he sleeps, or "
+#~ "attack a caravan head-on. It’s not noble work, but our pursuits require "
+#~ "plenty of gold."
+#~ msgstr ""
+#~ "𐑲 𐑨𐑥 ·𐑣𐑧𐑤𐑦𐑒𐑮𐑪𐑥, 𐑯 𐑿 𐑖𐑫𐑛 𐑯𐑪𐑑 𐑚𐑰 𐑕𐑴 𐑜𐑤𐑦𐑚. 𐑲 𐑒𐑩𐑯𐑑𐑮𐑴𐑤 𐑛𐑱𐑯𐑡𐑼𐑩𐑕 𐑥𐑧𐑯. 𐑥𐑲 𐑣𐑧𐑯𐑗𐑥𐑩𐑯 "
+#~ "𐑒𐑨𐑯 𐑕𐑤𐑦𐑐 𐑩𐑯𐑕𐑰𐑯 𐑔𐑮𐑵 𐑧𐑯𐑦 𐑕𐑦𐑑𐑦, 𐑮𐑪𐑚 𐑩 𐑥𐑨𐑯 𐑢𐑲𐑤 𐑣𐑰 𐑕𐑤𐑰𐑐𐑕, 𐑹 𐑩𐑑𐑨𐑒 𐑩 𐑒𐑨𐑮𐑩𐑝𐑨𐑯 𐑣𐑧𐑛-"
+#~ "𐑪𐑯. 𐑦𐑑'𐑕 𐑯𐑪𐑑 𐑯𐑴𐑚𐑤 𐑢𐑻𐑒, 𐑚𐑳𐑑 𐑬𐑼 𐑐𐑻𐑕𐑵𐑑𐑕 𐑮𐑦𐑒𐑢𐑲𐑼 𐑐𐑤𐑧𐑯𐑑𐑰 𐑝 𐑜𐑴𐑤𐑛."
+
+#, fuzzy
+#~ msgid "Why do you want to help us?"
+#~ msgstr "𐑲...𐑕𐑰, 𐑲 𐑔𐑦𐑙𐑒. 𐑢𐑲 𐑛𐑵 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑣𐑧𐑤𐑐 𐑳𐑕?"
+
+#, fuzzy
+#~| msgid ""
+#~| "We don’t. You have sought us out. But, I do know of your situation and "
+#~| "am willing to help. Any weakening of the Throne of Wesnoth, whether it "
+#~| "be occupied by King or Queen, aids us."
+#~ msgid ""
+#~ "You are the ones who have sought us out. But, I do know of your situation "
+#~ "and am willing to help. Any weakening of the Throne of Wesnoth, whether "
+#~ "it be occupied by King or Queen, aids us. Do you know of Halstead?"
+#~ msgstr ""
+#~ "𐑢𐑰 𐑛𐑴𐑯𐑑. 𐑿 𐑣𐑨𐑝 𐑕𐑷𐑑 𐑳𐑕 𐑬𐑑. 𐑚𐑳𐑑, 𐑲 𐑛𐑵 𐑯𐑴 𐑝 𐑿𐑼 𐑕𐑦𐑑𐑿𐑱𐑖𐑩𐑯 𐑯 𐑨𐑥 𐑢𐑦𐑤𐑦𐑙 𐑑 𐑣𐑧𐑤𐑐. "
+#~ "𐑧𐑯𐑦 𐑢𐑰𐑒𐑩𐑯𐑦𐑙 𐑝 𐑞 𐑔𐑮𐑴𐑯 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔, 𐑢𐑧𐑞𐑼 𐑦𐑑 𐑚𐑰 𐑪𐑒𐑘𐑫𐑐𐑲𐑛 𐑚𐑲 𐑒𐑦𐑙 𐑹 𐑒𐑢𐑰𐑯, 𐑱𐑛𐑟 𐑳𐑕."
+
+#, fuzzy
+#~| msgid ""
+#~| "The words of Lord Maddock have weighed heavy on me these past few days. "
+#~| "It has dawned on me that we can never win. We will never defeat the "
+#~| "entire army of Wesnoth. Idiocy! If the noble lord of Elensefar is "
+#~| "unwilling to resist the Queen, how should I ever expect to?"
+#~ msgid ""
+#~ "Well, what can we do? It seems to me that we can never win. It is "
+#~ "impossible for us to face the entire forces of Weldyn by ourselves. "
+#~ "Idiocy! If the noble lord of Elensefar is unwilling to resist the Queen, "
+#~ "how can we expect to?"
+#~ msgstr ""
+#~ "𐑞 𐑢𐑻𐑛𐑟 𐑝 𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒 𐑣𐑨𐑝 𐑢𐑱𐑛 𐑣𐑧𐑝𐑦 𐑪𐑯 𐑥𐑰 𐑞𐑰𐑟 𐑐𐑭𐑕𐑑 𐑓𐑿 𐑛𐑱𐑟. 𐑦𐑑 𐑣𐑨𐑟 𐑛𐑷𐑯𐑛 𐑪𐑯 𐑥𐑰 "
+#~ "𐑞𐑨𐑑 𐑢𐑰 𐑒𐑨𐑯 𐑯𐑧𐑝𐑼 𐑢𐑦𐑯. 𐑢𐑰 𐑢𐑦𐑤 𐑯𐑧𐑝𐑼 𐑛𐑦𐑓𐑰𐑑 𐑞 𐑧𐑯𐑑𐑲𐑼 𐑸𐑥𐑦 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔. 𐑦𐑛𐑰𐑩𐑕𐑰! 𐑦𐑓 "
+#~ "𐑞 𐑯𐑴𐑚𐑤 𐑤𐑹𐑛 𐑝 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑦𐑟 𐑩𐑯𐑢𐑦𐑤𐑦𐑙 𐑑 𐑮𐑦𐑟𐑦𐑕𐑑 𐑞 𐑒𐑢𐑰𐑯, 𐑣𐑬 𐑖𐑫𐑛 𐑲 𐑧𐑝𐑼 𐑦𐑒𐑕𐑐𐑧𐑒𐑑 𐑑?"
+
+#, fuzzy
+#~| msgid ""
+#~| "Do you propose surrender? It’s this or nothing. All we can do is see it "
+#~| "through to the end."
+#~ msgid ""
+#~ "We... cannot just surrender either. Helicrom is right. It’s this or "
+#~ "nothing. All we can do is see it through to the end."
+#~ msgstr ""
+#~ "𐑛𐑵 𐑿 𐑐𐑮𐑩𐑐𐑴𐑟 𐑕𐑻𐑧𐑯𐑛𐑻? 𐑦𐑑'𐑕 𐑞𐑦𐑕 𐑹 𐑯𐑳𐑔𐑦𐑙. 𐑷𐑤 𐑢𐑰 𐑒𐑨𐑯 𐑛𐑵 𐑦𐑟 𐑕𐑰 𐑦𐑑 𐑔𐑮𐑵 𐑑 𐑞 𐑧𐑯𐑛."
+
+#, fuzzy
+#~| msgid ""
+#~| "What a bloody mess. We must attack Halstead next. If we wait, they will "
+#~| "become invincible. If we can burn it to the ground before that happens, "
+#~| "our people may have a chance. Rest well tonight, because tomorrow’s "
+#~| "battle will decide the fate of our homes, our families, and our freedom."
+#~ msgid ""
+#~ "It seems to me that our only choice is to attack Halstead itself. If we "
+#~ "wait, their armies will become invincible. If we can burn it to the "
+#~ "ground before the Queen’s forces rally, we may yet be able to break their "
+#~ "foothold in this province."
+#~ msgstr ""
+#~ "𐑢𐑪𐑑 𐑩 𐑚𐑤𐑳𐑛𐑦 𐑥𐑧𐑕. 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑩𐑑𐑨𐑒 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑯𐑧𐑒𐑕𐑑. 𐑦𐑓 𐑢𐑰 𐑢𐑱𐑑, 𐑞𐑱 𐑢𐑦𐑤 𐑚𐑦𐑒𐑳𐑥 "
+#~ "𐑦𐑯𐑝𐑦𐑯𐑕𐑩𐑚𐑩𐑤. 𐑦𐑓 𐑢𐑰 𐑒𐑨𐑯 𐑚𐑻𐑯 𐑦𐑑 𐑑 𐑞 𐑜𐑮𐑬𐑯𐑛 𐑚𐑦𐑓𐑹 𐑞𐑨𐑑 𐑣𐑨𐑐𐑩𐑯𐑟, 𐑬𐑼 𐑐𐑰𐑐𐑩𐑤 𐑥𐑱 𐑣𐑨𐑝 𐑩 "
+#~ "𐑗𐑭𐑯𐑕. 𐑮𐑧𐑕𐑑 𐑢𐑧𐑤 𐑑𐑫𐑯𐑲𐑑, 𐑚𐑦𐑒𐑪𐑟 𐑑𐑩𐑥𐑸𐑴𐑟 𐑚𐑨𐑑𐑩𐑤 𐑢𐑦𐑤 𐑛𐑦𐑕𐑲𐑛 𐑞 𐑓𐑱𐑑 𐑝 𐑬𐑼 𐑣𐑴𐑥𐑟, 𐑬𐑼 "
+#~ "𐑓𐑨𐑥𐑦𐑤𐑦𐑟, 𐑯 𐑬𐑼 𐑓𐑮𐑰𐑛𐑩𐑥."
+
+#, fuzzy
+#~ msgid ""
+#~ "In the Year of Wesnoth 161, the newly crowned king sought to tame the "
+#~ "wildlands that separated the human cities surrounding Weldyn and the "
+#~ "coastal regions of Elensefar once and for all."
+#~ msgstr ""
+#~ "𐑦𐑯 𐑞 𐑘𐑽 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔 161, 338 𐑘𐑽𐑟 𐑚𐑦𐑓𐑹 ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑚𐑦𐑑𐑮𐑱𐑩𐑤, 𐑞 𐑯𐑿𐑤𐑦 𐑒𐑮𐑬𐑯𐑛 𐑒𐑦𐑙 𐑕𐑷𐑑 "
+#~ "𐑑 𐑥𐑱𐑒 𐑕𐑱𐑓 𐑢𐑳𐑯𐑕 𐑯 𐑓𐑹 𐑷𐑤 𐑞 𐑢𐑲𐑤𐑛𐑤𐑨𐑯𐑛𐑟 𐑞𐑨𐑑 𐑕𐑧𐑐𐑼𐑱𐑑𐑩𐑛 𐑞 𐑣𐑿𐑥𐑩𐑯 𐑕𐑦𐑑𐑦𐑟 𐑕𐑼𐑬𐑯𐑛𐑦𐑙 "
+#~ "·𐑢𐑧𐑤𐑛𐑦𐑯 𐑯 𐑞 𐑒𐑴𐑕𐑑𐑩𐑤 𐑮𐑰𐑗𐑩𐑯𐑟 𐑝 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸."
+
+#, fuzzy
+#~ msgid ""
+#~ "The grand army of Wesnoth, personally led by the High Council of "
+#~ "Archmagi, scoured the plains of all manner of hostile creature, be it "
+#~ "beast, orc, or elf. The city-state of Elensefar was formally united to "
+#~ "the kingdom and settlements rapidly spread. The country of Wesnoth had "
+#~ "been carved in deed as well as in name."
+#~ msgstr ""
+#~ "𐑞 𐑜𐑮𐑨𐑯𐑛 𐑸𐑥𐑦 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔, 𐑐𐑻𐑕𐑩𐑯𐑩𐑤𐑦 𐑤𐑧𐑛 𐑚𐑲 𐑞 𐑣𐑲 𐑒𐑬𐑯𐑕𐑩𐑤 𐑝 Archmagi, 𐑕𐑒𐑬𐑻𐑛 𐑞 "
+#~ "𐑐𐑤𐑱𐑯𐑟 𐑝 𐑷𐑤 𐑥𐑨𐑯𐑼 𐑝 𐑣𐑪𐑕𐑑𐑲𐑤 𐑒𐑮𐑰𐑗𐑼, 𐑚𐑰 𐑦𐑑 𐑚𐑰𐑕𐑑, 𐑹𐑒, 𐑹 𐑧𐑤𐑓. 𐑞 𐑕𐑦𐑑𐑦-𐑕𐑑𐑱𐑑 𐑝 "
+#~ "·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑢𐑪𐑟 𐑓𐑹𐑥𐑩𐑤𐑦 𐑿𐑯𐑲𐑑𐑩𐑛 𐑑 𐑞 𐑒𐑦𐑙𐑛𐑩𐑥 𐑯 𐑕𐑧𐑑𐑩𐑤𐑥𐑩𐑯𐑑𐑕 𐑮𐑨𐑐𐑦𐑛𐑤𐑦 𐑕𐑐𐑮𐑧𐑛. 𐑞 "
+#~ "𐑒𐑳𐑯𐑑𐑮𐑰 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑣𐑨𐑛 𐑚𐑰𐑯 𐑒𐑸𐑝𐑛 𐑦𐑯 𐑛𐑰𐑛 𐑨𐑟 𐑢𐑧𐑤 𐑨𐑟 𐑦𐑯 𐑯𐑱𐑥."
+
+#~ msgid ""
+#~ "A monument to this achievement was erected in the very heart of the "
+#~ "wildlands. In a twelve-year ritual, the High Council demonstrated the "
+#~ "height to which human magic had grown over the years by drawing the "
+#~ "monument directly from the earth’s living rock."
+#~ msgstr ""
+#~ "𐑩 𐑥𐑪𐑯𐑿𐑥𐑩𐑯𐑑 𐑑 𐑞𐑦𐑕 𐑩𐑗𐑰𐑝𐑥𐑩𐑯𐑑 𐑢𐑪𐑟 𐑽𐑧𐑒𐑑𐑩𐑛 𐑦𐑯 𐑞 𐑝𐑧𐑮𐑦 𐑣𐑸𐑑 𐑝 𐑞 𐑢𐑲𐑤𐑛𐑤𐑨𐑯𐑛𐑟. 𐑦𐑯 𐑩 "
+#~ "𐑑𐑢𐑧𐑤𐑝-𐑘𐑽 𐑮𐑦𐑗𐑵𐑩𐑤, 𐑞 𐑣𐑲 𐑒𐑬𐑯𐑕𐑩𐑤 𐑛𐑧𐑥𐑩𐑯𐑕𐑑𐑮𐑱𐑑𐑩𐑛 𐑞 𐑣𐑲𐑑 𐑑 𐑢𐑦𐑗 𐑣𐑿𐑥𐑩𐑯 𐑥𐑨𐑡𐑦𐑒 𐑣𐑨𐑛 "
+#~ "𐑜𐑮𐑴𐑯 𐑴𐑝𐑼 𐑞 𐑘𐑽𐑟 𐑚𐑲 𐑛𐑮𐑷𐑦𐑙 𐑞 𐑥𐑪𐑯𐑿𐑥𐑩𐑯𐑑 𐑛𐑲𐑮𐑧𐑒𐑑𐑤𐑦 𐑓𐑮𐑪𐑥 𐑞 𐑻𐑔𐑕 𐑤𐑦𐑝𐑦𐑙 𐑮𐑪𐑒."
+
+#~ msgid ""
+#~ "Hundreds of feet tall, the mountain towered high above the plains, its "
+#~ "sheer walls both inspiring and terrifying. Men from all over the "
+#~ "countryside labored there, building the most formidable fortress ever "
+#~ "conceived. It became the Stronghold of Halstead."
+#~ msgstr ""
+#~ "𐑣𐑳𐑯𐑛𐑮𐑧𐑛𐑟 𐑝 𐑓𐑰𐑑 𐑑𐑷𐑤, 𐑞 𐑥𐑬𐑯𐑑𐑩𐑯 𐑑𐑬𐑻𐑛 𐑣𐑲 𐑩𐑚𐑳𐑝 𐑞 𐑐𐑤𐑱𐑯𐑟, 𐑦𐑑𐑕 𐑖𐑽 𐑢𐑷𐑤𐑟 𐑚𐑴𐑔 "
+#~ "𐑦𐑯𐑕𐑐𐑲𐑼𐑦𐑙 𐑯 𐑑𐑧𐑮𐑦𐑓𐑲𐑦𐑙. 𐑥𐑧𐑯 𐑓𐑮𐑪𐑥 𐑷𐑤 𐑴𐑝𐑼 𐑞 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛 𐑤𐑱𐑚𐑼𐑛 𐑞𐑺, 𐑚𐑦𐑤𐑛𐑦𐑙 𐑞 𐑥𐑴𐑕𐑑 "
+#~ "𐑓𐑹𐑥𐑦𐑛𐑩𐑚𐑩𐑤 𐑓𐑹𐑑𐑮𐑩𐑕 𐑧𐑝𐑼 𐑒𐑩𐑯𐑕𐑰𐑝𐑛. 𐑦𐑑 𐑚𐑦𐑒𐑱𐑥 𐑞 𐑕𐑑𐑮𐑪𐑙𐑣𐑴𐑤𐑛 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛."
+
+#, fuzzy
+#~ msgid ""
+#~ "This sentinel of the western plains stood watch as Wesnoth prospered for "
+#~ "many centuries under its protection. No war has overcome it, and its "
+#~ "walls have never been overrun. The blood of invaders stains its parapets "
+#~ "and the bones of the defeated crumble at the base of Halstead’s frozen "
+#~ "waves of stone."
+#~ msgstr ""
+#~ "𐑞𐑦𐑕 𐑕𐑧𐑯𐑑𐑩𐑯𐑩𐑤 𐑝 𐑞 𐑢𐑧𐑕𐑑𐑼𐑯 𐑐𐑤𐑱𐑯𐑟 𐑕𐑑𐑫𐑛 𐑢𐑪𐑡 𐑨𐑟 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑐𐑮𐑪𐑕𐑐𐑼𐑛 𐑓𐑹 𐑥𐑧𐑯𐑦 "
+#~ "𐑕𐑧𐑯𐑑𐑘𐑼𐑦𐑟 𐑳𐑯𐑛𐑼 𐑞 𐑐𐑮𐑩𐑑𐑧𐑒𐑖𐑩𐑯 𐑦𐑑 𐑐𐑮𐑩𐑝𐑲𐑛𐑩𐑛. 𐑯𐑴 𐑢𐑹 𐑣𐑨𐑟 𐑴𐑝𐑼𐑒𐑳𐑥 𐑦𐑑, 𐑯 𐑦𐑑𐑕 𐑢𐑷𐑤𐑟 "
+#~ "𐑣𐑨𐑝 𐑯𐑧𐑝𐑼 𐑚𐑰𐑯 𐑴𐑝𐑼𐑮𐑳𐑯. 𐑞 𐑚𐑤𐑳𐑛 𐑝 𐑦𐑯𐑝𐑱𐑛𐑻𐑟 𐑕𐑑𐑱𐑯𐑟 𐑦𐑑𐑕 parapets 𐑯 𐑞 𐑚𐑴𐑯𐑟 𐑝 𐑞 "
+#~ "𐑛𐑦𐑓𐑰𐑑𐑩𐑛 𐑒𐑮𐑩𐑥𐑚𐑩𐑤 𐑨𐑑 𐑞 𐑚𐑱𐑕 𐑝 ·𐑣𐑨𐑤𐑕𐑑𐑧𐑛𐑕 𐑓𐑮𐑴𐑟𐑩𐑯 𐑢𐑱𐑝𐑟 𐑝 𐑕𐑑𐑴𐑯."
+
+#~ msgid ""
+#~ "That may not be too far from the truth. During the time of the Great "
+#~ "Kings of Wesnoth, this land was tamed with powerful magic. Wizards of an "
+#~ "ancient era forged the walls of Halstead from the rock below."
+#~ msgstr ""
+#~ "𐑞𐑨𐑑 𐑥𐑱 𐑯𐑪𐑑 𐑚𐑰 𐑑𐑵 𐑓𐑸 𐑓𐑮𐑪𐑥 𐑞 𐑑𐑮𐑵𐑔. 𐑛𐑘𐑫𐑼𐑦𐑙 𐑞 𐑑𐑲𐑥 𐑝 𐑞 𐑜𐑮𐑱𐑑 𐑒𐑦𐑙𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔, "
+#~ "𐑞𐑦𐑕 𐑤𐑨𐑯𐑛 𐑢𐑪𐑟 𐑑𐑱𐑥𐑛 𐑢𐑦𐑞 𐑐𐑬𐑼𐑓𐑩𐑤 𐑥𐑨𐑡𐑦𐑒. 𐑢𐑦𐑟𐑼𐑛𐑟 𐑝 𐑩𐑯 𐑱𐑯𐑖𐑩𐑯𐑑 𐑽𐑩 𐑓𐑹𐑡𐑛 𐑞 𐑢𐑷𐑤𐑟 𐑝 "
+#~ "𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑓𐑮𐑪𐑥 𐑞 𐑮𐑪𐑒 𐑚𐑩𐑤𐑴."
+
+#~ msgid ""
+#~ "No, my young friend. Halstead indeed has a weakness. Among my many assets "
+#~ "is access to a wealth of secrets few in Wesnoth are privy to."
+#~ msgstr ""
+#~ "𐑯𐑴, 𐑥𐑲 𐑘𐑳𐑙 𐑓𐑮𐑧𐑯𐑛. 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑦𐑯𐑛𐑰𐑛 𐑣𐑨𐑟 𐑩 𐑢𐑰𐑒𐑯𐑩𐑕. 𐑩𐑥𐑳𐑙 𐑥𐑲 𐑥𐑧𐑯𐑦 𐑨𐑕𐑩𐑑𐑕 𐑦𐑟 𐑨𐑒𐑕𐑧𐑕 "
+#~ "𐑑 𐑩 𐑢𐑧𐑤𐑔 𐑝 𐑕𐑰𐑒𐑮𐑩𐑑𐑕 𐑓𐑿 𐑦𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸 𐑐𐑮𐑦𐑝𐑰 𐑑."
+
+#~ msgid ""
+#~ "You see, the mountain on which the fort was built is solid, but the "
+#~ "castle on top has been built and rebuilt many times over the ages. It is "
+#~ "not as indestructible as you might think."
+#~ msgstr ""
+#~ "𐑿 𐑕𐑰, 𐑞 𐑥𐑬𐑯𐑑𐑩𐑯 𐑪𐑯 𐑢𐑦𐑗 𐑞 𐑓𐑹𐑑 𐑢𐑪𐑟 𐑚𐑦𐑤𐑑 𐑦𐑟 𐑕𐑪𐑤𐑦𐑛, 𐑚𐑳𐑑 𐑞 𐑒𐑨𐑕𐑩𐑤 𐑪𐑯 𐑑𐑪𐑐 𐑣𐑨𐑟 𐑚𐑰𐑯 "
+#~ "𐑚𐑦𐑤𐑑 𐑯 𐑮𐑰𐑚𐑦𐑤𐑑 𐑥𐑧𐑯𐑦 𐑑𐑲𐑥𐑟 𐑴𐑝𐑼 𐑞 𐑱𐑡𐑩𐑟. 𐑦𐑑 𐑦𐑟 𐑯𐑪𐑑 𐑨𐑟 𐑦𐑯𐑛𐑩𐑕𐑑𐑮𐑩𐑒𐑑𐑦𐑚𐑩𐑤 𐑨𐑟 𐑿 𐑥𐑲𐑑 "
+#~ "𐑔𐑦𐑙𐑒."
+
+#~ msgid ""
+#~ "Beneath the structure is a system of catacombs that connects all four "
+#~ "towers to the central keep. Over time, after many wars, supports were "
+#~ "required to hold up the middle."
+#~ msgstr ""
+#~ "𐑚𐑦𐑯𐑰𐑔 𐑞 𐑕𐑑𐑮𐑳𐑒𐑗𐑼 𐑦𐑟 𐑩 𐑕𐑦𐑕𐑑𐑩𐑥 𐑝 𐑒𐑨𐑑𐑩𐑒𐑴𐑥𐑟 𐑞𐑨𐑑 𐑒𐑩𐑯𐑧𐑒𐑑𐑕 𐑷𐑤 𐑓𐑹 𐑑𐑬𐑼𐑟 𐑑 𐑞 𐑕𐑧𐑯𐑑𐑮𐑩𐑤 "
+#~ "𐑒𐑰𐑐. 𐑴𐑝𐑼 𐑑𐑲𐑥, 𐑭𐑓𐑑𐑼 𐑥𐑧𐑯𐑦 𐑢𐑹𐑟, 𐑕𐑩𐑐𐑹𐑑𐑕 𐑢𐑻 𐑮𐑦𐑒𐑢𐑲𐑼𐑛 𐑑 𐑣𐑴𐑤𐑛 𐑳𐑐 𐑞 𐑥𐑦𐑛𐑩𐑤."
+
+#~ msgid ""
+#~ "I hope you’re right. In a few hours, night will fall, and we will find "
+#~ "out."
+#~ msgstr "𐑲 𐑣𐑴𐑐 𐑿'𐑼 𐑮𐑲𐑑. 𐑦𐑯 𐑩 𐑓𐑿 𐑬𐑼𐑟, 𐑯𐑲𐑑 𐑢𐑦𐑤 𐑓𐑷𐑤, 𐑯 𐑢𐑰 𐑢𐑦𐑤 𐑓𐑲𐑯𐑛 𐑬𐑑."
+
+#~ msgid ""
+#~ "We must be cautious. Look there, a substantial orc force is also "
+#~ "advancing on Halstead. They must think Wesnoth’s army is spread out right "
+#~ "now."
+#~ msgstr ""
+#~ "𐑢𐑰 𐑥𐑳𐑕𐑑 𐑚𐑰 𐑒𐑷𐑖𐑩𐑕. 𐑤𐑫𐑒 𐑞𐑺, 𐑩 𐑕𐑩𐑚𐑕𐑑𐑨𐑯𐑗𐑩𐑤 𐑹𐑒 𐑓𐑹𐑕 𐑦𐑟 𐑷𐑤𐑕𐑴 𐑩𐑛𐑝𐑭𐑯𐑕𐑦𐑙 𐑪𐑯 "
+#~ "𐑣𐑨𐑤𐑕𐑑𐑧𐑛. 𐑞𐑱 𐑥𐑳𐑕𐑑 𐑔𐑦𐑙𐑒 ·𐑢𐑧𐑕𐑯𐑷𐑔𐑕 𐑸𐑥𐑦 𐑦𐑟 𐑕𐑐𐑮𐑧𐑛 𐑬𐑑 𐑮𐑲𐑑 𐑯𐑬."
+
+#~ msgid "Heh. They’re in for a surprise. This may work to our advantage."
+#~ msgstr "𐑣𐑧. 𐑞𐑱'𐑼 𐑦𐑯 𐑓𐑹 𐑩 𐑕𐑼𐑐𐑮𐑲𐑟. 𐑞𐑦𐑕 𐑥𐑱 𐑢𐑻𐑒 𐑑 𐑬𐑼 𐑩𐑛𐑝𐑭𐑯𐑑𐑦𐑡."
+
+#~ msgid "Who is it?"
+#~ msgstr "𐑣𐑵 𐑦𐑟 𐑦𐑑?"
+
+#~ msgid "Help, I hope. Circumstances cannot afford to get much more dire."
+#~ msgstr "𐑣𐑧𐑤𐑐, 𐑲 𐑣𐑴𐑐. 𐑕𐑻𐑒𐑩𐑥𐑕𐑑𐑩𐑯𐑕𐑩𐑟 𐑒𐑨𐑯𐑪𐑑 𐑩𐑓𐑹𐑛 𐑑 𐑜𐑧𐑑 𐑥𐑳𐑗 𐑥𐑹 𐑛𐑲𐑮."
+
+#~ msgid "Riders approach from the northwest! Stand fast, men."
+#~ msgstr "𐑮𐑲𐑛𐑼𐑟 𐑩𐑐𐑮𐑴𐑗 𐑓𐑮𐑪𐑥 𐑞 𐑯𐑹𐑔𐑢𐑧𐑕𐑑! 𐑕𐑑𐑨𐑯𐑛 𐑓𐑭𐑕𐑑, 𐑥𐑧𐑯."
+
+#, fuzzy
+#~ msgid ""
+#~ "Knights of Elensefar, behold: the battle has already begun! Make camp "
+#~ "here. Then, we charge!"
+#~ msgstr ""
+#~ "𐑯𐑲𐑑𐑕 𐑝 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸, 𐑚𐑦𐑣𐑴𐑤𐑛: 𐑞 𐑚𐑨𐑑𐑩𐑤 𐑣𐑨𐑟 𐑷𐑤𐑮𐑧𐑛𐑦 𐑚𐑩𐑜𐑳𐑯! 𐑥𐑱𐑒 𐑒𐑨𐑥𐑐 𐑣𐑽. 𐑞𐑧𐑯, 𐑢𐑰 "
+#~ "𐑗𐑸𐑡!"
+
+#~ msgid ""
+#~ "Amazing. Lord Maddock sent his house guards... his finest troops! "
+#~ "Elensefar must be defenseless now. More hinges on this battle than I "
+#~ "thought."
+#~ msgstr ""
+#~ "𐑩𐑥𐑱𐑟𐑦𐑙. 𐑤𐑹𐑛 𐑥𐑨𐑛𐑩𐑒 𐑕𐑧𐑯𐑑 𐑣𐑦𐑟 𐑣𐑬𐑟 𐑜𐑸𐑛𐑟... 𐑣𐑦𐑟 𐑓𐑦𐑯𐑩𐑕𐑑 𐑑𐑮𐑵𐑐𐑕! ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸 𐑥𐑳𐑕𐑑 𐑚𐑰 "
+#~ "𐑛𐑦𐑓𐑧𐑯𐑕𐑤𐑩𐑕 𐑯𐑬. 𐑥𐑹 𐑣𐑦𐑯𐑡𐑩𐑟 𐑪𐑯 𐑞𐑦𐑕 𐑚𐑨𐑑𐑩𐑤 𐑞𐑨𐑯 𐑲 𐑔𐑷𐑑."
+
+#~ msgid "After about an hour..."
+#~ msgstr "𐑭𐑓𐑑𐑼 𐑩𐑚𐑬𐑑 𐑩𐑯 𐑬𐑼..."
+
+#~ msgid "Men, help me out of here! I am trapped under this rubble."
+#~ msgstr "𐑥𐑧𐑯, 𐑣𐑧𐑤𐑐 𐑥𐑰 𐑬𐑑 𐑝 𐑣𐑽! 𐑲 𐑨𐑥 𐑑𐑮𐑨𐑐𐑑 𐑳𐑯𐑛𐑼 𐑞𐑦𐑕 𐑮𐑩𐑚𐑩𐑤."
+
+#~ msgid "I hope this sacrifice is not in vain... but we will never know."
+#~ msgstr "𐑲 𐑣𐑴𐑐 𐑞𐑦𐑕 𐑕𐑨𐑒𐑮𐑦𐑓𐑲𐑕 𐑦𐑟 𐑯𐑪𐑑 𐑦𐑯 𐑝𐑱𐑯... 𐑚𐑳𐑑 𐑢𐑰 𐑢𐑦𐑤 𐑯𐑧𐑝𐑼 𐑯𐑴."
+
+#~ msgid "Our dream of freedom... gone... Unngh."
+#~ msgstr "𐑬𐑼 𐑛𐑮𐑰𐑥 𐑝 𐑓𐑮𐑰𐑛𐑩𐑥... 𐑜𐑪𐑯... 𐑳𐑯𐑯𐑜."
+
+#~ msgid "Uncle!"
+#~ msgstr "𐑳𐑙𐑒𐑩𐑤!"
+
+#~ msgid "NO!"
+#~ msgstr "𐑯𐑴!"
+
+#~ msgid "I promised your father I would watch after you... and I failed."
+#~ msgstr "𐑲 𐑐𐑮𐑪𐑥𐑦𐑕𐑑 𐑿𐑼 𐑓𐑭𐑞𐑼 𐑲 𐑢𐑫𐑛 𐑢𐑪𐑡 𐑭𐑓𐑑𐑼 𐑿... 𐑯 𐑲 𐑓𐑱𐑤𐑛."
+
+#~ msgid ""
+#~ "But we are so close to the end. We must finish this. I am sorry you will "
+#~ "not be able to enjoy our freedom. Goodbye, Harper."
+#~ msgstr ""
+#~ "𐑚𐑳𐑑 𐑢𐑰 𐑸 𐑕𐑴 𐑒𐑤𐑴𐑟 𐑑 𐑞 𐑧𐑯𐑛. 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑓𐑦𐑯𐑦𐑖 𐑞𐑦𐑕. 𐑲 𐑨𐑥 𐑕𐑪𐑮𐑦 𐑿 𐑢𐑦𐑤 𐑯𐑪𐑑 𐑚𐑰 𐑱𐑚𐑩𐑤 "
+#~ "𐑑 𐑦𐑯𐑡𐑶 𐑬𐑼 𐑓𐑮𐑰𐑛𐑩𐑥. 𐑜𐑫𐑛𐑚𐑲, 𐑣𐑸𐑐𐑻."
+
+#~ msgid ""
+#~ "Carry on, my friends. Fighting by your side is the most honorable thing I "
+#~ "have done..."
+#~ msgstr ""
+#~ "𐑒𐑨𐑮𐑦 𐑪𐑯, 𐑥𐑲 𐑓𐑮𐑧𐑯𐑛𐑟. 𐑓𐑲𐑑𐑦𐑙 𐑚𐑲 𐑿𐑼 𐑕𐑲𐑛 𐑦𐑟 𐑞 𐑥𐑴𐑕𐑑 𐑪𐑯𐑼𐑩𐑚𐑩𐑤 𐑔𐑦𐑙 𐑲 𐑣𐑨𐑝 𐑛𐑳𐑯..."
+
+#~ msgid ""
+#~ "You will never successfully oppose Asheviere. Her power is too great... "
+#~ "This small victory today is but a reprieve from the unimaginable pain you "
+#~ "will suffer when the full force of her wrath descends upon you."
+#~ msgstr ""
+#~ "𐑿 𐑢𐑦𐑤 𐑯𐑧𐑝𐑼 𐑕𐑩𐑒𐑕𐑧𐑕𐑓𐑩𐑤𐑦 𐑩𐑐𐑴𐑟 ·𐑨𐑖𐑧𐑝𐑽. 𐑣𐑻 𐑐𐑬𐑼 𐑦𐑟 𐑑𐑵 𐑜𐑮𐑱𐑑... 𐑞𐑦𐑕 𐑕𐑥𐑷𐑤 𐑝𐑦𐑒𐑑𐑼𐑦 "
+#~ "𐑑𐑫𐑛𐑱 𐑦𐑟 𐑚𐑳𐑑 𐑩 𐑮𐑰𐑐𐑮𐑰𐑝 𐑓𐑮𐑪𐑥 𐑞 𐑩𐑯𐑦𐑥𐑨𐑡𐑦𐑯𐑩𐑚𐑩𐑤 𐑐𐑱𐑯 𐑿 𐑢𐑦𐑤 𐑕𐑳𐑓𐑼 𐑢𐑧𐑯 𐑞 𐑓𐑫𐑤 𐑓𐑹𐑕 𐑝 "
+#~ "𐑣𐑻 𐑮𐑪𐑔 𐑛𐑦𐑕𐑧𐑯𐑛𐑟 𐑩𐑐𐑪𐑯 𐑿."
+
+#~ msgid ""
+#~ "This was no small victory. You underestimate the power of love for "
+#~ "freedom."
+#~ msgstr "𐑞𐑦𐑕 𐑢𐑪𐑟 𐑯𐑴 𐑕𐑥𐑷𐑤 𐑝𐑦𐑒𐑑𐑼𐑦. 𐑿 𐑩𐑯𐑛𐑻𐑧𐑕𐑑𐑩𐑥𐑱𐑑 𐑞 𐑐𐑬𐑼 𐑝 𐑤𐑳𐑝 𐑓𐑹 𐑓𐑮𐑰𐑛𐑩𐑥."
+
+#, fuzzy
+#~ msgid ""
+#~ "You... underestimate the... cruelty and ambition of your Queen... Uungh..."
+#~ msgstr "𐑿... 𐑩𐑯𐑛𐑻𐑧𐑕𐑑𐑩𐑥𐑱𐑑 𐑞... 𐑒𐑮𐑫𐑩𐑤𐑑𐑦 𐑯 𐑨𐑥𐑚𐑦𐑖𐑩𐑯 𐑝 𐑿𐑼 𐑒𐑢𐑰𐑯... 𐑳𐑯𐑯𐑜.."
+
+#~ msgid ""
+#~ "Small victory? Bah! Now we will raze this fortress and bury it in the "
+#~ "earth from whence it came."
+#~ msgstr ""
+#~ "𐑕𐑥𐑷𐑤 𐑝𐑦𐑒𐑑𐑼𐑦? 𐑚𐑭! 𐑯𐑬 𐑢𐑰 𐑢𐑦𐑤 𐑮𐑱𐑟 𐑞𐑦𐑕 𐑓𐑹𐑑𐑮𐑩𐑕 𐑯 𐑚𐑧𐑮𐑦 𐑦𐑑 𐑦𐑯 𐑞 𐑻𐑔 𐑓𐑮𐑪𐑥 𐑢𐑧𐑯𐑕 𐑦𐑑 "
+#~ "𐑒𐑱𐑥."
+
+#~ msgid ""
+#~ "The rest of the battle was a blur. The shock of what had happened stunned "
+#~ "everybody."
+#~ msgstr "𐑞 𐑮𐑧𐑕𐑑 𐑝 𐑞 𐑚𐑨𐑑𐑩𐑤 𐑢𐑪𐑟 𐑩 𐑚𐑤𐑻. 𐑞 𐑖𐑪𐑒 𐑝 𐑢𐑪𐑑 𐑣𐑨𐑛 𐑣𐑨𐑐𐑩𐑯𐑛 𐑕𐑑𐑩𐑯𐑛 𐑧𐑝𐑮𐑦𐑚𐑪𐑛𐑦."
+
+#, fuzzy
+#~| msgid ""
+#~| "Baldras and his men fled the plains of western Wesnoth under the cover "
+#~| "of night. The spectacle of Halstead’s destruction stunned them into a "
+#~| "daze that only slowly wore off as they made their way north to and past "
+#~| "Elensefar."
+#~ msgid ""
+#~ "Baldras and his men fled the plains of western Wesnoth under the cover of "
+#~ "night. The spectacle of Halstead’s destruction held them in a daze that "
+#~ "only slowly wore off as they made their way north to and past Elensefar."
+#~ msgstr ""
+#~ "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑯 𐑣𐑦𐑟 𐑥𐑧𐑯 𐑓𐑤𐑧𐑛 𐑞 𐑐𐑤𐑱𐑯𐑟 𐑝 𐑢𐑧𐑕𐑑𐑼𐑯 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑳𐑯𐑛𐑼 𐑞 𐑒𐑳𐑝𐑼 𐑝 𐑯𐑲𐑑. 𐑞 "
+#~ "𐑕𐑐𐑧𐑒𐑑𐑩𐑒𐑩𐑤 𐑝 ·𐑣𐑨𐑤𐑕𐑑𐑧𐑛𐑕 𐑛𐑩𐑕𐑑𐑮𐑳𐑒𐑖𐑩𐑯 𐑕𐑑𐑩𐑯𐑛 𐑞𐑧𐑥 𐑦𐑯𐑑𐑫 𐑩 𐑛𐑱𐑟 𐑞𐑨𐑑 𐑴𐑯𐑤𐑦 𐑕𐑤𐑴𐑤𐑦 𐑢𐑹 "
+#~ "𐑪𐑓 𐑨𐑟 𐑞𐑱 𐑥𐑱𐑛 𐑞𐑺 𐑢𐑱 𐑯𐑹𐑔 𐑑 𐑯 𐑐𐑭𐑕𐑑 ·𐑧𐑤𐑧𐑯𐑕𐑓𐑸."
+
+#, fuzzy
+#~| msgid ""
+#~| "The Elense riders routed the orcish army, small as it was, and sent them "
+#~| "back across the Great River. They then scattered to the countryside and "
+#~| "were not heard from again. Baldras thought this odd behavior when he "
+#~| "heard about it."
+#~ msgid ""
+#~ "The Elense riders routed the orcish army, small as it was, and sent them "
+#~ "back across the Great River. They then scattered to the countryside and "
+#~ "were not heard from again. Baldras thought this behavior odd when word of "
+#~ "this first reached him."
+#~ msgstr ""
+#~ "𐑞 ·𐑧𐑤𐑰𐑯𐑕 𐑮𐑲𐑛𐑼𐑟 𐑮𐑵𐑑𐑩𐑛 𐑞 𐑹𐑒𐑦𐑖 𐑸𐑥𐑦, 𐑕𐑥𐑷𐑤 𐑨𐑟 𐑦𐑑 𐑢𐑪𐑟, 𐑯 𐑕𐑧𐑯𐑑 𐑞𐑧𐑥 𐑚𐑨𐑒 𐑩𐑒𐑮𐑪𐑕 𐑞 "
+#~ "𐑜𐑮𐑱𐑑 𐑮𐑦𐑝𐑼. 𐑞𐑱 𐑞𐑧𐑯 𐑕𐑒𐑨𐑑𐑼𐑛 𐑑 𐑞 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛 𐑯 𐑢𐑻 𐑯𐑪𐑑 𐑣𐑻𐑛 𐑓𐑮𐑪𐑥 𐑩𐑜𐑱𐑯. ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 "
+#~ "𐑔𐑷𐑑 𐑞𐑦𐑕 𐑪𐑛 𐑚𐑦𐑣𐑱𐑝𐑘𐑼 𐑢𐑧𐑯 𐑣𐑰 𐑣𐑻𐑛 𐑩𐑚𐑬𐑑 𐑦𐑑."
+
+#~ msgid ""
+#~ "As the main body of Asheviere’s army neared the ruins of Halstead, "
+#~ "strange things began to happen. Every night, men would disappear. Others "
+#~ "were found hacked to bloody pieces. Unexplained misfortune plagued the "
+#~ "marching columns. Soldiers dropped dead where they stood, slain by unseen "
+#~ "assassins. Fear of an undead menace spread through the ranks."
+#~ msgstr ""
+#~ "𐑨𐑟 𐑞 𐑥𐑱𐑯 𐑚𐑪𐑛𐑦 𐑝 ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑸𐑥𐑦 𐑯𐑽𐑛 𐑞 𐑮𐑵𐑦𐑯𐑟 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛, 𐑕𐑑𐑮𐑱𐑯𐑡 𐑔𐑦𐑙𐑟 𐑚𐑩𐑜𐑨𐑯 𐑑 "
+#~ "𐑣𐑨𐑐𐑩𐑯. 𐑧𐑝𐑮𐑦 𐑯𐑲𐑑, 𐑥𐑧𐑯 𐑢𐑫𐑛 𐑛𐑦𐑕𐑩𐑐𐑽. 𐑳𐑞𐑼𐑟 𐑢𐑻 𐑓𐑬𐑯𐑛 𐑣𐑨𐑒𐑑 𐑑 𐑚𐑤𐑳𐑛𐑦 𐑐𐑰𐑕𐑩𐑟. "
+#~ "𐑩𐑯𐑦𐑒𐑕𐑐𐑤𐑱𐑯𐑛 𐑥𐑦𐑕𐑓𐑹𐑗𐑵𐑯 𐑐𐑤𐑱𐑜𐑛 𐑞 𐑥𐑸𐑗𐑦𐑙 𐑒𐑪𐑤𐑩𐑥𐑟. 𐑕𐑴𐑤𐑡𐑼𐑟 𐑛𐑮𐑪𐑐𐑑 𐑛𐑧𐑛 𐑢𐑺 𐑞𐑱 𐑕𐑑𐑫𐑛, "
+#~ "𐑕𐑤𐑱𐑯 𐑚𐑲 𐑩𐑯𐑕𐑰𐑯 𐑩𐑕𐑨𐑕𐑩𐑯𐑟. 𐑓𐑽 𐑝 𐑩𐑯 𐑳𐑯𐑛𐑧𐑛 𐑥𐑧𐑯𐑩𐑕 𐑕𐑐𐑮𐑧𐑛 𐑔𐑮𐑵 𐑞 𐑮𐑨𐑙𐑒𐑕."
+
+#, fuzzy
+#~| msgid ""
+#~| "When the army of Wesnoth found the ruins of the mighty fortress "
+#~| "Halstead, it was too much. Their shock that such a thing could happen "
+#~| "combined with the invisible terror stalking them convinced Asheviere’s "
+#~| "second in command the entire countryside was cursed. He quickly "
+#~| "retreated to the traditional border and set up strong defenses against "
+#~| "the west."
+#~ msgid ""
+#~ "When the army of Wesnoth found the ruins of the mighty fortress Halstead, "
+#~ "it was too much. Their shock that such a thing could happen, combined "
+#~ "with the invisible terror stalking them, convinced Asheviere’s second in "
+#~ "command the entire countryside was cursed. He quickly retreated to the "
+#~ "traditional border and set up strong defenses against the west."
+#~ msgstr ""
+#~ "𐑢𐑧𐑯 𐑞 𐑸𐑥𐑦 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑓𐑬𐑯𐑛 𐑞 𐑮𐑵𐑦𐑯𐑟 𐑝 𐑞 𐑥𐑲𐑑𐑦 𐑓𐑹𐑑𐑮𐑩𐑕 𐑣𐑨𐑤𐑕𐑑𐑧𐑛, 𐑦𐑑 𐑢𐑪𐑟 𐑑𐑵 𐑥𐑳𐑗. "
+#~ "𐑞𐑺 𐑖𐑪𐑒 𐑞𐑨𐑑 𐑕𐑳𐑗 𐑩 𐑔𐑦𐑙 𐑒𐑫𐑛 𐑣𐑨𐑐𐑩𐑯 𐑒𐑩𐑥𐑚𐑲𐑯𐑛 𐑢𐑦𐑞 𐑞 𐑦𐑯𐑝𐑦𐑕𐑦𐑚𐑩𐑤 𐑑𐑧𐑮𐑼 𐑕𐑑𐑷𐑒𐑦𐑙 𐑞𐑧𐑥 "
+#~ "𐑒𐑩𐑯𐑝𐑦𐑯𐑕𐑑 ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑕𐑧𐑒𐑩𐑯𐑛 𐑦𐑯 𐑒𐑩𐑥𐑭𐑯𐑛 𐑞 𐑧𐑯𐑑𐑲𐑼 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛 𐑢𐑪𐑟 𐑒𐑻𐑕𐑛. 𐑣𐑰 𐑒𐑢𐑦𐑒𐑤𐑦 "
+#~ "𐑮𐑦𐑑𐑮𐑰𐑑𐑩𐑛 𐑑 𐑞 𐑑𐑮𐑩𐑛𐑦𐑖𐑩𐑯𐑩𐑤 𐑚𐑹𐑛𐑼 𐑯 𐑕𐑧𐑑 𐑳𐑐 𐑕𐑑𐑮𐑪𐑙 𐑛𐑦𐑓𐑧𐑯𐑕𐑩𐑟 𐑩𐑜𐑱𐑯𐑕𐑑 𐑞 𐑢𐑧𐑕𐑑."
+
+#, fuzzy
+#~ msgid ""
+#~ "Baldras had just crossed the Great River when rumors of night-stalkers "
+#~ "filtered through his ranks. With bitter humor he realized that Lord "
+#~ "Maddock’s men were successfully using tactics Baldras had mastered and "
+#~ "used during his resistance."
+#~ msgstr ""
+#~ "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑣𐑨𐑛 𐑡𐑳𐑕𐑑 𐑒𐑮𐑪𐑕𐑛 𐑞 𐑜𐑮𐑱𐑑 𐑮𐑦𐑝𐑼 𐑢𐑧𐑯 𐑮𐑵𐑥𐑼𐑟 𐑝 𐑯𐑲𐑑-𐑕𐑑𐑷𐑒𐑼𐑟 𐑓𐑦𐑤𐑑𐑼𐑛 𐑔𐑮𐑵 𐑣𐑦𐑟 "
+#~ "𐑮𐑨𐑙𐑒𐑕. 𐑢𐑦𐑞 𐑚𐑦𐑑𐑼 𐑣𐑿𐑥𐑼 𐑣𐑰 𐑮𐑾𐑤𐑲𐑟𐑛 𐑞𐑨𐑑 𐑤𐑹𐑛 ·𐑥𐑨𐑛𐑩𐑒𐑕 𐑥𐑧𐑯 𐑢𐑻 𐑕𐑩𐑒𐑕𐑧𐑕𐑓𐑩𐑤𐑦 𐑿𐑟𐑦𐑙 "
+#~ "𐑑𐑨𐑒𐑑𐑦𐑒𐑕 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑣𐑨𐑛 𐑥𐑭𐑕𐑑𐑼𐑛 𐑯 𐑫𐑖𐑔𐑴𐑵𐑿𐑕𐑑 𐑛𐑘𐑫𐑼𐑦𐑙 𐑣𐑦𐑟 𐑮𐑦𐑟𐑦𐑕𐑑𐑩𐑯𐑕."
+
+#~ msgid ""
+#~ "The peasants-turned-outlaws finally reached Dallben. It was burnt to the "
+#~ "ground. In a panic, they raced through the forest to Delwyn. It was "
+#~ "likewise devastated. However, they did find one clue as to what "
+#~ "happened..."
+#~ msgstr ""
+#~ "𐑞 𐑐𐑧𐑟𐑩𐑯𐑑𐑕-𐑑𐑻𐑯𐑛-𐑬𐑑𐑤𐑷𐑟 𐑓𐑲𐑯𐑩𐑤𐑦 𐑮𐑰𐑗𐑑 ·𐑛𐑨𐑤𐑚𐑧𐑯. 𐑦𐑑 𐑢𐑪𐑟 𐑚𐑻𐑯𐑑 𐑑 𐑞 𐑜𐑮𐑬𐑯𐑛. 𐑦𐑯 𐑩 "
+#~ "𐑐𐑨𐑯𐑦𐑒, 𐑞𐑱 𐑮𐑱𐑕𐑑 𐑔𐑮𐑵 𐑞 𐑓𐑹𐑦𐑕𐑑 𐑑 𐑛𐑧𐑤𐑢𐑦𐑯. 𐑦𐑑 𐑢𐑪𐑟 𐑤𐑲𐑒𐑢𐑲𐑟 𐑛𐑧𐑝𐑩𐑕𐑑𐑱𐑑𐑩𐑛. 𐑣𐑬𐑧𐑝𐑼, 𐑞𐑱 "
+#~ "𐑛𐑦𐑛 𐑓𐑲𐑯𐑛 𐑢𐑳𐑯 𐑒𐑤𐑵 𐑨𐑟 𐑑 𐑢𐑪𐑑 𐑣𐑨𐑐𐑩𐑯𐑛..."
+
+#, fuzzy
+#~ msgid ""
+#~ "... a grimy note nailed to a charred post that read, <i>“Baldras, You "
+#~ "would have been proud. We gave ’em hell. But in the end, it wasn’t "
+#~ "enough.”</i>"
+#~ msgstr ""
+#~ "...𐑩 𐑜𐑮𐑲𐑥𐑰 𐑯𐑴𐑑 𐑯𐑱𐑤𐑛 𐑑 𐑩 𐑗𐑸𐑛 𐑐𐑴𐑕𐑑 𐑞𐑨𐑑 𐑨𐑖𐑔𐑮𐑧𐑛, '·𐑚𐑨𐑤𐑛𐑮𐑨𐑕, 𐑿 𐑢𐑫𐑛 𐑣𐑨𐑝 𐑚𐑰𐑯 "
+#~ "𐑐𐑮𐑬𐑛. 𐑢𐑰 𐑜𐑱𐑝 '𐑧𐑥 𐑣𐑧𐑤. 𐑚𐑳𐑑 𐑦𐑯 𐑞 𐑧𐑯𐑛, 𐑦𐑑 𐑢𐑪𐑟𐑯𐑑 𐑦𐑯𐑳𐑓.'"
+
+#, fuzzy
+#~ msgid ""
+#~ "<i>“We fled like criminals in the night, but we made sure that no one "
+#~ "would harass us anymore.”</i>"
+#~ msgstr ""
+#~ "'𐑢𐑰 𐑓𐑤𐑧𐑛 𐑤𐑲𐑒 𐑒𐑮𐑦𐑥𐑦𐑯𐑩𐑤𐑟 𐑦𐑯 𐑞 𐑯𐑲𐑑, 𐑚𐑳𐑑 𐑢𐑰 𐑥𐑱𐑛 𐑖𐑫𐑼 𐑞𐑨𐑑 𐑯𐑴 𐑢𐑳𐑯 𐑢𐑫𐑛 𐑣𐑻𐑨𐑕 𐑳𐑕 "
+#~ "𐑧𐑯𐑰𐑥𐑹.'"
+
+#, fuzzy
+#~ msgid ""
+#~ "<i>“If you wish to find us, head southwest. When you reach the land’s "
+#~ "end, just keep going. See you in the Three Sisters, old friend. ― "
+#~ "Relana”</i>"
+#~ msgstr ""
+#~ "'𐑦𐑓 𐑿 𐑢𐑦𐑖 𐑑 𐑓𐑲𐑯𐑛 𐑳𐑕, 𐑣𐑧𐑛 𐑕𐑬𐑔𐑢𐑧𐑕𐑑. 𐑢𐑧𐑯 𐑿 𐑮𐑰𐑗 𐑞 𐑤𐑨𐑯𐑛𐑟 𐑧𐑯𐑛, 𐑡𐑳𐑕𐑑 𐑒𐑰𐑐 𐑜𐑴𐑦𐑙. "
+#~ "𐑕𐑰 𐑿 𐑦𐑯 𐑞 𐑔𐑮𐑰 𐑕𐑦𐑕𐑑𐑼𐑟, 𐑴𐑤𐑛 𐑓𐑮𐑧𐑯𐑛. - ·𐑮𐑧𐑤𐑯𐑨𐑯' "
+
+#~ msgid "Tell my wife... that I loved her!"
+#~ msgstr "𐑑𐑧𐑤 𐑥𐑲 𐑢𐑲𐑓... 𐑞𐑨𐑑 𐑲 𐑤𐑳𐑝𐑛 𐑣𐑻!"
+
+#~ msgid "Unngh... Now our people may never be free..."
+#~ msgstr "𐑳𐑯𐑯𐑜... 𐑯𐑬 𐑬𐑼 𐑐𐑰𐑐𐑩𐑤 𐑥𐑱 𐑯𐑧𐑝𐑼 𐑚𐑰 𐑓𐑮𐑰..."
+
+#~ msgid "I am finished... will we ever be free?"
+#~ msgstr "𐑲 𐑨𐑥 𐑓𐑦𐑯𐑦𐑖𐑑... 𐑢𐑦𐑤 𐑢𐑰 𐑧𐑝𐑼 𐑚𐑰 𐑓𐑮𐑰?"
+
+#, fuzzy
+#~| msgid ""
+#~| "They returned to their village to find it destroyed, with those who "
+#~| "fought left dead and the few survivors born away to unguessable fates. "
+#~| "It was a bitter doom, but as Asheviere’s grip tightened they would live "
+#~| "to see worse."
+#~ msgid ""
+#~ "They returned to their village to find it destroyed, with those who "
+#~ "fought left dead and the few survivors borne away to unknown fates. It "
+#~ "was a bitter doom, but as Asheviere’s grip tightened they would live to "
+#~ "see worse."
+#~ msgstr ""
+#~ "𐑞𐑱 𐑮𐑦𐑑𐑻𐑯𐑛 𐑑 𐑞𐑺 𐑝𐑦𐑤𐑦𐑡 𐑑 𐑓𐑲𐑯𐑛 𐑦𐑑 𐑛𐑩𐑕𐑑𐑮𐑶𐑛, 𐑢𐑦𐑞 𐑞𐑴𐑟 𐑣𐑵 𐑓𐑷𐑑 𐑤𐑧𐑓𐑑 𐑛𐑧𐑛 𐑯 𐑞 𐑓𐑿 "
+#~ "𐑕𐑻𐑝𐑲𐑝𐑻𐑟 𐑚𐑹𐑯 𐑩𐑢𐑱 𐑑 𐑩𐑯𐑜𐑧𐑕𐑩𐑚𐑩𐑤 𐑓𐑱𐑑𐑕. 𐑦𐑑 𐑢𐑪𐑟 𐑩 𐑚𐑦𐑑𐑼 𐑛𐑵𐑥, 𐑚𐑳𐑑 𐑨𐑟 ·𐑨𐑖𐑧𐑝𐑽𐑟 𐑜𐑮𐑦𐑐 "
+#~ "𐑑𐑲𐑑𐑩𐑯𐑛 𐑞𐑱 𐑢𐑫𐑛 𐑤𐑲𐑝 𐑑 𐑕𐑰 𐑢𐑻𐑕."
+
+#~ msgid ""
+#~ "The hardy people of these marches learned self-reliance and survival "
+#~ "skills against the raiding orc hordes and savage saurians. They "
+#~ "established their own trading routes and pacts of mutual defense."
+#~ msgstr ""
+#~ "𐑞 𐑣𐑸𐑛𐑰 𐑐𐑰𐑐𐑩𐑤 𐑝 𐑞𐑰𐑟 𐑥𐑸𐑗𐑩𐑟 𐑤𐑻𐑯𐑛 𐑕𐑧𐑤𐑓-𐑮𐑦𐑤𐑲𐑩𐑯𐑕 𐑯 𐑕𐑻𐑝𐑲𐑝𐑩𐑤 𐑕𐑒𐑦𐑤𐑟 𐑩𐑜𐑱𐑯𐑕𐑑 𐑞 𐑮𐑱𐑛𐑦𐑙 "
+#~ "𐑹𐑒 𐑣𐑹𐑛𐑟 𐑯 𐑕𐑨𐑝𐑦𐑡 𐑕𐑸𐑾𐑯𐑟. 𐑞𐑱 𐑩𐑕𐑑𐑨𐑚𐑤𐑦𐑖𐑑 𐑞𐑺 𐑴𐑯 𐑑𐑮𐑱𐑛𐑦𐑙 𐑮𐑵𐑑𐑕 𐑯 𐑐𐑨𐑒𐑑𐑕 𐑝 𐑥𐑿𐑗𐑫𐑩𐑤 "
+#~ "𐑛𐑦𐑓𐑧𐑯𐑕."
+
+#~ msgid ""
+#~ "Although not permitted to train with proper military weapons, these "
+#~ "woodsmen were at home in the forests and swamps of the Western Marches, "
+#~ "and became very effective with their simple slings and clubs."
+#~ msgstr ""
+#~ "𐑷𐑤𐑞𐑴 𐑯𐑪𐑑 𐑐𐑼𐑥𐑦𐑑𐑩𐑛 𐑑 𐑑𐑮𐑱𐑯 𐑢𐑦𐑞 𐑐𐑮𐑪𐑐𐑼 𐑥𐑦𐑤𐑦𐑑𐑼𐑦 𐑢𐑧𐑐𐑩𐑯𐑟, 𐑞𐑰𐑟 𐑢𐑫𐑛𐑟𐑥𐑩𐑯 𐑢𐑻 𐑨𐑑 𐑣𐑴𐑥 "
+#~ "𐑦𐑯 𐑞 𐑓𐑪𐑮𐑦𐑕𐑑𐑕 𐑯 𐑕𐑢𐑭𐑥𐑐𐑕 𐑝 𐑞 𐑢𐑧𐑕𐑑𐑼𐑯 𐑥𐑸𐑗𐑩𐑟, 𐑯 𐑚𐑦𐑒𐑱𐑥 𐑝𐑧𐑮𐑦 𐑦𐑓𐑧𐑒𐑑𐑦𐑝 𐑢𐑦𐑞 𐑞𐑺 "
+#~ "𐑕𐑦𐑥𐑐𐑩𐑤 𐑕𐑤𐑦𐑙𐑟 𐑯 𐑒𐑤𐑳𐑚𐑟."
+
+#~ msgid ""
+#~ "After the betrayal of the King by Queen Asheviere, the new regent of "
+#~ "Wesnoth sought to consolidate her ill-gotten power. She sent her armies "
+#~ "across Wesnoth to intimidate the provincial rulers and secure her "
+#~ "continued reign."
+#~ msgstr ""
+#~ "𐑭𐑓𐑑𐑼 𐑞 𐑚𐑦𐑑𐑮𐑱𐑩𐑤 𐑝 𐑞 𐑒𐑦𐑙 𐑚𐑲 𐑒𐑢𐑰𐑯 ·𐑨𐑖𐑧𐑝𐑽, 𐑞 𐑯𐑿 𐑮𐑰𐑡𐑩𐑯𐑑 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑕𐑷𐑑 𐑑 "
+#~ "𐑒𐑩𐑯𐑕𐑭𐑤𐑦𐑛𐑱𐑑 𐑣𐑻 𐑦𐑤-𐑜𐑪𐑑𐑩𐑯 𐑐𐑬𐑼. 𐑖𐑰 𐑕𐑧𐑯𐑑 𐑣𐑻 𐑸𐑥𐑰𐑟 𐑩𐑒𐑮𐑪𐑕 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑑 𐑦𐑯𐑑𐑦𐑥𐑦𐑛𐑱𐑑 𐑞 "
+#~ "𐑐𐑮𐑩𐑝𐑦𐑯𐑖𐑩𐑤 𐑮𐑵𐑤𐑼𐑟 𐑯 𐑕𐑦𐑒𐑘𐑫𐑼 𐑣𐑻 𐑒𐑩𐑯𐑑𐑦𐑯𐑿𐑛 𐑮𐑱𐑯."
+
+#~ msgid ""
+#~ "The people of Annuvin were unwilling to relinquish their hard-earned self-"
+#~ "rule, especially not to this pretender..."
+#~ msgstr ""
+#~ "𐑞 𐑐𐑰𐑐𐑩𐑤 𐑝 ·𐑩𐑯𐑳𐑝𐑦𐑯 𐑢𐑻 𐑩𐑯𐑢𐑦𐑤𐑦𐑙 𐑑 𐑮𐑦𐑤𐑦𐑙𐑒𐑢𐑦𐑖 𐑞𐑺 𐑣𐑸𐑛-𐑻𐑯𐑛 𐑕𐑧𐑤𐑓-𐑮𐑵𐑤, 𐑦𐑕𐑐𐑧𐑖𐑩𐑤𐑦 "
+#~ "𐑯𐑪𐑑 𐑑 𐑞𐑦𐑕 𐑐𐑮𐑰𐑑𐑧𐑯𐑛𐑻..."
+
+#, fuzzy
+#~ msgid "Mal-Jarrof"
+#~ msgstr "𐑥𐑨𐑤-Jarrof"
+
+#~ msgid "Mal-Jerod"
+#~ msgstr "𐑥𐑨𐑤-𐑡𐑺𐑩𐑛"
+
+#~ msgid "Sel-Mana"
+#~ msgstr "𐑕𐑧𐑤-𐑥𐑭𐑯𐑩"
+
+#~ msgid "Defeat the lich and its minions"
+#~ msgstr "𐑛𐑦𐑓𐑰𐑑 𐑞 𐑤𐑦𐑗 𐑯 𐑦𐑑𐑕 𐑥𐑦𐑯𐑘𐑩𐑯𐑟"
+
+#~ msgid "I have heard of you. Necromancers. Barely-human scum, I say."
+#~ msgstr "𐑲 𐑣𐑨𐑝 𐑣𐑻𐑛 𐑝 𐑿. 𐑯𐑧𐑒𐑮𐑩𐑥𐑨𐑯𐑕𐑻𐑕. 𐑚𐑺𐑤𐑦-𐑣𐑿𐑥𐑩𐑯 𐑕𐑒𐑩𐑥, 𐑲 𐑕𐑱."
+
+#~ msgid ""
+#~ "Wrong. Necromancers become slaves to their lich masters and eventually "
+#~ "lose their humanity. We have proven that practicing the dark arts need "
+#~ "not lead down that path to damnation. We remain human, and seek the "
+#~ "mystical secret of balance between the ways of light and darkness. We "
+#~ "dance between both ways, adhering to neither."
+#~ msgstr ""
+#~ "𐑮𐑪𐑙. 𐑯𐑧𐑒𐑮𐑩𐑥𐑨𐑯𐑕𐑻𐑕 𐑚𐑦𐑒𐑳𐑥 𐑕𐑤𐑱𐑝𐑟 𐑑 𐑞𐑺 𐑤𐑦𐑗 𐑥𐑭𐑕𐑑𐑻𐑟 𐑯 𐑦𐑝𐑧𐑯𐑗𐑩𐑢𐑩𐑤𐑰 𐑤𐑵𐑟 𐑞𐑺 "
+#~ "𐑣𐑿𐑥𐑨𐑯𐑦𐑑𐑦. 𐑢𐑰 𐑣𐑨𐑝 𐑐𐑮𐑵𐑝𐑩𐑯 𐑞𐑨𐑑 𐑐𐑮𐑨𐑒𐑑𐑦𐑕𐑦𐑙 𐑞 𐑛𐑸𐑒 𐑸𐑑𐑕 𐑯𐑰𐑛 𐑯𐑪𐑑 𐑤𐑰𐑛 𐑛𐑬𐑯 𐑞𐑨𐑑 𐑐𐑭𐑔 𐑑 "
+#~ "𐑛𐑨𐑥𐑯𐑱𐑖𐑩𐑯. 𐑢𐑰 𐑮𐑦𐑥𐑱𐑯 𐑣𐑿𐑥𐑩𐑯, 𐑯 𐑕𐑰𐑒 𐑞 𐑥𐑦𐑕𐑑𐑦𐑒𐑩𐑤 𐑕𐑰𐑒𐑮𐑩𐑑 𐑝 𐑚𐑨𐑤𐑩𐑯𐑕 𐑚𐑦𐑑𐑢𐑰𐑯 𐑞 𐑢𐑱𐑟 𐑝 "
+#~ "𐑤𐑲𐑑 𐑯 𐑛𐑸𐑒𐑯𐑩𐑕. 𐑢𐑰 𐑛𐑭𐑯𐑕 𐑚𐑦𐑑𐑢𐑰𐑯 𐑚𐑴𐑔 𐑢𐑱𐑟, 𐑩𐑛𐑣𐑽𐑦𐑙 𐑑 𐑯𐑲𐑞𐑼."
+
+#, fuzzy
+#~ msgid ""
+#~ "Carcyn is always foggy as of late because these woods have recently "
+#~ "become home to a lich and two of its underling necromancers. Our "
+#~ "experiments may have actually aroused it from sleep... We’re not sure."
+#~ msgstr ""
+#~ "·𐑒𐑸𐑒𐑦𐑯 𐑦𐑟 𐑷𐑤𐑢𐑱𐑟 𐑓𐑪𐑜𐑦 𐑨𐑟 𐑝 𐑤𐑱𐑑 𐑚𐑦𐑒𐑪𐑟 𐑞𐑰𐑟 𐑢𐑫𐑛𐑟 𐑣𐑨𐑝 𐑮𐑰𐑕𐑩𐑯𐑑𐑤𐑦 𐑚𐑦𐑒𐑳𐑥 𐑣𐑴𐑥 𐑑 𐑩 "
+#~ "𐑤𐑦𐑗 𐑯 𐑑𐑵 𐑝 𐑦𐑑𐑕 𐑩𐑯𐑛𐑻𐑤𐑦𐑙 𐑯𐑧𐑒𐑮𐑩𐑥𐑨𐑯𐑕𐑻𐑕. 𐑬𐑼 𐑩𐑒𐑕𐑐𐑧𐑮𐑦𐑥𐑩𐑯𐑑𐑕 𐑥𐑱 𐑣𐑨𐑝 𐑨𐑒𐑗𐑫𐑩𐑤𐑦 𐑩𐑮𐑬𐑟𐑛 "
+#~ "𐑦𐑑 𐑓𐑮𐑪𐑥 𐑕𐑤𐑰𐑐... 𐑢𐑰'𐑼 𐑯𐑪𐑑 𐑦𐑜𐑟𐑨𐑒𐑑𐑤𐑦 𐑖𐑫𐑼."
+
+#~ msgid ""
+#~ "So now you need to defend your rear as well as your front... I see your "
+#~ "predicament. My men will wipe this land clean if you can help us defend "
+#~ "our homeland."
+#~ msgstr ""
+#~ "𐑕𐑴 𐑯𐑬 𐑿 𐑯𐑰𐑛 𐑑 𐑛𐑦𐑓𐑧𐑯𐑛 𐑿𐑼 𐑮𐑽 𐑨𐑟 𐑢𐑧𐑤 𐑨𐑟 𐑿𐑼 𐑓𐑮𐑳𐑯𐑑... 𐑲 𐑕𐑰 𐑿𐑼 𐑐𐑮𐑦𐑛𐑦𐑒𐑩𐑥𐑩𐑯𐑑. 𐑥𐑲 "
+#~ "𐑥𐑧𐑯 𐑢𐑦𐑤 𐑢𐑲𐑐 𐑞𐑦𐑕 𐑤𐑨𐑯𐑛 𐑒𐑤𐑰𐑯 𐑦𐑓 𐑿 𐑒𐑨𐑯 𐑣𐑧𐑤𐑐 𐑳𐑕 𐑛𐑦𐑓𐑧𐑯𐑛 𐑬𐑼 𐑣𐑴𐑥𐑤𐑨𐑯𐑛."
+
+#, fuzzy
+#~ msgid "Finally, that creature is dead, yet its foolish minions resist."
+#~ msgstr "𐑓𐑲𐑯𐑩𐑤𐑦 𐑞𐑨𐑑 𐑒𐑮𐑰𐑗𐑼 𐑦𐑟 𐑛𐑧𐑛, 𐑘𐑧𐑑 𐑦𐑑𐑕 𐑓𐑵𐑤𐑦𐑖 𐑥𐑦𐑯𐑘𐑩𐑯𐑟 𐑮𐑦𐑟𐑦𐑕𐑑."
+
+#~ msgid "The lich is destroyed and its minions dead."
+#~ msgstr "𐑞 𐑤𐑦𐑗 𐑦𐑟 𐑛𐑩𐑕𐑑𐑮𐑶𐑛 𐑯 𐑦𐑑𐑕 𐑥𐑦𐑯𐑘𐑩𐑯𐑟 𐑛𐑧𐑛."
+
+#, fuzzy
+#~ msgid ""
+#~ "The defeat of the evil lich infesting the Grey Woods was a bittersweet "
+#~ "victory. With Helicrom dead, the guild of shadow magic was thrown into "
+#~ "disarray."
+#~ msgstr ""
+#~ "𐑞 𐑛𐑦𐑓𐑰𐑑 𐑝 𐑞 𐑰𐑝𐑩𐑤 𐑤𐑦𐑗 infesting 𐑞 𐑜𐑮𐑱 𐑢𐑫𐑛𐑟 𐑢𐑪𐑟 𐑩 𐑚𐑦𐑑𐑻𐑕𐑢𐑰𐑑 𐑝𐑦𐑒𐑑𐑼𐑦. 𐑢𐑦𐑞 "
+#~ "·𐑣𐑧𐑤𐑦𐑒𐑮𐑪𐑥 𐑛𐑧𐑛, 𐑞 𐑜𐑦𐑤𐑛 𐑝 𐑖𐑨𐑛𐑴 𐑥𐑨𐑡𐑦𐑒 𐑢𐑪𐑟 𐑔𐑮𐑴𐑯 𐑦𐑯𐑑𐑫 𐑛𐑦𐑕𐑻𐑱."
+
+#~ msgid ""
+#~ "The remaining members were very grateful and offered Baldras a sizable "
+#~ "sum of gold for his help. It was not the help he was hoping for, but he "
+#~ "knew it would have to be enough for the coming conflict."
+#~ msgstr ""
+#~ "𐑞 𐑮𐑦𐑥𐑱𐑯𐑦𐑙 𐑥𐑧𐑥𐑚𐑼𐑟 𐑢𐑻 𐑝𐑧𐑮𐑦 𐑜𐑮𐑱𐑑𐑓𐑩𐑤 𐑯 𐑪𐑓𐑼𐑛 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑩 𐑕𐑲𐑟𐑩𐑚𐑩𐑤 𐑕𐑳𐑥 𐑝 𐑜𐑴𐑤𐑛 𐑓𐑹 "
+#~ "𐑣𐑦𐑟 𐑣𐑧𐑤𐑐. 𐑦𐑑 𐑢𐑪𐑟 𐑯𐑪𐑑 𐑞 𐑣𐑧𐑤𐑐 𐑣𐑰 𐑢𐑪𐑟 𐑣𐑪𐑐𐑦𐑙 𐑓𐑹, 𐑚𐑳𐑑 𐑣𐑰 𐑯𐑿 𐑦𐑑 𐑢𐑫𐑛 𐑣𐑨𐑝 𐑑 𐑚𐑰 "
+#~ "𐑦𐑯𐑳𐑓 𐑓𐑹 𐑞 𐑒𐑳𐑥𐑦𐑙 𐑒𐑩𐑯𐑓𐑤𐑦𐑒𐑑."
+
+#~ msgid ""
+#~ "With the undead driven out, we may live here in relative peace and pursue "
+#~ "our studies. For this, Baldras, I am grateful."
+#~ msgstr ""
+#~ "𐑢𐑦𐑞 𐑞 𐑳𐑯𐑛𐑧𐑛 𐑛𐑮𐑦𐑝𐑩𐑯 𐑬𐑑, 𐑢𐑰 𐑥𐑱 𐑤𐑦𐑝 𐑣𐑽 𐑦𐑯 𐑮𐑧𐑤𐑩𐑑𐑦𐑝 𐑐𐑰𐑕 𐑯 𐑐𐑼𐑕𐑿 𐑬𐑼 𐑕𐑑𐑳𐑛𐑦𐑟. 𐑓𐑹 "
+#~ "𐑞𐑦𐑕, ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕, 𐑲 𐑨𐑥 𐑜𐑮𐑱𐑑𐑓𐑩𐑤."
+
+#~ msgid ""
+#~ "Studies? Peace? You mean to continue feeding on the lawful citizens of "
+#~ "Wesnoth. There will be no peace for them."
+#~ msgstr ""
+#~ "𐑕𐑑𐑳𐑛𐑦𐑟? 𐑐𐑰𐑕? 𐑿 𐑥𐑰𐑯 𐑑 𐑒𐑩𐑯𐑑𐑦𐑯𐑿 𐑓𐑰𐑛𐑦𐑙 𐑪𐑯 𐑞 𐑤𐑷𐑓𐑫𐑤 𐑕𐑦𐑑𐑦𐑟𐑩𐑯𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔. 𐑞𐑺 𐑢𐑦𐑤 "
+#~ "𐑚𐑰 𐑯𐑴 𐑐𐑰𐑕 𐑓𐑹 𐑞𐑧𐑥."
+
+#~ msgid ""
+#~ "No one here is in a position to be dispensing moral judgments. "
+#~ "Regardless, you have done great service to us today, and we owe you a "
+#~ "debt. I will help you to the utmost of my ability."
+#~ msgstr ""
+#~ "𐑯𐑴 𐑢𐑳𐑯 𐑣𐑽 𐑦𐑟 𐑦𐑯 𐑩 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑑 𐑚𐑰 𐑛𐑦𐑕𐑐𐑧𐑯𐑕𐑦𐑙 𐑥𐑹𐑩𐑤 𐑡𐑳𐑡𐑥𐑩𐑯𐑑𐑕. 𐑮𐑦𐑜𐑸𐑛𐑤𐑩𐑕, 𐑿 𐑣𐑨𐑝 "
+#~ "𐑛𐑳𐑯 𐑜𐑮𐑱𐑑 𐑕𐑻𐑝𐑦𐑕 𐑑 𐑳𐑕 𐑑𐑫𐑛𐑱, 𐑯 𐑢𐑰 𐑴 𐑿 𐑩 𐑛𐑧𐑑. 𐑲 𐑢𐑦𐑤 𐑣𐑧𐑤𐑐 𐑿 𐑑 𐑞 𐑳𐑑𐑥𐑴𐑕𐑑 𐑝 𐑥𐑲 "
+#~ "𐑩𐑚𐑦𐑤𐑦𐑑𐑦."
+
+#~ msgid ""
+#~ "I was planning on giving you gold. Any good army is well financed, and "
+#~ "with the lich gone we can now spare it."
+#~ msgstr ""
+#~ "𐑲 𐑢𐑪𐑟 𐑐𐑤𐑨𐑯𐑦𐑙 𐑪𐑯 𐑜𐑦𐑝𐑦𐑙 𐑿 𐑜𐑴𐑤𐑛. 𐑧𐑯𐑦 𐑜𐑫𐑛 𐑸𐑥𐑦 𐑦𐑟 𐑢𐑧𐑤 𐑓𐑦𐑯𐑨𐑯𐑕𐑑, 𐑯 𐑢𐑦𐑞 𐑞 𐑤𐑦𐑗 𐑜𐑪𐑯 "
+#~ "𐑢𐑰 𐑒𐑨𐑯 𐑯𐑬 𐑕𐑐𐑺 𐑦𐑑."
+
+#~ msgid ""
+#~ "But, I think it would help you more if I lent you some of my men to join "
+#~ "you on your adventures. The Queen has been sending mages out here, and my "
+#~ "men are itching for some payback."
+#~ msgstr ""
+#~ "𐑚𐑳𐑑, 𐑲 𐑔𐑦𐑙𐑒 𐑦𐑑 𐑢𐑫𐑛 𐑣𐑧𐑤𐑐 𐑿 𐑥𐑹 𐑦𐑓 𐑲 𐑤𐑧𐑯𐑑 𐑿 𐑕𐑳𐑥 𐑝 𐑥𐑲 𐑥𐑧𐑯 𐑑 𐑡𐑶𐑯 𐑿 𐑪𐑯 𐑿𐑼 "
+#~ "𐑩𐑛𐑝𐑧𐑯𐑑𐑿𐑮𐑟. 𐑞 𐑒𐑢𐑰𐑯 𐑣𐑨𐑟 𐑚𐑰𐑯 𐑕𐑧𐑯𐑛𐑦𐑙 𐑥𐑱𐑡𐑦𐑟 𐑬𐑑 𐑣𐑽, 𐑯 𐑥𐑲 𐑥𐑧𐑯 𐑸 𐑦𐑗𐑦𐑙 𐑓𐑹 𐑕𐑳𐑥 "
+#~ "𐑐𐑱𐑚𐑨𐑒."
+
+#~ msgid ""
+#~ "On the other hand, if I keep the full force of my organization here, we "
+#~ "might be able to regroup and join you on the battlefield when the time "
+#~ "comes."
+#~ msgstr ""
+#~ "𐑪𐑯 𐑞 𐑳𐑞𐑼 𐑣𐑨𐑯𐑛, 𐑦𐑓 𐑲 𐑒𐑰𐑐 𐑞 𐑓𐑫𐑤 𐑓𐑹𐑕 𐑝 𐑥𐑲 𐑹𐑜𐑩𐑯𐑦𐑟𐑱𐑖𐑩𐑯 𐑣𐑽, 𐑢𐑰 𐑥𐑲𐑑 𐑚𐑰 𐑱𐑚𐑩𐑤 𐑑 "
+#~ "𐑮𐑰𐑜𐑮𐑵𐑐 𐑯 𐑡𐑶𐑯 𐑿 𐑪𐑯 𐑞 𐑚𐑨𐑑𐑩𐑤𐑓𐑰𐑤𐑛 𐑢𐑧𐑯 𐑞 𐑑𐑲𐑥 𐑒𐑳𐑥𐑟."
+
+#~ msgid "I leave it to you to decide."
+#~ msgstr "𐑲 𐑤𐑰𐑝 𐑦𐑑 𐑑 𐑿 𐑑 𐑛𐑦𐑕𐑲𐑛."
+
+#~ msgid "I will take the gold. How does 500 sound?"
+#~ msgstr "𐑲 𐑢𐑦𐑤 𐑑𐑱𐑒 𐑞 𐑜𐑴𐑤𐑛. 𐑣𐑬 𐑛𐑴𐑟 500 𐑕𐑬𐑯𐑛?"
+
+#~ msgid "Agreed. Good luck and farewell to you, Master Baldras."
+#~ msgstr "𐑩𐑜𐑮𐑰𐑛. 𐑜𐑫𐑛 𐑤𐑳𐑒 𐑯 𐑓𐑺𐑢𐑧𐑤 𐑑 𐑿, 𐑥𐑭𐑕𐑑𐑼 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕."
+
+#~ msgid ""
+#~ "Send your men with us. They will be valuable help as we prepare for the "
+#~ "assault from the Wesnoth army garrison."
+#~ msgstr ""
+#~ "𐑕𐑧𐑯𐑛 𐑿𐑼 𐑥𐑧𐑯 𐑢𐑦𐑞 𐑳𐑕. 𐑞𐑱 𐑢𐑦𐑤 𐑚𐑰 𐑝𐑨𐑤𐑿𐑚𐑩𐑤 𐑣𐑧𐑤𐑐 𐑨𐑟 𐑢𐑰 𐑐𐑮𐑰𐑐𐑺 𐑓𐑹 𐑞 𐑩𐑕𐑪𐑤𐑑 𐑓𐑮𐑪𐑥 𐑞 "
+#~ "·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑜𐑨𐑮𐑦𐑕𐑩𐑯."
+
+#~ msgid ""
+#~ "Done. My finest mages and thieves are at your disposal. Use them well."
+#~ msgstr "𐑛𐑳𐑯. 𐑥𐑲 𐑓𐑦𐑯𐑩𐑕𐑑 𐑥𐑱𐑡𐑦𐑟 𐑯 𐑔𐑰𐑝𐑟 𐑸 𐑨𐑑 𐑿𐑼 𐑛𐑦𐑕𐑐𐑴𐑟𐑩𐑤. 𐑿𐑟 𐑞𐑧𐑥 𐑢𐑧𐑤."
+
+#~ msgid "I wish you to join us in battle against the Queen’s forces."
+#~ msgstr "𐑲 𐑢𐑦𐑖 𐑿 𐑑 𐑡𐑶𐑯 𐑳𐑕 𐑦𐑯 𐑚𐑨𐑑𐑩𐑤 𐑩𐑜𐑱𐑯𐑕𐑑 𐑞 𐑒𐑢𐑰𐑯'𐑟 𐑓𐑹𐑕𐑩𐑟."
+
+#, fuzzy
+#~ msgid ""
+#~ "All right. I need time to clean up this forest and recall my men from the "
+#~ "countryside. We will be ready to march in seven days. All now hinges on "
+#~ "you! Until then..."
+#~ msgstr ""
+#~ "𐑪𐑤𐑮𐑲𐑑. 𐑲 𐑯𐑰𐑛 𐑑𐑲𐑥 𐑑 𐑒𐑤𐑰𐑯 𐑳𐑐 𐑞𐑦𐑕 𐑓𐑹𐑦𐑕𐑑 𐑯 𐑮𐑰𐑒𐑷𐑤 𐑥𐑲 𐑥𐑧𐑯 𐑓𐑮𐑪𐑥 𐑞 𐑒𐑳𐑯𐑑𐑮𐑦𐑕𐑲𐑛. 𐑢𐑰 "
+#~ "𐑢𐑦𐑤 𐑚𐑰 𐑮𐑧𐑛𐑦 𐑑 𐑥𐑸𐑗 𐑦𐑯 7 𐑛𐑱𐑟. 𐑷𐑤 𐑯𐑬 𐑣𐑦𐑯𐑡𐑩𐑟 𐑪𐑯 𐑿! 𐑳𐑯𐑑𐑦𐑤 𐑞𐑧𐑯..."
+
+#~ msgid "My men... have failed to protect me! I perish..."
+#~ msgstr "𐑥𐑲 𐑥𐑧𐑯... 𐑣𐑨𐑝 𐑓𐑱𐑤𐑛 𐑑 𐑐𐑮𐑩𐑑𐑧𐑒𐑑 𐑥𐑰! 𐑲 𐑐𐑧𐑮𐑦𐑖..."
+
+#~ msgid ""
+#~ "Baldras and his men quickly left the Grey Woods, not entirely convinced "
+#~ "of their safety even after eradicating the lich."
+#~ msgstr ""
+#~ "·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑯 𐑣𐑦𐑟 𐑥𐑧𐑯 𐑒𐑢𐑦𐑒𐑤𐑦 𐑤𐑧𐑓𐑑 𐑞 𐑜𐑮𐑱 𐑢𐑫𐑛𐑟, 𐑯𐑪𐑑 𐑧𐑯𐑑𐑲𐑼𐑤𐑦 𐑒𐑩𐑯𐑝𐑦𐑯𐑕𐑑 𐑝 𐑞𐑺 "
+#~ "𐑕𐑱𐑓𐑑𐑦 𐑰𐑝𐑩𐑯 𐑭𐑓𐑑𐑼 𐑽𐑨𐑛𐑩𐑒𐑱𐑑𐑦𐑙 𐑞 𐑤𐑦𐑗."
+
+#~ msgid ""
+#~ "As they marched, many men and women from the small hamlets peppering the "
+#~ "area around Carcyn and the Grey Woods approached the group, asking to "
+#~ "join them. The ascent of the Queen had cast an uneasy pall over the "
+#~ "citizens of Wesnoth, and some of them were willing to resist it."
+#~ msgstr ""
+#~ "𐑨𐑟 𐑞𐑱 𐑥𐑸𐑗𐑑, 𐑥𐑧𐑯𐑦 𐑥𐑧𐑯 𐑯 𐑢𐑦𐑥𐑦𐑯 𐑓𐑮𐑪𐑥 𐑞 𐑕𐑥𐑷𐑤 𐑣𐑨𐑥𐑤𐑩𐑑𐑕 𐑐𐑧𐑐𐑻𐑦𐑙 𐑞 𐑺𐑦𐑩 𐑩𐑮𐑬𐑯𐑛 "
+#~ "·𐑒𐑸𐑒𐑦𐑯 𐑯 𐑞 𐑜𐑮𐑱 𐑢𐑫𐑛𐑟 𐑩𐑐𐑮𐑴𐑗𐑑 𐑞 𐑜𐑮𐑵𐑐, 𐑭𐑕𐑒𐑦𐑙 𐑑 𐑡𐑶𐑯 𐑞𐑧𐑥. 𐑞 𐑨𐑟𐑕𐑧𐑯𐑑 𐑝 𐑞 𐑒𐑢𐑰𐑯 𐑣𐑨𐑛 "
+#~ "𐑒𐑭𐑕𐑑 𐑩𐑯 𐑳𐑯𐑰𐑟𐑦 𐑐𐑭𐑤 𐑴𐑝𐑼 𐑞 𐑕𐑦𐑑𐑦𐑟𐑩𐑯𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔, 𐑯 𐑕𐑳𐑥 𐑝 𐑞𐑧𐑥 𐑢𐑻 𐑢𐑦𐑤𐑦𐑙 𐑑 𐑮𐑦𐑟𐑦𐑕𐑑 "
+#~ "𐑦𐑑."
+
+#, fuzzy
+#~ msgid ""
+#~ "Knowing they too would be labeled criminals, he reluctantly accepted "
+#~ "their help.\n"
+#~ "<b>Note:</b> Baldras is now able to recruit Outlaws."
+#~ msgstr ""
+#~ "𐑯𐑴𐑦𐑙 𐑞𐑱 𐑑𐑵 𐑢𐑫𐑛 𐑚𐑰 𐑤𐑱𐑚𐑩𐑤𐑛 𐑒𐑮𐑦𐑥𐑦𐑯𐑩𐑤𐑟, 𐑣𐑰 𐑮𐑦𐑤𐑩𐑒𐑑𐑩𐑯𐑑𐑤𐑰 𐑨𐑒𐑕𐑧𐑐𐑑𐑩𐑛 𐑞𐑺 𐑣𐑧𐑤𐑐. "
+#~ "(·𐑚𐑨𐑤𐑛𐑮𐑨𐑕 𐑦𐑟 𐑯𐑬 𐑱𐑚𐑩𐑤 𐑑 𐑮𐑩𐑒𐑮𐑵𐑑 𐑬𐑑𐑤𐑷𐑟.)"
+
+#~ msgid ""
+#~ "Camped at the edge of the forest, they quietly observed substantial troop "
+#~ "movements coming from the direction of Aldril, a nearby city, and "
+#~ "marching to the northwest. Unsure what to make of it, they debated their "
+#~ "next course of action..."
+#~ msgstr ""
+#~ "𐑒𐑨𐑥𐑐𐑑 𐑨𐑑 𐑞 𐑧𐑡 𐑝 𐑞 𐑓𐑹𐑦𐑕𐑑, 𐑞𐑱 𐑒𐑢𐑲𐑧𐑑𐑤𐑦 𐑩𐑚𐑟𐑻𐑝𐑛 𐑕𐑩𐑚𐑕𐑑𐑨𐑯𐑗𐑩𐑤 𐑑𐑮𐑵𐑐 𐑥𐑵𐑝𐑥𐑩𐑯𐑑𐑕 𐑒𐑳𐑥𐑦𐑙 "
+#~ "𐑓𐑮𐑪𐑥 𐑞 𐑛𐑦𐑮𐑧𐑒𐑖𐑩𐑯 𐑝 ·𐑨𐑤𐑛𐑮𐑦𐑤, 𐑩 𐑯𐑽𐑚𐑲 𐑕𐑦𐑑𐑦, 𐑯 𐑥𐑸𐑗𐑦𐑙 𐑑 𐑞 𐑯𐑹𐑔𐑢𐑧𐑕𐑑. 𐑩𐑯𐑖𐑫𐑮 𐑢𐑪𐑑 𐑑 "
+#~ "𐑥𐑱𐑒 𐑝 𐑦𐑑, 𐑞𐑱 𐑛𐑩𐑚𐑱𐑑𐑦𐑛 𐑞𐑺 𐑯𐑧𐑒𐑕𐑑 𐑒𐑹𐑕 𐑝 𐑨𐑒𐑖𐑩𐑯..."
+
+#~ msgid "Kill all enemy forces"
+#~ msgstr "𐑒𐑦𐑤 𐑷𐑤 𐑧𐑯𐑩𐑥𐑦 𐑓𐑹𐑕𐑩𐑟"
+
+#, fuzzy
+#~ msgid "Jingo"
+#~ msgstr "Jingo"
+
+#, fuzzy
+#~ msgid "Majel"
+#~ msgstr "Majel"
+
+#, fuzzy
+#~ msgid ""
+#~ "What’s worse is that she appears to have taken notice. We have counted "
+#~ "five platoons of heavy infantry marching towards the garrison in just the "
+#~ "last two hours."
+#~ msgstr ""
+#~ "𐑢𐑪𐑑'𐑕 𐑢𐑻𐑕 𐑦𐑟 𐑞𐑨𐑑 𐑖𐑰 𐑩𐑐𐑽𐑟 𐑑 𐑣𐑨𐑝 𐑑𐑱𐑒𐑩𐑯 𐑯𐑴𐑑𐑦𐑕. 𐑢𐑰 𐑣𐑨𐑝 𐑒𐑬𐑯𐑑𐑩𐑛 𐑓𐑲𐑝 𐑐𐑤𐑩𐑑𐑵𐑯𐑟 𐑝 "
+#~ "𐑣𐑧𐑝𐑦 𐑦𐑯𐑓𐑩𐑯𐑑𐑮𐑦 𐑥𐑸𐑗𐑦𐑙 𐑑𐑫𐑢𐑹𐑛𐑟 𐑞 𐑜𐑨𐑮𐑦𐑕𐑩𐑯 𐑦𐑯 𐑡𐑳𐑕𐑑 𐑞 𐑤𐑭𐑕𐑑 2 𐑬𐑼𐑟."
+
+#~ msgid ""
+#~ "The garrison. The towers of Halstead are more than a garrison, nephew, "
+#~ "they are a fortress. They used to protect this area from the enemies of "
+#~ "Wesnoth; I never imagined they would house its enemies."
+#~ msgstr ""
+#~ "𐑞 𐑜𐑨𐑮𐑦𐑕𐑩𐑯. 𐑞 𐑑𐑬𐑼𐑟 𐑝 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑸 𐑥𐑹 𐑞𐑨𐑯 𐑩 𐑜𐑨𐑮𐑦𐑕𐑩𐑯, 𐑯𐑧𐑓𐑿, 𐑞𐑱 𐑸 𐑩 𐑓𐑹𐑑𐑮𐑩𐑕. 𐑞𐑱 "
+#~ "𐑫𐑖𐑔𐑴𐑵𐑿𐑕𐑑 𐑑 𐑐𐑮𐑩𐑑𐑧𐑒𐑑 𐑞𐑦𐑕 𐑺𐑦𐑩 𐑓𐑮𐑪𐑥 𐑞 𐑧𐑯𐑦𐑥𐑦𐑟 𐑝 ·𐑢𐑧𐑕𐑯𐑷𐑔; 𐑲 𐑯𐑧𐑝𐑼 𐑦𐑥𐑨𐑡𐑦𐑯𐑛 𐑞𐑱 𐑢𐑫𐑛 "
+#~ "𐑣𐑬𐑕 𐑦𐑑𐑕 𐑧𐑯𐑦𐑥𐑦𐑟."
+
+#~ msgid "Pitcher"
+#~ msgstr "𐑐𐑦𐑑𐑗𐑼"
+
+#~ msgid "Uncle, he wears the crest of the Elense. We should answer."
+#~ msgstr "𐑳𐑙𐑒𐑩𐑤, 𐑣𐑰 𐑢𐑺𐑟 𐑞 𐑒𐑮𐑧𐑕𐑑 𐑝 𐑞 ·𐑧𐑤𐑰𐑯𐑕. 𐑢𐑰 𐑖𐑫𐑛 𐑭𐑯𐑕𐑼."
+
+#~ msgid "Rider, hush before we are discovered! Come to us, but quietly!"
+#~ msgstr "𐑮𐑲𐑛𐑼, 𐑣𐑳𐑖 𐑚𐑦𐑓𐑹 𐑢𐑰 𐑸 𐑛𐑦𐑕𐑒𐑳𐑝𐑼𐑛! 𐑒𐑳𐑥 𐑑 𐑳𐑕, 𐑚𐑳𐑑 𐑒𐑢𐑲𐑧𐑑𐑤𐑦!"
+
+#, fuzzy
+#~ msgid ""
+#~ "Master Baldras, I bring news from the north. During the past week, "
+#~ "several patrols have again ventured across the Great River into Annuvin. "
+#~ "A woman named Relana opposed them with a small militia. She was "
+#~ "victorious."
+#~ msgstr ""
+#~ "𐑥𐑭𐑕𐑑𐑼 ·𐑚𐑨𐑤𐑛𐑮𐑨𐑕, 𐑲 𐑚𐑮𐑦𐑙 𐑯𐑿𐑟 𐑓𐑮𐑪𐑥 𐑞 𐑯𐑹𐑔. 𐑛𐑘𐑫𐑼𐑦𐑙 𐑞 𐑐𐑭𐑕𐑑 𐑢𐑰𐑒, 𐑕𐑧𐑝𐑼𐑩𐑤 𐑐𐑩𐑑𐑮𐑴𐑤𐑟 "
+#~ "𐑣𐑨𐑝 𐑩𐑜𐑱𐑯 𐑝𐑧𐑯𐑑𐑿𐑮𐑛 𐑩𐑒𐑮𐑪𐑕 𐑞 𐑜𐑮𐑱𐑑 𐑮𐑦𐑝𐑼 𐑦𐑯𐑑𐑫 ·𐑩𐑯𐑳𐑝𐑦𐑯. 𐑩 𐑥𐑨𐑯 𐑯𐑱𐑥𐑛 ·𐑮𐑧𐑤𐑯𐑨𐑯 𐑩𐑐𐑴𐑟𐑛 "
+#~ "𐑞𐑧𐑥 𐑢𐑦𐑞 𐑩 𐑕𐑥𐑷𐑤 𐑥𐑩𐑤𐑦𐑖𐑩. 𐑣𐑰 𐑢𐑪𐑟 𐑝𐑦𐑒𐑑𐑹𐑦𐑩𐑕."
+
+#~ msgid "This is surely good news!"
+#~ msgstr "𐑞𐑦𐑕 𐑦𐑟 𐑖𐑫𐑼𐑤𐑦 𐑜𐑫𐑛 𐑯𐑿𐑟!"
+
+#~ msgid ""
+#~ "I am afraid it is not. The Queen is sending a branch of her main field "
+#~ "army directly from Weldyn. As soon as they arrive, they will burn every "
+#~ "village to the ground. No one will live."
+#~ msgstr ""
+#~ "𐑲 𐑨𐑥 𐑩𐑓𐑮𐑱𐑛 𐑦𐑑 𐑦𐑟 𐑯𐑪𐑑. 𐑞 𐑒𐑢𐑰𐑯 𐑦𐑟 𐑕𐑧𐑯𐑛𐑦𐑙 𐑩 𐑚𐑮𐑭𐑯𐑗 𐑝 𐑣𐑻 𐑥𐑱𐑯 𐑓𐑰𐑤𐑛 𐑸𐑥𐑦 𐑛𐑲𐑮𐑧𐑒𐑑𐑤𐑦 "
+#~ "𐑓𐑮𐑪𐑥 ·𐑢𐑧𐑤𐑛𐑦𐑯. 𐑨𐑟 𐑕𐑵𐑯 𐑨𐑟 𐑞𐑱 𐑩𐑮𐑲𐑝, 𐑞𐑱 𐑢𐑦𐑤 𐑚𐑻𐑯 𐑧𐑝𐑮𐑦 𐑝𐑦𐑤𐑦𐑡 𐑑 𐑞 𐑜𐑮𐑬𐑯𐑛. 𐑯𐑴 𐑢𐑳𐑯 "
+#~ "𐑢𐑦𐑤 𐑤𐑲𐑝."
+
+#~ msgid ""
+#~ "The troop movements all make sense now. We must stop this army from "
+#~ "reaching the garrison. We cannot swallow them whole, but we can gnaw away "
+#~ "at them. They mustn’t take one step without us being there to harass and "
+#~ "delay them. When they reach Halstead they must be exhausted or dying."
+#~ msgstr ""
+#~ "𐑞 𐑑𐑮𐑵𐑐 𐑥𐑵𐑝𐑥𐑩𐑯𐑑𐑕 𐑷𐑤 𐑥𐑱𐑒 𐑕𐑧𐑯𐑕 𐑯𐑬. 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑕𐑑𐑪𐑐 𐑞𐑦𐑕 𐑸𐑥𐑦 𐑓𐑮𐑪𐑥 𐑮𐑰𐑗𐑦𐑙 𐑞 "
+#~ "𐑜𐑨𐑮𐑦𐑕𐑩𐑯. 𐑢𐑰 𐑒𐑨𐑯𐑪𐑑 𐑕𐑢𐑪𐑤𐑴 𐑞𐑧𐑥 𐑣𐑴𐑤, 𐑚𐑳𐑑 𐑢𐑰 𐑒𐑨𐑯 𐑯𐑪 𐑩𐑢𐑱 𐑨𐑑 𐑞𐑧𐑥. 𐑞𐑱 𐑥𐑳𐑕𐑯𐑑 𐑑𐑱𐑒 "
+#~ "𐑢𐑳𐑯 𐑕𐑑𐑧𐑐 𐑢𐑦𐑞𐑬𐑑 𐑳𐑕 𐑚𐑰𐑦𐑙 𐑞𐑺 𐑑 𐑣𐑻𐑨𐑕 𐑯 𐑛𐑦𐑤𐑱 𐑞𐑧𐑥. 𐑢𐑧𐑯 𐑞𐑱 𐑮𐑰𐑗 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑞𐑱 𐑥𐑳𐑕𐑑 "
+#~ "𐑚𐑰 𐑦𐑜𐑟𐑷𐑕𐑑𐑩𐑛 𐑹 𐑛𐑲𐑦𐑙."
+
+#~ msgid "You just said we can’t beat their entire army!"
+#~ msgstr "𐑿 𐑡𐑳𐑕𐑑 𐑕𐑧𐑛 𐑢𐑰 𐑒𐑭𐑯𐑑 𐑚𐑰𐑑 𐑞𐑺 𐑧𐑯𐑑𐑲𐑼 𐑸𐑥𐑦!"
+
+#, fuzzy
+#~ msgid ""
+#~ "May you prevail in peace and war. I must depart before I am seen so far "
+#~ "from my Lord’s borders."
+#~ msgstr ""
+#~ "𐑥𐑱 𐑿 𐑐𐑮𐑦𐑝𐑱𐑤 𐑦𐑯 𐑐𐑰𐑕 𐑯 𐑢𐑹. 𐑲 𐑥𐑳𐑕𐑑 𐑛𐑦𐑐𐑸𐑑 𐑚𐑦𐑓𐑹 𐑲 𐑨𐑥 𐑕𐑰𐑯 𐑕𐑴 𐑓𐑸 𐑓𐑮𐑪𐑥 𐑥𐑲 𐑤𐑹𐑛𐑟 "
+#~ "𐑚𐑹𐑛𐑼𐑟."
+
+#~ msgid "Ow! Fire hot! No step in fire!"
+#~ msgstr "𐑴! 𐑓𐑲𐑼 𐑣𐑪𐑑! 𐑯𐑴 𐑕𐑑𐑧𐑐 𐑦𐑯 𐑓𐑲𐑼!"
+
+#~ msgid ""
+#~ "Send word to Helicrom that we are ready. It is time for him to repay his "
+#~ "debt."
+#~ msgstr ""
+#~ "𐑕𐑧𐑯𐑛 𐑢𐑻𐑛 𐑑 ·𐑣𐑧𐑤𐑦𐑒𐑮𐑪𐑥 𐑞𐑨𐑑 𐑢𐑰 𐑸 𐑮𐑧𐑛𐑦. 𐑦𐑑 𐑦𐑟 𐑑𐑲𐑥 𐑓𐑹 𐑣𐑦𐑥 𐑑 𐑮𐑰𐑐𐑱 𐑣𐑦𐑟 𐑛𐑧𐑑."
+
+#~ msgid ""
+#~ "We have spent too much time here. Surely the entire Wesnoth army marches "
+#~ "on our position. We are done for!"
+#~ msgstr ""
+#~ "𐑢𐑰 𐑣𐑨𐑝 𐑕𐑐𐑧𐑯𐑑 𐑑𐑵 𐑥𐑳𐑗 𐑑𐑲𐑥 𐑣𐑽. 𐑖𐑫𐑼𐑤𐑦 𐑞 𐑧𐑯𐑑𐑲𐑼 ·𐑢𐑧𐑕𐑯𐑷𐑔 𐑸𐑥𐑦 𐑥𐑸𐑗𐑩𐑟 𐑪𐑯 𐑬𐑼 "
+#~ "𐑐𐑩𐑟𐑦𐑖𐑩𐑯. 𐑢𐑰 𐑸 𐑛𐑳𐑯 𐑓𐑹!"
+
+#~ msgid "No, young one. Halstead indeed has a weakness."
+#~ msgstr "𐑯𐑴, 𐑘𐑳𐑙 𐑢𐑳𐑯. 𐑣𐑨𐑤𐑕𐑑𐑧𐑛 𐑦𐑯𐑛𐑰𐑛 𐑣𐑨𐑟 𐑩 𐑢𐑰𐑒𐑯𐑩𐑕."
+
+#~ msgid "How do you know?"
+#~ msgstr "𐑣𐑬 𐑛𐑵 𐑿 𐑯𐑴?"
+
+#, fuzzy
+#~| msgid ""
+#~| "When I was a boy, my father — your grandfather — brought your dad and me "
+#~| "to live in Aldril after orcs massacred many in our village. We grew up "
+#~| "around here, and we learned many things."
+#~ msgid ""
+#~ "When I was a boy, my father — your grandfather — brought your mother and "
+#~ "me to live in Aldril after orcs massacred many in our village. We grew up "
+#~ "around here, and we learned many things."
+#~ msgstr ""
+#~ "𐑢𐑧𐑯 𐑲 𐑢𐑪𐑟 𐑩 𐑚𐑶, 𐑥𐑲 𐑓𐑭𐑞𐑼 - 𐑿𐑼 𐑜𐑮𐑨𐑯𐑛𐑓𐑭𐑞𐑼 - 𐑚𐑮𐑷𐑑 𐑿𐑼 𐑛𐑨𐑛 𐑯 𐑥𐑰 𐑑 𐑤𐑲𐑝 𐑦𐑯 "
+#~ "·𐑨𐑤𐑛𐑮𐑦𐑤 𐑭𐑓𐑑𐑼 𐑹𐑒𐑕 𐑥𐑨𐑕𐑩𐑒𐑻𐑛 𐑥𐑧𐑯𐑦 𐑦𐑯 𐑬𐑼 𐑝𐑦𐑤𐑦𐑡. 𐑢𐑰 𐑜𐑮𐑵 𐑳𐑐 𐑩𐑮𐑬𐑯𐑛 𐑣𐑽, 𐑯 𐑢𐑰 𐑤𐑻𐑯𐑛 "
+#~ "𐑥𐑧𐑯𐑦 𐑔𐑦𐑙𐑟."
+
+#~ msgid ""
+#~ "Beneath the structure is a system of catacombs that connects all four "
+#~ "towers to the central keep. The catacombs growing over time, combined "
+#~ "with centuries of war, made it necessary to install supports to hold up "
+#~ "the middle."
+#~ msgstr ""
+#~ "𐑚𐑦𐑯𐑰𐑔 𐑞 𐑕𐑑𐑮𐑳𐑒𐑗𐑼 𐑦𐑟 𐑩 𐑕𐑦𐑕𐑑𐑩𐑥 𐑝 𐑒𐑨𐑑𐑩𐑒𐑴𐑥𐑟 𐑞𐑨𐑑 𐑒𐑩𐑯𐑧𐑒𐑑𐑕 𐑷𐑤 𐑓𐑹 𐑑𐑬𐑼𐑟 𐑑 𐑞 𐑕𐑧𐑯𐑑𐑮𐑩𐑤 "
+#~ "𐑒𐑰𐑐. 𐑞 𐑒𐑨𐑑𐑩𐑒𐑴𐑥𐑟 𐑜𐑮𐑴𐑦𐑙 𐑴𐑝𐑼 𐑑𐑲𐑥, 𐑒𐑩𐑥𐑚𐑲𐑯𐑛 𐑢𐑦𐑞 𐑕𐑧𐑯𐑑𐑘𐑼𐑦𐑟 𐑝 𐑢𐑹, 𐑥𐑱𐑛 𐑦𐑑 𐑯𐑧𐑕𐑩𐑕𐑼𐑦 "
+#~ "𐑑 𐑦𐑯𐑕𐑑𐑷𐑤 𐑕𐑩𐑐𐑹𐑑𐑕 𐑑 𐑣𐑴𐑤𐑛 𐑳𐑐 𐑞 𐑥𐑦𐑛𐑩𐑤."
+
+#~ msgid "axe"
+#~ msgstr "𐑨𐑒𐑕"
+
+#~ msgid "sword"
+#~ msgstr "𐑕𐑹𐑛"
+
+#~ msgid "short sword"
+#~ msgstr "𐑖𐑹𐑑 𐑕𐑹𐑛"
+
+#~ msgid "Holy Ankh"
+#~ msgstr "𐑣𐑴𐑤𐑰 𐑨𐑯𐑒"
+
+#~ msgid ""
+#~ "You find a hefty pendant on a strange and ominous looking altar. It glows "
+#~ "brightly when you pick it up!"
+#~ msgstr ""
+#~ "𐑿 𐑓𐑲𐑯𐑛 𐑩 𐑣𐑧𐑓𐑑𐑰 𐑐𐑧𐑯𐑛𐑩𐑯𐑑 𐑪𐑯 𐑩 𐑕𐑑𐑮𐑱𐑯𐑡 𐑯 𐑭𐑥𐑩𐑯𐑩𐑕 𐑤𐑫𐑒𐑦𐑙 𐑷𐑤𐑑𐑼. 𐑦𐑑 𐑜𐑤𐑴𐑟 𐑚𐑮𐑲𐑑𐑤𐑰 "
+#~ "𐑢𐑧𐑯 𐑿 𐑐𐑦𐑒 𐑦𐑑 𐑳𐑐!"
+
+#~ msgid ""
+#~ "There is a strange altar here and a pendant on it. I don’t want to touch "
+#~ "it."
+#~ msgstr "𐑞𐑺 𐑦𐑟 𐑩 𐑕𐑑𐑮𐑱𐑯𐑡 𐑷𐑤𐑑𐑼 𐑣𐑽 𐑯 𐑩 𐑐𐑧𐑯𐑛𐑩𐑯𐑑 𐑪𐑯 𐑦𐑑. 𐑲 𐑛𐑴𐑯𐑑 𐑢𐑪𐑯𐑑 𐑑 𐑑𐑳𐑗 𐑦𐑑."
+
+#~ msgid "holy ankh"
+#~ msgstr "𐑣𐑴𐑤𐑰 𐑨𐑯𐑒"
+
+#~ msgid "Relnan"
+#~ msgstr "·𐑮𐑧𐑤𐑯𐑨𐑯"
+
+#~ msgid "magic missile"
+#~ msgstr "𐑥𐑨𐑡𐑦𐑒 𐑥𐑦𐑕𐑩𐑤"
+
+#~ msgid "Turns run out"
+#~ msgstr "𐑑𐑻𐑯𐑟 𐑮𐑳𐑯 𐑬𐑑"
+
+#~ msgid "(Baldras!)"
+#~ msgstr "(·𐑚𐑨𐑤𐑛𐑮𐑨𐑕!)"
+
+#~ msgid "Translators"
+#~ msgstr "𐑑𐑮𐑩𐑯𐑕𐑤𐑱𐑑𐑼𐑟"
