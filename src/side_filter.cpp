@@ -74,17 +74,38 @@ static bool check_side_number(const team &t, const std::string &str)
 	return in_ranges(t.side(), utils::parse_ranges_unsigned(str));
 }
 
+namespace
+{
+static const std::string str_side_in{"side_in"};
+static const std::string str_side{"side"};
+static const std::string str_team_name{"team_name"};
+static const std::string str_has_unit{"has_unit"};
+static const std::string str_search_recall_list{"search_recall_list"};
+static const std::string str_this_unit{"this_unit"};
+static const std::string str_enemy_of{"enemy_of"};
+static const std::string str_allied_with{"allied_with"};
+static const std::string str_has_enemy{"has_enemy"};
+static const std::string str_has_ally{"has_ally"};
+static const std::string str_controller{"controller"};
+static const std::string str_formula{"formula"};
+static const std::string str_lua_function{"lua_function"};
+
+static const std::string str_and{"and"};
+static const std::string str_or{"or"};
+static const std::string str_not{"not"};
+}
+
 bool side_filter::match_internal(const team &t) const
 {
 	assert(fc_);
 
-	if (cfg_.has_attribute("side_in")) {
-		if (!check_side_number(t,cfg_["side_in"])) {
+	if (cfg_.has_attribute(str_side_in)) {
+		if (!check_side_number(t,cfg_[str_side_in])) {
 			return false;
 		}
 	}
-	if (cfg_.has_attribute("side")) {
-		if (!check_side_number(t,cfg_["side"])) {
+	if (cfg_.has_attribute(str_side)) {
+		if (!check_side_number(t,cfg_[str_side])) {
 			return false;
 		}
 	}
@@ -94,7 +115,7 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	config::attribute_value cfg_team_name = cfg_["team_name"];
+	config::attribute_value cfg_team_name = cfg_[str_team_name];
 	if (!cfg_team_name.blank()) {
 		const std::string& that_team_name = cfg_team_name;
 		const std::string& this_team_name = t.team_name();
@@ -116,8 +137,8 @@ bool side_filter::match_internal(const team &t) const
 	}
 
 	//Allow filtering on units
-	if(cfg_.has_child("has_unit")) {
-		const vconfig & ufilt_cfg = cfg_.child("has_unit");
+	if(cfg_.has_child(str_has_unit)) {
+		const vconfig & ufilt_cfg = cfg_.child(str_has_unit);
 		if (!ufilter_) {
 			ufilter_.reset(new unit_filter(ufilt_cfg.make_safe()));
 			ufilter_->set_use_flat_tod(flat_);
@@ -132,9 +153,9 @@ bool side_filter::match_internal(const team &t) const
 				break;
 			}
 		}
-		if(!found && ufilt_cfg["search_recall_list"].to_bool(false)) {
+		if(!found && ufilt_cfg[str_search_recall_list].to_bool(false)) {
 			for(const unit_const_ptr u : t.recall_list()) {
-				scoped_recall_unit this_unit("this_unit", t.save_id_or_number(), t.recall_list().find_index(u->id()));
+				scoped_recall_unit this_unit(str_this_unit, t.save_id_or_number(), t.recall_list().find_index(u->id()));
 				if(ufilter_->matches(*u)) {
 					found = true;
 					break;
@@ -146,7 +167,7 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	const vconfig& enemy_of = cfg_.child("enemy_of");
+	const vconfig& enemy_of = cfg_.child(str_enemy_of);
 	if(!enemy_of.null()) {
 		if (!enemy_filter_)
 			enemy_filter_.reset(new side_filter(enemy_of, fc_));
@@ -158,7 +179,7 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	const vconfig& allied_with = cfg_.child("allied_with");
+	const vconfig& allied_with = cfg_.child(str_allied_with);
 	if(!allied_with.null()) {
 		if (!allied_filter_)
 			allied_filter_.reset(new side_filter(allied_with, fc_));
@@ -170,7 +191,7 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	const vconfig& has_enemy = cfg_.child("has_enemy");
+	const vconfig& has_enemy = cfg_.child(str_has_enemy);
 	if(!has_enemy.null()) {
 		if (!has_enemy_filter_)
 			has_enemy_filter_.reset(new side_filter(has_enemy, fc_));
@@ -186,7 +207,7 @@ bool side_filter::match_internal(const team &t) const
 		if (!found) return false;
 	}
 
-	const vconfig& has_ally = cfg_.child("has_ally");
+	const vconfig& has_ally = cfg_.child(str_has_ally);
 	if(!has_ally.null()) {
 		if (!has_ally_filter_)
 			has_ally_filter_.reset(new side_filter(has_ally, fc_));
@@ -203,7 +224,7 @@ bool side_filter::match_internal(const team &t) const
 	}
 
 
-	const config::attribute_value cfg_controller = cfg_["controller"];
+	const config::attribute_value cfg_controller = cfg_[str_controller];
 	if (!cfg_controller.blank())
 	{
 		if (resources::controller->is_networked_mp() && synced_context::is_synced()) {
@@ -223,11 +244,11 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	if (cfg_.has_attribute("formula")) {
+	if (cfg_.has_attribute(str_formula)) {
 		try {
 			const wfl::team_callable callable(t);
 			wfl::gamestate_function_symbol_table symbols;
-			const wfl::formula form(cfg_["formula"], &symbols);
+			const wfl::formula form(cfg_[str_formula], &symbols);
 			if(!form.evaluate(callable).as_bool()) {
 				return false;
 			}
@@ -240,8 +261,8 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	if (cfg_.has_attribute("lua_function")) {
-		std::string lua_function = cfg_["lua_function"].str();
+	if (cfg_.has_attribute(str_lua_function)) {
+		std::string lua_function = cfg_[str_lua_function].str();
 		if (!lua_function.empty() && fc_->get_lua_kernel()) {
 			if (!fc_->get_lua_kernel()->run_filter(lua_function.c_str(), t)) {
 				return false;
@@ -266,15 +287,15 @@ bool side_filter::match(const team& t) const
 	// Handle [and], [or], and [not] with in-order precedence
 	for(const auto& [key, filter] : cfg_.all_ordered()) {
 		// Handle [and]
-		if(key == "and") {
+		if(key == str_and) {
 			matches = matches && side_filter(filter, fc_, flat_).match(t);
 		}
 		// Handle [or]
-		else if(key == "or") {
+		else if(key == str_or) {
 			matches = matches || side_filter(filter, fc_, flat_).match(t);
 		}
 		// Handle [not]
-		else if(key == "not") {
+		else if(key == str_not) {
 			matches = matches && !side_filter(filter, fc_, flat_).match(t);
 		}
 	}
