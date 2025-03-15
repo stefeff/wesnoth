@@ -47,14 +47,15 @@ lua_unit::~lua_unit()
 
 unit* lua_unit::get() const
 {
-	if (ptr) return ptr.get();
 	if (c_ptr) return c_ptr;
+	if (ptr) return ptr.get();
 	if (side) {
 		return resources::gameboard->get_team(side).recall_list().find_if_matches_underlying_id(uid).get();
 	}
 	unit_map::unit_iterator ui = resources::gameboard->units().find(uid);
 	if (!ui.valid()) return nullptr;
-	return ui.get_shared_ptr().get(); //&*ui would not be legal, must get new shared_ptr by copy ctor because the unit_map itself is holding a boost shared pointer.
+	c_ptr = ui.get_shared_ptr().get(); //&*ui would not be legal, must get new shared_ptr by copy ctor because the unit_map itself is holding a boost shared pointer.
+	return c_ptr;
 }
 unit_ptr lua_unit::get_shared() const
 {

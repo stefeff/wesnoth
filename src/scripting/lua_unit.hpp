@@ -82,7 +82,7 @@ class lua_unit
 	std::size_t uid;
 	unit_ptr ptr;
 	int side;
-	unit* c_ptr;
+	unit mutable * c_ptr;
 	lua_unit(const lua_unit&) = delete;
 	lua_unit& operator=(const lua_unit&) = delete;
 
