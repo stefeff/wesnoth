@@ -2746,9 +2746,18 @@ unit_movement_resetter::~unit_movement_resetter()
 	}
 }
 
-std::string unit::TC_image_mods() const
+const std::string& unit::TC_image_mods() const
 {
-	return formatter() << "~RC(" << flag_rgb() << ">" << team::get_side_color_id(side()) << ")";
+	auto& flag = flag_rgb();
+
+	if (cached_TC_image_mods_.flag_rgb != flag || cached_TC_image_mods_.side != side()) {
+		cached_TC_image_mods_.flag_rgb = flag;
+		cached_TC_image_mods_.side = side();
+		cached_TC_image_mods_.TC_image_mods =
+			formatter() << "~RC(" << flag_rgb() << ">" << team::get_side_color_id(side()) << ")";
+	}
+
+	return cached_TC_image_mods_.TC_image_mods;
 }
 
 std::string unit::image_mods() const
