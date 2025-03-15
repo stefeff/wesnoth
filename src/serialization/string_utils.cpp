@@ -913,12 +913,13 @@ std::pair<double, double> parse_range_real(const std::string& str)
 	return res;
 }
 
-std::vector<std::pair<int, int>> parse_ranges_unsigned(const std::string& str)
+const std::vector<std::pair<int, int>>& parse_ranges_unsigned(const std::string& str)
 {
-	auto to_return = parse_ranges_int(str);
+	auto& to_return = parse_ranges_int(str);
 	if(std::any_of(to_return.begin(), to_return.end(), [](const std::pair<int, int>& r) { return r.first < 0; })) {
+		static std::vector<std::pair<int, int>> empty;
 		ERR_GENERAL << "Invalid range (expected values to be zero or positive): " << str;
-		return {};
+		return empty;
 	}
 
 	return to_return;
@@ -934,11 +935,17 @@ std::vector<std::pair<double, double>> parse_ranges_real(const std::string& str)
 	return to_return;
 }
 
-std::vector<std::pair<int, int>> parse_ranges_int(const std::string& str)
+const std::vector<std::pair<int, int>>& parse_ranges_int(const std::string& str)
 {
-	std::vector<std::pair<int, int>> to_return;
-	for(const std::string& r : utils::split(str)) {
-		to_return.push_back(parse_range(r));
+	static std::vector<std::pair<int, int>> to_return;
+	static std::string last_str{};
+
+	if (last_str != str) {
+		to_return.clear();
+		for(const std::string& r : utils::split(str)) {
+			to_return.push_back(parse_range(r));
+		}
+		last_str = str;
 	}
 
 	return to_return;
