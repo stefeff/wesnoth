@@ -1581,7 +1581,7 @@ public:
 	const std::string& flag_rgb() const;
 
 	/** Constructs a recolor (RC) IPF string for this unit's team color. */
-	std::string TC_image_mods() const;
+	const std::string& TC_image_mods() const;
 
 	/** Gets any IPF image mods applied by effects. */
 	const std::string& effect_image_mods() const
@@ -1871,6 +1871,12 @@ private:
 
 	std::string flag_rgb_;
 	std::string image_mods_;
+
+	mutable struct {
+		int side{-1};
+		std::string flag_rgb{};
+		std::string TC_image_mods{};
+	} cached_TC_image_mods_;
 
 	bool unrenamable_;
 	bool dismissable_;
