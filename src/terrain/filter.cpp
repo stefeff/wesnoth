@@ -138,7 +138,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 		return false;
 	}
 
-	std::string lua_function = cfg_[str_lua_function];
+	std::string lua_function = cfg_.expand_str(str_lua_function);
 	if (!lua_function.empty() && fc_->get_lua_kernel()) {
 		if (!fc_->get_lua_kernel()->run_filter(lua_function.c_str(), loc)) {
 			return false;
@@ -147,7 +147,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 
 	//Filter Areas
 	if (cfg_.has_attribute(str_area) &&
-		fc_->get_tod_man().get_area_by_id(cfg_[str_area]).count(loc) == 0)
+		fc_->get_tod_man().get_area_by_id(cfg_.expand_str(str_area)).count(loc) == 0)
 		return false;
 
 	if(cfg_.has_attribute(str_gives_income) &&
@@ -296,10 +296,8 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 		}
 	}
 
-	const t_string& t_tod_type = cfg_[str_time_of_day].t_str();
-	const t_string& t_tod_id = cfg_[str_time_of_day_id].t_str();
-	const std::string& tod_type = t_tod_type;
-	const std::string& tod_id = t_tod_id;
+	std::string tod_type = cfg_.expand_str(str_time_of_day);
+	std::string tod_id = cfg_.expand_str(str_time_of_day_id);
 	if(!tod_type.empty() || !tod_id.empty()) {
 		// creating a time_of_day is expensive, only do it if we will use it
 		const time_of_day& tod = flat_

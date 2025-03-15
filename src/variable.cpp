@@ -357,6 +357,12 @@ config::attribute_value vconfig::expand(const std::string &key) const
 	return val;
 }
 
+std::string vconfig::expand_str(const std::string &key) const
+{
+	std::string val = (*cfg_)[key];
+	return utils::interpolate_variables_into_string(val, *variables_);
+}
+
 vconfig::attribute_iterator::reference vconfig::attribute_iterator::operator*() const
 {
 	config::attribute val = *i_;
