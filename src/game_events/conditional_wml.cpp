@@ -54,7 +54,7 @@ namespace builtin_conditions {
 		if(!resources::gameboard) {
 			return false;
 		}
-		std::vector<std::pair<int,int>> counts = cfg.has_attribute("count")
+		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute("count")
 			? utils::parse_ranges_unsigned(cfg["count"]) : default_counts;
 		int match_count = 0;
 		const unit_filter ufilt(cfg);
@@ -91,7 +91,7 @@ namespace builtin_conditions {
 		std::set<map_location> res;
 		terrain_filter(cfg, resources::filter_con, false).get_locations(res);
 
-		std::vector<std::pair<int,int>> counts = cfg.has_attribute("count")
+		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute("count")
 		? utils::parse_ranges_unsigned(cfg["count"]) : default_counts;
 		return in_ranges<int>(res.size(), counts);
 	}

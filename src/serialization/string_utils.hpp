@@ -297,12 +297,12 @@ std::pair<int, int> parse_range(std::string_view str);
  * negative values. Will return an empty list if any of the ranges have a minimum that's below
  * zero.
  */
-std::vector<std::pair<int, int>> parse_ranges_unsigned(const std::string& str);
+const std::vector<std::pair<int, int>>& parse_ranges_unsigned(const std::string& str);
 
 /**
  * Handles a comma-separated list of inputs to parse_range.
  */
-std::vector<std::pair<int, int>> parse_ranges_int(const std::string& str);
+const std::vector<std::pair<int, int>>& parse_ranges_int(const std::string& str);
 
 /**
  * Recognises similar patterns to parse_range, and returns a {min, max} pair.
