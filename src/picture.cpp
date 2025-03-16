@@ -757,11 +757,6 @@ surface get_lighted_image(const image::locator& i_locator, const light_string& l
 	// select associated cache
 	lit_surface_cache* imap = &lit_surfaces_;
 
-	// if no light variants yet, need to add an empty map
-	if(!i_locator.in_cache(*imap)) {
-		i_locator.add_to_cache(*imap, lit_surface_variants());
-	}
-
 	// need access to add it if not found
 	{ // enclose reference pointing to data stored in a changing vector
 		const lit_surface_variants& lvar = i_locator.locate_in_cache(*imap);
@@ -793,11 +788,6 @@ texture get_lighted_texture(
 
 	// select associated cache
 	lit_texture_cache* imap = &lit_textures_;
-
-	// if no light variants yet, need to add an empty map
-	if(!i_locator.in_cache(*imap)) {
-		i_locator.add_to_cache(*imap, lit_texture_variants());
-	}
 
 	// need access to add it if not found
 	{ // enclose reference pointing to data stored in a changing vector
