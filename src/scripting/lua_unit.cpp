@@ -273,11 +273,124 @@ static int impl_unit_tostring(lua_State* L)
  */
 static int impl_unit_get(lua_State *L)
 {
+	enum attribute_name {
+		valid,
+		x,
+		y,
+		side,
+		id,
+		type,
+		image_mods,
+		usage,
+		ellipse,
+		halo,
+		hitpoints,
+		max_hitpoints,
+		experience,
+		max_experience,
+		recall_cost,
+		moves,
+		max_moves,
+		max_attacks,
+		attacks_left,
+		vision,
+		jamming,
+		name,
+		description,
+		canrecruit,
+		renamable,
+		level,
+		cost,
+		extra_recruit,
+		advances_to,
+		animations,
+		recall_filter,
+		hidden,
+		resting,
+		role,
+		race,
+		gender,
+		variation,
+		undead_variation,
+		zoc,
+		facing,
+		portrait,
+		__cfg,
+		loc,
+		__goto,
+		alignment,
+		upkeep,
+		advancements,
+		overlays,
+		traits,
+		abilities,
+		status,
+		variables,
+		attacks,
+		petrified
+	};
+	static const std::unordered_map<std::string, attribute_name> attributes {
+		{"valid", valid},
+		{"x", x},
+		{"y", y},
+		{"side", side},
+		{"id", id},
+		{"type", type},
+		{"image_mods", image_mods},
+		{"usage", usage},
+		{"ellipse", ellipse},
+		{"halo", halo},
+		{"hitpoints", hitpoints},
+		{"max_hitpoints", max_hitpoints},
+		{"experience", experience},
+		{"max_experience", max_experience},
+		{"recall_cost", recall_cost},
+		{"moves", moves},
+		{"max_moves", max_moves},
+		{"max_attacks", max_attacks},
+		{"attacks_left", attacks_left},
+		{"vision", vision},
+		{"jamming", jamming},
+		{"name", name},
+		{"description", description},
+		{"canrecruit", canrecruit},
+		{"renamable", renamable},
+		{"level", level},
+		{"cost", cost},
+		{"extra_recruit", extra_recruit},
+		{"advances_to", advances_to},
+		{"animations", animations},
+		{"recall_filter", recall_filter},
+		{"hidden", hidden},
+		{"resting", resting},
+		{"role", role},
+		{"race", race},
+		{"gender", gender},
+		{"variation", variation},
+		{"undead_variation", undead_variation},
+		{"zoc", zoc},
+		{"facing", facing},
+		{"portrait", portrait},
+		{"__cfg", __cfg},
+		{"loc", loc},
+		{"goto", __goto},
+		{"alignment", alignment},
+		{"upkeep", upkeep},
+		{"advancements", advancements},
+		{"overlays", overlays},
+		{"traits", traits},
+		{"abilities", abilities},
+		{"status", status},
+		{"variables", variables},
+		{"attacks", attacks},
+		{"petrified", petrified}
+	};
 	lua_unit *lu = static_cast<lua_unit *>(lua_touserdata(L, 1));
-	char const *m = luaL_checkstring(L, 2);
+	const std::string m = luaL_checkstring(L, 2);
 	const unit* pu = lu->get();
 
-	if(strcmp(m, "valid") == 0) {
+	auto it = attributes.find(m);
+	if (it != attributes.end() && it->second == valid) {
 		if(!pu) {
 			return 0;
 		}
@@ -295,124 +408,202 @@ static int impl_unit_get(lua_State *L)
 		return luaL_argerror(L, 1, "unknown unit");
 	}
 
-	const unit& u = *pu;
-
-	// Find the corresponding attribute.
-	return_int_attrib("x", u.get_location().wml_x());
-	return_int_attrib("y", u.get_location().wml_y());
-	if(strcmp(m, "loc") == 0) {
-		luaW_pushlocation(L, u.get_location());
-		return 1;
-	}
-	if(strcmp(m, "goto") == 0) {
-		luaW_pushlocation(L, u.get_goto());
-		return 1;
-	}
-	return_int_attrib("side", u.side());
-	return_string_attrib("id", u.id());
-	return_string_attrib("type", u.type_id());
-	return_string_attrib("image_mods", u.effect_image_mods());
-	return_string_attrib("usage", u.usage());
-	return_string_attrib("ellipse", u.image_ellipse());
-	return_string_attrib("halo", u.image_halo());
-	return_int_attrib("hitpoints", u.hitpoints());
-	return_int_attrib("max_hitpoints", u.max_hitpoints());
-	return_int_attrib("experience", u.experience());
-	return_int_attrib("max_experience", u.max_experience());
-	return_int_attrib("recall_cost", u.recall_cost());
-	return_int_attrib("moves", u.movement_left());
-	return_int_attrib("max_moves", u.total_movement());
-	return_int_attrib("max_attacks", u.max_attacks());
-	return_int_attrib("attacks_left", u.attacks_left());
-	return_int_attrib("vision", u.vision());
-	return_int_attrib("jamming", u.jamming());
-	return_tstring_attrib("name", u.name());
-	return_tstring_attrib("description", u.unit_description());
-	return_bool_attrib("canrecruit", u.can_recruit());
-	return_bool_attrib("renamable", !u.unrenamable());
-	return_int_attrib("level", u.level());
-	return_int_attrib("cost", u.cost());
-
-	return_vector_string_attrib("extra_recruit", u.recruits());
-	return_vector_string_attrib("advances_to", u.advances_to());
-
-	if(strcmp(m, "alignment") == 0) {
-		lua_push(L, unit_alignments::get_string(u.alignment()));
-		return 1;
-	}
-
-	if(strcmp(m, "upkeep") == 0) {
-		unit::upkeep_t upkeep = u.upkeep_raw();
-
-		// Need to keep these separate in order to ensure an int value is always used if applicable.
-		if(int* v = utils::get_if<int>(&upkeep)) {
-			lua_push(L, *v);
-		} else {
-			const std::string type = utils::visit(unit::upkeep_type_visitor{}, upkeep);
-			lua_push(L, type);
+	if (it == attributes.end()) {
+		static std::vector<std::string> path{"wesnoth", "units", ""};
+		path[2] = m;
+		if(luaW_getglobal(L, path)) {
+			return 1;
 		}
+		else {
+			return 0;
+		}
+	}
 
-		return 1;
-	}
-	if(strcmp(m, "advancements") == 0) {
-		lua_push(L, u.modification_advancements());
-		return 1;
-	}
-	if(strcmp(m, "overlays") == 0) {
-		lua_push(L, u.overlays());
-		return 1;
-	}
-	if(strcmp(m, "traits") == 0) {
-		lua_push(L, u.get_traits_list());
-		return 1;
-	}
-	if(strcmp(m, "abilities") == 0) {
-		lua_push(L, u.get_ability_list());
-		return 1;
-	}
-	if(strcmp(m, "status") == 0) {
-		lua_createtable(L, 1, 0);
-		lua_pushvalue(L, 1);
-		lua_rawseti(L, -2, 1);
-		luaL_setmetatable(L, ustatusKey);
-		return 1;
-	}
-	if(strcmp(m, "variables") == 0) {
-		lua_createtable(L, 1, 0);
-		lua_pushvalue(L, 1);
-		lua_rawseti(L, -2, 1);
-		luaL_setmetatable(L, unitvarKey);
-		return 1;
-	}
-	if(strcmp(m, "attacks") == 0) {
-		push_unit_attacks_table(L, 1);
-		return 1;
-	}
-	if(strcmp(m, "petrified") == 0) {
-		deprecated_message("(unit).petrified", DEP_LEVEL::INDEFINITE, {1,17,0}, "use (unit).status.petrified instead");
-		lua_pushboolean(L, u.incapacitated());
-		return 1;
-	}
-	return_vector_string_attrib("animations", u.anim_comp().get_flags());
-	return_cfg_attrib("recall_filter", cfg = u.recall_filter());
-	return_bool_attrib("hidden", u.get_hidden());
-	return_bool_attrib("resting", u.resting());
-	return_string_attrib("role", u.get_role());
-	return_string_attrib("race", u.race()->id());
-	return_string_attrib("gender", gender_string(u.gender()));
-	return_string_attrib("variation", u.variation());
-	return_string_attrib("undead_variation", u.undead_variation());
-	return_bool_attrib("zoc", u.get_emit_zoc());
-	return_string_attrib("facing", map_location::write_direction(u.facing()));
-	return_string_attrib("portrait", u.big_profile() == u.absolute_image()
-		? u.absolute_image() + u.image_mods() + "~SCALE_SHARP(144,144)"
-		: u.big_profile());
-	return_cfg_attrib("__cfg", u.write(cfg); u.get_location().write(cfg));
+#define case_int_attrib(accessor) \
+	lua_pushinteger(L, (accessor)); \
+	break;
+#define case_string_attrib(accessor) { \
+	const std::string& str = (accessor); \
+	lua_pushlstring(L, str.c_str(), str.length()); \
+	break; }
+#define case_tstring_attrib(accessor) \
+	luaW_pushtstring(L, (accessor)); \
+	break;
+#define case_bool_attrib(accessor) \
+	lua_pushboolean(L, (accessor)); \
+	break;
+#define case_cfg_attrib(accessor) {\
+	config cfg; \
+	{accessor;} \
+	luaW_pushconfig(L, cfg); \
+	break; }
+#define case_vector_string_attrib(accessor) {\
+	const std::vector<std::string>& vector = (accessor); \
+	lua_createtable(L, vector.size(), 0); \
+	int i = 1; \
+	for (const std::string& s : vector) { \
+		lua_pushlstring(L, s.c_str(), s.length()); \
+		lua_rawseti(L, -2, i); \
+		++i; \
+	} \
+	break; }
 
-	if(luaW_getglobal(L, "wesnoth", "units", m)) {
-		return 1;
+	const unit& u = *pu;
+	switch (it->second) {
+		case valid: // dummy, case already handled
+			break;
+		case x:
+			case_int_attrib(u.get_location().wml_x());
+		case y:
+			case_int_attrib(u.get_location().wml_y());
+		case side:
+			case_int_attrib(u.side());
+		case id:
+			case_string_attrib(u.id());
+		case type:
+			case_string_attrib(u.type_id());
+		case image_mods:
+			case_string_attrib(u.effect_image_mods());
+		case usage:
+			case_string_attrib(u.usage());
+		case ellipse:
+			case_string_attrib(u.image_ellipse());
+		case halo:
+			case_string_attrib(u.image_halo());
+		case hitpoints:
+			case_int_attrib(u.hitpoints());
+		case max_hitpoints:
+			case_int_attrib(u.max_hitpoints());
+		case experience:
+			case_int_attrib(u.experience());
+		case max_experience:
+			case_int_attrib(u.max_experience());
+		case recall_cost:
+			case_int_attrib(u.recall_cost());
+		case moves:
+			case_int_attrib(u.movement_left());
+		case max_moves:
+			case_int_attrib(u.total_movement());
+		case max_attacks:
+			case_int_attrib(u.max_attacks());
+		case attacks_left:
+			case_int_attrib(u.attacks_left());
+		case vision:
+			case_int_attrib(u.vision());
+		case jamming:
+			case_int_attrib(u.jamming());
+		case name:
+			case_tstring_attrib(u.name());
+		case description:
+			case_tstring_attrib(u.unit_description());
+		case canrecruit:
+			case_bool_attrib(u.can_recruit());
+		case renamable:
+			case_bool_attrib(!u.unrenamable());
+		case level:
+			case_int_attrib(u.level());
+		case cost:
+			case_int_attrib(u.cost());
+		case extra_recruit:
+			case_vector_string_attrib(u.recruits());
+		case advances_to:
+			case_vector_string_attrib(u.advances_to());
+		case animations:
+			case_vector_string_attrib(u.anim_comp().get_flags());
+		case recall_filter:
+			case_cfg_attrib(cfg = u.recall_filter());
+		case hidden:
+			case_bool_attrib(u.get_hidden());
+		case resting:
+			case_bool_attrib(u.resting());
+		case role:
+			case_string_attrib(u.get_role());
+		case race:
+			case_string_attrib(u.race()->id());
+		case gender:
+			case_string_attrib(gender_string(u.gender()));
+		case variation:
+			case_string_attrib(u.variation());
+		case undead_variation:
+			case_string_attrib(u.undead_variation());
+		case zoc:
+			case_bool_attrib(u.get_emit_zoc());
+		case facing:
+			case_string_attrib(map_location::write_direction(u.facing()));
+		case portrait:
+			case_string_attrib(u.big_profile() == u.absolute_image()
+				? u.absolute_image() + u.image_mods() + "~SCALE_SHARP(144,144)"
+				: u.big_profile());
+		case __cfg:
+			case_cfg_attrib(u.write(cfg); u.get_location().write(cfg));
+
+		case loc: {
+			luaW_pushlocation(L, u.get_location());
+			break;
+		}
+		case __goto: {
+			luaW_pushlocation(L, u.get_goto());
+			break;
+		}
+		case alignment: {
+			lua_push(L, unit_alignments::get_string(u.alignment()));
+			break;
+		}
+		case upkeep: {
+			unit::upkeep_t upkeep = u.upkeep_raw();
+
+			// Need to keep these separate in order to ensure an int value is always used if applicable.
+			if(int* v = utils::get_if<int>(&upkeep)) {
+				lua_push(L, *v);
+			} else {
+				const std::string type = utils::visit(unit::upkeep_type_visitor{}, upkeep);
+				lua_push(L, type);
+			}
+
+			break;
+		}
+		case advancements: {
+			lua_push(L, u.modification_advancements());
+			break;
+		}
+		case overlays: {
+			lua_push(L, u.overlays());
+			break;
+		}
+		case traits: {
+			lua_push(L, u.get_traits_list());
+			break;
+		}
+		case abilities: {
+			lua_push(L, u.get_ability_list());
+			break;
+		}
+		case status: {
+			lua_createtable(L, 1, 0);
+			lua_pushvalue(L, 1);
+			lua_rawseti(L, -2, 1);
+			luaL_setmetatable(L, ustatusKey);
+			break;
+		}
+		case variables: {
+			lua_createtable(L, 1, 0);
+			lua_pushvalue(L, 1);
+			lua_rawseti(L, -2, 1);
+			luaL_setmetatable(L, unitvarKey);
+			break;
+		}
+		case attacks: {
+			push_unit_attacks_table(L, 1);
+			break;
+		}
+		case petrified: {
+			deprecated_message("(unit).petrified", DEP_LEVEL::INDEFINITE, {1,17,0}, "use (unit).status.petrified instead");
+			lua_pushboolean(L, u.incapacitated());
+			break;
+		}
 	}
-	return 0;
+
+	return 1;
 }
 
 /**
