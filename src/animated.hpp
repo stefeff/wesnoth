@@ -67,7 +67,8 @@ public:
 	int time_to_tick(int animation_time) const;
 	int tick_to_time(int animation_tick) const;
 
-	void update_last_draw_time(double acceleration = 0);
+	void update_last_draw_time();
+	void update_last_draw_time(double acceleration);
 	bool need_update() const;
 
 	bool cycles() const

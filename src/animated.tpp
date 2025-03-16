@@ -85,14 +85,8 @@ inline void animated<T>::start_animation(int start_time, bool cycles)
 }
 
 template<typename T>
-inline void animated<T>::update_last_draw_time(double acceleration)
+inline void animated<T>::update_last_draw_time()
 {
-	if(acceleration > 0 && acceleration_ != acceleration) {
-		int tmp = tick_to_time(last_update_tick_);
-		acceleration_ = acceleration;
-		start_tick_ = last_update_tick_ + static_cast<int>((starting_frame_time_ - tmp) / acceleration_);
-	}
-
 	if(!started_ && start_tick_ != 0) {
 		// animation is paused
 		start_tick_ += get_current_animation_tick() - last_update_tick_;
@@ -130,6 +124,18 @@ inline void animated<T>::update_last_draw_time(double acceleration)
 	if(current_frame_end_time < get_animation_time() && current_frame_end_time < get_end_time()) {
 		current_frame_key_++;
 	}
+}
+
+template<typename T>
+inline void animated<T>::update_last_draw_time(double acceleration)
+{
+	if(acceleration > 0 && acceleration_ != acceleration) {
+		int tmp = tick_to_time(last_update_tick_);
+		acceleration_ = acceleration;
+		start_tick_ = last_update_tick_ + static_cast<int>((starting_frame_time_ - tmp) / acceleration_);
+	}
+
+	update_last_draw_time();
 }
 
 template<typename T>
