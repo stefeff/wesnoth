@@ -69,7 +69,8 @@ public:
 	std::chrono::steady_clock::time_point time_to_tick(const std::chrono::milliseconds& animation_time) const;
 	std::chrono::milliseconds tick_to_time(const std::chrono::steady_clock::time_point& animation_tick) const;
 
-	void update_last_draw_time(double acceleration = 0);
+	void update_last_draw_time();
+	void update_last_draw_time(double acceleration);
 	bool need_update() const;
 
 	bool cycles() const

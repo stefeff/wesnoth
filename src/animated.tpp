@@ -84,14 +84,8 @@ inline void animated<T>::start_animation(const std::chrono::milliseconds& start_
 }
 
 template<typename T>
-inline void animated<T>::update_last_draw_time(double acceleration)
+inline void animated<T>::update_last_draw_time()
 {
-	if(acceleration > 0 && acceleration_ != acceleration) {
-		auto tmp = tick_to_time(last_update_tick_);
-		acceleration_ = acceleration;
-		start_tick_ = last_update_tick_ + std::chrono::duration_cast<std::chrono::milliseconds>((starting_frame_time_ - tmp) / acceleration_);
-	}
-
 	if(!started_ && start_tick_ != std::chrono::steady_clock::time_point{}) {
 		// animation is paused
 		start_tick_ += get_current_animation_tick() - last_update_tick_;
@@ -150,6 +144,18 @@ template<typename T>
 inline bool animated<T>::not_started() const
 {
 	return !started_ && start_tick_ == std::chrono::steady_clock::time_point{};
+}
+
+template<typename T>
+inline void animated<T>::update_last_draw_time(double acceleration)
+{
+	if(acceleration > 0 && acceleration_ != acceleration) {
+		auto tmp = tick_to_time(last_update_tick_);
+		acceleration_ = acceleration;
+		start_tick_ = last_update_tick_ + std::chrono::duration_cast<std::chrono::milliseconds>((starting_frame_time_ - tmp) / acceleration_);
+	}
+
+	update_last_draw_time();
 }
 
 template<typename T>
