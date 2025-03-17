@@ -21,3 +21,5 @@ Testing/sdl2_jpg
 Testing/sdl2_mixer
 Testing/sdl2_png
 Testing/sdl2_webp
+build/**
+callgrind.out.*
