@@ -1883,6 +1883,8 @@ std::vector<std::pair<std::string, std::string>> unit::amla_icons() const
 std::vector<config> unit::get_modification_advances() const
 {
 	std::vector<config> res;
+	res.reserve(modification_advancements().size());
+
 	for(const config& adv : modification_advancements()) {
 		if(adv["strict_amla"].to_bool() && !advances_to_.empty()) {
 			continue;
