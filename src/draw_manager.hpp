@@ -17,6 +17,7 @@
 #include "sdl/rect.hpp"
 
 #include <chrono>
+#include <vector>
 
 namespace gui2 { class top_level_drawable; }
 
@@ -90,6 +91,8 @@ namespace draw_manager
  * so this may be called for every invalidation without much concern.
  */
 void invalidate_region(const rect& region);
+
+void invalidate_regions(std::vector<rect>&& regions);
 
 /** Mark the entire screen as requiring redraw. */
 void invalidate_all();
