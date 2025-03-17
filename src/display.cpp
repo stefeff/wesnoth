@@ -1197,6 +1197,8 @@ void display::get_terrain_images(const map_location& loc, const std::string& tim
 	if(const terrain_builder::imagelist* const terrains = builder_->get_terrain_at(loc, timeid, builder_terrain_type)) {
 		// Cache the offmap name. Since it is themeable it can change, so don't make it static.
 		const std::string off_map_name = "terrain/" + theme_.border().tile_image;
+		terrain_image_vector_.reserve(terrains->size());
+
 		for(const auto& terrain : *terrains) {
 			const image::locator& image = animate_map_ ? terrain.get_current_frame() : terrain.get_first_frame();
 
