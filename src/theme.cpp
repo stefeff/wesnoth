@@ -313,11 +313,8 @@ theme::border_t::border_t(const config& cfg)
 	VALIDATE(size >= 0.0 && size <= 0.5, _("border_size should be between 0.0 and 0.5."));
 }
 
-rect& theme::object::location(const SDL_Rect& screen) const
+void theme::object::update_location(const SDL_Rect& screen) const
 {
-	if(last_screen_ == screen) [[likely]]
-		return relative_loc_;
-
 	last_screen_ = screen;
 
 	switch(xanchor_) {
@@ -373,8 +370,6 @@ rect& theme::object::location(const SDL_Rect& screen) const
 		relative_loc_.y = std::min<int>(relative_loc_.y, screen.h - relative_loc_.h);
 	}
 	relative_loc_.h = std::min<int>(relative_loc_.h, screen.h - relative_loc_.y);
-
-	return relative_loc_;
 }
 
 theme::object::ANCHORING theme::object::read_anchor(const std::string& str)
@@ -397,7 +392,8 @@ void theme::object::modify_location(const _rect& rect)
 	loc_.y = rect.y1;
 	loc_.w = rect.x2 - rect.x1;
 	loc_.h = rect.y2 - rect.y1;
-	last_screen_ = sdl::empty_rect;
+
+	update_location(last_screen_);
 }
 
 void theme::object::modify_location(std::string rect_str, SDL_Rect location_ref_rect)
