@@ -33,10 +33,18 @@ constexpr const SDL_Rect empty_rect { 0, 0, 0, 0 };
 
 } // namespace sdl
 
-bool operator==(const SDL_Rect& a, const SDL_Rect& b);
-bool operator!=(const SDL_Rect& a, const SDL_Rect& b);
+inline bool operator==(const SDL_Rect& a, const SDL_Rect& b)
+{
+	return memcmp(&a, &b, sizeof(a)) == 0;
+}
+
+inline bool operator!=(const SDL_Rect& a, const SDL_Rect& b)
+{
+	return !operator==(a,b);
+}
 
 std::ostream& operator<<(std::ostream& s, const SDL_Rect& rect);
+
 
 /**
  * An abstract description of a rectangle with integer coordinates.
@@ -67,8 +75,14 @@ public:
 	constexpr point size() const { return {w, h}; }
 
 	// Comparisons
-	bool operator==(const rect& r) const;
-	bool operator==(const SDL_Rect& r) const;
+	bool operator==(const rect& r) const
+	{
+		return memcmp(this, &r, sizeof(r)) == 0;
+	}
+	bool operator==(const SDL_Rect& r) const
+	{
+		return memcmp(this, &r, sizeof(r)) == 0;
+	}
 
 	// Scalar multiplication and division
 	constexpr rect operator*(int s) const
