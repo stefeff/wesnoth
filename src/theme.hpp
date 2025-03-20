@@ -69,7 +69,6 @@ class theme
 		enum ANCHORING { FIXED, TOP_ANCHORED, PROPORTIONAL, BOTTOM_ANCHORED };
 
 	private:
-		bool location_modified_;
 		std::string id_;
 		rect loc_;
 		mutable rect relative_loc_;
