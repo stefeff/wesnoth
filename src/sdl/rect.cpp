@@ -20,30 +20,37 @@
 
 #include <ostream>
 
-bool operator==(const SDL_Rect& a, const SDL_Rect& b)
+#ifdef __SSE2__
+#include <immintrin.h>
+
+#ifdef __SSE4_1__
+#define mm_blendv_epi8 _mm_blendv_epi8
+#define mm_min_epi32 _mm_min_epi32
+#define mm_max_epi32 _mm_max_epi32
+#else
+
+static inline __m128i mm_blendv_epi8(__m128i a, __m128i b, __m128i mask)
 {
-	return SDL_RectEquals(&a, &b) != SDL_FALSE;
+	return _mm_or_si128(_mm_andnot_si128(mask, a), _mm_and_si128(mask, b));
 }
 
-bool operator!=(const SDL_Rect& a, const SDL_Rect& b)
+static inline __m128i mm_min_epi32(__m128i a, __m128i b)
 {
-	return !operator==(a,b);
+	return mm_blendv_epi8(a,  b, _mm_cmplt_epi32(b, a));
 }
+
+static inline __m128i mm_max_epi32(__m128i a, __m128i b)
+{
+	return mm_blendv_epi8(a,  b, _mm_cmpgt_epi32(b, a));
+}
+
+#endif
+#endif
 
 std::ostream& operator<<(std::ostream& s, const SDL_Rect& r)
 {
 	s << '[' << r.x << ',' << r.y << '|' << r.w << ',' << r.h << ']';
 	return s;
-}
-
-bool rect::operator==(const rect& r) const
-{
-	return SDL_RectEquals(this, &r) != SDL_FALSE;
-}
-
-bool rect::operator==(const SDL_Rect& r) const
-{
-	return SDL_RectEquals(this, &r) != SDL_FALSE;
 }
 
 bool rect::empty() const
@@ -64,37 +71,115 @@ bool rect::contains(const point& point) const
 
 bool rect::contains(const SDL_Rect& r) const
 {
+#ifdef __SSE2__
+	auto lhs_left_bottom = _mm_loadu_si128(reinterpret_cast<const __m128i*>(this));
+	auto lhs_size = _mm_bsrli_si128(lhs_left_bottom, 8);
+	auto rhs_left_bottom = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&r));
+	auto rhs_size = _mm_bsrli_si128(rhs_left_bottom, 8);
+
+	auto lhs_right_top = _mm_add_epi32(lhs_left_bottom, lhs_size);
+	auto rhs_right_top = _mm_add_epi32(rhs_left_bottom, rhs_size);
+
+	auto is_left_bottom = _mm_cmplt_epi32(rhs_left_bottom, lhs_left_bottom);
+	auto is_right_top = _mm_cmpgt_epi32(rhs_right_top, lhs_right_top);
+	auto any_outside = _mm_or_si128(is_left_bottom, is_right_top);
+	return _mm_cvtsi128_si64x(any_outside) == 0;
+#else
 	if(this->x > r.x) return false;
 	if(this->y > r.y) return false;
 	if(this->x + this->w < r.x + r.w) return false;
 	if(this->y + this->h < r.y + r.h) return false;
 	return true;
+#endif
 }
 
 bool rect::overlaps(const SDL_Rect& r) const
 {
+#ifdef __SSE2__
+	auto lhs_left_bottom = _mm_loadu_si128(reinterpret_cast<const __m128i*>(this));
+	auto lhs_size = _mm_bsrli_si128(lhs_left_bottom, 8);
+	auto rhs_left_bottom = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&r));
+	auto rhs_size = _mm_bsrli_si128(rhs_left_bottom, 8);
+
+	auto right_distance = _mm_sub_epi32(rhs_left_bottom, lhs_left_bottom);
+	auto left_distance = _mm_sub_epi32(lhs_left_bottom, rhs_left_bottom);
+	auto is_left = _mm_cmplt_epi32(right_distance, _mm_setzero_si128());
+
+	auto right_overlap = _mm_cmplt_epi32(right_distance, lhs_size);
+	auto left_overlap = _mm_cmplt_epi32(left_distance, rhs_size);
+	auto overlap = mm_blendv_epi8(right_overlap, left_overlap, is_left);
+	return _mm_cvtsi128_si64x(overlap) == -1ll;
+#else
 	return SDL_HasIntersection(this, &r);
+#endif
 }
 
 rect rect::minimal_cover(const SDL_Rect& other) const
 {
 	rect result;
+#ifdef __SSE2__
+	auto lhs = _mm_loadu_si128(reinterpret_cast<const __m128i*>(this));
+	auto rhs = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&other));
+
+	auto lhs_valid = _mm_cmpgt_epi32(lhs, _mm_setzero_si128());
+	lhs_valid = _mm_shuffle_epi32(_mm_and_si128(lhs_valid, _mm_bsrli_si128(lhs_valid, 4)), 0xaa);
+	auto rhs_valid = _mm_cmpgt_epi32(rhs, _mm_setzero_si128());
+	rhs_valid = _mm_shuffle_epi32(_mm_and_si128(rhs_valid, _mm_bsrli_si128(rhs_valid, 4)), 0xaa);
+
+	auto lhs_left_bottom = mm_blendv_epi8(rhs, lhs, lhs_valid);
+	auto rhs_left_bottom = mm_blendv_epi8(lhs_left_bottom, rhs, rhs_valid);
+	auto lhs_size = _mm_bsrli_si128(lhs_left_bottom, 8);
+	auto rhs_size = _mm_bsrli_si128(rhs_left_bottom, 8);
+
+	auto lhs_right_top = _mm_add_epi32(lhs_left_bottom, lhs_size);
+	auto rhs_right_top = _mm_add_epi32(rhs_left_bottom, rhs_size);
+
+	auto left_bottom = mm_min_epi32(lhs_left_bottom, rhs_left_bottom);
+	auto right_top = mm_max_epi32(lhs_right_top, rhs_right_top);
+	auto size = _mm_sub_epi32(right_top, left_bottom);
+
+	auto cover = _mm_or_si128(_mm_move_epi64(left_bottom), _mm_bslli_si128(size, 8));
+	_mm_storeu_si128(reinterpret_cast<__m128i*>(&result), cover);
+#else
 	SDL_UnionRect(this, &other, &result);
+#endif
 	return result;
 }
 
 rect& rect::expand_to_cover(const SDL_Rect& other)
 {
-	SDL_UnionRect(this, &other, this);
+	*this = minimal_cover(other);
 	return *this;
 }
 
 rect rect::intersect(const SDL_Rect& other) const
 {
 	rect result;
+#ifdef __SSE2__
+	auto lhs_left_bottom = _mm_loadu_si128(reinterpret_cast<const __m128i*>(this));
+	auto lhs_size = _mm_bsrli_si128(lhs_left_bottom, 8);
+	auto rhs_left_bottom = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&other));
+	auto rhs_size = _mm_bsrli_si128(rhs_left_bottom, 8);
+
+	auto lhs_right_top = _mm_add_epi32(lhs_left_bottom, lhs_size);
+	auto rhs_right_top = _mm_add_epi32(rhs_left_bottom, rhs_size);
+
+	auto left_bottom = mm_max_epi32(lhs_left_bottom, rhs_left_bottom);
+	auto right_top = mm_min_epi32(lhs_right_top, rhs_right_top);
+
+	auto size = _mm_sub_epi32(right_top, left_bottom);
+	auto insertsect = _mm_or_si128(_mm_move_epi64(left_bottom), _mm_bslli_si128(size, 8));
+
+	auto valid = _mm_cmplt_epi32(left_bottom, right_top);
+	valid = _mm_shuffle_epi32(_mm_and_si128(valid, _mm_bsrli_si128(valid, 4)), 0);
+	insertsect = _mm_and_si128(valid, insertsect);
+
+	_mm_storeu_si128(reinterpret_cast<__m128i*>(&result), insertsect);
+#else
 	if(!SDL_IntersectRect(this, &other, &result)) {
 		return rect();
 	}
+#endif
 	return result;
 }
 
