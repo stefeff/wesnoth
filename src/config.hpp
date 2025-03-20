@@ -31,20 +31,24 @@
 #include "config_attribute_value.hpp"
 #include "exceptions.hpp"
 #include "utils/const_clone.hpp"
+#include "utils/interned_string.hpp"
 #include "utils/optional_reference.hpp"
 #include "utils/ranges.hpp"
 
 #include <functional>
 #include <iosfwd>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <string>
 #include <string_view>
 #include <utility>
+#include <unordered_map>
 #include <vector>
 
 #include <boost/range/iterator_range.hpp>
 
+using config_key_type = utils::interned_string;
 enum class DEP_LEVEL : uint8_t;
 
 class config;
@@ -188,7 +192,7 @@ public:
 	static bool valid_attribute(std::string_view name);
 
 	typedef std::vector<std::unique_ptr<config>> child_list;
-	typedef std::map<std::string, child_list, std::less<>> child_map;
+	typedef std::unordered_map<config_key_type, child_list> child_map;
 
 	struct const_child_iterator;
 
@@ -289,18 +293,14 @@ public:
 	 */
 	using attribute_value = config_attribute_value;
 
-	typedef std::map<
-		std::string
-		, attribute_value
-		, std::less<>
-	> attribute_map;
+	typedef std::unordered_map<config_key_type, attribute_value> attribute_map;
 	typedef attribute_map::value_type attribute;
 	struct const_attribute_iterator;
 
 	struct attribute_iterator
 	{
 		typedef attribute value_type;
-		typedef std::bidirectional_iterator_tag iterator_category;
+		typedef std::forward_iterator_tag iterator_category;
 		typedef attribute *pointer;
 		typedef attribute &reference;
 		typedef attribute_map::iterator Itor;
@@ -309,8 +309,6 @@ public:
 
 		attribute_iterator &operator++() { ++i_; return *this; }
 		attribute_iterator operator++(int) { return attribute_iterator(i_++); }
-		attribute_iterator &operator--() { --i_; return *this; }
-		attribute_iterator operator--(int) { return attribute_iterator(i_--); }
 
 		reference operator*() const { return *i_; }
 		pointer operator->() const { return &*i_; }
@@ -328,7 +326,7 @@ public:
 	struct const_attribute_iterator
 	{
 		typedef const attribute value_type;
-		typedef std::bidirectional_iterator_tag iterator_category;
+		typedef std::forward_iterator_tag iterator_category;
 		typedef const attribute *pointer;
 		typedef const attribute &reference;
 		typedef attribute_map::const_iterator Itor;
@@ -338,9 +336,6 @@ public:
 
 		const_attribute_iterator &operator++() { ++i_; return *this; }
 		const_attribute_iterator operator++(int) { return const_attribute_iterator(i_++); }
-
-		const_attribute_iterator &operator--() { --i_; return *this; }
-		const_attribute_iterator operator--(int) { return const_attribute_iterator(i_--); }
 
 		reference operator*() const { return *i_; }
 		pointer operator->() const { return &*i_; }

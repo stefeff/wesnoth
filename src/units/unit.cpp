@@ -48,12 +48,14 @@
 #include "units/types.hpp"
 #include "utils/config_filters.hpp"
 #include "utils/general.hpp"
+#include "utils/interned_string.hpp"
 #include "variable.hpp" // for vconfig, etc
 
 #include <cassert>                     // for assert
 #include <exception>                    // for exception
 #include <iterator>                     // for back_insert_iterator, etc
 #include <string_view>
+#include <unordered_set>
 #include <utility>
 
 namespace t_translation { struct terrain_code; }
@@ -67,17 +69,17 @@ static lg::log_domain log_unit("unit");
 namespace
 {
 	// "advance" only kept around for backwards compatibility; only "advancement" should be used
-	const std::set<std::string_view> ModificationTypes { "advancement", "advance", "trait", "object" };
+	const std::unordered_set<utils::interned_string> ModificationTypes { "advancement", "advance", "trait", "object" };
 
 	/**
 	 * Pointers to units which have data in their internal caches. The
 	 * destructor of an unit removes itself from the cache, so the pointers are
 	 * always valid.
 	 */
-	static std::vector<const unit*> units_with_cache;
+	std::vector<const unit*> units_with_cache;
 
-	static const std::string leader_crown_path = "misc/leader-crown.png";
-	static const std::set<std::string_view> internalized_attrs {
+	const std::string leader_crown_path = "misc/leader-crown.png";
+	const std::unordered_set<utils::interned_string> internalized_attrs {
 		"type",
 		"id",
 		"name",
@@ -148,33 +150,10 @@ namespace
 
 	void warn_unknown_attribute(const config::const_attr_itors& cfg)
 	{
-		config::const_attribute_iterator cur = cfg.begin();
-		config::const_attribute_iterator end = cfg.end();
-
-		auto cur_known = internalized_attrs.begin();
-		auto end_known = internalized_attrs.end();
-
-		while(cur_known != end_known) {
-			if(cur == end) {
-				return;
+		for (auto& attr : cfg) {
+			if (internalized_attrs.count(attr.first) == 0) {
+				WRN_UT << "Unknown attribute '" << attr.first << "' discarded.";
 			}
-			int comp = cur->first.compare(*cur_known);
-			if(comp < 0) {
-				WRN_UT << "Unknown attribute '" << cur->first << "' discarded.";
-				++cur;
-			}
-			else if(comp == 0) {
-				++cur;
-				++cur_known;
-			}
-			else {
-				++cur_known;
-			}
-		}
-
-		while(cur != end) {
-			WRN_UT << "Unknown attribute '" << cur->first << "' discarded.";
-			++cur;
 		}
 	}
 
@@ -2903,7 +2882,7 @@ std::string get_checksum(const unit& u, backwards_compatibility::unit_checksum_v
 	config wcfg;
 	u.write(unit_config);
 
-	static const std::set<std::string_view> main_keys {
+	static const std::unordered_set<utils::interned_string> main_keys {
 		"advances_to",
 		"alignment",
 		"cost",
@@ -2928,11 +2907,11 @@ std::string get_checksum(const unit& u, backwards_compatibility::unit_checksum_v
 		"zoc"
 	};
 
-	for(const std::string_view& main_key : main_keys) {
+	for(const auto& main_key : main_keys) {
 		wcfg[main_key] = unit_config[main_key];
 	}
 
-	static const std::set<std::string_view> attack_keys {
+	static const std::unordered_set<utils::interned_string> attack_keys {
 		"name",
 		"type",
 		"range",
@@ -2943,7 +2922,7 @@ std::string get_checksum(const unit& u, backwards_compatibility::unit_checksum_v
 	for(const config& att : unit_config.child_range("attack")) {
 		config& child = wcfg.add_child("attack");
 
-		for(const std::string_view& attack_key : attack_keys) {
+		for(const auto& attack_key : attack_keys) {
 			child[attack_key] = att[attack_key];
 		}
 
@@ -2977,7 +2956,7 @@ std::string get_checksum(const unit& u, backwards_compatibility::unit_checksum_v
 		child.recursive_clear_value("name");
 	}
 
-	static const std::set<std::string_view> child_keys {
+	static const std::unordered_set<utils::interned_string> child_keys {
 		"advance_from",
 		"defense",
 		"movement_costs",
@@ -2986,7 +2965,7 @@ std::string get_checksum(const unit& u, backwards_compatibility::unit_checksum_v
 		"resistance"
 	};
 
-	for(const std::string_view& child_key : child_keys) {
+	for(const auto& child_key : child_keys) {
 		for(const config& c : unit_config.child_range(child_key)) {
 			wcfg.add_child(child_key, c);
 		}

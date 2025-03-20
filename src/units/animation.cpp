@@ -305,7 +305,7 @@ unit_animation::unit_animation(const config& cfg,const std::string& frame_string
 			continue;
 		}
 
-		if(key.find("_frame", key.size() - 6) == std::string::npos) {
+		if(key.str().find("_frame", key.size() - 6) == std::string::npos) {
 			continue;
 		}
 
@@ -313,7 +313,7 @@ unit_animation::unit_animation(const config& cfg,const std::string& frame_string
 			continue;
 		}
 
-		sub_anims_[key] = particle(cfg, key.substr(0, key.size() - 5));
+		sub_anims_[key] = particle(cfg, key.str().substr(0, key.size() - 5));
 	}
 
 	event_ = utils::split(cfg["apply_to"]);

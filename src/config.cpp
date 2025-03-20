@@ -40,34 +40,10 @@ static lg::log_domain log_config("config");
 static lg::log_domain log_wml("wml");
 #define ERR_WML LOG_STREAM(err, log_wml)
 
-namespace
-{
-// std::map::operator[] does not support heterogeneous lookup so we need this to work around.
-template<typename Map, typename Key>
-typename Map::iterator map_get(Map& map, Key&& key)
-{
-	auto res = map.lower_bound(key);
-
-	if(res == map.end() || key != res->first) {
-		res = map.emplace_hint(res, std::piecewise_construct, std::forward_as_tuple(key), std::tuple<>());
-	}
-
-	return res;
-}
-
-// std::map::erase does not support heterogeneous lookup so we need this to work around.
-template<typename Map, typename Key>
-int map_erase_key(Map& map, Key&& key)
-{
-	auto i = map.find(key);
-	if(i != map.end()) {
-		map.erase(i);
-		return 1;
-	}
-	return 0;
-}
-
-}
+static const utils::interned_string str_insert{"insert"};
+static const utils::interned_string str_not{"not"};
+static const utils::interned_string str_and{"and"};
+static const utils::interned_string str_or{"or"};
 
 /* ** config implementation ** */
 
@@ -161,7 +137,7 @@ bool config::has_attribute(std::string_view key) const
 
 void config::remove_attribute(std::string_view key)
 {
-	map_erase_key(values_, key);
+	values_.erase(key);
 }
 
 void config::append_children(const config& cfg)
@@ -435,8 +411,7 @@ config::const_child_itors config::get_deprecated_child_range(std::string_view ol
 
 config& config::add_child(std::string_view key)
 {
-	auto iter = map_get(children_, key);
-	child_list& v = iter->second;
+	child_list& v = children_[key];
 	v.emplace_back(new config());
 	ordered_children_.emplace_back(iter, v.size() - 1);
 	return *v.back();
@@ -444,8 +419,7 @@ config& config::add_child(std::string_view key)
 
 config& config::add_child(std::string_view key, const config& val)
 {
-	auto iter = map_get(children_, key);
-	child_list& v = iter->second;
+	child_list& v = children_[key];
 	v.emplace_back(new config(val));
 	ordered_children_.emplace_back(iter, v.size() - 1);
 
@@ -454,8 +428,7 @@ config& config::add_child(std::string_view key, const config& val)
 
 config& config::add_child(std::string_view key, config&& val)
 {
-	auto iter = map_get(children_, key);
-	child_list& v = iter->second;
+	child_list& v = children_[key];
 	v.emplace_back(new config(std::move(val)));
 	ordered_children_.emplace_back(iter, v.size() - 1);
 
@@ -464,8 +437,7 @@ config& config::add_child(std::string_view key, config&& val)
 
 config& config::add_child_at(std::string_view key, const config& val, std::size_t index)
 {
-	auto iter = map_get(children_, key);
-	child_list& v = iter->second;
+	child_list& v = children_[key];
 	if(index > v.size()) {
 		throw error("illegal index to add child at");
 	}
@@ -564,8 +536,8 @@ void config::splice_children(config& src, std::string_view key)
 
 	utils::erase_if(src.ordered_children_, [&i_src](const config::child_pos& pos) { return pos.pos == i_src; });
 
-	auto i_dst = map_get(children_, key);
-	child_list& dst = i_dst->second;
+	child_list& dst = children_[key];
+	child_map::iterator i_dst = children_.find(key);
 
 	const auto before = dst.size();
 	dst.insert(dst.end(),
@@ -582,9 +554,9 @@ void config::splice_children(config& src, std::string_view key)
 
 void config::recursive_clear_value(std::string_view key)
 {
-	map_erase_key(values_, key);
+	values_.erase(key);
 
-	for(std::pair<const std::string, child_list>& p : children_) {
+	for(const auto& p : children_) {
 		for(auto& cfg : p.second) {
 			cfg->recursive_clear_value(key);
 		}
@@ -676,13 +648,7 @@ const config::attribute_value& config::get_or(const std::string_view key, const 
 
 config::attribute_value& config::operator[](std::string_view key)
 {
-	auto res = values_.lower_bound(key);
-
-	if(res == values_.end() || key != res->first) {
-		res = values_.emplace_hint(res, std::piecewise_construct, std::forward_as_tuple(key), std::tuple<>());
-	}
-
-	return res->second;
+	return values_[key];
 }
 
 const config::attribute_value& config::get_old_attribute(std::string_view key, const std::string& old_key, const std::string& in_tag, const std::string& message) const
@@ -900,7 +866,7 @@ void config::get_diff(const config& c, config& res) const
 		const attribute_map::const_iterator j = c.values_.find(key);
 		if(j == c.values_.end() || (value != j->second && !value.blank())) {
 			if(inserts == nullptr) {
-				inserts = &res.add_child("insert");
+				inserts = &res.add_child(str_insert);
 			}
 
 			(*inserts)[key] = value;
@@ -1024,7 +990,7 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 
 			const child_map::iterator itor = children_.find(key);
 			if(itor == children_.end() || index >= itor->second.size()) {
-				throw error("error in diff: could not find element '" + key + "'");
+				throw error("error in diff: could not find element '" + key.str() + "'");
 			}
 
 			itor->second[index]->apply_diff(cfg, track);
@@ -1049,7 +1015,7 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 			} else {
 				const child_map::iterator itor = children_.find(key);
 				if(itor == children_.end() || index >= itor->second.size()) {
-					throw error("error in diff: could not find element '" + key + "'");
+					throw error("error in diff: could not find element '" + key.str() + "'");
 				}
 
 				itor->second[index]->values_[diff_track_attribute] = "deleted";
@@ -1077,14 +1043,14 @@ void config::clear_diff_track(const config& diff)
 
 			const child_map::iterator itor = children_.find(key);
 			if(itor == children_.end() || index >= itor->second.size()) {
-				throw error("error in diff: could not find element '" + key + "'");
+				throw error("error in diff: could not find element '" + key.str() + "'");
 			}
 
 			itor->second[index]->clear_diff_track(cfg);
 		}
 	}
 
-	for(std::pair<const std::string, child_list>& p : children_) {
+	for(const auto& p : children_) {
 		for(auto& cfg : p.second) {
 			cfg->remove_attribute(diff_track_attribute);
 		}
@@ -1097,7 +1063,7 @@ void config::clear_diff_track(const config& diff)
 void config::merge_with(const config& c)
 {
 	std::vector<child_pos> to_remove;
-	std::map<std::string, unsigned> visitations;
+	std::unordered_map<config_key_type, unsigned> visitations;
 
 	// Merge attributes first
 	merge_attributes(c);
@@ -1170,8 +1136,9 @@ bool config::matches(const config& filter) const
 	bool result = true;
 
 	for(const auto& [key, value] : filter.attribute_range()) {
-		if(key.compare(0, 8, "glob_on_") == 0) {
-			const attribute_value* v = get(key.substr(8));
+		auto& str = key.str();
+		if(str.compare(0, 8, "glob_on_") == 0) {
+			const attribute_value* v = get(str.substr(8));
 			if(!v || !utils::wildcard_string_match(v->str(), value.str())) {
 				result = false;
 				break;
@@ -1186,13 +1153,13 @@ bool config::matches(const config& filter) const
 	}
 
 	for(const auto [key, cfg] : filter.all_children_view()) {
-		if(key == "not") {
+		if(key == str_not) {
 			result = result && !matches(cfg);
 			continue;
-		} else if(key == "and") {
+		} else if(key == str_and) {
 			result = result && matches(cfg);
 			continue;
-		} else if(key == "or") {
+		} else if(key == str_or) {
 			result = result || matches(cfg);
 			continue;
 		}

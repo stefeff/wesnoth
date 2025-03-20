@@ -29,6 +29,7 @@
 #pragma once
 
 #include "tstring.hpp"
+#include "utils/interned_string.hpp"
 #include "utils/variant.hpp"
 
 #include <chrono>
@@ -195,6 +196,13 @@ public:
 		});
 	}
 #else
+	template<typename T>
+	std::enable_if_t<std::is_same_v<const utils::interned_string, std::add_const_t<T>>, bool>
+		friend operator==(const config_attribute_value &val, const T &str)
+	{
+		return val == str.str();
+	}
+
 	template<typename T>
 	std::enable_if_t<std::is_constructible_v<std::string, T>, bool>
 	friend operator==(const config_attribute_value& attribute, const T& comp)

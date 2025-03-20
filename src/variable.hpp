@@ -105,7 +105,7 @@ public:
 		struct pointer_proxy;
 
 		typedef const config::attribute value_type;
-		typedef std::bidirectional_iterator_tag iterator_category;
+		typedef std::forward_iterator_tag iterator_category;
 		typedef int difference_type;
 		typedef const pointer_proxy pointer;
 		typedef const config::attribute reference;
@@ -114,9 +114,6 @@ public:
 
 		attribute_iterator &operator++() { ++i_; return *this; }
 		attribute_iterator operator++(int) { return attribute_iterator(i_++, *variables_); }
-
-		attribute_iterator &operator--() { --i_; return *this; }
-		attribute_iterator operator--(int) { return attribute_iterator(i_--, *variables_); }
 
 		reference operator*() const;
 		pointer operator->() const;
