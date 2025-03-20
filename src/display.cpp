@@ -179,7 +179,6 @@ display::display(const display_context* dc,
 	, fps_start_()
 	, fps_actual_()
 	, reportLocations_()
-	, reportSurfaces_()
 	, reports_()
 	, menu_buttons_()
 	, action_buttons_()
@@ -2345,7 +2344,6 @@ void display::queue_rerender()
 	invalidateGameStatus_ = true;
 
 	reportLocations_.clear();
-	reportSurfaces_.clear();
 	reports_.clear();
 
 	bounds_check_position();

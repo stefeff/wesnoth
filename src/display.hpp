@@ -762,9 +762,8 @@ protected:
 	uint32_t last_frame_finished_ = 0u;
 
 	// Not set by the initializer:
-	std::map<std::string, rect> reportLocations_;
-	std::map<std::string, texture> reportSurfaces_;
-	std::map<std::string, config> reports_;
+	std::unordered_map<std::string, rect> reportLocations_;
+	std::unordered_map<std::string, config> reports_;
 	std::vector<std::shared_ptr<gui::button>> menu_buttons_, action_buttons_;
 	std::set<map_location> invalidated_;
 	// If we're transitioning from one time of day to the next,
