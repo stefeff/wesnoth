@@ -273,8 +273,7 @@ static void do_resolve_rects(const config& cfg, config& resolved_config, config*
 }
 
 theme::object::object()
-	: location_modified_(false)
-	, id_()
+	: id_()
 	, loc_(sdl::empty_rect)
 	, relative_loc_(sdl::empty_rect)
 	, last_screen_(sdl::empty_rect)
@@ -286,8 +285,7 @@ theme::object::object()
 }
 
 theme::object::object(std::size_t sw, std::size_t sh, const config& cfg)
-	: location_modified_(false)
-	, id_(cfg["id"])
+	: id_(cfg["id"])
 	, loc_(read_sdl_rect(cfg))
 	, relative_loc_(sdl::empty_rect)
 	, last_screen_(sdl::empty_rect)
@@ -317,7 +315,7 @@ theme::border_t::border_t(const config& cfg)
 
 rect& theme::object::location(const SDL_Rect& screen) const
 {
-	if(last_screen_ == screen && !location_modified_)
+	if(last_screen_ == screen) [[likely]]
 		return relative_loc_;
 
 	last_screen_ = screen;
@@ -399,7 +397,7 @@ void theme::object::modify_location(const _rect& rect)
 	loc_.y = rect.y1;
 	loc_.w = rect.x2 - rect.x1;
 	loc_.h = rect.y2 - rect.y1;
-	location_modified_ = true;
+	last_screen_ = sdl::empty_rect;
 }
 
 void theme::object::modify_location(std::string rect_str, SDL_Rect location_ref_rect)
