@@ -100,7 +100,7 @@ void invalidate_regions(std::vector<rect>&& regions)
 
 	// eliminate zero-width (merged) rectangles
 	regions.erase(
-		std::copy_if(regions.begin(), regions.end(), regions.begin(), 
+		std::copy_if(regions.begin(), regions.end(), regions.begin(),
 			[](const rect& r) {
 				return r.w > 0;
 			}),
@@ -304,20 +304,19 @@ next:
 	while (!invalidated_regions_.empty()) {
 		rect r = invalidated_regions_.back();
 		invalidated_regions_.pop_back();
+
+		int max_x = r.x + r.w;
+		int max_y = r.y + r.h;
 		// check if this will be superceded by or should be merged with another
 		for (auto& other : invalidated_regions_) {
-			// r will never contain other, due to construction
-			if (other.contains(r)) {
-				DBG_DM << "skipping redundant draw " << r;
-				//STREAMING_LOG << "-";
-				goto next;
-			}
-			rect m = other.minimal_cover(r);
-			if (m.area() <= r.area() + other.area()) {
-				DBG_DM << "merging inefficient draws " << r;
-				//STREAMING_LOG << "=";
-				other = m;
-				goto next;
+			if (max_x >= other.x && max_y >= other.y) {
+				rect m = other.minimal_cover(r);
+				if (m.area() <= r.area() + other.area()) {
+					DBG_DM << "merging inefficient draws " << r;
+					//STREAMING_LOG << "=";
+					other = m;
+					goto next;
+				}
 			}
 		}
 		DBG_DM << "drawing " << r;
