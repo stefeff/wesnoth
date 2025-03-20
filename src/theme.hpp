@@ -49,7 +49,13 @@ class theme
 		object(std::size_t sw, std::size_t sh, const config& cfg);
 		virtual ~object() { }
 
-		virtual rect& location(const rect& screen) const;
+		rect& location(const rect& screen) const
+		{
+			if (screen != last_screen_) [[unlikely]] {
+				update_location(screen);
+			}
+			return relative_loc_;
+		}
 		const rect& get_location() const { return loc_; }
 		const std::string& get_id() const { return id_; }
 
@@ -78,6 +84,8 @@ class theme
 		std::size_t spec_width_, spec_height_;
 
 		static ANCHORING read_anchor(const std::string& str);
+
+		void update_location(const rect& screen) const;
 	};
 
 	struct border_t
@@ -102,8 +110,6 @@ public:
 		label();
 		explicit label(std::size_t sw, std::size_t sh, const config& cfg);
 
-		using object::location;
-
 		const std::string& text() const { return text_; }
 		void set_text(const std::string& text) { text_ = text; }
 		const std::string& icon() const { return icon_; }
@@ -125,8 +131,6 @@ public:
 	public:
 
 		explicit status_item(std::size_t sw, std::size_t sh, const config& cfg);
-
-		using object::location;
 
 		const std::string& prefix() const { return prefix_; }
 		const std::string& postfix() const { return postfix_; }
@@ -151,8 +155,6 @@ public:
 	public:
 		explicit panel(std::size_t sw, std::size_t sh, const config& cfg);
 
-		using object::location;
-
 		const std::string& image() const { return image_; }
 
 	private:
@@ -164,8 +166,6 @@ public:
 	public:
 		action();
 		explicit action(std::size_t sw, std::size_t sh, const config& cfg);
-
-		using object::location;
 
 		bool is_context() const  { return context_; }
 
@@ -194,8 +194,6 @@ public:
 		slider();
 		explicit slider(std::size_t sw, std::size_t sh, const config& cfg);
 
-		using object::location;
-
 		const std::string& title() const { return title_; }
 
 		const std::string& tooltip() const { return tooltip_; }
@@ -217,8 +215,6 @@ public:
 	public:
 		menu();
 		explicit menu(std::size_t sw, std::size_t sh, const config& cfg);
-
-		using object::location;
 
 		bool is_button() const { return button_; }
 
