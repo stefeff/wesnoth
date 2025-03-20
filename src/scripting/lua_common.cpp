@@ -311,7 +311,7 @@ static int impl_vconfig_pairs_iter(lua_State *L)
 	if (range.empty()) {
 		return 0;
 	}
-	config::attribute value = range.front();
+	const config::attribute& value = range.front();
 	range.pop_front();
 	lua_pushlstring(L, value.first.c_str(), value.first.length());
 	luaW_pushscalar(L, vcfg[value.first]);

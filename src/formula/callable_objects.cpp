@@ -556,7 +556,7 @@ void config_callable::get_inputs(formula_input_vector& inputs) const
 	add_input(inputs, "__attributes");
 
 	for(const auto& val : cfg_.attribute_range()) {
-		if(val.first.find_first_not_of(formula::id_chars) != std::string::npos) {
+		if(val.first.str().find_first_not_of(formula::id_chars) != std::string::npos) {
 			add_input(inputs, val.first);
 		}
 	}

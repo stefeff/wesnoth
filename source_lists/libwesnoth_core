@@ -30,3 +30,4 @@ serialization/validator.cpp
 server/common/simple_wml.cpp
 tstring.cpp
 utils/general.cpp
+utils/interned_string.cpp

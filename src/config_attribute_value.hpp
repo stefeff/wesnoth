@@ -29,6 +29,7 @@
 #pragma once
 
 #include "tstring.hpp"
+#include "utils/interned_string.hpp"
 #include "utils/variant.hpp"
 
 #include <climits>
@@ -173,6 +174,13 @@ public:
 	bool equals(const std::string& str) const;
 	// These function prevent t_string creation in case of c["a"] == "b" comparisons.
 	// The templates are needed to prevent using these function in case of c["a"] == 0 comparisons.
+	template<typename T>
+	std::enable_if_t<std::is_same_v<const utils::interned_string, std::add_const_t<T>>, bool>
+		friend operator==(const config_attribute_value &val, const T &str)
+	{
+		return val.equals(str.str());
+	}
+
 	template<typename T>
 	std::enable_if_t<std::is_same_v<const std::string, std::add_const_t<T>>, bool>
 		friend operator==(const config_attribute_value &val, const T &str)

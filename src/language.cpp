@@ -15,6 +15,7 @@
 
 #include "filesystem.hpp"
 #include "gettext.hpp"
+#include "utils/interned_string.hpp"
 #include "language.hpp"
 #include "log.hpp"
 #include "preferences/general.hpp"
