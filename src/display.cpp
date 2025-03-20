@@ -166,7 +166,6 @@ display::display(const display_context* dc,
 	, reports_object_(&reports_object)
 	, scroll_event_("scrolled")
 	, reportLocations_()
-	, reportSurfaces_()
 	, reports_()
 	, menu_buttons_()
 	, action_buttons_()
@@ -2151,7 +2150,6 @@ void display::queue_rerender()
 	invalidateGameStatus_ = true;
 
 	reportLocations_.clear();
-	reportSurfaces_.clear();
 	reports_.clear();
 
 	bounds_check_position();
