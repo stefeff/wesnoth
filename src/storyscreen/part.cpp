@@ -26,12 +26,12 @@
 namespace storyscreen
 {
 floating_image::floating_image(const config& cfg)
-	: file_(cfg["file"])
-	, x_(cfg["x"])
-	, y_(cfg["y"])
-	, delay_(cfg["delay"])
-	, resize_with_background_(cfg["resize_with_background"].to_bool())
-	, centered_(cfg["centered"].to_bool())
+	: file_(cfg[str_file])
+	, x_(cfg[str_x])
+	, y_(cfg[str_y])
+	, delay_(cfg[str_delay])
+	, resize_with_background_(cfg[str_resize_with_background].to_bool())
+	, centered_(cfg[str_centered].to_bool())
 {
 }
 
@@ -55,42 +55,42 @@ background_layer::background_layer(const config& cfg)
 	, is_base_layer_(false)
 	, image_file_()
 {
-	if(cfg.has_attribute("image")) {
-		image_file_ = cfg["image"].str();
+	if(cfg.has_attribute(str_image)) {
+		image_file_ = cfg[str_image].str();
 	}
 
-	if(cfg.has_attribute("scale")) {
-		scale_vertically_ = cfg["scale"].to_bool(true);
-		scale_horizontally_ = cfg["scale"].to_bool(true);
+	if(cfg.has_attribute(str_scale)) {
+		scale_vertically_ = cfg[str_scale].to_bool(true);
+		scale_horizontally_ = cfg[str_scale].to_bool(true);
 	} else {
-		if(cfg.has_attribute("scale_vertically")) {
-			scale_vertically_ = cfg["scale_vertically"].to_bool(true);
+		if(cfg.has_attribute(str_scale_vertically)) {
+			scale_vertically_ = cfg[str_scale_vertically].to_bool(true);
 		}
 
-		if(cfg.has_attribute("scale_horizontally")) {
-			scale_horizontally_ = cfg["scale_horizontally"].to_bool(true);
+		if(cfg.has_attribute(str_scale_horizontally)) {
+			scale_horizontally_ = cfg[str_scale_horizontally].to_bool(true);
 		}
 	}
 
-	if(cfg.has_attribute("tile")) {
-		tile_vertically_ = cfg["tile"].to_bool(false);
-		tile_horizontally_ = cfg["tile"].to_bool(false);
+	if(cfg.has_attribute(str_tile)) {
+		tile_vertically_ = cfg[str_tile].to_bool(false);
+		tile_horizontally_ = cfg[str_tile].to_bool(false);
 	} else {
-		if(cfg.has_attribute("tile_vertically")) {
-			tile_vertically_ = cfg["tile_vertically"].to_bool(false);
+		if(cfg.has_attribute(str_tile_vertically)) {
+			tile_vertically_ = cfg[str_tile_vertically].to_bool(false);
 		}
 
-		if(cfg.has_attribute("tile_horizontally")) {
-			tile_horizontally_ = cfg["tile_horizontally"].to_bool(false);
+		if(cfg.has_attribute(str_tile_horizontally)) {
+			tile_horizontally_ = cfg[str_tile_horizontally].to_bool(false);
 		}
 	}
 
-	if(cfg.has_attribute("keep_aspect_ratio")) {
-		keep_aspect_ratio_ = cfg["keep_aspect_ratio"].to_bool(true);
+	if(cfg.has_attribute(str_keep_aspect_ratio)) {
+		keep_aspect_ratio_ = cfg[str_keep_aspect_ratio].to_bool(true);
 	}
 
-	if(cfg.has_attribute("base_layer")) {
-		is_base_layer_ = cfg["base_layer"].to_bool(false);
+	if(cfg.has_attribute(str_base_layer)) {
+		is_base_layer_ = cfg[str_base_layer].to_bool(false);
 	}
 }
 
@@ -131,79 +131,79 @@ void part::resolve_wml(const vconfig& cfg)
 	// Converts shortcut syntax to members of [background_layer]
 	background_layer bl;
 
-	if(cfg.has_attribute("background")) {
-		bl.set_file(cfg["background"].str());
+	if(cfg.has_attribute(str_background)) {
+		bl.set_file(cfg[str_background].str());
 	}
 
-	if(cfg.has_attribute("scale_background")) {
-		bl.set_scale_horizontally(cfg["scale_background"].to_bool(true));
-		bl.set_scale_vertically(cfg["scale_background"].to_bool(true));
+	if(cfg.has_attribute(str_scale_background)) {
+		bl.set_scale_horizontally(cfg[str_scale_background].to_bool(true));
+		bl.set_scale_vertically(cfg[str_scale_background].to_bool(true));
 	} else {
-		if(cfg.has_attribute("scale_background_vertically")) {
-			bl.set_scale_vertically(cfg["scale_background_vertically"].to_bool(true));
+		if(cfg.has_attribute(str_scale_background_vertically)) {
+			bl.set_scale_vertically(cfg[str_scale_background_vertically].to_bool(true));
 		}
 
-		if(cfg.has_attribute("scale_background_horizontally")) {
-			bl.set_scale_horizontally(cfg["scale_background_horizontally"].to_bool(true));
+		if(cfg.has_attribute(str_scale_background_horizontally)) {
+			bl.set_scale_horizontally(cfg[str_scale_background_horizontally].to_bool(true));
 		}
 	}
 
-	if(cfg.has_attribute("tile_background")) {
-		bl.set_tile_horizontally(cfg["tile_background"].to_bool(false));
-		bl.set_tile_vertically(cfg["tile_background"].to_bool(false));
+	if(cfg.has_attribute(str_tile_background)) {
+		bl.set_tile_horizontally(cfg[str_tile_background].to_bool(false));
+		bl.set_tile_vertically(cfg[str_tile_background].to_bool(false));
 	} else {
-		if(cfg.has_attribute("tile_background_vertically")) {
-			bl.set_tile_vertically(cfg["tile_background_vertically"].to_bool(false));
+		if(cfg.has_attribute(str_tile_background_vertically)) {
+			bl.set_tile_vertically(cfg[str_tile_background_vertically].to_bool(false));
 		}
 
-		if(cfg.has_attribute("tile_background_horizontally")) {
-			bl.set_tile_vertically(cfg["tile_background_horizontally"].to_bool(false));
+		if(cfg.has_attribute(str_tile_background_horizontally)) {
+			bl.set_tile_vertically(cfg[str_tile_background_horizontally].to_bool(false));
 		}
 	}
 
-	if(cfg.has_attribute("keep_aspect_ratio")) {
-		bl.set_keep_aspect_ratio(cfg["keep_aspect_ratio"].to_bool(true));
+	if(cfg.has_attribute(str_keep_aspect_ratio)) {
+		bl.set_keep_aspect_ratio(cfg[str_keep_aspect_ratio].to_bool(true));
 	}
 
 	background_layers_.push_back(bl);
 
-	if(cfg.has_attribute("show_title")) {
-		show_title_ = cfg["show_title"].to_bool();
+	if(cfg.has_attribute(str_show_title)) {
+		show_title_ = cfg[str_show_title].to_bool();
 	}
 
-	if(cfg.has_attribute("story")) {
-		text_ = cfg["story"].str();
+	if(cfg.has_attribute(str_story)) {
+		text_ = cfg[str_story].str();
 	}
 
-	if(cfg.has_attribute("title")) {
-		text_title_ = cfg["title"].str();
-		if(!cfg.has_attribute("show_title")) {
+	if(cfg.has_attribute(str_title)) {
+		text_title_ = cfg[str_title].str();
+		if(!cfg.has_attribute(str_show_title)) {
 			show_title_ = true;
 		}
 	}
 
-	if(cfg.has_attribute("text_layout")) {
-		text_block_loc_ = string_tblock_loc(cfg["text_layout"]);
+	if(cfg.has_attribute(str_text_layout)) {
+		text_block_loc_ = string_tblock_loc(cfg[str_text_layout]);
 	}
 
-	if(cfg.has_attribute("text_alignment")) {
-		text_alignment_ = cfg["text_alignment"].str();
+	if(cfg.has_attribute(str_text_alignment)) {
+		text_alignment_ = cfg[str_text_alignment].str();
 	}
 
-	if(cfg.has_attribute("title_alignment")) {
-		title_alignment_ = cfg["title_alignment"].str();
+	if(cfg.has_attribute(str_title_alignment)) {
+		title_alignment_ = cfg[str_title_alignment].str();
 	}
 
-	if(cfg.has_attribute("music")) {
-		music_ = cfg["music"].str();
+	if(cfg.has_attribute(str_music)) {
+		music_ = cfg[str_music].str();
 	}
 
-	if(cfg.has_attribute("sound")) {
-		sound_ = cfg["sound"].str();
+	if(cfg.has_attribute(str_sound)) {
+		sound_ = cfg[str_sound].str();
 	}
 
-	if(cfg.has_attribute("voice")) {
-		voice_ = cfg["voice"].str();
+	if(cfg.has_attribute(str_voice)) {
+		voice_ = cfg[str_voice].str();
 	}
 
 	// Inherited

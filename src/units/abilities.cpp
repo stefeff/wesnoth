@@ -312,9 +312,9 @@ namespace {
 			if (!name.empty()) {
 				res.emplace_back(
 						ab.cfg[str_id],
-						ab.cfg.get_or("name_inactive", "name").t_str(),
+						ab.cfg.get_or(str_name_inactive, str_name).t_str(),
 						name,
-						ab.cfg.get_or("description_inactive", "description").t_str() );
+						ab.cfg.get_or(str_description_inactive, str_description).t_str() );
 				return true;
 			}
 		}
@@ -446,7 +446,7 @@ bool unit::ability_active(const std::string& ability,const config& cfg,const map
 	}
 	bool illuminates = ability == "illuminates";
 
-	if (auto afilter = cfg.optional_child("filter"))
+	if (auto afilter = cfg.optional_child(str_filter))
 		if ( !unit_filter(vconfig(*afilter)).set_use_flat_tod(illuminates).matches(*this, loc) )
 			return false;
 
@@ -454,7 +454,7 @@ bool unit::ability_active(const std::string& ability,const config& cfg,const map
 
 	const unit_map& units = get_unit_map();
 
-	for (const config &i : cfg.child_range("filter_adjacent"))
+	for (const config &i : cfg.child_range(str_filter_adjacent))
 	{
 		std::size_t count = 0;
 		unit_filter ufilt{ vconfig(i) };
@@ -471,7 +471,7 @@ bool unit::ability_active(const std::string& ability,const config& cfg,const map
 				return false;
 			if((*this).id() == (*unit).id())
 				return false;
-			if (i.has_attribute("is_enemy")) {
+			if (i.has_attribute(str_is_enemy)) {
 				const display_context& dc = resources::filter_con->get_disp_context();
 				if (i[str_is_enemy].to_bool() != dc.get_team(unit->side()).is_enemy(side_)) {
 					continue;
@@ -487,7 +487,7 @@ bool unit::ability_active(const std::string& ability,const config& cfg,const map
 		}
 	}
 
-	for (const config &i : cfg.child_range("filter_adjacent_location"))
+	for (const config &i : cfg.child_range(str_filter_adjacent_location))
 	{
 		std::size_t count = 0;
 		terrain_filter adj_filter(vconfig(i), resources::filter_con, false);
@@ -517,7 +517,7 @@ bool unit::ability_active(const std::string& ability,const config& cfg,const map
 bool unit::ability_affects_adjacent(const std::string& ability, const config& cfg,int dir,const map_location& loc,const unit& from) const
 {
 	unit::recursion_guard adj_lock;
-	if(cfg.has_child("affect_adjacent")){
+	if(cfg.has_child(str_affect_adjacent)){
 		adj_lock = update_variables_recursion();
 		if(!adj_lock) {
 			show_recursion_warning(*this, cfg);
@@ -529,9 +529,9 @@ bool unit::ability_affects_adjacent(const std::string& ability, const config& cf
 	assert(dir >=0 && dir <= 5);
 	map_location::DIRECTION direction = static_cast<map_location::DIRECTION>(dir);
 
-	for (const config &i : cfg.child_range("affect_adjacent"))
+	for (const config &i : cfg.child_range(str_affect_adjacent))
 	{
-		if (i.has_attribute("adjacent")) { //key adjacent defined
+		if (i.has_attribute(str_adjacent)) { //key adjacent defined
 			std::vector<map_location::DIRECTION> dirs = map_location::parse_directions(i[str_adjacent]);
 			if (std::find(dirs.begin(), dirs.end(), direction) == dirs.end()) {
 				continue;
@@ -540,7 +540,7 @@ bool unit::ability_affects_adjacent(const std::string& ability, const config& cf
 		if((*this).id() == from.id()){
 			return false;
 		}
-		auto filter = i.optional_child("filter");
+		auto filter = i.optional_child(str_filter);
 		if (!filter || //filter tag given
 			unit_filter(vconfig(*filter)).set_use_flat_tod(illuminates).matches(*this, loc, from) ) {
 			return true;
@@ -551,7 +551,7 @@ bool unit::ability_affects_adjacent(const std::string& ability, const config& cf
 
 bool unit::ability_affects_self(const std::string& ability,const config& cfg,const map_location& loc) const
 {
-	auto filter = cfg.optional_child("filter_self");
+	auto filter = cfg.optional_child(str_filter_self);
 	unit::recursion_guard self_lock;
 	if(filter){
 		self_lock = update_variables_recursion();
@@ -567,7 +567,7 @@ bool unit::ability_affects_self(const std::string& ability,const config& cfg,con
 
 bool unit::ability_affects_weapon(const config& cfg, const_attack_ptr weapon, bool is_opp) const
 {
-	const std::string filter_tag_name = is_opp ? "filter_second_weapon" : "filter_weapon";
+	const auto filter_tag_name = is_opp ? str_filter_second_weapon : str_filter_weapon;
 	if(!cfg.has_child(filter_tag_name)) {
 		return true;
 	}
@@ -981,9 +981,9 @@ std::vector<std::pair<t_string, t_string>> attack_type::special_tooltips(
 					active_list->push_back(true);
 			}
 		} else {
-			const t_string& name = sp.cfg.get_or("name_inactive", "name").t_str();
+			const t_string& name = sp.cfg.get_or(str_name_inactive, str_name).t_str();
 			if (!name.empty()) {
-				res.emplace_back(name, sp.cfg.get_or("description_inactive", "description").t_str() );
+				res.emplace_back(name, sp.cfg.get_or(str_description_inactive, str_description).t_str() );
 				active_list->push_back(false);
 			}
 		}
@@ -1028,7 +1028,7 @@ std::string attack_type::weapon_specials() const
 		const std::string& name =
 			active
 			? sp.cfg[str_name].str()
-			: sp.cfg.get_or("name_inactive", "name").str();
+			: sp.cfg.get_or(str_name_inactive, str_name).str();
 		if (!name.empty()) {
 			if (!res.empty()) res += ", ";
 			if (!active) res += font::span_color(font::inactive_details_color);
@@ -1914,13 +1914,13 @@ bool attack_type::special_active_impl(
 	config cfg = special;
 	if(special[str_backstab].to_bool()){
 		const std::string& backstab_formula = "enemy_of(self, flanker) and not flanker.petrified where flanker = unit_at(direction_from(loc, other.facing))";
-		config& filter_child = cfg.child_or_add("filter_opponent");
-		if(!special.has_child("filter_opponent")){
+		config& filter_child = cfg.child_or_add(str_filter_opponent);
+		if(!special.has_child(str_filter_opponent)){
 			filter_child[str_formula] = backstab_formula;
 		} else {
 			config filter;
 			filter[str_formula] = backstab_formula;
-			filter_child.add_child("and", filter);
+			filter_child.add_child(str_and, filter);
 		}
 	}
 	const config& special_backstab = special[str_backstab].to_bool() ? cfg : special;
@@ -1951,7 +1951,7 @@ bool attack_type::special_active_impl(
 	const auto adjacent = get_adjacent_tiles(self_loc);
 
 	// Filter the adjacent units.
-	for (const config &i : special.child_range("filter_adjacent"))
+	for (const config &i : special.child_range(str_filter_adjacent))
 	{
 		std::size_t count = 0;
 		std::vector<map_location::DIRECTION> dirs = map_location::parse_directions(i[str_adjacent]);
@@ -1963,7 +1963,7 @@ bool attack_type::special_active_impl(
 			unit_map::const_iterator unit = units.find(adjacent[index]);
 			if (unit == units.end() || !filter.matches(*unit, adjacent[index], *self))
 				return false;
-			if (i.has_attribute("is_enemy")) {
+			if (i.has_attribute(str_is_enemy)) {
 				const display_context& dc = resources::filter_con->get_disp_context();
 				if (i[str_is_enemy].to_bool() != dc.get_team(unit->side()).is_enemy(self->side())) {
 					continue;
@@ -1980,7 +1980,7 @@ bool attack_type::special_active_impl(
 	}
 
 	// Filter the adjacent locations.
-	for (const config &i : special.child_range("filter_adjacent_location"))
+	for (const config &i : special.child_range(str_filter_adjacent_location))
 	{
 		std::size_t count = 0;
 		std::vector<map_location::DIRECTION> dirs = map_location::parse_directions(i[str_adjacent]);
@@ -2020,7 +2020,7 @@ void individual_effect::set(value_modifier t, int val, const config *abil, const
 
 bool filter_base_matches(const config& cfg, int def)
 {
-	if (auto apply_filter = cfg.optional_child("filter_base_value")) {
+	if (auto apply_filter = cfg.optional_child(str_filter_base_value)) {
 		config::attribute_value cond_eq = apply_filter[str_equals];
 		config::attribute_value cond_ne = apply_filter[str_not_equals];
 		config::attribute_value cond_lt = apply_filter[str_less_than];
@@ -2052,13 +2052,13 @@ effect::effect(const unit_ability_list& list, int def, const_attack_ptr att, boo
 
 	for (const unit_ability & ability : list) {
 		const config& cfg = *ability.ability_cfg;
-		const std::string& effect_id = cfg[cfg[str_id].empty() ? "name" : "id"];
+		const std::string& effect_id = cfg[cfg[str_id].empty() ? str_name : str_id];
 
 		if (!filter_base_matches(cfg, def))
 			continue;
 
 		if(!is_cumulable){
-			if (const config::attribute_value *v = cfg.get("value")) {
+			if (const config::attribute_value *v = cfg.get(str_value)) {
 				int value = get_single_ability_value(*v, def, ability, list.loc(), att, [&](const wfl::formula& formula, wfl::map_formula_callable& callable) {
 					callable.add("base_value", wfl::variant(def));
 					return formula.evaluate(callable).as_int();
@@ -2081,7 +2081,7 @@ effect::effect(const unit_ability_list& list, int def, const_attack_ptr att, boo
 			}
 		}
 
-		if (const config::attribute_value *v = cfg.get("add")) {
+		if (const config::attribute_value *v = cfg.get(str_add)) {
 			int add = get_single_ability_value(*v, def, ability, list.loc(), att, [&](const wfl::formula& formula, wfl::map_formula_callable& callable) {
 				callable.add("base_value", wfl::variant(def));
 				return formula.evaluate(callable).as_int();
@@ -2091,7 +2091,7 @@ effect::effect(const unit_ability_list& list, int def, const_attack_ptr att, boo
 				values_add[effect_id].set(ADD, add, ability.ability_cfg, ability.teacher_loc);
 			}
 		}
-		if (const config::attribute_value *v = cfg.get("sub")) {
+		if (const config::attribute_value *v = cfg.get(str_sub)) {
 			int sub = - get_single_ability_value(*v, def, ability, list.loc(), att, [&](const wfl::formula& formula, wfl::map_formula_callable& callable) {
 				callable.add("base_value", wfl::variant(def));
 				return formula.evaluate(callable).as_int();
@@ -2101,7 +2101,7 @@ effect::effect(const unit_ability_list& list, int def, const_attack_ptr att, boo
 				values_add[effect_id].set(ADD, sub, ability.ability_cfg, ability.teacher_loc);
 			}
 		}
-		if (const config::attribute_value *v = cfg.get("multiply")) {
+		if (const config::attribute_value *v = cfg.get(str_multiply)) {
 			int multiply = static_cast<int>(get_single_ability_value(*v, static_cast<double>(def), ability, list.loc(), att, [&](const wfl::formula& formula, wfl::map_formula_callable& callable) {
 				callable.add("base_value", wfl::variant(def));
 				return formula.evaluate(callable).as_decimal() / 1000.0 ;
@@ -2111,7 +2111,7 @@ effect::effect(const unit_ability_list& list, int def, const_attack_ptr att, boo
 				values_mul[effect_id].set(MUL, multiply, ability.ability_cfg, ability.teacher_loc);
 			}
 		}
-		if (const config::attribute_value *v = cfg.get("divide")) {
+		if (const config::attribute_value *v = cfg.get(str_divide)) {
 			int divide = static_cast<int>(get_single_ability_value(*v, static_cast<double>(def), ability, list.loc(), att, [&](const wfl::formula& formula, wfl::map_formula_callable& callable) {
 				callable.add("base_value", wfl::variant(def));
 				return formula.evaluate(callable).as_decimal() / 1000.0 ;

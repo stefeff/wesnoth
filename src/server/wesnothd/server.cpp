@@ -433,7 +433,7 @@ void server::load_config()
 #define FIFODIR "/var/run/wesnothd"
 #endif
 	const std::string fifo_path
-			= (cfg_["fifo_path"].empty() ? std::string(FIFODIR) + "/socket" : std::string(cfg_["fifo_path"]));
+			= (cfg_[str_fifo_path].empty() ? std::string(FIFODIR) + "/socket" : std::string(cfg_[str_fifo_path]));
 	// Reset (replace) the input stream only if the FIFO path changed.
 	if(fifo_path != input_path_) {
 		input_.close();
@@ -442,30 +442,30 @@ void server::load_config()
 	}
 #endif
 
-	save_replays_ = cfg_["save_replays"].to_bool();
-	replay_save_path_ = cfg_["replay_save_path"].str();
+	save_replays_ = cfg_[str_save_replays].to_bool();
+	replay_save_path_ = cfg_[str_replay_save_path].str();
 
-	tor_ip_list_ = utils::split(cfg_["tor_ip_list_path"].empty()
+	tor_ip_list_ = utils::split(cfg_[str_tor_ip_list_path].empty()
 		? ""
-		: filesystem::read_file(cfg_["tor_ip_list_path"]), '\n');
+		: filesystem::read_file(cfg_[str_tor_ip_list_path]), '\n');
 
-	admin_passwd_ = cfg_["passwd"].str();
-	motd_ = cfg_["motd"].str();
-	information_ = cfg_["information"].str();
-	announcements_ = cfg_["announcements"].str();
-	server_id_ = cfg_["id"].str();
-	lan_server_ = cfg_["lan_server"].to_time_t(0);
+	admin_passwd_ = cfg_[str_passwd].str();
+	motd_ = cfg_[str_motd].str();
+	information_ = cfg_[str_information].str();
+	announcements_ = cfg_[str_announcements].str();
+	server_id_ = cfg_[str_id].str();
+	lan_server_ = cfg_[str_lan_server].to_time_t(0);
 
-	deny_unregistered_login_ = cfg_["deny_unregistered_login"].to_bool();
+	deny_unregistered_login_ = cfg_[str_deny_unregistered_login].to_bool();
 
-	allow_remote_shutdown_ = cfg_["allow_remote_shutdown"].to_bool();
+	allow_remote_shutdown_ = cfg_[str_allow_remote_shutdown].to_bool();
 
-	for(const std::string& source : utils::split(cfg_["client_sources"].str())) {
+	for(const std::string& source : utils::split(cfg_[str_client_sources].str())) {
 		client_sources_.insert(source);
 	}
 
 	disallowed_names_.clear();
-	if(cfg_["disallow_names"].empty()) {
+	if(cfg_[str_disallow_names].empty()) {
 		disallowed_names_.push_back("*admin*");
 		disallowed_names_.push_back("*admln*");
 		disallowed_names_.push_back("*server*");
@@ -477,26 +477,26 @@ void server::load_config()
 		disallowed_names_.push_back("ai?");
 		disallowed_names_.push_back("*moderator*");
 	} else {
-		disallowed_names_ = utils::split(cfg_["disallow_names"]);
+		disallowed_names_ = utils::split(cfg_[str_disallow_names]);
 	}
 
-	default_max_messages_ = cfg_["max_messages"].to_int(4);
-	default_time_period_ = cfg_["messages_time_period"].to_int(10);
-	concurrent_connections_ = cfg_["connections_allowed"].to_int(5);
-	max_ip_log_size_ = cfg_["max_ip_log_size"].to_int(500);
+	default_max_messages_ = cfg_[str_max_messages].to_int(4);
+	default_time_period_ = cfg_[str_messages_time_period].to_int(10);
+	concurrent_connections_ = cfg_[str_connections_allowed].to_int(5);
+	max_ip_log_size_ = cfg_[str_max_ip_log_size].to_int(500);
 
-	failed_login_limit_ = cfg_["failed_logins_limit"].to_int(10);
-	failed_login_ban_ = cfg_["failed_logins_ban"].to_int(3600);
-	failed_login_buffer_size_ = cfg_["failed_logins_buffer_size"].to_int(500);
+	failed_login_limit_ = cfg_[str_failed_logins_limit].to_int(10);
+	failed_login_ban_ = cfg_[str_failed_logins_ban].to_int(3600);
+	failed_login_buffer_size_ = cfg_[str_failed_logins_buffer_size].to_int(500);
 
 	// Example config line:
 	// restart_command="./wesnothd-debug -d -c ~/.wesnoth1.5/server.cfg"
 	// remember to make new one as a daemon or it will block old one
-	restart_command = cfg_["restart_command"].str();
+	restart_command = cfg_[str_restart_command].str();
 
-	recommended_version_ = cfg_["recommended_version"].str();
+	recommended_version_ = cfg_[str_recommended_version].str();
 	accepted_versions_.clear();
-	const std::string& versions = cfg_["versions_accepted"];
+	const std::string& versions = cfg_[str_versions_accepted];
 	if(versions.empty() == false) {
 		accepted_versions_ = utils::split(versions);
 	} else {
@@ -505,15 +505,15 @@ void server::load_config()
 	}
 
 	redirected_versions_.clear();
-	for(const config& redirect : cfg_.child_range("redirect")) {
-		for(const std::string& version : utils::split(redirect["version"])) {
+	for(const config& redirect : cfg_.child_range(str_redirect)) {
+		for(const std::string& version : utils::split(redirect[str_version])) {
 			redirected_versions_[version] = redirect;
 		}
 	}
 
 	proxy_versions_.clear();
-	for(const config& proxy : cfg_.child_range("proxy")) {
-		for(const std::string& version : utils::split(proxy["version"])) {
+	for(const config& proxy : cfg_.child_range(str_proxy)) {
+		for(const std::string& version : utils::split(proxy[str_version])) {
 			proxy_versions_[version] = proxy;
 		}
 	}
@@ -541,8 +541,8 @@ void server::load_config()
 
 	load_tls_config(cfg_);
 
-	if(cfg_["dummy_player_count"].to_int() > 0) {
-		for(int i = 0; i < cfg_["dummy_player_count"].to_int(); i++) {
+	if(cfg_[str_dummy_player_count].to_int() > 0) {
+		for(int i = 0; i < cfg_[str_dummy_player_count].to_int(); i++) {
 			simple_wml::node& dummy_user = games_and_users_list_.root().add_child_at("user", i);
 			dummy_user.set_attr_dup("available", "yes");
 			dummy_user.set_attr_int("forum_id", i);
@@ -553,8 +553,8 @@ void server::load_config()
 			dummy_user.set_attr_dup("registered", "yes");
 			dummy_user.set_attr_dup("status", "lobby");
 		}
-		if(cfg_["dummy_player_timer_interval"].to_int() > 0) {
-			dummy_player_timer_interval_ = cfg_["dummy_player_timer_interval"].to_int();
+		if(cfg_[str_dummy_player_timer_interval].to_int() > 0) {
+			dummy_player_timer_interval_ = cfg_[str_dummy_player_timer_interval].to_int();
 		}
 		start_dummy_player_updates();
 	}
@@ -715,8 +715,8 @@ void server::login_client(boost::asio::yield_context yield, SocketPtr socket)
 			for(const auto& redirect_version : redirected_versions_) {
 				if(utils::wildcard_string_match(client_version, redirect_version.first)) {
 					LOG_SERVER << log_address(socket) << "\tplayer joined using version " << client_version
-						   << ":\tredirecting them to " << redirect_version.second["host"] << ":"
-						   << redirect_version.second["port"];
+						   << ":\tredirecting them to " << redirect_version.second[str_host] << ":"
+						   << redirect_version.second[str_port];
 
 					simple_wml::node& redirect = response.root().add_child("redirect");
 					for(const auto& attr : redirect_version.second.attribute_range()) {

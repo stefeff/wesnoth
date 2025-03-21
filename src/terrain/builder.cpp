@@ -680,11 +680,11 @@ terrain_builder::rule_image_variant::rule_image_variant(const std::string& image
 
 void terrain_builder::add_images_from_config(rule_imagelist& images, const config& cfg, bool global, int dx, int dy)
 {
-	for(const config& img : cfg.child_range("image")) {
-		int layer = img["layer"];
+	for(const config& img : cfg.child_range(str_image)) {
+		int layer = img[str_layer];
 
 		int basex = tilewidth_ / 2 + dx, basey = tilewidth_ / 2 + dy;
-		if(const config::attribute_value* base_ = img.get("base")) {
+		if(const config::attribute_value* base_ = img.get(str_base)) {
 			std::vector<std::string> base = utils::split(*base_);
 			if(base.size() >= 2) {
 				try {
@@ -697,7 +697,7 @@ void terrain_builder::add_images_from_config(rule_imagelist& images, const confi
 		}
 
 		int center_x = -1, center_y = -1;
-		if(const config::attribute_value* center_ = img.get("center")) {
+		if(const config::attribute_value* center_ = img.get(str_center)) {
 			std::vector<std::string> center = utils::split(*center_);
 			if(center.size() >= 2) {
 				try {
@@ -709,29 +709,29 @@ void terrain_builder::add_images_from_config(rule_imagelist& images, const confi
 			}
 		}
 
-		bool is_water = img["is_water"].to_bool();
+		bool is_water = img[str_is_water].to_bool();
 
 		images.push_back(rule_image(layer, basex - dx, basey - dy, global, center_x, center_y, is_water));
 
 		// Adds the other variants of the image
-		for(const config& variant : img.child_range("variant")) {
-			const std::string& name = variant["name"];
-			const std::string& variations = img["variations"];
-			const std::string& tod = variant["tod"];
-			const std::string& has_flag = variant["has_flag"];
+		for(const config& variant : img.child_range(str_variant)) {
+			const std::string& name = variant[str_name];
+			const std::string& variations = img[str_variations];
+			const std::string& tod = variant[str_tod];
+			const std::string& has_flag = variant[str_has_flag];
 
 			// If an integer is given then assign that, but if a bool is given, then assign -1 if true and 0 if false
-			int random_start = variant["random_start"].to_bool(true) ? variant["random_start"].to_int(-1) : 0;
+			int random_start = variant[str_random_start].to_bool(true) ? variant[str_random_start].to_int(-1) : 0;
 
 			images.back().variants.emplace_back(name, variations, tod, has_flag, random_start);
 		}
 
 		// Adds the main (default) variant of the image at the end,
 		// (will be used only if previous variants don't match)
-		const std::string& name = img["name"];
-		const std::string& variations = img["variations"];
+		const std::string& name = img[str_name];
+		const std::string& variations = img[str_variations];
 
-		int random_start = img["random_start"].to_bool(true) ? img["random_start"].to_int(-1) : 0;
+		int random_start = img[str_random_start].to_bool(true) ? img[str_random_start].to_int(-1) : 0;
 
 		images.back().variants.emplace_back(name, variations, random_start);
 	}
@@ -774,22 +774,22 @@ void terrain_builder::add_constraints(terrain_builder::constraint_set& constrain
 
 {
 	terrain_constraint& constraint = add_constraints(
-			constraints, loc, t_translation::ter_match(cfg["type"].str(), t_translation::WILDCARD), global_images);
+			constraints, loc, t_translation::ter_match(cfg[str_type].str(), t_translation::WILDCARD), global_images);
 
-	std::vector<std::string> item_string = utils::square_parenthetical_split(cfg["set_flag"], ',', "[", "]");
+	std::vector<std::string> item_string = utils::square_parenthetical_split(cfg[str_set_flag], ',', "[", "]");
 	constraint.set_flag.insert(constraint.set_flag.end(), item_string.begin(), item_string.end());
 
-	item_string = utils::square_parenthetical_split(cfg["has_flag"], ',', "[", "]");
+	item_string = utils::square_parenthetical_split(cfg[str_has_flag], ',', "[", "]");
 	constraint.has_flag.insert(constraint.has_flag.end(), item_string.begin(), item_string.end());
 
-	item_string = utils::square_parenthetical_split(cfg["no_flag"], ',', "[", "]");
+	item_string = utils::square_parenthetical_split(cfg[str_no_flag], ',', "[", "]");
 	constraint.no_flag.insert(constraint.no_flag.end(), item_string.begin(), item_string.end());
 
-	item_string = utils::square_parenthetical_split(cfg["set_no_flag"], ',', "[", "]");
+	item_string = utils::square_parenthetical_split(cfg[str_set_no_flag], ',', "[", "]");
 	constraint.set_flag.insert(constraint.set_flag.end(), item_string.begin(), item_string.end());
 	constraint.no_flag.insert(constraint.no_flag.end(), item_string.begin(), item_string.end());
 
-	constraint.no_draw = cfg["no_draw"].to_bool(false);
+	constraint.no_draw = cfg[str_no_draw].to_bool(false);
 
 	add_images_from_config(constraint.images, cfg, false);
 }
@@ -885,39 +885,39 @@ void terrain_builder::parse_config(const game_config_view& cfg, bool local)
 	int n = 0;
 
 	// Parses the list of building rules (BRs)
-	for(const config& br : cfg.child_range("terrain_graphics")) {
+	for(const config& br : cfg.child_range(str_terrain_graphics)) {
 		building_rule pbr; // Parsed Building rule
 		pbr.local = local;
 
 		// add_images_from_config(pbr.images, **br);
 
-		pbr.location_constraints = map_location(br["x"].to_int() - 1, br["y"].to_int() - 1);
+		pbr.location_constraints = map_location(br[str_x].to_int() - 1, br[str_y].to_int() - 1);
 
-		pbr.modulo_constraints = map_location(br["mod_x"].to_int(), br["mod_y"].to_int());
+		pbr.modulo_constraints = map_location(br[str_mod_x].to_int(), br[str_mod_y].to_int());
 
-		pbr.probability = br["probability"].to_int(100);
+		pbr.probability = br[str_probability].to_int(100);
 
 		// Mapping anchor indices to anchor locations.
 		anchormap anchors;
 
 		// Parse the map= , if there is one (and fill the anchors list)
-		parse_mapstring(br["map"], pbr, anchors, br);
+		parse_mapstring(br[str_map], pbr, anchors, br);
 
 		// Parses the terrain constraints (TCs)
-		for(const config& tc : br.child_range("tile")) {
+		for(const config& tc : br.child_range(str_tile)) {
 			// Adds the terrain constraint to the current built terrain's list
 			// of terrain constraints, if it does not exist.
 			map_location loc;
-			if(const config::attribute_value* v = tc.get("x")) {
+			if(const config::attribute_value* v = tc.get(str_x)) {
 				loc.x = *v;
 			}
-			if(const config::attribute_value* v = tc.get("y")) {
+			if(const config::attribute_value* v = tc.get(str_y)) {
 				loc.y = *v;
 			}
 			if(loc.valid()) {
 				add_constraints(pbr.constraints, loc, tc, br);
 			}
-			if(const config::attribute_value* v = tc.get("pos")) {
+			if(const config::attribute_value* v = tc.get(str_pos)) {
 				int pos = *v;
 				if(anchors.find(pos) == anchors.end()) {
 					WRN_NG << "Invalid anchor!";
@@ -933,10 +933,10 @@ void terrain_builder::parse_config(const game_config_view& cfg, bool local)
 			}
 		}
 
-		const std::vector<std::string> global_set_flag = utils::split(br["set_flag"]);
-		const std::vector<std::string> global_no_flag = utils::split(br["no_flag"]);
-		const std::vector<std::string> global_has_flag = utils::split(br["has_flag"]);
-		const std::vector<std::string> global_set_no_flag = utils::split(br["set_no_flag"]);
+		const std::vector<std::string> global_set_flag = utils::split(br[str_set_flag]);
+		const std::vector<std::string> global_no_flag = utils::split(br[str_no_flag]);
+		const std::vector<std::string> global_has_flag = utils::split(br[str_has_flag]);
+		const std::vector<std::string> global_set_no_flag = utils::split(br[str_set_no_flag]);
 
 		for(terrain_constraint& constraint : pbr.constraints) {
 			constraint.set_flag.insert(constraint.set_flag.end(), global_set_flag.begin(), global_set_flag.end());
@@ -947,9 +947,9 @@ void terrain_builder::parse_config(const game_config_view& cfg, bool local)
 		}
 
 		// Handles rotations
-		const std::string& rotations = br["rotations"];
+		const std::string& rotations = br[str_rotations];
 
-		pbr.precedence = br["precedence"];
+		pbr.precedence = br[str_precedence];
 
 		add_rotated_rules(building_rules_, pbr, rotations);
 
@@ -995,20 +995,20 @@ void terrain_builder::add_off_map_rule(const std::string& image)
 	// Build a config object
 	config cfg;
 
-	config& item = cfg.add_child("terrain_graphics");
+	config& item = cfg.add_child(str_terrain_graphics);
 
-	config& tile = item.add_child("tile");
-	tile["x"] = 0;
-	tile["y"] = 0;
-	tile["type"] = t_translation::write_terrain_code(t_translation::OFF_MAP_USER);
+	config& tile = item.add_child(str_tile);
+	tile[str_x] = 0;
+	tile[str_y] = 0;
+	tile[str_type] = t_translation::write_terrain_code(t_translation::OFF_MAP_USER);
 
-	config& tile_image = tile.add_child("image");
-	tile_image["layer"] = -1000;
-	tile_image["name"] = image;
+	config& tile_image = tile.add_child(str_image);
+	tile_image[str_layer] = -1000;
+	tile_image[str_name] = image;
 
-	item["probability"] = 100;
-	item["no_flag"] = "base";
-	item["set_flag"] = "base";
+	item[str_probability] = 100;
+	item[str_no_flag] = "base";
+	item[str_set_flag] = "base";
 
 	// Parse the object
 	parse_global_config(game_config_view::wrap(cfg));

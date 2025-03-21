@@ -55,8 +55,8 @@ unit_race::unit_race() :
 		plural_name_(),
 		description_(),
 		ntraits_(0),
-		traits_(empty_traits().child_range("trait")),
-		topics_(empty_topics().child_range("topic")),
+		traits_(empty_traits().child_range(str_trait)),
+		topics_(empty_topics().child_range(str_topic)),
 		global_traits_(true),
 		undead_variation_(),
 		help_taxonomy_()
@@ -68,32 +68,32 @@ unit_race::unit_race() :
 
 unit_race::unit_race(const config& cfg) :
 		cfg_(cfg),
-		id_(cfg["id"]),
-		icon_(cfg["editor_icon"]),
-		plural_name_(cfg["plural_name"].t_str()),
-		description_(cfg["description"].t_str()),
-		ntraits_(cfg["num_traits"]),
-		traits_(cfg.child_range("trait")),
-		topics_(cfg.child_range("topic")),
-		global_traits_(!cfg["ignore_global_traits"].to_bool()),
-		undead_variation_(cfg["undead_variation"]),
-		help_taxonomy_(cfg["help_taxonomy"])
+		id_(cfg[str_id]),
+		icon_(cfg[str_editor_icon]),
+		plural_name_(cfg[str_plural_name].t_str()),
+		description_(cfg[str_description].t_str()),
+		ntraits_(cfg[str_num_traits]),
+		traits_(cfg.child_range(str_trait)),
+		topics_(cfg.child_range(str_topic)),
+		global_traits_(!cfg[str_ignore_global_traits].to_bool()),
+		undead_variation_(cfg[str_undead_variation]),
+		help_taxonomy_(cfg[str_help_taxonomy])
 
 {
 	if (plural_name_.empty()) {
 		lg::log_to_chat() << "[race] id='" << id_ << "' is missing a plural_name field.\n";
 		ERR_WML << "[race] id='" << id_ << "' is missing a plural_name field.";
-		plural_name_ = (cfg["name"]);
+		plural_name_ = (cfg[str_name]);
 	}
 
 	// use "name" if "male_name" or "female_name" aren't available
-	name_[MALE] = cfg["male_name"];
+	name_[MALE] = cfg[str_male_name];
 	if(name_[MALE].empty()) {
-		name_[MALE] = (cfg["name"]);
+		name_[MALE] = (cfg[str_name]);
 	}
-	name_[FEMALE] = cfg["female_name"];
+	name_[FEMALE] = cfg[str_female_name];
 	if(name_[FEMALE].empty()) {
-		name_[FEMALE] = (cfg["name"]);
+		name_[FEMALE] = (cfg[str_name]);
 	}
 	if(std::any_of(name_.begin(), name_.end(), [](const auto& n) { return n.empty(); })) {
 		lg::log_to_chat()

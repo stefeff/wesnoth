@@ -561,12 +561,12 @@ void unit_animation::fill_initial_animations(std::vector<unit_animation>& animat
 		animations.push_back(base);
 		animations.back().event_ = { "attack" };
 		animations.back().unit_anim_.override(-150, 300, particle::NO_CYCLE, "", "", {0,0,0}, "0~0.6:150,0.6~0:150", std::to_string(display::LAYER_UNIT_MOVE_DEFAULT-display::LAYER_UNIT_FIRST));
-		animations.back().primary_attack_filter_.emplace_back("range", "melee");
+		animations.back().primary_attack_filter_.emplace_back(str_range, "melee");
 
 		animations.push_back(base);
 		animations.back().event_ = { "attack" };
 		animations.back().unit_anim_.override(-150, 150, particle::NO_CYCLE);
-		animations.back().primary_attack_filter_.emplace_back("range", "ranged");
+		animations.back().primary_attack_filter_.emplace_back(str_range, "ranged");
 
 		animations.push_back(base);
 		animations.back().event_ = { "death" };
@@ -811,7 +811,7 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			anim[str_layer] = move_layer;
 		}
 
-		config::const_child_itors missile_fs = anim.child_range("missile_frame");
+		config::const_child_itors missile_fs = anim.child_range(str_missile_frame);
 		if(anim[str_offset].empty() && missile_fs.empty()) {
 			anim[str_offset] ="0~0.6,0.6~0";
 		}
@@ -828,8 +828,8 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			config tmp;
 			tmp[str_duration] = 1;
 
-			anim.add_child("missile_frame", tmp);
-			anim.add_child_at("missile_frame", tmp, 0);
+			anim.add_child(str_missile_frame, tmp);
+			anim.add_child_at(str_missile_frame, tmp, 0);
 		}
 
 		animations.emplace_back(anim);

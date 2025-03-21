@@ -30,11 +30,11 @@ void unit_formula_manager::add_formula_var(std::string str,wfl:: variant var)
 
 void unit_formula_manager::read(const config & ai)
 {
-	unit_formula_ = ai.get_deprecated_attribute("formula", "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17").str();
-	unit_loop_formula_ = ai.get_deprecated_attribute("loop_formula", "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17").str();
-	unit_priority_formula_ = ai.get_deprecated_attribute("priority", "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17").str();
+	unit_formula_ = ai.get_deprecated_attribute(str_formula, "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17").str();
+	unit_loop_formula_ = ai.get_deprecated_attribute(str_loop_formula, "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17").str();
+	unit_priority_formula_ = ai.get_deprecated_attribute(str_priority, "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17").str();
 
-	if (auto ai_vars = ai.get_deprecated_child("vars", "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17"))
+	if (auto ai_vars = ai.get_deprecated_child(str_vars, "unit][ai", DEP_LEVEL::FOR_REMOVAL, "FormulaAI will be removed in 1.17"))
 	{
 		formula_vars_ = std::make_shared<wfl::map_formula_callable>();
 
@@ -52,21 +52,21 @@ void unit_formula_manager::write(config & cfg)
 {
 	if ( has_formula() || has_loop_formula() || (formula_vars_ && formula_vars_->empty() == false) ) {
 
-		config &ai = cfg.add_child("ai");
+		config &ai = cfg.add_child(str_ai);
 
 		if (has_formula())
-			ai["formula"] = unit_formula_;
+			ai[str_formula] = unit_formula_;
 
 		if (has_loop_formula())
-			ai["loop_formula"] = unit_loop_formula_;
+			ai[str_loop_formula] = unit_loop_formula_;
 
 		if (has_priority_formula())
-			ai["priority"] = unit_priority_formula_;
+			ai[str_priority] = unit_priority_formula_;
 
 
 		if (formula_vars_ && formula_vars_->empty() == false)
 		{
-			config &ai_vars = ai.add_child("vars");
+			config &ai_vars = ai.add_child(str_vars);
 
 			std::string str;
 			for(wfl::map_formula_callable::const_iterator i = formula_vars_->begin(); i != formula_vars_->end(); ++i)

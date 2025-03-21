@@ -38,7 +38,7 @@ void terrain_type_data::lazy_initialization() const
 	if(initialized_)
 		return;
 
-	for (const config &terrain_data : game_config_.child_range("terrain_type"))
+	for (const config &terrain_data : game_config_.child_range(str_terrain_type))
 	{
 		terrain_type terrain(terrain_data);
 		DBG_G << "create_terrain_maps: " << terrain.number() << " "
