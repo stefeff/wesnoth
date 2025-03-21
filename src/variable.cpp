@@ -187,7 +187,7 @@ config vconfig::get_parsed_config() const
 
 	for(const auto [key, cfg] : cfg_->all_children_view())
 	{
-		if (key == "insert_tag") {
+		if (key == str_insert_tag) {
 			vconfig insert_cfg(cfg, *variables_);
 			std::string name = insert_cfg[str_name];
 			std::string vname = insert_cfg[str_variable];
@@ -210,7 +210,7 @@ config vconfig::get_parsed_config() const
 				vconfig_recursion.erase(vname);
 				WRN_NG << err.message;
 				if(vconfig_recursion.empty()) {
-					res.add_child("insert_tag", insert_cfg.get_config());
+					res.add_child(str_insert_tag, insert_cfg.get_config());
 				} else {
 					// throw to the top [insert_tag] which started the recursion
 					throw;
@@ -230,11 +230,11 @@ vconfig::child_list vconfig::get_children(const config_key_type& key) const
 
 	for(const auto [key, cfg] : cfg_->all_children_view())
 	{
-		if (key == key_to_get) {
+		if (key == key) {
 			res.push_back(vconfig(cfg, cache_, *variables_));
-		} else if (key == "insert_tag") {
+		} else if (key == str_insert_tag) {
 			vconfig insert_cfg(cfg, *variables_);
-			if(insert_cfg[str_name] == key_to_get)
+			if(insert_cfg[str_name] == key)
 			{
 				try
 				{
@@ -262,9 +262,9 @@ std::size_t vconfig::count_children(const config_key_type& key) const
 	{
 		if (key == key_to_count) {
 			n++;
-		} else if (key == "insert_tag") {
+		} else if (key == str_insert_tag) {
 			vconfig insert_cfg(cfg, *variables_);
-			if(insert_cfg[str_name] == key_to_count)
+			if(insert_cfg[str_name] == key)
 			{
 				try
 				{
@@ -291,7 +291,7 @@ vconfig vconfig::child(const config_key_type& key) const
 	if (auto natural = cfg_->optional_child(key)) {
 		return vconfig(*natural, cache_, *variables_);
 	}
-	for (const config &ins : cfg_->child_range("insert_tag"))
+	for (const config &ins : cfg_->child_range(str_insert_tag))
 	{
 		vconfig insert_cfg(ins, *variables_);
 		if(insert_cfg[str_name] == key)
@@ -318,7 +318,7 @@ bool vconfig::has_child(const config_key_type& key) const
 	if (cfg_->has_child(key)) {
 		return true;
 	}
-	for (const config &ins : cfg_->child_range("insert_tag"))
+	for (const config &ins : cfg_->child_range(str_insert_tag))
 	{
 		vconfig insert_cfg(ins, *variables_);
 		if(insert_cfg[str_name] == key) {
@@ -390,7 +390,7 @@ vconfig::all_children_iterator::all_children_iterator(const Itor &i, const varia
 
 vconfig::all_children_iterator& vconfig::all_children_iterator::operator++()
 {
-	if (inner_index_ >= 0 && i_->key == "insert_tag")
+	if (inner_index_ >= 0 && i_->key == str_insert_tag)
 	{
 		try
 		{
@@ -422,7 +422,7 @@ vconfig::all_children_iterator vconfig::all_children_iterator::operator++(int)
 
 vconfig::all_children_iterator& vconfig::all_children_iterator::operator--()
 {
-	if(inner_index_ >= 0 && i_->key == "insert_tag") {
+	if(inner_index_ >= 0 && i_->key == str_insert_tag) {
 		if(--inner_index_ >= 0) {
 			return *this;
 		}
@@ -462,7 +462,7 @@ std::string vconfig::all_children_iterator::get_key() const
 
 vconfig vconfig::all_children_iterator::get_child() const
 {
-	if (inner_index_ >= 0 && i_->key == "insert_tag")
+	if (inner_index_ >= 0 && i_->key == str_insert_tag)
 	{
 		try
 		{
