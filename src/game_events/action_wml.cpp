@@ -101,38 +101,38 @@ namespace { // Support functions
 	 */
 	map_location cfg_to_loc(const vconfig& cfg, int defaultx = -999, int defaulty = -999)
 	{
-		return map_location(cfg["x"].to_int(defaultx), cfg["y"].to_int(defaulty), wml_loc());
+		return map_location(cfg[str_x].to_int(defaultx), cfg[str_y].to_int(defaulty), wml_loc());
 	}
 
 	fake_unit_ptr create_fake_unit(const vconfig& cfg)
 	{
-		std::string type = cfg["type"];
-		std::string variation = cfg["variation"];
-		std::string img_mods = cfg["image_mods"];
+		std::string type = cfg[str_type];
+		std::string variation = cfg[str_variation];
+		std::string img_mods = cfg[str_image_mods];
 
-		std::size_t side_num = cfg["side"].to_int(1);
+		std::size_t side_num = cfg[str_side].to_int(1);
 		if (!resources::gameboard->has_team(side_num)) {
 			side_num = 1;
 		}
 
-		unit_race::GENDER gender = string_gender(cfg["gender"]);
+		unit_race::GENDER gender = string_gender(cfg[str_gender]);
 		const unit_type *ut = unit_types.find(type);
 		if (!ut) return fake_unit_ptr();
 		fake_unit_ptr fake = fake_unit_ptr(unit::create(*ut, side_num, false, gender));
 
 		if(!variation.empty()) {
 			config mod;
-			config &effect = mod.add_child("effect");
-			effect["apply_to"] = "variation";
-			effect["name"] = variation;
+			config &effect = mod.add_child(str_effect);
+			effect[str_apply_to] = "variation";
+			effect[str_name] = variation;
 			fake->add_modification("variation",mod);
 		}
 
 		if(!img_mods.empty()) {
 			config mod;
-			config &effect = mod.add_child("effect");
-			effect["apply_to"] = "image_mod";
-			effect["add"] = img_mods;
+			config &effect = mod.add_child(str_effect);
+			effect[str_apply_to] = "image_mod";
+			effect[str_add] = img_mods;
 			fake->add_modification("image_mod",mod);
 		}
 
@@ -345,9 +345,9 @@ WML_HANDLER_FUNCTION(get_global_variable,,pcfg)
 
 WML_HANDLER_FUNCTION(modify_turns,, cfg)
 {
-	config::attribute_value value = cfg["value"];
-	std::string add = cfg["add"];
-	config::attribute_value current = cfg["current"];
+	config::attribute_value value = cfg[str_value];
+	std::string add = cfg[str_add];
+	config::attribute_value current = cfg[str_current];
 	tod_manager& tod_man = *resources::tod_manager;
 	if(!add.empty()) {
 		tod_man.modify_turns_by_wml(add);
@@ -380,10 +380,10 @@ WML_HANDLER_FUNCTION(move_unit_fake,, cfg)
 	if(!dummy_unit.get())
 		return;
 
-	const bool force_scroll = cfg["force_scroll"].to_bool(true);
+	const bool force_scroll = cfg[str_force_scroll].to_bool(true);
 
-	const std::string x = cfg["x"];
-	const std::string y = cfg["y"];
+	const std::string x = cfg[str_x];
+	const std::string y = cfg[str_y];
 
 	const std::vector<std::string> xvals = utils::split(x);
 	const std::vector<std::string> yvals = utils::split(y);
@@ -401,8 +401,8 @@ WML_HANDLER_FUNCTION(move_units_fake,, cfg)
 	events::command_disabler command_disabler;
 	LOG_NG << "Processing [move_units_fake]";
 
-	const bool force_scroll = cfg["force_scroll"].to_bool();
-	const vconfig::child_list unit_cfgs = cfg.get_children("fake_unit");
+	const bool force_scroll = cfg[str_force_scroll].to_bool();
+	const vconfig::child_list unit_cfgs = cfg.get_children(str_fake_unit);
 	std::size_t num_units = unit_cfgs.size();
 	std::vector<fake_unit_ptr > units;
 	units.reserve(num_units);
@@ -414,9 +414,9 @@ WML_HANDLER_FUNCTION(move_units_fake,, cfg)
 	std::size_t longest_path = 0;
 
 	for (const vconfig& config : unit_cfgs) {
-		const std::vector<std::string> xvals = utils::split(config["x"]);
-		const std::vector<std::string> yvals = utils::split(config["y"]);
-		int skip_steps = config["skip_steps"];
+		const std::vector<std::string> xvals = utils::split(config[str_x]);
+		const std::vector<std::string> yvals = utils::split(config[str_y]);
+		int skip_steps = config[str_skip_steps];
 		fake_unit_ptr u = create_fake_unit(config);
 		units.push_back(u);
 		paths.push_back(fake_unit_path(*u, xvals, yvals));
@@ -467,11 +467,11 @@ WML_HANDLER_FUNCTION(recall,, cfg)
 	 * collisions; filters should be named consistently and always have a
 	 * distinct scope.
 	 */
-	temp_config["x"] = "recall";
-	temp_config["y"] = "recall";
-	temp_config.remove_attribute("location_id");
+	temp_config[str_x] = "recall";
+	temp_config[str_y] = "recall";
+	temp_config.remove_attribute(str_location_id);
 	vconfig unit_filter_cfg(temp_config);
-	const vconfig & leader_filter = cfg.child("secondary_unit");
+	const vconfig & leader_filter = cfg.child(str_secondary_unit);
 
 	for(int index = 0; index < static_cast<int>(resources::gameboard->teams().size()); ++index) {
 		LOG_NG << "for side " << index + 1 << "...";
@@ -495,11 +495,11 @@ WML_HANDLER_FUNCTION(recall,, cfg)
 				DBG_NG << (*u)->id() << " matched the filter...";
 				const unit_ptr to_recruit = *u;
 				const unit* pass_check = to_recruit.get();
-				if(!cfg["check_passability"].to_bool(true)) pass_check = nullptr;
+				if(!cfg[str_check_passability].to_bool(true)) pass_check = nullptr;
 				map_location cfg_loc = cfg_to_loc(cfg);
-				if(cfg.has_attribute("location_id")) {
+				if(cfg.has_attribute(str_location_id)) {
 					const auto& special_locs = resources::gameboard->map().special_locations().left;
-					const auto& iter = special_locs.find(cfg["location_id"]);
+					const auto& iter = special_locs.find(cfg[str_location_id]);
 					if(iter != special_locs.end()) {
 						cfg_loc = iter->second;
 					}
@@ -519,8 +519,8 @@ WML_HANDLER_FUNCTION(recall,, cfg)
 							DBG_NG << "...valid location for the recall found. Recalling.";
 							avail.erase(u);	// Erase before recruiting, since recruiting can fire more events
 							actions::place_recruit(to_recruit, loc, leader->get_location(), 0, true,
-							                       map_location::parse_direction(cfg["facing"]),
-							                       cfg["show"].to_bool(true), cfg["fire_event"].to_bool(false),
+							                       map_location::parse_direction(cfg[str_facing]),
+							                       cfg[str_show].to_bool(true), cfg[str_fire_event].to_bool(false),
 							                       true, true);
 							return;
 						}
@@ -536,8 +536,8 @@ WML_HANDLER_FUNCTION(recall,, cfg)
 						avail.erase(u);	// Erase before recruiting, since recruiting can fire more events
 						map_location null_location = map_location::null_location();
 						actions::place_recruit(to_recruit, loc, null_location, 0, true,
-						                       map_location::parse_direction(cfg["facing"]),
-						                       cfg["show"].to_bool(true), cfg["fire_event"].to_bool(false),
+						                       map_location::parse_direction(cfg[str_facing]),
+						                       cfg[str_show].to_bool(true), cfg[str_fire_event].to_bool(false),
 						                       true, true);
 						return;
 					}
@@ -556,7 +556,7 @@ namespace {
 		virtual config query_user(int /*side*/) const override
 		{
 			std::string res = filesystem::read_map(filename_);
-			return config {"map_data", res};
+			return config {str_map_data, res};
 		}
 		virtual config random_choice(int /*side*/) const override
 		{
@@ -594,17 +594,17 @@ WML_HANDLER_FUNCTION(replace_map,, cfg)
 	gamemap map(*game_map);
 
 	try {
-		if(!cfg["map_file"].empty()) {
-			config file_cfg = mp_sync::get_user_choice("map_data", map_choice(cfg["map_file"].str()));
-			map.read(file_cfg["map_data"].str(), false);
-		} else if(!cfg["map_data"].empty()) {
-			map.read(cfg["map_data"], false);
+		if(!cfg[str_map_file].empty()) {
+			config file_cfg = mp_sync::get_user_choice("map_data", map_choice(cfg[str_map_file].str()));
+			map.read(file_cfg[str_map_data].str(), false);
+		} else if(!cfg[str_map_data].empty()) {
+			map.read(cfg[str_map_data], false);
 		} else {
 			deprecated_message("[replace_map]map=", DEP_LEVEL::INDEFINITE, "1.16", "Use map_data= instead.");
-			map.read(cfg["map"], false);
+			map.read(cfg[str_map], false);
 		}
 	} catch(const incorrect_map_format_error&) {
-		const std::string log_map_name = cfg["map"].empty() ? cfg["map_file"] : std::string("from inline data");
+		const std::string log_map_name = cfg[str_map].empty() ? cfg[str_map_file] : std::string("from inline data");
 		lg::log_to_chat() << "replace_map: Unable to load map " << log_map_name << '\n';
 		ERR_WML << "replace_map: Unable to load map " << log_map_name;
 		return;
@@ -615,7 +615,7 @@ WML_HANDLER_FUNCTION(replace_map,, cfg)
 
 	if (map.total_width() > game_map->total_width()
 	|| map.total_height() > game_map->total_height()) {
-		if (!cfg["expand"].to_bool()) {
+		if (!cfg[str_expand].to_bool()) {
 			lg::log_to_chat() << "replace_map: Map dimension(s) increase but expand is not set\n";
 			ERR_WML << "replace_map: Map dimension(s) increase but expand is not set";
 			return;
@@ -624,7 +624,7 @@ WML_HANDLER_FUNCTION(replace_map,, cfg)
 
 	if (map.total_width() < game_map->total_width()
 	|| map.total_height() < game_map->total_height()) {
-		if (!cfg["shrink"].to_bool()) {
+		if (!cfg[str_shrink].to_bool()) {
 			lg::log_to_chat() << "replace_map: Map dimension(s) decrease but shrink is not set\n";
 			ERR_WML << "replace_map: Map dimension(s) decrease but shrink is not set";
 			return;
@@ -655,7 +655,7 @@ WML_HANDLER_FUNCTION(set_global_variable,,pcfg)
 
 WML_HANDLER_FUNCTION(set_variables,, cfg)
 {
-	const t_string& name = cfg["name"];
+	const t_string& name = cfg[str_name];
 	variable_access_create dest = resources::gamedata->get_variable_access_write(name);
 	if(name.empty()) {
 		ERR_NG << "trying to set a variable with an empty name:\n" << cfg.get_config().debug();
@@ -663,11 +663,11 @@ WML_HANDLER_FUNCTION(set_variables,, cfg)
 	}
 
 	std::vector<config> data;
-	if(cfg.has_attribute("to_variable"))
+	if(cfg.has_attribute(str_to_variable))
 	{
 		try
 		{
-			variable_access_const tovar = resources::gamedata->get_variable_access_read(cfg["to_variable"]);
+			variable_access_const tovar = resources::gamedata->get_variable_access_read(cfg[str_to_variable]);
 			for (const config& c : tovar.as_array())
 			{
 				data.push_back(c);
@@ -675,7 +675,7 @@ WML_HANDLER_FUNCTION(set_variables,, cfg)
 		}
 		catch(const invalid_variablename_exception&)
 		{
-			ERR_NG << "Cannot do [set_variables] with invalid to_variable variable: " << cfg["to_variable"] << " with " << cfg.get_config().debug();
+			ERR_NG << "Cannot do [set_variables] with invalid to_variable variable: " << cfg[str_to_variable] << " with " << cfg.get_config().debug();
 		}
 	} else {
 		typedef std::pair<std::string, vconfig> vchild;
@@ -687,19 +687,19 @@ WML_HANDLER_FUNCTION(set_variables,, cfg)
 			} else if(p.first == "split") {
 				const vconfig & split_element = p.second;
 
-				std::string split_string=split_element["list"];
-				std::string separator_string=split_element["separator"];
-				std::string key_name=split_element["key"];
+				std::string split_string=split_element[str_list];
+				std::string separator_string=split_element[str_separator];
+				std::string key_name=split_element[str_key];
 				if(key_name.empty())
 				{
 					key_name="value";
 				}
 
-				bool remove_empty = split_element["remove_empty"].to_bool();
+				bool remove_empty = split_element[str_remove_empty].to_bool();
 
 				char* separator = separator_string.empty() ? nullptr : &separator_string[0];
 				if(separator_string.size() > 1){
-					ERR_NG << "[set_variables] [split] separator only supports 1 character, multiple passed: " << split_element["separator"] << " with " << cfg.get_config().debug();
+					ERR_NG << "[set_variables] [split] separator only supports 1 character, multiple passed: " << split_element[str_separator] << " with " << cfg.get_config().debug();
 				}
 
 				std::vector<std::string> split_vector;
@@ -725,7 +725,7 @@ WML_HANDLER_FUNCTION(set_variables,, cfg)
 	}
 	try
 	{
-		const std::string& mode = cfg["mode"];
+		const std::string& mode = cfg[str_mode];
 		if(mode == "merge")
 		{
 			if(dest.explicit_index() && data.size() > 1)
@@ -765,24 +765,24 @@ WML_HANDLER_FUNCTION(set_variables,, cfg)
  */
 WML_HANDLER_FUNCTION(store_relative_direction,, cfg)
 {
-	if (!cfg.child("source")) {
+	if (!cfg.child(str_source)) {
 		WRN_NG << "No source in [store_relative_direction]";
 		return;
 	}
-	if (!cfg.child("destination")) {
+	if (!cfg.child(str_destination)) {
 		WRN_NG << "No destination in [store_relative_direction]";
 		return;
 	}
-	if (!cfg.has_attribute("variable")) {
+	if (!cfg.has_attribute(str_variable)) {
 		WRN_NG << "No variable in [store_relative_direction]";
 		return;
 	}
 
-	const map_location src = cfg_to_loc(cfg.child("source"));
-	const map_location dst = cfg_to_loc(cfg.child("destination"));
+	const map_location src = cfg_to_loc(cfg.child(str_source));
+	const map_location dst = cfg_to_loc(cfg.child(str_destination));
 
-	std::string variable = cfg["variable"];
-	map_location::RELATIVE_DIR_MODE mode = static_cast<map_location::RELATIVE_DIR_MODE> (cfg["mode"].to_int(0));
+	std::string variable = cfg[str_variable];
+	map_location::RELATIVE_DIR_MODE mode = static_cast<map_location::RELATIVE_DIR_MODE> (cfg[str_mode].to_int(0));
 	try
 	{
 		variable_access_create store = resources::gamedata->get_variable_access_write(variable);
@@ -803,24 +803,24 @@ WML_HANDLER_FUNCTION(store_relative_direction,, cfg)
  */
 WML_HANDLER_FUNCTION(store_rotate_map_location,, cfg)
 {
-	if (!cfg.child("source")) {
+	if (!cfg.child(str_source)) {
 		WRN_NG << "No source in [store_rotate_map_location]";
 		return;
 	}
-	if (!cfg.child("destination")) {
+	if (!cfg.child(str_destination)) {
 		WRN_NG << "No destination in [store_rotate_map_location]";
 		return;
 	}
-	if (!cfg.has_attribute("variable")) {
+	if (!cfg.has_attribute(str_variable)) {
 		WRN_NG << "No variable in [store_rotate_map_location]";
 		return;
 	}
 
-	const map_location src = cfg_to_loc(cfg.child("source"));
-	const map_location dst = cfg_to_loc(cfg.child("destination"));
+	const map_location src = cfg_to_loc(cfg.child(str_source));
+	const map_location dst = cfg_to_loc(cfg.child(str_destination));
 
-	std::string variable = cfg["variable"];
-	int angle = cfg["angle"].to_int(1);
+	std::string variable = cfg[str_variable];
+	int angle = cfg[str_angle].to_int(1);
 
 	try
 	{
@@ -836,28 +836,28 @@ WML_HANDLER_FUNCTION(store_rotate_map_location,, cfg)
 
 WML_HANDLER_FUNCTION(tunnel,, cfg)
 {
-	const bool remove = cfg["remove"].to_bool(false);
-	const bool delay = cfg["delayed_variable_substitution"].to_bool(true);
+	const bool remove = cfg[str_remove].to_bool(false);
+	const bool delay = cfg[str_delayed_variable_substitution].to_bool(true);
 	if (remove) {
-		const std::vector<std::string> ids = utils::split(cfg["id"]);
+		const std::vector<std::string> ids = utils::split(cfg[str_id]);
 		for (const std::string &id : ids) {
 			resources::tunnels->remove(id);
 		}
-	} else if (cfg.get_children("source").empty() ||
-		cfg.get_children("target").empty() ||
-		cfg.get_children("filter").empty()) {
+	} else if (cfg.get_children(str_source).empty() ||
+		cfg.get_children(str_target).empty() ||
+		cfg.get_children(str_filter).empty()) {
 		ERR_WML << "[tunnel] is missing a mandatory tag:\n"
 		        << cfg.get_config().debug();
-	} else if (cfg.get_children("source").size() > 1 ||
-		cfg.get_children("target").size() > 1 ||
-		cfg.get_children("filter").size() > 1) {
+	} else if (cfg.get_children(str_source).size() > 1 ||
+		cfg.get_children(str_target).size() > 1 ||
+		cfg.get_children(str_filter).size() > 1) {
 		ERR_WML << "[tunnel] should have exactly one of each mandatory tag:\n"
 		        << cfg.get_config().debug();
 	} else {
 		pathfind::teleport_group tunnel(delay ? cfg : vconfig(cfg.get_parsed_config()), false);
 		resources::tunnels->add(tunnel);
 
-		if(cfg["bidirectional"].to_bool(true)) {
+		if(cfg[str_bidirectional].to_bool(true)) {
 			tunnel = pathfind::teleport_group(delay ? cfg : vconfig(cfg.get_parsed_config()), true);
 			resources::tunnels->add(tunnel);
 		}
@@ -870,18 +870,18 @@ WML_HANDLER_FUNCTION(unit,, cfg)
 	events::command_disabler command_disabler;
 	config parsed_cfg = cfg.get_parsed_config();
 
-	config::attribute_value to_variable = cfg["to_variable"];
+	config::attribute_value to_variable = cfg[str_to_variable];
 	if (!to_variable.blank())
 	{
-		parsed_cfg.remove_attribute("to_variable");
+		parsed_cfg.remove_attribute(str_to_variable);
 		unit_ptr new_unit = unit::create(parsed_cfg, true, &cfg);
 		try
 		{
 			config &var = resources::gamedata->get_variable_cfg(to_variable);
 			var.clear();
 			new_unit->write(var);
-			if (const config::attribute_value *v = parsed_cfg.get("x")) var["x"] = *v;
-			if (const config::attribute_value *v = parsed_cfg.get("y")) var["y"] = *v;
+			if (const config::attribute_value *v = parsed_cfg.get(str_x)) var[str_x] = *v;
+			if (const config::attribute_value *v = parsed_cfg.get(str_y)) var[str_y] = *v;
 		}
 		catch(const invalid_variablename_exception&)
 		{
@@ -891,7 +891,7 @@ WML_HANDLER_FUNCTION(unit,, cfg)
 
 	}
 
-	int side = parsed_cfg["side"].to_int(1);
+	int side = parsed_cfg[str_side].to_int(1);
 
 
 	if ((side<1)||(side > static_cast<int>(resources::gameboard->teams().size()))) {

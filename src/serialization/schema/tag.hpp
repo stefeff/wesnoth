@@ -69,7 +69,7 @@ private:
 			ensure_valid_or_end();
 		}
 		// Construct an end iterator
-		iterator() : match(config().child_or_empty("fsdfsdf")) {}
+		iterator() : match(config().child_or_empty(str_fsdfsdf)) {}
 	private:
 		friend class boost::iterator_core_access;
 		void init(const wml_tag& base_tag);
@@ -111,12 +111,12 @@ private:
 public:
 
 	wml_tag()
-		: name_("")
+		: name_()
 		, min_(0)
 		, max_(0)
 		, min_children_(0)
 		, max_children_(INT_MAX)
-		, super_("")
+		, super_()
 		, tags_()
 		, keys_()
 		, links_()
@@ -125,7 +125,7 @@ public:
 	{
 	}
 
-	wml_tag(const std::string& name, int min, int max, const std::string& super = "", bool any = false)
+	wml_tag(const std::string& name, int min, int max, const std::string& super = {}, bool any = false)
 		: name_(name)
 		, min_(min)
 		, max_(max)

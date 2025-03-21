@@ -56,7 +56,7 @@ class lua_candidate_action_wrapper_base : public candidate_action {
 
 public:
 	lua_candidate_action_wrapper_base( rca_context &context, const config &cfg)
-		: candidate_action(context, cfg),evaluation_action_handler_(),execution_action_handler_(),serialized_evaluation_state_(cfg.child_or_empty("args")),serialized_filterown_(cfg.child_or_empty("filter_own"))
+		: candidate_action(context, cfg),evaluation_action_handler_(),execution_action_handler_(),serialized_evaluation_state_(cfg.child_or_empty(str_args)),serialized_filterown_(cfg.child_or_empty(str_filter_own))
 	{
 		// do nothing
 	}
@@ -87,8 +87,8 @@ public:
 
 	virtual config to_config() const {
 		config cfg = candidate_action::to_config();
-		cfg.add_child("args",serialized_evaluation_state_);
-		cfg.add_child("filter_own",serialized_filterown_);
+		cfg.add_child(str_args,serialized_evaluation_state_);
+		cfg.add_child(str_filter_own,serialized_filterown_);
 		return cfg;
 	}
 
@@ -103,7 +103,7 @@ class lua_candidate_action_wrapper : public lua_candidate_action_wrapper_base {
 
 public:
 	lua_candidate_action_wrapper( rca_context &context, const config &cfg, lua_ai_context &lua_ai_ctx)
-		: lua_candidate_action_wrapper_base(context,cfg),evaluation_(cfg["evaluation"]),execution_(cfg["execution"])
+		: lua_candidate_action_wrapper_base(context,cfg),evaluation_(cfg[str_evaluation]),execution_(cfg[str_execution])
 	{
 		evaluation_action_handler_.reset(resources::lua_kernel->create_lua_ai_action_handler(evaluation_.c_str(),lua_ai_ctx));
 		execution_action_handler_.reset(resources::lua_kernel->create_lua_ai_action_handler(execution_.c_str(),lua_ai_ctx));
@@ -114,8 +114,8 @@ public:
 	virtual config to_config() const
 	{
 		config cfg = lua_candidate_action_wrapper_base::to_config();
-		cfg["evaluation"] = evaluation_;
-		cfg["execution"] = execution_;
+		cfg[str_evaluation] = evaluation_;
+		cfg[str_execution] = execution_;
 		return cfg;
 	}
 
@@ -127,13 +127,13 @@ private:
 class lua_candidate_action_wrapper_external : public lua_candidate_action_wrapper_base {
 public:
 	lua_candidate_action_wrapper_external(rca_context& context, const config& cfg, lua_ai_context &lua_ai_ctx)
-		: lua_candidate_action_wrapper_base(context,cfg), location_(cfg["location"]), use_parms_(false)
+		: lua_candidate_action_wrapper_base(context,cfg), location_(cfg[str_location]), use_parms_(false)
 	{
-		if (cfg.has_attribute("exec_parms") || cfg.has_attribute("eval_parms")) {
+		if (cfg.has_attribute(str_exec_parms) || cfg.has_attribute(str_eval_parms)) {
 			deprecated_message("[candidate_action]eval_parms,exec_parms=", DEP_LEVEL::PREEMPTIVE, "1.17", "Use [args] instead - this data is passed to both the evaluation and the execution");
 			use_parms_ = true;
-			exec_parms_ = cfg["exec_parms"].str();
-			eval_parms_ = cfg["eval_parms"].str();
+			exec_parms_ = cfg[str_exec_parms].str();
+			eval_parms_ = cfg[str_eval_parms].str();
 		}
 		std::string eval_code;
 		std::string exec_code;
@@ -148,10 +148,10 @@ public:
 	virtual config to_config() const
 	{
 		config cfg = lua_candidate_action_wrapper_base::to_config();
-		cfg["location"] = location_;
+		cfg[str_location] = location_;
 		if (use_parms_) {
-			cfg["eval_parms"] = eval_parms_;
-			cfg["exec_parms"] = exec_parms_;
+			cfg[str_eval_parms] = eval_parms_;
+			cfg[str_exec_parms] = exec_parms_;
 		}
 		return cfg;
 	}
@@ -181,7 +181,7 @@ public:
 		: lua_candidate_action_wrapper(context, cfg, lua_ai_ctx)
 		, bound_unit_()
 	{
-		map_location loc(cfg["unit_x"], cfg["unit_y"], wml_loc()); // lua and c++ coords differ by one
+		map_location loc(cfg[str_unit_x], cfg[str_unit_y], wml_loc()); // lua and c++ coords differ by one
 		bound_unit_ = (*resources::gameboard->units().find(loc)).clone();
 	}
 
@@ -207,9 +207,9 @@ public:
 	virtual config to_config() const
 	{
 		config cfg = lua_candidate_action_wrapper::to_config();
-		cfg["sticky"] = true;
-		cfg["unit_x"] = bound_unit_->get_location().wml_x();
-		cfg["unit_y"] = bound_unit_->get_location().wml_y();
+		cfg[str_sticky] = true;
+		cfg[str_unit_x] = bound_unit_->get_location().wml_x();
+		cfg[str_unit_y] = bound_unit_->get_location().wml_y();
 		return cfg;
 	}
 private:
@@ -220,7 +220,7 @@ private:
 class lua_stage_wrapper : public stage {
 public:
 	lua_stage_wrapper( ai_context &context, const config &cfg, lua_ai_context &lua_ai_ctx )
-		: stage(context,cfg),action_handler_(),code_(cfg["code"]),serialized_evaluation_state_(cfg.child_or_empty("args"))
+		: stage(context,cfg),action_handler_(),code_(cfg[str_code]),serialized_evaluation_state_(cfg.child_or_empty(str_args))
 	{
 		action_handler_.reset(resources::lua_kernel->create_lua_ai_action_handler(code_.c_str(),lua_ai_ctx));
 	}
@@ -245,8 +245,8 @@ public:
 	virtual config to_config() const
 	{
 		config cfg = stage::to_config();
-		cfg["code"] = code_;
-		cfg.add_child("args",serialized_evaluation_state_);
+		cfg[str_code] = code_;
+		cfg.add_child(str_args,serialized_evaluation_state_);
 		return cfg;
 	}
 private:
@@ -266,8 +266,8 @@ engine_lua::engine_lua( readonly_context &context, const config &cfg )
 		get_engine_code(cfg).c_str(), this))
 {
 	name_ = "lua";
-	config data(cfg.child_or_empty("data"));
-	config args(cfg.child_or_empty("args"));
+	config data(cfg.child_or_empty(str_data));
+	config args(cfg.child_or_empty(str_args));
 
 	if (lua_ai_context_) { // The context might be nullptr if the config contains errors
 		lua_ai_context_->set_persistent_data(data);
@@ -278,8 +278,8 @@ engine_lua::engine_lua( readonly_context &context, const config &cfg )
 
 std::string engine_lua::get_engine_code(const config &cfg) const
 {
-	if (cfg.has_attribute("code")) {
-		return cfg["code"].str();
+	if (cfg.has_attribute(str_code)) {
+		return cfg[str_code].str();
 	}
 	// If there is no engine defined we create a dummy engine
 	std::string code = "wesnoth.require(\"ai/lua/dummy_engine_lua.lua\")";
@@ -310,9 +310,9 @@ void engine_lua::do_parse_candidate_action_from_config( rca_context &context, co
 	}
 
 	candidate_action_ptr ca_ptr;
-	if (!cfg["sticky"].to_bool())
+	if (!cfg[str_sticky].to_bool())
 	{
-		if (cfg.has_attribute("location")) {
+		if (cfg.has_attribute(str_location)) {
 			ca_ptr.reset(new lua_candidate_action_wrapper_external(context,cfg,*lua_ai_context_));
 		} else {
 			ca_ptr.reset(new lua_candidate_action_wrapper(context,cfg,*lua_ai_context_));
@@ -361,16 +361,16 @@ void engine_lua::do_parse_aspect_from_config( const config &cfg, const std::stri
 
 void engine_lua::do_parse_goal_from_config(const config &cfg, std::back_insert_iterator<std::vector< goal_ptr > > b )
 {
-	goal_factory::factory_map::iterator f = goal_factory::get_list().find(cfg["name"]);
+	goal_factory::factory_map::iterator f = goal_factory::get_list().find(cfg[str_name]);
 	if (f == goal_factory::get_list().end()){
-		ERR_AI_LUA << "side "<<ai_.get_side()<< " : UNKNOWN goal["<<cfg["name"]<<"]";
+		ERR_AI_LUA << "side "<<ai_.get_side()<< " : UNKNOWN goal["<<cfg[str_name]<<"]";
 		DBG_AI_LUA << "config snippet contains: " << std::endl << cfg;
 		return;
 	}
 	goal_ptr new_goal = f->second->get_new_instance(ai_,cfg);
 	new_goal->on_create(lua_ai_context_);
 	if (!new_goal || !new_goal->ok()) {
-		ERR_AI_LUA << "side "<<ai_.get_side()<< " : UNABLE TO CREATE goal["<<cfg["name"]<<"]";
+		ERR_AI_LUA << "side "<<ai_.get_side()<< " : UNABLE TO CREATE goal["<<cfg[str_name]<<"]";
 		DBG_AI_LUA << "config snippet contains: " << std::endl << cfg;
 		return;
 	}
@@ -393,13 +393,13 @@ config engine_lua::to_config() const
 {
 	config cfg = engine::to_config();
 
-	cfg["id"] = get_id();
-	cfg["code"] = this->code_;
+	cfg[str_id] = get_id();
+	cfg[str_code] = this->code_;
 
 	if (lua_ai_context_) {
 		config data = config();
 		lua_ai_context_->get_persistent_data(data);
-		cfg.add_child("data") = data;
+		cfg.add_child(str_data) = data;
 	}
 
 	return cfg;

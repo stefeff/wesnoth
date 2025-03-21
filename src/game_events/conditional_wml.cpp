@@ -36,6 +36,8 @@
 #include "units/map.hpp"
 #include "variable.hpp"
 
+#include <unordered_set>
+
 static lg::log_domain log_engine("engine");
 #define WRN_NG LOG_STREAM(warn, log_engine)
 
@@ -54,8 +56,8 @@ namespace builtin_conditions {
 		if(!resources::gameboard) {
 			return false;
 		}
-		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute("count")
-			? utils::parse_ranges_unsigned(cfg["count"]) : default_counts;
+		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute(str_count)
+			? utils::parse_ranges_unsigned(cfg[str_count]) : default_counts;
 		int match_count = 0;
 		const unit_filter ufilt(cfg);
 		for(const unit &i : resources::gameboard->units()) {
@@ -67,7 +69,7 @@ namespace builtin_conditions {
 				}
 			}
 		}
-		if(cfg["search_recall_list"].to_bool()) {
+		if(cfg[str_search_recall_list].to_bool()) {
 			for(const team& team : resources::gameboard->teams()) {
 				if(counts == default_counts && match_count) {
 					break;
@@ -91,19 +93,19 @@ namespace builtin_conditions {
 		std::set<map_location> res;
 		terrain_filter(cfg, resources::filter_con, false).get_locations(res);
 
-		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute("count")
-		? utils::parse_ranges_unsigned(cfg["count"]) : default_counts;
+		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute(str_count)
+		? utils::parse_ranges_unsigned(cfg[str_count]) : default_counts;
 		return in_ranges<int>(res.size(), counts);
 	}
 
 	bool variable_matches(const vconfig& values)
 	{
-		if(values["name"].blank()) {
+		if(values[str_name].blank()) {
 			lg::log_to_chat() << "[variable] with missing name=\n";
 			ERR_WML << "[variable] with missing name=";
 			return true;
 		}
-		const std::string name = values["name"];
+		const std::string name = values[str_name];
 		config::attribute_value value = resources::gamedata->get_variable_const(name);
 
 		if(auto n = values.get_config().attribute_count(); n > 2) {
@@ -118,7 +120,7 @@ namespace builtin_conditions {
 		do { \
 			if (values.has_attribute(name)) { \
 				std::string attr_str = values[name].str(); \
-				std::string str_value = value.str(); \
+				std::string _str_value = value.str(); \
 				return (test); \
 			} \
 		} while (0)
@@ -141,17 +143,17 @@ namespace builtin_conditions {
 			} \
 		} while (0)
 
-		TEST_STR_ATTR("equals",                str_value == attr_str);
-		TEST_STR_ATTR("not_equals",            str_value != attr_str);
-		TEST_NUM_ATTR("numerical_equals",      num_value == attr_num);
-		TEST_NUM_ATTR("numerical_not_equals",  num_value != attr_num);
-		TEST_NUM_ATTR("greater_than",          num_value >  attr_num);
-		TEST_NUM_ATTR("less_than",             num_value <  attr_num);
-		TEST_NUM_ATTR("greater_than_equal_to", num_value >= attr_num);
-		TEST_NUM_ATTR("less_than_equal_to",    num_value <= attr_num);
-		TEST_BOL_ATTR("boolean_equals",       bool_value == attr_bool);
-		TEST_BOL_ATTR("boolean_not_equals",   bool_value != attr_bool);
-		TEST_STR_ATTR("contains", str_value.find(attr_str) != std::string::npos);
+		TEST_STR_ATTR(str_equals,               _str_value == attr_str);
+		TEST_STR_ATTR(str_not_equals,           _str_value != attr_str);
+		TEST_NUM_ATTR(str_numerical_equals,      num_value == attr_num);
+		TEST_NUM_ATTR(str_numerical_not_equals,  num_value != attr_num);
+		TEST_NUM_ATTR(str_greater_than,          num_value >  attr_num);
+		TEST_NUM_ATTR(str_less_than,             num_value <  attr_num);
+		TEST_NUM_ATTR(str_greater_than_equal_to, num_value >= attr_num);
+		TEST_NUM_ATTR(str_less_than_equal_to,    num_value <= attr_num);
+		TEST_BOL_ATTR(str_boolean_equals,       bool_value == attr_bool);
+		TEST_BOL_ATTR(str_boolean_not_equals,   bool_value != attr_bool);
+		TEST_STR_ATTR(str_contains, _str_value.find(attr_str) != std::string::npos);
 
 #undef TEST_STR_ATTR
 #undef TEST_NUM_ATTR
@@ -164,15 +166,15 @@ namespace builtin_conditions {
 namespace { // Support functions
 	bool internal_conditional_passed(const vconfig& cond)
 	{
-		if(cond.has_child("true")) {
+		if(cond.has_child(str_true)) {
 			return true;
 		}
-		if(cond.has_child("false")) {
+		if(cond.has_child(str_false)) {
 			return false;
 		}
 
-		static const std::set<std::string> skip
-			{"then", "else", "elseif", "not", "and", "or", "do"};
+		static const std::unordered_set<utils::interned_string> skip
+			{str_then, str_else, str_elseif, str_not, str_and, str_or, str_do};
 
 		for(const auto& [key, filter] : cond.all_ordered()) {
 			if(std::find(skip.begin(), skip.end(), key) == skip.end()) {

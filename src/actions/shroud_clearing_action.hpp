@@ -26,9 +26,9 @@ struct shroud_clearing_action
 
 	shroud_clearing_action(const config& cfg)
 		: route()
-		, view_info(cfg.child_or_empty("unit"))
-		, original_village_owner(cfg["village_owner"].to_int())
-		, take_village_timebonus(cfg["village_timebonus"].to_bool())
+		, view_info(cfg.child_or_empty(str_unit))
+		, original_village_owner(cfg[str_village_owner].to_int())
+		, take_village_timebonus(cfg[str_village_timebonus].to_bool())
 	{
 		read_locations(cfg, route);
 	}
@@ -76,9 +76,9 @@ struct shroud_clearing_action
 	void write(config & cfg) const
 	{
 		write_locations(route, cfg);
-		view_info.write(cfg.add_child("unit"));
-		cfg["village_owner"] = original_village_owner;
-		cfg["village_timebonus"] = take_village_timebonus;
+		view_info.write(cfg.add_child(str_unit));
+		cfg[str_village_owner] = original_village_owner;
+		cfg[str_village_timebonus] = take_village_timebonus;
 	}
 
 	virtual ~shroud_clearing_action() {}

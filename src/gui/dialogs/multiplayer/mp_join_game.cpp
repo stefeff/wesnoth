@@ -89,7 +89,7 @@ bool mp_join_game::fetch_game_config()
 {
 	// Ask for the next scenario data, if applicable
 	if(!first_scenario_) {
-		mp::send_to_server(config("load_next_scenario"));
+		mp::send_to_server(config(str_load_next_scenario));
 	}
 
 	bool has_scenario_and_controllers = false;
@@ -102,21 +102,21 @@ bool mp_join_game::fetch_game_config()
 			network_connection_.wait_and_receive_data(revc);
 		});
 
-		if(auto err = revc.optional_child("error")) {
-			throw wesnothd_error(err["message"]);
-		} else if(revc.has_child("leave_game")) {
+		if(auto err = revc.optional_child(str_error)) {
+			throw wesnothd_error(err[str_message]);
+		} else if(revc.has_child(str_leave_game)) {
 			return false;
-		} else if(auto next_scenario = revc.optional_child("next_scenario")) {
+		} else if(auto next_scenario = revc.optional_child(str_next_scenario)) {
 			level_.swap(*next_scenario);
-		} else if(revc.has_attribute("version")) {
+		} else if(revc.has_attribute(str_version)) {
 			level_.swap(revc);
 
 			has_scenario_and_controllers = true;
-		} else if(auto controllers = revc.optional_child("controllers")) {
+		} else if(auto controllers = revc.optional_child(str_controllers)) {
 			int index = 0;
-			for(const config& controller : controllers->child_range("controller")) {
-				if(auto side = get_scenario().optional_child("side", index)) {
-					side["is_local"] = controller["is_local"];
+			for(const config& controller : controllers->child_range(str_controller)) {
+				if(auto side = get_scenario().optional_child(str_side, index)) {
+					side[str_is_local] = controller[str_is_local];
 				}
 				++index;
 			}
@@ -125,7 +125,7 @@ bool mp_join_game::fetch_game_config()
 		}
 	}
 
-	if(level_["started"].to_bool()) {
+	if(level_[str_started].to_bool()) {
 		mp::level_to_gamestate(level_, state_);
 		return true;
 	}
@@ -139,10 +139,10 @@ bool mp_join_game::fetch_game_config()
 		// since add-ons are now only enabled when used, the scenario ID may still not be known
 		// so check in the MP info sent from the server for the scenario ID if that's the case
 		if(scenario_id == "") {
-			for(const auto& addon : level_.mandatory_child("multiplayer").child_range("addon")) {
-				for(const auto& content : addon.child_range("content")) {
-					if(content["type"] == "scenario") {
-						scenario_id = content["id"].str();
+			for(const auto& addon : level_.mandatory_child(str_multiplayer).child_range(str_addon)) {
+				for(const auto& content : addon.child_range(str_content)) {
+					if(content[str_type] == "scenario") {
+						scenario_id = content[str_id].str();
 					}
 				}
 			}
@@ -163,29 +163,29 @@ bool mp_join_game::fetch_game_config()
 	const config* side_choice = nullptr;
 
 	int side_num_choice = 1, side_num_counter = 1;
-	for(const config& side : get_scenario().child_range("side")) {
+	for(const config& side : get_scenario().child_range(str_side)) {
 		// TODO: it can happen that the scenario specifies that the controller
 		//       of a side should also gain control of another side.
-		if(side["controller"] == side_controller::reserved && side["current_player"] == preferences::login()) {
+		if(side[str_controller] == side_controller::reserved && side[str_current_player] == preferences::login()) {
 			side_choice = &side;
 			side_num_choice = side_num_counter;
 			break;
 		}
 
-		if(side["controller"] == side_controller::human && side["player_id"].empty()) {
+		if(side[str_controller] == side_controller::human && side[str_player_id].empty()) {
 			if(!side_choice) { // Found the first empty side
 				side_choice = &side;
 				side_num_choice = side_num_counter;
 			}
 
-			if(side["current_player"] == preferences::login()) {
+			if(side[str_current_player] == preferences::login()) {
 				side_choice = &side;
 				side_num_choice = side_num_counter;
 				break;  // Found the preferred one
 			}
 		}
 
-		if(side["player_id"] == preferences::login()) {
+		if(side[str_player_id] == preferences::login()) {
 			// We already own a side in this game
 			return true;
 		}
@@ -199,7 +199,7 @@ bool mp_join_game::fetch_game_config()
 	}
 
 	// If the client is allowed to choose their team, do that here instead of having it set by the server
-	if((*side_choice)["allow_changes"].to_bool(true)) {
+	if((*side_choice)[str_allow_changes].to_bool(true)) {
 		if(!show_flg_select(side_num_choice, true)) {
 			return false;
 		}
@@ -211,13 +211,13 @@ bool mp_join_game::fetch_game_config()
 static std::string generate_user_description(const config& side)
 {
 	// Allow the host to override, since only the host knows the ai_algorithm.
-	if(const config::attribute_value* desc = side.get("user_description")) {
+	if(const config::attribute_value* desc = side.get(str_user_description)) {
 		return desc->str();
 	}
 
-	const std::string controller_type = side["controller"].str();
-	const std::string reservation = side["current_player"].str();
-	const std::string owner = side["player_id"].str();
+	const std::string controller_type = side[str_controller].str();
+	const std::string reservation = side[str_current_player].str();
+	const std::string owner = side[str_player_id].str();
 
 	if(controller_type == side_controller::ai) {
 		return _("Computer Player");
@@ -244,7 +244,7 @@ void mp_join_game::pre_show(window& window)
 	//
 	label& title = find_widget<label>(&window, "title", false);
 	// FIXME: very hacky way to get the game name...
-	title.set_label((formatter() << level_.mandatory_child("multiplayer")["scenario"] << " " << font::unicode_em_dash << " " << get_scenario()["name"].t_str()).str());
+	title.set_label((formatter() << level_.mandatory_child(str_multiplayer)[str_scenario] << " " << font::unicode_em_dash << " " << get_scenario()[str_name].t_str()).str());
 
 	//
 	// Set up sides list
@@ -277,42 +277,42 @@ void mp_join_game::pre_show(window& window)
 
 	plugins_context_->set_callback("launch", [&window](const config&) { window.set_retval(retval::OK); }, false);
 	plugins_context_->set_callback("quit",   [&window](const config&) { window.set_retval(retval::CANCEL); }, false);
-	plugins_context_->set_callback("chat",   [&chat](const config& cfg) { chat.send_chat_message(cfg["message"], false); }, true);
+	plugins_context_->set_callback("chat",   [&chat](const config& cfg) { chat.send_chat_message(cfg[str_message], false); }, true);
 }
 
 bool mp_join_game::show_flg_select(int side_num, bool first_time)
 {
-	if(auto side_choice = get_scenario().optional_child("side", side_num - 1)) {
-		if(!side_choice["allow_changes"].to_bool(true)) {
+	if(auto side_choice = get_scenario().optional_child(str_side, side_num - 1)) {
+		if(!side_choice[str_allow_changes].to_bool(true)) {
 			return true;
 		}
 
-		auto era = level_.optional_child("era");
+		auto era = level_.optional_child(str_era);
 		if(!era) {
 			ERR_MP << "no era information";
 			return false;
 		}
 
-		config::const_child_itors possible_sides = era->child_range("multiplayer_side");
+		config::const_child_itors possible_sides = era->child_range(str_multiplayer_side);
 		if(possible_sides.empty()) {
-			WRN_MP << "no [multiplayer_side] found in era '" << era["id"] << "'.";
+			WRN_MP << "no [multiplayer_side] found in era '" << era[str_id] << "'.";
 			return false;
 		}
 
-		const std::string color = side_choice["color"].str();
+		const std::string color = side_choice[str_color].str();
 
 		std::vector<const config*> era_factions;
 		//make this safe against changes to level_ that might make possible_sides invalid pointers.
 		config era_copy;
 		for(const config& side : possible_sides) {
-			config& side_new = era_copy.add_child("multiplayer_side", side);
+			config& side_new = era_copy.add_child(str_multiplayer_side, side);
 			era_factions.push_back(&side_new);
 		}
 
 		const bool is_mp = state_.classification().is_normal_mp_game();
-		const bool lock_settings = get_scenario()["force_lock_settings"].to_bool(!is_mp);
-		const bool use_map_settings = level_.mandatory_child("multiplayer")["mp_use_map_settings"].to_bool();
-		const saved_game_mode::type saved_game = saved_game_mode::get_enum(level_.mandatory_child("multiplayer")["savegame"].str()).value_or(saved_game_mode::type::no);
+		const bool lock_settings = get_scenario()[str_force_lock_settings].to_bool(!is_mp);
+		const bool use_map_settings = level_.mandatory_child(str_multiplayer)[str_mp_use_map_settings].to_bool();
+		const saved_game_mode::type saved_game = saved_game_mode::get_enum(level_.mandatory_child(str_multiplayer)[str_savegame].str()).value_or(saved_game_mode::type::no);
 
 		ng::flg_manager flg(era_factions, *side_choice, lock_settings, use_map_settings, saved_game == saved_game_mode::type::midgame);
 
@@ -326,14 +326,14 @@ bool mp_join_game::show_flg_select(int side_num, bool first_time)
 		}
 
 		config faction;
-		config& change = faction.add_child("change_faction");
-		change["change_faction"] = true;
-		change["name"] = preferences::login();
-		change["faction"] = flg.current_faction()["id"];
-		change["leader"] = flg.current_leader();
-		change["gender"] = flg.current_gender();
+		config& change = faction.add_child(str_change_faction);
+		change[str_change_faction] = true;
+		change[str_name] = preferences::login();
+		change[str_faction] = flg.current_faction()[str_id];
+		change[str_leader] = flg.current_leader();
+		change[str_gender] = flg.current_gender();
 		// TODO: the host cannot yet handle this and always uses the first side owned by that player.
-		change["side_num"] = side_num;
+		change[str_side_num] = side_num;
 
 		mp::send_to_server(faction);
 	}
@@ -354,45 +354,45 @@ void mp_join_game::generate_side_list()
 	const widget_data empty_map;
 
 	int side_num = 0;
-	for(const auto& side : get_scenario().child_range("side")) {
+	for(const auto& side : get_scenario().child_range(str_side)) {
 		++side_num;
-		if(!side["allow_player"].to_bool(true)) {
+		if(!side[str_allow_player].to_bool(true)) {
 			continue;
 		}
 
 		// Check to see whether we've added a toplevel tree node for this team. If not, add one
-		if(team_tree_map_.find(side["team_name"].str()) == team_tree_map_.end()) {
+		if(team_tree_map_.find(side[str_team_name].str()) == team_tree_map_.end()) {
 			widget_data data;
 			widget_item item;
 
-			item["label"] = t_string::from_serialized(side["user_team_name"]);
+			item[str_label] = t_string::from_serialized(side[str_user_team_name]);
 			data.emplace("tree_view_node_label", item);
 
 			tree_view_node& team_node = tree.add_node("team_header", data);
 			team_node.add_sibling("side_spacer", empty_map);
 
-			team_tree_map_[side["team_name"].str()] = &team_node;
+			team_tree_map_[side[str_team_name].str()] = &team_node;
 		}
 
 		widget_data data;
 		widget_item item;
 
-		const std::string color = !side["color"].empty() ? side["color"] : side["side"].str();
+		const std::string color = !side[str_color].empty() ? side[str_color] : side[str_side].str();
 
-		item["label"] = (formatter() << "<span color='" << font::get_pango_color_from_id(color) << "'>" << side["side"] << "</span>").str();
+		item[str_label] = (formatter() << "<span color='" << font::get_pango_color_from_id(color) << "'>" << side[str_side] << "</span>").str();
 		data.emplace("side_number", item);
 
 		std::string leader_image = ng::random_enemy_picture;
-		std::string leader_type = side["type"];
-		std::string leader_gender = side["gender"];
+		std::string leader_type = side[str_type];
+		std::string leader_gender = side[str_gender];
 		std::string leader_name;
 
 		// If there is a unit which can recruit, use it as a leader.
 		// Necessary to display leader information when loading saves.
-		for(const config& side_unit : side.child_range("unit")) {
-			if(side_unit["canrecruit"].to_bool()) {
-				leader_type = side_unit["type"].str();
-				leader_gender = side_unit["gender"].str();
+		for(const config& side_unit : side.child_range(str_unit)) {
+			if(side_unit[str_canrecruit].to_bool()) {
+				leader_type = side_unit[str_type].str();
+				leader_gender = side_unit[str_gender].str();
 				break;
 			}
 		}
@@ -404,7 +404,7 @@ void mp_join_game::generate_side_list()
 			leader_name = type.type_name();
 		}
 
-		item["label"] = leader_image;
+		item[str_label] = leader_image;
 		data.emplace("leader_image", item);
 
 		std::string description = generate_user_description(side);
@@ -412,45 +412,45 @@ void mp_join_game::generate_side_list()
 			description += formatter() << " (<i>" << leader_name << "</i>)";
 		}
 
-		item["label"] = description;
+		item[str_label] = description;
 		data.emplace("leader_type", item);
 
-		item["label"] = (formatter() << "<span color='#a69275'>" << side["faction_name"] << "</span>").str();
+		item[str_label] = (formatter() << "<span color='#a69275'>" << side[str_faction_name] << "</span>").str();
 		data.emplace("leader_faction", item);
 
 		std::string gender_icon = "icons/icon-random.png";
 		if(leader_gender != "null") {
 			gender_icon = formatter() << "icons/icon-" << leader_gender << ".png";
-			item["tooltip"] = leader_gender;
+			item[str_tooltip] = leader_gender;
 		}
 
-		item["label"] = gender_icon;
+		item[str_label] = gender_icon;
 		data.emplace("leader_gender", item);
 
 		item.clear();
 
 		// Don't show gold for saved games
 		// TODO: gold icon
-		if(side["allow_changes"].to_bool()) {
-			item["label"] = side["gold"].str() + " " + _("Gold");
+		if(side[str_allow_changes].to_bool()) {
+			item[str_label] = side[str_gold].str() + " " + _("Gold");
 			data.emplace("side_gold", item);
 		}
 
-		const int income_amt = side["income"];
+		const int income_amt = side[str_income];
 		if(income_amt != 0) {
 			const std::string income_string = formatter() << (income_amt > 0 ? "+" : "") << income_amt << " " << _("Income");
 
-			item["label"] = income_string;
+			item[str_label] = income_string;
 			data.emplace("side_income", item);
 		}
 
-		tree_view_node& node = team_tree_map_[side["team_name"].str()]->add_child("side_panel", data);
+		tree_view_node& node = team_tree_map_[side[str_team_name].str()]->add_child("side_panel", data);
 
 		grid& row_grid = node.get_grid();
 
 		auto* select_leader_button = find_widget<button>(&row_grid, "select_leader", false, false);
 		if(select_leader_button) {
-			if(side["player_id"] == preferences::login() && side["allow_changes"].to_bool(true)) {
+			if(side[str_player_id] == preferences::login() && side[str_allow_changes].to_bool(true)) {
 				//
 				// Small wrapper function in order to set the handled and halt parameters and prevent
 				// crashes in case the dialog closes and the original button to which the callback was
@@ -493,7 +493,7 @@ void mp_join_game::close_faction_select_dialog_if_open()
 void mp_join_game::network_handler()
 {
 	// If the game has already started, close the dialog immediately.
-	if(level_["started"].to_bool()) {
+	if(level_[str_started].to_bool()) {
 		set_retval(retval::OK);
 		return;
 	}
@@ -506,61 +506,61 @@ void mp_join_game::network_handler()
 	// Update chat
 	find_widget<chatbox>(get_window(), "chat", false).process_network_data(data);
 
-	if(!data["message"].empty()) {
-		gui2::show_transient_message(_("Response") , data["message"]);
+	if(!data[str_message].empty()) {
+		gui2::show_transient_message(_("Response") , data[str_message]);
 	}
 
-	if(data["failed"].to_bool()) {
+	if(data[str_failed].to_bool()) {
 		close_faction_select_dialog_if_open();
 
 		set_retval(retval::CANCEL);
-	} else if(data.has_child("start_game")) {
+	} else if(data.has_child(str_start_game)) {
 		close_faction_select_dialog_if_open();
 
-		level_["started"] = true;
+		level_[str_started] = true;
 		set_retval(retval::OK);
-	} else if(data.has_child("leave_game")) {
+	} else if(data.has_child(str_leave_game)) {
 		close_faction_select_dialog_if_open();
 
 		set_retval(retval::CANCEL);
 	}
 
-	if(data.has_child("stop_updates")) {
+	if(data.has_child(str_stop_updates)) {
 		stop_updates_ = true;
-	} else if(auto c = data.optional_child("scenario_diff")) {
+	} else if(auto c = data.optional_child(str_scenario_diff)) {
 		// TODO: We should catch config::error and then leave the game.
 		level_.apply_diff(*c);
 
 		generate_side_list();
-	} else if(auto change = data.optional_child("change_controller")) {
-		if(auto side_to_change = get_scenario().find_child("side", "side", change["side"])) {
+	} else if(auto change = data.optional_child(str_change_controller)) {
+		if(auto side_to_change = get_scenario().find_child(str_side, str_side, change[str_side])) {
 			side_to_change->merge_with(*change);
 		}
 
-		if(flg_dialog_ && flg_dialog_->get_side_num() == change["side"].to_int()) {
+		if(flg_dialog_ && flg_dialog_->get_side_num() == change[str_side].to_int()) {
 			close_faction_select_dialog_if_open();
 		}
-	} else if(data.has_child("scenario") || data.has_child("snapshot") || data.has_child("next_scenario")) {
-		level_ = first_scenario_ ? data : data.mandatory_child("next_scenario");
+	} else if(data.has_child(str_scenario) || data.has_child(str_snapshot) || data.has_child(str_next_scenario)) {
+		level_ = first_scenario_ ? data : data.mandatory_child(str_next_scenario);
 
 		generate_side_list();
 	}
 
-	if(data.has_child("turn")) {
+	if(data.has_child(str_turn)) {
 		ERR_MP << "received replay data\n" << data << "\n in mp join";
 	}
 
 	// Update player list
-	if(data.has_child("user")) {
-		player_list_->update_list(data.child_range("user"));
+	if(data.has_child(str_user)) {
+		player_list_->update_list(data.child_range(str_user));
 	}
 }
 
 config& mp_join_game::get_scenario()
 {
-	if(auto scenario = level_.optional_child("scenario")) {
+	if(auto scenario = level_.optional_child(str_scenario)) {
 		return *scenario;
-	} else if(auto snapshot = level_.optional_child("snapshot")) {
+	} else if(auto snapshot = level_.optional_child(str_snapshot)) {
 		return *snapshot;
 	}
 
@@ -580,9 +580,9 @@ void mp_join_game::post_show(window& window)
 
 		mp::ui_alerts::game_has_begun();
 	} else if(observe_game_) {
-		mp::send_to_server(config("observer_quit", config { "name", preferences::login() }));
+		mp::send_to_server(config(str_observer_quit, config {str_name, preferences::login() }));
 	} else {
-		mp::send_to_server(config("leave_game"));
+		mp::send_to_server(config(str_leave_game));
 	}
 }
 

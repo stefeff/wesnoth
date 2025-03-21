@@ -67,7 +67,7 @@ private:
 };
 
 engine_fai::engine_fai( readonly_context &context, const config &cfg )
-	: engine(context,cfg), formula_ai_(new formula_ai(context,cfg.child_or_empty("formula_ai")))
+	: engine(context,cfg), formula_ai_(new formula_ai(context,cfg.child_or_empty(str_formula_ai)))
 {
 	name_ = "fai";
 	formula_ai_->on_create();
@@ -80,7 +80,7 @@ engine_fai::~engine_fai()
 void engine_fai::do_parse_candidate_action_from_config( rca_context &context, const config &cfg, std::back_insert_iterator<std::vector< candidate_action_ptr >> b ){
 	wfl::candidate_action_ptr fai_ca = formula_ai_->load_candidate_action_from_config(cfg);
 	if (!fai_ca) {
-		ERR_AI_ENGINE_FAI << "side "<<ai_.get_side()<< " : ERROR creating candidate_action["<<cfg["name"]<<"]";
+		ERR_AI_ENGINE_FAI << "side "<<ai_.get_side()<< " : ERROR creating candidate_action["<<cfg[str_name]<<"]";
 		DBG_AI_ENGINE_FAI << "config snippet contains: " << std::endl << cfg;
 		return;
 	}
@@ -92,7 +92,7 @@ void engine_fai::do_parse_candidate_action_from_config( rca_context &context, co
 void engine_fai::do_parse_stage_from_config( ai_context &context, const config &cfg, std::back_insert_iterator<std::vector< stage_ptr >> b )
 {
 	// This checekd for !cfg but oter implementation of do_parse_stage_from_config didn't.
-	const std::string &name = cfg["name"];
+	const std::string &name = cfg[str_name];
 	stage_ptr st_ptr;
 
 	//dropped from 1.8, as it's not ready
@@ -130,7 +130,7 @@ void engine_fai::set_ai_context(ai_context *context)
 config engine_fai::to_config() const
 {
 	config cfg = engine::to_config();
-	cfg.add_child("formula_ai",formula_ai_->to_config());
+	cfg.add_child(str_formula_ai,formula_ai_->to_config());
 	return cfg;
 }
 

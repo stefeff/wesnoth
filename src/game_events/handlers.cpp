@@ -133,8 +133,8 @@ void event_handler::write_config(config &cfg, bool include_nonserializable) cons
 	static const char* log_append_postload = " - this will break saves because it was registered after preload\n";
 	if(is_lua_) {
 		if(include_nonserializable) {
-			cfg["nonserializable"] = true;
-			cfg.add_child("lua")["code"] = "<function>";
+			cfg[str_nonserializable] = true;
+			cfg.add_child(str_lua)[str_code] = "<function>";
 		} else {
 			static const char* log = "Skipping serialization of an event with action bound to Lua code";
 			if(has_preloaded_){
@@ -148,7 +148,7 @@ void event_handler::write_config(config &cfg, bool include_nonserializable) cons
 	}
 	if(!std::all_of(filters_.begin(), filters_.end(), std::mem_fn(&event_filter::can_serialize))) {
 		if(include_nonserializable) {
-			cfg["nonserializable"] = true;
+			cfg[str_nonserializable] = true;
 		} else {
 			static const char* log = "Skipping serialization of an event with filter bound to Lua code";
 			if(has_preloaded_) {
@@ -160,10 +160,10 @@ void event_handler::write_config(config &cfg, bool include_nonserializable) cons
 			return;
 		}
 	}
-	if(!types_.empty()) cfg["name"] = types_;
-	if(!id_.empty()) cfg["id"] = id_;
-	cfg["first_time_only"] = first_time_only_;
-	cfg["priority"] = priority_;
+	if(!types_.empty()) cfg[str_name] = types_;
+	if(!id_.empty()) cfg[str_id] = id_;
+	cfg[str_first_time_only] = first_time_only_;
+	cfg[str_priority] = priority_;
 	for(const auto& filter : filters_) {
 		filter->serialize(cfg);
 	}
@@ -188,7 +188,7 @@ struct filter_condition : public event_filter {
 	}
 	void serialize(config& cfg) const override
 	{
-		cfg.add_child("filter_condition", cfg_.get_config());
+		cfg.add_child(str_filter_condition, cfg_.get_config());
 	}
 	bool can_serialize() const override
 	{
@@ -206,7 +206,7 @@ struct filter_side : public event_filter {
 	}
 	void serialize(config& cfg) const override
 	{
-		cfg.add_child("filter_side", ssf_.get_config());
+		cfg.add_child(str_filter_side, ssf_.get_config());
 	}
 	bool can_serialize() const override
 	{
@@ -226,7 +226,7 @@ struct filter_unit : public event_filter {
 	}
 	void serialize(config& cfg) const override
 	{
-		cfg.add_child(first_ ? "filter" : "filter_second", suf_.to_config());
+		cfg.add_child(first_ ? str_filter : str_filter_second, suf_.to_config());
 	}
 	bool can_serialize() const override
 	{
@@ -248,12 +248,12 @@ struct filter_attack : public event_filter {
 		auto unit_d = units.find(loc_d);
 		if(unit_a != units.end() && loc.matches_unit(unit_a)) {
 			const auto u = unit_a->shared_from_this();
-			auto temp_weapon = event_info.data.optional_child(first_ ? "first" : "second");
+			auto temp_weapon = event_info.data.optional_child(first_ ? str_first : str_second);
 			if(temp_weapon){
 				const_attack_ptr attack = std::make_shared<const attack_type>(*temp_weapon);
 				if(unit_d != units.end() && loc_d.matches_unit(unit_d)) {
 					const auto opp = unit_d->shared_from_this();
-					auto temp_other_weapon = event_info.data.optional_child(!first_ ? "first" : "second");
+					auto temp_other_weapon = event_info.data.optional_child(!first_ ? str_first : str_second);
 					const_attack_ptr second_attack = temp_other_weapon ? std::make_shared<const attack_type>(*temp_other_weapon) : nullptr;
 					auto ctx = attack->specials_context(u, opp, loc, loc_d, first_, second_attack);
 					std::optional<decltype(ctx)> opp_ctx;
@@ -271,7 +271,7 @@ struct filter_attack : public event_filter {
 	}
 	void serialize(config& cfg) const override
 	{
-		cfg.add_child(first_ ? "filter_attack" : "filter_second_attack", swf_.get_config());
+		cfg.add_child(first_ ? str_filter_attack : str_filter_second_attack, swf_.get_config());
 	}
 	bool can_serialize() const override
 	{
@@ -294,11 +294,11 @@ struct filter_formula : public event_filter {
 	void serialize(config& cfg) const override
 	{
 		std::string code = formula_.str();
-		if(cfg.has_attribute("filter_formula")) {
+		if(cfg.has_attribute(str_filter_formula)) {
 			// This will probably never happen in practice, but handle it just in case it somehow can
-			code = "(" + cfg["filter_formula"].str() + ") and (" + code + ")";
+			code = "(" + cfg[str_filter_formula].str() + ") and (" + code + ")";
 		}
-		cfg["filter_formula"] = code;
+		cfg[str_filter_formula] = code;
 	}
 	bool can_serialize() const override
 	{
@@ -343,9 +343,9 @@ struct filter_dynamic : public event_filter {
 	}
 	void serialize(config& cfg) const override
 	{
-		auto tag = cfg.add_child("insert_tag");
-		tag["name"] = tag_;
-		tag["variable"] = var_;
+		auto tag = cfg.add_child(str_insert_tag);
+		tag[str_name] = tag_;
+		tag[str_variable] = var_;
 	}
 	bool can_serialize() const override
 	{
@@ -361,12 +361,12 @@ void event_handler::read_filters(const config &cfg)
 		vconfig vcfg(filter.cfg);
 		if(auto filter_ptr = make_filter(filter.key, vcfg)) {
 			add_filter(std::move(filter_ptr));
-		} else if(filter.key == "insert_tag" && make_filter(vcfg["name"], vconfig::empty_vconfig())) {
-			add_filter(std::make_unique<filter_dynamic>(vcfg["name"], vcfg["variable"]));
+		} else if(filter.key == "insert_tag" && make_filter(vcfg[str_name], vconfig::empty_vconfig())) {
+			add_filter(std::make_unique<filter_dynamic>(vcfg[str_name], vcfg[str_variable]));
 		}
 	}
-	if(cfg.has_attribute("filter_formula")) {
-		add_filter(std::make_unique<filter_formula>(cfg["filter_formula"]));
+	if(cfg.has_attribute(str_filter_formula)) {
+		add_filter(std::make_unique<filter_formula>(cfg[str_filter_formula]));
 	}
 }
 

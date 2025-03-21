@@ -243,19 +243,19 @@ readonly_context_impl::readonly_context_impl(side_context &context, const config
 
 void readonly_context_impl::on_readonly_context_create() {
 	//init the composite ai engines
-	for(const config &cfg_element : cfg_.child_range("engine")) {
+	for(const config &cfg_element : cfg_.child_range(str_engine)) {
 		engine::parse_engine_from_config(*this,cfg_element,std::back_inserter(engines_));
 	}
 
 	// init the composite ai aspects
-	for(const config &cfg_element : cfg_.child_range("aspect")) {
+	for(const config &cfg_element : cfg_.child_range(str_aspect)) {
 		std::vector<aspect_ptr> aspects;
-		engine::parse_aspect_from_config(*this,cfg_element,cfg_element["id"],std::back_inserter(aspects));
+		engine::parse_aspect_from_config(*this,cfg_element,cfg_element[str_id],std::back_inserter(aspects));
 		add_aspects(aspects);
 	}
 
 	// init the composite ai goals
-	for(const config &cfg_element : cfg_.child_range("goal")) {
+	for(const config &cfg_element : cfg_.child_range(str_goal)) {
 		engine::parse_goal_from_config(*this,cfg_element,std::back_inserter(get_goals()));
 	}
 }
@@ -274,13 +274,13 @@ config readonly_context_impl::to_readonly_context_config() const
 {
 	config cfg;
 	for(const engine_ptr &e : engines_) {
-		cfg.add_child("engine",e->to_config());
+		cfg.add_child(str_engine,e->to_config());
 	}
 	for(const aspect_map::value_type &a : aspects_) {
-		cfg.add_child("aspect",a.second->to_config());
+		cfg.add_child(str_aspect,a.second->to_config());
 	}
 	for(const goal_ptr &g : goals_) {
-		cfg.add_child("goal",g->to_config());
+		cfg.add_child(str_goal,g->to_config());
 	}
 	return cfg;
 }
@@ -381,7 +381,7 @@ void readonly_context_impl::calculate_moves(const unit_map& units, std::map<map_
 	}
 
 	// deactivate terrain filtering if it's just the dummy 'matches nothing'
-	static const config only_not_tag("not");
+	static const config only_not_tag(str_not);
 	if(remove_destinations && remove_destinations->to_config() == only_not_tag) {
 		remove_destinations = nullptr;
 	}
@@ -558,7 +558,7 @@ const terrain_filter& readonly_context_impl::get_avoid() const
 		return avoid_->get();
 	}
 	config cfg;
-	cfg.add_child("not");
+	cfg.add_child(str_not);
 	static terrain_filter tf(vconfig(cfg, true), resources::filter_con, false);
 	return tf;
 }
@@ -605,7 +605,7 @@ const move_map& readonly_context_impl::get_enemy_srcdst() const
 
 engine_ptr readonly_context_impl::get_engine_by_cfg(const config& cfg)
 {
-	std::string engine_name = cfg["engine"];
+	std::string engine_name = cfg[str_engine];
 	if (engine_name.empty()) {
 		engine_name="cpp";//default engine
 	}

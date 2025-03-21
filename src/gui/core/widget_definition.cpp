@@ -30,20 +30,20 @@ state_definition::state_definition(const config& cfg)
 {}
 
 resolution_definition::resolution_definition(const config& cfg)
-	: window_width(cfg["window_width"])
-	, window_height(cfg["window_height"])
-	, min_width(cfg["min_width"])
-	, min_height(cfg["min_height"])
-	, default_width(cfg["default_width"])
-	, default_height(cfg["default_height"])
-	, max_width(cfg["max_width"])
-	, max_height(cfg["max_height"])
+	: window_width(cfg[str_window_width])
+	, window_height(cfg[str_window_height])
+	, min_width(cfg[str_min_width])
+	, min_height(cfg[str_min_height])
+	, default_width(cfg[str_default_width])
+	, default_height(cfg[str_default_height])
+	, max_width(cfg[str_max_width])
+	, max_height(cfg[str_max_height])
 	, linked_groups()
-	, text_extra_width(cfg["text_extra_width"])
-	, text_extra_height(cfg["text_extra_height"])
-	, text_font_size(cfg["text_font_size"])
-	, text_font_family(font::str_to_family_class(cfg["text_font_family"]))
-	, text_font_style(decode_font_style(cfg["text_font_style"]))
+	, text_extra_width(cfg[str_text_extra_width])
+	, text_extra_height(cfg[str_text_extra_height])
+	, text_font_size(cfg[str_text_font_size])
+	, text_font_family(font::str_to_family_class(cfg[str_text_font_family]))
+	, text_font_style(decode_font_style(cfg[str_text_font_style]))
 	, state()
 {
 	DBG_GUI_P << "Parsing resolution " << window_width << ", " << window_height;
@@ -52,7 +52,7 @@ resolution_definition::resolution_definition(const config& cfg)
 }
 
 styled_widget_definition::styled_widget_definition(const config& cfg)
-	: id(cfg["id"]), description(cfg["description"].t_str()), resolutions()
+	: id(cfg[str_id]), description(cfg[str_description].t_str()), resolutions()
 {
 	VALIDATE(!id.empty(), missing_mandatory_wml_key("styled_widget", "id"));
 	VALIDATE(!description.empty(),
@@ -63,7 +63,7 @@ styled_widget_definition::styled_widget_definition(const config& cfg)
 	 * translatable string is not in the header and we don't need to pull in
 	 * extra header dependencies.
 	 */
-	config::const_child_itors itors = cfg.child_range("resolution");
+	config::const_child_itors itors = cfg.child_range(str_resolution);
 	VALIDATE(!itors.empty(), _("No resolution defined."));
 }
 

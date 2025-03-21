@@ -35,12 +35,12 @@ const double candidate_action::HIGH_SCORE = 10000000;
 
 candidate_action::candidate_action(rca_context &context, const config &cfg):
 	recursion_counter_(context.get_recursion_count()),
-	enabled_(cfg["enabled"].to_bool(true)), engine_(cfg["engine"]),
-	score_(cfg["score"].to_double(BAD_SCORE)),
-	max_score_(cfg["max_score"].to_double(HIGH_SCORE)),
-	id_(cfg["id"]), name_(cfg["name"]), type_(cfg["type"]), to_be_removed_(false)
+	enabled_(cfg[str_enabled].to_bool(true)), engine_(cfg[str_engine]),
+	score_(cfg[str_score].to_double(BAD_SCORE)),
+	max_score_(cfg[str_max_score].to_double(HIGH_SCORE)),
+	id_(cfg[str_id]), name_(cfg[str_name]), type_(cfg[str_type]), to_be_removed_(false)
 {
-	if (auto filter_own = cfg.optional_child("filter_own")) {
+	if (auto filter_own = cfg.optional_child(str_filter_own)) {
 		vconfig vcfg(*filter_own);
 		vcfg.make_safe();
 		filter_own_.reset(new unit_filter(vcfg));
@@ -103,16 +103,16 @@ const std::string& candidate_action::get_type() const
 config candidate_action::to_config() const
 {
 	config cfg;
-	cfg["enabled"] = enabled_;
-	cfg["engine"] = engine_;
-	cfg["id"] = id_;
-	cfg["name"] = name_;
-	cfg["score"] = score_;
-	cfg["max_score"] = max_score_;
+	cfg[str_enabled] = enabled_;
+	cfg[str_engine] = engine_;
+	cfg[str_id] = id_;
+	cfg[str_name] = name_;
+	cfg[str_score] = score_;
+	cfg[str_max_score] = max_score_;
 	if (filter_own_ && !filter_own_->empty()) {
-		cfg.add_child("filter_own", filter_own_->to_config());
+		cfg.add_child(str_filter_own, filter_own_->to_config());
 	}
-	cfg["type"] = type_;
+	cfg[str_type] = type_;
 	return cfg;
 }
 

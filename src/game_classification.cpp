@@ -34,51 +34,51 @@ static lg::log_domain log_engine("engine");
 const std::string DEFAULT_DIFFICULTY("NORMAL");
 
 game_classification::game_classification(const config& cfg)
-	: label(cfg["label"])
-	, version(cfg["version"])
-	, type(campaign_type::get_enum(cfg["campaign_type"].str()).value_or(campaign_type::type::scenario))
-	, campaign_define(cfg["campaign_define"])
-	, campaign_xtra_defines(utils::split(cfg["campaign_extra_defines"]))
-	, scenario_define(cfg["scenario_define"])
-	, era_define(cfg["era_define"])
-	, mod_defines(utils::split(cfg["mod_defines"]))
-	, active_mods(utils::split(cfg["active_mods"]))
-	, era_id(cfg["era_id"])
-	, campaign(cfg["campaign"])
-	, campaign_name(cfg["campaign_name"])
-	, abbrev(cfg["abbrev"])
-	, end_credits(cfg["end_credits"].to_bool(true))
-	, end_text(cfg["end_text"])
-	, end_text_duration(std::clamp<unsigned>(cfg["end_text_duration"].to_unsigned(0), 0, 5000))
-	, difficulty(cfg["difficulty"].empty() ? DEFAULT_DIFFICULTY : cfg["difficulty"].str())
-	, random_mode(cfg["random_mode"])
-	, oos_debug(cfg["oos_debug"].to_bool(false))
+	: label(cfg[str_label])
+	, version(cfg[str_version])
+	, type(campaign_type::get_enum(cfg[str_campaign_type].str()).value_or(campaign_type::type::scenario))
+	, campaign_define(cfg[str_campaign_define])
+	, campaign_xtra_defines(utils::split(cfg[str_campaign_extra_defines]))
+	, scenario_define(cfg[str_scenario_define])
+	, era_define(cfg[str_era_define])
+	, mod_defines(utils::split(cfg[str_mod_defines]))
+	, active_mods(utils::split(cfg[str_active_mods]))
+	, era_id(cfg[str_era_id])
+	, campaign(cfg[str_campaign])
+	, campaign_name(cfg[str_campaign_name])
+	, abbrev(cfg[str_abbrev])
+	, end_credits(cfg[str_end_credits].to_bool(true))
+	, end_text(cfg[str_end_text])
+	, end_text_duration(std::clamp<unsigned>(cfg[str_end_text_duration].to_unsigned(0), 0, 5000))
+	, difficulty(cfg[str_difficulty].empty() ? DEFAULT_DIFFICULTY : cfg[str_difficulty].str())
+	, random_mode(cfg[str_random_mode])
+	, oos_debug(cfg[str_oos_debug].to_bool(false))
 {
 }
 
 config game_classification::to_config() const
 {
 	config cfg;
-	cfg["label"] = label;
-	cfg["version"] = game_config::wesnoth_version.str();
-	cfg["campaign_type"] = campaign_type::get_string(type);
-	cfg["campaign_define"] = campaign_define;
-	cfg["campaign_extra_defines"] = utils::join(campaign_xtra_defines);
-	cfg["scenario_define"] = scenario_define;
-	cfg["era_define"] = era_define;
-	cfg["mod_defines"] = utils::join(mod_defines);
-	cfg["active_mods"] = utils::join(active_mods);
-	cfg["era_id"] = era_id;
-	cfg["campaign"] = campaign;
-	cfg["campaign_name"] = campaign_name;
-	cfg["abbrev"] = abbrev;
-	cfg["end_credits"] = end_credits;
-	cfg["end_text"] = end_text;
-	cfg["end_text_duration"] = std::to_string(end_text_duration);
-	cfg["difficulty"] = difficulty;
-	cfg["random_mode"] = random_mode;
-	cfg["oos_debug"] = oos_debug;
-	cfg["core"] = preferences::core_id();
+	cfg[str_label] = label;
+	cfg[str_version] = game_config::wesnoth_version.str();
+	cfg[str_campaign_type] = campaign_type::get_string(type);
+	cfg[str_campaign_define] = campaign_define;
+	cfg[str_campaign_extra_defines] = utils::join(campaign_xtra_defines);
+	cfg[str_scenario_define] = scenario_define;
+	cfg[str_era_define] = era_define;
+	cfg[str_mod_defines] = utils::join(mod_defines);
+	cfg[str_active_mods] = utils::join(active_mods);
+	cfg[str_era_id] = era_id;
+	cfg[str_campaign] = campaign;
+	cfg[str_campaign_name] = campaign_name;
+	cfg[str_abbrev] = abbrev;
+	cfg[str_end_credits] = end_credits;
+	cfg[str_end_text] = end_text;
+	cfg[str_end_text_duration] = std::to_string(end_text_duration);
+	cfg[str_difficulty] = difficulty;
+	cfg[str_random_mode] = random_mode;
+	cfg[str_oos_debug] = oos_debug;
+	cfg[str_core] = preferences::core_id();
 
 	return cfg;
 }
@@ -145,11 +145,11 @@ std::set<std::string> game_classification::active_addons(const std::string& scen
 			}
 		}
 		if(auto cfg = game_config_manager::get()->game_config().find_child(current.type, "id", current.id)) {
-			if(!cfg["addon_id"].empty()) {
-				res.insert(cfg["addon_id"]);
+			if(!cfg[str_addon_id].empty()) {
+				res.insert(cfg[str_addon_id]);
 			}
-			for (const config& load_res : cfg->child_range("load_resource")) {
-				mods.emplace_back("resource", load_res["id"].str());
+			for (const config& load_res : cfg->child_range(str_load_resource)) {
+				mods.emplace_back("resource", load_res[str_id].str());
 			}
 		} else {
 			ERR_NG << "Unable to find config for content " << current.id << " of type " << current.type;

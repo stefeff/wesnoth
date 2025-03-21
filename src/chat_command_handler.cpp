@@ -76,7 +76,7 @@ void chat_command_handler::do_ignore()
 	}
 	else {
 		utils::string_map symbols;
-		symbols["nick"] = get_arg(1);
+		symbols[str_nick] = get_arg(1);
 
 		if (preferences::add_acquaintance(get_arg(1), "ignore", get_data(2)).first) {
 			print(_("ignores list"), VGETTEXT("Added to ignore list: $nick", symbols));
@@ -95,7 +95,7 @@ void chat_command_handler::do_friend()
 	}
 	else {
 		utils::string_map symbols;
-		symbols["nick"] = get_arg(1);
+		symbols[str_nick] = get_arg(1);
 
 		if (preferences::add_acquaintance(get_arg(1), "friend", get_data(2)).first) {
 			print(_("friends list"), VGETTEXT("Added to friends list: $nick", symbols));
@@ -113,7 +113,7 @@ void chat_command_handler::do_remove()
 		preferences::remove_acquaintance(get_arg(i));
 		chat_handler_.user_relation_changed(get_arg(i));
 		utils::string_map symbols;
-		symbols["nick"] = get_arg(i);
+		symbols[str_nick] = get_arg(i);
 		print(_("friends and ignores list"), VGETTEXT("Removed from list: $nick", symbols));
 	}
 }
@@ -131,11 +131,11 @@ void chat_command_handler::do_info() {
 	if (get_data(1).empty()) return command_failed_need_arg(1);
 
 	config data;
-	config& nickserv = data.add_child("nickserv");
+	config& nickserv = data.add_child(str_nickserv);
 
-	nickserv.add_child("info")["name"] = get_data(1);
+	nickserv.add_child(str_info)[str_name] = get_data(1);
 	utils::string_map symbols;
-	symbols["nick"] = get_arg(1);
+	symbols[str_nick] = get_arg(1);
 	print(_("nick registration"), VGETTEXT("requesting information for user $nick", symbols));
 
 	chat_handler_.send_to_server(data);

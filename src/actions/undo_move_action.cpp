@@ -54,11 +54,11 @@ void move_action::write(config & cfg) const
 {
 	undo_action::write(cfg);
 	shroud_clearing_action::write(cfg);
-	cfg["starting_direction"] = map_location::write_direction(starting_dir);
-	cfg["starting_moves"] = starting_moves;
-	config & child = cfg.mandatory_child("unit");
-	child["goto_x"] = goto_hex.wml_x();
-	child["goto_y"] = goto_hex.wml_y();
+	cfg[str_starting_direction] = map_location::write_direction(starting_dir);
+	cfg[str_starting_moves] = starting_moves;
+	config & child = cfg.mandatory_child(str_unit);
+	child[str_goto_x] = goto_hex.wml_x();
+	child[str_goto_y] = goto_hex.wml_y();
 }
 
 /**
@@ -112,7 +112,7 @@ bool move_action::undo(int)
 	unit_display::move_unit(rev_route, u.get_shared_ptr(), true, starting_dir);
 	bool halo_adjacent = false;
 	for (const config::any_child sp : u->abilities().all_children_range()){
-		if(!(sp.cfg)["halo_image"].empty() && (sp.cfg).has_child("affect_adjacent")){
+		if(!(sp.cfg)[str_halo_image].empty() && (sp.cfg).has_child(str_affect_adjacent)){
 			halo_adjacent = true;
 			break;
 		}

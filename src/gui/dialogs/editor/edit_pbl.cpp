@@ -109,17 +109,17 @@ void editor_edit_pbl::pre_show(window& win)
 	}
 
 	text_box* name = find_widget<text_box>(&win, "name", false, true);
-	name->set_value(pbl["title"]);
+	name->set_value(pbl[str_title]);
 	win.keyboard_capture(name);
 
-	find_widget<scroll_text>(&win, "description", false).set_value(pbl["description"]);
-	find_widget<text_box>(&win, "icon", false).set_value(pbl["icon"]);
-	if(!pbl["icon"].empty()) {
+	find_widget<scroll_text>(&win, "description", false).set_value(pbl[str_description]);
+	find_widget<text_box>(&win, "icon", false).set_value(pbl[str_icon]);
+	if(!pbl[str_icon].empty()) {
 		drawing& img = find_widget<drawing>(&win, "preview", false);
-		img.set_label(pbl["icon"]);
+		img.set_label(pbl[str_icon]);
 	}
-	find_widget<text_box>(&win, "author", false).set_value(pbl["author"]);
-	find_widget<text_box>(&win, "version", false).set_value(pbl["version"]);
+	find_widget<text_box>(&win, "author", false).set_value(pbl[str_author]);
+	find_widget<text_box>(&win, "version", false).set_value(pbl[str_version]);
 
 	multimenu_button& dependencies = find_widget<multimenu_button>(&win, "dependencies", false);
 	std::vector<config> addons_list;
@@ -129,18 +129,18 @@ void editor_edit_pbl::pre_show(window& win)
 	}
 
 	for(const std::string& dir : dirs_) {
-		addons_list.emplace_back("label", dir, "checkbox", false);
+		addons_list.emplace_back(str_label, dir, str_checkbox, false);
 	}
 	dependencies.set_values(addons_list);
 
-	std::vector<std::string> existing_dependencies = utils::split(pbl["dependencies"].str(), ',');
+	std::vector<std::string> existing_dependencies = utils::split(pbl[str_dependencies].str(), ',');
 	for(unsigned i = 0; i < dirs_.size(); i++) {
 		if(std::find(existing_dependencies.begin(), existing_dependencies.end(), dirs_[i]) != existing_dependencies.end()) {
 			dependencies.select_option(i);
 		}
 	}
 
-	if(pbl["forum_auth"].to_bool()) {
+	if(pbl[str_forum_auth].to_bool()) {
 		find_widget<toggle_button>(&win, "forum_auth", false).set_value(true);
 		find_widget<text_box>(&win, "email", false).set_visible(gui2::widget::visibility::invisible);
 		find_widget<label>(&win, "email_label", false).set_visible(gui2::widget::visibility::invisible);
@@ -149,19 +149,19 @@ void editor_edit_pbl::pre_show(window& win)
 		find_widget<text_box>(&win, "secondary_authors", false).set_visible(gui2::widget::visibility::visible);
 		find_widget<label>(&win, "secondary_authors_label", false).set_visible(gui2::widget::visibility::visible);
 	} else {
-		find_widget<text_box>(&win, "email", false).set_value(pbl["email"]);
-		find_widget<text_box>(&win, "password", false).set_value(pbl["passphrase"]);
+		find_widget<text_box>(&win, "email", false).set_value(pbl[str_email]);
+		find_widget<text_box>(&win, "password", false).set_value(pbl[str_passphrase]);
 		find_widget<text_box>(&win, "secondary_authors", false).set_visible(gui2::widget::visibility::invisible);
 		find_widget<label>(&win, "secondary_authors_label", false).set_visible(gui2::widget::visibility::invisible);
 	}
 
-	if(pbl.has_child("feedback")) {
-		find_widget<text_box>(&win, "forum_thread", false).set_value(pbl.mandatory_child("feedback")["topic_id"]);
+	if(pbl.has_child(str_feedback)) {
+		find_widget<text_box>(&win, "forum_thread", false).set_value(pbl.mandatory_child(str_feedback)[str_topic_id]);
 	}
 
 	unsigned selected = 0;
 	for(unsigned i = 0; i < type_values.size(); i++) {
-		if(type_values[i] == pbl["type"]) {
+		if(type_values[i] == pbl[str_type]) {
 			selected = i;
 			break;
 		}
@@ -169,33 +169,33 @@ void editor_edit_pbl::pre_show(window& win)
 
 	menu_button& types = find_widget<menu_button>(&win, "type", false);
 	std::vector<config> type_list;
-	type_list.emplace_back("label", "");
-	type_list.emplace_back("label", _("Core"));
-	type_list.emplace_back("label", _("Campaign"));
-	type_list.emplace_back("label", _("Hybrid Campaign"));
-	type_list.emplace_back("label", _("Multiplayer Campaign"));
-	type_list.emplace_back("label", _("Scenario"));
-	type_list.emplace_back("label", _("Multiplayer Scenario"));
-	type_list.emplace_back("label", _("Faction"));
-	type_list.emplace_back("label", _("Era"));
-	type_list.emplace_back("label", _("Map Pack"));
-	type_list.emplace_back("label", _("Modification"));
-	type_list.emplace_back("label", _("Media"));
-	type_list.emplace_back("label", _("Other"));
+	type_list.emplace_back(str_label, "");
+	type_list.emplace_back(str_label, _("Core"));
+	type_list.emplace_back(str_label, _("Campaign"));
+	type_list.emplace_back(str_label, _("Hybrid Campaign"));
+	type_list.emplace_back(str_label, _("Multiplayer Campaign"));
+	type_list.emplace_back(str_label, _("Scenario"));
+	type_list.emplace_back(str_label, _("Multiplayer Scenario"));
+	type_list.emplace_back(str_label, _("Faction"));
+	type_list.emplace_back(str_label, _("Era"));
+	type_list.emplace_back(str_label, _("Map Pack"));
+	type_list.emplace_back(str_label, _("Modification"));
+	type_list.emplace_back(str_label, _("Media"));
+	type_list.emplace_back(str_label, _("Other"));
 	types.set_values(type_list);
 	types.set_selected(selected);
 
 	multimenu_button& tags = find_widget<multimenu_button>(&win, "tags", false);
 	std::vector<config> tags_list;
-	tags_list.emplace_back("label", _("Cooperative"), "checkbox", false);
-	tags_list.emplace_back("label", _("Cosmetic"), "checkbox", false);
-	tags_list.emplace_back("label", _("Difficulty"), "checkbox", false);
-	tags_list.emplace_back("label", _("RNG"), "checkbox", false);
-	tags_list.emplace_back("label", _("Survival"), "checkbox", false);
-	tags_list.emplace_back("label", _("Terraforming"), "checkbox", false);
+	tags_list.emplace_back(str_label, _("Cooperative"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Cosmetic"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Difficulty"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("RNG"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Survival"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Terraforming"), str_checkbox, false);
 	tags.set_values(tags_list);
 
-	std::vector<std::string> chosen_tags = utils::split(pbl["tags"].str(), ',');
+	std::vector<std::string> chosen_tags = utils::split(pbl[str_tags].str(), ',');
 	for(unsigned i = 0; i < tag_values.size(); i++) {
 		if(std::find(chosen_tags.begin(), chosen_tags.end(), tag_values[i]) != chosen_tags.end()) {
 			tags.select_option(i);
@@ -205,11 +205,11 @@ void editor_edit_pbl::pre_show(window& win)
 	listbox& translations = find_widget<listbox>(&win, "translations", false);
 	button& translations_delete = find_widget<button>(&win, "translations_delete", false);
 
-	for(const config& child : pbl.child_range("translation")) {
+	for(const config& child : pbl.child_range(str_translation)) {
 		const widget_data& entry{
-			{"translations_language", widget_item{{"label", child["language"].str()}}},
-			{"translations_title", widget_item{{"label", child["title"].str()}}},
-			{"translations_description", widget_item{{"label", child["description"].str()}}},
+			{"translations_language", widget_item{{"label", child[str_language].str()}}},
+			{"translations_title", widget_item{{"label", child[str_title].str()}}},
+			{"translations_description", widget_item{{"label", child[str_description].str()}}},
 		};
 		translations.add_row(entry);
 	}
@@ -236,19 +236,19 @@ config editor_edit_pbl::create_cfg()
 	config cfg;
 
 	if(const std::string& name = find_widget<text_box>(get_window(), "name", false).get_value(); !name.empty()) {
-		cfg["title"] = name;
+		cfg[str_title] = name;
 	}
 	if(const std::string& description = find_widget<scroll_text>(get_window(), "description", false).get_value(); !description.empty()) {
-		cfg["description"] = description;
+		cfg[str_description] = description;
 	}
 	if(const std::string& icon = find_widget<text_box>(get_window(), "icon", false).get_value(); !icon.empty()) {
-		cfg["icon"] = icon;
+		cfg[str_icon] = icon;
 	}
 	if(const std::string& author = find_widget<text_box>(get_window(), "author", false).get_value(); !author.empty()) {
-		cfg["author"] = author;
+		cfg[str_author] = author;
 	}
 	if(const std::string& version = find_widget<text_box>(get_window(), "version", false).get_value(); !version.empty()) {
-		cfg["version"] = version;
+		cfg[str_version] = version;
 	}
 
 	multimenu_button& dependencies = find_widget<multimenu_button>(get_window(), "dependencies", false);
@@ -260,31 +260,31 @@ config editor_edit_pbl::create_cfg()
 		}
 	}
 	if(chosen_deps.size() > 0) {
-		cfg["dependencies"] = utils::join(chosen_deps, ",");
+		cfg[str_dependencies] = utils::join(chosen_deps, ",");
 	}
 
 	if(find_widget<toggle_button>(get_window(), "forum_auth", false).get_value_bool()) {
-		cfg["forum_auth"] = true;
+		cfg[str_forum_auth] = true;
 
 		if(const std::string& secondary_authors = find_widget<text_box>(get_window(), "secondary_authors", false).get_value(); !secondary_authors.empty()) {
-			cfg["secondary_authors"] = secondary_authors;
+			cfg[str_secondary_authors] = secondary_authors;
 		}
 	} else {
 		if(const std::string& email = find_widget<text_box>(get_window(), "email", false).get_value(); !email.empty()) {
-			cfg["email"] = email;
+			cfg[str_email] = email;
 		}
 		if(const std::string& passphrase = find_widget<text_box>(get_window(), "password", false).get_value(); !passphrase.empty()) {
-			cfg["passphrase"] = passphrase;
+			cfg[str_passphrase] = passphrase;
 		}
 	}
 
 	if(const std::string& topic_id = find_widget<text_box>(get_window(), "forum_thread", false).get_value(); !topic_id.empty()) {
-		config& feedback = cfg.add_child("feedback");
-		feedback["topic_id"] = topic_id;
+		config& feedback = cfg.add_child(str_feedback);
+		feedback[str_topic_id] = topic_id;
 	}
 
 	if(unsigned value = find_widget<menu_button>(get_window(), "type", false).get_value(); value != 0) {
-		cfg["type"] = type_values[value];
+		cfg[str_type] = type_values[value];
 	}
 
 	multimenu_button& tags = find_widget<multimenu_button>(get_window(), "tags", false);
@@ -296,17 +296,17 @@ config editor_edit_pbl::create_cfg()
 		}
 	}
 	if(chosen_tags.size() > 0) {
-		cfg["tags"] = utils::join(chosen_tags, ",");
+		cfg[str_tags] = utils::join(chosen_tags, ",");
 	}
 
 	listbox& translations = find_widget<listbox>(get_window(), "translations", false);
 	for(unsigned i = 0; i < translations.get_item_count(); i++) {
 		grid* row = translations.get_row_grid(i);
-		config& translation = cfg.add_child("translation");
+		config& translation = cfg.add_child(str_translation);
 
-		translation["language"] = dynamic_cast<label*>(row->find("translations_language", false))->get_label();
-		translation["title"] = dynamic_cast<label*>(row->find("translations_title", false))->get_label();
-		translation["description"] = dynamic_cast<label*>(row->find("translations_description", false))->get_label();
+		translation[str_language] = dynamic_cast<label*>(row->find("translations_language", false))->get_label();
+		translation[str_title] = dynamic_cast<label*>(row->find("translations_title", false))->get_label();
+		translation[str_description] = dynamic_cast<label*>(row->find("translations_description", false))->get_label();
 	}
 
 	return cfg;

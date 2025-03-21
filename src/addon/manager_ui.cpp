@@ -89,8 +89,8 @@ bool addons_manager_ui(const std::string& remote_address)
 		ERR_CFG << "could not read .pbl file " << e.path << ": " << e.message;
 
 		utils::string_map symbols;
-		symbols["path"] = e.path;
-		symbols["msg"] = e.message;
+		symbols[str_path] = e.path;
+		symbols[str_msg] = e.message;
 
 		gui2::show_error_message(
 			VGETTEXT("A local file with add-on publishing information could not be read.\n\nFile: $path\nError message: $msg", symbols));
@@ -130,7 +130,7 @@ bool uninstall_local_addons()
 			get_addon_install_info(id, info_cfg);
 
 			if(!info_cfg.empty()) {
-				title = info_cfg["title"].str();
+				title = info_cfg[str_title].str();
 			}
 		}
 
@@ -289,7 +289,7 @@ bool ad_hoc_addon_fetch_session(const std::vector<std::string>& addon_ids)
 					game_config::config_cache& cache = game_config::config_cache::instance();
 					config info;
 					cache.get_config(info_cfg, info);
-					version_info installed_addon_version(info.child_or_empty("info")["version"]);
+					version_info installed_addon_version(info.child_or_empty(str_info)[str_version]);
 
 					// if the installed version is outdated, download the most recent version from the add-ons server
 					if(installed_addon_version >= addon.current_version) {
@@ -311,7 +311,7 @@ bool ad_hoc_addon_fetch_session(const std::vector<std::string>& addon_ids)
 
 		if(!return_value) {
 			utils::string_map symbols;
-			symbols["addon_ids"] = os.str();
+			symbols[str_addon_ids] = os.str();
 			gui2::show_error_message(VGETTEXT("Could not find add-ons matching the ids $addon_ids on the add-on server.", symbols));
 		}
 
@@ -330,8 +330,8 @@ bool ad_hoc_addon_fetch_session(const std::vector<std::string>& addon_ids)
 		ERR_CFG << "could not read .pbl file " << e.path << ": " << e.message;
 
 		utils::string_map symbols;
-		symbols["path"] = e.path;
-		symbols["msg"] = e.message;
+		symbols[str_path] = e.path;
+		symbols[str_msg] = e.message;
 
 		gui2::show_error_message(
 			VGETTEXT("A local file with add-on publishing information could not be read.\n\nFile: $path\nError message: $msg", symbols));

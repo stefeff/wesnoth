@@ -246,12 +246,12 @@ public:
 		, default_()
 		, parent_id_(id)
 	{
-		for (const config &cfg_element : this->cfg_.child_range("facet")) {
+		for (const config &cfg_element : this->cfg_.child_range(str_facet)) {
 			add_facet(-1,cfg_element);
 		}
 
-		if (auto cfg_default = this->cfg_.optional_child("default")) {
-			cfg_default["id"] = "default_facet";
+		if (auto cfg_default = this->cfg_.optional_child(str_default)) {
+			cfg_default[str_id] = "default_facet";
 			std::vector< aspect_ptr > default_aspects;
 			engine::parse_aspect_from_config(*this, *cfg_default, parent_id_, std::back_inserter(default_aspects));
 			if (!default_aspects.empty()) {
@@ -302,10 +302,10 @@ public:
 	{
 		config cfg = aspect::to_config();
 		for (const typesafe_aspect_ptr<T>& f : facets_) {
-			cfg.add_child("facet",f->to_config());
+			cfg.add_child(str_facet,f->to_config());
 		}
 		if (default_) {
-			cfg.add_child("default",default_->to_config());
+			cfg.add_child(str_default,default_->to_config());
 		}
 		return cfg;
 	}
@@ -402,16 +402,16 @@ class lua_aspect : public typesafe_aspect<T>
 public:
 	lua_aspect(readonly_context &context, const config &cfg, const std::string &id, std::shared_ptr<lua_ai_context>& l_ctx)
 		: typesafe_aspect<T>(context, cfg, id)
-		, handler_(), code_(), params_(cfg.child_or_empty("args"))
+		, handler_(), code_(), params_(cfg.child_or_empty(str_args))
 	{
 		this->name_ = "lua_aspect";
-		if (cfg.has_attribute("code"))
+		if (cfg.has_attribute(str_code))
 		{
-			code_ = cfg["code"].str();
+			code_ = cfg[str_code].str();
 		}
-		else if (cfg.has_attribute("value"))
+		else if (cfg.has_attribute(str_value))
 		{
-			code_ = "return " + cfg["value"].apply_visitor(lua_aspect_visitor());
+			code_ = "return " + cfg[str_value].apply_visitor(lua_aspect_visitor());
 		}
 		else
 		{
@@ -432,9 +432,9 @@ public:
 	config to_config() const
 	{
 		config cfg = aspect::to_config();
-		cfg["code"] = code_;
+		cfg[str_code] = code_;
 		if (!params_.empty()) {
-			cfg.add_child("args", params_);
+			cfg.add_child(str_args, params_);
 		}
 		return cfg;
 	}

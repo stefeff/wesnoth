@@ -54,39 +54,39 @@ void configure_engine::set_default_values()
 
 bool configure_engine::force_lock_settings() const
 {
-	return initial_cfg()["force_lock_settings"].to_bool(!state_.classification().is_normal_mp_game());
+	return initial_cfg()[str_force_lock_settings].to_bool(!state_.classification().is_normal_mp_game());
 }
 
 std::string configure_engine::game_name_default()
 {
 	utils::string_map i18n_symbols;
-	i18n_symbols["login"] = preferences::login();
+	i18n_symbols[str_login] = preferences::login();
 	return VGETTEXT("$login|’s game", i18n_symbols);
 }
 
 int configure_engine::num_turns_default() const
 {
-	return use_map_settings() ? settings::get_turns(initial_cfg()["turns"]) : preferences::turns();
+	return use_map_settings() ? settings::get_turns(initial_cfg()[str_turns]) : preferences::turns();
 }
 
 int configure_engine::village_gold_default() const
 {
 	return use_map_settings()
-		? settings::get_village_gold(initial_cfg()["mp_village_gold"], &state_.classification())
+		? settings::get_village_gold(initial_cfg()[str_mp_village_gold], &state_.classification())
 		: preferences::village_gold();
 }
 
 int configure_engine::village_support_default() const
 {
 	return use_map_settings()
-		? settings::get_village_support(initial_cfg()["mp_village_support"])
+		? settings::get_village_support(initial_cfg()[str_mp_village_support])
 		: preferences::village_support();
 }
 
 int configure_engine::xp_modifier_default() const
 {
 	return use_map_settings()
-		? settings::get_xp_modifier(initial_cfg()["experience_modifier"])
+		? settings::get_xp_modifier(initial_cfg()[str_experience_modifier])
 		: preferences::xp_modifier();
 }
 
@@ -123,20 +123,20 @@ bool configure_engine::use_map_settings_default() const
 bool configure_engine::random_start_time_default() const
 {
 	return use_map_settings()
-		? initial_cfg()["random_start_time"].to_bool(false)
+		? initial_cfg()[str_random_start_time].to_bool(false)
 		: preferences::random_start_time();
 }
 
 bool configure_engine::fog_game_default() const
 {
 	return use_map_settings()
-		? initial_cfg()["mp_fog"].to_bool(state_.classification().is_normal_mp_game())
+		? initial_cfg()[str_mp_fog].to_bool(state_.classification().is_normal_mp_game())
 		: preferences::fog();
 }
 
 bool configure_engine::shroud_game_default() const
 {
-	return use_map_settings() ? initial_cfg()["mp_shroud"].to_bool(false) : preferences::shroud();
+	return use_map_settings() ? initial_cfg()[str_mp_shroud].to_bool(false) : preferences::shroud();
 }
 
 bool configure_engine::allow_observers_default() const
@@ -171,37 +171,37 @@ void configure_engine::write_parameters()
 	const mp_game_settings& params = this->state_.mp_settings();
 
 	if(params.random_start_time) {
-		if(!tod_manager::is_start_ToD(scenario["random_start_time"])) {
-			scenario["random_start_time"] = true;
+		if(!tod_manager::is_start_ToD(scenario[str_random_start_time])) {
+			scenario[str_random_start_time] = true;
 		}
 	} else {
-		scenario["random_start_time"] = false;
+		scenario[str_random_start_time] = false;
 	}
 
-	scenario["experience_modifier"] = params.xp_modifier;
-	scenario["turns"] = params.num_turns;
+	scenario[str_experience_modifier] = params.xp_modifier;
+	scenario[str_turns] = params.num_turns;
 
-	for(config& side : scenario.child_range("side")) {
+	for(config& side : scenario.child_range(str_side)) {
 		if(!params.use_map_settings) {
-			side["fog"] = params.fog_game;
-			side["shroud"] = params.shroud_game;
-			side["village_gold"] = params.village_gold;
-			side["village_support"] = params.village_support;
+			side[str_fog] = params.fog_game;
+			side[str_shroud] = params.shroud_game;
+			side[str_village_gold] = params.village_gold;
+			side[str_village_support] = params.village_support;
 		} else {
-			if(side["fog"].empty()) {
-				side["fog"] = params.fog_game;
+			if(side[str_fog].empty()) {
+				side[str_fog] = params.fog_game;
 			}
 
-			if(side["shroud"].empty()) {
-				side["shroud"] = params.shroud_game;
+			if(side[str_shroud].empty()) {
+				side[str_shroud] = params.shroud_game;
 			}
 
-			if(side["village_gold"].empty()) {
-				side["village_gold"] = params.village_gold;
+			if(side[str_village_gold].empty()) {
+				side[str_village_gold] = params.village_gold;
 			}
 
-			if(side["village_support"].empty()) {
-				side["village_support"] = params.village_support;
+			if(side[str_village_support].empty()) {
+				side[str_village_support] = params.village_support;
 			}
 		}
 	}

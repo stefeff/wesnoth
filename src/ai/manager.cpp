@@ -102,18 +102,18 @@ void holder::init( side_number side )
 
 	if (this->ai_) {
 		ai_->on_create();
-		for (config &mod_ai : cfg_.child_range("modify_ai")) {
-			if (!mod_ai.has_attribute("side")) {
-				mod_ai["side"] = side;
+		for (config &mod_ai : cfg_.child_range(str_modify_ai)) {
+			if (!mod_ai.has_attribute(str_side)) {
+				mod_ai[str_side] = side;
 			}
 			modify_ai(mod_ai);
 		}
-		for(config& micro : cfg_.child_range("micro_ai")) {
-			micro["side"] = side;
-			micro["action"] = "add";
+		for(config& micro : cfg_.child_range(str_micro_ai)) {
+			micro[str_side] = side;
+			micro[str_action] = "add";
 			micro_ai(micro);
 		}
-		cfg_.clear_children("modify_ai", "micro_ai");
+		cfg_.clear_children(str_modify_ai, str_micro_ai);
 
 		std::vector<engine_ptr> engines = ai_->get_engines();
 		for (std::vector<engine_ptr>::iterator it = engines.begin(); it != engines.end(); ++it)
@@ -153,7 +153,7 @@ void holder::micro_ai(const config& cfg)
 	}
 	assert(this->ai_);
 
-	auto engine = this->ai_->get_engine_by_cfg(config{"engine", "lua"});
+	auto engine = this->ai_->get_engine_by_cfg(config{str_engine, "lua"});
 	if(auto lua = std::dynamic_pointer_cast<engine_lua>(engine)) {
 		lua->apply_micro_ai(cfg);
 	}
@@ -165,17 +165,17 @@ void holder::modify_ai(const config &cfg)
 		// if not initialized, initialize now.
 		get_ai_ref();
 	}
-	const std::string &act = cfg["action"];
-	LOG_AI_MOD << "side "<< side_ << "        "<<act<<"_ai_component \""<<cfg["path"]<<"\"";
+	const std::string &act = cfg[str_action];
+	LOG_AI_MOD << "side "<< side_ << "        "<<act<<"_ai_component \""<<cfg[str_path]<<"\"";
 	DBG_AI_MOD << std::endl << cfg;
 	DBG_AI_MOD << "side "<< side_ << " before "<<act<<"_ai_component"<<std::endl << to_config();
 	bool res = false;
 	if (act == "add") {
-		res = component_manager::add_component(&*this->ai_,cfg["path"],cfg);
+		res = component_manager::add_component(&*this->ai_,cfg[str_path],cfg);
 	} else if (act == "change") {
-		res = component_manager::change_component(&*this->ai_,cfg["path"],cfg);
+		res = component_manager::change_component(&*this->ai_,cfg[str_path],cfg);
 	} else if (act == "delete") {
-		res = component_manager::delete_component(&*this->ai_,cfg["path"]);
+		res = component_manager::delete_component(&*this->ai_,cfg[str_path]);
 	} else {
 		ERR_AI_MOD << "modify_ai tag has invalid 'action' attribute " << act;
 	}
@@ -193,29 +193,29 @@ void holder::append_ai(const config& cfg)
 	if(!this->ai_) {
 		get_ai_ref();
 	}
-	for(const config& aspect : cfg.child_range("aspect")) {
-		const std::string& id = aspect["id"];
-		for(const config& facet : aspect.child_range("facet")) {
+	for(const config& aspect : cfg.child_range(str_aspect)) {
+		const std::string& id = aspect[str_id];
+		for(const config& facet : aspect.child_range(str_facet)) {
 			ai_->add_facet(id, facet);
 		}
 	}
-	for(const config& goal : cfg.child_range("goal")) {
+	for(const config& goal : cfg.child_range(str_goal)) {
 		ai_->add_goal(goal);
 	}
-	for(const config& stage : cfg.child_range("stage")) {
-		if(stage["name"] != "empty") {
+	for(const config& stage : cfg.child_range(str_stage)) {
+		if(stage[str_name] != "empty") {
 			ai_->add_stage(stage);
 		}
 	}
-	for(config mod : cfg.child_range("modify_ai")) {
-		if (!mod.has_attribute("side")) {
-			mod["side"] = side_context_->get_side();
+	for(config mod : cfg.child_range(str_modify_ai)) {
+		if (!mod.has_attribute(str_side)) {
+			mod[str_side] = side_context_->get_side();
 		}
 		modify_ai(mod);
 	}
-	for(config micro : cfg.child_range("micro_ai")) {
-		micro["side"] = side_context_->get_side();
-		micro["action"] = "add";
+	for(config micro : cfg.child_range(str_micro_ai)) {
+		micro[str_side] = side_context_->get_side();
+		micro[str_action] = "add";
 		micro_ai(micro);
 	}
 }
@@ -250,7 +250,7 @@ const std::string holder::describe_ai()
 	if (this->ai_!=nullptr) {
 		return this->ai_->describe_self()+std::string(" for side ")+sidestr+std::string(" : ");
 	} else {
-		return std::string("not initialized ai with id=[")+cfg_["id"]+std::string("] for side ")+sidestr+std::string(" : ");
+		return std::string("not initialized ai with id=[")+cfg_[str_id]+std::string("] for side ")+sidestr+std::string(" : ");
 	}
 }
 
@@ -265,13 +265,13 @@ const std::string holder::get_ai_overview()
 	auto plsk = this->ai_->get_passive_leader_shares_keep();
 	// In order to display booleans as yes/no rather than 1/0 or true/false
 	config cfg;
-	cfg["allow_ally_villages"] = this->ai_->get_allow_ally_villages();
-	cfg["simple_targeting"] = this->ai_->get_simple_targeting();
-	cfg["support_villages"] = this->ai_->get_support_villages();
+	cfg[str_allow_ally_villages] = this->ai_->get_allow_ally_villages();
+	cfg[str_simple_targeting] = this->ai_->get_simple_targeting();
+	cfg[str_support_villages] = this->ai_->get_support_villages();
 	std::stringstream s;
 	s << "advancements:  " << this->ai_->get_advancements().get_value() << std::endl;
 	s << "aggression:  " << this->ai_->get_aggression() << std::endl;
-	s << "allow_ally_villages:  " << cfg["allow_ally_villages"] << std::endl;
+	s << "allow_ally_villages:  " << cfg[str_allow_ally_villages] << std::endl;
 	s << "caution:  " << this->ai_->get_caution() << std::endl;
 	s << "grouping:  " << this->ai_->get_grouping() << std::endl;
 	s << "leader_aggression:  " << this->ai_->get_leader_aggression() << std::endl;
@@ -290,8 +290,8 @@ const std::string holder::get_ai_overview()
 	s << "retreat_enemy_weight:  " << this->ai_->get_retreat_enemy_weight() << std::endl;
 	s << "retreat_factor:  " << this->ai_->get_retreat_factor() << std::endl;
 	s << "scout_village_targeting:  " << this->ai_->get_scout_village_targeting() << std::endl;
-	s << "simple_targeting:  " << cfg["simple_targeting"] << std::endl;
-	s << "support_villages:  " << cfg["support_villages"] << std::endl;
+	s << "simple_targeting:  " << cfg[str_simple_targeting] << std::endl;
+	s << "support_villages:  " << cfg[str_support_villages] << std::endl;
 	s << "village_value:  " << this->ai_->get_village_value() << std::endl;
 	s << "villages_per_scout:  " << this->ai_->get_villages_per_scout() << std::endl;
 
@@ -308,7 +308,7 @@ const std::string holder::get_ai_structure()
 
 const std::string holder::get_ai_identifier() const
 {
-	return cfg_["id"];
+	return cfg_[str_id];
 }
 
 component* holder::get_component(component *root, const std::string &path) {
@@ -552,7 +552,7 @@ const std::string manager::internal_evaluate_command( side_number side, const st
 			side = std::stoi(cmd.at(1));
 			std::string file = cmd.at(2);
 			if (add_ai_for_side_from_file(side,file,false)){
-				return std::string("AI MANAGER: added [")+manager::get_active_ai_identifier_for_side(side)+std::string("] AI for side ")+std::to_string(side)+std::string(" from file ")+file;
+				return std::string("AI MANAGER: added [str_)+manager::get_active_ai_identifier_for_side(side)+std::string(] AI for side ")+std::to_string(side)+std::string(" from file ")+file;
 			} else {
 				return std::string("AI MANAGER: failed attempt to add AI for side ")+std::to_string(side)+std::string(" from file ")+file;
 			}
@@ -562,7 +562,7 @@ const std::string manager::internal_evaluate_command( side_number side, const st
 			side = std::stoi(cmd.at(1));
 			std::string file = cmd.at(2);
 			if (add_ai_for_side_from_file(side,file,true)){
-					return std::string("AI MANAGER: added [")+manager::get_active_ai_identifier_for_side(side)+std::string("] AI for side ")+std::to_string(side)+std::string(" from file ")+file;
+					return std::string("AI MANAGER: added [str_)+manager::get_active_ai_identifier_for_side(side)+std::string(] AI for side ")+std::to_string(side)+std::string(" from file ")+file;
 			} else {
 					return std::string("AI MANAGER: failed attempt to add AI for side ")+std::to_string(side)+std::string(" from file ")+file;
 			}

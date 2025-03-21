@@ -64,8 +64,8 @@ void editor_palette<Item>::expand_palette_groups_menu(std::vector<config>& items
 		}
 
 		groups.emplace_back(
-			"label", groupname,
-			"icon", img
+			str_label, groupname,
+			str_icon, img
 		);
 	}
 

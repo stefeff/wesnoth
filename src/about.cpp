@@ -50,14 +50,14 @@ credits_group::credits_group(const config& cfg, bool is_campaign_credits)
 	, header()
 {
 	if(is_campaign_credits) {
-		id = cfg["id"].str();
-		header = cfg["name"].t_str();
+		id = cfg[str_id].str();
+		header = cfg[str_name].t_str();
 	}
 
-	sections.reserve(cfg.child_count("about"));
+	sections.reserve(cfg.child_count(str_about));
 
-	for(const config& about : cfg.child_range("about")) {
-		if(!about.has_child("entry")) {
+	for(const config& about : cfg.child_range(str_about)) {
+		if(!about.has_child(str_entry)) {
 			continue;
 		}
 
@@ -70,19 +70,19 @@ credits_group::credits_group(const config& cfg, bool is_campaign_credits)
 		}
 	}
 
-	if(cfg["sort"].to_bool(false)) {
+	if(cfg[str_sort].to_bool(false)) {
 		std::sort(sections.begin(), sections.end());
 	}
 }
 
 credits_group::about_group::about_group(const config& cfg)
 	: names()
-	, title(cfg["title"].t_str())
+	, title(cfg[str_title].t_str())
 {
-	names.reserve(cfg.child_count("entry"));
+	names.reserve(cfg.child_count(str_entry));
 
-	for(const config& entry : cfg.child_range("entry")) {
-		names.emplace_back(font::escape_text(entry["name"].str()), font::escape_text(entry["comment"].str()));
+	for(const config& entry : cfg.child_range(str_entry)) {
+		names.emplace_back(font::escape_text(entry[str_name].str()), font::escape_text(entry[str_comment].str()));
 	}
 }
 
@@ -128,8 +128,8 @@ void set_about(const game_config_view& cfg)
 	//
 	// Parse all [credits_group] tags
 	//
-	for(const config& group : cfg.child_range("credits_group")) {
-		if(group.has_child("about")) {
+	for(const config& group : cfg.child_range(str_credits_group)) {
+		if(group.has_child(str_about)) {
 			parsed_credits_data.emplace_back(group, false);
 
 			// Not in the credits_group since we don't want to inadvertently
@@ -142,8 +142,8 @@ void set_about(const game_config_view& cfg)
 	// Parse all toplevel [about] tags.
 	//
 	config misc;
-	for(const config& about : cfg.child_range("about")) {
-		misc.add_child("about", about);
+	for(const config& about : cfg.child_range(str_about)) {
+		misc.add_child(str_about, about);
 	}
 
 	if(!misc.empty()) {
@@ -153,8 +153,8 @@ void set_about(const game_config_view& cfg)
 	//
 	// Parse all campaign [about] tags.
 	//
-	for(const config& campaign : cfg.child_range("campaign")) {
-		if(campaign.has_child("about")) {
+	for(const config& campaign : cfg.child_range(str_campaign)) {
+		if(campaign.has_child(str_about)) {
 			parsed_credits_data.emplace_back(campaign, true);
 		}
 	}

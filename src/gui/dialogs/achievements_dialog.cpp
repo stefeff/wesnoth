@@ -64,7 +64,7 @@ void achievements_dialog::pre_show(window& win)
 		}
 
 		// populate all possibilities into the dropdown
-		content_list.emplace_back("label", list.display_name_);
+		content_list.emplace_back(str_label, list.display_name_);
 	}
 
 	if(content_list.size() > 0) {
@@ -96,7 +96,7 @@ void achievements_dialog::set_achievements_row()
 		widget_data row;
 		widget_item item;
 
-		item["label"] = !ach.achieved_ ? ach.icon_ : ach.icon_completed_;
+		item[str_label] = !ach.achieved_ ? ach.icon_ : ach.icon_completed_;
 		row.emplace("icon", item);
 
 		if(!ach.achieved_) {
@@ -104,17 +104,17 @@ void achievements_dialog::set_achievements_row()
 			if(ach.max_progress_ != 0 && ach.current_progress_ != -1) {
 				name += " ("+std::to_string(ach.current_progress_)+"/"+std::to_string(ach.max_progress_)+")";
 			}
-			item["label"] = name;
+			item[str_label] = name;
 		} else {
-			item["label"] = ach.name_completed_;
-			item["definition"] = "gold_large";
+			item[str_label] = ach.name_completed_;
+			item[str_definition] = "gold_large";
 		}
 		row.emplace("name", item);
 
 		if(!ach.achieved_) {
-			item["label"] = ach.description_;
+			item[str_label] = ach.description_;
 		} else {
-			item["label"] = "<span color='green'>"+ach.description_completed_+"</span>";
+			item[str_label] = "<span color='green'>"+ach.description_completed_+"</span>";
 		}
 		row.emplace("description", item);
 

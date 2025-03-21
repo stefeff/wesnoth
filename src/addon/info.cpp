@@ -60,96 +60,96 @@ namespace {
 
 void addon_info_translation::read(const config& cfg)
 {
-	supported = cfg["supported"].to_bool(true);
-	title = cfg["title"].str();
-	description = cfg["description"].str();
+	supported = cfg[str_supported].to_bool(true);
+	title = cfg[str_title].str();
+	description = cfg[str_description].str();
 }
 
 void addon_info_translation::write(config& cfg) const
 {
-	cfg["supported"] = supported;
-	cfg["title"] = title;
-	cfg["description"] = description;
+	cfg[str_supported] = supported;
+	cfg[str_title] = title;
+	cfg[str_description] = description;
 }
 
 void addon_info::read(const config& cfg)
 {
-	id = cfg["name"].str();
-	title = cfg["title"].str();
-	description = cfg["description"].str();
-	icon = cfg["icon"].str();
-	current_version = cfg["version"].str();
-	versions.emplace(cfg["version"].str());
-	author = cfg["author"].str();
-	size = cfg["size"];
-	downloads = cfg["downloads"];
-	uploads = cfg["uploads"];
-	type = get_addon_type(cfg["type"].str());
+	id = cfg[str_name].str();
+	title = cfg[str_title].str();
+	description = cfg[str_description].str();
+	icon = cfg[str_icon].str();
+	current_version = cfg[str_version].str();
+	versions.emplace(cfg[str_version].str());
+	author = cfg[str_author].str();
+	size = cfg[str_size];
+	downloads = cfg[str_downloads];
+	uploads = cfg[str_uploads];
+	type = get_addon_type(cfg[str_type].str());
 
-	for(const config& version : cfg.child_range("version")) {
-		versions.emplace(version["version"].str());
+	for(const config& version : cfg.child_range(str_version)) {
+		versions.emplace(version[str_version].str());
 	}
 
-	const config::const_child_itors& locales_as_configs = cfg.child_range("translation");
+	const config::const_child_itors& locales_as_configs = cfg.child_range(str_translation);
 
 	for(const config& locale : locales_as_configs) {
-		if(locale["supported"].to_bool(true))
-			locales.emplace_back(locale["language"].str());
-		info_translations.emplace(locale["language"].str(), addon_info_translation(locale));
+		if(locale[str_supported].to_bool(true))
+			locales.emplace_back(locale[str_language].str());
+		info_translations.emplace(locale[str_language].str(), addon_info_translation(locale));
 	}
 
-	core = cfg["core"].str();
-	depends = utils::split(cfg["dependencies"].str());
-	tags = utils::split(cfg["tags"].str());
-	feedback_url = cfg["feedback_url"].str();
+	core = cfg[str_core].str();
+	depends = utils::split(cfg[str_dependencies].str());
+	tags = utils::split(cfg[str_tags].str());
+	feedback_url = cfg[str_feedback_url].str();
 
-	updated = cfg["timestamp"].to_time_t();
-	created = cfg["original_timestamp"].to_time_t();
+	updated = cfg[str_timestamp].to_time_t();
+	created = cfg[str_original_timestamp].to_time_t();
 
-	local_only = cfg["local_only"].to_bool();
+	local_only = cfg[str_local_only].to_bool();
 }
 
 void addon_info::write(config& cfg) const
 {
-	cfg["id"] = id;
-	cfg["title"] = title;
-	cfg["description"] = description;
-	cfg["icon"] = icon;
-	cfg["version"] = current_version.str();
-	cfg["author"] = author;
-	cfg["size"] = size;
-	cfg["downloads"] = downloads;
-	cfg["uploads"] = uploads;
-	cfg["type"] = get_addon_type_string(type);
+	cfg[str_id] = id;
+	cfg[str_title] = title;
+	cfg[str_description] = description;
+	cfg[str_icon] = icon;
+	cfg[str_version] = current_version.str();
+	cfg[str_author] = author;
+	cfg[str_size] = size;
+	cfg[str_downloads] = downloads;
+	cfg[str_uploads] = uploads;
+	cfg[str_type] = get_addon_type_string(type);
 
 	for(const version_info& version : versions) {
-		config& version_cfg = cfg.add_child("version");
-		version_cfg["version"] = version.str();
+		config& version_cfg = cfg.add_child(str_version);
+		version_cfg[str_version] = version.str();
 	}
 
 	for(const auto& element : info_translations) {
-		config& locale = cfg.add_child("translation");
-		locale["language"] = element.first;
+		config& locale = cfg.add_child(str_translation);
+		locale[str_language] = element.first;
 		element.second.write(locale);
 	}
 
-	cfg["core"] = core;
-	cfg["dependencies"] = utils::join(depends);
-	cfg["tags"] = utils::join(tags);
-	cfg["feedback_url"] = feedback_url;
+	cfg[str_core] = core;
+	cfg[str_dependencies] = utils::join(depends);
+	cfg[str_tags] = utils::join(tags);
+	cfg[str_feedback_url] = feedback_url;
 
-	cfg["timestamp"] = updated;
-	cfg["original_timestamp"] = created;
+	cfg[str_timestamp] = updated;
+	cfg[str_original_timestamp] = created;
 }
 
 void addon_info::write_minimal(config& cfg) const
 {
-	cfg["version"] = current_version.str();
-	cfg["uploads"] = uploads;
-	cfg["type"] = get_addon_type_string(type);
-	cfg["title"] = title;
-	cfg["dependencies"] = utils::join(depends);
-	cfg["core"] = core;
+	cfg[str_version] = current_version.str();
+	cfg[str_uploads] = uploads;
+	cfg[str_type] = get_addon_type_string(type);
+	cfg[str_title] = title;
+	cfg[str_dependencies] = utils::join(depends);
+	cfg[str_core] = core;
 }
 
 std::string addon_info::display_title() const
@@ -295,9 +295,9 @@ void read_addons_list(const config& cfg, addons_list& dest)
 
 	/** @todo FIXME: get rid of this legacy "campaign"/"campaigns" silliness
 	 */
-	const config::const_child_itors &addon_cfgs = cfg.child_range("campaign");
+	const config::const_child_itors &addon_cfgs = cfg.child_range(str_campaign);
 	for(const config& addon_cfg : addon_cfgs) {
-		const std::string& id = addon_cfg["name"].str();
+		const std::string& id = addon_cfg[str_name].str();
 		if(dest.find(id) != dest.end()) {
 			ERR_AC << "add-ons list has multiple entries for '" << id << "', not good; ignoring them";
 			continue;

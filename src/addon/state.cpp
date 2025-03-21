@@ -43,8 +43,8 @@ addon_tracking_info get_addon_tracking_info(const addon_info& addon)
 				// Just grabbing the version, no need to validate.
 				config pbl = get_addon_pbl_info(id, false);
 
-				if(pbl.has_attribute("version")) {
-					t.installed_version = pbl["version"].str();
+				if(pbl.has_attribute(str_version)) {
+					t.installed_version = pbl[str_version].str();
 				} else {
 					t.installed_version = get_addon_version_info(id);
 				}

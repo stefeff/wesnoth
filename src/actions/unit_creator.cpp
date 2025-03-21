@@ -105,15 +105,15 @@ unit_creator& unit_creator::allow_add_to_recall(bool b)
 map_location unit_creator::find_location(const config &cfg, const unit* pass_check)
 {
 
-	DBG_NG << "finding location for unit with id=["<<cfg["id"]<<"] placement=["<<cfg["placement"]<<"] x=["<<cfg["x"]<<"] y=["<<cfg["y"]<<"] for side " << team_.side();
+	DBG_NG << "finding location for unit with id=["<<cfg[str_id]<<"] placement=["<<cfg[str_placement]<<"] x=["<<cfg[str_x]<<"] y=["<<cfg[str_y]<<"] for side " << team_.side();
 
-	std::vector<std::string> placements = utils::split(cfg["placement"]);
+	std::vector<std::string> placements = utils::split(cfg[str_placement]);
 
 	placements.push_back("map");
 	placements.push_back("recall");
 
-	bool pass = cfg["passable"].to_bool(false);
-	bool vacant = !cfg["overwrite"].to_bool(false);
+	bool pass = cfg[str_passable].to_bool(false);
+	bool vacant = !cfg[str_overwrite].to_bool(false);
 
 	for (const std::string& place : placements)
 	{
@@ -139,8 +139,8 @@ map_location unit_creator::find_location(const config &cfg, const unit* pass_che
 
 		// "map", "map_passable", and "map_overwrite".
 		else if(place == "map"  ||  place == "map_passable" || place == "map_overwrite") {
-			if(cfg.has_attribute("location_id")) {
-				loc = board_->map().special_location(cfg["location_id"]);
+			if(cfg.has_attribute(str_location_id)) {
+				loc = board_->map().special_location(cfg[str_location_id]);
 			}
 			if(!loc.valid()) {
 				loc = map_location(cfg, resources::gamedata);
@@ -173,12 +173,12 @@ map_location unit_creator::find_location(const config &cfg, const unit* pass_che
 void unit_creator::add_unit(const config &cfg, const vconfig* vcfg)
 {
 	config temp_cfg(cfg);
-	temp_cfg["side"] = team_.side();
+	temp_cfg[str_side] = team_.side();
 
-	const std::string& id =(cfg)["id"];
-	bool animate = temp_cfg["animate"].to_bool();
-	bool fire_event = temp_cfg["fire_event"].to_bool(true);
-	temp_cfg.remove_attribute("animate");
+	const std::string& id =(cfg)[str_id];
+	bool animate = temp_cfg[str_animate].to_bool();
+	bool fire_event = temp_cfg[str_fire_event].to_bool(true);
+	temp_cfg.remove_attribute(str_animate);
 
 	unit_ptr recall_list_element = team_.recall_list().find_if_matches_id(id);
 
@@ -209,7 +209,7 @@ void unit_creator::add_unit(const config &cfg, const vconfig* vcfg)
 			post_create(loc,*(board_->units().find(loc)),animate,fire_event);
 		}
 		else if ( add_to_recall_ ) {
-			LOG_NG << "wanted to insert unit on recall list, but recall list for side " << (cfg)["side"] << "already contains id=" <<id;
+			LOG_NG << "wanted to insert unit on recall list, but recall list for side " << (cfg)[str_side] << "already contains id=" <<id;
 			return;
 		}
 	}

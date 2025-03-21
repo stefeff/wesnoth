@@ -81,7 +81,7 @@ bool select_campaign(saved_game& state, jump_to_campaign_info jump_to_campaign)
 
 			// Checking for valid campaign name
 			const auto campaign = std::find_if(campaigns.begin(), campaigns.end(), [&jump_to_campaign](ng::create_engine::level_ptr level) {
-				return level->data()["id"] == jump_to_campaign.campaign_id;
+				return level->data()[str_id] == jump_to_campaign.campaign_id;
 			});
 
 			// Didn't find a campaign with that id
@@ -112,7 +112,7 @@ bool select_campaign(saved_game& state, jump_to_campaign_info jump_to_campaign)
 
 		if(!jump_to_campaign.scenario_id.empty()) {
 			state.set_carryover_sides_start(
-				config {"next_scenario", jump_to_campaign.scenario_id}
+				config {str_next_scenario, jump_to_campaign.scenario_id}
 			);
 		}
 

@@ -49,7 +49,7 @@ recall_action::recall_action(const unit_const_ptr recalled, const map_location& 
 recall_action::recall_action(const config & cfg, const map_location & from)
 	: undo_action(cfg)
 	, shroud_clearing_action(cfg)
-	, id(cfg["id"])
+	, id(cfg[str_id])
 	, recall_from(from)
 {}
 
@@ -61,8 +61,8 @@ void recall_action::write(config & cfg) const
 	undo_action::write(cfg);
 	shroud_clearing_action::write(cfg);
 
-	recall_from.write(cfg.add_child("leader"));
-	cfg["id"] = id;
+	recall_from.write(cfg.add_child(str_leader));
+	cfg[str_id] = id;
 }
 
 /**

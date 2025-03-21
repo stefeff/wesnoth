@@ -29,6 +29,21 @@
 namespace actions
 {
 
+static const utils::interned_string str_first{"first"};
+static const utils::interned_string str_second{"second"};
+static const utils::interned_string str_unit_id_diff{"unit_id_diff"};
+
+static const utils::interned_string str_filter{"filter"};
+static const utils::interned_string str_filter_second{"filter_second"};
+static const utils::interned_string str_data{"data"};
+static const utils::interned_string str_command{"command"};
+static const utils::interned_string str_filter_x{"filter_x"};
+static const utils::interned_string str_filter_y{"filter_y"};
+static const utils::interned_string str_underlying_id{"underlying_id"};
+static const utils::interned_string str_id{"id"};
+static const utils::interned_string str_x{"x"};
+static const utils::interned_string str_y{"y"};
+
 undo_event::undo_event(int fcn_idx, const config& args, const game_events::queued_event& ctx)
 	: lua_idx(fcn_idx)
 	, commands(args)
@@ -73,14 +88,14 @@ undo_event::undo_event(const config& cmds, const game_events::queued_event& ctx)
 undo_event::undo_event(const config& first, const config& second, const config& weapons, const config& cmds)
 	: commands(cmds)
 	, data(weapons)
-	, loc1(first["x"], first["y"], wml_loc())
-	, loc2(second["x"], second["y"], wml_loc())
-	, filter_loc1(first["filter_x"], first["filter_y"], wml_loc())
-	, filter_loc2(second["filter_x"], second["filter_y"], wml_loc())
-	, uid1(first["underlying_id"])
-	, uid2(second["underlying_id"])
-	, id1(first["id"])
-	, id2(second["id"])
+	, loc1(first[str_x], first[str_y], wml_loc())
+	, loc2(second[str_x], second[str_y], wml_loc())
+	, filter_loc1(first[str_filter_x], first[str_filter_y], wml_loc())
+	, filter_loc2(second[str_filter_x], second[str_filter_y], wml_loc())
+	, uid1(first[str_underlying_id])
+	, uid2(second[str_underlying_id])
+	, id1(first[str_id])
+	, id2(second[str_id])
 {
 }
 
@@ -102,7 +117,7 @@ undo_action::undo_action()
 
 undo_action::undo_action(const config& cfg)
 	: undo_action_base()
-	, unit_id_diff(cfg["unit_id_diff"])
+	, unit_id_diff(cfg[str_unit_id_diff])
 {
 	read_event_vector(umc_commands_undo, cfg, "undo_actions");
 }
@@ -136,8 +151,8 @@ namespace {
 			u2.reset(new scoped_xy_unit("unit", who->get_location(), resources::gameboard->units()));
 		}
 
-		scoped_weapon_info w1("weapon", e.data.optional_child("first"));
-		scoped_weapon_info w2("second_weapon", e.data.optional_child("second"));
+		scoped_weapon_info w1("weapon", e.data.optional_child(str_first));
+		scoped_weapon_info w2("second_weapon", e.data.optional_child(str_second));
 
 		game_events::queued_event q(tag, "", map_location(x1, y1, wml_loc()), map_location(x2, y2, wml_loc()), e.data);
 		if(e.lua_idx.has_value()) {
@@ -163,7 +178,7 @@ void undo_action::execute_undo_umc_wml()
 
 void undo_action::write(config & cfg) const
 {
-	cfg["unit_id_diff"] = unit_id_diff;
+	cfg[str_unit_id_diff] = unit_id_diff;
 	write_event_vector(umc_commands_undo, cfg, "undo_actions");
 	undo_action_base::write(cfg);
 }
@@ -171,7 +186,7 @@ void undo_action::write(config & cfg) const
 void undo_action::read_event_vector(event_vector& vec, const config& cfg, const std::string& tag)
 {
 	for(auto c : cfg.child_range(tag)) {
-		vec.emplace_back(c.child_or_empty("filter"), c.child_or_empty("filter_second"), c.child_or_empty("data"), c.child_or_empty("command"));
+		vec.emplace_back(c.child_or_empty(str_filter), c.child_or_empty(str_filter_second), c.child_or_empty(str_data), c.child_or_empty(str_command));
 	}
 }
 
@@ -184,24 +199,24 @@ void undo_action::write_event_vector(const event_vector& vec, config& cfg, const
 			continue;
 		}
 		config& entry = cfg.add_child(tag);
-		config& first = entry.add_child("filter");
-		config& second = entry.add_child("filter_second");
-		entry.add_child("data", evt.data);
-		entry.add_child("command", evt.commands);
+		config& first = entry.add_child(str_filter);
+		config& second = entry.add_child(str_filter_second);
+		entry.add_child(str_data, evt.data);
+		entry.add_child(str_command, evt.commands);
 		// First location
-		first["filter_x"] = evt.filter_loc1.wml_x();
-		first["filter_y"] = evt.filter_loc1.wml_y();
-		first["underlying_id"] = evt.uid1;
-		first["id"] = evt.id1;
-		first["x"] = evt.loc1.wml_x();
-		first["y"] = evt.loc1.wml_y();
+		first[str_filter_x] = evt.filter_loc1.wml_x();
+		first[str_filter_y] = evt.filter_loc1.wml_y();
+		first[str_underlying_id] = evt.uid1;
+		first[str_id] = evt.id1;
+		first[str_x] = evt.loc1.wml_x();
+		first[str_y] = evt.loc1.wml_y();
 		// Second location
-		second["filter_x"] = evt.filter_loc2.wml_x();
-		second["filter_y"] = evt.filter_loc2.wml_y();
-		second["underlying_id"] = evt.uid2;
-		second["id"] = evt.id2;
-		second["x"] = evt.loc2.wml_x();
-		second["y"] = evt.loc2.wml_y();
+		second[str_filter_x] = evt.filter_loc2.wml_x();
+		second[str_filter_y] = evt.filter_loc2.wml_y();
+		second[str_underlying_id] = evt.uid2;
+		second[str_id] = evt.id2;
+		second[str_x] = evt.loc2.wml_x();
+		second[str_y] = evt.loc2.wml_y();
 	}
 }
 

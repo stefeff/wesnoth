@@ -34,8 +34,8 @@ base_candidate_action::base_candidate_action(const std::string& name,
 		function_symbol_table* function_table) :
 	name_(name),
 	type_(type),
-	eval_(new formula(cfg["evaluation"], function_table)),
-	action_(new formula(cfg["action"], function_table)),
+	eval_(new formula(cfg[str_evaluation], function_table)),
+	action_(new formula(cfg[str_action], function_table)),
 	score_(0)
 {}
 
@@ -62,7 +62,7 @@ candidate_action_with_filters::candidate_action_with_filters(
 	: base_candidate_action(name, type, cfg, function_table)
 	, filter_map_()
 {
-	auto filter_params = cfg.optional_child("filter");
+	auto filter_params = cfg.optional_child(str_filter);
 
 	if( filter_params ) {
 		for(const config::attribute& filter_param : filter_params->attribute_range())

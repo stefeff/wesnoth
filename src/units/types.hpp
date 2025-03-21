@@ -121,7 +121,7 @@ public:
 
 	/** Returns two iterators pointing to a range of AMLA configs. */
 	config::const_child_itors modification_advancements() const
-	{ return get_cfg().child_range("advancement"); }
+	{ return get_cfg().child_range(str_advancement); }
 
 	/**
 	 * Returns a gendered variant of this unit_type.
@@ -180,9 +180,9 @@ public:
 	const std::string& icon() const { return icon_; }
 	const std::string &small_profile() const { return small_profile_; }
 	const std::string &big_profile() const { return profile_; }
-	std::string halo() const { return get_cfg()["halo"]; }
-	std::string ellipse() const { return get_cfg()["ellipse"]; }
-	bool generate_name() const { return get_cfg()["generate_name"].to_bool(true); }
+	std::string halo() const { return get_cfg()[str_halo]; }
+	std::string ellipse() const { return get_cfg()[str_ellipse]; }
+	bool generate_name() const { return get_cfg()[str_generate_name].to_bool(true); }
 	const std::vector<unit_animation>& animations() const;
 
 	const std::string& flag_rgb() const;
@@ -231,16 +231,16 @@ public:
 	std::vector<std::string> get_ability_list() const;
 
 	config::const_child_itors possible_traits() const
-	{ return possible_traits_.child_range("trait"); }
+	{ return possible_traits_.child_range(str_trait); }
 
 	const config& abilities_cfg() const
-	{ return get_cfg().child_or_empty("abilities"); }
+	{ return get_cfg().child_or_empty(str_abilities); }
 
 	config::const_child_itors advancements() const
-	{ return get_cfg().child_range("advancement"); }
+	{ return get_cfg().child_range(str_advancement); }
 
 	config::const_child_itors events() const
-	{ return get_cfg().child_range("event"); }
+	{ return get_cfg().child_range(str_event); }
 
 	bool has_random_traits() const;
 
@@ -271,7 +271,7 @@ public:
 	bool show_variations_in_help() const;
 
 	/** Returns the ID of this type's race without the need to build the type. */
-	std::string race_id() const { return get_cfg()["race"]; } //race_->id(); }
+	std::string race_id() const { return get_cfg()[str_race]; } //race_->id(); }
 	/**
 	 * Never returns nullptr, but may point to the null race.
 	 * Requires building to the HELP_INDEXED status to get the correct race.
@@ -395,7 +395,7 @@ public:
 
 	const unit_type_map &types() const { return types_; }
 	const race_map &races() const { return races_; }
-	config_array_view traits() const { return units_cfg().child_range("trait"); }
+	config_array_view traits() const { return units_cfg().child_range(str_trait); }
 	void set_config(const game_config_view &cfg);
 
 	/** Finds a unit_type by its id() and makes sure it is built to the specified level. */

@@ -85,27 +85,6 @@ static bool check_side_number(const team &t, const std::string &str)
 		return false;
 }
 
-namespace
-{
-static const std::string str_side_in{"side_in"};
-static const std::string str_side{"side"};
-static const std::string str_team_name{"team_name"};
-static const std::string str_has_unit{"has_unit"};
-static const std::string str_search_recall_list{"search_recall_list"};
-static const std::string str_this_unit{"this_unit"};
-static const std::string str_enemy_of{"enemy_of"};
-static const std::string str_allied_with{"allied_with"};
-static const std::string str_has_enemy{"has_enemy"};
-static const std::string str_has_ally{"has_ally"};
-static const std::string str_controller{"controller"};
-static const std::string str_formula{"formula"};
-static const std::string str_lua_function{"lua_function"};
-
-static const std::string str_and{"and"};
-static const std::string str_or{"or"};
-static const std::string str_not{"not"};
-}
-
 bool side_filter::match_internal(const team &t) const
 {
 	assert(fc_);

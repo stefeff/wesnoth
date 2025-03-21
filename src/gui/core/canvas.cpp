@@ -46,14 +46,14 @@ namespace gui2
 
 line_shape::line_shape(const config& cfg)
 	: shape(cfg)
-	, x1_(cfg["x1"])
-	, y1_(cfg["y1"])
-	, x2_(cfg["x2"])
-	, y2_(cfg["y2"])
-	, color_(cfg["color"])
-	, thickness_(cfg["thickness"])
+	, x1_(cfg[str_x1])
+	, y1_(cfg[str_y1])
+	, x2_(cfg[str_x2])
+	, y2_(cfg[str_y2])
+	, color_(cfg[str_color])
+	, thickness_(cfg[str_thickness])
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Line: found debug message '" << debug << "'.";
 	}
@@ -83,16 +83,16 @@ void line_shape::draw(wfl::map_formula_callable& variables)
 
 rectangle_shape::rectangle_shape(const config& cfg)
 	: rect_bounded_shape(cfg)
-	, border_thickness_(cfg["border_thickness"])
-	, border_color_(cfg["border_color"], color_t::null_color())
-	, fill_color_(cfg["fill_color"], color_t::null_color())
+	, border_thickness_(cfg[str_border_thickness])
+	, border_color_(cfg[str_border_color], color_t::null_color())
+	, fill_color_(cfg[str_fill_color], color_t::null_color())
 {
 	// Check if a raw color string evaluates to a null color.
 	if(!border_color_.has_formula() && border_color_().null()) {
 		border_thickness_ = 0;
 	}
 
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Rectangle: found debug message '" << debug << "'.";
 	}
@@ -144,17 +144,17 @@ void rectangle_shape::draw(wfl::map_formula_callable& variables)
 
 round_rectangle_shape::round_rectangle_shape(const config& cfg)
 	: rect_bounded_shape(cfg)
-	, r_(cfg["corner_radius"])
-	, border_thickness_(cfg["border_thickness"])
-	, border_color_(cfg["border_color"], color_t::null_color())
-	, fill_color_(cfg["fill_color"], color_t::null_color())
+	, r_(cfg[str_corner_radius])
+	, border_thickness_(cfg[str_border_thickness])
+	, border_color_(cfg[str_border_color], color_t::null_color())
+	, fill_color_(cfg[str_fill_color], color_t::null_color())
 {
 	// Check if a raw color string evaluates to a null color.
 	if(!border_color_.has_formula() && border_color_().null()) {
 		border_thickness_ = 0;
 	}
 
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Rounded Rectangle: found debug message '" << debug << "'.";
 	}
@@ -209,14 +209,14 @@ void round_rectangle_shape::draw(wfl::map_formula_callable& variables)
 
 circle_shape::circle_shape(const config& cfg)
 	: shape(cfg)
-	, x_(cfg["x"])
-	, y_(cfg["y"])
-	, radius_(cfg["radius"])
-	, border_color_(cfg["border_color"])
-	, fill_color_(cfg["fill_color"])
-	, border_thickness_(cfg["border_thickness"].to_int(1))
+	, x_(cfg[str_x])
+	, y_(cfg[str_y])
+	, radius_(cfg[str_radius])
+	, border_color_(cfg[str_border_color])
+	, fill_color_(cfg[str_fill_color])
+	, border_thickness_(cfg[str_border_thickness].to_int(1))
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Circle: found debug message '" << debug << "'.";
 	}
@@ -251,16 +251,16 @@ void circle_shape::draw(wfl::map_formula_callable& variables)
 
 image_shape::image_shape(const config& cfg, wfl::action_function_symbol_table& functions)
 	: shape(cfg)
-	, x_(cfg["x"])
-	, y_(cfg["y"])
-	, w_(cfg["w"])
-	, h_(cfg["h"])
-	, image_name_(cfg["name"])
-	, resize_mode_(get_resize_mode(cfg["resize_mode"]))
-	, mirror_(cfg.get_old_attribute("mirror", "vertical_mirror", "image"))
-	, actions_formula_(cfg["actions"], &functions)
+	, x_(cfg[str_x])
+	, y_(cfg[str_y])
+	, w_(cfg[str_w])
+	, h_(cfg[str_h])
+	, image_name_(cfg[str_name])
+	, resize_mode_(get_resize_mode(cfg[str_resize_mode]))
+	, mirror_(cfg.get_old_attribute(str_mirror, str_vertical_mirror, str_image))
+	, actions_formula_(cfg[str_actions], &functions)
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Image: found debug message '" << debug << "'.";
 	}
@@ -397,27 +397,27 @@ image_shape::resize_mode image_shape::get_resize_mode(const std::string& resize_
 
 text_shape::text_shape(const config& cfg)
 	: rect_bounded_shape(cfg)
-	, font_family_(font::str_to_family_class(cfg["font_family"]))
-	, font_size_(cfg["font_size"])
-	, font_style_(decode_font_style(cfg["font_style"]))
-	, text_alignment_(cfg["text_alignment"])
-	, color_(cfg["color"])
-	, text_(cfg["text"])
-	, text_markup_(cfg["text_markup"], false)
-	, link_aware_(cfg["text_link_aware"], false)
-	, link_color_(cfg["text_link_color"], color_t::from_hex_string("ffff00"))
-	, maximum_width_(cfg["maximum_width"], -1)
-	, characters_per_line_(cfg["text_characters_per_line"])
-	, maximum_height_(cfg["maximum_height"], -1)
-	, highlight_start_(cfg["highlight_start"], 0)
-	, highlight_end_(cfg["highlight_end"], 0)
-	, highlight_color_(cfg["highlight_color"], color_t::from_hex_string("215380"))
+	, font_family_(font::str_to_family_class(cfg[str_font_family]))
+	, font_size_(cfg[str_font_size])
+	, font_style_(decode_font_style(cfg[str_font_style]))
+	, text_alignment_(cfg[str_text_alignment])
+	, color_(cfg[str_color])
+	, text_(cfg[str_text])
+	, text_markup_(cfg[str_text_markup], false)
+	, link_aware_(cfg[str_text_link_aware], false)
+	, link_color_(cfg[str_text_link_color], color_t::from_hex_string("ffff00"))
+	, maximum_width_(cfg[str_maximum_width], -1)
+	, characters_per_line_(cfg[str_text_characters_per_line])
+	, maximum_height_(cfg[str_maximum_height], -1)
+	, highlight_start_(cfg[str_highlight_start], 0)
+	, highlight_end_(cfg[str_highlight_end], 0)
+	, highlight_color_(cfg[str_highlight_color], color_t::from_hex_string("215380"))
 {
 	if(!font_size_.has_formula()) {
 		VALIDATE(font_size_(), _("Text has a font size of 0."));
 	}
 
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Text: found debug message '" << debug << "'.";
 	}
@@ -630,7 +630,7 @@ void canvas::parse_cfg(const config& cfg)
 			{
 
 				if(function.key == "blur") {
-					blur_depth_ = function.cfg["depth"];
+					blur_depth_ = function.cfg[str_depth];
 				} else {
 					ERR_GUI_P << "Canvas: found a pre commit function"
 							  << " of an invalid type " << type << ".";

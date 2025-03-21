@@ -26,17 +26,17 @@ namespace schema_validation
 {
 
 wml_key::wml_key(const config& cfg)
-	: name_(cfg["name"].str())
-	, type_(cfg["type"].str())
+	: name_(cfg[str_name].str())
+	, type_(cfg[str_type].str())
 	, default_()
 	, mandatory_(false)
 	, fuzzy_(name_.find_first_of("*?") != std::string::npos)
 {
-	if(cfg.has_attribute("mandatory")) {
-		mandatory_ = cfg["mandatory"].to_bool();
+	if(cfg.has_attribute(str_mandatory)) {
+		mandatory_ = cfg[str_mandatory].to_bool();
 	} else {
-		if(cfg.has_attribute("default")) {
-			default_ = cfg["default"].str();
+		if(cfg.has_attribute(str_default)) {
+			default_ = cfg[str_default].str();
 		}
 	}
 }

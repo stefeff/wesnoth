@@ -120,11 +120,11 @@ void editor_controller::init_gui()
 
 void editor_controller::init_tods(const game_config_view& game_config)
 {
-	for (const config &schedule : game_config.child_range("editor_times")) {
+	for (const config &schedule : game_config.child_range(str_editor_times)) {
 
-		const std::string& schedule_id = schedule["id"];
+		const std::string& schedule_id = schedule[str_id];
 		/* Use schedule id as the name if schedule name is empty */
-		const std::string& schedule_name = schedule["name"].empty() ? schedule["id"] : schedule["name"];
+		const std::string& schedule_name = schedule[str_name].empty() ? schedule[str_id] : schedule[str_name];
 		if (schedule_id.empty()) {
 			ERR_ED << "Missing ID attribute in a TOD Schedule.";
 			continue;
@@ -140,7 +140,7 @@ void editor_controller::init_tods(const game_config_view& game_config)
 			continue;
 		}
 
-		for (const config &time : schedule.child_range("time")) {
+		for (const config &time : schedule.child_range(str_time)) {
 			times->second.second.emplace_back(time);
 		}
 
@@ -159,7 +159,7 @@ void editor_controller::init_music(const game_config_view& game_config)
 	}
 	else {
 		for (const config& editor_music : game_config.child_range(tag_name)) {
-			for (const config& music : editor_music.child_range("music")) {
+			for (const config& music : editor_music.child_range(str_music)) {
 				sound::music_track track(music);
 				if (track.file_path().empty())
 					WRN_ED << "Music track " << track.id() << " not found.";
@@ -726,7 +726,7 @@ bool editor_controller::do_execute_command(const hotkey::ui_command& cmd, bool p
 					sound::play_music_once(music_tracks_[index].id());
 					get_current_map_context().add_to_playlist(music_tracks_[index]);
 					std::vector<config> items;
-					items.emplace_back("id", "editor-playlist");
+					items.emplace_back(str_id, "editor-playlist");
 					std::shared_ptr<gui::button> b = gui_->find_menu_button("menu-playlist");
 					show_menu(items, b->location().x +1, b->location().y + b->height() +1, false, *gui_);
 					return true;
@@ -1132,14 +1132,14 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 
 	std::vector<config> items;
 	for(const auto& c : items_arg) {
-		const std::string& id = c["id"];
+		const std::string& id = c[str_id];
 
 		const hotkey::ui_command cmd = hotkey::ui_command(hotkey::get_hotkey_command(id));
 
 		if((can_execute_command(cmd) && (!context_menu || in_context_menu(cmd)))
 			|| cmd.hotkey_command == hotkey::HOTKEY_NULL)
 		{
-			items.emplace_back("id", id);
+			items.emplace_back(str_id, id);
 		}
 	}
 
@@ -1149,7 +1149,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 	}
 
 	// Based on the ID of the first entry, we fill the menu contextually.
-	const std::string& first_id = items.front()["id"];
+	const std::string& first_id = items.front()[str_id];
 
 	if(first_id == "EDITOR-LOAD-MRU-PLACEHOLDER") {
 		active_menu_ = editor::LOAD_MRU;
@@ -1180,7 +1180,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 		active_menu_ = editor::ADDON;
 	}
 
-	if(!items.empty() && items.front()["id"] == "editor-switch-time") {
+	if(!items.empty() && items.front()[str_id] == "editor-switch-time") {
 		active_menu_ = editor::TIME;
 		context_manager_->expand_time_menu(items, 0);
 	}
@@ -1195,7 +1195,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 		auto pos = items.erase(items.begin());
 		int dir = 0;
 		std::generate_n(std::inserter<std::vector<config>>(items, pos), static_cast<int>(map_location::NDIRECTIONS), [&dir]() -> config {
-			return config {"label", map_location::write_translated_direction(map_location::DIRECTION(dir++))};
+			return config {str_label, map_location::write_translated_direction(map_location::DIRECTION(dir++))};
 		});
 	}
 
@@ -1203,7 +1203,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 		active_menu_ = editor::MUSIC;
 		auto pos = items.erase(items.begin());
 		std::transform(music_tracks_.begin(), music_tracks_.end(), std::inserter<std::vector<config>>(items, pos), [](const sound::music_track& track) -> config {
-			return config {"label", track.title().empty() ? track.id() : track.title()};
+			return config {str_label, track.title().empty() ? track.id() : track.title()};
 		});
 	}
 
@@ -1211,7 +1211,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 		active_menu_ = editor::SCHEDULE;
 		auto pos = items.erase(items.begin());
 		std::transform(tods_.begin(), tods_.end(), std::inserter<std::vector<config>>(items, pos), [](const tods_map::value_type& tod) -> config {
-			return config {"label", tod.second.first};
+			return config {str_label, tod.second.first};
 		});
 	}
 
@@ -1219,7 +1219,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, int xloc
 		active_menu_ = editor::LOCAL_SCHEDULE;
 		auto pos = items.erase(items.begin());
 		std::transform(tods_.begin(), tods_.end(), std::inserter<std::vector<config>>(items, pos), [](const tods_map::value_type& tod) -> config {
-			return config {"label", tod.second.first};
+			return config {str_label, tod.second.first};
 		});
 	}
 

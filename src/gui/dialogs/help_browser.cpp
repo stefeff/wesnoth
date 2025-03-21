@@ -46,7 +46,7 @@ REGISTER_DIALOG(help_browser)
 help_browser::help_browser()
 	: modal_dialog(window_id())
 	, initial_topic_("introduction")
-	, help_cfg_(game_config_manager::get()->game_config().mandatory_child("help"))
+	, help_cfg_(game_config_manager::get()->game_config().mandatory_child(str_help))
 {
 }
 
@@ -62,11 +62,11 @@ void help_browser::pre_show(window& window)
 
 	unsigned id = 0;
 
-	for(const auto& topic : help_cfg_.child_range("topic")) {
+	for(const auto& topic : help_cfg_.child_range(str_topic)) {
 		widget_data data;
 		widget_item item;
 
-		item["label"] = topic["title"];
+		item[str_label] = topic[str_title];
 		data.emplace("topic_name", item);
 
 		topic_tree.add_node("topic", data).set_id(std::to_string(id));
@@ -75,7 +75,7 @@ void help_browser::pre_show(window& window)
 		item.clear();
 		data.clear();
 
-		item["label"] = topic["text"].empty() ? "" : topic["text"].str();
+		item[str_label] = topic[str_text].empty() ? "" : topic[str_text].str();
 		data.emplace("topic_text", item);
 
 		topic_pages.add_page(data);

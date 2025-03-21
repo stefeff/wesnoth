@@ -113,7 +113,7 @@ void editor_display::layout()
 	display::layout();
 
 	config element;
-	config::attribute_value &text = element.add_child("element")["text"];
+	config::attribute_value &text = element.add_child(str_element)[str_text];
 	// Fill in the terrain report
 	if (get_map().on_board_with_border(mouseoverHex_)) {
 		text = get_map().get_terrain_editor_string(mouseoverHex_);

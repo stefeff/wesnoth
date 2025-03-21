@@ -61,40 +61,40 @@ namespace actions {
  */
 undo_action_base * undo_list::create_action(const config & cfg)
 {
-	const std::string str = cfg["type"];
+	const std::string str = cfg[str_type];
 	undo_action_base * res = nullptr;
 	// The general division of labor in this function is that the various
 	// constructors will parse the "unit" child config, while this function
 	// parses everything else.
 
 	if ( str == "move" ) {
-		res = new undo::move_action(cfg, cfg.child_or_empty("unit"),
-		                       cfg["starting_moves"],
-		                       map_location::parse_direction(cfg["starting_direction"]));
+		res = new undo::move_action(cfg, cfg.child_or_empty(str_unit),
+		                       cfg[str_starting_moves],
+		                       map_location::parse_direction(cfg[str_starting_direction]));
 	}
 
 	else if ( str == "recruit" ) {
 		// Validate the unit type.
-		const config & child = cfg.mandatory_child("unit");
-		const unit_type * u_type = unit_types.find(child["type"]);
+		const config & child = cfg.mandatory_child(str_unit);
+		const unit_type * u_type = unit_types.find(child[str_type]);
 
 		if ( !u_type ) {
 			// Bad data.
 			ERR_NG << "Invalid recruit found in [undo] or [redo]; unit type '"
-			       << child["type"] << "' was not found.\n";
+			       << child[str_type] << "' was not found.\n";
 			return nullptr;
 		}
-		res = new undo::recruit_action(cfg, *u_type, map_location(cfg.child_or_empty("leader"), nullptr));
+		res = new undo::recruit_action(cfg, *u_type, map_location(cfg.child_or_empty(str_leader), nullptr));
 	}
 
 	else if ( str == "recall" )
-		res =  new undo::recall_action(cfg, map_location(cfg.child_or_empty("leader"), nullptr));
+		res =  new undo::recall_action(cfg, map_location(cfg.child_or_empty(str_leader), nullptr));
 
 	else if ( str == "dismiss" )
-		res =  new undo::dismiss_action(cfg, cfg.mandatory_child("unit"));
+		res =  new undo::dismiss_action(cfg, cfg.mandatory_child(str_unit));
 
 	else if ( str == "auto_shroud" )
-		res =  new undo::auto_shroud_action(cfg["active"].to_bool());
+		res =  new undo::auto_shroud_action(cfg[str_active].to_bool());
 
 	else if ( str == "update_shroud" )
 		res =  new undo::update_shroud_action();
@@ -270,11 +270,11 @@ void undo_list::new_side_turn(int side)
 void undo_list::read(const config & cfg)
 {
 	// Merge header data.
-	side_ = cfg["side"].to_int(side_);
-	committed_actions_ = committed_actions_ || cfg["committed"].to_bool();
+	side_ = cfg[str_side].to_int(side_);
+	committed_actions_ = committed_actions_ || cfg[str_committed].to_bool();
 
 	// Build the undo stack.
-	for (const config & child : cfg.child_range("undo")) {
+	for (const config & child : cfg.child_range(str_undo)) {
 		try {
 			undo_action_base * action = create_action(child);
 			if ( action ) {
@@ -292,7 +292,7 @@ void undo_list::read(const config & cfg)
 	}
 
 	// Build the redo stack.
-	for (const config & child : cfg.child_range("redo")) {
+	for (const config & child : cfg.child_range(str_redo)) {
 		try {
 			redos_.emplace_back(new config(child));
 		} catch (const bad_lexical_cast &) {
@@ -313,14 +313,14 @@ void undo_list::read(const config & cfg)
  */
 void undo_list::write(config & cfg) const
 {
-	cfg["side"] = side_;
-	cfg["committed"] = committed_actions_;
+	cfg[str_side] = side_;
+	cfg[str_committed] = committed_actions_;
 
 	for ( const auto& action_ptr : undos_)
-		action_ptr->write(cfg.add_child("undo"));
+		action_ptr->write(cfg.add_child(str_undo));
 
 	for ( const auto& cfg_ptr : redos_)
-		cfg.add_child("redo") = *cfg_ptr;
+		cfg.add_child(str_redo) = *cfg_ptr;
 }
 
 
@@ -392,7 +392,7 @@ void undo_list::redo()
 	auto action = std::move(redos_.back());
 	redos_.pop_back();
 
-	auto [commandname, data] = action->mandatory_child("command").all_children_range().front();
+	auto [commandname, data] = action->mandatory_child(str_command).all_children_range().front();
 
 	// Note that this might add more than one [command]
 	resources::recorder->redo(*action);

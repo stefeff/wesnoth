@@ -131,9 +131,9 @@ recruitment::recruitment(rca_context& context, const config& cfg)
 	total_own_units_(0),
 	scouts_wanted_(0)
 {
-	if (cfg["state"] == "save_gold") {
+	if (cfg[str_state] == "save_gold") {
 		state_ = SAVE_GOLD;
-	} else if (cfg["state"] == "spend_all_gold") {
+	} else if (cfg[str_state] == "spend_all_gold") {
 		state_ = SPEND_ALL_GOLD;
 	} else {
 		state_ = NORMAL;
@@ -143,11 +143,11 @@ recruitment::recruitment(rca_context& context, const config& cfg)
 config recruitment::to_config() const {
 	config cfg = candidate_action::to_config();
 	if (state_ == SAVE_GOLD) {
-		cfg["state"] = "save_gold";
+		cfg[str_state] = "save_gold";
 	} else if (state_ == SPEND_ALL_GOLD) {
-		cfg["state"] = "spend_all_gold";
+		cfg[str_state] = "spend_all_gold";
 	} else {
-		cfg["state"] = "normal";
+		cfg[str_state] = "normal";
 	}
 	return cfg;
 }
@@ -362,7 +362,7 @@ void recruitment::execute() {
 
 		// Check if we may want to save gold by not recruiting.
 		update_state();
-		int save_gold_turn = get_recruitment_save_gold()["active"].to_int(2);  // From aspect.
+		int save_gold_turn = get_recruitment_save_gold()[str_active].to_int(2);  // From aspect.
 		int current_turn = resources::tod_manager->turn();
 		bool save_gold_active = save_gold_turn > 0 && save_gold_turn <= current_turn;
 		if (state_ == SAVE_GOLD && save_gold_active) {
@@ -1205,13 +1205,13 @@ config* recruitment::get_most_important_job() {
 	config* most_important_job = nullptr;
 	int most_important_importance = -1;
 	int biggest_number = -1;
-	for (config& job : recruitment_instructions_.child_range("recruit")) {
+	for (config& job : recruitment_instructions_.child_range(str_recruit)) {
 		if (job.empty()) {
 			continue;
 		}
-		int importance = job["importance"].to_int(1);
-		int number = job["number"].to_int(99999);
-		bool total = job["total"].to_bool(false);
+		int importance = job[str_importance].to_int(1);
+		int number = job[str_number].to_int(99999);
+		bool total = job[str_total].to_bool(false);
 		if (total) {
 			// If the total flag is set we have to subtract
 			// all existing units which matches the type.
@@ -1245,8 +1245,8 @@ config* recruitment::get_most_important_job() {
 const std::string recruitment::get_random_pattern_type_if_exists(const data& leader_data,
 		const config* job) const {
 	std::string choosen_type;
-	if (job->operator[]("pattern").to_bool(false)) {
-		std::vector<std::string> job_types = utils::split(job->operator[]("type"));
+	if ((*job)[str_pattern].to_bool(false)) {
+		std::vector<std::string> job_types = utils::split((*job)[str_type]);
 
 		if (job_types.empty()) {
 			// Empty type attribute means random recruiting.
@@ -1305,13 +1305,13 @@ void recruitment::integrate_recruitment_pattern_in_recruitment_instructions() {
 			s  << ", ";
 		}
 	}
-	job["type"] = s.str();
-	job["number"] = 99999;
-	job["pattern"] = true;
-	job["blocker"] = true;
-	job["total"] = false;
-	job["importance"] = 1;
-	recruitment_instructions_.add_child("recruit", job);
+	job[str_type] = s.str();
+	job[str_number] = 99999;
+	job[str_pattern] = true;
+	job[str_blocker] = true;
+	job[str_total] = false;
+	job[str_importance] = 1;
+	recruitment_instructions_.add_child(str_recruit, job);
 }
 
 /**
@@ -1333,7 +1333,7 @@ bool recruitment::leader_matches_job(const data& leader_data, const config* job)
 		return false;
 	}
 
-	std::vector<std::string> ids = utils::split(job->operator[]("leader_id"));
+	std::vector<std::string> ids = utils::split((*job)[str_leader_id]);
 	if (ids.empty()) {
 		// If no leader is specified, all leaders are okay.
 		return true;
@@ -1350,8 +1350,8 @@ bool recruitment::limit_ok(const std::string& recruit) const {
 	// retrieve the aspect again. So the [limit]s can be altered during a turn.
 	const config aspect = get_recruitment_instructions();
 
-	for (const config& limit : aspect.child_range("limit")) {
-		std::vector<std::string> types = utils::split(limit["type"]);
+	for (const config& limit : aspect.child_range(str_limit)) {
+		std::vector<std::string> types = utils::split(limit[str_type]);
 		// First check if the recruit matches one of the types.
 		if (recruit_matches_types(recruit, types)) {
 			// Count all own existing units which matches the type.
@@ -1364,7 +1364,7 @@ bool recruitment::limit_ok(const std::string& recruit) const {
 				}
 			}
 			// Check if we reached the limit.
-			if (count >= limit["max"].to_int(0)) {
+			if (count >= limit[str_max].to_int(0)) {
 				return false;
 			}
 		}
@@ -1378,7 +1378,7 @@ bool recruitment::limit_ok(const std::string& recruit) const {
  */
 bool recruitment::recruit_matches_job(const std::string& recruit, const config* job) const {
 	assert(job);
-	std::vector<std::string> job_types = utils::split(job->operator[]("type"));
+	std::vector<std::string> job_types = utils::split((*job)[str_type]);
 	return recruit_matches_types(recruit, job_types);
 }
 
@@ -1431,7 +1431,7 @@ bool recruitment::recruit_matches_types(const std::string& recruit,
  */
 bool recruitment::remove_job_if_no_blocker(config* job) {
 	assert(job);
-	if ((*job)["blocker"].to_bool(true)) {
+	if ((*job)[str_blocker].to_bool(true)) {
 		LOG_AI_RECRUITMENT << "Canceling job.";
 		job->clear();
 		return true;
@@ -1543,7 +1543,7 @@ void recruitment::update_state() {
 		return;
 	}
 	// Retrieve from aspect.
-	int spend_all_gold = get_recruitment_save_gold()["spend_all_gold"].to_int(-1);
+	int spend_all_gold = get_recruitment_save_gold()[str_spend_all_gold].to_int(-1);
 	if (spend_all_gold > 0 && current_team().gold() >= spend_all_gold) {
 		state_ = SPEND_ALL_GOLD;
 		LOG_AI_RECRUITMENT << "Changed state_ to SPEND_ALL_GOLD.";
@@ -1551,15 +1551,15 @@ void recruitment::update_state() {
 	}
 	double ratio = get_unit_ratio();
 	double income_estimation = 1.;
-	if (!get_recruitment_save_gold()["save_on_negative_income"].to_bool(false)) {
+	if (!get_recruitment_save_gold()[str_save_on_negative_income].to_bool(false)) {
 		income_estimation = get_estimated_income(SAVE_GOLD_FORECAST_TURNS);
 	}
 	LOG_AI_RECRUITMENT << "Ratio is " << ratio;
 	LOG_AI_RECRUITMENT << "Estimated income is " << income_estimation;
 
 	// Retrieve from aspect.
-	double save_gold_begin = get_recruitment_save_gold()["begin"].to_double(1.5);
-	double save_gold_end = get_recruitment_save_gold()["end"].to_double(1.1);
+	double save_gold_begin = get_recruitment_save_gold()[str_begin].to_double(1.5);
+	double save_gold_end = get_recruitment_save_gold()[str_end].to_double(1.1);
 
 	if (state_ == NORMAL && ratio > save_gold_begin && income_estimation > 0) {
 		state_ = SAVE_GOLD;
@@ -1817,26 +1817,26 @@ void recruitment::recruit_situation_change_observer::reset_gamestate_changed() {
 recruitment_aspect::recruitment_aspect(readonly_context &context, const config &cfg, const std::string &id)
 	: standard_aspect<config>(context, cfg, id)
 {
-	config parsed_cfg(cfg.has_child("value") ? cfg.mandatory_child("value") : cfg);
+	config parsed_cfg(cfg.has_child(str_value) ? cfg.mandatory_child(str_value) : cfg);
 	// First, transform simplified tags into [recruit] tags.
-	for (config pattern : parsed_cfg.child_range("pattern")) {
-		parsed_cfg["pattern"] = true;
-		parsed_cfg.add_child("recruit", std::move(pattern));
+	for (config pattern : parsed_cfg.child_range(str_pattern)) {
+		parsed_cfg[str_pattern] = true;
+		parsed_cfg.add_child(str_recruit, std::move(pattern));
 	}
-	for (config total : parsed_cfg.child_range("total")) {
-		parsed_cfg["total"] = true;
-		parsed_cfg.add_child("recruit", std::move(total));
+	for (config total : parsed_cfg.child_range(str_total)) {
+		parsed_cfg[str_total] = true;
+		parsed_cfg.add_child(str_recruit, std::move(total));
 	}
-	parsed_cfg.clear_children("pattern", "total");
+	parsed_cfg.clear_children(str_pattern, str_total);
 	// Then, if there's no [recruit], add one.
-	if (!parsed_cfg.has_child("recruit")) {
-		parsed_cfg.add_child("recruit", config {"importance", 0});
+	if (!parsed_cfg.has_child(str_recruit)) {
+		parsed_cfg.add_child(str_recruit, config {str_importance, 0});
 	}
 	// Finally, populate our lists
-	for (config job : parsed_cfg.child_range("recruit")) {
+	for (config job : parsed_cfg.child_range(str_recruit)) {
 		create_job(jobs_, job);
 	}
-	for (config lim : parsed_cfg.child_range("limit")) {
+	for (config lim : parsed_cfg.child_range(str_limit)) {
 		create_limit(limits_, lim);
 	}
 	std::function<void(std::vector<std::shared_ptr<recruit_job>>&, const config&)> factory_jobs =
@@ -1850,10 +1850,10 @@ recruitment_aspect::recruitment_aspect(readonly_context &context, const config &
 void recruitment_aspect::recalculate() const {
 	config cfg;
 	for (const std::shared_ptr<recruit_job>& job : jobs_) {
-		cfg.add_child("recruit", job->to_config());
+		cfg.add_child(str_recruit, job->to_config());
 	}
 	for (const std::shared_ptr<recruit_limit>& lim : limits_) {
-		cfg.add_child("limit", lim->to_config());
+		cfg.add_child(str_limit, lim->to_config());
 	}
 	*this->value_ = cfg;
 	this->valid_ = true;
@@ -1861,20 +1861,20 @@ void recruitment_aspect::recalculate() const {
 
 void recruitment_aspect::create_job(std::vector<std::shared_ptr<recruit_job>> &jobs, const config &job) {
 	jobs.emplace_back(std::make_shared<recruit_job>(
-		utils::split(job["type"]),
-		job["leader_id"], job["id"],
-		job["number"].to_int(-1), job["importance"].to_int(1),
-		job["total"].to_bool(false),
-		job["blocker"].to_bool(true),
-		job["pattern"].to_bool(true)
+		utils::split(job[str_type]),
+		job[str_leader_id], job[str_id],
+		job[str_number].to_int(-1), job[str_importance].to_int(1),
+		job[str_total].to_bool(false),
+		job[str_blocker].to_bool(true),
+		job[str_pattern].to_bool(true)
 	));
 }
 
 void recruitment_aspect::create_limit(std::vector<std::shared_ptr<recruit_limit>> &limits, const config &lim) {
 	limits.emplace_back(std::make_shared<recruit_limit>(
-		utils::split(lim["type"]),
-		lim["id"],
-		lim["max"].to_int(0)
+		utils::split(lim[str_type]),
+		lim[str_id],
+		lim[str_max].to_int(0)
 	));
 }
 

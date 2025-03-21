@@ -295,7 +295,7 @@ private:
 	 */
 	const config& side_cfg() const
 	{
-		return initial_->child_or_empty("side");
+		return initial_->child_or_empty(str_side);
 	}
 
 	const config& initial_cfg() const

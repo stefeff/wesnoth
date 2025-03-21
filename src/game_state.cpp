@@ -56,13 +56,13 @@ game_state::game_state(const config& level, play_controller& pc)
 	, ai_manager_()
 	, events_manager_(new game_events::manager())
 	, undo_stack_(new actions::undo_list())
-	, player_number_(level["playing_team"].to_int() + 1)
-	, next_player_number_(level["next_player_number"].to_int(player_number_ + 1))
-	, do_healing_(level["do_healing"].to_bool(false))
-	, server_request_number_(level["server_request_number"].to_int())
+	, player_number_(level[str_playing_team].to_int() + 1)
+	, next_player_number_(level[str_next_player_number].to_int(player_number_ + 1))
+	, do_healing_(level[str_do_healing].to_bool(false))
+	, server_request_number_(level[str_server_request_number].to_int())
 {
 	lua_kernel_->load_core();
-	if(auto endlevel_cfg = level.optional_child("end_level_data")) {
+	if(auto endlevel_cfg = level.optional_child(str_end_level_data)) {
 		end_level_data el_data;
 		el_data.read(*endlevel_cfg);
 		el_data.transient.carryover_report = false;
@@ -75,7 +75,7 @@ game_state::~game_state() {}
 static int placing_score(const config& side, const gamemap& map, const map_location& pos)
 {
 	int positions = 0, liked = 0;
-	const t_translation::ter_list terrain = t_translation::read_list(side["terrain_liked"].str());
+	const t_translation::ter_list terrain = t_translation::read_list(side[str_terrain_liked].str());
 
 	for(int i = -8; i != 8; ++i) {
 		for(int j = -8; j != +8; ++j) {
@@ -115,7 +115,7 @@ void game_state::place_sides_in_preferred_locations(const config& level)
 	int num_pos = board_.map().num_valid_starting_positions();
 
 	int side_num = 1;
-	for(const config &side : level.child_range("side"))
+	for(const config &side : level.child_range(str_side))
 	{
 		for(int p = 1; p <= num_pos; ++p) {
 			const map_location& pos = board_.map().starting_position(p);
@@ -147,19 +147,19 @@ void game_state::init(const config& level, play_controller & pc)
 {
 	events_manager_->read_scenario(level, *lua_kernel_);
 	gui2::dialogs::loading_screen::progress(loading_stage::init_teams);
-	if (level["modify_placing"].to_bool()) {
+	if (level[str_modify_placing].to_bool()) {
 		LOG_NG << "modifying placing...";
 		place_sides_in_preferred_locations(level);
 	}
 
 	LOG_NG << "initialized time of day regions... "    << (SDL_GetTicks() - pc.ticks());
-	for (const config &t : level.child_range("time_area")) {
+	for (const config &t : level.child_range(str_time_area)) {
 		tod_manager_.add_time_area(board_.map(),t);
 	}
 
 	LOG_NG << "initialized teams... "    << (SDL_GetTicks() - pc.ticks());
 
-	board_.teams().resize(level.child_count("side"));
+	board_.teams().resize(level.child_count(str_side));
 	if (player_number_ != 1 && player_number_ > static_cast<int>(board_.teams().size())) {
 		ERR_NG << "invalid player number " <<  player_number_ << " #sides=" << board_.teams().size();
 		player_number_ = 1;
@@ -174,7 +174,7 @@ void game_state::init(const config& level, play_controller & pc)
 	team_builders.reserve(board_.teams().size());
 
 	int team_num = 0;
-	for (const config &side : level.child_range("side"))
+	for (const config &side : level.child_range(str_side))
 	{
 		++team_num;
 
@@ -191,7 +191,7 @@ void game_state::init(const config& level, play_controller & pc)
 
 		tod_manager_.resolve_random(*randomness::generator);
 
-		undo_stack_->read(level.child_or_empty("undo_stack"));
+		undo_stack_->read(level.child_or_empty(str_undo_stack));
 
 		for(team_builder& tb : team_builders) {
 			tb.build_team_stage_two();
@@ -220,11 +220,11 @@ void game_state::write(config& cfg) const
 	// dont write this before we fired the (pre)start events
 	// This is the case for the 'replay_start' part of the savegame.
 	if(!in_phase(game_data::INITIAL, game_data::PRELOAD)) {
-		cfg["playing_team"] = player_number_ - 1;
-		cfg["next_player_number"] = next_player_number_;
+		cfg[str_playing_team] = player_number_ - 1;
+		cfg[str_next_player_number] = next_player_number_;
 	}
-	cfg["server_request_number"] = server_request_number_;
-	cfg["do_healing"] = do_healing_;
+	cfg[str_server_request_number] = server_request_number_;
+	cfg[str_do_healing] = do_healing_;
 	//Call the lua save_game functions
 	lua_kernel_->save_game(cfg);
 
@@ -244,10 +244,10 @@ void game_state::write(config& cfg) const
 	gamedata_.write_snapshot(cfg);
 
 	// Preserve the undo stack so that fog/shroud clearing is kept accurate.
-	undo_stack_->write(cfg.add_child("undo_stack"));
+	undo_stack_->write(cfg.add_child(str_undo_stack));
 
 	if(end_level_data_) {
-		end_level_data_->write(cfg.add_child("end_level_data"));
+		end_level_data_->write(cfg.add_child(str_end_level_data));
 	}
 }
 
@@ -425,11 +425,11 @@ private:
 
 void game_state::add_side_wml(config cfg)
 {
-	cfg["side"] = board_.teams().size() + 1;
+	cfg[str_side] = board_.teams().size() + 1;
 	//if we want to also allow setting the controller we must update the server code.
-	cfg["controller"] = side_controller::none;
+	cfg[str_controller] = side_controller::none;
 	//TODO: is this it? are there caches which must be cleared?
 	board_.teams().emplace_back();
-	board_.teams().back().build(cfg, board_.map(), cfg["gold"].to_int());
+	board_.teams().back().build(cfg, board_.map(), cfg[str_gold].to_int());
 	config choice = synced_context::ask_server_choice(add_side_wml_choice());
 }

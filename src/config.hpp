@@ -29,6 +29,7 @@
 #pragma once
 
 #include "config_attribute_value.hpp"
+#include "config_strings.hpp"
 #include "exceptions.hpp"
 #include "utils/const_clone.hpp"
 #include "utils/interned_string.hpp"
@@ -819,7 +820,7 @@ public:
 	/**
 	 * The name of the attribute used for tracking diff changes
 	 */
-	static const char* diff_track_attribute;
+	static const utils::interned_string diff_track_attribute;
 
 	/**
 	 * A function to apply a diff config onto this config object.

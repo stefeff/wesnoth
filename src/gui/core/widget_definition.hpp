@@ -115,7 +115,7 @@ struct styled_widget_definition
 	template<class T>
 	void load_resolutions(const config& cfg)
 	{
-		for(const config& resolution : cfg.child_range("resolution")) {
+		for(const config& resolution : cfg.child_range(str_resolution)) {
 			resolutions.emplace_back(std::make_shared<T>(resolution));
 		}
 	}

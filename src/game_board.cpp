@@ -37,8 +37,8 @@ static lg::log_domain log_engine_enemies("engine/enemies");
 
 game_board::game_board(const config& level)
 	: teams_()
-	, map_(std::make_unique<gamemap>(level["map_data"]))
-	, unit_id_manager_(level["next_underlying_unit_id"])
+	, map_(std::make_unique<gamemap>(level[str_map_data]))
+	, unit_id_manager_(level[str_next_underlying_unit_id])
 	, units_()
 {
 }
@@ -380,20 +380,20 @@ bool game_board::change_terrain(const map_location &loc, const t_translation::te
 
 void game_board::write_config(config& cfg) const
 {
-	cfg["next_underlying_unit_id"] = unit_id_manager_.get_save_id();
+	cfg[str_next_underlying_unit_id] = unit_id_manager_.get_save_id();
 
 	for(std::vector<team>::const_iterator t = teams_.begin(); t != teams_.end(); ++t) {
 		int side_num = std::distance(teams_.begin(), t) + 1;
 
-		config& side = cfg.add_child("side");
+		config& side = cfg.add_child(str_side);
 		t->write(side);
-		side["no_leader"] = true;
-		side["side"] = std::to_string(side_num);
+		side[str_no_leader] = true;
+		side[str_side] = std::to_string(side_num);
 
 		// current units
 		for(const unit& i : units_) {
 			if(i.side() == side_num) {
-				config& u = side.add_child("unit");
+				config& u = side.add_child(str_unit);
 				i.get_location().write(u);
 				i.write(u, false);
 			}
@@ -401,13 +401,13 @@ void game_board::write_config(config& cfg) const
 
 		// recall list
 		for(const unit_const_ptr j : t->recall_list()) {
-			config& u = side.add_child("unit");
+			config& u = side.add_child(str_unit);
 			j->write(u);
 		}
 	}
 
 	// write the map
-	cfg["map_data"] = map_->write();
+	cfg[str_map_data] = map_->write();
 }
 
 temporary_unit_placer::temporary_unit_placer(unit_map& m, const map_location& loc, unit& u)

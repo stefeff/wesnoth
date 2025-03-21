@@ -55,15 +55,15 @@ ai_composite::ai_composite( default_ai_context &context, const config &cfg)
 void ai_composite::on_create()
 {
 	LOG_AI_COMPOSITE << "side "<< get_side() << " : "<<" created AI with id=["<<
-		cfg_["id"]<<"]";
+		cfg_[str_id]<<"]";
 
 	// init the composite ai stages
-	for (const config &cfg_element : cfg_.child_range("stage")) {
+	for (const config &cfg_element : cfg_.child_range(str_stage)) {
 		add_stage(cfg_element);
 	}
 
 	config cfg;
-	cfg["engine"] = "fai";
+	cfg[str_engine] = "fai";
 	engine_ptr e_ptr = get_engine_by_cfg(cfg);
 	if (e_ptr) {
 		e_ptr->set_ai_context(this);
@@ -146,24 +146,24 @@ void ai_composite::play_turn(){
 
 std::string ai_composite::get_id() const
 {
-	return cfg_["id"];
+	return cfg_[str_id];
 }
 
 
 std::string ai_composite::get_name() const
 {
-	return cfg_["name"];
+	return cfg_[str_name];
 }
 
 std::string ai_composite::get_engine() const
 {
-	return cfg_["engine"];
+	return cfg_[str_engine];
 }
 
 std::string ai_composite::evaluate(const std::string& str)
 {
 	config cfg;
-	cfg["engine"] = "fai";
+	cfg[str_engine] = "fai";
 	engine_ptr e_ptr = get_engine_by_cfg(cfg);
 	if (!e_ptr) {
 		// This should be unreachable, but not entirely sure...
@@ -202,7 +202,7 @@ config ai_composite::to_config() const
 
 	//serialize the composite ai stages
 	for (const stage_ptr &s : stages_) {
-		cfg.add_child("stage",s->to_config());
+		cfg.add_child(str_stage,s->to_config());
 	}
 
 	return cfg;
@@ -211,7 +211,7 @@ config ai_composite::to_config() const
 config ai_composite::preparse_cfg(ai_context& ctx, const config& cfg)
 {
 	config temp_cfg, parsed_cfg;
-	temp_cfg.add_child("ai", cfg);
+	temp_cfg.add_child(str_ai, cfg);
 	configuration::parse_side_config(ctx.get_side(), temp_cfg, parsed_cfg);
 	return parsed_cfg;
 }

@@ -157,7 +157,7 @@ battle_context_unit_stats::battle_context_unit_stats(nonempty_unit_const_ptr up,
 		opp.undead_variation() != "null" && !resources::gameboard->map().is_village(opp_loc);
 
 	if(plagues) {
-		plague_type = (*plague_specials.front().ability_cfg)["type"].str();
+		plague_type = (*plague_specials.front().ability_cfg)[str_type].str();
 
 		if(plague_type.empty()) {
 			plague_type = u.type().parent_id();
@@ -300,7 +300,7 @@ battle_context_unit_stats::battle_context_unit_stats(const unit_type* u_type,
 		opp_type->undead_variation() != "null";
 
 	if(plagues) {
-		plague_type = (*plague_specials.front().ability_cfg)["type"].str();
+		plague_type = (*plague_specials.front().ability_cfg)[str_type].str();
 		if(plague_type.empty()) {
 			plague_type = u_type->parent_id();
 		}
@@ -849,8 +849,8 @@ void attack::fire_event(const std::string& n)
 
 	// prepare the event data for weapon filtering
 	config ev_data;
-	config& a_weapon_cfg = ev_data.add_child("first");
-	config& d_weapon_cfg = ev_data.add_child("second");
+	config& a_weapon_cfg = ev_data.add_child(str_first);
+	config& d_weapon_cfg = ev_data.add_child(str_second);
 
 	// Need these to ensure weapon filters work correctly
 	std::optional<attack_type::specials_context_t> a_ctx, d_ctx;
@@ -873,12 +873,12 @@ void attack::fire_event(const std::string& n)
 		d_stats_->weapon->write(d_weapon_cfg);
 	}
 
-	if(a_weapon_cfg["name"].empty()) {
-		a_weapon_cfg["name"] = "none";
+	if(a_weapon_cfg[str_name].empty()) {
+		a_weapon_cfg[str_name] = "none";
 	}
 
-	if(d_weapon_cfg["name"].empty()) {
-		d_weapon_cfg["name"] = "none";
+	if(d_weapon_cfg[str_name].empty()) {
+		d_weapon_cfg[str_name] = "none";
 	}
 
 	if(n == "attack_end") {
@@ -890,7 +890,7 @@ void attack::fire_event(const std::string& n)
 	// damage_inflicted is set in these two events.
 	// TODO: should we set this value from unit_info::damage, or continue using the WML variable?
 	if(n == "attacker_hits" || n == "defender_hits") {
-		ev_data["damage_inflicted"] = resources::gamedata->get_variable("damage_inflicted");
+		ev_data[str_damage_inflicted] = resources::gamedata->get_variable("damage_inflicted");
 	}
 
 	const int defender_side = d_.get_unit().side();
@@ -1007,7 +1007,7 @@ bool attack::perform_hit(bool attacker_turn, statistics_attack_context& stats)
 
 	// Make sure that if we're serializing a game here,
 	// we got the same results as the game did originally.
-	const config local_results {"chance", attacker.cth_, "hits", hits, "damage", damage};
+	const config local_results {str_chance, attacker.cth_, str_hits, hits, str_damage, damage};
 
 	config replay_results;
 	bool equals_replay = checkup_instance->local_checkup(local_results, replay_results);
@@ -1101,11 +1101,11 @@ bool attack::perform_hit(bool attacker_turn, statistics_attack_context& stats)
 
 	replay_results.clear();
 
-	// There was also a attribute cfg["unit_hit"] which was never used so i deleted.
-	equals_replay = checkup_instance->local_checkup(config{"dies", dies}, replay_results);
+	// There was also a attribute cfg[str_unit_hit] which was never used so i deleted.
+	equals_replay = checkup_instance->local_checkup(config{str_dies, dies}, replay_results);
 
 	if(!equals_replay) {
-		bool results_dies = replay_results["dies"].to_bool();
+		bool results_dies = replay_results[str_dies].to_bool();
 
 		errbuf_ << "SYNC: In attack " << a_.dump() << " vs " << d_.dump() << ": the data source says the "
 				<< (attacker_turn ? "defender" : "attacker") << ' ' << (results_dies ? "perished" : "survived")
@@ -1235,16 +1235,16 @@ void attack::unit_killed(unit_info& attacker,
 	config a_weapon_cfg = attacker_stats->weapon && attacker.valid() ? attacker_stats->weapon->to_config() : config();
 	config d_weapon_cfg = defender_stats->weapon && defender.valid() ? defender_stats->weapon->to_config() : config();
 
-	if(a_weapon_cfg["name"].empty()) {
-		a_weapon_cfg["name"] = "none";
+	if(a_weapon_cfg[str_name].empty()) {
+		a_weapon_cfg[str_name] = "none";
 	}
 
-	if(d_weapon_cfg["name"].empty()) {
-		d_weapon_cfg["name"] = "none";
+	if(d_weapon_cfg[str_name].empty()) {
+		d_weapon_cfg[str_name] = "none";
 	}
 
-	dat.add_child("first", d_weapon_cfg);
-	dat.add_child("second", a_weapon_cfg);
+	dat.add_child(str_first, d_weapon_cfg);
+	dat.add_child(str_second, a_weapon_cfg);
 
 	resources::game_events->pump().fire("last_breath", death_loc, attacker_loc, dat);
 	refresh_bc();
@@ -1298,9 +1298,9 @@ void attack::unit_killed(unit_info& attacker,
 			// Apply variation
 			if(undead_variation != "null") {
 				config mod;
-				config& variation = mod.add_child("effect");
-				variation["apply_to"] = "variation";
-				variation["name"] = undead_variation;
+				config& variation = mod.add_child(str_effect);
+				variation[str_apply_to] = "variation";
+				variation[str_name] = undead_variation;
 				newunit->add_modification("variation", mod);
 				newunit->heal_fully();
 			}
@@ -1491,9 +1491,9 @@ void attack::perform()
 void attack::check_replay_attack_result(
 		bool& hits, int ran_num, int& damage, config replay_results, unit_info& attacker)
 {
-	int results_chance = replay_results["chance"];
-	bool results_hits = replay_results["hits"].to_bool();
-	int results_damage = replay_results["damage"];
+	int results_chance = replay_results[str_chance];
+	bool results_hits = replay_results[str_hits].to_bool();
+	int results_damage = replay_results[str_damage];
 
 #if 0
 	errbuf_ << "SYNC: In attack " << a_.dump() << " vs " << d_.dump()

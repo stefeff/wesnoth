@@ -30,7 +30,7 @@ namespace undo
 void dismiss_action::write(config & cfg) const
 {
 	undo_action::write(cfg);
-	dismissed_unit->write(cfg.add_child("unit"));
+	dismissed_unit->write(cfg.add_child(str_unit));
 }
 
 /**

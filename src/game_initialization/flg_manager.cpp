@@ -34,18 +34,18 @@ namespace ng
 flg_manager::flg_manager(const std::vector<const config*>& era_factions,
 		const config& side, const bool lock_settings, const bool use_map_settings, const bool saved_game)
 	: era_factions_(era_factions)
-	, side_num_(side["side"].to_int())
-	, faction_from_recruit_(side["faction_from_recruit"].to_bool())
-	, original_type_(get_default_faction(side)["type"].str())
-	, original_gender_(get_default_faction(side)["gender"].str())
+	, side_num_(side[str_side].to_int())
+	, faction_from_recruit_(side[str_faction_from_recruit].to_bool())
+	, original_type_(get_default_faction(side)[str_type].str())
+	, original_gender_(get_default_faction(side)[str_gender].str())
 	, savegame_gender_()
-	, original_faction_(get_default_faction(side)["faction"].str())
-	, original_recruit_(utils::split(get_default_faction(side)["recruit"].str()))
-	, choose_faction_by_leader_(side["leader"].str())
+	, original_faction_(get_default_faction(side)[str_faction].str())
+	, original_recruit_(utils::split(get_default_faction(side)[str_recruit].str()))
+	, choose_faction_by_leader_(side[str_leader].str())
 	, saved_game_(saved_game)
-	, has_no_recruits_(original_recruit_.empty() && side["previous_recruits"].empty())
-	, faction_lock_(side["faction_lock"].to_bool(lock_settings))
-	, leader_lock_(side["leader_lock"].to_bool(lock_settings))
+	, has_no_recruits_(original_recruit_.empty() && side[str_previous_recruits].empty())
+	, faction_lock_(side[str_faction_lock].to_bool(lock_settings))
+	, leader_lock_(side[str_leader_lock].to_bool(lock_settings))
 	, available_factions_()
 	, available_leaders_()
 	, available_genders_()
@@ -55,26 +55,26 @@ flg_manager::flg_manager(const std::vector<const config*>& era_factions,
 	, current_faction_(nullptr)
 	, current_leader_("null")
 	, current_gender_("null")
-	, default_leader_type_(side["type"])
-	, default_leader_gender_(side["gender"])
+	, default_leader_type_(side[str_type])
+	, default_leader_gender_(side[str_gender])
 	, default_leader_cfg_(nullptr)
 {
-	const std::string& leader_id = side["id"];
+	const std::string& leader_id = side[str_id];
 	if(!leader_id.empty()) {
 		// Check if leader was carried over and now is in [unit] tag.
-		default_leader_cfg_ = side.find_child("unit", "id", leader_id).ptr();
+		default_leader_cfg_ = side.find_child(str_unit, str_id, leader_id).ptr();
 		if(default_leader_cfg_) {
-			default_leader_type_ = (*default_leader_cfg_)["type"].str();
-			default_leader_gender_ = (*default_leader_cfg_)["gender"].str();
+			default_leader_type_ = (*default_leader_cfg_)[str_type].str();
+			default_leader_gender_ = (*default_leader_cfg_)[str_gender].str();
 		} else {
 			default_leader_cfg_ = nullptr;
 		}
 	} else if(default_leader_type_.empty()) {
 		// Find a unit which can recruit.
-		for(const config& side_unit : side.child_range("unit")) {
-			if(side_unit["canrecruit"].to_bool()) {
-				default_leader_type_ = side_unit["type"].str();
-				default_leader_gender_ = side_unit["gender"].str();
+		for(const config& side_unit : side.child_range(str_unit)) {
+			if(side_unit[str_canrecruit].to_bool()) {
+				default_leader_type_ = side_unit[str_type].str();
+				default_leader_gender_ = side_unit[str_gender].str();
 				default_leader_cfg_ = &side_unit;
 				break;
 			}
@@ -93,9 +93,9 @@ flg_manager::flg_manager(const std::vector<const config*>& era_factions,
 	faction_lock_ = faction_lock_ && (use_map_settings || lock_settings);
 
 	//TODO: this code looks wrong, we should probably just use default_leader_gender_ from above.
-	for(const config& side_unit : side.child_range("unit")) {
-		if(current_leader_ == side_unit["type"] && side_unit["canrecruit"].to_bool()) {
-			savegame_gender_ = side_unit["gender"].str();
+	for(const config& side_unit : side.child_range(str_unit)) {
+		if(current_leader_ == side_unit[str_type] && side_unit[str_canrecruit].to_bool()) {
+			savegame_gender_ = side_unit[str_gender].str();
 			break;
 		}
 	}
@@ -119,7 +119,7 @@ void flg_manager::set_current_faction(const std::string& id)
 {
 	unsigned index = 0;
 	for(const config* faction : choosable_factions_) {
-		if((*faction)["id"] == id) {
+		if((*faction)[str_id] == id) {
 			set_current_faction(index);
 			return;
 		}
@@ -146,7 +146,7 @@ void flg_manager::set_current_gender(const unsigned index)
 
 bool flg_manager::is_random_faction()
 {
-	return (*current_faction_)["random_faction"].to_bool();
+	return (*current_faction_)[str_random_faction].to_bool();
 }
 
 // When we use a random mode like "no mirror", "no ally mirror", the list of faction ids to avoid is passed
@@ -159,12 +159,12 @@ void flg_manager::resolve_random(randomness::mt_rng& rng, const std::vector<std:
 	if(is_random_faction()) {
 		std::vector<std::string> faction_choices, faction_excepts;
 
-		faction_choices = utils::split((*current_faction_)["choices"]);
+		faction_choices = utils::split((*current_faction_)[str_choices]);
 		if(faction_choices.size() == 1 && faction_choices.front().empty()) {
 			faction_choices.clear();
 		}
 
-		faction_excepts = utils::split((*current_faction_)["except"]);
+		faction_excepts = utils::split((*current_faction_)[str_except]);
 		if(faction_excepts.size() == 1 && faction_excepts.front().empty()) {
 			faction_excepts.clear();
 		}
@@ -175,11 +175,11 @@ void flg_manager::resolve_random(randomness::mt_rng& rng, const std::vector<std:
 		for(unsigned int i = 0; i < available_factions_.size(); ++i) {
 			const config& faction = *available_factions_[i];
 
-			if(faction["random_faction"].to_bool()) {
+			if(faction[str_random_faction].to_bool()) {
 				continue;
 			}
 
-			const std::string& faction_id = faction["id"];
+			const std::string& faction_id = faction[str_id];
 
 			if(!faction_choices.empty() && std::find(faction_choices.begin(), faction_choices.end(),
 					faction_id) == faction_choices.end()) {
@@ -220,7 +220,7 @@ void flg_manager::resolve_random(randomness::mt_rng& rng, const std::vector<std:
 	}
 
 	if(current_leader_ == "random") {
-		std::vector<std::string> nonrandom_leaders = utils::split((*current_faction_)["random_leader"]);
+		std::vector<std::string> nonrandom_leaders = utils::split((*current_faction_)[str_random_leader]);
 		if(nonrandom_leaders.empty()) {
 			for(const std::string& leader : available_leaders_) {
 				if(leader != "random") {
@@ -231,7 +231,7 @@ void flg_manager::resolve_random(randomness::mt_rng& rng, const std::vector<std:
 
 		if(nonrandom_leaders.empty()) {
 			throw config::error(VGETTEXT(
-				"Unable to find a leader type for faction $faction", {{"faction", (*current_faction_)["name"].str()}}));
+				"Unable to find a leader type for faction $faction", {{"faction", (*current_faction_)[str_name].str()}}));
 		} else {
 			const int lchoice = rng.get_next_random() % nonrandom_leaders.size();
 			current_leader_ = nonrandom_leaders[lchoice];
@@ -265,7 +265,7 @@ void flg_manager::update_available_factions()
 	const bool show_custom_faction = original_faction_ == "Custom" || !has_no_recruits_ || faction_lock_;
 
 	for(const config* faction : era_factions_) {
-		if((*faction)["id"] == "Custom" && !show_custom_faction) {
+		if((*faction)[str_id] == "Custom" && !show_custom_faction) {
 
 			// "Custom" faction should not be available if both
 			// "recruit" and "previous_recruits" lists are empty.
@@ -275,7 +275,7 @@ void flg_manager::update_available_factions()
 		}
 
 		// Add default faction to the top of the list.
-		if(original_faction_ == (*faction)["id"]) {
+		if(original_faction_ == (*faction)[str_id]) {
 			available_factions_.insert(available_factions_.begin(), faction);
 		} else {
 			available_factions_.push_back(faction);
@@ -305,10 +305,10 @@ void flg_manager::update_available_leaders()
 		}
 
 		if(!saved_game_ && !is_random_faction()) {
-			if((*current_faction_)["id"] == "Custom") {
+			if((*current_faction_)[str_id] == "Custom") {
 				// Allow user to choose a leader from any faction.
 				for(const config* f : available_factions_) {
-					if((*f)["id"] != "Random") {
+					if((*f)[str_id] != "Random") {
 						append_leaders_from_faction(f);
 					}
 				}
@@ -432,7 +432,7 @@ void flg_manager::select_default_faction()
 	const std::string& default_faction = original_faction_;
 	auto default_faction_it = std::find_if(choosable_factions_.begin(), choosable_factions_.end(),
 		[&default_faction](const config* faction) {
-			return (*faction)["id"] == default_faction;
+			return (*faction)[str_id] == default_faction;
 		});
 
 	if(default_faction_it != choosable_factions_.end()) {
@@ -496,7 +496,7 @@ int flg_manager::current_faction_index() const
 
 void flg_manager::append_leaders_from_faction(const config* faction)
 {
-	std::vector<std::string> leaders_to_append = utils::split((*faction)["leader"]);
+	std::vector<std::string> leaders_to_append = utils::split((*faction)[str_leader]);
 
 	available_leaders_.insert(available_leaders_.end(), leaders_to_append.begin(),
 		leaders_to_append.end());
@@ -546,7 +546,7 @@ void flg_manager::set_current_gender(const std::string& gender)
 
 const config& flg_manager::get_default_faction(const config& cfg)
 {
-	if(auto df = cfg.optional_child("default_faction")) {
+	if(auto df = cfg.optional_child(str_default_faction)) {
 		return *df;
 	} else {
 		return cfg;

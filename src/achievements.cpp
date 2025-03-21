@@ -25,26 +25,26 @@ static lg::log_domain log_config("config");
 #define ERR_CONFIG LOG_STREAM(err, log_config)
 
 sub_achievement::sub_achievement(const config& cfg, bool achieved)
-		: id_(cfg["id"].str())
-		, description_(cfg["description"].t_str())
-		, icon_(cfg["icon"].str()+"~GS()")
-		, icon_completed_(cfg["icon"].str())
+		: id_(cfg[str_id].str())
+		, description_(cfg[str_description].t_str())
+		, icon_(cfg[str_icon].str()+"~GS()")
+		, icon_completed_(cfg[str_icon].str())
 		, achieved_(achieved)
 {}
 
 achievement::achievement(const config& cfg, const std::string& content_for, bool achieved, int progress)
-		: id_(cfg["id"].str())
-		, name_(cfg["name"].t_str())
-		, name_completed_(cfg["name_completed"].t_str())
-		, description_(cfg["description"].t_str())
-		, description_completed_(cfg["description_completed"].t_str())
-		, icon_(cfg["icon"].str()+"~GS()")
-		, icon_completed_(cfg["icon_completed"].str())
-		, hidden_(cfg["hidden"].to_bool())
+		: id_(cfg[str_id].str())
+		, name_(cfg[str_name].t_str())
+		, name_completed_(cfg[str_name_completed].t_str())
+		, description_(cfg[str_description].t_str())
+		, description_completed_(cfg[str_description_completed].t_str())
+		, icon_(cfg[str_icon].str()+"~GS()")
+		, icon_completed_(cfg[str_icon_completed].str())
+		, hidden_(cfg[str_hidden].to_bool())
 		, achieved_(achieved)
-		, max_progress_(cfg["max_progress"].to_int(0))
+		, max_progress_(cfg[str_max_progress].to_int(0))
 		, current_progress_(progress)
-		, sound_path_(cfg["sound"].str())
+		, sound_path_(cfg[str_sound].str())
 		, sub_achievements_()
 {
 	if(name_completed_.empty()) {
@@ -55,12 +55,12 @@ achievement::achievement(const config& cfg, const std::string& content_for, bool
 	}
 	if(icon_completed_.empty()) {
 		// avoid the ~GS() appended to icon_
-		icon_completed_ = cfg["icon"].str();
+		icon_completed_ = cfg[str_icon].str();
 	}
 
-	for(const config& sub_ach : cfg.child_range("sub_achievement"))
+	for(const config& sub_ach : cfg.child_range(str_sub_achievement))
 	{
-		std::string sub_id = sub_ach["id"].str();
+		std::string sub_id = sub_ach[str_id].str();
 
 		if(sub_id.empty()) {
 			ERR_CONFIG << "Achievement " << id_ << " has a sub-achievement missing the id attribute:\n" << sub_ach.debug();
@@ -72,12 +72,12 @@ achievement::achievement(const config& cfg, const std::string& content_for, bool
 }
 
 achievement_group::achievement_group(const config& cfg)
-	: display_name_(cfg["display_name"].t_str())
-	, content_for_(cfg["content_for"].str())
+	: display_name_(cfg[str_display_name].t_str())
+	, content_for_(cfg[str_content_for].str())
 	, achievements_()
 {
-	for(const config& ach : cfg.child_range("achievement")) {
-		std::string id = ach["id"].str();
+	for(const config& ach : cfg.child_range(str_achievement)) {
+		std::string id = ach[str_id].str();
 
 		if(id.empty()) {
 			ERR_CONFIG << content_for_ + " achievement missing id attribute:\n" << ach.debug();
@@ -153,8 +153,8 @@ config achievements::read_achievements_file(const std::string& path)
  */
 void achievements::process_achievements_file(const config& cfg, const std::string& content_source)
 {
-	for(const config& achgrp : cfg.child_range("achievement_group")) {
-		if(achgrp["content_for"].str().empty()) {
+	for(const config& achgrp : cfg.child_range(str_achievement_group)) {
+		if(achgrp[str_content_for].str().empty()) {
 			ERR_CONFIG << content_source + " achievement_group missing content_for attribute:\n" << achgrp.debug();
 			continue;
 		}

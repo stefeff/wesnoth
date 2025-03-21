@@ -136,7 +136,7 @@ map_context::map_context(const game_config_view& game_config, const std::string&
 	, labels_(nullptr)
 	, units_()
 	, teams_()
-	, tod_manager_(new tod_manager(game_config.find_mandatory_child("editor_times", "id", "empty")))
+	, tod_manager_(new tod_manager(game_config.find_mandatory_child(str_editor_times, str_id, str_empty)))
 	, mp_settings_()
 	, game_classification_()
 	, music_tracks_()
@@ -302,8 +302,8 @@ void map_context::new_side()
 	teams_.emplace_back();
 
 	config cfg;
-	cfg["side"] = teams_.size(); // side is 1-indexed, so we can just use size()
-	cfg["hidden"] = false;
+	cfg[str_side] = teams_.size(); // side is 1-indexed, so we can just use size()
+	cfg[str_hidden] = false;
 
 	teams_.back().build(cfg, map());
 
@@ -383,9 +383,9 @@ void map_context::replace_local_schedule(const std::vector<time_of_day>& schedul
 config map_context::convert_scenario(const config& old_scenario)
 {
 	config cfg;
-	config& multiplayer = cfg.add_child("multiplayer");
+	config& multiplayer = cfg.add_child(str_multiplayer);
 	multiplayer.append_attributes(old_scenario);
-	std::string map_data = multiplayer["map_data"];
+	std::string map_data = multiplayer[str_map_data];
 	std::string separate_map_file = filesystem::get_current_editor_dir(addon_id_) + "/maps/" + filesystem::base_name(filename_, true) + ".map";
 
 	// check that there's embedded map data, since that's how the editor used to save scenarios
@@ -394,19 +394,19 @@ config map_context::convert_scenario(const config& old_scenario)
 		if(filesystem::file_exists(separate_map_file)) {
 			separate_map_file = filesystem::get_current_editor_dir(addon_id_) + "/maps/" + filesystem::get_next_filename(filesystem::base_name(filename_, true), ".map");
 		}
-		multiplayer["id"] = filesystem::base_name(separate_map_file, true);
+		multiplayer[str_id] = filesystem::base_name(separate_map_file, true);
 
 		filesystem::write_file(separate_map_file, map_data);
-		multiplayer.remove_attribute("map_data");
-		multiplayer["map_file"] = filesystem::base_name(separate_map_file);
+		multiplayer.remove_attribute(str_map_data);
+		multiplayer[str_map_file] = filesystem::base_name(separate_map_file);
 	} else {
 		ERR_ED << "Cannot convert " << filename_ << " due to missing map_data attribute.";
 		throw editor_map_load_exception("load_scenario: no embedded map_data attribute found in old-style scenario", filename_);
 	}
 
-	config& event = multiplayer.add_child("event");
-	event["name"] = "prestart";
-	event["id"] = "editor_event-prestart";
+	config& event = multiplayer.add_child(str_event);
+	event[str_name] = "prestart";
+	event[str_id] = "editor_event-prestart";
 
 	// for all children that aren't [side] or [time], move them to an event
 	// for [side]:
@@ -417,27 +417,27 @@ config map_context::convert_scenario(const config& old_scenario)
 	// for [time]:
 	//   keep under [multiplayer]
 	for(const config::any_child child : old_scenario.all_children_range()) {
-		if(child.key != "side" && child.key != "time") {
+		if(child.key != str_side && child.key != str_time) {
 			config& c = event.add_child(child.key);
 			c.append_attributes(child.cfg);
 			c.append_children(child.cfg);
-		} else if(child.key == "side") {
-			config& c = multiplayer.add_child("side");
+		} else if(child.key == str_side) {
+			config& c = multiplayer.add_child(str_side);
 			c.append_attributes(child.cfg);
 			for(const config::any_child side_child : child.cfg.all_children_range()) {
-				if(side_child.key == "village") {
-					config& c1 = c.add_child("village");
+				if(side_child.key == str_village) {
+					config& c1 = c.add_child(str_village);
 					c1.append_attributes(side_child.cfg);
 				} else {
 					config& c1 = event.add_child(side_child.key);
 					c1.append_attributes(side_child.cfg);
-					if(side_child.key == "unit") {
-						c1["side"] = child.cfg["side"];
+					if(side_child.key == str_unit) {
+						c1[str_side] = child.cfg[str_side];
 					}
 				}
 			}
-		} else if(child.key == "time") {
-			config& c = multiplayer.add_child("time");
+		} else if(child.key == str_time) {
+			config& c = multiplayer.add_child(str_time);
 			c.append_attributes(child.cfg);
 		}
 	}
@@ -451,69 +451,69 @@ void map_context::load_scenario()
 	read(scen, *(preprocess_file(filename_)));
 
 	config scenario;
-	if(scen.has_child("scenario")) {
-		scenario = scen.mandatory_child("scenario");
-	} else if(scen.has_child("multiplayer")) {
-		scenario = scen.mandatory_child("multiplayer");
-	} else if(scen.has_child("test")) {
-		scenario = scen.mandatory_child("test");
+	if(scen.has_child(str_scenario)) {
+		scenario = scen.mandatory_child(str_scenario);
+	} else if(scen.has_child(str_multiplayer)) {
+		scenario = scen.mandatory_child(str_multiplayer);
+	} else if(scen.has_child(str_test)) {
+		scenario = scen.mandatory_child(str_test);
 	} else {
 		ERR_ED << "Found no [scenario], [multiplayer], or [test] tag in " << filename_ << ", assuming old-style editor scenario and defaulting to [multiplayer]";
 		scen = convert_scenario(scen);
-		scenario = scen.mandatory_child("multiplayer");
+		scenario = scen.mandatory_child(str_multiplayer);
 	}
 
-	scenario_id_ = scenario["id"].str();
-	scenario_name_ = scenario["name"].str();
-	scenario_description_ = scenario["description"].str();
+	scenario_id_ = scenario[str_id].str();
+	scenario_name_ = scenario[str_name].str();
+	scenario_description_ = scenario[str_description].str();
 
-	if(const config::attribute_value* experience_modifier = scenario.get("experience_modifier")) {
+	if(const config::attribute_value* experience_modifier = scenario.get(str_experience_modifier)) {
 		xp_mod_ = experience_modifier->to_int();
 	}
-	victory_defeated_ = scenario["victory_when_enemies_defeated"].to_bool(true);
-	random_time_ = scenario["random_start_time"].to_bool(false);
+	victory_defeated_ = scenario[str_victory_when_enemies_defeated].to_bool(true);
+	random_time_ = scenario[str_random_start_time].to_bool(false);
 
-	if(!scenario["map_data"].str().empty()) {
-		map_ = editor_map::from_string(scenario["map_data"]); // throws on error
-	} else if(!scenario["map_file"].str().empty()) {
-		map_ = editor_map::from_string(filesystem::read_file(filesystem::get_current_editor_dir(addon_id_) + "/maps/" + filesystem::base_name(scenario["map_file"]))); // throws on error
+	if(!scenario[str_map_data].str().empty()) {
+		map_ = editor_map::from_string(scenario[str_map_data]); // throws on error
+	} else if(!scenario[str_map_file].str().empty()) {
+		map_ = editor_map::from_string(filesystem::read_file(filesystem::get_current_editor_dir(addon_id_) + "/maps/" + filesystem::base_name(scenario[str_map_file]))); // throws on error
 	} else {
 		throw editor_map_load_exception("load_scenario: no map_file or map_data attribute found", filename_);
 	}
 
-	for(config& side : scenario.child_range("side")) {
+	for(config& side : scenario.child_range(str_side)) {
 		teams_.emplace_back();
 		teams_.back().build(side, map_);
-		if(!side["recruit"].str().empty()) {
-			teams_.back().set_recruits(utils::split_set(side["recruit"].str(), ','));
+		if(!side[str_recruit].str().empty()) {
+			teams_.back().set_recruits(utils::split_set(side[str_recruit].str(), ','));
 		}
 	}
 
 	tod_manager_.reset(new tod_manager(scenario));
 
-	auto event = scenario.find_child("event", "id", "editor_event-start");
+	auto event = scenario.find_child(str_event, str_id, str_editor_event_start);
 	if(!event) {
-		event = scenario.find_child("event", "id", "editor_event-prestart");
+		event = scenario.find_child(str_event, str_id, str_editor_event_prestart);
 	}
 	if(event) {
 		config& evt = event.value();
 
 		labels_.read(evt);
 
-		for(const config& time_area : evt.child_range("time_area")) {
+		for(const config& time_area : evt.child_range(str_time_area)) {
 			tod_manager_->add_time_area(map_, time_area);
 		}
 
-		for(const config& item : evt.child_range("item")) {
+		for(const config& item : evt.child_range(str_item)) {
 			const map_location loc(item);
 			overlays_[loc].push_back(overlay(item));
 		}
 
-		for(const config& music : evt.child_range("music")) {
-			music_tracks_.emplace(music["name"], sound::music_track(music));
+		for(const config& music : evt.child_range(str_music)) {
+			music_tracks_.emplace(music[str_name], sound::music_track(music));
 		}
 
-		for(config& a_unit : evt.child_range("unit")) {
+		for(config& a_unit : evt.child_range(str_unit)) {
 			units_.insert(unit::create(a_unit, true));
 		}
 	}
@@ -638,58 +638,58 @@ config map_context::to_config()
 	// else if this has [scenario], use [scenario]
 	// else if this has [test], use [test]
 	// else if none, add a [multiplayer]
-	config& scenario = scen.has_child("multiplayer")
-		? scen.mandatory_child("multiplayer")
-		: scen.has_child("scenario")
-			? scen.mandatory_child("scenario")
-			: scen.has_child("test")
-				? scen.mandatory_child("test")
-				: scen.add_child("multiplayer");
+	config& scenario = scen.has_child(str_multiplayer)
+		? scen.mandatory_child(str_multiplayer)
+		: scen.has_child(str_scenario)
+			? scen.mandatory_child(str_scenario)
+			: scen.has_child(str_test)
+				? scen.mandatory_child(str_test)
+				: scen.add_child(str_multiplayer);
 
-	scenario.remove_children("side");
-	scenario.remove_children("event", [](config cfg){return cfg["id"].str() == "editor_event-start" || cfg["id"].str() == "editor_event-prestart";});
+	scenario.remove_children(str_side);
+	scenario.remove_children(str_event, [](config cfg){return cfg[str_id].str() == "editor_event-start" || cfg[str_id].str() == "editor_event-prestart";});
 
-	scenario["id"] = scenario_id_;
-	scenario["name"] = t_string(scenario_name_, current_textdomain);
-	scenario["description"] = t_string(scenario_description_, current_textdomain);
+	scenario[str_id] = scenario_id_;
+	scenario[str_name] = t_string(scenario_name_, current_textdomain);
+	scenario[str_description] = t_string(scenario_description_, current_textdomain);
 
 	if(xp_mod_) {
-		scenario["experience_modifier"] = *xp_mod_;
+		scenario[str_experience_modifier] = *xp_mod_;
 	}
 	if(victory_defeated_) {
-		scenario["victory_when_enemies_defeated"] = *victory_defeated_;
+		scenario[str_victory_when_enemies_defeated] = *victory_defeated_;
 	}
-	scenario["random_start_time"] = random_time_;
+	scenario[str_random_start_time] = random_time_;
 
 	// write out the map data
-	scenario["map_file"] = scenario_id_ + ".map";
+	scenario[str_map_file] = scenario_id_ + ".map";
 	filesystem::write_file(filesystem::get_current_editor_dir(addon_id_) + "/maps/" + scenario_id_ + ".map", map_.write());
 
 	// find or add the editor's start event
-	config& event = scenario.add_child("event");
-	event["name"] = "prestart";
-	event["id"] = "editor_event-prestart";
-	event["priority"] = 1000;
+	config& event = scenario.add_child(str_event);
+	event[str_name] = "prestart";
+	event[str_id] = "editor_event-prestart";
+	event[str_priority] = 1000;
 
 	// write out all the scenario data below
 
 	// [time]s and [time_area]s
 	// put the [time_area]s into the event to keep as much editor-specific stuff separated in its own event as possible
 	config times = tod_manager_->to_config(current_textdomain);
-	times.remove_attribute("turn_at");
-	times.remove_attribute("it_is_a_new_turn");
-	if(scenario["turns"].to_int() == -1) {
-		times.remove_attribute("turns");
+	times.remove_attribute(str_turn_at);
+	times.remove_attribute(str_it_is_a_new_turn);
+	if(scenario[str_turns].to_int() == -1) {
+		times.remove_attribute(str_turns);
 	} else {
-		scenario["turns"] = times["turns"];
+		scenario[str_turns] = times[str_turns];
 	}
 
-	for(const config& time : times.child_range("time")) {
-		config& t = scenario.add_child("time");
+	for(const config& time : times.child_range(str_time)) {
+		config& t = scenario.add_child(str_time);
 		t.append(time);
 	}
-	for(const config& time_area : times.child_range("time_area")) {
-		config& t = event.add_child("time_area");
+	for(const config& time_area : times.child_range(str_time_area)) {
+		config& t = event.add_child(str_time_area);
 		t.append(time_area);
 	}
 
@@ -699,22 +699,22 @@ config map_context::to_config()
 	// [item]s
 	for(const auto& overlay_pair : overlays_) {
 		for(const overlay& o : overlay_pair.second) {
-			config& item = event.add_child("item");
+			config& item = event.add_child(str_item);
 
 			// Write x,y location
 			overlay_pair.first.write(item);
 
 			// These should always have a value
-			item["image"] = o.image;
-			item["visible_in_fog"] = o.visible_in_fog;
+			item[str_image] = o.image;
+			item[str_visible_in_fog] = o.visible_in_fog;
 
 			// Optional keys
-			item["id"].write_if_not_empty(o.id);
-			item["name"].write_if_not_empty(t_string(o.name, current_textdomain));
-			item["team_name"].write_if_not_empty(o.team_name);
-			item["halo"].write_if_not_empty(o.halo);
+			item[str_id].write_if_not_empty(o.id);
+			item[str_name].write_if_not_empty(t_string(o.name, current_textdomain));
+			item[str_team_name].write_if_not_empty(o.team_name);
+			item[str_halo].write_if_not_empty(o.halo);
 			if(o.submerge) {
-				item["submerge"] = o.submerge;
+				item[str_submerge] = o.submerge;
 			}
 		}
 	}
@@ -726,54 +726,54 @@ config map_context::to_config()
 
 	// [unit]s
 	for(const auto& unit : units_) {
-		config& u = event.add_child("unit");
+		config& u = event.add_child(str_unit);
 
 		unit.get_location().write(u);
 
-		u["side"] = unit.side();
-		u["type"] = unit.type_id();
-		u["name"].write_if_not_empty(t_string(unit.name(), current_textdomain));
-		u["facing"] = map_location::write_direction(unit.facing());
+		u[str_side] = unit.side();
+		u[str_type] = unit.type_id();
+		u[str_name].write_if_not_empty(t_string(unit.name(), current_textdomain));
+		u[str_facing] = map_location::write_direction(unit.facing());
 
 		if(!boost::regex_match(unit.id(), boost::regex(".*-[0-9]+"))) {
-			u["id"] = unit.id();
+			u[str_id] = unit.id();
 		}
 
 		if(unit.can_recruit()) {
-			u["canrecruit"] = unit.can_recruit();
+			u[str_canrecruit] = unit.can_recruit();
 		}
 
 		if(unit.unrenamable()) {
-			u["unrenamable"] = unit.unrenamable();
+			u[str_unrenamable] = unit.unrenamable();
 		}
 	}
 
 	// [side]s
 	for(const auto& team : teams_) {
-		config& side = scenario.add_child("side");
+		config& side = scenario.add_child(str_side);
 
-		side["side"] = scenario.child_count("side");
-		side["hidden"] = team.hidden();
+		side[str_side] = scenario.child_count(str_side);
+		side[str_hidden] = team.hidden();
 
-		side["controller"] = side_controller::get_string(team.controller());
-		side["no_leader"] = team.no_leader();
+		side[str_controller] = side_controller::get_string(team.controller());
+		side[str_no_leader] = team.no_leader();
 
-		side["team_name"] = team.team_name();
-		side["user_team_name"].write_if_not_empty(t_string(team.user_team_name(), current_textdomain));
+		side[str_team_name] = team.team_name();
+		side[str_user_team_name].write_if_not_empty(t_string(team.user_team_name(), current_textdomain));
 		if(team.recruits().size() > 0) {
-			side["recruit"] = utils::join(team.recruits(), ",");
-			side["faction"] = "Custom";
+			side[str_recruit] = utils::join(team.recruits(), ",");
+			side[str_faction] = "Custom";
 		}
 
-		side["fog"] = team.uses_fog();
-		side["shroud"] = team.uses_shroud();
-		side["share_vision"] = team_shared_vision::get_string(team.share_vision());
+		side[str_fog] = team.uses_fog();
+		side[str_shroud] = team.uses_shroud();
+		side[str_share_vision] = team_shared_vision::get_string(team.share_vision());
 
-		side["gold"] = team.gold();
-		side["income"] = team.base_income();
+		side[str_gold] = team.gold();
+		side[str_income] = team.base_income();
 
 		for(const map_location& village : team.villages()) {
-			village.write(side.add_child("village"));
+			village.write(side.add_child(str_village));
 		}
 	}
 
@@ -796,24 +796,24 @@ void map_context::save_schedule(const std::string& schedule_id, const std::strin
 			/* If exists, read the schedule.cfg
 			 * and insert [editor_times] block at correct place */
 			preproc_map editor_map;
-			editor_map["EDITOR"] = preproc_define("true");
+			editor_map[str_EDITOR] = preproc_define("true");
 			read(schedule, *(preprocess_file(schedule_path, &editor_map)));
 		}
 	} catch(const filesystem::io_exception& e) {
 		utils::string_map symbols;
-		symbols["msg"] = e.what();
+		symbols[str_msg] = e.what();
 		//TODO : Needs to be replaced with a better message later.
 		const std::string msg = VGETTEXT("Could not save the scenario: $msg", symbols);
 		throw editor_map_save_exception(msg);
 	}
 
-	config& editor_times = schedule.add_child("editor_times");
+	config& editor_times = schedule.add_child(str_editor_times);
 
-	editor_times["id"] = schedule_id;
-	editor_times["name"] = t_string(schedule_name, current_textdomain);
+	editor_times[str_id] = schedule_id;
+	editor_times[str_name] = t_string(schedule_name, current_textdomain);
 	config times = tod_manager_->to_config(current_textdomain);
-	for(const config& time : times.child_range("time")) {
-		config& t = editor_times.add_child("time");
+	for(const config& time : times.child_range(str_time)) {
+		config& t = editor_times.add_child(str_time);
 		t.append(time);
 	}
 
@@ -840,7 +840,7 @@ void map_context::save_schedule(const std::string& schedule_id, const std::strin
 
 	} catch(const filesystem::io_exception& e) {
 		utils::string_map symbols;
-		symbols["msg"] = e.what();
+		symbols[str_msg] = e.what();
 		//TODO : Needs to be replaced with a better message later.
 		const std::string msg = VGETTEXT("Could not save the scenario: $msg", symbols);
 
@@ -882,7 +882,7 @@ void map_context::save_scenario()
 		clear_modified();
 	} catch(const filesystem::io_exception& e) {
 		utils::string_map symbols;
-		symbols["msg"] = e.what();
+		symbols[str_msg] = e.what();
 		const std::string msg = VGETTEXT("Could not save the scenario: $msg", symbols);
 
 		throw editor_map_save_exception(msg);
@@ -923,7 +923,7 @@ void map_context::save_map()
 		clear_modified();
 	} catch(const filesystem::io_exception& e) {
 		utils::string_map symbols;
-		symbols["msg"] = e.what();
+		symbols[str_msg] = e.what();
 		const std::string msg = VGETTEXT("Could not save the map: $msg", symbols);
 
 		throw editor_map_save_exception(msg);

@@ -94,44 +94,6 @@ terrain_filter::terrain_filter_cache::terrain_filter_cache() :
 	ufilter_()
 {}
 
-namespace
-{
-static const std::string str_lua_function{"lua_function"};
-static const std::string str_area{"area"};
-static const std::string str_gives_income{"gives_income"};
-static const std::string str_terrain{"terrain"};
-static const std::string str_x{"x"};
-static const std::string str_y{"y"};
-static const std::string str_find_in{"find_in"};
-
-static const std::string str_location_id{"location_id"};
-static const std::string str_filter{"filter"};
-static const std::string str_filter_vision{"filter_vision"};
-static const std::string str_visible{"visible"};
-static const std::string str_respect_fog{"respect_fog"};
-
-static const std::string str_filter_adjacent_location{"filter_adjacent_location"};
-static const std::string str_adjacent{"adjacent"};
-static const std::string str_count{"count"};
-static const std::string str_time_of_day{"time_of_day"};
-static const std::string str_time_of_day_id{"time_of_day_id"};
-
-static const std::string str_owner_side{"owner_side"};
-static const std::string str_filter_owner{"filter_owner"};
-static const std::string str_formula{"formula"};
-
-static const std::string str_recall{"recall"};
-static const std::string str_teleport_unit{"teleport_unit"};
-static const std::string str_radius{"radius"};
-static const std::string str_filter_radius{"filter_radius"};
-
-static const std::string str_and{"and"};
-static const std::string str_or{"or"};
-static const std::string str_not{"not"};
-
-static const std::string str_include_borders{"include_borders"};
-}
-
 bool terrain_filter::match_internal(const map_location& loc, const unit* ref_unit, const bool ignore_xy) const
 {
 	if (!this->fc_->get_disp_context().map().on_board_with_border(loc)) {
@@ -417,7 +379,7 @@ bool terrain_filter::match_impl(const map_location& loc, const unit* ref_unit) c
 	std::unique_ptr<scoped_wml_variable> ref_unit_var;
 	if(ref_unit) {
 		if(fc_->get_disp_context().map().on_board(ref_unit->get_location())) {
-			ref_unit_var.reset(new scoped_xy_unit(str_teleport_unit, ref_unit->get_location(), fc_->get_disp_context().units()));
+			ref_unit_var.reset(new scoped_xy_unit("teleport_unit", ref_unit->get_location(), fc_->get_disp_context().units()));
 		} else {
 			// Possible TODO: Support recall list units?
 		}

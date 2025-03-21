@@ -39,14 +39,9 @@ static lg::log_domain log_config("config");
 static lg::log_domain log_wml("wml");
 #define ERR_WML LOG_STREAM(err, log_wml)
 
-static const utils::interned_string str_insert{"insert"};
-static const utils::interned_string str_not{"not"};
-static const utils::interned_string str_and{"and"};
-static const utils::interned_string str_or{"or"};
-
 /* ** config implementation ** */
 
-const char* config::diff_track_attribute = "__diff_track";
+const utils::interned_string config::diff_track_attribute{"__diff_track"};
 
 config::config()
 	: values_()
@@ -917,7 +912,7 @@ void config::get_diff(const config& c, config& res) const
 		const attribute_map::const_iterator itor = values_.find(v.first);
 		if(itor == values_.end() || itor->second.blank()) {
 			if(deletes == nullptr) {
-				deletes = &res.add_child("delete");
+				deletes = &res.add_child(str_delete);
 			}
 
 			(*deletes)[v.first] = "x";
@@ -961,9 +956,9 @@ void config::get_diff(const config& c, config& res) const
 				// If b has more elements than a, then we assume this element
 				// is an element that needs deleting.
 				if(b.size() - bi > a.size() - ai) {
-					config& new_delete = res.add_child("delete_child");
+					config& new_delete = res.add_child(str_delete_child);
 					buf << bi - ndeletes;
-					new_delete.values_["index"] = buf.str();
+					new_delete.values_[str_index] = buf.str();
 					new_delete.add_child(entity);
 
 					++ndeletes;
@@ -973,9 +968,9 @@ void config::get_diff(const config& c, config& res) const
 				// If b has less elements than a, then we assume this element
 				// is an element that needs inserting.
 				else if(b.size() - bi < a.size() - ai) {
-					config& new_insert = res.add_child("insert_child");
+					config& new_insert = res.add_child(str_insert_child);
 					buf << ai;
-					new_insert.values_["index"] = buf.str();
+					new_insert.values_[str_index] = buf.str();
 					new_insert.add_child(entity, *a[ai]);
 
 					++ai;
@@ -984,9 +979,9 @@ void config::get_diff(const config& c, config& res) const
 				// Otherwise, they have the same number of elements,
 				// so try just changing this element to match.
 				else {
-					config& new_change = res.add_child("change_child");
+					config& new_change = res.add_child(str_change_child);
 					buf << bi;
-					new_change.values_["index"] = buf.str();
+					new_change.values_[str_index] = buf.str();
 					new_change.add_child(entity, a[ai]->get_diff(*b[bi]));
 
 					++ai;
@@ -1003,20 +998,20 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 		values_[diff_track_attribute] = "modified";
 	}
 
-	if(const auto inserts = diff.optional_child("insert")) {
+	if(const auto inserts = diff.optional_child(str_insert)) {
 		for(const attribute& v : inserts->attribute_range()) {
 			values_[v.first] = v.second;
 		}
 	}
 
-	if(const auto deletes = diff.optional_child("delete")) {
+	if(const auto deletes = diff.optional_child(str_delete)) {
 		for(const attribute& v : deletes->attribute_range()) {
 			values_.erase(v.first);
 		}
 	}
 
-	for(const config& i : diff.child_range("change_child")) {
-		const std::size_t index = lexical_cast<std::size_t>(i["index"].str());
+	for(const config& i : diff.child_range(str_change_child)) {
+		const std::size_t index = lexical_cast<std::size_t>(i[str_index].str());
 		for(const any_child item : i.all_children_range()) {
 			if(item.key.empty()) {
 				continue;
@@ -1031,8 +1026,8 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 		}
 	}
 
-	for(const config& i : diff.child_range("insert_child")) {
-		const auto index = lexical_cast<std::size_t>(i["index"].str());
+	for(const config& i : diff.child_range(str_insert_child)) {
+		const auto index = lexical_cast<std::size_t>(i[str_index].str());
 		for(const any_child item : i.all_children_range()) {
 			config& inserted = add_child_at(item.key, item.cfg, index);
 			if(track) {
@@ -1041,8 +1036,8 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 		}
 	}
 
-	for(const config& i : diff.child_range("delete_child")) {
-		const auto index = lexical_cast<std::size_t>(i["index"].str());
+	for(const config& i : diff.child_range(str_delete_child)) {
+		const auto index = lexical_cast<std::size_t>(i[str_index].str());
 		for(const any_child item : i.all_children_range()) {
 			if(!track) {
 				remove_child(item.key, index);
@@ -1061,15 +1056,15 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 void config::clear_diff_track(const config& diff)
 {
 	remove_attribute(diff_track_attribute);
-	for(const config& i : diff.child_range("delete_child")) {
-		const auto index = lexical_cast<std::size_t>(i["index"].str());
+	for(const config& i : diff.child_range(str_delete_child)) {
+		const auto index = lexical_cast<std::size_t>(i[str_index].str());
 		for(const any_child item : i.all_children_range()) {
 			remove_child(item.key, index);
 		}
 	}
 
-	for(const config& i : diff.child_range("change_child")) {
-		const std::size_t index = lexical_cast<std::size_t>(i["index"].str());
+	for(const config& i : diff.child_range(str_change_child)) {
+		const std::size_t index = lexical_cast<std::size_t>(i[str_index].str());
 		for(const any_child item : i.all_children_range()) {
 			if(item.key.empty()) {
 				continue;

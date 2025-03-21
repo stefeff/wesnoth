@@ -1449,7 +1449,7 @@ void binary_paths_manager::set_paths(const game_config_view& cfg)
 	cleanup();
 	init_binary_paths();
 
-	for(const config& bp : cfg.child_range("binary_path")) {
+	for(const config& bp : cfg.child_range(str_binary_path)) {
 		std::string path = bp["path"].str();
 		if(path.find("..") != std::string::npos) {
 			ERR_FS << "Invalid binary path '" << path << "'";

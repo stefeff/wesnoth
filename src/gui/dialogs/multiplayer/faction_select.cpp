@@ -97,14 +97,14 @@ void faction_select::pre_show(window& window)
 		widget_data data;
 		widget_item item;
 
-		const std::string name = side["name"].str();
+		const std::string name = side[str_name].str();
 		// flag_rgb here is unrelated to any handling in the unit class
-		const std::string flag_rgb = !side["flag_rgb"].empty() ? side["flag_rgb"].str() : "magenta";
+		const std::string flag_rgb = !side[str_flag_rgb].empty() ? side[str_flag_rgb].str() : "magenta";
 
-		item["label"] = (formatter() << side["image"] << "~RC(" << flag_rgb << ">" << tc_color_ << ")").str();
+		item[str_label] = (formatter() << side[str_image] << "~RC(" << flag_rgb << ">" << tc_color_ << ")").str();
 		data.emplace("faction_image", item);
 
-		item["label"] = name;
+		item[str_label] = name;
 		data.emplace("faction_name", item);
 
 		list.add_row(data);
@@ -154,7 +154,7 @@ void faction_select::on_faction_select()
 	on_leader_select();
 
 	// Print recruits
-	const std::vector<std::string> recruit_list = utils::split(flg_manager_.current_faction()["recruit"]);
+	const std::vector<std::string> recruit_list = utils::split(flg_manager_.current_faction()[str_recruit]);
 	std::vector<t_string> recruit_names;
 
 	for(const auto& recruit : recruit_list) {

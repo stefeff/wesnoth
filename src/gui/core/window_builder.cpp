@@ -54,13 +54,13 @@ std::unique_ptr<window> build(const std::string& type)
 }
 
 builder_widget::builder_widget(const config& cfg)
-	: id(cfg["id"])
-	, linked_group(cfg["linked_group"])
+	: id(cfg[str_id])
+	, linked_group(cfg[str_linked_group])
 	, debug_border_mode(widget::debug_border::none)
-	, debug_border_color(decode_color(cfg["debug_border_color"]))
+	, debug_border_color(decode_color(cfg[str_debug_border_color]))
 {
 	// TODO: move to a `decode` function?
-	switch(const int dbm = cfg["debug_border_mode"].to_int(0); dbm) {
+	switch(const int dbm = cfg[str_debug_border_mode].to_int(0); dbm) {
 	case 0:
 		debug_border_mode = widget::debug_border::none;
 		break;
@@ -80,19 +80,19 @@ builder_widget_ptr create_widget_builder(const config& cfg)
 	config::const_all_children_itors children = cfg.all_children_range();
 	VALIDATE(children.size() == 1, "Grid cell does not have exactly 1 child.");
 
-	if(const auto grid = cfg.optional_child("grid")) {
+	if(const auto grid = cfg.optional_child(str_grid)) {
 		return std::make_shared<builder_grid>(grid.value());
 	}
 
-	if(const auto instance = cfg.optional_child("instance")) {
+	if(const auto instance = cfg.optional_child(str_instance)) {
 		return std::make_shared<implementation::builder_instance>(instance.value());
 	}
 
-	if(const auto pane = cfg.optional_child("pane")) {
+	if(const auto pane = cfg.optional_child(str_pane)) {
 		return std::make_shared<implementation::builder_pane>(pane.value());
 	}
 
-	if(const auto viewport = cfg.optional_child("viewport")) {
+	if(const auto viewport = cfg.optional_child(str_viewport)) {
 		return std::make_shared<implementation::builder_viewport>(viewport.value());
 	}
 
@@ -129,7 +129,7 @@ void builder_window::read(const config& cfg)
 
 	DBG_GUI_P << "Window builder: reading data for window " << id_ << ".";
 
-	config::const_child_itors cfgs = cfg.child_range("resolution");
+	config::const_child_itors cfgs = cfg.child_range(str_resolution);
 	VALIDATE(!cfgs.empty(), _("No resolution defined."));
 
 	for(const auto& i : cfgs) {
@@ -138,31 +138,31 @@ void builder_window::read(const config& cfg)
 }
 
 builder_window::window_resolution::window_resolution(const config& cfg)
-	: window_width(cfg["window_width"])
-	, window_height(cfg["window_height"])
-	, automatic_placement(cfg["automatic_placement"].to_bool(true))
-	, x(cfg["x"])
-	, y(cfg["y"])
-	, width(cfg["width"])
-	, height(cfg["height"])
-	, reevaluate_best_size(cfg["reevaluate_best_size"])
+	: window_width(cfg[str_window_width])
+	, window_height(cfg[str_window_height])
+	, automatic_placement(cfg[str_automatic_placement].to_bool(true))
+	, x(cfg[str_x])
+	, y(cfg[str_y])
+	, width(cfg[str_width])
+	, height(cfg[str_height])
+	, reevaluate_best_size(cfg[str_reevaluate_best_size])
 	, functions()
-	, vertical_placement(implementation::get_v_align(cfg["vertical_placement"]))
-	, horizontal_placement(implementation::get_h_align(cfg["horizontal_placement"]))
-	, maximum_width(cfg["maximum_width"], 0u)
-	, maximum_height(cfg["maximum_height"], 0u)
-	, click_dismiss(cfg["click_dismiss"].to_bool())
-	, definition(cfg["definition"])
+	, vertical_placement(implementation::get_v_align(cfg[str_vertical_placement]))
+	, horizontal_placement(implementation::get_h_align(cfg[str_horizontal_placement]))
+	, maximum_width(cfg[str_maximum_width], 0u)
+	, maximum_height(cfg[str_maximum_height], 0u)
+	, click_dismiss(cfg[str_click_dismiss].to_bool())
+	, definition(cfg[str_definition])
 	, linked_groups()
-	, tooltip(cfg.child_or_empty("tooltip"), "tooltip")
-	, helptip(cfg.child_or_empty("helptip"), "helptip")
+	, tooltip(cfg.child_or_empty(str_tooltip), "tooltip")
+	, helptip(cfg.child_or_empty(str_helptip), "helptip")
 	, grid(nullptr)
 {
-	if(!cfg["functions"].empty()) {
-		wfl::formula(cfg["functions"], &functions).evaluate();
+	if(!cfg[str_functions].empty()) {
+		wfl::formula(cfg[str_functions], &functions).evaluate();
 	}
 
-	auto c = cfg.optional_child("grid");
+	auto c = cfg.optional_child(str_grid);
 
 	VALIDATE(c, _("No grid defined."));
 
@@ -182,10 +182,10 @@ builder_window::window_resolution::window_resolution(const config& cfg)
 	linked_groups = parse_linked_group_definitions(cfg);
 }
 
-builder_window::window_resolution::tooltip_info::tooltip_info(const config& cfg, const std::string& tagname)
-	: id(cfg["id"])
+builder_window::window_resolution::tooltip_info::tooltip_info(const config& cfg, const std::string&)
+	: id(cfg[str_id])
 {
-	VALIDATE(!id.empty(), missing_mandatory_wml_key("[window][resolution][" + tagname + "]", "id"));
+	VALIDATE(!id.empty(), missing_mandatory_wml_key("[window][resolution][str_ + tagname + ]", "id"));
 }
 
 builder_grid::builder_grid(const config& cfg)
@@ -200,16 +200,16 @@ builder_grid::builder_grid(const config& cfg)
 {
 	log_scope2(log_gui_parse, "Window builder: parsing a grid");
 
-	for(const auto& row : cfg.child_range("row")) {
+	for(const auto& row : cfg.child_range(str_row)) {
 		unsigned col = 0;
 
-		row_grow_factor.push_back(row["grow_factor"]);
+		row_grow_factor.push_back(row[str_grow_factor]);
 
-		for(const auto& c : row.child_range("column")) {
+		for(const auto& c : row.child_range(str_column)) {
 			flags.push_back(implementation::read_flags(c));
-			border_size.push_back(c["border_size"]);
+			border_size.push_back(c[str_border_size]);
 			if(rows == 0) {
-				col_grow_factor.push_back(c["grow_factor"]);
+				col_grow_factor.push_back(c[str_grow_factor]);
 			}
 
 			widgets.push_back(create_widget_builder(c));

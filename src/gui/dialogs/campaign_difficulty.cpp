@@ -45,9 +45,9 @@ config generate_difficulty_config(const config& source)
 	result.append_children(source, "difficulty");
 
 	// Issue deprecation warnings about the old difficulties syntax
-	if(result.empty() && source.has_attribute("difficulties")) {
+	if(result.empty() && source.has_attribute(str_difficulties)) {
 		deprecated_message("[campaign]difficulties", DEP_LEVEL::REMOVED, {1, 15, 0}, "Use [difficulty] instead.");
-		if(source.has_attribute("difficulty_descriptions")) {
+		if(source.has_attribute(str_difficulty_descriptions)) {
 			deprecated_message("[campaign]difficulty_descriptions", DEP_LEVEL::REMOVED, {1, 15, 0}, "Use [difficulty] instead.");
 		}
 	}
@@ -58,7 +58,7 @@ config generate_difficulty_config(const config& source)
 campaign_difficulty::campaign_difficulty(const config& campaign)
 	: modal_dialog(window_id())
 	, difficulties_(generate_difficulty_config(campaign))
-	, campaign_id_(campaign["id"])
+	, campaign_id_(campaign[str_id])
 	, selected_difficulty_("CANCEL")
 {
 }
@@ -69,40 +69,40 @@ void campaign_difficulty::pre_show(window& window)
 	window.keyboard_capture(&list);
 
 	unsigned difficulty_count = 0;
-	const unsigned difficulty_max = difficulties_.child_count("difficulty");
-	for(const config& d : difficulties_.child_range("difficulty")) {
+	const unsigned difficulty_max = difficulties_.child_count(str_difficulty);
+	for(const config& d : difficulties_.child_range(str_difficulty)) {
 		widget_data data;
 		widget_item item;
 
-		item["label"] = d["image"];
-		data.emplace("icon", item);
+		item[str_label] = d[str_image];
+		data.emplace(str_icon, item);
 
-		item["use_markup"] = "true";
+		item[str_use_markup] = "true";
 
 		std::ostringstream ss;
-		ss << d["label"];
+		ss << d[str_label];
 
-		if(!d["description"].empty()) {
-			if (d["auto_markup"].to_bool(true) == false) {
-				ss << "\n" << d["description"].str();
-			} else if (!d["old_markup"].to_bool()) {
-				ss << "\n<small>" << font::span_color(font::GRAY_COLOR) << "(" << d["description"].str() << ")</span></small>";
+		if(!d[str_description].empty()) {
+			if (d[str_auto_markup].to_bool(true) == false) {
+				ss << "\n" << d[str_description].str();
+			} else if (!d[str_old_markup].to_bool()) {
+				ss << "\n<small>" << font::span_color(font::GRAY_COLOR) << "(" << d[str_description].str() << ")</span></small>";
 			} else {
-				ss << "\n<small>" << font::span_color(font::GRAY_COLOR) << d["description"] << "</span></small>";
+				ss << "\n<small>" << font::span_color(font::GRAY_COLOR) << d[str_description] << "</span></small>";
 			}
 		}
 
-		item["label"] = ss.str();
-		data.emplace("label", item);
+		item[str_label] = ss.str();
+		data.emplace(str_label, item);
 
 		grid& grid = list.add_row(data);
 
-		if(d["default"].to_bool(false)) {
+		if(d[str_default].to_bool(false)) {
 			list.select_last_row();
 		}
 
 		styled_widget& widget = find_widget<styled_widget>(&grid, "victory", false);
-		if(preferences::is_campaign_completed(campaign_id_, d["define"])) {
+		if(preferences::is_campaign_completed(campaign_id_, d[str_define])) {
 			// Use different laurels according to the difficulty level, following the
 			// pre-existing convention established in campaign_selection class.
 			// Assumes ascending order of difficulty and gold laurel is set first
@@ -126,7 +126,7 @@ void campaign_difficulty::post_show(window& window)
 {
 	if(get_retval() == retval::OK) {
 		listbox& list = find_widget<listbox>(&window, "listbox", false);
-		selected_difficulty_ = difficulties_.mandatory_child("difficulty", list.get_selected_row())["define"].str();
+		selected_difficulty_ = difficulties_.mandatory_child(str_difficulty, list.get_selected_row())[str_define].str();
 	}
 }
 } // namespace dialogs

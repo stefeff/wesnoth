@@ -25,19 +25,19 @@ static lg::log_domain log_engine("engine");
 #define ERR_NG LOG_STREAM(err, log_engine)
 
 carryover::carryover(const config& side)
-		: add_(!side["carryover_add"].empty() ? side["carryover_add"].to_bool() : side["add"].to_bool())
-		, current_player_(side["current_player"])
-		, gold_(!side["carryover_gold"].empty() ? side["carryover_gold"].to_int() : side["gold"].to_int())
+		: add_(!side[str_carryover_add].empty() ? side[str_carryover_add].to_bool() : side[str_add].to_bool())
+		, current_player_(side[str_current_player])
+		, gold_(!side[str_carryover_gold].empty() ? side[str_carryover_gold].to_int() : side[str_gold].to_int())
 		// if we load it from a snapshot we need to read the recruits from "recruits" and not from "previous_recruits".
-		, previous_recruits_(side.has_attribute("recruit") ? utils::split_set(side["recruit"].str()) :utils::split_set(side["previous_recruits"].str()))
+		, previous_recruits_(side.has_attribute(str_recruit) ? utils::split_set(side[str_recruit].str()) :utils::split_set(side[str_previous_recruits].str()))
 		, recall_list_()
-		, save_id_(side["save_id"])
-		, variables_(side.child_or_empty("variables"))
+		, save_id_(side[str_save_id])
+		, variables_(side.child_or_empty(str_variables))
 {
-	for(const config& u : side.child_range("unit")) {
+	for(const config& u : side.child_range(str_unit)) {
 		recall_list_.push_back(u);
 		config& u_back = recall_list_.back();
-		u_back.remove_attributes("side", "goto_x", "goto_y", "x", "y", "hidden");
+		u_back.remove_attributes(str_side, str_goto_x, str_goto_y, str_x, str_y, str_hidden);
 	}
 }
 
@@ -45,20 +45,20 @@ static const int default_gold_qty = 100;
 
 void carryover::transfer_all_gold_to(config& side_cfg){
 
-	int cfg_gold = side_cfg["gold"].to_int();
+	int cfg_gold = side_cfg[str_gold].to_int();
 
-	if(side_cfg["gold"].empty()) {
+	if(side_cfg[str_gold].empty()) {
 		cfg_gold = default_gold_qty;
-		side_cfg["gold"] = cfg_gold;
+		side_cfg[str_gold] = cfg_gold;
 	}
 
 	if(add_ && gold_ > 0){
-		side_cfg["gold"] = cfg_gold + gold_;
+		side_cfg[str_gold] = cfg_gold + gold_;
 	}
 	else if(gold_ > cfg_gold){
-		side_cfg["gold"] = gold_;
+		side_cfg[str_gold] = gold_;
 	}
-	side_cfg.child_or_add("variables").swap(variables_);
+	side_cfg.child_or_add(str_variables).swap(variables_);
 	variables_.clear();
 	gold_ = 0;
 }
@@ -66,12 +66,12 @@ void carryover::transfer_all_gold_to(config& side_cfg){
 void carryover::transfer_all_recruits_to(config& side_cfg){
 	std::string can_recruit_str = utils::join(previous_recruits_, ",");
 	previous_recruits_.clear();
-	side_cfg["previous_recruits"] = can_recruit_str;
+	side_cfg[str_previous_recruits] = can_recruit_str;
 }
 
 void carryover::transfer_all_recalls_to(config& side_cfg){
 	for(const config & u_cfg : recall_list_) {
-		side_cfg.add_child("unit", u_cfg);
+		side_cfg.add_child(str_unit, u_cfg);
 	}
 	recall_list_.clear();
 }
@@ -90,47 +90,47 @@ const std::string carryover::to_string(){
 	std::string side = "";
 	side.append("Side " + save_id_ + ": gold " + std::to_string(gold_) + " recruits " + get_recruits(false) + " units ");
 	for(const config & u_cfg : recall_list_) {
-		side.append(u_cfg["name"].str() + ", ");
+		side.append(u_cfg[str_name].str() + ", ");
 	}
 	return side;
 }
 
 void carryover::to_config(config& cfg){
-	config& side = cfg.add_child("side");
-	side["save_id"] = save_id_;
-	side["gold"] = gold_;
-	side["add"] = add_;
-	side["current_player"] = current_player_;
-	side["previous_recruits"] = get_recruits(false);
-	side.add_child("variables", variables_);
+	config& side = cfg.add_child(str_side);
+	side[str_save_id] = save_id_;
+	side[str_gold] = gold_;
+	side[str_add] = add_;
+	side[str_current_player] = current_player_;
+	side[str_previous_recruits] = get_recruits(false);
+	side.add_child(str_variables, variables_);
 	for(const config & u_cfg : recall_list_) {
-		side.add_child("unit", u_cfg);
+		side.add_child(str_unit, u_cfg);
 	}
 }
 
 carryover_info::carryover_info(const config& cfg, bool from_snpashot)
 	: carryover_sides_()
-	, variables_(cfg.child_or_empty("variables"))
+	, variables_(cfg.child_or_empty(str_variables))
 	, rng_(cfg)
 	, wml_menu_items_()
-	, next_scenario_(cfg["next_scenario"])
-	, next_underlying_unit_id_(cfg["next_underlying_unit_id"].to_int(0))
+	, next_scenario_(cfg[str_next_scenario])
+	, next_underlying_unit_id_(cfg[str_next_underlying_unit_id].to_int(0))
 {
-	for(const config& side : cfg.child_range("side"))
+	for(const config& side : cfg.child_range(str_side))
 	{
-		if(side["lost"].to_bool(false) || !side["persistent"].to_bool(true) || side["save_id"].empty())
+		if(side[str_lost].to_bool(false) || !side[str_persistent].to_bool(true) || side[str_save_id].empty())
 		{
 			//this shouldn't happen outside a snpshot.
 			if(!from_snpashot) {
-				ERR_NG << "found invalid carryover data in saved game, lost='" << side["lost"] << "' persistent='" << side["persistent"] << "' save_id='" << side["save_id"] << "'";
+				ERR_NG << "found invalid carryover data in saved game, lost='" << side[str_lost] << "' persistent='" << side[str_persistent] << "' save_id='" << side[str_save_id] << "'";
 			}
 			continue;
 		}
 		this->carryover_sides_.emplace_back(side);
 	}
-	for(const config& item : cfg.child_range("menu_item"))
+	for(const config& item : cfg.child_range(str_menu_item))
 	{
-		if(item["persistent"].to_bool(true)) {
+		if(item[str_persistent].to_bool(true)) {
 			wml_menu_items_.push_back(item);
 		}
 	}
@@ -167,13 +167,13 @@ struct save_id_equals
 };
 
 void carryover_info::transfer_all_to(config& side_cfg){
-	if(side_cfg["save_id"].empty()){
-		side_cfg["save_id"] = side_cfg["id"];
+	if(side_cfg[str_save_id].empty()){
+		side_cfg[str_save_id] = side_cfg[str_id];
 	}
 	std::vector<carryover>::iterator iside = std::find_if(
 		carryover_sides_.begin(),
 		carryover_sides_.end(),
-		save_id_equals(side_cfg["save_id"])
+		save_id_equals(side_cfg[str_save_id])
 	);
 	if(iside != carryover_sides_.end())
 	{
@@ -186,32 +186,32 @@ void carryover_info::transfer_all_to(config& side_cfg){
 	else
 	{
 		//if no carryover was found for this side, check if starting gold is defined
-		if(!side_cfg.has_attribute("gold") || side_cfg["gold"].empty()){
-			side_cfg["gold"] = default_gold_qty;
+		if(!side_cfg.has_attribute(str_gold) || side_cfg[str_gold].empty()){
+			side_cfg[str_gold] = default_gold_qty;
 		}
 	}
 }
 
 void carryover_info::transfer_to(config& level)
 {
-	if(!level.has_attribute("next_underlying_unit_id"))
+	if(!level.has_attribute(str_next_underlying_unit_id))
 	{
-		level["next_underlying_unit_id"] = next_underlying_unit_id_;
+		level[str_next_underlying_unit_id] = next_underlying_unit_id_;
 	}
 
 	//if the game has been loaded from a snapshot, variables_ is empty since we cleared it below.
-	level.child_or_add("variables").append(std::move(variables_));
+	level.child_or_add(str_variables).append(std::move(variables_));
 
-	config::attribute_value & seed_value = level["random_seed"];
+	config::attribute_value & seed_value = level[str_random_seed];
 	if ( seed_value.empty() ) {
 		seed_value = rng_.get_random_seed_str();
-		level["random_calls"] = rng_.get_random_calls();
+		level[str_random_calls] = rng_.get_random_calls();
 	}
 
-	if(!level.has_child("menu_item")){
+	if(!level.has_child(str_menu_item)){
 		for(config& item : wml_menu_items_)
 		{
-			level.add_child("menu_item").swap(item);
+			level.add_child(str_menu_item).swap(item);
 		}
 	}
 
@@ -224,20 +224,20 @@ void carryover_info::transfer_to(config& level)
 const config carryover_info::to_config()
 {
 	config cfg;
-	cfg["next_underlying_unit_id"] = next_underlying_unit_id_;
-	cfg["next_scenario"] = next_scenario_;
+	cfg[str_next_underlying_unit_id] = next_underlying_unit_id_;
+	cfg[str_next_scenario] = next_scenario_;
 
 	for(carryover& c : carryover_sides_) {
 		c.to_config(cfg);
 	}
 
-	cfg["random_seed"] = rng_.get_random_seed_str();
-	cfg["random_calls"] = rng_.get_random_calls();
+	cfg[str_random_seed] = rng_.get_random_seed_str();
+	cfg[str_random_calls] = rng_.get_random_calls();
 
-	cfg.add_child("variables", variables_);
+	cfg.add_child(str_variables, variables_);
 	for(const config& item : wml_menu_items_)
 	{
-		cfg.add_child("menu_item", item);
+		cfg.add_child(str_menu_item, item);
 	}
 	return cfg;
 }

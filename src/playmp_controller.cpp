@@ -341,9 +341,9 @@ void playmp_controller::process_oos(const std::string& err_msg) const
 {
 	// Notify the server of the oos error.
 	config cfg;
-	config& info = cfg.add_child("info");
-	info["type"] = "termination";
-	info["condition"] = "out of sync";
+	config& info = cfg.add_child(str_info);
+	info[str_type] = "termination";
+	info[str_condition] = "out of sync";
 	send_to_wesnothd(cfg);
 
 	std::stringstream temp_buf;

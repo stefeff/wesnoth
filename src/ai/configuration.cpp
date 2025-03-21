@@ -48,21 +48,21 @@ void configuration::init(const game_config_view &game_config)
 	era_ai_configurations_.clear();
 	mod_ai_configurations_.clear();
 
-	const config &ais = game_config.mandatory_child("ais");
-	if (auto default_config = ais.optional_child("default_config")) {
+	const config &ais = game_config.mandatory_child(str_ais);
+	if (auto default_config = ais.optional_child(str_default_config)) {
 		default_config_ = *default_config;
 	} else {
 		ERR_AI_CONFIGURATION << "Missing AI [default_config]. Therefore, default_config_ set to empty.";
 		default_config_.clear();
 	}
-	default_ai_algorithm_ = ais["default_ai_algorithm"].str();
+	default_ai_algorithm_ = ais[str_default_ai_algorithm].str();
 	if (default_ai_algorithm_.empty()) {
 		ERR_AI_CONFIGURATION << "Missing default_ai_algorithm. This will result in no AI being loaded by default.";
 	}
 
 
-	for (const config &ai_configuration : ais.child_range("ai")) {
-		const std::string &id = ai_configuration["id"];
+	for (const config &ai_configuration : ais.child_range(str_ai)) {
+		const std::string &id = ai_configuration[str_id];
 		if (id.empty()){
 
 			ERR_AI_CONFIGURATION << "skipped AI config due to missing id" << ". Config contains:"<< std::endl << ai_configuration;
@@ -75,20 +75,20 @@ void configuration::init(const game_config_view &game_config)
 
 		description desc;
 		desc.id=id;
-		desc.mp_rank=ai_configuration["mp_rank"].to_int(std::numeric_limits<int>::max());
-		desc.text = ai_configuration["description"].t_str();
+		desc.mp_rank=ai_configuration[str_mp_rank].to_int(std::numeric_limits<int>::max());
+		desc.text = ai_configuration[str_description].t_str();
 		desc.cfg=ai_configuration;
 
 		ai_configurations_.emplace(id, desc);
-		LOG_AI_CONFIGURATION << "loaded AI config: " << ai_configuration["description"];
+		LOG_AI_CONFIGURATION << "loaded AI config: " << ai_configuration[str_description];
 	}
 }
 
 namespace {
 void extract_ai_configurations(std::map<std::string, description> &storage, const config &input)
 {
-	for (const config &ai_configuration : input.child_range("ai")) {
-		const std::string &id = ai_configuration["id"];
+	for (const config &ai_configuration : input.child_range(str_ai)) {
+		const std::string &id = ai_configuration[str_id];
 		if (id.empty()){
 
 			ERR_AI_CONFIGURATION << "skipped AI config due to missing id" << ". Config contains:"<< std::endl << ai_configuration;
@@ -101,12 +101,12 @@ void extract_ai_configurations(std::map<std::string, description> &storage, cons
 
 		description desc;
 		desc.id=id;
-		desc.text = ai_configuration["description"].t_str();
-		desc.mp_rank = ai_configuration["mp_rank"].to_int(std::numeric_limits<int>::max());
+		desc.text = ai_configuration[str_description].t_str();
+		desc.mp_rank = ai_configuration[str_mp_rank].to_int(std::numeric_limits<int>::max());
 		desc.cfg=ai_configuration;
 
 		storage.emplace(id, desc);
-		LOG_AI_CONFIGURATION << "loaded AI config: " << ai_configuration["description"];
+		LOG_AI_CONFIGURATION << "loaded AI config: " << ai_configuration[str_description];
 	}
 }
 }
@@ -132,7 +132,7 @@ std::vector<description*> configuration::get_available_ais()
 	const auto add_if_not_hidden = [&ais_list](description* d) {
 		const config& cfg = d->cfg;
 
-		if(!cfg["hidden"].to_bool(false)) {
+		if(!cfg[str_hidden].to_bool(false)) {
 			ais_list.push_back(d);
 
 			DBG_AI_CONFIGURATION << "has ai with config: " << std::endl << cfg;
@@ -205,22 +205,22 @@ bool configuration::parse_side_config(side_number side, const config& original_c
 
 	//leave only the [ai] children
 	cfg.clear();
-	for (const config &aiparam : original_cfg.child_range("ai")) {
-		cfg.add_child("ai",aiparam);
+	for (const config &aiparam : original_cfg.child_range(str_ai)) {
+		cfg.add_child(str_ai,aiparam);
 	}
 
 	//backward-compatibility hack: put ai_algorithm if it is present
-	if (const config::attribute_value *v = original_cfg.get("ai_algorithm")) {
+	if (const config::attribute_value *v = original_cfg.get(str_ai_algorithm)) {
 		config ai_a;
-		ai_a["ai_algorithm"] = *v;
-		cfg.add_child("ai",ai_a);
+		ai_a[str_ai_algorithm] = *v;
+		cfg.add_child(str_ai,ai_a);
 	}
 	DBG_AI_CONFIGURATION << "side " << side << ": config contains:"<< std::endl << cfg;
 
 	//insert default config at the beginning
 	if (!default_config_.empty()) {
 		DBG_AI_CONFIGURATION << "side "<< side <<": applying default configuration";
-		cfg.add_child_at("ai",default_config_,0);
+		cfg.add_child_at(str_ai,default_config_,0);
 	} else {
 		ERR_AI_CONFIGURATION << "side "<< side <<": default configuration is not available, not applying it";
 	}
@@ -233,7 +233,7 @@ bool configuration::parse_side_config(side_number side, const config& original_c
 	config parsed_cfg = config();
 
 	LOG_AI_CONFIGURATION << "side "<< side <<": merging AI configurations";
-	for (const config &aiparam : cfg.child_range("ai")) {
+	for (const config &aiparam : cfg.child_range(str_ai)) {
 		parsed_cfg.append(aiparam);
 	}
 
@@ -242,20 +242,20 @@ bool configuration::parse_side_config(side_number side, const config& original_c
 	parsed_cfg.merge_children_by_attribute("aspect","id");
 
 	LOG_AI_CONFIGURATION << "side "<< side <<": removing duplicate [default] tags from aspects";
-	for (config &aspect_cfg : parsed_cfg.child_range("aspect")) {
-		if (aspect_cfg["name"] != "composite_aspect") {
+	for (config &aspect_cfg : parsed_cfg.child_range(str_aspect)) {
+		if (aspect_cfg[str_name] != "composite_aspect") {
 			// No point in warning about Lua or standard aspects lacking [default]
 			continue;
 		}
-		if (!aspect_cfg.has_child("default")) {
-			WRN_AI_CONFIGURATION << "side "<< side <<": aspect with id=["<<aspect_cfg["id"]<<"] lacks default config facet!";
+		if (!aspect_cfg.has_child(str_default)) {
+			WRN_AI_CONFIGURATION << "side "<< side <<": aspect with id=["<<aspect_cfg[str_id]<<"] lacks default config facet!";
 			continue;
 		}
 		aspect_cfg.merge_children("default");
-		config& dflt = aspect_cfg.mandatory_child("default");
-		if (dflt.has_child("value")) {
-			while (dflt.child_count("value") > 1) {
-				dflt.remove_child("value", 0);
+		config& dflt = aspect_cfg.mandatory_child(str_default);
+		if (dflt.has_child(str_value)) {
+			while (dflt.child_count(str_value) > 1) {
+				dflt.remove_child(str_value, 0);
 			}
 		}
 	}
@@ -275,25 +275,25 @@ static const std::set<std::string> old_goal_tags {"target", "target_location", "
 void configuration::expand_simplified_aspects(side_number side, config &cfg) {
 	std::string algorithm;
 	config base_config, parsed_config;
-	for (const config &aiparam : cfg.child_range("ai")) {
+	for (const config &aiparam : cfg.child_range(str_ai)) {
 		std::string turns, time_of_day, engine = "cpp";
-		if (aiparam.has_attribute("turns")) {
-			turns = aiparam["turns"].str();
+		if (aiparam.has_attribute(str_turns)) {
+			turns = aiparam[str_turns].str();
 		}
-		if (aiparam.has_attribute("time_of_day")) {
-			time_of_day = aiparam["time_of_day"].str();
+		if (aiparam.has_attribute(str_time_of_day)) {
+			time_of_day = aiparam[str_time_of_day].str();
 		}
-		if (aiparam.has_attribute("engine")) {
-			engine = aiparam["engine"].str();
+		if (aiparam.has_attribute(str_engine)) {
+			engine = aiparam[str_engine].str();
 			if(engine == "fai") {
 				deprecated_message("FormulaAI", DEP_LEVEL::FOR_REMOVAL, "1.17", "FormulaAI is slated to be removed. Use equivalent Lua AIs instead");
 			}
 		}
-		if (aiparam.has_attribute("ai_algorithm")) {
+		if (aiparam.has_attribute(str_ai_algorithm)) {
 			if (algorithm.empty()) {
-				algorithm = aiparam["ai_algorithm"].str();
+				algorithm = aiparam[str_ai_algorithm].str();
 				base_config = get_ai_config_for(algorithm);
-			} else if(algorithm != aiparam["ai_algorithm"]) {
+			} else if(algorithm != aiparam[str_ai_algorithm]) {
 				lg::log_to_chat() << "side " << side << " has two [ai] tags with contradictory ai_algorithm - the first one will take precedence.\n";
 				ERR_WML << "side " << side << " has two [ai] tags with contradictory ai_algorithm - the first one will take precedence.";
 			}
@@ -304,11 +304,11 @@ void configuration::expand_simplified_aspects(side_number side, config &cfg) {
 				continue;
 			}
 			config facet_config;
-			facet_config["engine"] = engine;
-			facet_config["name"] = "standard_aspect";
-			facet_config["turns"] = turns;
-			facet_config["time_of_day"] = time_of_day;
-			facet_config["value"] = attr.second;
+			facet_config[str_engine] = engine;
+			facet_config[str_name] = "standard_aspect";
+			facet_config[str_turns] = turns;
+			facet_config[str_time_of_day] = time_of_day;
+			facet_config[str_value] = attr.second;
 			facet_configs.emplace_back(attr.first, facet_config);
 		}
 		for (const config::any_child child : aiparam.all_children_range()) {
@@ -316,8 +316,8 @@ void configuration::expand_simplified_aspects(side_number side, config &cfg) {
 				// These aren't simplified, so just copy over unchanged.
 				parsed_config.add_child(child.key, child.cfg);
 				if(
-				   (child.key != "modify_ai" && child.cfg["engine"] == "fai") ||
-				   (child.key == "modify_ai" && child.cfg.all_children_count() > 0 && child.cfg.all_children_range().front().cfg["engine"] == "fai")
+				   (child.key != "modify_ai" && child.cfg[str_engine] == "fai") ||
+				   (child.key == "modify_ai" && child.cfg.all_children_count() > 0 && child.cfg.all_children_range().front().cfg[str_engine] == "fai")
 				) {
 					deprecated_message("FormulaAI", DEP_LEVEL::FOR_REMOVAL, "1.17", "FormulaAI is slated to be removed. Use equivalent Lua AIs instead");
 				}
@@ -325,38 +325,38 @@ void configuration::expand_simplified_aspects(side_number side, config &cfg) {
 			} else if(old_goal_tags.count(child.key)) {
 				// A simplified goal, mainly kept around just for backwards compatibility.
 				config goal_config, criteria_config = child.cfg;
-				goal_config["name"] = child.key;
-				goal_config["turns"] = turns;
-				goal_config["time_of_day"] = time_of_day;
-				if(child.key.substr(0,7) == "protect" && criteria_config.has_attribute("protect_radius")) {
-					goal_config["protect_radius"] = criteria_config["protect_radius"];
-					criteria_config.remove_attribute("protect_radius");
+				goal_config[str_name] = child.key;
+				goal_config[str_turns] = turns;
+				goal_config[str_time_of_day] = time_of_day;
+				if(child.key.substr(0,7) == "protect" && criteria_config.has_attribute(str_protect_radius)) {
+					goal_config[str_protect_radius] = criteria_config[str_protect_radius];
+					criteria_config.remove_attribute(str_protect_radius);
 				}
-				if(criteria_config.has_attribute("value")) {
-					goal_config["value"] = criteria_config["value"];
-					criteria_config.remove_attribute("value");
+				if(criteria_config.has_attribute(str_value)) {
+					goal_config[str_value] = criteria_config[str_value];
+					criteria_config.remove_attribute(str_value);
 				}
-				goal_config.add_child("criteria", criteria_config);
-				parsed_config.add_child("goal", std::move(goal_config));
+				goal_config.add_child(str_criteria, criteria_config);
+				parsed_config.add_child(str_goal, std::move(goal_config));
 				continue;
 			}
 			// Now there's two possibilities. If the tag is [attacks] or contains either value= or [value],
 			// then it can be copied verbatim as a [facet] tag.
 			// Otherwise, it needs to be placed as a [value] within a [facet] tag.
-			if (child.key == "attacks" || child.cfg.has_attribute("value") || child.cfg.has_child("value")) {
+			if (child.key == "attacks" || child.cfg.has_attribute(str_value) || child.cfg.has_child(str_value)) {
 				facet_configs.emplace_back(child.key, child.cfg);
 			} else {
 				config facet_config;
-				facet_config["engine"] = engine;
-				facet_config["name"] = "standard_aspect";
-				facet_config["turns"] = turns;
-				facet_config["time_of_day"] = time_of_day;
-				facet_config.add_child("value", child.cfg);
-				if (child.key == "leader_goal" && !child.cfg["id"].empty()) {
+				facet_config[str_engine] = engine;
+				facet_config[str_name] = "standard_aspect";
+				facet_config[str_turns] = turns;
+				facet_config[str_time_of_day] = time_of_day;
+				facet_config.add_child(str_value, child.cfg);
+				if (child.key == "leader_goal" && !child.cfg[str_id].empty()) {
 					// Use id= attribute (if present) as the facet ID
-					const std::string& id = child.cfg["id"];
+					const std::string& id = child.cfg[str_id];
 					if(id != "*" && id.find_first_not_of("0123456789") != std::string::npos) {
-						facet_config["id"] = child.cfg["id"];
+						facet_config[str_id] = child.cfg[str_id];
 					}
 				}
 				facet_configs.emplace_back(child.key, facet_config);
@@ -366,31 +366,31 @@ void configuration::expand_simplified_aspects(side_number side, config &cfg) {
 		while (!facet_configs.empty()) {
 			const std::string &aspect = facet_configs.front().first;
 			const config &facet_config = facet_configs.front().second;
-			aspect_configs[aspect]["id"] = aspect; // Will sometimes be redundant assignment
-			aspect_configs[aspect]["name"] = "composite_aspect";
-			aspect_configs[aspect].add_child("facet", facet_config);
+			aspect_configs[aspect][str_id] = aspect; // Will sometimes be redundant assignment
+			aspect_configs[aspect][str_name] = "composite_aspect";
+			aspect_configs[aspect].add_child(str_facet, facet_config);
 			facet_configs.pop_front();
 		}
 		typedef std::map<std::string, config>::value_type aspect_pair;
 		for (const aspect_pair& p : aspect_configs) {
-			parsed_config.add_child("aspect", p.second);
+			parsed_config.add_child(str_aspect, p.second);
 		}
 	}
 	// Support old recruitment aspect syntax
-	for(auto& child : parsed_config.child_range("aspect")) {
-		if(child["id"] == "recruitment") {
+	for(auto& child : parsed_config.child_range(str_aspect)) {
+		if(child[str_id] == "recruitment") {
 			deprecated_message("AI recruitment aspect", DEP_LEVEL::INDEFINITE, "", "Use the recruitment_instructions aspect instead");
-			child["id"] = "recruitment_instructions";
+			child[str_id] = "recruitment_instructions";
 		}
 	}
-	if (algorithm.empty() && !parsed_config.has_child("stage")) {
+	if (algorithm.empty() && !parsed_config.has_child(str_stage)) {
 		base_config = get_ai_config_for(default_ai_algorithm_);
 	}
 	for (const config::any_child child : parsed_config.all_children_range()) {
 		base_config.add_child(child.key, child.cfg);
 	}
-	cfg.clear_children("ai");
-	cfg.add_child("ai", std::move(base_config));
+	cfg.clear_children(str_ai);
+	cfg.add_child(str_ai, std::move(base_config));
 }
 
 } //end of namespace ai

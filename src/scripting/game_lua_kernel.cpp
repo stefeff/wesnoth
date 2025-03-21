@@ -202,7 +202,7 @@ void game_lua_kernel::lua_chat(const std::string& caption, const std::string& ms
  */
 std::vector<int> game_lua_kernel::get_sides_vector(const vconfig& cfg)
 {
-	const config::attribute_value sides = cfg["side"];
+	const config::attribute_value sides = cfg[str_side];
 	const vconfig &ssf = cfg.child("filter_side");
 
 	if (!ssf.null()) {
@@ -711,7 +711,7 @@ int game_lua_kernel::intf_set_variable(lua_State *L)
 int game_lua_kernel::intf_create_side(lua_State *L)
 {
 	config cfg = luaW_checkconfig(L, 1);
-	cfg["side"] = teams().size() + 1;
+	cfg[str_side] = teams().size() + 1;
 	game_state_.add_side_wml(cfg);
 	lua_pushinteger(L, teams().size());
 
@@ -1293,7 +1293,7 @@ int game_lua_kernel::impl_game_config_get(lua_State *L)
 	if(strcmp(m, "global_traits") == 0) {
 		lua_newtable(L);
 		for(const config& trait : unit_types.traits()) {
-			const std::string& id = trait["id"];
+			const std::string& id = trait[str_id];
 			//It seems the engine never checks the id field for emptiness or duplicates
 			//However, the worst that could happen is that the trait read later overwrites the older one,
 			//and this is not the right place for such checks.
@@ -1311,7 +1311,7 @@ int game_lua_kernel::impl_game_config_get(lua_State *L)
 	if(classification.type==campaign_type::type::multiplayer) {
 		return_cfgref_attrib_deprecated("mp_settings", "wesnoth.game_config", INDEFINITE, "1.17", "Use wesnoth.scenario.mp_settings instead", mp_settings.to_config());
 		return_cfgref_attrib_deprecated("era", "wesnoth.game_config", INDEFINITE, "1.17", "Use wesnoth.scenario.era instead",
-			game_config_manager::get()->game_config().find_mandatory_child("era","id",classification.era_id));
+			game_config_manager::get()->game_config().find_mandatory_child(str_era,str_id,classification.era_id));
 		//^ finds the era with name matching mp_era, and creates a lua reference from the config of that era.
 	}
 
@@ -1434,7 +1434,7 @@ static int impl_mp_settings_get(lua_State* L)
 				std::advance(iter, i);
 				config cfg;
 				iter->second.write(cfg);
-				cfg["id"] = iter->first;
+				cfg[str_id] = iter->first;
 
 				lua_createtable(L, 2, 0);
 				lua_pushstring(L, "addon");
@@ -1650,14 +1650,14 @@ int game_lua_kernel::impl_scenario_set(lua_State *L)
 		vconfig cfg(luaW_checkvconfig(L, 3));
 		end_level_data data;
 
-		data.proceed_to_next_level = cfg["proceed_to_next_level"].to_bool(true);
-		data.transient.carryover_report = cfg["carryover_report"].to_bool(true);
-		data.prescenario_save = cfg["save"].to_bool(true);
-		data.replay_save = cfg["replay_save"].to_bool(true);
-		data.transient.linger_mode = cfg["linger_mode"].to_bool(true) && !teams().empty();
-		data.transient.reveal_map = cfg["reveal_map"].to_bool(true);
-		data.is_victory = cfg["result"] == level_result::victory;
-		data.test_result = cfg["test_result"].str();
+		data.proceed_to_next_level = cfg[str_proceed_to_next_level].to_bool(true);
+		data.transient.carryover_report = cfg[str_carryover_report].to_bool(true);
+		data.prescenario_save = cfg[str_save].to_bool(true);
+		data.replay_save = cfg[str_replay_save].to_bool(true);
+		data.transient.linger_mode = cfg[str_linger_mode].to_bool(true) && !teams().empty();
+		data.transient.reveal_map = cfg[str_reveal_map].to_bool(true);
+		data.is_victory = cfg[str_result] == level_result::victory;
+		data.test_result = cfg[str_test_result].str();
 		play_controller_.set_end_level_data(data);
 
 		return 1;
@@ -1717,8 +1717,8 @@ int game_lua_kernel::impl_current_get(lua_State *L)
 	{
 		const game_events::queued_event &ev = get_event_info();
 		config cfg;
-		cfg["name"] = ev.name;
-		cfg["id"]   = ev.id;
+		cfg[str_name] = ev.name;
+		cfg[str_id]   = ev.id;
 		cfg.add_child("data", ev.data);
 		if (auto weapon = ev.data.optional_child("first")) {
 			cfg.add_child("weapon", *weapon);
@@ -1727,21 +1727,21 @@ int game_lua_kernel::impl_current_get(lua_State *L)
 			cfg.add_child("second_weapon", *weapon);
 		}
 
-		const config::attribute_value di = ev.data["damage_inflicted"];
+		const config::attribute_value di = ev.data[str_damage_inflicted];
 		if(!di.empty()) {
-			cfg["damage_inflicted"] = di;
+			cfg[str_damage_inflicted] = di;
 		}
 
 		if (ev.loc1.valid()) {
-			cfg["x1"] = ev.loc1.filter_loc().wml_x();
-			cfg["y1"] = ev.loc1.filter_loc().wml_y();
+			cfg[str_x1] = ev.loc1.filter_loc().wml_x();
+			cfg[str_y1] = ev.loc1.filter_loc().wml_y();
 			// The position of the unit involved in this event, currently the only case where this is different from x1/y1 are enter/exit_hex events
-			cfg["unit_x"] = ev.loc1.wml_x();
-			cfg["unit_y"] = ev.loc1.wml_y();
+			cfg[str_unit_x] = ev.loc1.wml_x();
+			cfg[str_unit_y] = ev.loc1.wml_y();
 		}
 		if (ev.loc2.valid()) {
-			cfg["x2"] = ev.loc2.filter_loc().wml_x();
-			cfg["y2"] = ev.loc2.filter_loc().wml_y();
+			cfg[str_x2] = ev.loc2.filter_loc().wml_x();
+			cfg[str_y2] = ev.loc2.filter_loc().wml_y();
 		}
 		luaW_pushconfig(L, cfg);
 		return 1;
@@ -2573,8 +2573,8 @@ int game_lua_kernel::intf_put_unit(lua_State *L)
 		const vconfig* vcfg = nullptr;
 		config cfg = luaW_checkconfig(L, 1, vcfg);
 		if (!map().on_board(loc)) {
-			loc.set_wml_x(cfg["x"]);
-			loc.set_wml_y(cfg["y"]);
+			loc.set_wml_x(cfg[str_x]);
+			loc.set_wml_y(cfg[str_y]);
 			if (!map().on_board(loc))
 				return luaL_argerror(L, 2, "invalid location");
 		}
@@ -3158,24 +3158,24 @@ int game_lua_kernel::intf_get_achievement(lua_State *L)
 			for(const auto& achieve : group.achievements_) {
 				if(achieve.id_ == id) {
 					// found the achievement - return it as a config
-					cfg["id"] = achieve.id_;
-					cfg["name"] = achieve.name_;
-					cfg["name_completed"] = achieve.name_completed_;
-					cfg["description"] = achieve.description_;
-					cfg["description_completed"] = achieve.description_completed_;
-					cfg["icon"] = achieve.icon_;
-					cfg["icon_completed"] = achieve.icon_completed_;
-					cfg["hidden"] = achieve.hidden_;
-					cfg["achieved"] = achieve.achieved_;
-					cfg["max_progress"] = achieve.max_progress_;
-					cfg["current_progress"] = achieve.current_progress_;
+					cfg[str_id] = achieve.id_;
+					cfg[str_name] = achieve.name_;
+					cfg[str_name_completed] = achieve.name_completed_;
+					cfg[str_description] = achieve.description_;
+					cfg[str_description_completed] = achieve.description_completed_;
+					cfg[str_icon] = achieve.icon_;
+					cfg[str_icon_completed] = achieve.icon_completed_;
+					cfg[str_hidden] = achieve.hidden_;
+					cfg[str_achieved] = achieve.achieved_;
+					cfg[str_max_progress] = achieve.max_progress_;
+					cfg[str_current_progress] = achieve.current_progress_;
 
 					for(const auto& sub_ach : achieve.sub_achievements_) {
 						config& sub = cfg.add_child("sub_achievement");
-						sub["id"] = sub_ach.id_;
-						sub["description"] = sub_ach.description_;
-						sub["icon"] = sub_ach.icon_;
-						sub["achieved"] = sub_ach.achieved_;
+						sub[str_id] = sub_ach.id_;
+						sub[str_description] = sub_ach.description_;
+						sub[str_icon] = sub_ach.icon_;
+						sub[str_achieved] = sub_ach.achieved_;
 					}
 
 					luaW_pushconfig(L, cfg);
@@ -3740,7 +3740,7 @@ static int intf_append_ai(lua_State *L)
 	ai::configuration::expand_simplified_aspects(side_num, cfg);
 	if(added_dummy_stage) {
 		for(auto iter = cfg.ordered_begin(); iter != cfg.ordered_end(); iter++) {
-			if(iter->key == "stage" && iter->cfg["name"] == "empty") {
+			if(iter->key == "stage" && iter->cfg[str_name] == "empty") {
 				iter = cfg.erase(iter);
 			}
 		}
@@ -3842,12 +3842,12 @@ static int intf_remove_modifications(lua_State *L)
 	}
 	//TODO
 	if(filter.attribute_count() == 1 && filter.all_children_count() == 0 && filter.attribute_range().front().first == "duration") {
-		u.expire_modifications(filter["duration"]);
+		u.expire_modifications(filter[str_duration]);
 	} else {
 		for(const std::string& tag : tags) {
 			for(config& obj : u.get_modifications().child_range(tag)) {
 				if(obj.matches(filter)) {
-					obj["duration"] = "now";
+					obj[str_duration] = "now";
 				}
 			}
 		}
@@ -3914,13 +3914,13 @@ int game_lua_kernel::intf_add_tile_overlay(lua_State *L)
 			[&](int team) { return game_state_.get_disp_context().get_team(team).team_name(); });
 		team_name = utils::join(team_names);
 	} else {
-		team_name = cfg["team_name"].str();
+		team_name = cfg[str_team_name].str();
 	}
 
 	if (game_display_) {
-		game_display_->add_overlay(loc, cfg["image"], cfg["halo"],
-			team_name, cfg["name"], cfg["visible_in_fog"].to_bool(true),
-			cfg["submerge"].to_double(0), cfg["z_order"].to_double(0));
+		game_display_->add_overlay(loc, cfg[str_image], cfg[str_halo],
+			team_name, cfg[str_name], cfg[str_visible_in_fog].to_bool(true),
+			cfg[str_submerge].to_double(0), cfg[str_z_order].to_double(0));
 	}
 	return 0;
 }
@@ -3984,7 +3984,7 @@ struct lua_event_filter : public game_events::event_filter
 		lk.clear_wml_event(ref_);
 	}
 	void serialize(config& cfg) const override {
-		cfg.add_child("filter_lua")["code"] = "<function>";
+		cfg.add_child("filter_lua")[str_code] = "<function>";
 	}
 private:
 	game_lua_kernel& lk;
@@ -4085,7 +4085,7 @@ int game_lua_kernel::intf_add_event(lua_State *L)
 					READ_ONE_FILTER("second_attack", "filter_second_attack");
 #undef READ_ONE_FILTER
 					if(luaW_tableget(L, filterIdx, "formula")) {
-						filters["filter_formula"] = luaL_checkstring(L, -1);
+						filters[str_filter_formula] = luaL_checkstring(L, -1);
 					}
 				}
 			}
@@ -4166,7 +4166,7 @@ int game_lua_kernel::intf_add_event_wml(lua_State *L)
 {
 	game_events::manager & man = *game_state_.events_manager_;
 	vconfig cfg(luaW_checkvconfig(L, 1));
-	bool delayed_variable_substitution = cfg["delayed_variable_substitution"].to_bool(true);
+	bool delayed_variable_substitution = cfg[str_delayed_variable_substitution].to_bool(true);
 	if(delayed_variable_substitution) {
 		man.add_event_handler_from_wml(cfg.get_config(), *this);
 	} else {
@@ -4353,7 +4353,7 @@ static int intf_modify_ai_old(lua_State *L)
 {
 	config cfg;
 	luaW_toconfig(L, 1, cfg);
-	int side = cfg["side"];
+	int side = cfg[str_side];
 	ai::manager::get_singleton().modify_active_ai_for_side(side, cfg);
 	return 0;
 }
@@ -4569,7 +4569,7 @@ int game_lua_kernel::intf_add_time_area(lua_State * L)
 	if(lua_gettop(L) == 1) {
 		vconfig cfg = luaW_checkvconfig(L, 1);
 		deprecated_message("Single-argument wesnoth.map.place_area is deprecated. Instead, pass ID, filter, and schedule as three separate arguments.", DEP_LEVEL::INDEFINITE, {1, 17, 0});
-		id = cfg["id"].str();
+		id = cfg[str_id].str();
 		const terrain_filter filter(cfg, &game_state_, false);
 		filter.get_locations(locs, true);
 		times = cfg.get_parsed_config();
@@ -4902,7 +4902,7 @@ static int intf_invoke_synced_command(lua_State* L)
 			return luaL_argerror(L, 1, "Unknown synced command");
 		}
 		config& cmd_tag = cmd.child_or_add("custom_command");
-		cmd_tag["name"] = name;
+		cmd_tag[str_name] = name;
 		if(!lua_isnoneornil(L, 2)) {
 			cmd_tag.add_child("data", luaW_checkconfig(L, 2));
 		}
@@ -5522,7 +5522,7 @@ void game_lua_kernel::save_game(config &cfg)
 			 * are the core-lua-handled (currently [item] and [objectives])
 			 * and the extra UMC ones.
 			 */
-			const std::string m = "Tag is already used: [" + i->key + "]";
+			const std::string m = "Tag is already used: [str_ + i->key + ]";
 			log_error(m.c_str());
 			v.erase(i);
 			continue;
@@ -5576,7 +5576,7 @@ int game_lua_kernel::cfun_builtin_effect(lua_State *L)
 
 	// The times= key is supposed to be ignored by the effect function.
 	// However, just in case someone doesn't realize this, we will set it to 1 here.
-	cfg["times"] = 1;
+	cfg[str_times] = 1;
 
 	if(need_apply) {
 		u->apply_builtin_effect(which_effect, cfg);

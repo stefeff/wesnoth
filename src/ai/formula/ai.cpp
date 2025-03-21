@@ -76,9 +76,9 @@ using ca_ptr = wfl::candidate_action_ptr;
 ca_ptr formula_ai::load_candidate_action_from_config(const config& rc_action)
 {
 	ca_ptr new_ca;
-	const t_string &name = rc_action["name"];
+	const t_string &name = rc_action[str_name];
 	try {
-		const t_string &type = rc_action["type"];
+		const t_string &type = rc_action[str_type];
 
 		if( type == "movement") {
 			new_ca = std::make_shared<move_candidate_action>(name, type, rc_action, &function_table_);
@@ -666,17 +666,17 @@ bool formula_ai::can_reach_unit(map_location unit_A, map_location unit_B) const 
 void formula_ai::on_create(){
 	//make sure we don't run out of refcount
 
-	for(const config &func : cfg_.child_range("function"))
+	for(const config &func : cfg_.child_range(str_function))
 	{
-		const t_string &name = func["name"];
-		const t_string &inputs = func["inputs"];
-		const t_string &formula_str = func["formula"];
+		const t_string &name = func[str_name];
+		const t_string &inputs = func[str_inputs];
+		const t_string &formula_str = func[str_formula];
 
 		std::vector<std::string> args = utils::split(inputs.str());
 		try {
 			add_formula_function(name,
 					     create_optional_formula(formula_str),
-					     create_optional_formula(func["precondition"]),
+					     create_optional_formula(func[str_precondition]),
 					     args);
 		}
 		catch(const formula_error& e) {
@@ -685,7 +685,7 @@ void formula_ai::on_create(){
 	}
 
 	vars_ = map_formula_callable();
-	if (const auto ai_vars = cfg_.optional_child("vars"))
+	if (const auto ai_vars = cfg_.optional_child(str_vars))
 	{
 		variant var;
 		for(const config::attribute &i : ai_vars->attribute_range()) {
@@ -759,9 +759,9 @@ config formula_ai::to_config() const
 	config cfg = cfg_;
 
 	//formula AI variables
-	cfg.clear_children("vars");
+	cfg.clear_children(str_vars);
 	if (vars_.empty() == false) {
-		config &ai_vars = cfg.add_child("vars");
+		config &ai_vars = cfg.add_child(str_vars);
 
 		std::string str;
 		for(map_formula_callable::const_iterator i = vars_.begin(); i != vars_.end(); ++i)

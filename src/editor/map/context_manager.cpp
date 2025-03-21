@@ -371,7 +371,7 @@ void context_manager::expand_open_maps_menu(std::vector<config>& items, int i)
 		const std::string label = ss.str();
 		const std::string details = get_menu_marker(changed);
 
-		contexts.emplace_back("label", label, "details", details);
+		contexts.emplace_back(str_label, label, str_details, details);
 	}
 
 	items.insert(pos, contexts.begin(), contexts.end());
@@ -384,7 +384,7 @@ void context_manager::expand_load_mru_menu(std::vector<config>& items, int i)
 	auto pos = items.erase(items.begin() + i);
 
 	if(mru.empty()) {
-		items.insert(pos, config {"label", _("No Recent Files")});
+		items.insert(pos, config {str_label, _("No Recent Files")});
 		return;
 	}
 
@@ -397,7 +397,7 @@ void context_manager::expand_load_mru_menu(std::vector<config>& items, int i)
 
 	std::vector<config> temp;
 	std::transform(mru.begin(), mru.end(), std::back_inserter(temp), [](const std::string& str) {
-		return config {"label", str};
+		return config {str_label, str};
 	});
 
 	items.insert(pos, temp.begin(), temp.end());
@@ -434,7 +434,7 @@ void context_manager::expand_areas_menu(std::vector<config>& items, int i)
 		const std::string label = ss.str();
 		const std::string details = get_menu_marker(changed);
 
-		area_entries.emplace_back("label", label, "details", details);
+		area_entries.emplace_back(str_label, label, str_details, details);
 	}
 
 	items.insert(pos, area_entries.begin(), area_entries.end());
@@ -458,7 +458,7 @@ void context_manager::expand_sides_menu(std::vector<config>& items, int i)
 			label << teamname;
 		}
 
-		contexts.emplace_back("label", label.str());
+		contexts.emplace_back(str_label, label.str());
 	}
 
 	items.insert(pos, contexts.begin(), contexts.end());
@@ -475,8 +475,8 @@ void context_manager::expand_time_menu(std::vector<config>& items, int i)
 
 	for(const time_of_day& time : tod_m->times()) {
 		times.emplace_back(
-			"details", time.name, // Use 'details' field here since the image will take the first column
-			"image", time.image
+			str_details, time.name, // Use 'details' field here since the image will take the first column
+			str_image, time.image
 		);
 	}
 
@@ -492,8 +492,8 @@ void context_manager::expand_local_time_menu(std::vector<config>& items, int i)
 
 	for(const time_of_day& time : tod_m->times(get_map_context().get_active_area())) {
 		times.emplace_back(
-			"details", time.name, // Use 'details' field here since the image will take the first column
-			"image", time.image
+			str_details, time.name, // Use 'details' field here since the image will take the first column
+			str_image, time.image
 		);
 	}
 
@@ -783,16 +783,16 @@ void context_manager::save_scenario_as_dialog()
 
 void context_manager::init_map_generators(const game_config_view& game_config)
 {
-	for(const config& i : game_config.child_range("multiplayer")) {
-		if(i["map_generation"].empty() && i["scenario_generation"].empty()) {
+	for(const config& i : game_config.child_range(str_multiplayer)) {
+		if(i[str_map_generation].empty() && i[str_scenario_generation].empty()) {
 			continue;
 		}
 
 		// TODO: we should probably use `child` with a try/catch block once that function throws
-		if(const auto generator_cfg = i.optional_child("generator")) {
-			map_generators_.emplace_back(create_map_generator(i["map_generation"].empty() ? i["scenario_generation"] : i["map_generation"], generator_cfg.value()));
+		if(const auto generator_cfg = i.optional_child(str_generator)) {
+			map_generators_.emplace_back(create_map_generator(i[str_map_generation].empty() ? i[str_scenario_generation] : i[str_map_generation], generator_cfg.value()));
 		} else {
-			ERR_ED << "Scenario \"" << i["name"] << "\" with id " << i["id"]
+			ERR_ED << "Scenario \"" << i[str_name] << "\" with id " << i[str_id]
 					<< " has map_generation= but no [generator] tag";
 		}
 	}
@@ -1015,7 +1015,7 @@ void context_manager::revert_map()
 
 void context_manager::new_map(int width, int height, const t_translation::terrain_code& fill, bool new_context)
 {
-	const config& default_schedule = game_config_.find_mandatory_child("editor_times", "id", "empty");
+	const config& default_schedule = game_config_.find_mandatory_child(str_editor_times, str_id, str_empty);
 	editor_map m(width, height, fill);
 
 	if(new_context) {
@@ -1028,7 +1028,7 @@ void context_manager::new_map(int width, int height, const t_translation::terrai
 
 void context_manager::new_scenario(int width, int height, const t_translation::terrain_code& fill, bool new_context)
 {
-	auto default_schedule = game_config_.find_child("editor_times", "id", "empty");
+	auto default_schedule = game_config_.find_child(str_editor_times, str_id, str_empty);
 	editor_map m(width, height, fill);
 
 	if(new_context) {
@@ -1081,7 +1081,7 @@ void context_manager::create_default_context()
 		t_translation::terrain_code default_terrain =
 			t_translation::read_terrain_code(game_config::default_terrain);
 
-		const config& default_schedule = game_config_.find_mandatory_child("editor_times", "id", "empty");
+		const config& default_schedule = game_config_.find_mandatory_child(str_editor_times, str_id, str_empty);
 		add_map_context(editor_map(44, 33, default_terrain), true, default_schedule, current_addon_);
 	} else {
 		for(const std::string& filename : saved_windows_) {

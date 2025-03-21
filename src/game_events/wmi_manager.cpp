@@ -140,7 +140,7 @@ void wmi_manager::get_items(const map_location& hex,
 		if(item->use_wml_menu() && (!item->is_synced() || resources::controller->can_use_synced_wml_menu())
 				&& item->can_show(hex, gamedata, fc)) {
 			// Include this item.
-			items.emplace_back("id", item->hotkey_id() , "label", item->menu_text(), "icon", item->image());
+			items.emplace_back(str_id, item->hotkey_id() , str_label, item->menu_text(), str_icon, item->image());
 		}
 	}
 	gamedata.get_variable("x1") = x1;
@@ -193,7 +193,7 @@ void wmi_manager::to_config(config& cfg) const
 	// Loop through our items.
 	for(const auto& item : wml_menu_items_) {
 		// Add this item as a child of cfg.
-		item.second->to_config(cfg.add_child("menu_item"));
+		item.second->to_config(cfg.add_child(str_menu_item));
 	}
 }
 
@@ -219,12 +219,12 @@ void wmi_manager::set_item(const std::string& id, const vconfig& menu_item)
 void wmi_manager::set_menu_items(const config& cfg)
 {
 	wml_menu_items_.clear();
-	for(const config& item : cfg.child_range("menu_item")) {
-		if(!item.has_attribute("id")) {
+	for(const config& item : cfg.child_range(str_menu_item)) {
+		if(!item.has_attribute(str_id)) {
 			continue;
 		}
 
-		const std::string& id = item["id"];
+		const std::string& id = item[str_id];
 		bool success;
 
 		std::tie(std::ignore, success) = wml_menu_items_.emplace(id, std::make_shared<wml_menu_item>(id, item));
