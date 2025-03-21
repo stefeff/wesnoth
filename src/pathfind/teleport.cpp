@@ -41,25 +41,25 @@ namespace {
 }
 
 // This constructor is *only* meant for loading from saves
-teleport_group::teleport_group(const config& cfg) : cfg_(cfg), reversed_(cfg["reversed"].to_bool(false)), id_(cfg["id"])
+teleport_group::teleport_group(const config& cfg) : cfg_(cfg), reversed_(cfg[str_reversed].to_bool(false)), id_(cfg[str_id])
 {
-	VALIDATE(cfg.has_attribute("id"), missing_mandatory_wml_key("tunnel", "id"));
-	VALIDATE(cfg.has_attribute("reversed"), missing_mandatory_wml_key("tunnel", "reversed"));
+	VALIDATE(cfg.has_attribute(str_id), missing_mandatory_wml_key("tunnel", "id"));
+	VALIDATE(cfg.has_attribute(str_reversed), missing_mandatory_wml_key("tunnel", "reversed"));
 
-	VALIDATE(cfg_.child_count("source") == 1, "The tunnel should have only one 'source' child.");
-	VALIDATE(cfg_.child_count("target") == 1, "The tunnel should have only one 'target' child.");
-	VALIDATE(cfg_.child_count("filter") == 1, "The tunnel should have only one 'filter' child.");
+	VALIDATE(cfg_.child_count(str_source) == 1, "The tunnel should have only one 'source' child.");
+	VALIDATE(cfg_.child_count(str_target) == 1, "The tunnel should have only one 'target' child.");
+	VALIDATE(cfg_.child_count(str_filter) == 1, "The tunnel should have only one 'filter' child.");
 }
 
 teleport_group::teleport_group(const vconfig& cfg, bool reversed) : cfg_(cfg.get_config()), reversed_(reversed), id_()
 {
-	VALIDATE(cfg_.child_count("source") == 1, "The tunnel should have only one 'source' child.");
-	VALIDATE(cfg_.child_count("target") == 1, "The tunnel should have only one 'target' child.");
-	VALIDATE(cfg_.child_count("filter") == 1, "The tunnel should have only one 'filter' child.");
-	if (cfg["id"].empty()) {
+	VALIDATE(cfg_.child_count(str_source) == 1, "The tunnel should have only one 'source' child.");
+	VALIDATE(cfg_.child_count(str_target) == 1, "The tunnel should have only one 'target' child.");
+	VALIDATE(cfg_.child_count(str_filter) == 1, "The tunnel should have only one 'filter' child.");
+	if (cfg[str_id].empty()) {
 		id_ = resources::tunnels->next_unique_id();
 	} else {
-		id_ = cfg["id"].str();
+		id_ = cfg[str_id].str();
 		if (reversed_) // Differentiate the reverse tunnel from the forward one
 			id_ += reversed_suffix;
 	}
@@ -124,9 +124,9 @@ void teleport_group::get_teleport_pair(
 		fc = &ignore_context.value();
 	}
 
-	vconfig filter(cfg_.child_or_empty("filter"), true);
-	vconfig source(cfg_.child_or_empty("source"), true);
-	vconfig target(cfg_.child_or_empty("target"), true);
+	vconfig filter(cfg_.child_or_empty(str_filter), true);
+	vconfig source(cfg_.child_or_empty(str_source), true);
+	vconfig target(cfg_.child_or_empty(str_target), true);
 	const unit_filter ufilt(filter); //Note: Don't use the ignore units filter context here, only for the terrain filters. (That's how it worked before the filter contexts were introduced)
 	if (ufilt.matches(u)) {
 		terrain_filter source_filter(source, fc, false);
@@ -142,22 +142,22 @@ const std::string& teleport_group::get_teleport_id() const {
 }
 
 bool teleport_group::always_visible() const {
-	return cfg_["always_visible"].to_bool(false);
+	return cfg_[str_always_visible].to_bool(false);
 }
 
 bool teleport_group::pass_allied_units() const {
-	return cfg_["pass_allied_units"].to_bool(true);
+	return cfg_[str_pass_allied_units].to_bool(true);
 }
 
 bool teleport_group::allow_vision() const {
-	return cfg_["allow_vision"].to_bool(true);
+	return cfg_[str_allow_vision].to_bool(true);
 }
 
 config teleport_group::to_config() const {
 	config retval = cfg_;
-	retval["saved"] = "yes";
-	retval["reversed"] = reversed_ ? "yes" : "no";
-	retval["id"] = id_;
+	retval[str_saved] = "yes";
+	retval[str_reversed] = reversed_ ? "yes" : "no";
+	retval[str_id] = id_;
 	return retval;
 }
 
@@ -268,11 +268,11 @@ const teleport_map get_teleport_locations(const unit &u,
 	return teleport_map(groups, u, viewing_team, see_all, ignore_units, check_vision);
 }
 
-manager::manager(const config &cfg) : tunnels_(), id_(cfg["next_teleport_group_id"].to_int(0)) {
-	const int tunnel_count = cfg.child_count("tunnel");
+manager::manager(const config &cfg) : tunnels_(), id_(cfg[str_next_teleport_group_id].to_int(0)) {
+	const int tunnel_count = cfg.child_count(str_tunnel);
 	for(int i = 0; i < tunnel_count; ++i) {
-		const config& t = cfg.mandatory_child("tunnel", i);
-		if(!t["saved"].to_bool()) {
+		const config& t = cfg.mandatory_child(str_tunnel, i);
+		if(!t[str_saved].to_bool()) {
 			lg::log_to_chat() << "Do not use [tunnel] directly in a [scenario]. Use it in an [event] or [abilities] tag.\n";
 			ERR_WML << "Do not use [tunnel] directly in a [scenario]. Use it in an [event] or [abilities] tag.";
 			continue;
@@ -306,9 +306,9 @@ config manager::to_config() const {
 
 	std::vector<teleport_group>::const_iterator tunnel = tunnels_.begin();
 	for(; tunnel != tunnels_.end(); ++tunnel) {
-		store.add_child("tunnel", tunnel->to_config());
+		store.add_child(str_tunnel, tunnel->to_config());
 	}
-	store["next_teleport_group_id"] = std::to_string(id_);
+	store[str_next_teleport_group_id] = std::to_string(id_);
 
 	return store;
 }

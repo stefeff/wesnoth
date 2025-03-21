@@ -37,7 +37,7 @@ using namespace std::chrono_literals;
 
 static std::string get_heal_sound(const config& cfg)
 {
-	return cfg["healed_sound"].empty() ? "heal.wav" : cfg["healed_sound"].str();
+	return cfg[str_healed_sound].empty() ? "heal.wav" : cfg[str_healed_sound].str();
 }
 
 struct animation_branch
@@ -79,18 +79,18 @@ struct animation_cursor
 		bool previously_value_set     = false;
 		bool previously_value_2nd_set = false;
 
-		const std::string s_cfg_hits      = cfg["hits"];
-		const std::string s_cfg_direction = cfg["direction"];
-		const std::string s_cfg_terrain   = cfg["terrain_types"];
-		const std::string s_cfg_value     = cfg["value"];
-		const std::string s_cfg_value_2nd = cfg["value_2nd"];
+		const std::string s_cfg_hits      = cfg[str_hits];
+		const std::string s_cfg_direction = cfg[str_direction];
+		const std::string s_cfg_terrain   = cfg[str_terrain_types];
+		const std::string s_cfg_value     = cfg[str_value];
+		const std::string s_cfg_value_2nd = cfg[str_value_2nd];
 
 		for(const auto& branch : branches) {
-			const std::string s_branch_hits      = branch.attributes["hits"];
-			const std::string s_branch_direction = branch.attributes["direction"];
-			const std::string s_branch_terrain   = branch.attributes["terrain_types"];
-			const std::string s_branch_value     = branch.attributes["value"];
-			const std::string s_branch_value_2nd = branch.attributes["value_second"];
+			const std::string s_branch_hits      = branch.attributes[str_hits];
+			const std::string s_branch_direction = branch.attributes[str_direction];
+			const std::string s_branch_terrain   = branch.attributes[str_terrain_types];
+			const std::string s_branch_value     = branch.attributes[str_value];
+			const std::string s_branch_value_2nd = branch.attributes[str_value_second];
 
 			if(!s_branch_hits.empty() && s_branch_hits == s_cfg_hits) {
 				previously_hits_set = true;
@@ -116,11 +116,11 @@ struct animation_cursor
 		// Merge all frames that have new matches and prune any impossible
 		// matches, e.g. hits='yes' and hits='no'
 		for(auto iter = branches.begin(); iter != branches.end(); /* nothing */) {
-			const std::string s_branch_hits      = (*iter).attributes["hits"];
-			const std::string s_branch_direction = (*iter).attributes["direction"];
-			const std::string s_branch_terrain   = (*iter).attributes["terrain_types"];
-			const std::string s_branch_value     = (*iter).attributes["value"];
-			const std::string s_branch_value_2nd = (*iter).attributes["value_second"];
+			const std::string s_branch_hits      = (*iter).attributes[str_hits];
+			const std::string s_branch_direction = (*iter).attributes[str_direction];
+			const std::string s_branch_terrain   = (*iter).attributes[str_terrain_types];
+			const std::string s_branch_value     = (*iter).attributes[str_value];
+			const std::string s_branch_value_2nd = (*iter).attributes[str_value_second];
 
 			const bool hits_match      = (previously_hits_set && s_branch_hits != s_cfg_hits);
 			const bool direction_match = (previously_direction_set && s_branch_direction != s_cfg_direction);
@@ -145,11 +145,11 @@ struct animation_cursor
 		// Then we prune all parent branches with similar matches as they
 		// now will not have the full frame list
 		for(auto iter = parent->branches.begin(); iter != parent->branches.end(); /* nothing */) {
-			const std::string s_branch_hits      = (*iter).attributes["hits"];
-			const std::string s_branch_direction = (*iter).attributes["direction"];
-			const std::string s_branch_terrain   = (*iter).attributes["terrain_types"];
-			const std::string s_branch_value     = (*iter).attributes["value"];
-			const std::string s_branch_value_2nd = (*iter).attributes["value_second"];
+			const std::string s_branch_hits      = (*iter).attributes[str_hits];
+			const std::string s_branch_direction = (*iter).attributes[str_direction];
+			const std::string s_branch_terrain   = (*iter).attributes[str_terrain_types];
+			const std::string s_branch_value     = (*iter).attributes[str_value];
+			const std::string s_branch_value_2nd = (*iter).attributes[str_value_second];
 
 			const bool hits_match      = (previously_hits_set && s_branch_hits == s_cfg_hits);
 			const bool direction_match = (previously_direction_set && s_branch_direction == s_cfg_direction);
@@ -278,12 +278,12 @@ unit_animation::unit_animation(const std::chrono::milliseconds& start_time,
 }
 
 unit_animation::unit_animation(const config& cfg,const std::string& frame_string )
-	: terrain_types_(t_translation::read_list(cfg["terrain_type"].str()))
+	: terrain_types_(t_translation::read_list(cfg[str_terrain_type].str()))
 	, unit_filter_()
 	, secondary_unit_filter_()
 	, directions_()
-	, frequency_(cfg["frequency"].to_int())
-	, base_score_(cfg["base_score"].to_int())
+	, frequency_(cfg[str_frequency].to_int())
+	, base_score_(cfg[str_base_score].to_int())
 	, event_()
 	, value_()
 	, primary_attack_filter_()
@@ -298,7 +298,7 @@ unit_animation::unit_animation(const config& cfg,const std::string& frame_string
 	, play_offscreen_(true)
 	, overlaped_hex_()
 {
-	//if(!cfg["debug"].empty()) printf("DEBUG WML: FINAL\n%s\n\n",cfg.debug().c_str());
+	//if(!cfg[str_debug].empty()) printf("DEBUG WML: FINAL\n%s\n\n",cfg.debug().c_str());
 
 	for(const auto [key, frame] : cfg.all_children_view()) {
 		if(key == frame_string) {
@@ -316,9 +316,9 @@ unit_animation::unit_animation(const config& cfg,const std::string& frame_string
 		sub_anims_[key] = particle(cfg, key.str().substr(0, key.size() - 5));
 	}
 
-	event_ = utils::split(cfg["apply_to"]);
+	event_ = utils::split(cfg[str_apply_to]);
 
-	const std::vector<std::string>& my_directions = utils::split(cfg["direction"]);
+	const std::vector<std::string>& my_directions = utils::split(cfg[str_direction]);
 	for(const auto& direction :  my_directions) {
 		const map_location::direction d = map_location::parse_direction(direction);
 		directions_.push_back(d);
@@ -335,19 +335,19 @@ unit_animation::unit_animation(const config& cfg,const std::string& frame_string
 		assert(fc);
 	}*/
 
-	for(const config& filter : cfg.child_range("filter")) {
+	for(const config& filter : cfg.child_range(str_filter)) {
 		unit_filter_.push_back(filter);
 	}
 
-	for(const config& filter : cfg.child_range("filter_second")) {
+	for(const config& filter : cfg.child_range(str_filter_second)) {
 		secondary_unit_filter_.push_back(filter);
 	}
 
-	for(const std::string& v : utils::split(cfg["value"])) {
+	for(const std::string& v : utils::split(cfg[str_value])) {
 		value_.push_back(utils::from_chars<int>(v).value_or(0));
 	}
 
-	for(const auto& h : utils::split(cfg["hits"])) {
+	for(const auto& h : utils::split(cfg[str_hits])) {
 		if(h == "yes" || h == strike_result::hit) {
 			hits_.push_back(strike_result::type::hit);
 		}
@@ -361,19 +361,19 @@ unit_animation::unit_animation(const config& cfg,const std::string& frame_string
 		}
 	}
 
-	for(const std::string& v2 : utils::split(cfg["value_second"])) {
+	for(const std::string& v2 : utils::split(cfg[str_value_second])) {
 		value2_.push_back(utils::from_chars<int>(v2).value_or(0));
 	}
 
-	for(const config& filter : cfg.child_range("filter_attack")) {
+	for(const config& filter : cfg.child_range(str_filter_attack)) {
 		primary_attack_filter_.push_back(filter);
 	}
 
-	for(const config& filter : cfg.child_range("filter_second_attack")) {
+	for(const config& filter : cfg.child_range(str_filter_second_attack)) {
 		secondary_attack_filter_.push_back(filter);
 	}
 
-	play_offscreen_ = cfg["offscreen"].to_bool(true);
+	play_offscreen_ = cfg[str_backstab].to_bool(true);
 }
 
 int unit_animation::matches(const map_location& loc, const map_location& second_loc,
@@ -496,7 +496,7 @@ void unit_animation::fill_initial_animations(std::vector<unit_animation>& animat
 		}
 	}
 
-	const std::string default_image = cfg["image"];
+	const std::string default_image = cfg[str_image];
 
 	if(animation_base.empty()) {
 		animation_base.push_back(unit_animation(0ms, frame_builder().image(default_image).duration(1ms), "", unit_animation::DEFAULT_ANIM));
@@ -572,8 +572,8 @@ void unit_animation::fill_initial_animations(std::vector<unit_animation>& animat
 		animations.push_back(base);
 		animations.back().event_ = { "death" };
 		animations.back().unit_anim_.override(0ms, 600ms, particle::NO_CYCLE, "1~0:600");
-		animations.back().sub_anims_["_death_sound"] = particle();
-		animations.back().sub_anims_["_death_sound"].add_frame(1ms, frame_builder().sound(cfg["die_sound"]), true);
+		animations.back().sub_anims_[str__death_sound] = particle();
+		animations.back().sub_anims_[str__death_sound].add_frame(1ms, frame_builder().sound(cfg[str_die_sound]), true);
 
 		animations.push_back(base);
 		animations.back().event_ = { "victory" };
@@ -596,13 +596,13 @@ void unit_animation::fill_initial_animations(std::vector<unit_animation>& animat
 
 		const std::string healed_sound = get_heal_sound(cfg);
 
-		animations.back().sub_anims_["_healed_sound"].add_frame(1ms, frame_builder().sound(healed_sound), true);
+		animations.back().sub_anims_[str__healed_sound].add_frame(1ms, frame_builder().sound(healed_sound), true);
 
 		animations.push_back(base);
 		animations.back().event_ = { "poisoned" };
 		animations.back().unit_anim_.override(0ms, 300ms, particle::NO_CYCLE, "", "0:30,0.5:30,0:30,0.5:30,0:30,0.5:30,0:30,0.5:30,0:30", {0,255,0});
-		animations.back().sub_anims_["_poison_sound"] = particle();
-		animations.back().sub_anims_["_poison_sound"].add_frame(1ms, frame_builder().sound(game_config::sounds::status::poisoned), true);
+		animations.back().sub_anims_[str__poison_sound] = particle();
+		animations.back().sub_anims_[str__poison_sound].add_frame(1ms, frame_builder().sound(game_config::sounds::status::poisoned), true);
 	}
 }
 
@@ -613,14 +613,14 @@ static void add_simple_anim(std::vector<unit_animation>& animations,
 {
 	for(const animation_branch& ab : prepare_animation(cfg, tag_name)) {
 		config anim = ab.merge();
-		anim["apply_to"] = apply_to;
+		anim[str_apply_to] = apply_to;
 
 		if(!offscreen) {
-			config::attribute_value& v = anim["offscreen"];
+			config::attribute_value& v = anim[str_offscreen];
 			if(v.empty()) v = false;
 		}
 
-		config::attribute_value& v = anim["layer"];
+		config::attribute_value& v = anim[str_layer];
 		if(v.empty()) v = get_abs_frame_layer(layer);
 
 		animations.emplace_back(anim);
@@ -648,8 +648,8 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "standing_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "standing";
-		anim["cycles"] = true;
+		anim[str_apply_to] = "standing";
+		anim[str_cycles] = true;
 
 		// Add cycles to all frames within a standing animation block
 		for(config::const_all_children_iterator ci : ab.children) {
@@ -660,12 +660,12 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			}
 		}
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
-		if(anim["offscreen"].empty()) {
-			anim["offscreen"] = false;
+		if(anim[str_offscreen].empty()) {
+			anim[str_offscreen] = false;
 		}
 
 		animations.emplace_back(anim);
@@ -674,8 +674,8 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 	// Standing animations are also used as default animations
 	for(const animation_branch& ab : prepare_animation(cfg, "standing_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "default";
-		anim["cycles"] = true;
+		anim[str_apply_to] = "default";
+		anim[str_cycles] = true;
 
 		for(config::const_all_children_iterator ci : ab.children) {
 			std::string sub_frame_name = ci->key;
@@ -685,12 +685,12 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			}
 		}
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
-		if(anim["offscreen"].empty()) {
-			anim["offscreen"] = false;
+		if(anim[str_offscreen].empty()) {
+			anim[str_offscreen] = false;
 		}
 
 		animations.emplace_back(anim);
@@ -698,11 +698,11 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "healing_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "healing";
-		anim["value"] = anim["damage"];
+		anim[str_apply_to] = "healing";
+		anim[str_value] = anim[str_damage];
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
 		animations.emplace_back(anim);
@@ -710,46 +710,46 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "healed_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "healed";
-		anim["value"] = anim["healing"];
+		anim[str_apply_to] = "healed";
+		anim[str_value] = anim[str_healing];
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
 		animations.emplace_back(anim);
-		animations.back().sub_anims_["_healed_sound"] = particle();
+		animations.back().sub_anims_[str__healed_sound] = particle();
 
 		const std::string healed_sound = get_heal_sound(cfg);
-		animations.back().sub_anims_["_healed_sound"].add_frame(1ms,frame_builder().sound(healed_sound),true);
+		animations.back().sub_anims_[str__healed_sound].add_frame(1ms,frame_builder().sound(healed_sound),true);
 	}
 
 	for(const animation_branch &ab : prepare_animation(cfg, "poison_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "poisoned";
-		anim["value"] = anim["damage"];
+		anim[str_apply_to] = "poisoned";
+		anim[str_value] = anim[str_damage];
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
 		animations.emplace_back(anim);
-		animations.back().sub_anims_["_poison_sound"] = particle();
-		animations.back().sub_anims_["_poison_sound"].add_frame(1ms,frame_builder().sound(game_config::sounds::status::poisoned),true);
+		animations.back().sub_anims_[str__poison_sound] = particle();
+		animations.back().sub_anims_[str__poison_sound].add_frame(1ms,frame_builder().sound(game_config::sounds::status::poisoned),true);
 	}
 
 	add_simple_anim(animations, cfg, "pre_movement_anim", "pre_movement", drawing_layer::unit_move_default);
 
 	for(const animation_branch& ab : prepare_animation(cfg, "movement_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "movement";
+		anim[str_apply_to] = "movement";
 
-		if(anim["offset"].empty()) {
-			anim["offset"] = "0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,";
+		if(anim[str_offset].empty()) {
+			anim[str_offset] = "0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,0~1:200,";
 		}
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = move_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = move_layer;
 		}
 
 		animations.emplace_back(anim);
@@ -759,22 +759,22 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "defend")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "defend";
+		anim[str_apply_to] = "defend";
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
-		if(!anim["damage"].empty() && anim["value"].empty()) {
-			anim["value"] = anim["damage"];
+		if(!anim[str_damage].empty() && anim[str_value].empty()) {
+			anim[str_value] = anim[str_damage];
 		}
 
-		if(anim["hits"].empty()) {
-			anim["hits"] = false;
+		if(anim[str_hits].empty()) {
+			anim[str_hits] = false;
 			animations.emplace_back(anim);
 			animations.back().base_score_--; //so default doesn't interfere with 'if' block
 
-			anim["hits"] = true;
+			anim[str_hits] = true;
 			animations.emplace_back(anim);
 			animations.back().base_score_--;
 
@@ -784,9 +784,9 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 				.duration(225ms)
 				.blend("0.0,0.5:75,0.0:75,0.5:75,0.0", {255,0,0}));
 		} else {
-			for(const std::string& hit_type : utils::split(anim["hits"])) {
+			for(const std::string& hit_type : utils::split(anim[str_hits])) {
 				config tmp = anim;
-				tmp["hits"] = hit_type;
+				tmp[str_hits] = hit_type;
 
 				animations.emplace_back(tmp);
 
@@ -806,28 +806,28 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "attack_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "attack";
+		anim[str_apply_to] = "attack";
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = move_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = move_layer;
 		}
 
 		config::const_child_itors missile_fs = anim.child_range("missile_frame");
-		if(anim["offset"].empty() && missile_fs.empty()) {
-			anim["offset"] ="0~0.6,0.6~0";
+		if(anim[str_offset].empty() && missile_fs.empty()) {
+			anim[str_offset] ="0~0.6,0.6~0";
 		}
 
 		if(!missile_fs.empty()) {
-			if(anim["missile_offset"].empty()) {
-				anim["missile_offset"] = "0~0.8";
+			if(anim[str_missile_offset].empty()) {
+				anim[str_missile_offset] = "0~0.8";
 			}
 
-			if(anim["missile_layer"].empty()) {
-				anim["missile_layer"] = missile_layer;
+			if(anim[str_missile_layer].empty()) {
+				anim[str_missile_layer] = missile_layer;
 			}
 
 			config tmp;
-			tmp["duration"] = 1;
+			tmp[str_duration] = 1;
 
 			anim.add_child("missile_frame", tmp);
 			anim.add_child_at("missile_frame", tmp, 0);
@@ -838,10 +838,10 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "death")) {
 		config anim = ab.merge();
-		anim["apply_to"] = "death";
+		anim[str_apply_to] = "death";
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
 		animations.emplace_back(anim);
@@ -852,9 +852,9 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			.duration(600ms)
 			.highlight("1~0:600"));
 
-		if(!cfg["die_sound"].empty()) {
-			animations.back().sub_anims_["_death_sound"] = particle();
-			animations.back().sub_anims_["_death_sound"].add_frame(1ms,frame_builder().sound(cfg["die_sound"]),true);
+		if(!cfg[str_die_sound].empty()) {
+			animations.back().sub_anims_[str__death_sound] = particle();
+			animations.back().sub_anims_[str__death_sound].add_frame(1ms,frame_builder().sound(cfg[str_die_sound]),true);
 		}
 	}
 
@@ -862,10 +862,10 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "extra_anim")) {
 		config anim = ab.merge();
-		anim["apply_to"] = anim["flag"];
+		anim[str_apply_to] = anim[str_flag];
 
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
 		animations.emplace_back(anim);
@@ -873,15 +873,15 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 	for(const animation_branch& ab : prepare_animation(cfg, "teleport_anim")) {
 		config anim = ab.merge();
-		if(anim["layer"].empty()) {
-			anim["layer"] = default_layer;
+		if(anim[str_layer].empty()) {
+			anim[str_layer] = default_layer;
 		}
 
-		anim["apply_to"] = "pre_teleport";
+		anim[str_apply_to] = "pre_teleport";
 		animations.emplace_back(anim);
 		animations.back().unit_anim_.set_end_time(0ms);
 
-		anim["apply_to"] ="post_teleport";
+		anim[str_apply_to] ="post_teleport";
 		animations.emplace_back(anim);
 		animations.back().unit_anim_.remove_frames_until(0ms);
 	}
@@ -939,7 +939,7 @@ unit_animation::particle::particle(const config& cfg, const std::string& frame_s
 	config::const_child_itors range = cfg.child_range(frame_string + "frame");
 	if(!range.empty() && cfg[frame_string + "start_time"].empty()) {
 		for(const config& frame : range) {
-			starting_frame_time_ = std::min(starting_frame_time_, chrono::parse_duration<std::chrono::milliseconds>(frame["begin"]));
+			starting_frame_time_ = std::min(starting_frame_time_, chrono::parse_duration<std::chrono::milliseconds>(frame[str_begin]));
 		}
 	} else {
 		starting_frame_time_ = chrono::parse_duration<std::chrono::milliseconds>(cfg[frame_string + "start_time"]);
@@ -1049,7 +1049,7 @@ void unit_animation::start_animation(const std::chrono::milliseconds& start_time
 		particle crude_build;
 		crude_build.add_frame(1ms, frame_builder());
 		crude_build.add_frame(1ms, frame_builder().text(text, text_color), true);
-		sub_anims_["_add_text"] = crude_build;
+		sub_anims_[str__add_text] = crude_build;
 	}
 
 	for(auto& anim : sub_anims_) {

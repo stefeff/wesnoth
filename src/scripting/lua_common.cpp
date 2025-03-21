@@ -259,8 +259,9 @@ static int impl_vconfig_get(lua_State *L)
 		return 1;
 	}
 
-	if (v->null() || !v->has_attribute(m)) return 0;
-	luaW_pushscalar(L, (*v)[m]);
+	config_key_type key{m};
+	if (v->null() || !v->has_attribute(key)) return 0;
+	luaW_pushscalar(L, (*v)[key]);
 	return 1;
 }
 
@@ -927,9 +928,10 @@ bool luaW_toconfig(lua_State *L, int index, config &cfg)
 		if (!lua_istable(L, -1)) return_misformed();
 		lua_rawgeti(L, -1, 1);
 		char const *m = lua_tostring(L, -1);
-		if (!m || !config::valid_tag(m)) return_misformed();
+		config_key_type key{m};
+		if (!m || !config::valid_tag(key)) return_misformed();
 		lua_rawgeti(L, -2, 2);
-		if (!luaW_toconfig(L, -1, cfg.add_child(m)))
+		if (!luaW_toconfig(L, -1, cfg.add_child(key)))
 			return_misformed();
 		lua_pop(L, 3);
 	}
@@ -941,8 +943,9 @@ bool luaW_toconfig(lua_State *L, int index, config &cfg)
 		if (indextype == LUA_TNUMBER) continue;
 		if (indextype != LUA_TSTRING) return_misformed();
 		const char* m = lua_tostring(L, -2);
-		if(!m || !config::valid_attribute(m)) return_misformed();
-		config::attribute_value &v = cfg[m];
+		config_key_type key{m};
+		if(!m || !config::valid_attribute(key)) return_misformed();
+		config::attribute_value &v = cfg[key];
 		if (lua_istable(L, -1)) {
 			int subindex = lua_absindex(L, -1);
 			std::ostringstream str;

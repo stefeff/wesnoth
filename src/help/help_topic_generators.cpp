@@ -259,7 +259,7 @@ std::string terrain_topic_generator::operator()() const {
 			}
 		}
 		utils::string_map symbols;
-		symbols["types"] = utils::format_conjunct_list("", underlying);
+		symbols[str_types] = utils::format_conjunct_list("", underlying);
 		// TRANSLATORS: $types is a conjunct list, typical values will be "Castle" or "Flat and Shallow Water".
 		// The terrain names will be hypertext links to the help page of the corresponding terrain type.
 		// There will always be at least 1 item in the list, but unlikely to be more than 3.
@@ -269,7 +269,7 @@ std::string terrain_topic_generator::operator()() const {
 			const terrain_type& base = tdata->get_terrain_info(type_.default_base());
 
 			symbols.clear();
-			symbols["type"] = markup::make_link(base.editor_name(),
+			symbols[str_type] = markup::make_link(base.editor_name(),
 				(base.is_indivisible() ? ".." : "") + terrain_prefix + base.id());
 			// TRANSLATORS: In the help for a terrain type, for example Dwarven Village is often placed on Cave Floor
 			ss << "\n" << VGETTEXT("Typical base terrain: $type", symbols);
@@ -447,7 +447,7 @@ std::string unit_topic_generator::operator()() const {
 		ss << _("Base unit:") << font::nbsp << markup::make_link(parent->type_name(), ".." + unit_prefix + type_.id()) << "\n";
 	} else {
 		bool first = true;
-		for(const std::string& base_id : utils::split(type_.get_cfg()["base_ids"])) {
+		for(const std::string& base_id : utils::split(type_.get_cfg()[str_base_ids])) {
 			if(first) {
 				ss << _("Base units:") << font::nbsp;
 				first = false;
@@ -508,25 +508,25 @@ std::string unit_topic_generator::operator()() const {
 		int must_have_nameless_traits = 0;
 
 		for(const config& trait : traits) {
-			const std::string& male_name = trait["male_name"].str();
-			const std::string& female_name = trait["female_name"].str();
+			const std::string& male_name = trait[str_male_name].str();
+			const std::string& female_name = trait[str_female_name].str();
 			std::string trait_name;
 			if(type_.has_gender_variation(unit_race::MALE) && ! male_name.empty())
 				trait_name = male_name;
 			else if(type_.has_gender_variation(unit_race::FEMALE) && ! female_name.empty())
 				trait_name = female_name;
-			else if(! trait["name"].str().empty())
-				trait_name = trait["name"].str();
+			else if(! trait[str_name].str().empty())
+				trait_name = trait[str_name].str();
 			else
 				continue; // Hidden trait
 
 			std::string lang_trait_name = translation::gettext(trait_name.c_str());
-			if(lang_trait_name.empty() && trait["availability"].str() == "musthave") {
+			if(lang_trait_name.empty() && trait[str_availability].str() == "musthave") {
 				++must_have_nameless_traits;
 				continue;
 			}
-			const std::string ref_id = "traits_"+trait["id"].str();
-			((trait["availability"].str() == "musthave") ? must_have_traits : possible_random_traits).emplace_back(lang_trait_name, ref_id);
+			const std::string ref_id = "traits_"+trait[str_id].str();
+			((trait[str_availability].str() == "musthave") ? must_have_traits : possible_random_traits).emplace_back(lang_trait_name, ref_id);
 		}
 
 		// minimum of remaining num_traits and possible random traits (if there are insufficient random traits num_traits cannot be fulfilled)
@@ -770,11 +770,11 @@ std::string unit_topic_generator::operator()() const {
 	config::const_child_itors traits = type_.possible_traits();
 	if(!traits.empty() && type_.num_traits() > 0) {
 		for(const config & t : traits) {
-			if(t["availability"].str() == "musthave") {
+			if(t[str_availability].str() == "musthave") {
 				for(const config & effect : t.child_range("effect")) {
 					if(!effect.has_child("filter") // If this is musthave but has a unit filter, it might not always apply, so don't apply it in the help.
-							&& movetype::effects.find(effect["apply_to"].str()) != movetype::effects.end()) {
-						movement_type.merge(effect, effect["replace"].to_bool());
+							&& movetype::effects.find(effect[str_apply_to].str()) != movetype::effects.end()) {
+						movement_type.merge(effect, effect[str_replace].to_bool());
 					}
 				}
 			}

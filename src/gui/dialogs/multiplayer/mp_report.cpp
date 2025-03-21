@@ -43,9 +43,9 @@ mp_report::mp_report(std::string& report_text)
 void mp_report::pre_show()
 {
 	std::vector<config> occurrence_location_entries;
-	occurrence_location_entries.emplace_back("label", _("Lobby"));
-	occurrence_location_entries.emplace_back("label", _("Whisper"));
-	occurrence_location_entries.emplace_back("label", _("Game"));
+	occurrence_location_entries.emplace_back(str_label, _("Lobby"));
+	occurrence_location_entries.emplace_back(str_label, _("Whisper"));
+	occurrence_location_entries.emplace_back(str_label, _("Game"));
 
 	find_widget<menu_button>("occurrence_location").set_values(occurrence_location_entries);
 

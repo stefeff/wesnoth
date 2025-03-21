@@ -64,13 +64,13 @@ static void verify(const unit_map& units, const config& cfg) {
 	std::stringstream errbuf;
 	LOG_REPLAY << "verifying unit structure...";
 
-	const std::size_t nunits = cfg["num_units"].to_size_t();
+	const std::size_t nunits = cfg[str_num_units].to_size_t();
 	if(nunits != units.size()) {
 		errbuf << "SYNC VERIFICATION FAILED: number of units from data source differ: "
 			   << nunits << " according to data source. " << units.size() << " locally\n";
 
 		std::set<map_location> locs;
-		for (const config &u : cfg.child_range("unit"))
+		for (const config &u : cfg.child_range(str_unit))
 		{
 			const map_location loc(u);
 			locs.insert(loc);
@@ -91,13 +91,13 @@ static void verify(const unit_map& units, const config& cfg) {
 		errbuf.clear();
 	}
 
-	for (const config &un : cfg.child_range("unit"))
+	for (const config &un : cfg.child_range(str_unit))
 	{
 		const map_location loc(un);
 		const unit_map::const_iterator u = units.find(loc);
 		if(u == units.end()) {
 			errbuf << "SYNC VERIFICATION FAILED: data source says there is a '"
-				   << un["type"] << "' (side " << un["side"] << ") at "
+				   << un[str_type] << "' (side " << un[str_side] << ") at "
 				   << loc << " but there is no local record of it\n";
 			replay::process_error(errbuf.str());
 			errbuf.clear();
@@ -132,8 +132,8 @@ static void verify(const unit_map& units, const config& cfg) {
 
 static std::chrono::system_clock::time_point get_time(const config& speak)
 {
-	if(!speak["time"].empty()) {
-		return chrono::parse_timestamp(speak["time"]);
+	if(!speak[str_time].empty()) {
+		return chrono::parse_timestamp(speak[str_time]);
 	} else {
 		// fallback in case sender uses wesnoth that doesn't send timestamps
 		return std::chrono::system_clock::now();
@@ -143,16 +143,16 @@ static std::chrono::system_clock::time_point get_time(const config& speak)
 chat_msg::chat_msg(const config &cfg)
 	: color_() // use default white for observers
 	, nick_()
-	, text_(cfg["message"].str())
+	, text_(cfg[str_message].str())
 	, time_(get_time(cfg))
 {
-	if(cfg["team_name"].empty() && cfg["to_sides"].empty())
+	if(cfg[str_team_name].empty() && cfg[str_to_sides].empty())
 	{
-		nick_ = cfg["id"].str();
+		nick_ = cfg[str_id].str();
 	} else {
-		nick_ = "*"+cfg["id"].str()+"*";
+		nick_ = "*"+cfg[str_id].str()+"*";
 	}
-	int side = cfg["side"].to_int(0);
+	int side = cfg[str_side].to_int(0);
 	LOG_REPLAY << "side in message: " << side;
 	if(side != 0) {
 		color_ = team::get_side_color(side);
@@ -192,11 +192,11 @@ void replay::add_unit_checksum(const map_location& loc,config& cfg)
 	if(! game_config::mp_debug) {
 		return;
 	}
-	config& cc = cfg.add_child("checksum");
+	config& cc = cfg.add_child(str_checksum);
 	loc.write(cc);
 	unit_map::const_iterator u = resources::gameboard->units().find(loc);
 	assert(u.valid());
-	cc["value"] = get_checksum(*u);
+	cc[str_value] = get_checksum(*u);
 }
 
 
@@ -204,36 +204,36 @@ void replay::init_side()
 {
 	config& cmd = add_command();
 	config init_side;
-	init_side["side_number"] = resources::controller->current_side();
-	cmd.add_child("init_side", init_side);
+	init_side[str_side_number] = resources::controller->current_side();
+	cmd.add_child(str_init_side, init_side);
 }
 
 void replay::add_start()
 {
 	config& cmd = add_command();
-	cmd["sent"] = true;
-	cmd.add_child("start");
+	cmd[str_sent] = true;
+	cmd.add_child(str_start);
 }
 
 void replay::add_surrender(int side_number)
 {
 	config& cmd = add_nonundoable_command();
-	cmd.add_child("surrender")["side_number"] = side_number;
+	cmd.add_child(str_surrender)[str_side_number] = side_number;
 }
 
 void replay::add_countdown_update(int value, int team)
 {
 	config& cmd = add_command();
 	config val;
-	val["value"] = value;
-	val["team"] = team;
-	cmd.add_child("countdown_update", std::move(val));
+	val[str_value] = value;
+	val[str_team] = team;
+	cmd.add_child(str_countdown_update, std::move(val));
 }
 void replay::add_synced_command(const std::string& name, const config& command)
 {
 	config& cmd = add_command();
 	cmd.add_child(name,command);
-	cmd["from_side"] = resources::controller->current_side();
+	cmd[str_from_side] = resources::controller->current_side();
 	LOG_REPLAY << "add_synced_command: \n" << cmd.debug();
 }
 
@@ -242,14 +242,14 @@ void replay::add_synced_command(const std::string& name, const config& command)
 void replay::user_input(const std::string &name, const config &input, int from_side)
 {
 	config& cmd = add_command();
-	cmd["dependent"] = true;
+	cmd[str_dependent] = true;
 	if(from_side == -1)
 	{
-		cmd["from_side"] = "server";
+		cmd[str_from_side] = "server";
 	}
 	else
 	{
-		cmd["from_side"] = from_side;
+		cmd[str_from_side] = from_side;
 	}
 	cmd.add_child(name, input);
 }
@@ -262,7 +262,7 @@ void replay::add_label(const terrain_label* label)
 
 	label->write(val);
 
-	cmd.add_child("label",val);
+	cmd.add_child(str_label,val);
 }
 
 void replay::clear_labels(const std::string& team_name, bool force)
@@ -270,28 +270,28 @@ void replay::clear_labels(const std::string& team_name, bool force)
 	config& cmd = add_nonundoable_command();
 
 	config val;
-	val["team_name"] = team_name;
-	val["force"] = force;
-	cmd.add_child("clear_labels", std::move(val));
+	val[str_team_name] = team_name;
+	val[str_force] = force;
+	cmd.add_child(str_clear_labels, std::move(val));
 }
 
 void replay::add_rename(const std::string& name, const map_location& loc)
 {
 	config& cmd = add_command();
-	cmd["async"] = true; // Not undoable, but depends on moves/recruits that are
+	cmd[str_async] = true; // Not undoable, but depends on moves/recruits that are
 	config val;
 	loc.write(val);
-	val["name"] = name;
-	cmd.add_child("rename", std::move(val));
+	val[str_name] = name;
+	cmd.add_child(str_rename, std::move(val));
 }
 
 
 void replay::end_turn(int next_player_number)
 {
 	config& cmd = add_command();
-	config& end_turn = cmd.add_child("end_turn");
+	config& end_turn = cmd.add_child(str_end_turn);
 
-	end_turn["next_player_number"] = next_player_number;
+	end_turn[str_next_player_number] = next_player_number;
 }
 
 
@@ -335,15 +335,15 @@ bool replay::add_chat_message_location(int pos)
 void replay::speak(const config& cfg)
 {
 	config& cmd = add_nonundoable_command();
-	cmd.add_child("speak",cfg);
+	cmd.add_child(str_speak,cfg);
 	add_chat_message_location(base_->size() - 1);
 }
 
 void replay::add_chat_log_entry(const config &cfg, std::back_insert_iterator<std::vector<chat_msg>> &i) const
 {
 
-	if (!prefs::get().parse_should_show_lobby_join(cfg["id"], cfg["message"])) return;
-	if (prefs::get().is_ignored(cfg["id"])) return;
+	if (!prefs::get().parse_should_show_lobby_join(cfg[str_id], cfg[str_message])) return;
+	if (prefs::get().is_ignored(cfg[str_id])) return;
 	*i = chat_msg(cfg);
 }
 
@@ -371,7 +371,7 @@ const std::vector<chat_msg>& replay::build_chat_log() const
 	{
 		last_location = *loc_it;
 
-		const config &speak = command(last_location).mandatory_child("speak");
+		const config &speak = command(last_location).mandatory_child(str_speak);
 		add_chat_log_entry(speak, chat_log_appender);
 
 	}
@@ -386,10 +386,10 @@ config replay::get_unsent_commands(DATA_TYPE data_type)
 		config &c = command(cmd);
 		//prevent creating 'blank' attribute values during checks
 		const config &cc = c;
-		if ((data_type == ALL_DATA || !cc["undo"].to_bool(true)) && !cc["sent"].to_bool(false))
+		if ((data_type == ALL_DATA || !cc[str_undo].to_bool(true)) && !cc[str_sent].to_bool(false))
 		{
 			res.add_child("command", c);
-			c["sent"] = true;
+			c[str_sent] = true;
 		}
 	}
 	if(data_type == ALL_DATA) {
@@ -402,7 +402,7 @@ void replay::redo(const config& cfg, bool set_to_end)
 {
 	assert(base_->get_pos() == ncommands());
 	int old_pos = base_->get_pos();
-	for (const config &cmd : cfg.child_range("command"))
+	for (const config &cmd : cfg.child_range(str_command))
 	{
 		base_->add_child() = cmd;
 	}
@@ -425,7 +425,7 @@ config& replay::get_last_real_command()
 	{
 		config &c = command(cmd_num);
 		const config &cc = c;
-		if (cc["dependent"].to_bool(false) || !cc["undo"].to_bool(true) || cc["async"].to_bool(false))
+		if (cc[str_dependent].to_bool(false) || !cc[str_undo].to_bool(true) || cc[str_async].to_bool(false))
 		{
 			continue;
 		}
@@ -441,7 +441,7 @@ config& replay::get_last_real_command()
  */
 static bool fix_rename_command(const config& c, config& async_child)
 {
-	if (const auto child = c.optional_child("move"))
+	if (const auto child = c.optional_child(str_move))
 	{
 		// A unit's move is being undone.
 		// Repair unsynced cmds whose locations depend on that unit's location.
@@ -465,9 +465,9 @@ static bool fix_rename_command(const config& c, config& async_child)
 	}
 	else
 	{
-		auto loc = c.optional_child("recruit");
+		auto loc = c.optional_child(str_recruit);
 		if(!loc) {
-			loc = c.optional_child("recall");
+			loc = c.optional_child(str_recall);
 		}
 
 		if(loc) {
@@ -498,9 +498,9 @@ void replay::undo_cut(config& dst)
 		//"dependent"=true means user input
 		const config &c = command(cmd_index);
 
-		if(c["undo"].to_bool(true) && !c["async"].to_bool(false) && !c["dependent"].to_bool(false))
+		if(c[str_undo].to_bool(true) && !c[str_async].to_bool(false) && !c[str_dependent].to_bool(false))
 		{
-			if(c["sent"].to_bool(false))
+			if(c[str_sent].to_bool(false))
 			{
 				ERR_REPLAY << "trying to undo a command that was already sent.";
 				return;
@@ -522,13 +522,13 @@ void replay::undo_cut(config& dst)
 	{
 		config &c = command(i);
 		const config &cc = c;
-		if(!cc["undo"].to_bool(true))
+		if(!cc[str_undo].to_bool(true))
 		{
 			//Leave these commands on the replay.
 		}
-		else if(cc["async"].to_bool(false))
+		else if(cc[str_async].to_bool(false))
 		{
-			if(auto rename = c.optional_child("rename"))
+			if(auto rename = c.optional_child(str_rename))
 			{
 				if(fix_rename_command(command(cmd_index), rename.value()))
 				{
@@ -537,10 +537,10 @@ void replay::undo_cut(config& dst)
 				}
 			}
 		}
-		else if(cc["dependent"].to_bool(false) || i == cmd_index)
+		else if(cc[str_dependent].to_bool(false) || i == cmd_index)
 		{
 			//we loop backwars so we must insert new insert at beginning to preserve order.
-			dst.add_child_at("command", config(), 0).swap(c);
+			dst.add_child_at(str_command, config(), 0).swap(c);
 			remove_command(i);
 		}
 		else
@@ -582,7 +582,7 @@ config& replay::add_nonundoable_command()
 {
 	const bool was_at_end = at_end();
 	config& r = base_->insert_command(base_->size());
-	r["undo"] = false;
+	r[str_undo] = false;
 	if(was_at_end) {
 		base_->set_pos(base_->get_pos() + 1);
 	}
@@ -644,15 +644,15 @@ bool replay::empty() const
 
 void replay::add_config(const config& cfg, MARK_SENT mark)
 {
-	for (const config &cmd : cfg.child_range("command"))
+	for (const config &cmd : cfg.child_range(str_command))
 	{
 		config &cmd_cfg = base_->insert_command(base_->size());
 		cmd_cfg = cmd;
 		if(mark == MARK_AS_SENT) {
-			cmd_cfg["sent"] = true;
+			cmd_cfg[str_sent] = true;
 		}
-		if(cmd_cfg.has_child("speak")) {
-			cmd_cfg["undo"] = false;
+		if(cmd_cfg.has_child(str_speak)) {
+			cmd_cfg[str_undo] = false;
 		}
 	}
 }
@@ -661,9 +661,9 @@ bool replay::add_start_if_not_there_yet()
 	//this method would confuse the value of 'pos' otherwise
 	VALIDATE(base_->get_pos() == 0, _("The file you have tried to load is corrupt"));
 	//since pos is 0, at_end() is equivalent to empty()
-	if(at_end() || !base_->get_command_at(0).has_child("start"))
+	if(at_end() || !base_->get_command_at(0).has_child(str_start))
 	{
-		base_->insert_command(0) = config {"start", config(), "sent", true};
+		base_->insert_command(0) = config {str_start, config(), str_sent, true};
 		return true;
 	}
 	else
@@ -681,7 +681,7 @@ REPLAY_ACTION_TYPE get_replay_action_type(const config& command)
 	if(key == "speak" || key == "label" || key == "surrender" || key == "clear_labels" || key == "rename" || key == "countdown_update") {
 		return REPLAY_ACTION_TYPE::UNSYNCED;
 	}
-	if(command["dependent"].to_bool(false)) {
+	if(command[str_dependent].to_bool(false)) {
 		return REPLAY_ACTION_TYPE::DEPENDENT;
 	}
 	return REPLAY_ACTION_TYPE::SYNCED;
@@ -731,24 +731,24 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 
 		const auto ch_itors = cfg->all_children_view();
 		//if there is an empty command tag or a start tag
-		if (ch_itors.empty() || cfg->has_child("start"))
+		if (ch_itors.empty() || cfg->has_child(str_start))
 		{
 			//this shouldn't happen anymore because replaycontroller now moves over the [start] with get_next_action
 			//also we removed the the "add empty replay entry at scenario reload" behavior.
 			ERR_REPLAY << "found "<<  cfg->debug() <<" in replay";
 			//do nothing
 		}
-		else if (auto speak = cfg->optional_child("speak"))
+		else if (auto speak = cfg->optional_child(str_speak))
 		{
-			const std::string &team_name = speak["to_sides"];
-			const std::string &speaker_name = speak["id"];
-			const std::string &message = speak["message"];
+			const std::string &team_name = speak[str_to_sides];
+			const std::string &speaker_name = speak[str_id];
+			const std::string &message = speak[str_message];
 
 			bool is_whisper = (speaker_name.find("whisper: ") == 0);
 			if(resources::recorder->add_chat_message_location()) {
 				DBG_REPLAY << "tried to add a chat message twice.";
 				if (!resources::controller->is_skipping_replay() || is_whisper) {
-					int side = speak["side"].to_int();
+					int side = speak[str_side].to_int();
 					game_display::get_singleton()->get_chat_manager().add_chat_message(get_time(*speak), speaker_name, side, message,
 						(team_name.empty() ? events::chat_handler::MESSAGE_PUBLIC
 						: events::chat_handler::MESSAGE_PRIVATE),
@@ -756,11 +756,11 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 				}
 			}
 		}
-		else if (cfg->has_child("surrender"))
+		else if (cfg->has_child(str_surrender))
 		{
 			//prevent sending of a synced command for surrender
 		}
-		else if (auto label_config = cfg->optional_child("label"))
+		else if (auto label_config = cfg->optional_child(str_label))
 		{
 			terrain_label label(display::get_singleton()->labels(), *label_config);
 
@@ -770,14 +770,14 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 						label.team_name(),
 						label.color());
 		}
-		else if (auto clear_labels = cfg->optional_child("clear_labels"))
+		else if (auto clear_labels = cfg->optional_child(str_clear_labels))
 		{
-			display::get_singleton()->labels().clear(std::string(clear_labels["team_name"]), clear_labels["force"].to_bool());
+			display::get_singleton()->labels().clear(std::string(clear_labels[str_team_name]), clear_labels[str_force].to_bool());
 		}
-		else if (auto rename = cfg->optional_child("rename"))
+		else if (auto rename = cfg->optional_child(str_rename))
 		{
 			const map_location loc(*rename);
-			const std::string &name = rename["name"];
+			const std::string &name = rename[str_name];
 
 			unit_map::iterator u = resources::gameboard->units().find(loc);
 			if (u.valid() && !u->unrenamable()) {
@@ -794,7 +794,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 			}
 		}
 
-		else if (cfg->has_child("init_side"))
+		else if (cfg->has_child(str_init_side))
 		{
 
 			if(!is_unsynced)
@@ -813,7 +813,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 		}
 
 		//if there is an end turn directive
-		else if (auto end_turn = cfg->optional_child("end_turn"))
+		else if (auto end_turn = cfg->optional_child(str_end_turn))
 		{
 			if(!is_unsynced)
 			{
@@ -823,20 +823,20 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 			}
 			else
 			{
-				if (auto cfg_verify = cfg->optional_child("verify")) {
+				if (auto cfg_verify = cfg->optional_child(str_verify)) {
 					verify(resources::gameboard->units(), *cfg_verify);
 				}
-				if(int npn = end_turn["next_player_number"].to_int(0); npn > 0) {
+				if(int npn = end_turn[str_next_player_number].to_int(0); npn > 0) {
 					resources::controller->gamestate().next_player_number_ = npn;
 				}
 				resources::controller->gamestate().gamedata_.set_phase(game_data::TURN_ENDED);
 				return REPLAY_FOUND_END_TURN;
 			}
 		}
-		else if (auto countdown_update = cfg->optional_child("countdown_update"))
+		else if (auto countdown_update = cfg->optional_child(str_countdown_update))
 		{
-			auto val = chrono::parse_duration<std::chrono::milliseconds>(countdown_update["value"]);
-			int tval = countdown_update["team"].to_int();
+			auto val = chrono::parse_duration<std::chrono::milliseconds>(countdown_update[str_value]);
+			int tval = countdown_update[str_team].to_int();
 			if (tval <= 0  || tval > static_cast<int>(resources::gameboard->teams().size())) {
 				std::stringstream errbuf;
 				errbuf << "Illegal countdown update \n"
@@ -848,7 +848,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 				resources::gameboard->get_team(tval).set_countdown_time(val);
 			}
 		}
-		else if ((*cfg)["dependent"].to_bool(false))
+		else if ((*cfg)[str_dependent].to_bool(false))
 		{
 			if(is_unsynced)
 			{
@@ -873,7 +873,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 
 			if(!is_unsynced)
 			{
-				replay::process_error("found [" + commandname + "] command in replay expecting a user choice\n" );
+				replay::process_error("found [str_ + commandname + ] command in replay expecting a user choice\n" );
 				resources::recorder->revert_action();
 				return REPLAY_FOUND_DEPENDENT;
 			}
@@ -881,11 +881,11 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 			{
 				LOG_REPLAY << "found commandname " << commandname << "in replay";
 
-				if((*cfg)["from_side"].to_int(0) != resources::controller->current_side()) {
-					ERR_REPLAY << "received a synced [command] from side " << (*cfg)["from_side"].to_int(0) << ". Expacted was a [command] from side " << resources::controller->current_side();
+				if((*cfg)[str_from_side].to_int(0) != resources::controller->current_side()) {
+					ERR_REPLAY << "received a synced [command] from side " << (*cfg)[str_from_side].to_int(0) << ". Expacted was a [command] from side " << resources::controller->current_side();
 				}
-				else if((*cfg)["side_invalid"].to_bool(false)) {
-					ERR_REPLAY << "received a synced [command] from side " << (*cfg)["from_side"].to_int(0) << ". Sent from wrong client.";
+				else if((*cfg)[str_side_invalid].to_bool(false)) {
+					ERR_REPLAY << "received a synced [command] from side " << (*cfg)[str_from_side].to_int(0) << ". Sent from wrong client.";
 				}
 				/*
 					we need to use the undo stack during replays in order to make delayed shroud updated work.
@@ -901,7 +901,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 			}
 		}
 
-		if (auto child = cfg->optional_child("verify")) {
+		if (auto child = cfg->optional_child(str_verify)) {
 			verify(resources::gameboard->units(), *child);
 		}
 	}

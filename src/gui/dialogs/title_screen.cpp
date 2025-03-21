@@ -475,9 +475,9 @@ void title_screen::hotkey_callback_select_tests()
 	game_config_manager::get()->load_game_config_for_create(false, true);
 
 	std::vector<std::string> options;
-	for(const config &sc : game_config_manager::get()->game_config().child_range("test")) {
-		if(!sc["is_unit_test"].to_bool(false)) {
-			options.emplace_back(sc["id"]);
+	for(const config &sc : game_config_manager::get()->game_config().child_range(str_test)) {
+		if(!sc[str_is_unit_test].to_bool(false)) {
+			options.emplace_back(sc[str_id]);
 		}
 	}
 
@@ -563,17 +563,17 @@ void title_screen::button_callback_cores()
 	int current = 0;
 
 	std::vector<config> cores;
-	for(const config& core : game_config_manager::get()->game_config().child_range("core")) {
+	for(const config& core : game_config_manager::get()->game_config().child_range(str_core)) {
 		cores.push_back(core);
 
-		if(core["id"] == prefs::get().core()) {
+		if(core[str_id] == prefs::get().core()) {
 			current = cores.size() - 1;
 		}
 	}
 
 	gui2::dialogs::core_selection core_dlg(cores, current);
 	if(core_dlg.show()) {
-		const std::string& core_id = cores[core_dlg.get_choice()]["id"];
+		const std::string& core_id = cores[core_dlg.get_choice()][str_id];
 
 		prefs::get().set_core(core_id);
 		set_retval(RELOAD_GAME_DATA);

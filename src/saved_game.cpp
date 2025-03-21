@@ -170,14 +170,14 @@ void saved_game::set_carryover_sides_start(config carryover_sides_start)
 
 void saved_game::set_random_seed()
 {
-	if(has_carryover_expanded_ || !carryover_["random_seed"].empty()) {
+	if(has_carryover_expanded_ || !carryover_[str_random_seed].empty()) {
 		return;
 	}
 
 	std::stringstream stream;
 	stream << std::setfill('0') << std::setw(8) << std::hex << randomness::generator->get_random_int(0, std::numeric_limits<int>::max());
-	carryover_["random_seed"] = stream.str();
-	carryover_["random_calls"] = 0;
+	carryover_[str_random_seed] = stream.str();
+	carryover_[str_random_calls] = 0;
 }
 
 void saved_game::write_config(config_writer& out) const
@@ -186,28 +186,28 @@ void saved_game::write_config(config_writer& out) const
 	write_starting_point(out);
 
 	if(!replay_start_.empty()) {
-		out.write_child("replay_start", replay_start_);
+		out.write_child(str_replay_start, replay_start_);
 	}
 
-	out.open_child("replay");
+	out.open_child(str_replay);
 	replay_data_.write(out);
-	out.close_child("replay");
+	out.close_child(str_replay);
 	write_carryover(out);
 }
 
 void saved_game::write_starting_point(config_writer& out) const
 {
 	if(starting_point_type_ == starting_point::SNAPSHOT) {
-		out.write_child("snapshot", starting_point_);
+		out.write_child(str_snapshot, starting_point_);
 	} else if(starting_point_type_ == starting_point::SCENARIO) {
-		out.write_child("scenario", starting_point_);
+		out.write_child(str_scenario, starting_point_);
 	}
 }
 
 void saved_game::write_carryover(config_writer& out) const
 {
 	assert(not_corrupt());
-	out.write_child(has_carryover_expanded_ ? "carryover_sides" : "carryover_sides_start", carryover_);
+	out.write_child(has_carryover_expanded_ ? str_carryover_sides : str_carryover_sides_start, carryover_);
 }
 
 void saved_game::write_general_info(config_writer& out) const
@@ -230,35 +230,35 @@ void saved_game::set_defaults()
 		"carryover_add",
 	};
 
-	if(auto campaign = game_config.find_child("campaign", "id", classification_.campaign)) {
+	if(auto campaign = game_config.find_child(str_campaign, str_id, classification_.campaign)) {
 		// FIXME: The mp code could use `require_scenario` to check whether we have the addon in question installed.
 		//        But since [scenario]s are usually hidden behind `#ifdef CAMPAIGN_DEFINE` it would not be able to find them.
 		//        Investigate how this should actually work.
-		bool require_campaign = campaign["require_campaign"].to_bool(true);
-		starting_point_["require_scenario"] = require_campaign;
+		bool require_campaign = campaign[str_require_campaign].to_bool(true);
+		starting_point_[str_require_scenario] = require_campaign;
 	}
 
-	for(config& side : starting_point_.child_range("side")) {
+	for(config& side : starting_point_.child_range(str_side)) {
 		// Set save_id default value directly after loading to its default to prevent different default behaviour in
 		// mp_connect code and sp code.
 
-		if(side["no_leader"].to_bool()) {
-			side["leader_lock"] = true;
-			side.remove_attribute("type");
+		if(side[str_no_leader].to_bool()) {
+			side[str_leader_lock] = true;
+			side.remove_attribute(str_type);
 		}
 
-		if(side["save_id"].empty()) {
-			side["save_id"] = side["id"];
+		if(side[str_save_id].empty()) {
+			side[str_save_id] = side[str_id];
 		}
-		if(side["save_id"].empty()) {
-			side["save_id"] = side.child_or_empty("leader")["id"];
+		if(side[str_save_id].empty()) {
+			side[str_save_id] = side.child_or_empty(str_leader)[str_id];
 		}
 
 		// If this side tag describes the leader of the side, convert it into a [leader] tag here, by doing this here,
 		// all code that follows, no longer has to hande the possibility of leader information directly in [side].
 
 		// If this side tag describes the leader of the side
-		if(!side["type"].empty() && side["type"] != "null") {
+		if(!side[str_type].empty() && side[str_type] != "null") {
 			auto temp = config{};
 
 			for(const std::string& tag : team::tags) {
@@ -270,25 +270,25 @@ void saved_game::set_defaults()
 					side.remove_attribute(attr);
 				}
 			}
-			temp["side"] = side["side"];
+			temp[str_side] = side[str_side];
 			temp.swap(side);
 			temp.swap(side.add_child_at("leader", config(), 0));
 		}
 
 		if(!is_multiplayer_tag) {
-			if(side["name"].blank()) {
-				side["name"] = side.child_or_empty("leader")["name"];
+			if(side[str_name].blank()) {
+				side[str_name] = side.child_or_empty(str_leader)[str_name];
 			}
-			if(side["side_name"].blank()) {
-				side["side_name"] = side["name"];
+			if(side[str_side_name].blank()) {
+				side[str_side_name] = side[str_name];
 			}
 		}
 
-		if(!is_loaded_game && !side["current_player"].empty()) {
+		if(!is_loaded_game && !side[str_current_player].empty()) {
 			ERR_NG << "Removed invalid 'current_player' attribute from [side] while loading a scenario. Consider using "
 					  "'side_name' instead";
 
-			side["current_player"] = config::attribute_value();
+			side[str_current_player] = config::attribute_value();
 		}
 
 		// Set some team specific values to their defaults specified in scenario
@@ -306,11 +306,11 @@ void saved_game::set_defaults()
 void saved_game::expand_scenario()
 {
 	if(starting_point_type_ == starting_point::NONE && !has_carryover_expanded_) {
-		game_config_manager::get()->load_game_config_for_game(classification(), carryover_["next_scenario"]);
+		game_config_manager::get()->load_game_config_for_game(classification(), carryover_[str_next_scenario]);
 
 		const game_config_view& game_config = game_config_manager::get()->game_config();
 		auto scenario =
-			game_config.find_child(classification().get_tagname(), "id", carryover_["next_scenario"]);
+			game_config.find_child(classification().get_tagname(), str_id, carryover_[str_next_scenario]);
 
 		if(scenario) {
 			starting_point_type_ = starting_point::SCENARIO;
@@ -324,7 +324,7 @@ void saved_game::expand_scenario()
 			update_label();
 			set_defaults();
 		} else {
-			ERR_NG << "Couldn't find [" << classification().get_tagname() << "] with id=" << carryover_["next_scenario"];
+			ERR_NG << "Couldn't find [" << classification().get_tagname() << "] with id=" << carryover_[str_next_scenario];
 			starting_point_type_ = starting_point::INVALID;
 			starting_point_.clear();
 		}
@@ -333,18 +333,18 @@ void saved_game::expand_scenario()
 
 void saved_game::check_require_scenario()
 {
-	const std::string version_default = starting_point_["addon_id"].empty() ? game_config::wesnoth_version.str() : "";
+	const std::string version_default = starting_point_[str_addon_id].empty() ? game_config::wesnoth_version.str() : "";
 	config scenario;
-	scenario["id"] = starting_point_["addon_id"].str("mainline");
-	scenario["name"] = starting_point_["addon_title"].str("mainline");
-	scenario["version"] = starting_point_["addon_version"].str(version_default);
-	scenario["min_version"] = starting_point_["addon_min_version"];
-	scenario["required"] = starting_point_["require_scenario"].to_bool(false);
-	config& content = scenario.add_child("content");
-	content["id"] = starting_point_["id"];
-	content["name"] = starting_point_["name"];
+	scenario[str_id] = starting_point_[str_addon_id].str("mainline");
+	scenario[str_name] = starting_point_[str_addon_title].str("mainline");
+	scenario[str_version] = starting_point_[str_addon_version].str(version_default);
+	scenario[str_min_version] = starting_point_[str_addon_min_version];
+	scenario[str_required] = starting_point_[str_require_scenario].to_bool(false);
+	config& content = scenario.add_child(str_content);
+	content[str_id] = starting_point_[str_id];
+	content[str_name] = starting_point_[str_name];
 	// TODO: would it be better if this used the actual tagname ([multiplayer]/[scenario]) instead of always using [scenario]?
-	content["type"] = "scenario";
+	content[str_type] = "scenario";
 
 	mp_settings_.update_addon_requirements(scenario);
 }
@@ -357,43 +357,43 @@ void saved_game::load_non_scenario(const std::string& type, const std::string& i
 		std::string require_attr = "require_" + type;
 
 		// anything with no addon_id is from mainline, and therefore isn't required in the sense that all players already have it
-		const std::string version_default = cfg["addon_id"].empty() ? game_config::wesnoth_version.str() : "";
+		const std::string version_default = cfg[str_addon_id].empty() ? game_config::wesnoth_version.str() : "";
 		config non_scenario;
 		// if there's no addon_id, then this isn't an add-on
-		non_scenario["id"] = cfg["addon_id"].str("mainline");
-		non_scenario["name"] = cfg["addon_title"].str("mainline");
-		non_scenario["version"] = cfg["addon_version"].str(version_default);
-		non_scenario["min_version"] = cfg["addon_min_version"];
-		non_scenario["required"] = cfg[require_attr].to_bool(!cfg["addon_id"].empty());
-		config& content = non_scenario.add_child("content");
-		content["id"] = id;
-		content["name"] = cfg["addon_title"].str(cfg["name"].str(""));
-		content["type"] = type;
+		non_scenario[str_id] = cfg[str_addon_id].str("mainline");
+		non_scenario[str_name] = cfg[str_addon_title].str("mainline");
+		non_scenario[str_version] = cfg[str_addon_version].str(version_default);
+		non_scenario[str_min_version] = cfg[str_addon_min_version];
+		non_scenario[str_required] = cfg[require_attr].to_bool(!cfg[str_addon_id].empty());
+		config& content = non_scenario.add_child(str_content);
+		content[str_id] = id;
+		content[str_name] = cfg[str_addon_title].str(cfg[str_name].str(""));
+		content[str_type] = type;
 
 		mp_settings_.update_addon_requirements(non_scenario);
 
 		// Copy events
-		for(const config& modevent : cfg->child_range("event")) {
-			if(modevent["enable_if"].empty()
-				|| variable_to_bool(carryover_.child_or_empty("variables"), modevent["enable_if"])
+		for(const config& modevent : cfg->child_range(str_event)) {
+			if(modevent[str_enable_if].empty()
+				|| variable_to_bool(carryover_.child_or_empty(str_variables), modevent[str_enable_if])
 			) {
-				starting_point_.add_child_at_total("event", modevent, pos++);
+				starting_point_.add_child_at_total(str_event, modevent, pos++);
 			}
 		}
 
 		// Copy lua
-		for(const config& modlua : cfg->child_range("lua")) {
-			starting_point_.add_child_at_total("lua", modlua, pos++);
+		for(const config& modlua : cfg->child_range(str_lua)) {
+			starting_point_.add_child_at_total(str_lua, modlua, pos++);
 		}
 
 		// Copy modify_unit_type
-		for(const config& modlua : cfg->child_range("modify_unit_type")) {
-			starting_point_.add_child_at_total("modify_unit_type", modlua, pos++);
+		for(const config& modlua : cfg->child_range(str_modify_unit_type)) {
+			starting_point_.add_child_at_total(str_modify_unit_type, modlua, pos++);
 		}
 
 		// Copy load_resource
-		for(const config& load_resource : cfg->child_range("load_resource")) {
-			starting_point_.add_child_at_total("load_resource", load_resource, pos++);
+		for(const config& load_resource : cfg->child_range(str_load_resource)) {
+			starting_point_.add_child_at_total(str_load_resource, load_resource, pos++);
 		}
 	} else {
 		// TODO: A user message instead?
@@ -409,7 +409,7 @@ void saved_game::expand_mp_events()
 {
 	expand_scenario();
 
-	if(starting_point_type_ == starting_point::SCENARIO && !starting_point_["has_mod_events"].to_bool(false)) {
+	if(starting_point_type_ == starting_point::SCENARIO && !starting_point_[str_has_mod_events].to_bool(false)) {
 		std::vector<modevents_entry> mods;
 		std::set<std::string> loaded_resources;
 
@@ -433,16 +433,16 @@ void saved_game::expand_mp_events()
 
 		while(starting_point_.has_child("load_resource")) {
 			assert(starting_point_.child_count("load_resource") > 0);
-			std::string id = starting_point_.mandatory_child("load_resource")["id"];
+			std::string id = starting_point_.mandatory_child("load_resource")[str_id];
 			std::size_t pos = starting_point_.find_total_first_of("load_resource");
 			starting_point_.remove_child("load_resource", 0);
 			if(loaded_resources.find(id) == loaded_resources.end()) {
 				loaded_resources.insert(id);
-				load_non_scenario("resource", id, pos);
+				load_non_scenario(str_resource, id, pos);
 			}
 		}
-		starting_point_["has_mod_events"] = true;
-		starting_point_["loaded_resources"] = utils::join(loaded_resources);
+		starting_point_[str_has_mod_events] = true;
+		starting_point_[str_loaded_resources] = utils::join(loaded_resources);
 	}
 }
 
@@ -459,15 +459,15 @@ void saved_game::expand_mp_options()
 		mods.emplace_back("multiplayer", get_scenario_id());
 		mods.emplace_back("campaign", classification().campaign);
 
-		config& variables = carryover_.child_or_add("variables");
+		config& variables = carryover_.child_or_add(str_variables);
 
 		for(modevents_entry& mod : mods) {
 			if(auto cfg = mp_settings().options.find_child(mod.type, "id", mod.id)) {
-				for(const config& option : cfg->child_range("option")) {
+				for(const config& option : cfg->child_range(str_option)) {
 					try {
-						variable_access_create(option["id"], variables).as_scalar() = option["value"];
+						variable_access_create(option[str_id], variables).as_scalar() = option[str_value];
 					} catch(const invalid_variablename_exception&) {
-						ERR_NG << "variable " << option["id"] << "cannot be set to " << option["value"];
+						ERR_NG << "variable " << option[str_id] << "cannot be set to " << option[str_value];
 					}
 				}
 			} else {
@@ -482,41 +482,41 @@ static void inherit_scenario(config& scenario, config&& src)
 	config map_scen = std::move(src);
 	config& map_scenario = map_scen.has_child("multiplayer") ? map_scen.mandatory_child("multiplayer") : (map_scen.has_child("scenario") ? map_scen.mandatory_child("scenario") : map_scen);
 	config sides;
-	sides.splice_children(map_scenario, "side");
+	sides.splice_children(map_scenario, str_side);
 	scenario.append_children(map_scenario);
 	scenario.inherit_attributes(map_scenario);
-	for(config& side_from : sides.child_range("side")) {
-		auto side_to = scenario.find_child("side", "side", side_from["side"]);
+	for(config& side_from : sides.child_range(str_side)) {
+		auto side_to = scenario.find_child(str_side, str_side, side_from[str_side]);
 		if(side_to) {
 			side_to->inherit_attributes(side_from);
 			side_to->append_children(side_from);
 		} else {
-			scenario.add_child("side", side_from);
+			scenario.add_child(str_side, side_from);
 		}
 	}
 }
 
 void saved_game::expand_map_file(config& scenario)
 {
-	if(!scenario["include_file"].empty()) {
-		std::string include_data = filesystem::read_scenario(scenario["include_file"]);
+	if(!scenario[str_include_file].empty()) {
+		std::string include_data = filesystem::read_scenario(scenario[str_include_file]);
 		if(!include_data.empty()) {
 			inherit_scenario(scenario, io::read(include_data));
 		}
 		// this method gets called two additional times, so without this you end up calling inherit_scenario() three times total
 		// this is equivalent to the below check for map_data being empty
-		scenario["include_file"] = "";
+		scenario[str_include_file] = "";
 	}
 
-	if(scenario["map_data"].empty() && !scenario["map_file"].empty()) {
-		std::string map_data = filesystem::read_map(scenario["map_file"]);
-		if(map_data.find("map_data") != std::string::npos) {
+	if(scenario[str_map_data].empty() && !scenario[str_map_file].empty()) {
+		std::string map_data = filesystem::read_map(scenario[str_map_file]);
+		if(map_data.find(str_map_data) != std::string::npos) {
 			// we have a scenario, generated by the editor
 			deprecated_message("map_file cfg", DEP_LEVEL::FOR_REMOVAL, "1.19", "Providing a .cfg file to the map_file attribute is deprecated. Use map_file for .map files and include_file for .cfg files.");
 			inherit_scenario(scenario, io::read(map_data));
 		} else {
 			// we have an plain map_data file
-			scenario["map_data"] = map_data;
+			scenario[str_map_data] = map_data;
 		}
 	}
 }
@@ -527,12 +527,12 @@ void saved_game::expand_random_scenario()
 
 	if(starting_point_type_ == starting_point::SCENARIO) {
 		// If the entire scenario should be randomly generated
-		if(!starting_point_["scenario_generation"].empty()) {
+		if(!starting_point_[str_scenario_generation].empty()) {
 			LOG_NG << "randomly generating scenario...";
 			const cursor::setter cursor_setter(cursor::WAIT);
 
 			config scenario_new =
-				random_generate_scenario(starting_point_["scenario_generation"], starting_point_.mandatory_child("generator"), &carryover_.child_or_empty("variables"));
+				random_generate_scenario(starting_point_[str_scenario_generation], starting_point_.mandatory_child(str_generator), &carryover_.child_or_empty(str_variables));
 
 			post_scenario_generation(starting_point_, scenario_new);
 			starting_point_ = std::move(scenario_new);
@@ -544,13 +544,13 @@ void saved_game::expand_random_scenario()
 		// If no map_data is provided, try to load the specified file directly
 		expand_map_file(starting_point_);
 		// If the map should be randomly generated
-		// We don’t want that we accidentally to this twice so we check for starting_point_["map_data"].empty()
-		if(starting_point_["map_data"].empty() && !starting_point_["map_generation"].empty()) {
+		// We don’t want that we accidentally to this twice so we check for starting_point_[str_map_data].empty()
+		if(starting_point_[str_map_data].empty() && !starting_point_[str_map_generation].empty()) {
 			LOG_NG << "randomly generating map...";
 			const cursor::setter cursor_setter(cursor::WAIT);
 
-			starting_point_["map_data"] =
-				random_generate_map(starting_point_["map_generation"], starting_point_.mandatory_child("generator"), &carryover_.child_or_empty("variables"));
+			starting_point_[str_map_data] =
+				random_generate_map(starting_point_[str_map_generation], starting_point_.mandatory_child(str_generator), &carryover_.child_or_empty(str_variables));
 		}
 	}
 }
@@ -576,8 +576,8 @@ void saved_game::post_scenario_generation(const config& old_scenario, config& ge
 	// Preserve "story" from the scenario toplevel.
 	// Note that it does not delete [story] tags in generated_scenario, so you can still have your story
 	// dependent on the generated scenario.
-	for(const config& story : old_scenario.child_range("story")) {
-		generated_scenario.add_child("story", story);
+	for(const config& story : old_scenario.child_range(str_story)) {
+		generated_scenario.add_child(str_story, story);
 	}
 }
 
@@ -589,12 +589,12 @@ void saved_game::expand_carryover()
 		carryover_info sides(carryover_);
 
 		sides.transfer_to(get_starting_point());
-		for(config& side_cfg : get_starting_point().child_range("side")) {
+		for(config& side_cfg : get_starting_point().child_range(str_side)) {
 			sides.transfer_all_to(side_cfg);
 		}
 
 		carryover_ = sides.to_config();
-		statistics().new_scenario(get_starting_point()["name"]);
+		statistics().new_scenario(get_starting_point()[str_name]);
 		has_carryover_expanded_ = true;
 	}
 }
@@ -677,20 +677,20 @@ config saved_game::to_config() const
 	config r = classification_.to_config();
 
 	if(!replay_start_.empty()) {
-		r.add_child("replay_start", replay_start_);
+		r.add_child(str_replay_start, replay_start_);
 	}
 
-	replay_data_.write(r.add_child("replay"));
+	replay_data_.write(r.add_child(str_replay));
 
 	if(starting_point_type_ == starting_point::SNAPSHOT) {
-		r.add_child("snapshot", starting_point_);
+		r.add_child(str_snapshot, starting_point_);
 	} else if(starting_point_type_ == starting_point::SCENARIO) {
-		r.add_child("scenario", starting_point_);
+		r.add_child(str_scenario, starting_point_);
 	}
 
-	r.add_child(has_carryover_expanded_ ? "carryover_sides" : "carryover_sides_start", carryover_);
-	r.add_child("multiplayer", mp_settings_.to_config());
-	r.add_child("statistics", statistics_.to_config());
+	r.add_child(has_carryover_expanded_ ? str_carryover_sides : str_carryover_sides_start, carryover_);
+	r.add_child(str_multiplayer, mp_settings_.to_config());
+	r.add_child(str_statistics, statistics_.to_config());
 
 	return r;
 }
@@ -700,11 +700,11 @@ std::string saved_game::get_scenario_id() const
 	std::string scenario_id;
 
 	if(starting_point_type_ == starting_point::SNAPSHOT || starting_point_type_ == starting_point::SCENARIO) {
-		scenario_id = starting_point_["id"].str();
+		scenario_id = starting_point_[str_id].str();
 	} else if(!has_carryover_expanded_) {
-		scenario_id = carryover_["next_scenario"].str();
+		scenario_id = carryover_[str_next_scenario].str();
 	} else if(!replay_start_.empty()) {
-		scenario_id = replay_start_["id"].str();
+		scenario_id = replay_start_[str_id].str();
 	} else {
 		assert(!"cannot figure out scenario_id");
 		throw "assertion ignored";
@@ -723,9 +723,9 @@ void saved_game::update_label()
 	std::string& label = classification().label;
 
 	if(classification().abbrev.empty()) {
-		label = starting_point_["name"].str();
+		label = starting_point_[str_name].str();
 	} else {
-		label = classification().abbrev + "-" + starting_point_["name"].t_str();
+		label = classification().abbrev + "-" + starting_point_[str_name].t_str();
 	}
 
 	utils::erase_if(label, is_illegal_file_char);
@@ -734,25 +734,25 @@ void saved_game::update_label()
 
 void saved_game::cancel_orders()
 {
-	for(config& side : starting_point_.child_range("side")) {
+	for(config& side : starting_point_.child_range(str_side)) {
 		// for humans "goto_x/y" is used for multi-turn-moves
 		// for the ai "goto_x/y" is a way for wml to order the ai to move a unit to a certain place.
 		// we want to cancel human order but not to break wml.
-		if(side["controller"] != side_controller::human) {
+		if(side[str_controller] != side_controller::human) {
 			continue;
 		}
 
-		for(config& unit : side.child_range("unit")) {
-			unit["goto_x"] = -999;
-			unit["goto_y"] = -999;
+		for(config& unit : side.child_range(str_unit)) {
+			unit[str_goto_x] = -999;
+			unit[str_goto_y] = -999;
 		}
 	}
 }
 
 void saved_game::unify_controllers()
 {
-	for(config& side : starting_point_.child_range("side")) {
-		side.remove_attribute("is_local");
+	for(config& side : starting_point_.child_range(str_side)) {
+		side.remove_attribute(str_is_local);
 	}
 }
 
@@ -782,10 +782,10 @@ void saved_game::set_data(config&& input_cfg)
 	log_scope("read_game");
 	config cfg = std::move(input_cfg);
 
-	if(auto caryover_sides = cfg.optional_child("carryover_sides")) {
+	if(auto caryover_sides = cfg.optional_child(str_carryover_sides)) {
 		carryover_.swap(*caryover_sides);
 		has_carryover_expanded_ = true;
-	} else if(auto caryover_sides_start = cfg.optional_child("carryover_sides_start")) {
+	} else if(auto caryover_sides_start = cfg.optional_child(str_carryover_sides_start)) {
 		carryover_.swap(*caryover_sides_start);
 		has_carryover_expanded_ = false;
 	} else {
@@ -793,7 +793,7 @@ void saved_game::set_data(config&& input_cfg)
 		has_carryover_expanded_ = false;
 	}
 
-	if(auto replay_start = cfg.optional_child("replay_start")) {
+	if(auto replay_start = cfg.optional_child(str_replay_start)) {
 		replay_start_.swap(*replay_start);
 	} else {
 		replay_start_.clear();
@@ -802,16 +802,16 @@ void saved_game::set_data(config&& input_cfg)
 	replay_data_ = replay_recorder_base();
 
 	// Serversided replays can contain multiple [replay]
-	for(config& replay : cfg.child_range("replay")) {
+	for(config& replay : cfg.child_range(str_replay)) {
 		replay_data_.append_config(replay);
 	}
 
 	replay_data_.set_to_end();
 
-	if(auto snapshot = cfg.optional_child("snapshot")) {
+	if(auto snapshot = cfg.optional_child(str_snapshot)) {
 		starting_point_type_ = starting_point::SNAPSHOT;
 		starting_point_.swap(*snapshot);
-	} else if(auto scenario = cfg.optional_child("scenario")) {
+	} else if(auto scenario = cfg.optional_child(str_scenario)) {
 		starting_point_type_ = starting_point::SCENARIO;
 		starting_point_.swap(*scenario);
 	} else {
@@ -819,9 +819,9 @@ void saved_game::set_data(config&& input_cfg)
 		starting_point_.clear();
 	}
 
-	LOG_NG << "scenario: '" << carryover_["next_scenario"].str() << "'";
+	LOG_NG << "scenario: '" << carryover_[str_next_scenario].str() << "'";
 
-	if(auto stats = cfg.optional_child("statistics")) {
+	if(auto stats = cfg.optional_child(str_statistics)) {
 		statistics_.read(*stats);
 	}
 

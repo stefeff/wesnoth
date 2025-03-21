@@ -634,26 +634,26 @@ void manager::send_network_data()
 
 		config packet;
 		config& wb_cfg = packet.add_child("whiteboard",buf_cfg);
-		wb_cfg["side"] = static_cast<int>(team_index+1);
-		wb_cfg["to_sides"] = resources::gameboard->teams().at(team_index).allied_human_teams();
+		wb_cfg[str_side] = static_cast<int>(team_index+1);
+		wb_cfg[str_to_sides] = resources::gameboard->teams().at(team_index).allied_human_teams();
 
 		buf_cfg.clear();
 
 		resources::controller->send_to_wesnothd(packet, "whiteboard");
 
-		std::size_t count = wb_cfg.child_count("net_cmd");
+		std::size_t count = wb_cfg.child_count(str_net_cmd);
 		LOG_WB << "Side " << (team_index+1) << " sent wb data (" << count << " cmds).";
 	}
 }
 
 void manager::process_network_data(const config& cfg)
 {
-	if(auto wb_cfg = cfg.optional_child("whiteboard"))
+	if(auto wb_cfg = cfg.optional_child(str_whiteboard))
 	{
-		std::size_t count = wb_cfg->child_count("net_cmd");
+		std::size_t count = wb_cfg->child_count(str_net_cmd);
 		LOG_WB << "Received wb data (" << count << ").";
 
-		team& team_from = resources::gameboard->get_team(wb_cfg["side"].to_int());
+		team& team_from = resources::gameboard->get_team(wb_cfg[str_side].to_int());
 		for(const side_actions::net_cmd& cmd : wb_cfg->child_range("net_cmd"))
 			team_from.get_side_actions()->execute_net_cmd(cmd);
 	}
@@ -662,7 +662,7 @@ void manager::process_network_data(const config& cfg)
 void manager::queue_net_cmd(std::size_t team_index, const side_actions::net_cmd& cmd)
 {
 	assert(team_index < net_buffer_.size());
-	net_buffer_[team_index].add_child("net_cmd",cmd);
+	net_buffer_[team_index].add_child(str_net_cmd,cmd);
 }
 
 void manager::create_temp_move()
@@ -1129,7 +1129,7 @@ void manager::options_dlg()
 
 		allies.push_back(&t);
 
-		t_vars["player"] = t.current_player();
+		t_vars[str_player] = t.current_player();
 		std::size_t t_index = t.side()-1;
 		if(team_plans_hidden_[t_index])
 			options.emplace_back(VGETTEXT("Show plans for $player", t_vars));

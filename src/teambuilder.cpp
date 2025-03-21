@@ -84,8 +84,8 @@ void team_builder::log_step(const char* s) const
 
 void team_builder::init()
 {
-	if(side_cfg_["side"].to_int(side_) != side_) {
-		ERR_NG_TC << "found invalid side=" << side_cfg_["side"].to_int(side_) << " in definition of side number " << side_;
+	if(side_cfg_[str_side].to_int(side_) != side_) {
+		ERR_NG_TC << "found invalid side=" << side_cfg_[str_side].to_int(side_) << " in definition of side number " << side_;
 		throw game::load_game_failed("Invalid side definition");
 	}
 
@@ -113,7 +113,7 @@ void team_builder::objectives()
 	// to the level-global "objectives"
 	// this is only used by the default mp 'Defeat enemy leader' objectives
 	if(team_.objectives().empty()) {
-		team_.set_objectives(level_["objectives"].t_str(), false);
+		team_.set_objectives(level_[str_objectives].t_str(), false);
 	}
 }
 
@@ -133,15 +133,15 @@ void team_builder::handle_unit(const config& u, const char* origin)
 {
 	DBG_NG_TC
 		<< "unit from " << origin << ": "
-		<< "type=[" << u["type"] << "] "
-		<< "id=[" << u["id"] << "] "
-		<< "placement=[" << u["placement"] << "] "
-		<< "x=[" << u["x"] << "] "
-		<< "y=[" << u["y"] << "]";
+		<< "type=[" << u[str_type] << "] "
+		<< "id=[" << u[str_id] << "] "
+		<< "placement=[" << u[str_placement] << "] "
+		<< "x=[" << u[str_x] << "] "
+		<< "y=[" << u[str_y] << "]";
 
-	if(u["type"].empty()) {
+	if(u[str_type].empty()) {
 		WRN_NG_TC
-			<< "when building level, skipping a unit (id=[" << u["id"] << "]) from " << origin
+			<< "when building level, skipping a unit (id=[" << u[str_id] << "]) from " << origin
 			<< " with no type information,\n"
 			<< "for side:\n"
 			<< side_cfg_.debug();
@@ -149,12 +149,12 @@ void team_builder::handle_unit(const config& u, const char* origin)
 		return;
 	}
 
-	const std::string& id = u["id"];
+	const std::string& id = u[str_id];
 	if(!id.empty()) {
 		if(seen_ids_.find(id) != seen_ids_.end()) {
 			// seen before
 			config u_tmp = u;
-			u_tmp["side"] = std::to_string(side_);
+			u_tmp[str_side] = std::to_string(side_);
 			team_.recall_list().add(unit::create(u_tmp, true));
 		} else {
 			// not seen before
@@ -173,12 +173,12 @@ void team_builder::handle_leader(const config& leader)
 	config& stored = leader_configs_.back();
 
 	// Provide some default values, if not specified.
-	config::attribute_value& a1 = stored["canrecruit"];
+	config::attribute_value& a1 = stored[str_canrecruit];
 	if(a1.blank()) {
 		a1 = true;
 	}
 
-	config::attribute_value& a2 = stored["placement"];
+	config::attribute_value& a2 = stored[str_placement];
 	if(a2.blank()) {
 		a2 = "map,leader";
 	}

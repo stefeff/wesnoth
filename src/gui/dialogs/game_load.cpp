@@ -141,12 +141,12 @@ void game_load::set_save_dir_list(menu_button& dir_list)
 	std::vector<config> options;
 
 	// The first option in the list is the current version's save dir
-	options.emplace_back("label",  _("game_version^Current Version"), "path", "");
+	options.emplace_back(str_label,  _("game_version^Current Version"), str_path, "");
 
 	for(const auto& known_dir : other_dirs) {
 		options.emplace_back(
-			"label", VGETTEXT("game_version^Wesnoth $version", utils::string_map{{"version", known_dir.version}}),
-			"path", known_dir.path
+			str_label, VGETTEXT("game_version^Wesnoth $version", utils::string_map{{"version", known_dir.version}}),
+			str_path, known_dir.path
 		);
 	}
 
@@ -394,7 +394,7 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 			if(auto campaign = cache_config_.find_child("campaign", "id", campaign_id)) {
 				str << "\n" << _("Difficulty: ");
 				try {
-					const config& difficulty = campaign->find_mandatory_child("difficulty", "define", cfg_summary[str_difficulty]);
+					const config& difficulty = campaign->find_mandatory_child(str_difficulty, str_define, cfg_summary[str_difficulty]);
 					std::ostringstream ss;
 					ss << difficulty[str_label] << " (" << difficulty[str_description] << ")";
 					str << ss.str();
@@ -424,7 +424,7 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 		for(const auto& mod_id : active_mods) {
 			std::string mod_name;
 			try {
-				mod_name = cache_config_.find_mandatory_child("modification", "id", mod_id)[str_name].str();
+				mod_name = cache_config_.find_mandatory_child(str_modification, str_id, mod_id)[str_name].str();
 			} catch(const config::error&) {
 				// Fallback to nontranslatable mod id.
 				mod_name = "(" + mod_id + ")";

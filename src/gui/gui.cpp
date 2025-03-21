@@ -64,14 +64,14 @@ try {
  */
 auto register_theme(const config& def) -> utils::optional<gui_theme_map_t::iterator>
 try {
-	auto [iter, is_unique] = guis.try_emplace(def["id"], def);
+	auto [iter, is_unique] = guis.try_emplace(def[str_id], def);
 	if(is_unique) return iter;
 
-	ERR_GUI_P << "UI Theme '" << def["id"] << "' already exists.";
+	ERR_GUI_P << "UI Theme '" << def[str_id] << "' already exists.";
 	return utils::nullopt;
 
 } catch(const wml_exception& e) {
-	ERR_GUI_P << "Invalid UI theme: " << def["id"];
+	ERR_GUI_P << "Invalid UI theme: " << def[str_id];
 	ERR_GUI_P << e.user_message;
 	return utils::nullopt;
 }
@@ -86,7 +86,7 @@ void parse(const std::string& full_path, bool is_core)
 {
 	config cfg = read_and_validate(full_path);
 	for(const config& def : cfg.child_range("gui")) {
-		const bool is_default = def["id"] == "default";
+		const bool is_default = def[str_id] == "default";
 
 		if(is_default && !is_core) {
 			ERR_GUI_P << "UI theme id 'default' is reserved for core themes.";

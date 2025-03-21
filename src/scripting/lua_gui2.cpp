@@ -70,9 +70,9 @@ int show_message_dialog(lua_State* L)
 	const bool has_input = !lua_isnoneornil(L, 3) && luaW_toconfig(L, 3, txt_cfg) && !txt_cfg.empty();
 
 	gui2::dialogs::wml_message_input input;
-	input.caption = txt_cfg["label"].str();
-	input.text = txt_cfg["text"].str();
-	input.maximum_length = txt_cfg["max_length"].to_int(256);
+	input.caption = txt_cfg[str_label].str();
+	input.text = txt_cfg[str_text].str();
+	input.maximum_length = txt_cfg[str_max_length].to_int(256);
 	input.text_input_was_specified = has_input;
 
 	gui2::dialogs::wml_message_options options{};
@@ -84,15 +84,15 @@ int show_message_dialog(lua_State* L)
 			t_string short_opt;
 			config opt;
 			if(luaW_totstring(L, -1, short_opt)) {
-				opt["label"] = short_opt;
+				opt[str_label] = short_opt;
 			} else if(!luaW_toconfig(L, -1, opt)) {
 				std::ostringstream error;
 				error << "expected array of config and/or translatable strings, but index ";
 				error << i << " was a " << lua_typename(L, lua_type(L, -1));
 				return luaL_argerror(L, 2, error.str().c_str());
 			}
-			gui2::dialogs::wml_message_option option(opt["label"], opt["description"], opt["image"]);
-			if(opt["default"].to_bool(false)) {
+			gui2::dialogs::wml_message_option option(opt[str_label], opt[str_description], opt[str_image]);
+			if(opt[str_default].to_bool(false)) {
 				options.chosen_option = i - 1;
 			}
 			options.option_list.push_back(option);
@@ -112,22 +112,22 @@ int show_message_dialog(lua_State* L)
 	}
 
 	const config& def_cfg = luaW_checkconfig(L, 1);
-	const std::string& title = def_cfg["title"];
-	const std::string& message = def_cfg["message"];
+	const std::string& title = def_cfg[str_title];
+	const std::string& message = def_cfg[str_message];
 
 	using portrait = gui2::dialogs::wml_message_portrait;
 	std::unique_ptr<portrait> left;
 	std::unique_ptr<portrait> right;
 	const bool is_double = def_cfg.has_attribute("second_portrait");
-	const bool left_side = def_cfg["left_side"].to_bool(true);
+	const bool left_side = def_cfg[str_left_side].to_bool(true);
 	if(is_double || left_side) {
-		left.reset(new portrait {def_cfg["portrait"], def_cfg["mirror"].to_bool(false)});
+		left.reset(new portrait {def_cfg[str_portrait], def_cfg[str_mirror].to_bool(false)});
 	} else {
 		// This means right side only.
-		right.reset(new portrait {def_cfg["portrait"], def_cfg["mirror"].to_bool(false)});
+		right.reset(new portrait {def_cfg[str_portrait], def_cfg[str_mirror].to_bool(false)});
 	}
 	if(is_double) {
-		right.reset(new portrait {def_cfg["second_portrait"], def_cfg["second_mirror"].to_bool(false)});
+		right.reset(new portrait {def_cfg[str_second_portrait], def_cfg[str_second_mirror].to_bool(false)});
 	}
 
 	int dlg_result = gui2::dialogs::show_wml_message(title, message, left.get(), right.get(), options, input);
@@ -286,20 +286,20 @@ int intf_show_recruit_dialog(lua_State* L)
 		idx++;
 		const config& cfg = luaW_checkconfig(L, idx);
 		if (!cfg.empty()) {
-			if (!cfg["title"].empty()) {
-				dlg->set_title(cfg["title"]);
+			if (!cfg[str_title].empty()) {
+				dlg->set_title(cfg[str_title]);
 			}
 
-			if (!cfg["ok_label"].empty()) {
-				dlg->set_ok_label(cfg["ok_label"]);
+			if (!cfg[str_ok_label].empty()) {
+				dlg->set_ok_label(cfg[str_ok_label]);
 			}
 
-			if (!cfg["cancel_label"].empty()) {
-				dlg->set_cancel_label(cfg["cancel_label"]);
+			if (!cfg[str_cancel_label].empty()) {
+				dlg->set_cancel_label(cfg[str_cancel_label]);
 			}
 
-			if (!cfg["help_topic"].empty()) {
-				dlg->set_help_topic(cfg["help_topic"]);
+			if (!cfg[str_help_topic].empty()) {
+				dlg->set_help_topic(cfg[str_help_topic]);
 			}
 		}
 
@@ -341,20 +341,20 @@ int intf_show_recall_dialog(lua_State* L)
 		idx++;
 		const config& cfg = luaW_checkconfig(L, idx);
 		if (!cfg.empty()) {
-			if (!cfg["title"].empty()) {
-				dlg->set_title(cfg["title"]);
+			if (!cfg[str_title].empty()) {
+				dlg->set_title(cfg[str_title]);
 			}
 
-			if (!cfg["ok_label"].empty()) {
-				dlg->set_ok_label(cfg["ok_label"]);
+			if (!cfg[str_ok_label].empty()) {
+				dlg->set_ok_label(cfg[str_ok_label]);
 			}
 
-			if (!cfg["cancel_label"].empty()) {
-				dlg->set_cancel_label(cfg["cancel_label"]);
+			if (!cfg[str_cancel_label].empty()) {
+				dlg->set_cancel_label(cfg[str_cancel_label]);
 			}
 
-			if (!cfg["help_topic"].empty()) {
-				dlg->set_help_topic(cfg["help_topic"]);
+			if (!cfg[str_help_topic].empty()) {
+				dlg->set_help_topic(cfg[str_help_topic]);
 			}
 		}
 

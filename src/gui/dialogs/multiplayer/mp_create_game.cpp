@@ -157,12 +157,12 @@ void mp_create_game::quick_mp_setup(saved_game& state, const config presets)
 	create.set_current_level_type(level_type::type::scenario);
 	const auto& levels = create.get_levels_by_type(level_type::type::scenario);
 	for(std::size_t i = 0; i < levels.size(); i++) {
-		if(levels[i]->id() == presets["scenario"].str()) {
+		if(levels[i]->id() == presets[str_scenario].str()) {
 			create.set_current_level(i);
 		}
 	}
 
-	create.set_current_era_id(presets["era"]);
+	create.set_current_era_id(presets[str_era]);
 
 	// from post_show
 	create.prepare_for_era_and_mods();
@@ -171,15 +171,15 @@ void mp_create_game::quick_mp_setup(saved_game& state, const config presets)
 	create.prepare_for_new_level();
 
 	mp_game_settings& params = create.get_state().mp_settings();
-	params.mp_scenario = presets["scenario"].str();
+	params.mp_scenario = presets[str_scenario].str();
 	params.use_map_settings = true;
-	params.num_turns = presets["turn_count"].to_int(-1);
-	params.village_gold = presets["village_gold"].to_int();
-	params.village_support = presets["village_support"].to_int();
-	params.xp_modifier = presets["experience_modifier"].to_int();
-	params.random_start_time = presets["random_start_time"].to_bool();
-	params.fog_game = presets["fog"].to_bool();
-	params.shroud_game = presets["shroud"].to_bool();
+	params.num_turns = presets[str_turn_count].to_int(-1);
+	params.village_gold = presets[str_village_gold].to_int();
+	params.village_support = presets[str_village_support].to_int();
+	params.xp_modifier = presets[str_experience_modifier].to_int();
+	params.random_start_time = presets[str_random_start_time].to_bool();
+	params.fog_game = presets[str_fog].to_bool();
+	params.shroud_game = presets[str_shroud].to_bool();
 
 	// write to scenario
 	// queue games are supposed to all use the same settings, not be modified by the user
@@ -187,43 +187,43 @@ void mp_create_game::quick_mp_setup(saved_game& state, const config presets)
 	config& scenario = create.get_state().get_starting_point();
 
 	if(params.random_start_time) {
-		if(!tod_manager::is_start_ToD(scenario["random_start_time"])) {
-			scenario["random_start_time"] = true;
+		if(!tod_manager::is_start_ToD(scenario[str_random_start_time])) {
+			scenario[str_random_start_time] = true;
 		}
 	} else {
-		scenario["random_start_time"] = false;
+		scenario[str_random_start_time] = false;
 	}
 
-	scenario["experience_modifier"] = params.xp_modifier;
-	scenario["turns"] = params.num_turns;
+	scenario[str_experience_modifier] = params.xp_modifier;
+	scenario[str_turns] = params.num_turns;
 
 	for(config& side : scenario.child_range("side")) {
-		side["controller_lock"] = false;
-		side["team_lock"] = true;
-		side["gold_lock"] = true;
-		side["income_lock"] = true;
+		side[str_controller_lock] = false;
+		side[str_team_lock] = true;
+		side[str_gold_lock] = true;
+		side[str_income_lock] = true;
 
-		side["fog"] = params.fog_game;
-		side["shroud"] = params.shroud_game;
-		side["village_gold"] = params.village_gold;
-		side["village_support"] = params.village_support;
+		side[str_fog] = params.fog_game;
+		side[str_shroud] = params.shroud_game;
+		side[str_village_gold] = params.village_gold;
+		side[str_village_support] = params.village_support;
 	}
 
-	params.mp_countdown = presets["countdown"].to_bool();
-	params.mp_countdown_init_time = std::chrono::seconds{presets["countdown_init_time"].to_int()};
-	params.mp_countdown_turn_bonus = std::chrono::seconds{presets["countdown_turn_bonus"].to_int()};
-	params.mp_countdown_reservoir_time = std::chrono::seconds{presets["countdown_reservoir_time"].to_int()};
-	params.mp_countdown_action_bonus = std::chrono::seconds{presets["countdown_action_bonus"].to_int()};
+	params.mp_countdown = presets[str_countdown].to_bool();
+	params.mp_countdown_init_time = std::chrono::seconds{presets[str_countdown_init_time].to_int()};
+	params.mp_countdown_turn_bonus = std::chrono::seconds{presets[str_countdown_turn_bonus].to_int()};
+	params.mp_countdown_reservoir_time = std::chrono::seconds{presets[str_countdown_reservoir_time].to_int()};
+	params.mp_countdown_action_bonus = std::chrono::seconds{presets[str_countdown_action_bonus].to_int()};
 
 	params.allow_observers = true;
 	params.private_replay = false;
 	create.get_state().classification().oos_debug = false;
-	params.shuffle_sides = presets["shuffle_sides"].to_bool();
+	params.shuffle_sides = presets[str_shuffle_sides].to_bool();
 
-	params.mode = random_faction_mode::get_enum(presets["random_faction_mode"].str()).value_or(random_faction_mode::type::independent);
+	params.mode = random_faction_mode::get_enum(presets[str_random_faction_mode].str()).value_or(random_faction_mode::type::independent);
 	params.name = settings::game_name_default();
 
-	for(const std::string& mod : utils::split(presets["modifications"].str())) {
+	for(const std::string& mod : utils::split(presets[str_modifications].str())) {
 		create.active_mods().push_back(mod);
 	}
 
@@ -278,7 +278,7 @@ void mp_create_game::pre_show()
 	//
 	std::vector<config> game_types;
 	for(level_type_info& type_info : level_types_) {
-		game_types.emplace_back("label", type_info.second);
+		game_types.emplace_back(str_label, type_info.second);
 	}
 
 	if(game_types.empty()) {
@@ -340,7 +340,7 @@ void mp_create_game::pre_show()
 
 	std::vector<config> era_names;
 	for(const auto& era : create_engine_.get_const_extras_by_type(ng::create_engine::ERA)) {
-		era_names.emplace_back("label", era->name, "tooltip", era->description);
+		era_names.emplace_back(str_label, era->name, str_tooltip, era->description);
 	}
 
 	if(era_names.empty()) {
@@ -445,7 +445,7 @@ void mp_create_game::pre_show()
 	plugins_context_->set_callback("load",   [this](const config&) { load_game_callback(); }, false);
 
 #define UPDATE_ATTRIBUTE(field, convert) \
-	do { if(cfg.has_attribute(#field)) { field##_->set_widget_value(cfg[#field].convert()); } } while(false) \
+	do { if(cfg.has_attribute(str_##field)) { field##_->set_widget_value(cfg[str_##field].convert()); } } while(false) \
 
 	plugins_context_->set_callback("update_settings", [this](const config& cfg) {
 		UPDATE_ATTRIBUTE(turns, to_int);
@@ -469,42 +469,42 @@ void mp_create_game::pre_show()
 #undef UPDATE_ATTRIBUTE
 
 	plugins_context_->set_callback("set_name",     [this](const config& cfg) {
-		create_engine_.get_state().mp_settings().name = cfg["name"];
+		create_engine_.get_state().mp_settings().name = cfg[str_name];
 	}, true);
 
 	plugins_context_->set_callback("set_password", [this](const config& cfg) {
-		create_engine_.get_state().mp_settings().password = cfg["password"];
+		create_engine_.get_state().mp_settings().password = cfg[str_password];
 	}, true);
 
 	plugins_context_->set_callback("select_level", [this](const config& cfg) {
-		selected_game_index_ = convert_to_game_filtered_index(cfg["index"].to_int());
+		selected_game_index_ = convert_to_game_filtered_index(cfg[str_index].to_int());
 		create_engine_.set_current_level(selected_game_index_);
 	}, true);
 
 	plugins_context_->set_callback("select_type",  [this](const config& cfg) {
-		create_engine_.set_current_level_type(level_type::get_enum(cfg["type"].str()).value_or(level_type::type::scenario)); }, true);
+		create_engine_.set_current_level_type(level_type::get_enum(cfg[str_type].str()).value_or(level_type::type::scenario)); }, true);
 
 	plugins_context_->set_callback("select_era",   [this](const config& cfg) {
-		create_engine_.set_current_era_index(cfg["index"].to_int()); }, true);
+		create_engine_.set_current_era_index(cfg[str_index].to_int()); }, true);
 
 	plugins_context_->set_callback("select_mod",   [this](const config& cfg) {
-		on_mod_toggle(cfg["id"].str(), nullptr);
+		on_mod_toggle(cfg[str_id].str(), nullptr);
 	}, true);
 
 	plugins_context_->set_accessor("get_selected", [this](const config&) {
 		const ng::level& current_level = create_engine_.current_level();
 		return config {
-			"id", current_level.id(),
-			"name", current_level.name(),
-			"icon", current_level.icon(),
-			"description", current_level.description(),
-			"allow_era_choice", current_level.allow_era_choice(),
-			"type", level_type::get_string(create_engine_.current_level_type()),
+			str_id, current_level.id(),
+			str_name, current_level.name(),
+			str_icon, current_level.icon(),
+			str_description, current_level.description(),
+			str_allow_era_choice, current_level.allow_era_choice(),
+			str_type, level_type::get_string(create_engine_.current_level_type()),
 		};
 	});
 
 	plugins_context_->set_accessor("find_level",   [this](const config& cfg) {
-		const std::string id = cfg["id"].str();
+		const std::string id = cfg[str_id].str();
 		auto result = create_engine_.find_level_by_id(id);
 		return config {
 			"index", result.second,
@@ -513,11 +513,11 @@ void mp_create_game::pre_show()
 	});
 
 	plugins_context_->set_accessor_int("find_era", [this](const config& cfg) {
-		return create_engine_.find_extra_by_id(ng::create_engine::ERA, cfg["id"]);
+		return create_engine_.find_extra_by_id(ng::create_engine::ERA, cfg[str_id]);
 	});
 
 	plugins_context_->set_accessor_int("find_mod", [this](const config& cfg) {
-		return create_engine_.find_extra_by_id(ng::create_engine::MOD, cfg["id"]);
+		return create_engine_.find_extra_by_id(ng::create_engine::MOD, cfg[str_id]);
 	});
 }
 
@@ -629,33 +629,33 @@ void mp_create_game::on_game_select()
 		update_map_settings();
 	} else {
 		if(auto preset = prefs::get().get_game_preset(create_engine_.preset_id_by_index(selected_game))) {
-			use_map_settings_->set_widget_value(preset["use_map_settings"].to_bool());
-			fog_->set_widget_value(preset["fog"].to_bool());
-			shroud_->set_widget_value(preset["shroud"].to_bool());
-			start_time_->set_widget_value(preset["random_start_time"].to_bool());
-			shuffle_sides_->set_widget_value(preset["shuffle_sides"].to_bool());
-			observers_->set_widget_value(preset["observer"].to_bool());
-			turns_->set_widget_value(preset["turns"].to_int());
-			gold_->set_widget_value(preset["village_gold"].to_int());
-			support_->set_widget_value(preset["village_support"].to_int());
-			experience_->set_widget_value(preset["experience_modifier"].to_int());
-			time_limit_->set_widget_value(preset["countdown"].to_bool());
-			init_turn_limit_->set_widget_value(preset["countdown_turn_limit"].to_int());
-			turn_bonus_->set_widget_value(preset["countdown_turn_bonus"].to_int());
-			reservoir_->set_widget_value(preset["countdown_reservoir"].to_int());
-			action_bonus_->set_widget_value(preset["countdown_action_bonus"].to_int());
+			use_map_settings_->set_widget_value(preset[str_use_map_settings].to_bool());
+			fog_->set_widget_value(preset[str_fog].to_bool());
+			shroud_->set_widget_value(preset[str_shroud].to_bool());
+			start_time_->set_widget_value(preset[str_random_start_time].to_bool());
+			shuffle_sides_->set_widget_value(preset[str_shuffle_sides].to_bool());
+			observers_->set_widget_value(preset[str_observer].to_bool());
+			turns_->set_widget_value(preset[str_turns].to_int());
+			gold_->set_widget_value(preset[str_village_gold].to_int());
+			support_->set_widget_value(preset[str_village_support].to_int());
+			experience_->set_widget_value(preset[str_experience_modifier].to_int());
+			time_limit_->set_widget_value(preset[str_countdown].to_bool());
+			init_turn_limit_->set_widget_value(preset[str_countdown_turn_limit].to_int());
+			turn_bonus_->set_widget_value(preset[str_countdown_turn_bonus].to_int());
+			reservoir_->set_widget_value(preset[str_countdown_reservoir].to_int());
+			action_bonus_->set_widget_value(preset[str_countdown_action_bonus].to_int());
 
-			random_faction_mode::type mode = random_faction_mode::get_enum(preset["random_faction_mode"].str()).value_or(random_faction_mode::type::independent);
+			random_faction_mode::type mode = random_faction_mode::get_enum(preset[str_random_faction_mode].str()).value_or(random_faction_mode::type::independent);
 			find_widget<menu_button>("random_faction_mode").set_selected(static_cast<int>(mode));
 
-			const int era_selection = create_engine_.find_extra_by_id(ng::create_engine::ERA, preset["era"].str());
+			const int era_selection = create_engine_.find_extra_by_id(ng::create_engine::ERA, preset[str_era].str());
 			if(era_selection >= 0) {
 				eras_menu_button_->set_selected(era_selection);
 			}
 			on_era_select();
 
 			int i = 0;
-			const auto& activemods = utils::split(preset["modifications"]);
+			const auto& activemods = utils::split(preset[str_modifications]);
 			for(const auto& mod : create_engine_.get_extras_by_type(ng::create_engine::MOD)) {
 				toggle_button& mod_button = mod_list_->get_row_grid(i)->find_widget<toggle_button>("mod_active_state");
 				mod_button.set_value_bool(utils::contains(activemods, mod->id));
@@ -739,11 +739,11 @@ void mp_create_game::display_games_of_type(level_type::type type, const std::str
 		widget_item item;
 
 		if(type == level_type::type::campaign || type == level_type::type::sp_campaign) {
-			item["label"] = game->icon();
+			item[str_label] = game->icon();
 			data.emplace("game_icon", item);
 		}
 
-		item["label"] = game->name();
+		item[str_label] = game->name();
 		data.emplace("game_name", item);
 
 		grid& rg = list.add_row(data);
@@ -804,8 +804,8 @@ void mp_create_game::update_details()
 	if(create_engine_.current_level_type() == level_type::type::random_map) {
 		// If the current random map doesn't have data, generate it
 		if(create_engine_.generator_assigned() &&
-			create_engine_.current_level().data()["map_data"].empty() &&
-			create_engine_.current_level().data()["map_file"].empty()) {
+			create_engine_.current_level().data()[str_map_data].empty() &&
+			create_engine_.current_level().data()[str_map_file].empty()) {
 			create_engine_.init_generated_level_data();
 		}
 
@@ -837,12 +837,12 @@ void mp_create_game::update_details()
 
 			find_widget<stacked_widget>("minimap_stack").select_layer(0);
 
-			if(current_scenario->data()["map_data"].empty()) {
+			if(current_scenario->data()[str_map_data].empty()) {
 				saved_game::expand_map_file(current_scenario->data());
 				current_scenario->set_metadata();
 			}
 
-			find_widget<minimap>("minimap").set_map_data(current_scenario->data()["map_data"]);
+			find_widget<minimap>("minimap").set_map_data(current_scenario->data()[str_map_data]);
 
 			players.set_label(std::to_string(current_scenario->num_players()));
 			map_size.set_label(current_scenario->map_size());
@@ -855,9 +855,9 @@ void mp_create_game::update_details()
 
 			assert(current_campaign);
 
-			create_engine_.get_state().classification().campaign = current_campaign->data()["id"].str();
+			create_engine_.get_state().classification().campaign = current_campaign->data()[str_id].str();
 
-			const std::string img = formatter() << current_campaign->data()["image"] << "~SCALE_INTO(265,265)";
+			const std::string img = formatter() << current_campaign->data()[str_image] << "~SCALE_INTO(265,265)";
 
 			find_widget<stacked_widget>("minimap_stack").select_layer(1);
 			find_widget<image>("campaign_image").set_image(img);
@@ -884,7 +884,7 @@ void mp_create_game::update_details()
 void mp_create_game::update_map_settings()
 {
 	config& level = create_engine_.current_level().data();
-	if(level["force_lock_settings"].to_bool(!create_engine_.get_state().classification().is_normal_mp_game())) {
+	if(level[str_force_lock_settings].to_bool(!create_engine_.get_state().classification().is_normal_mp_game())) {
 		use_map_settings_->widget_set_enabled(false, false);
 		use_map_settings_->set_widget_value(true);
 	} else {
@@ -943,27 +943,27 @@ config mp_create_game::settings_config()
 {
 	config settings;
 
-	settings["scenario"] = create_engine_.current_level().id();
-	settings["era"] = create_engine_.current_era().id;
-	settings["fog"] = fog_->get_widget_value();
-	settings["shroud"] = shroud_->get_widget_value();
-	settings["village_gold"] = gold_->get_widget_value();
-	settings["village_support"] = support_->get_widget_value();
-	settings["experience_modifier"] = experience_->get_widget_value();
-	settings["countdown"] = time_limit_->get_widget_value();
-	settings["countdown_turn_limit"] = init_turn_limit_->get_widget_value();
-	settings["countdown_action_bonus"] = action_bonus_->get_widget_value();
-	settings["countdown_turn_bonus"] = turn_bonus_->get_widget_value();
-	settings["countdown_reservoir"] = reservoir_->get_widget_value();
-	settings["random_start_time"] = start_time_->get_widget_value();
-	settings["shuffle_sides"] = shuffle_sides_->get_widget_value();
-	settings["turns"] = turns_->get_widget_value();
-	settings["observer"] = observers_->get_widget_value();
-	settings["use_map_settings"] = use_map_settings_->get_widget_value();
-	settings["modifications"] = utils::join(create_engine_.active_mods(), ",");
+	settings[str_scenario] = create_engine_.current_level().id();
+	settings[str_era] = create_engine_.current_era().id;
+	settings[str_fog] = fog_->get_widget_value();
+	settings[str_shroud] = shroud_->get_widget_value();
+	settings[str_village_gold] = gold_->get_widget_value();
+	settings[str_village_support] = support_->get_widget_value();
+	settings[str_experience_modifier] = experience_->get_widget_value();
+	settings[str_countdown] = time_limit_->get_widget_value();
+	settings[str_countdown_turn_limit] = init_turn_limit_->get_widget_value();
+	settings[str_countdown_action_bonus] = action_bonus_->get_widget_value();
+	settings[str_countdown_turn_bonus] = turn_bonus_->get_widget_value();
+	settings[str_countdown_reservoir] = reservoir_->get_widget_value();
+	settings[str_random_start_time] = start_time_->get_widget_value();
+	settings[str_shuffle_sides] = shuffle_sides_->get_widget_value();
+	settings[str_turns] = turns_->get_widget_value();
+	settings[str_observer] = observers_->get_widget_value();
+	settings[str_use_map_settings] = use_map_settings_->get_widget_value();
+	settings[str_modifications] = utils::join(create_engine_.active_mods(), ",");
 	settings.add_child("options", options_manager_->get_options_config());
 	random_faction_mode::type type = random_faction_mode::get_enum(selected_rfm_index_).value_or(random_faction_mode::type::independent);
-	settings["random_faction_mode"] = random_faction_mode::get_string(type);
+	settings[str_random_faction_mode] = random_faction_mode::get_string(type);
 
 	return settings;
 }
@@ -1083,13 +1083,13 @@ void mp_create_game::post_show()
 		const auto& tagname = create_engine_.get_state().classification().get_tagname();
 
 		if(tagname == "scenario") {
-			const std::string first_scenario = create_engine_.current_level().data()["first_scenario"];
+			const std::string first_scenario = create_engine_.current_level().data()[str_first_scenario];
 			for(const config& scenario : game_config_manager::get()->game_config().child_range(tagname)) {
-				const bool is_first = scenario["id"] == first_scenario;
-				if(scenario["allow_new_game"].to_bool(false) || is_first || game_config::debug ) {
-					const std::string& title = !scenario["new_game_title"].empty()
-						? scenario["new_game_title"]
-						: scenario["name"];
+				const bool is_first = scenario[str_id] == first_scenario;
+				if(scenario[str_allow_new_game].to_bool(false) || is_first || game_config::debug ) {
+					const std::string& title = !scenario[str_new_game_title].empty()
+						? scenario[str_new_game_title]
+						: scenario[str_name];
 
 					entry_points.insert(is_first ? entry_points.begin() : entry_points.end(), &scenario);
 					entry_point_titles.insert(is_first ? entry_point_titles.begin() : entry_point_titles.end(), title);
@@ -1112,7 +1112,7 @@ void mp_create_game::post_show()
 
 		params.use_map_settings = use_map_settings_->get_widget_value();
 
-		if(!create_engine_.current_level().data()["force_lock_settings"].to_bool(!create_engine_.get_state().classification().is_normal_mp_game())) {
+		if(!create_engine_.current_level().data()[str_force_lock_settings].to_bool(!create_engine_.get_state().classification().is_normal_mp_game())) {
 			// Max slider value (in this case, 100) means 'unlimited turns', so pass the value -1
 			const int num_turns = turns_->get_widget_value();
 			params.num_turns = num_turns < ::settings::turns_max ? num_turns : - 1;
@@ -1127,37 +1127,37 @@ void mp_create_game::post_show()
 			config& scenario = create_engine_.get_state().get_starting_point();
 
 			if(params.random_start_time) {
-				if(!tod_manager::is_start_ToD(scenario["random_start_time"])) {
-					scenario["random_start_time"] = true;
+				if(!tod_manager::is_start_ToD(scenario[str_random_start_time])) {
+					scenario[str_random_start_time] = true;
 				}
 			} else {
-				scenario["random_start_time"] = false;
+				scenario[str_random_start_time] = false;
 			}
 
-			scenario["experience_modifier"] = params.xp_modifier;
-			scenario["turns"] = params.num_turns;
+			scenario[str_experience_modifier] = params.xp_modifier;
+			scenario[str_turns] = params.num_turns;
 
 			for(config& side : scenario.child_range("side")) {
 				if(!params.use_map_settings) {
-					side["fog"] = params.fog_game;
-					side["shroud"] = params.shroud_game;
-					side["village_gold"] = params.village_gold;
-					side["village_support"] = params.village_support;
+					side[str_fog] = params.fog_game;
+					side[str_shroud] = params.shroud_game;
+					side[str_village_gold] = params.village_gold;
+					side[str_village_support] = params.village_support;
 				} else {
-					if(side["fog"].empty()) {
-						side["fog"] = params.fog_game;
+					if(side[str_fog].empty()) {
+						side[str_fog] = params.fog_game;
 					}
 
-					if(side["shroud"].empty()) {
-						side["shroud"] = params.shroud_game;
+					if(side[str_shroud].empty()) {
+						side[str_shroud] = params.shroud_game;
 					}
 
-					if(side["village_gold"].empty()) {
-						side["village_gold"] = params.village_gold;
+					if(side[str_village_gold].empty()) {
+						side[str_village_gold] = params.village_gold;
 					}
 
-					if(side["village_support"].empty()) {
-						side["village_support"] = params.village_support;
+					if(side[str_village_support].empty()) {
+						side[str_village_support] = params.village_support;
 					}
 				}
 			}

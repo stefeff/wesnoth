@@ -92,18 +92,18 @@ static int intf_default_generate(lua_State *L)
 	generator_data arg;
 	arg.width = width;
 	arg.height = height;
-	arg.nplayers = cfg["nplayers"].to_int(2);
-	arg.nvillages = cfg["nvillages"].to_int(0);
-	arg.iterations = cfg["iterations"].to_int(0);
-	arg.hill_size = cfg["hill_size"].to_int(0);
-	arg.castle_size = cfg["castle_size"].to_int(0);
-	arg.island_size = cfg["island_size"].to_int(0);
-	arg.island_off_center = cfg["island_off_center"].to_int(0);
-	arg.max_lakes = cfg["max_lakes"].to_int(0);
-	arg.link_castles = cfg["link_castles"].to_bool();
-	arg.show_labels = cfg["show_labels"].to_bool(0);
+	arg.nplayers = cfg[str_nplayers].to_int(2);
+	arg.nvillages = cfg[str_nvillages].to_int(0);
+	arg.iterations = cfg[str_iterations].to_int(0);
+	arg.hill_size = cfg[str_hill_size].to_int(0);
+	arg.castle_size = cfg[str_castle_size].to_int(0);
+	arg.island_size = cfg[str_island_size].to_int(0);
+	arg.island_off_center = cfg[str_island_off_center].to_int(0);
+	arg.max_lakes = cfg[str_max_lakes].to_int(0);
+	arg.link_castles = cfg[str_link_castles].to_bool();
+	arg.show_labels = cfg[str_show_labels].to_bool(0);
 
-	uint32_t seed = cfg["seed"].to_int(0);
+	uint32_t seed = cfg[str_seed].to_int(0);
 	if(!cfg.has_attribute("seed")) {
 		seed = rng();
 	}
@@ -131,14 +131,14 @@ static int intf_default_generate_height_map(lua_State *L)
 		deprecated_message("generate_height_map(..., {location_set=false})", DEP_LEVEL::PREEMPTIVE, "1.17", "The default value of this option will be changed to true in 1.17.");
 	}
 
-	int iterations = cfg["iterations"].to_int(1);
-	int hill_size = cfg["hill_size"].to_int(1);
-	int island_size = cfg["island_size"].to_int(width/2);
-	int center_x = cfg["center_x"].to_int(width/2);
-	int center_y = cfg["center_y"].to_int(height/2);
-	bool flip_layout = cfg["flip_format"].to_bool();
-	bool as_locset = cfg["location_set"].to_bool(false);
-	uint32_t seed = cfg["seed"].to_int(0);
+	int iterations = cfg[str_iterations].to_int(1);
+	int hill_size = cfg[str_hill_size].to_int(1);
+	int island_size = cfg[str_island_size].to_int(width/2);
+	int center_x = cfg[str_center_x].to_int(width/2);
+	int center_y = cfg[str_center_y].to_int(height/2);
+	bool flip_layout = cfg[str_flip_format].to_bool();
+	bool as_locset = cfg[str_location_set].to_bool(false);
+	uint32_t seed = cfg[str_seed].to_int(0);
 
 	if(!cfg.has_attribute("seed")) {
 		seed = rng();

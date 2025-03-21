@@ -151,7 +151,7 @@ void playsingle_controller::hotkey_handler::whiteboard_toggle() {
 	if (whiteboard_manager_->is_active()) {
 		std::string hk = hotkey::get_names(hotkey::get_hotkey_command(hotkey::HOTKEY_WB_TOGGLE).id);
 		utils::string_map symbols;
-		symbols["hotkey"] = hk;
+		symbols[str_hotkey] = hk;
 
 		gui()->announce(_("Planning mode activated!") + std::string("\n") + VGETTEXT("(press $hotkey to deactivate)", symbols), font::NORMAL_COLOR);
 	} else {
@@ -338,7 +338,7 @@ void playsingle_controller::hotkey_handler::load_autosave(const std::string& fil
 #endif
 	}
 
-	if(savegame.child_or_empty("snapshot")["replay_pos"].to_int(-1) < 0 ) {
+	if(savegame.child_or_empty("snapshot")[str_replay_pos].to_int(-1) < 0 ) {
 		gui2::show_error_message(_("The file you have tried to load has no replay information."));
 		return;
 	}
@@ -347,8 +347,8 @@ void playsingle_controller::hotkey_handler::load_autosave(const std::string& fil
 		return;
 	}
 
-	auto res = std::make_shared<config>(savegame.child_or_empty("snapshot"));
-	auto stats = std::make_shared<config>(savegame.child_or_empty("statistics"));
+	auto res = std::make_shared<config>(savegame.child_or_empty(str_snapshot));
+	auto stats = std::make_shared<config>(savegame.child_or_empty(str_statistics));
 	throw reset_gamestate_exception(res, stats, false);
 }
 

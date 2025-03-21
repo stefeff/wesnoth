@@ -42,8 +42,8 @@ struct persist_choice: mp_sync::user_choice {
 		//side can be different from side_for: if side was null-controlled
 		//then get_user_choice will use the next non-null-controlled side instead
 		config ret;
-		ret["side"] = side;
-		ret.add_child("variables",ctx.get_var(var_name));
+		ret[str_side] = side;
+		ret.add_child(str_variables,ctx.get_var(var_name));
 		return ret;
 	}
 	virtual config random_choice(int /*side_for*/) const {
@@ -62,12 +62,12 @@ struct persist_choice: mp_sync::user_choice {
 
 static void get_global_variable(persist_context &ctx, const vconfig &pcfg)
 {
-	std::string global = pcfg["from_global"];
-	std::string local = pcfg["to_local"];
-	config::attribute_value pcfg_side = pcfg["side"];
+	std::string global = pcfg[str_from_global];
+	std::string local = pcfg[str_to_local];
+	config::attribute_value pcfg_side = pcfg[str_side];
 	const int side = pcfg_side.to_int(resources::controller->current_side());
 	persist_choice choice(ctx, global, side);
-	config cfg = mp_sync::get_user_choice("global_variable",choice,side).mandatory_child("variables");
+	config cfg = mp_sync::get_user_choice("global_variable",choice,side).mandatory_child(str_variables);
 	try
 	{
 		std::size_t arrsize = cfg.child_count(global);
@@ -87,17 +87,17 @@ static void get_global_variable(persist_context &ctx, const vconfig &pcfg)
 
 static void clear_global_variable(persist_context &ctx, const vconfig &pcfg)
 {
-	std::string global = pcfg["global"];
-	ctx.clear_var(global, pcfg["immediate"].to_bool());
+	std::string global = pcfg[str_global];
+	ctx.clear_var(global, pcfg[str_immediate].to_bool());
 }
 
 static void set_global_variable(persist_context &ctx, const vconfig &pcfg)
 {
-	if (pcfg["from_local"].empty()) {
+	if (pcfg[str_from_local].empty()) {
 		clear_global_variable(ctx, pcfg);
 	} else {
-		std::string global = pcfg["to_global"];
-		std::string local = pcfg["from_local"];
+		std::string global = pcfg[str_to_global];
+		std::string local = pcfg[str_from_local];
 		config val;
 		const config &vars = resources::gamedata->get_variables();
 		std::size_t arraylen = vars.child_count(local);
@@ -114,38 +114,38 @@ static void set_global_variable(persist_context &ctx, const vconfig &pcfg)
 			for (std::size_t i = 0; i < arraylen; i++)
 				val.add_child(global, vars.mandatory_child(local,i));
 		}
-		ctx.set_var(global, val, pcfg["immediate"].to_bool());
+		ctx.set_var(global, val, pcfg[str_immediate].to_bool());
 	}
 }
 void verify_and_get_global_variable(const vconfig &pcfg)
 {
 	bool valid = true;
-	if (!pcfg.has_attribute("from_global")) {
+	if (!pcfg.has_attribute(str_from_global)) {
 		ERR_PERSIST << "[get_global_variable] missing required attribute \"from_global\"";
 		valid = false;
 	}
-	if (!pcfg.has_attribute("to_local")) {
+	if (!pcfg.has_attribute(str_to_local)) {
 		ERR_PERSIST << "[get_global_variable] missing required attribute \"to_local\"";
 		valid = false;
 	}
 	// TODO: allow for global namespace.
-	if (!pcfg.has_attribute("namespace")) {
+	if (!pcfg.has_attribute(str_namespace)) {
 		ERR_PERSIST << "[get_global_variable] missing attribute \"namespace\"";
 		valid = false;
 	}
 	if (resources::controller->is_networked_mp()) {
-			DBG_PERSIST << "verify_and_get_global_variable with from_global=" << pcfg["from_global"] << " from side " << pcfg["side"];
-			config::attribute_value pcfg_side = pcfg["side"];
+			DBG_PERSIST << "verify_and_get_global_variable with from_global=" << pcfg[str_from_global] << " from side " << pcfg[str_side];
+			config::attribute_value pcfg_side = pcfg[str_side];
 			int side = (pcfg_side.str() == "global" || pcfg_side.empty()) ? resources::controller->current_side() : pcfg_side.to_int();
 			if (!resources::gameboard->has_team(side)) {
 				ERR_PERSIST << "[get_global_variable] attribute \"side\" specifies invalid side number.";
 				valid = false;
 			}
-			DBG_PERSIST <<  "end verify_and_get_global_variable with from_global=" << pcfg["from_global"] << " from side " << pcfg["side"];
+			DBG_PERSIST <<  "end verify_and_get_global_variable with from_global=" << pcfg[str_from_global] << " from side " << pcfg[str_side];
 	}
 	if (valid)
 	{
-		persist_context &ctx = resources::persist->get_context((pcfg["namespace"]));
+		persist_context &ctx = resources::persist->get_context((pcfg[str_namespace]));
 		if (ctx.valid()) {
 			get_global_variable(ctx,pcfg);
 		} else {
@@ -156,20 +156,20 @@ void verify_and_get_global_variable(const vconfig &pcfg)
 void verify_and_set_global_variable(const vconfig &pcfg)
 {
 	bool valid = true;
-	if (!pcfg.has_attribute("to_global")) {
+	if (!pcfg.has_attribute(str_to_global)) {
 		ERR_PERSIST << "[set_global_variable] missing required attribute \"to_global\"";
 		valid = false;
 	}
-	if (!pcfg.has_attribute("from_local")) {
+	if (!pcfg.has_attribute(str_from_local)) {
 		LOG_PERSIST << "Warning: [set_global_variable] missing attribute \"from_local\", global variable will be cleared";
 	}
 	// TODO: allow for global namespace.
-	if (!pcfg.has_attribute("namespace")) {
+	if (!pcfg.has_attribute(str_namespace)) {
 		ERR_PERSIST << "[set_global_variable] missing attribute \"namespace\" and no global namespace provided.";
 		valid = false;
 	}
 	if (resources::controller->is_networked_mp()) {
-		config::attribute_value pcfg_side = pcfg["side"];
+		config::attribute_value pcfg_side = pcfg[str_side];
 		int side = pcfg_side.to_int();
 		//Check side matching only if the side is not "global" or empty.
 		if (pcfg_side.str() != "global" && !pcfg_side.empty()) {
@@ -188,7 +188,7 @@ void verify_and_set_global_variable(const vconfig &pcfg)
 	}
 	if (valid)
 	{
-		persist_context &ctx = resources::persist->get_context((pcfg["namespace"]));
+		persist_context &ctx = resources::persist->get_context((pcfg[str_namespace]));
 		if (ctx.valid()) {
 			set_global_variable(ctx,pcfg);
 		} else {
@@ -199,16 +199,16 @@ void verify_and_set_global_variable(const vconfig &pcfg)
 void verify_and_clear_global_variable(const vconfig &pcfg)
 {
 	bool valid = true;
-	if (!pcfg.has_attribute("global")) {
+	if (!pcfg.has_attribute(str_global)) {
 		ERR_PERSIST << "[clear_global_variable] missing required attribute \"global\"";
 		valid = false;
 	}
-	if (!pcfg.has_attribute("namespace")) {
+	if (!pcfg.has_attribute(str_namespace)) {
 		ERR_PERSIST << "[clear_global_variable] missing attribute \"namespace\" and no global namespace provided.";
 		valid = false;
 	}
 	if (resources::controller->is_networked_mp()) {
-		config::attribute_value pcfg_side = pcfg["side"];
+		config::attribute_value pcfg_side = pcfg[str_side];
 		const int side = pcfg_side.to_int();
 		//Check side matching only if the side is not "global" or empty.
 		if (pcfg_side.str() != "global" && !pcfg_side.empty()) {
@@ -227,7 +227,7 @@ void verify_and_clear_global_variable(const vconfig &pcfg)
 	}
 	if (valid)
 	{
-		persist_context &ctx = resources::persist->get_context((pcfg["namespace"]));
+		persist_context &ctx = resources::persist->get_context((pcfg[str_namespace]));
 		if (ctx.valid()) {
 			clear_global_variable(ctx,pcfg);
 		} else {

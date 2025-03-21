@@ -549,13 +549,13 @@ void event_mode_controller::show_list(tree_view_node& node, bool is_wmi)
 		return;
 	}
 
-	for(const auto & cfg : events.child_range(is_wmi ? "menu_item" : "event"))
+	for(const auto & cfg : events.child_range(is_wmi ? str_menu_item : str_event))
 	{
 		std::string name = is_wmi ? cfg[str_id] : cfg[str_name];
 		bool named_event = !is_wmi && !cfg[str_id].empty();
 
 		auto progress = view()
-			.stuff_list_entry(&node, named_event ? "named_event" : "basic")
+			.stuff_list_entry(&node, named_event ? str_named_event : str_basic)
 			.widget("name", name);
 
 		if(named_event) {
@@ -572,7 +572,7 @@ void event_mode_controller::show_list(tree_view_node& node, bool is_wmi)
 void event_mode_controller::show_event(tree_view_node& node, bool is_wmi)
 {
 	int n = node.describe_path().back();
-	model().set_data(config_to_string(events.mandatory_child(is_wmi ? "menu_item" : "event", n)));
+	model().set_data(config_to_string(events.mandatory_child(is_wmi ? str_menu_item : str_event, n)));
 }
 
 static stuff_list_adder add_unit_entry(stuff_list_adder& progress, const unit& u, const display_context& dc)
@@ -697,7 +697,7 @@ void unit_mode_controller::show_array(tree_view_node& node)
 void team_mode_controller::show_list(tree_view_node& node, int side)
 {
 	config&& cfg = dc().get_team(side).to_config();
-	cfg.clear_children("ai");
+	cfg.clear_children(str_ai);
 	model().set_data(config_to_string(cfg));
 
 	if(node.count_children() > 0) {

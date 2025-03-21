@@ -165,7 +165,7 @@ play_controller::play_controller(const config& level, saved_game& state_of_game)
 {
 	copy_persistent(level, level_);
 
-	for(const config& modify_unit_type : level_.child_range("modify_unit_type")) {
+	for(const config& modify_unit_type : level_.child_range(str_modify_unit_type)) {
 		unit_types.apply_scenario_fix(modify_unit_type);
 	}
 	resources::controller = this;
@@ -237,7 +237,7 @@ void play_controller::init(const config& level)
 		LOG_NG << "initializing display (includes theme init and building terrain rules)... " << timer();
 		gui2::dialogs::loading_screen::progress(loading_stage::init_display);
 		gui_.reset(new game_display(gamestate().board_, whiteboard_manager_, *gamestate().reports_, theme(), level));
-		map_start_ = map_location(level.child_or_empty("display").child_or_empty("location"));
+		map_start_ = map_location(level.child_or_empty(str_display).child_or_empty(str_location));
 		if(start_faded_) {
 			gui_->set_fade({0,0,0,255});
 			gui_->set_prevent_draw(true);
@@ -591,7 +591,7 @@ config play_controller::to_config() const
 	cfg[str_replay_pos] = saved_game_.get_replay().get_pos();
 	gamestate().write(cfg);
 
-	gui_->write(cfg.add_child("display"));
+	gui_->write(cfg.add_child(str_display));
 
 	// Write the soundsources.
 	soundsources_manager_->write_sourcespecs(cfg);

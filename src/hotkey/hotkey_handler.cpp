@@ -189,7 +189,7 @@ void play_controller::hotkey_handler::toggle_accelerated_speed()
 
 	if(prefs::get().turbo()) {
 		utils::string_map symbols;
-		symbols["hk"] = hotkey::get_names(hotkey::get_hotkey_command(hotkey::HOTKEY_ACCELERATED).id);
+		symbols[str_hk] = hotkey::get_names(hotkey::get_hotkey_command(hotkey::HOTKEY_ACCELERATED).id);
 		gui()->announce(_("Accelerated speed enabled!") + "\n" + VGETTEXT("(press $hk to disable)", symbols), font::NORMAL_COLOR, ao);
 	} else {
 		gui()->announce(_("Accelerated speed disabled!"), font::NORMAL_COLOR, ao);
@@ -436,7 +436,7 @@ void play_controller::hotkey_handler::show_menu(const std::vector<config>& items
 {
 	std::vector<config> items;
 	for(const auto& item : items_arg) {
-		std::string id = item["id"];
+		std::string id = item[str_id];
 		auto cmd = hotkey::ui_command(id);
 
 		if(id == "AUTOSAVES") {

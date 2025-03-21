@@ -196,7 +196,7 @@ void menu_handler::save_map()
 		gui2::show_transient_message("", _("Map saved."));
 	} catch(const filesystem::io_exception& e) {
 		utils::string_map symbols;
-		symbols["msg"] = e.what();
+		symbols[str_msg] = e.what();
 		const std::string msg = VGETTEXT("Could not save the map: $msg", symbols);
 		gui2::show_transient_error_message(msg);
 	}
@@ -213,7 +213,7 @@ void menu_handler::preferences()
 void menu_handler::show_chat_log()
 {
 	config c;
-	c["name"] = "prototype of chat log";
+	c[str_name] = "prototype of chat log";
 	chat_log::display(vconfig(c), *resources::recorder);
 }
 
@@ -440,7 +440,7 @@ void menu_handler::recall(int side_num, const map_location& last_hex)
 
 	if(current_team.gold() - wb_gold < unit_cost) {
 		utils::string_map i18n_symbols;
-		i18n_symbols["cost"] = std::to_string(unit_cost);
+		i18n_symbols[str_cost] = std::to_string(unit_cost);
 		std::string msg = VNGETTEXT("You must have at least 1 gold piece to recall a unit.",
 				"You must have at least $cost gold pieces to recall this unit.", unit_cost, i18n_symbols);
 		gui2::show_transient_message("", msg);
@@ -759,11 +759,11 @@ void create_and_place(
 {
 	synced_context::run_and_throw("debug_create_unit",
 		config {
-			"x", loc.wml_x(),
-			"y", loc.wml_y(),
-			"type", u_type.id(),
-			"gender", gender_string(gender),
-			"variation", variation,
+			str_x, loc.wml_x(),
+			str_y, loc.wml_y(),
+			str_type, u_type.id(),
+			str_gender, gender_string(gender),
+			str_variation, variation,
 		}
 	);
 }
@@ -819,7 +819,7 @@ void menu_handler::change_side(mouse_handler& mousehandler)
 void menu_handler::kill_unit(mouse_handler& mousehandler)
 {
 	const map_location loc = mousehandler.get_last_hex();
-	synced_context::run_and_throw("debug_kill", config {"x", loc.wml_x(), "y", loc.wml_y()});
+	synced_context::run_and_throw("debug_kill", config {str_x, loc.wml_x(), str_y, loc.wml_y()});
 }
 
 void menu_handler::label_terrain(mouse_handler& mousehandler, bool team_only)
@@ -1345,29 +1345,29 @@ private:
 void menu_handler::send_chat_message(const std::string& message, bool allies_only)
 {
 	config cfg;
-	cfg["id"] = prefs::get().login();
-	cfg["message"] = message;
+	cfg[str_id] = prefs::get().login();
+	cfg[str_message] = message;
 	auto now = std::chrono::system_clock::now();
-	cfg["time"] = chrono::serialize_timestamp(now);
+	cfg[str_time] = chrono::serialize_timestamp(now);
 
 	const int side = board().is_observer() ? 0 : gui_->viewing_team().side();
 	if(!board().is_observer()) {
-		cfg["side"] = side;
+		cfg[str_side] = side;
 	}
 
 	bool private_message = has_friends() && allies_only;
 
 	if(private_message) {
 		if(board().is_observer()) {
-			cfg["to_sides"] = game_config::observer_team_name;
+			cfg[str_to_sides] = game_config::observer_team_name;
 		} else {
-			cfg["to_sides"] = gui_->viewing_team().allied_human_teams();
+			cfg[str_to_sides] = gui_->viewing_team().allied_human_teams();
 		}
 	}
 
 	resources::recorder->speak(cfg);
 
-	add_chat_message(now, cfg["id"], side, message,
+	add_chat_message(now, cfg[str_id], side, message,
 			private_message ? events::chat_handler::MESSAGE_PRIVATE : events::chat_handler::MESSAGE_PUBLIC);
 }
 
@@ -1439,7 +1439,7 @@ void menu_handler::do_search(const std::string& new_search)
 		last_search_hit_ = map_location();
 		// Not found, inform the player
 		utils::string_map symbols;
-		symbols["search"] = last_search_;
+		symbols[str_search] = last_search_;
 		const std::string msg = VGETTEXT("Could not find label or unit "
 										 "containing the string ‘$search’.",
 				symbols);
@@ -1485,7 +1485,7 @@ void console_handler::do_droid()
 	team& team = menu_handler_.board().get_team(side);
 
 	utils::string_map symbols;
-	symbols["side"] = std::to_string(side);
+	symbols[str_side] = std::to_string(side);
 
 	if(side < 1 || side > menu_handler_.pc_.get_teams().size()) {
 		command_failed(VGETTEXT("Can’t droid invalid side: ‘$side’.", symbols));
@@ -1598,10 +1598,10 @@ void console_handler::do_terrain()
 
 	synced_context::run_and_throw("debug_terrain",
 		config {
-			"x", loc.wml_x(),
-			"y", loc.wml_y(),
-			"terrain_type", terrain_type,
-			"mode_str", mode_str,
+			str_x, loc.wml_x(),
+			str_y, loc.wml_y(),
+			str_terrain_type, terrain_type,
+			str_mode_str, mode_str,
 		}
 	);
 }
@@ -1617,17 +1617,17 @@ void console_handler::do_idle()
 
 	if(side < 1 || side > menu_handler_.pc_.get_teams().size()) {
 		utils::string_map symbols;
-		symbols["side"] = side_s;
+		symbols[str_side] = side_s;
 		command_failed(VGETTEXT("Can’t idle invalid side: ‘$side’.", symbols));
 		return;
 	} else if(team.is_network()) {
 		utils::string_map symbols;
-		symbols["side"] = std::to_string(side);
+		symbols[str_side] = std::to_string(side);
 		command_failed(VGETTEXT("Can’t idle networked side: ‘$side’.", symbols));
 		return;
 	} else if(team.is_local_ai()) {
 		utils::string_map symbols;
-		symbols["side"] = std::to_string(side);
+		symbols[str_side] = std::to_string(side);
 		command_failed(VGETTEXT("Can’t idle local ai side: ‘$side’.", symbols));
 		return;
 	} else if(team.is_local_human()) {
@@ -1673,7 +1673,7 @@ void console_handler::do_control()
 
 		if(it_t == teams.end()) {
 			utils::string_map symbols;
-			symbols["side"] = side;
+			symbols[str_side] = side;
 			command_failed(VGETTEXT("Can’t change control of invalid side: ‘$side’.", symbols));
 			return;
 		} else {
@@ -1683,7 +1683,7 @@ void console_handler::do_control()
 
 	if(side_num < 1 || side_num > menu_handler_.pc_.get_teams().size()) {
 		utils::string_map symbols;
-		symbols["side"] = side;
+		symbols[str_side] = side;
 		command_failed(VGETTEXT("Can’t change control of out-of-bounds side: ‘$side’.", symbols));
 		return;
 	}
@@ -1700,14 +1700,14 @@ void console_handler::do_controller()
 		side_num = lexical_cast<unsigned int>(side);
 	} catch(const bad_lexical_cast&) {
 		utils::string_map symbols;
-		symbols["side"] = side;
+		symbols[str_side] = side;
 		command_failed(VGETTEXT("Can’t query control of invalid side: ‘$side’.", symbols));
 		return;
 	}
 
 	if(side_num < 1 || side_num > menu_handler_.pc_.get_teams().size()) {
 		utils::string_map symbols;
-		symbols["side"] = side;
+		symbols[str_side] = side;
 		command_failed(VGETTEXT("Can’t query control of out-of-bounds side: ‘$side’.", symbols));
 		return;
 	}
@@ -1794,7 +1794,7 @@ void console_handler::do_nosaves()
 
 void console_handler::do_next_level()
 {
-	synced_context::run_and_throw("debug_next_level", config {"next_level", get_data()});
+	synced_context::run_and_throw("debug_next_level", config {str_next_level, get_data()});
 }
 
 void console_handler::do_choose_level()
@@ -1804,7 +1804,7 @@ void console_handler::do_choose_level()
 	std::string next;
 	if(tag != "multiplayer") {
 		for(const config& sc : menu_handler_.game_config_.child_range(tag)) {
-			const std::string& id = sc["id"];
+			const std::string& id = sc[str_id];
 			options.push_back(id);
 			if(id == menu_handler_.gamedata().next_scenario()) {
 				next = id;
@@ -1814,11 +1814,11 @@ void console_handler::do_choose_level()
 		// find scenarios of multiplayer campaigns
 		// (assumes that scenarios are ordered properly in the game_config)
 		std::string scenario_id = menu_handler_.pc_.get_mp_settings().mp_scenario;
-		if(auto this_scenario = menu_handler_.game_config_.find_child(tag, "id", scenario_id)) {
-			std::string addon_id = this_scenario["addon_id"].str();
+		if(auto this_scenario = menu_handler_.game_config_.find_child(tag, str_id, scenario_id)) {
+			std::string addon_id = this_scenario[str_addon_id].str();
 			for(const config& sc : menu_handler_.game_config_.child_range(tag)) {
-				if(sc["addon_id"] == addon_id) {
-					std::string id = sc["id"];
+				if(sc[str_addon_id] == addon_id) {
+					std::string id = sc[str_id];
 					options.push_back(id);
 					if(id == menu_handler_.gamedata().next_scenario()) {
 						next = id;
@@ -1841,7 +1841,7 @@ void console_handler::do_choose_level()
 	}
 
 	if(std::size_t(choice) < options.size()) {
-		synced_context::run_and_throw("debug_next_level", config {"next_level", options[choice]});
+		synced_context::run_and_throw("debug_next_level", config {str_next_level, options[choice]});
 	}
 }
 
@@ -1854,13 +1854,13 @@ void console_handler::do_turn()
 	if(!data.empty()) {
 		turn = lexical_cast_default<int>(data, 1);
 	}
-	synced_context::run_and_throw("debug_turn", config {"turn", turn});
+	synced_context::run_and_throw("debug_turn", config {str_turn, turn});
 }
 
 void console_handler::do_turn_limit()
 {
 	int limit = get_data().empty() ? -1 : lexical_cast_default<int>(get_data(), 1);
-	synced_context::run_and_throw("debug_turn_limit", config {"turn_limit", limit});
+	synced_context::run_and_throw("debug_turn_limit", config {str_turn_limit, limit});
 }
 
 void console_handler::do_debug()
@@ -1887,7 +1887,7 @@ void console_handler::do_lua()
 		return;
 	}
 
-	synced_context::run_and_throw("debug_lua", config {"code", get_data()});
+	synced_context::run_and_throw("debug_lua", config {str_code, get_data()});
 }
 
 void console_handler::do_unsafe_lua()
@@ -1949,7 +1949,7 @@ void console_handler::do_set_var()
 	if(j != data.end()) {
 		const std::string name(data.begin(), j);
 		const std::string value(j + 1, data.end());
-		synced_context::run_and_throw("debug_set_var", config {"name", name, "value", value});
+		synced_context::run_and_throw("debug_set_var", config {str_name, name, str_value, value});
 	} else {
 		command_failed(_("Variable not found"));
 	}
@@ -1982,7 +1982,7 @@ void console_handler::do_unit()
 	unit_map::iterator i = menu_handler_.current_unit();
 	if(i == menu_handler_.pc_.get_units().end()) {
 		utils::string_map symbols;
-		symbols["unit"] = get_arg(1);
+		symbols[str_unit] = get_arg(1);
 		command_failed(VGETTEXT(
 			"Debug command ‘unit: $unit’ failed: no unit selected or hovered over.",
 			symbols));
@@ -2000,7 +2000,7 @@ void console_handler::do_unit()
 		auto alignment = unit_alignments::get_enum(parameters[1]);
 		if(!alignment) {
 			utils::string_map symbols;
-			symbols["alignment"] = get_arg(1);
+			symbols[str_alignment] = get_arg(1);
 			command_failed(VGETTEXT(
 					"Invalid alignment: ‘$alignment’, needs to be one of lawful, neutral, chaotic, or liminal.",
 					symbols));
@@ -2010,10 +2010,10 @@ void console_handler::do_unit()
 
 	synced_context::run_and_throw("debug_unit",
 		config {
-			"x", loc.wml_x(),
-			"y", loc.wml_y(),
-			"name", parameters[0],
-			"value", parameters[1],
+			str_x, loc.wml_x(),
+			str_y, loc.wml_y(),
+			str_name, parameters[0],
+			str_value, parameters[1],
 		}
 	);
 }
@@ -2065,12 +2065,12 @@ void console_handler::do_shroud()
 
 void console_handler::do_gold()
 {
-	synced_context::run_and_throw("debug_gold", config {"gold", lexical_cast_default<int>(get_data(), 1000)});
+	synced_context::run_and_throw("debug_gold", config {str_gold, lexical_cast_default<int>(get_data(), 1000)});
 }
 
 void console_handler::do_event()
 {
-	synced_context::run_and_throw("debug_event", config {"eventname", get_data()});
+	synced_context::run_and_throw("debug_event", config {str_eventname, get_data()});
 }
 
 void console_handler::do_toggle_draw_coordinates()
@@ -2136,7 +2136,7 @@ void menu_handler::request_control_change(int side_num, const std::string& playe
 	} else {
 		// The server will (or won't because we aren't allowed to change the controller)
 		// send us a [change_controller] back, which we then handle in playturn.cpp
-		pc_.send_to_wesnothd(config {"change_controller", config {"side", side, "player", player}});
+		pc_.send_to_wesnothd(config {str_change_controller, config {str_side, side, str_player, player}});
 	}
 }
 

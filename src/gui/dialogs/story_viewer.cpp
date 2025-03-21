@@ -40,11 +40,11 @@ namespace gui2::dialogs
 static config get_title_area_decor_config()
 {
 	static config cfg;
-	cfg["x"] = 0;
-	cfg["y"] = 0;
-	cfg["w"] = "(screen_width)";
-	cfg["h"] = "(image_original_height * 2)";
-	cfg["name"] = "dialogs/story_title_decor.png~O(75%)";
+	cfg[str_x] = 0;
+	cfg[str_y] = 0;
+	cfg[str_w] = "(screen_width)";
+	cfg[str_h] = "(image_original_height * 2)";
+	cfg[str_name] = "dialogs/story_title_decor.png~O(75%)";
 
 	return cfg;
 }
@@ -210,7 +210,7 @@ void story_viewer::display_part()
 	 * some sane defaults directly.
 	 */
 	if(base_layer != nullptr) {
-		(*base_layer)["actions"] = R"((
+		(*base_layer)[str_actions] = R"((
 			[
 				set_var('base_scale_x', as_decimal(image_width)  / as_decimal(image_original_width)),
 				set_var('base_scale_y', as_decimal(image_height) / as_decimal(image_original_height)),
@@ -225,7 +225,7 @@ void story_viewer::display_part()
 		window_canvas.set_variable("base_origin_y", wfl::variant(0));
 	}
 
-	cfg.add_child("image", get_title_area_decor_config());
+	cfg.add_child(str_image, get_title_area_decor_config());
 
 	window_canvas.set_shapes(cfg);
 
@@ -348,17 +348,17 @@ void story_viewer::draw_floating_image(floating_image_list::const_iterator image
 		y_ss << ")";
 
 		config image;
-		image["x"] = x_ss.str();
-		image["y"] = y_ss.str();
+		image[str_x] = x_ss.str();
+		image[str_y] = y_ss.str();
 
 		// Width and height don't need to be set unless the image needs to be scaled.
 		if(floating_image.resize_with_background()) {
-			image["w"] = "(image_original_width * base_scale_x)";
-			image["h"] = "(image_original_height * base_scale_y)";
+			image[str_w] = "(image_original_width * base_scale_x)";
+			image[str_h] = "(image_original_height * base_scale_y)";
 		}
 
-		image["name"] = floating_image.file();
-		config cfg{"image", std::move(image)};
+		image[str_name] = floating_image.file();
+		config cfg{str_image, std::move(image)};
 
 		window_canvas.append_shapes(cfg);
 
