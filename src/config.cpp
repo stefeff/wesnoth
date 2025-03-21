@@ -97,7 +97,25 @@ config& config::operator=(config&& cfg) noexcept
 	return *this;
 }
 
-bool config::valid_tag(std::string_view name)
+struct is_alnum_table
+{
+	is_alnum_table() {
+		for (unsigned u = 0; u < sizeof(valid); ++u) {
+			const char c = static_cast<char>(u);
+			valid[u] = (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+				       (c >= '0' && c <= '9') || (c == '_');
+		}
+	}
+	bool operator[](char c) const { return valid[static_cast<unsigned char>(c)]; }
+
+private:
+
+	bool valid[256]{};
+};
+
+static const is_alnum_table is_alnum;
+
+bool config::valid_tag(config_key_type name)
 {
 	if(name.empty()) {
 		// Empty strings not allowed
@@ -114,8 +132,7 @@ bool config::valid_tag(std::string_view name)
 			that a manual check can be up to 30 times faster than std::isalnum().
 
 			- Jyrki, 2019-01-19 */
-			return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
-				(c >= '0' && c <= '9') || (c == '_');
+			return is_alnum[c];
 		});
 	}
 }
