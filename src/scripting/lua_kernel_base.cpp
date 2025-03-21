@@ -1079,11 +1079,11 @@ bool lua_kernel_base::load_string(char const * prog, const std::string& name, er
 void lua_kernel_base::run_lua_tag(const config& cfg)
 {
 	int nArgs = 0;
-	if (auto args = cfg.optional_child("args")) {
+	if (auto args = cfg.optional_child(str_args)) {
 		luaW_pushconfig(this->mState, *args);
 		++nArgs;
 	}
-	this->run(cfg["code"].str().c_str(), cfg["name"].str(), nArgs);
+	this->run(cfg[str_code].str().c_str(), cfg[str_name].str(), nArgs);
 }
 // Call load_string and protected call. Make them throw exceptions.
 //

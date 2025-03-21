@@ -165,38 +165,38 @@ team::team_info::team_info()
 
 void team::team_info::read(const config& cfg)
 {
-	gold = cfg["gold"];
-	income = cfg["income"];
-	team_name = cfg["team_name"].str();
-	user_team_name = cfg["user_team_name"];
-	side_name = cfg["side_name"];
-	faction = cfg["faction"].str();
-	faction_name = cfg["faction_name"];
-	save_id = cfg["save_id"].str();
-	current_player = cfg["current_player"].str();
-	countdown_time = cfg["countdown_time"].str();
-	action_bonus_count = cfg["action_bonus_count"];
-	flag = cfg["flag"].str();
-	flag_icon = cfg["flag_icon"].str();
-	id = cfg["id"].str();
-	scroll_to_leader = cfg["scroll_to_leader"].to_bool(true);
-	objectives = cfg["objectives"];
-	objectives_changed = cfg["objectives_changed"].to_bool();
-	disallow_observers = cfg["disallow_observers"].to_bool();
-	allow_player = cfg["allow_player"].to_bool(true);
-	chose_random = cfg["chose_random"].to_bool(false);
-	no_leader = cfg["no_leader"].to_bool();
-	defeat_cond = defeat_condition::get_enum(cfg["defeat_condition"].str()).value_or(defeat_condition::type::no_leader_left);
-	lost = cfg["lost"].to_bool(false);
-	hidden = cfg["hidden"].to_bool();
-	no_turn_confirmation = cfg["suppress_end_turn_confirmation"].to_bool();
-	side = cfg["side"].to_int(1);
-	carryover_percentage = cfg["carryover_percentage"].to_int(game_config::gold_carryover_percentage);
-	carryover_add = cfg["carryover_add"].to_bool(false);
-	carryover_bonus = cfg["carryover_bonus"].to_double(1);
-	carryover_gold = cfg["carryover_gold"].to_int(0);
-	variables = cfg.child_or_empty("variables");
-	is_local = cfg["is_local"].to_bool(true);
+	gold = cfg[str_gold];
+	income = cfg[str_income];
+	team_name = cfg[str_team_name].str();
+	user_team_name = cfg[str_user_team_name];
+	side_name = cfg[str_side_name];
+	faction = cfg[str_faction].str();
+	faction_name = cfg[str_faction_name];
+	save_id = cfg[str_save_id].str();
+	current_player = cfg[str_current_player].str();
+	countdown_time = cfg[str_countdown_time].str();
+	action_bonus_count = cfg[str_action_bonus_count];
+	flag = cfg[str_flag].str();
+	flag_icon = cfg[str_flag_icon].str();
+	id = cfg[str_id].str();
+	scroll_to_leader = cfg[str_scroll_to_leader].to_bool(true);
+	objectives = cfg[str_objectives];
+	objectives_changed = cfg[str_objectives_changed].to_bool();
+	disallow_observers = cfg[str_disallow_observers].to_bool();
+	allow_player = cfg[str_allow_player].to_bool(true);
+	chose_random = cfg[str_chose_random].to_bool(false);
+	no_leader = cfg[str_no_leader].to_bool();
+	defeat_cond = defeat_condition::get_enum(cfg[str_defeat_condition].str()).value_or(defeat_condition::type::no_leader_left);
+	lost = cfg[str_lost].to_bool(false);
+	hidden = cfg[str_hidden].to_bool();
+	no_turn_confirmation = cfg[str_suppress_end_turn_confirmation].to_bool();
+	side = cfg[str_side].to_int(1);
+	carryover_percentage = cfg[str_carryover_percentage].to_int(game_config::gold_carryover_percentage);
+	carryover_add = cfg[str_carryover_add].to_bool(false);
+	carryover_bonus = cfg[str_carryover_bonus].to_double(1);
+	carryover_gold = cfg[str_carryover_gold].to_int(0);
+	variables = cfg.child_or_empty(str_variables);
+	is_local = cfg[str_is_local].to_bool(true);
 
 	color = get_side_color_id_from_config(cfg);
 
@@ -205,61 +205,61 @@ void team::team_info::read(const config& cfg)
 		user_team_name = t_string::from_serialized(user_team_name);
 
 	if(ai::manager::has_manager()) {
-		if(cfg.has_attribute("ai_config")) {
-			ai::manager::get_singleton().add_ai_for_side_from_file(side, cfg["ai_config"], true);
+		if(cfg.has_attribute(str_ai_config)) {
+			ai::manager::get_singleton().add_ai_for_side_from_file(side, cfg[str_ai_config], true);
 		} else {
 			ai::manager::get_singleton().add_ai_for_side_from_config(side, cfg, true);
 		}
 	}
 
-	std::vector<std::string> recruits = utils::split(cfg["recruit"]);
+	std::vector<std::string> recruits = utils::split(cfg[str_recruit]);
 	can_recruit.insert(recruits.begin(), recruits.end());
 
 	// at the start of a scenario "start_gold" is not set, we need to take the
 	// value from the gold setting (or fall back to the gold default)
-	if(!cfg["start_gold"].empty()) {
-		start_gold = cfg["start_gold"];
-	} else if(!cfg["gold"].empty()) {
+	if(!cfg[str_start_gold].empty()) {
+		start_gold = cfg[str_start_gold];
+	} else if(!cfg[str_gold].empty()) {
 		start_gold = gold;
 	} else {
 		start_gold = default_team_gold_;
 	}
 
 	if(team_name.empty()) {
-		team_name = cfg["side"].str();
+		team_name = cfg[str_side].str();
 	}
 
 	if(save_id.empty()) {
 		save_id = id;
 	}
 
-	income_per_village = cfg["village_gold"].to_int(game_config::village_income);
-	recall_cost = cfg["recall_cost"].to_int(game_config::recall_cost);
+	income_per_village = cfg[str_village_gold].to_int(game_config::village_income);
+	recall_cost = cfg[str_recall_cost].to_int(game_config::recall_cost);
 
-	const std::string& village_support = cfg["village_support"];
+	const std::string& village_support = cfg[str_village_support];
 	if(village_support.empty()) {
 		support_per_village = game_config::village_support;
 	} else {
 		support_per_village = lexical_cast_default<int>(village_support, game_config::village_support);
 	}
 
-	controller = side_controller::get_enum(cfg["controller"].str()).value_or(side_controller::type::ai);
+	controller = side_controller::get_enum(cfg[str_controller].str()).value_or(side_controller::type::ai);
 
 	// TODO: Why do we read disallow observers differently when controller is empty?
 	if(controller == side_controller::type::none) {
-		disallow_observers = cfg["disallow_observers"].to_bool(true);
+		disallow_observers = cfg[str_disallow_observers].to_bool(true);
 	}
 
 	// override persistence flag if it is explicitly defined in the config
 	// by default, persistence of a team is set depending on the controller
-	persistent = cfg["persistent"].to_bool(this->controller == side_controller::type::human);
+	persistent = cfg[str_persistent].to_bool(this->controller == side_controller::type::human);
 
 	//========================================================
 	// END OF MESSY CODE
 
 	// Share_view and share_maps can't both be enabled,
 	// so share_view overrides share_maps.
-	share_vision = team_shared_vision::get_enum(cfg["share_vision"].str()).value_or(team_shared_vision::type::all);
+	share_vision = team_shared_vision::get_enum(cfg[str_share_vision].str()).value_or(team_shared_vision::type::all);
 	handle_legacy_share_vision(cfg);
 
 	LOG_NG << "team_info::team_info(...): team_name: " << team_name << ", share_vision: " << team_shared_vision::get_string(share_vision) << ".";
@@ -268,9 +268,9 @@ void team::team_info::read(const config& cfg)
 void team::team_info::handle_legacy_share_vision(const config& cfg)
 {
 	if(cfg.has_attribute("share_view") || cfg.has_attribute("share_maps")) {
-		if(cfg["share_view"].to_bool()) {
+		if(cfg[str_share_view].to_bool()) {
 			share_vision = team_shared_vision::type::all;
-		} else if(cfg["share_maps"].to_bool(true)) {
+		} else if(cfg[str_share_maps].to_bool(true)) {
 			share_vision = team_shared_vision::type::shroud;
 		} else {
 			share_vision = team_shared_vision::type::none;
@@ -280,51 +280,51 @@ void team::team_info::handle_legacy_share_vision(const config& cfg)
 
 void team::team_info::write(config& cfg) const
 {
-	cfg["gold"] = gold;
-	cfg["start_gold"] = start_gold;
-	cfg["income"] = income;
-	cfg["team_name"] = team_name;
-	cfg["user_team_name"] = user_team_name;
-	cfg["side_name"] = side_name;
-	cfg["faction"] = faction;
-	cfg["faction_name"] = faction_name;
-	cfg["save_id"] = save_id;
-	cfg["current_player"] = current_player;
-	cfg["flag"] = flag;
-	cfg["flag_icon"] = flag_icon;
-	cfg["id"] = id;
-	cfg["objectives"] = objectives;
-	cfg["objectives_changed"] = objectives_changed;
-	cfg["countdown_time"] = countdown_time;
-	cfg["action_bonus_count"] = action_bonus_count;
-	cfg["village_gold"] = income_per_village;
-	cfg["village_support"] = support_per_village;
-	cfg["recall_cost"] = recall_cost;
-	cfg["disallow_observers"] = disallow_observers;
-	cfg["allow_player"] = allow_player;
-	cfg["chose_random"] = chose_random;
-	cfg["no_leader"] = no_leader;
-	cfg["defeat_condition"] = defeat_condition::get_string(defeat_cond);
-	cfg["hidden"] = hidden;
-	cfg["suppress_end_turn_confirmation"] = no_turn_confirmation;
-	cfg["scroll_to_leader"] = scroll_to_leader;
-	cfg["controller"] = side_controller::get_string(controller);
-	cfg["recruit"] = utils::join(can_recruit);
-	cfg["share_vision"] = team_shared_vision::get_string(share_vision);
+	cfg[str_gold] = gold;
+	cfg[str_start_gold] = start_gold;
+	cfg[str_income] = income;
+	cfg[str_team_name] = team_name;
+	cfg[str_user_team_name] = user_team_name;
+	cfg[str_side_name] = side_name;
+	cfg[str_faction] = faction;
+	cfg[str_faction_name] = faction_name;
+	cfg[str_save_id] = save_id;
+	cfg[str_current_player] = current_player;
+	cfg[str_flag] = flag;
+	cfg[str_flag_icon] = flag_icon;
+	cfg[str_id] = id;
+	cfg[str_objectives] = objectives;
+	cfg[str_objectives_changed] = objectives_changed;
+	cfg[str_countdown_time] = countdown_time;
+	cfg[str_action_bonus_count] = action_bonus_count;
+	cfg[str_village_gold] = income_per_village;
+	cfg[str_village_support] = support_per_village;
+	cfg[str_recall_cost] = recall_cost;
+	cfg[str_disallow_observers] = disallow_observers;
+	cfg[str_allow_player] = allow_player;
+	cfg[str_chose_random] = chose_random;
+	cfg[str_no_leader] = no_leader;
+	cfg[str_defeat_condition] = defeat_condition::get_string(defeat_cond);
+	cfg[str_hidden] = hidden;
+	cfg[str_suppress_end_turn_confirmation] = no_turn_confirmation;
+	cfg[str_scroll_to_leader] = scroll_to_leader;
+	cfg[str_controller] = side_controller::get_string(controller);
+	cfg[str_recruit] = utils::join(can_recruit);
+	cfg[str_share_vision] = team_shared_vision::get_string(share_vision);
 
-	cfg["color"] = color;
-	cfg["persistent"] = persistent;
-	cfg["lost"] = lost;
-	cfg["carryover_percentage"] = carryover_percentage;
-	cfg["carryover_add"] = carryover_add;
-	cfg["carryover_bonus"] = carryover_bonus;
-	cfg["carryover_gold"] = carryover_gold;
+	cfg[str_color] = color;
+	cfg[str_persistent] = persistent;
+	cfg[str_lost] = lost;
+	cfg[str_carryover_percentage] = carryover_percentage;
+	cfg[str_carryover_add] = carryover_add;
+	cfg[str_carryover_bonus] = carryover_bonus;
+	cfg[str_carryover_gold] = carryover_gold;
 
 	if(!variables.empty()) {
-		cfg.add_child("variables", variables);
+		cfg.add_child(str_variables, variables);
 	}
 
-	cfg.add_child("ai", ai::manager::get_singleton().to_config(side));
+	cfg.add_child(str_ai, ai::manager::get_singleton().to_config(side));
 }
 
 team::team()
@@ -355,11 +355,11 @@ void team::build(const config& cfg, const gamemap& map, int gold)
 	gold_ = gold;
 	info_.read(cfg);
 
-	fog_.set_enabled(cfg["fog"].to_bool());
-	fog_.read(cfg["fog_data"]);
-	shroud_.set_enabled(cfg["shroud"].to_bool());
-	shroud_.read(cfg["shroud_data"]);
-	auto_shroud_updates_ = cfg["auto_shroud"].to_bool(auto_shroud_updates_);
+	fog_.set_enabled(cfg[str_fog].to_bool());
+	fog_.read(cfg[str_fog_data]);
+	shroud_.set_enabled(cfg[str_shroud].to_bool());
+	shroud_.read(cfg[str_shroud_data]);
+	auto_shroud_updates_ = cfg[str_auto_shroud].to_bool(auto_shroud_updates_);
 
 	LOG_NG << "team::team(...): team_name: " << info_.team_name << ", shroud: " << uses_shroud()
 		   << ", fog: " << uses_fog() << ".";
@@ -368,7 +368,7 @@ void team::build(const config& cfg, const gamemap& map, int gold)
 	auto fog_override = cfg.optional_child("fog_override");
 	if(fog_override) {
 		const std::vector<map_location> fog_vector
-				= map.parse_location_range(fog_override["x"], fog_override["y"], true);
+				= map.parse_location_range(fog_override[str_x], fog_override[str_y], true);
 		fog_clearer_.insert(fog_vector.begin(), fog_vector.end());
 	}
 
@@ -393,8 +393,8 @@ void team::build(const config& cfg, const gamemap& map, int gold)
 		}
 	}
 
-	countdown_time_ = cfg["countdown_time"];
-	action_bonus_count_ = cfg["action_bonus_count"];
+	countdown_time_ = cfg[str_countdown_time];
+	action_bonus_count_ = cfg[str_action_bonus_count];
 
 	planned_actions_.reset(new wb::side_actions());
 	planned_actions_->set_team_index(info_.side - 1);
@@ -403,23 +403,23 @@ void team::build(const config& cfg, const gamemap& map, int gold)
 void team::write(config& cfg) const
 {
 	info_.write(cfg);
-	cfg["auto_shroud"] = auto_shroud_updates_;
-	cfg["shroud"] = uses_shroud();
-	cfg["fog"] = uses_fog();
-	cfg["gold"] = gold_;
+	cfg[str_auto_shroud] = auto_shroud_updates_;
+	cfg[str_shroud] = uses_shroud();
+	cfg[str_fog] = uses_fog();
+	cfg[str_gold] = gold_;
 
 	// Write village locations
 	for(const map_location& loc : villages_) {
 		loc.write(cfg.add_child("village"));
 	}
 
-	cfg["shroud_data"] = shroud_.write();
-	cfg["fog_data"] = fog_.write();
+	cfg[str_shroud_data] = shroud_.write();
+	cfg[str_fog_data] = fog_.write();
 	if(!fog_clearer_.empty())
 		write_location_range(fog_clearer_, cfg.add_child("fog_override"));
 
-	cfg["countdown_time"] = countdown_time_;
-	cfg["action_bonus_count"] = action_bonus_count_;
+	cfg[str_countdown_time] = countdown_time_;
+	cfg[str_action_bonus_count] = action_bonus_count_;
 }
 
 void team::fix_villages(const gamemap &map)
@@ -595,14 +595,14 @@ void team::change_controller_by_wml(const std::string& new_controller_string)
 	}
 
 	config choice = synced_context::ask_server_choice(controller_server_choice(*new_controller, *this));
-	if(!side_controller::get_enum(choice["controller"].str())) {
-		WRN_NG << "Received an invalid controller string from the server" << choice["controller"];
+	if(!side_controller::get_enum(choice[str_controller].str())) {
+		WRN_NG << "Received an invalid controller string from the server" << choice[str_controller];
 	} else {
-		new_controller = side_controller::get_enum(choice["controller"].str());
+		new_controller = side_controller::get_enum(choice[str_controller].str());
 	}
 
 	if(!resources::controller->is_replay()) {
-		set_local(choice["is_local"].to_bool());
+		set_local(choice[str_is_local].to_bool());
 	}
 
 	if(playsingle_controller* pc =  dynamic_cast<playsingle_controller*>(resources::controller)) {
@@ -1010,13 +1010,13 @@ const t_string team::get_side_color_name_for_UI(unsigned side)
 
 std::string team::get_side_color_id_from_config(const config& cfg)
 {
-	const config::attribute_value& c = cfg["color"];
+	const config::attribute_value& c = cfg[str_color];
 
 	// If no color key or value was provided, use the given color for that side.
 	// If outside a game context (ie, where a list of teams has been constructed),
 	// this will just be the side's default color.
 	if(c.blank() || c.empty()) {
-		return get_side_color_id(cfg["side"].to_unsigned());
+		return get_side_color_id(cfg[str_side].to_unsigned());
 	}
 
 	// Do the same as above for numeric color key values.
@@ -1046,7 +1046,7 @@ void team::log_recruitable() const
 config team::to_config() const
 {
 	config cfg;
-	config& result = cfg.add_child("side");
+	config& result = cfg.add_child(str_side);
 	write(result);
 	return result;
 }

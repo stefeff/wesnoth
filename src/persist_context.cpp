@@ -61,16 +61,16 @@ bool persist_file_context::clear_var(const std::string &global, bool immediate)
 		bak = cfg_;
 		config *node = get_node(bak, namespace_);
 		if (node)
-			bactive = node->child_or_add("variables");
+			bactive = node->child_or_add(str_variables);
 		load();
 	}
 	config *active = get_node(cfg_, namespace_);
 	if (active == nullptr)
 		return false;
 
-	bool ret = active->has_child("variables");
+	bool ret = active->has_child(str_variables);
 	if (ret) {
-		config &cfg = active->mandatory_child("variables");
+		config &cfg = active->mandatory_child(str_variables);
 		bool exists = cfg.has_attribute(global);
 		if (!exists) {
 			if (cfg.has_child(global)) {
@@ -93,16 +93,16 @@ bool persist_file_context::clear_var(const std::string &global, bool immediate)
 			cfg.remove_attribute(global);
 			if (immediate) bactive.remove_attribute(global);
 			if (cfg.empty()) {
-				active->clear_children("variables");
-				active->remove_attribute("variables");
+				active->clear_children(str_variables);
+				active->remove_attribute(str_variables);
 				name_space working = namespace_;
 				while ((active->empty()) && (!working.lineage_.empty())) {
 					name_space prev = working.prev();
 					active = get_node(cfg_, prev);
 					active->clear_children(working.node_);
-					if (active->has_child("variables") && active->mandatory_child("variables").empty()) {
-						active->clear_children("variables");
-						active->remove_attribute("variables");
+					if (active->has_child(str_variables) && active->mandatory_child(str_variables).empty()) {
+						active->clear_children(str_variables);
+						active->remove_attribute(str_variables);
 					}
 					working = prev;
 				}
@@ -115,10 +115,10 @@ bool persist_file_context::clear_var(const std::string &global, bool immediate)
 				cfg_ = bak;
 				active = get_node(cfg_, namespace_);
 				if (active != nullptr) {
-					active->clear_children("variables");
-					active->remove_attribute("variables");
+					active->clear_children(str_variables);
+					active->remove_attribute(str_variables);
 					if (!bactive.empty())
-						active->add_child("variables",bactive);
+						active->add_child(str_variables,bactive);
 				}
 			} else {
 				ret = true;
@@ -128,10 +128,10 @@ bool persist_file_context::clear_var(const std::string &global, bool immediate)
 				cfg_ = bak;
 				active = get_node(cfg_, namespace_);
 				if (active != nullptr) {
-					active->clear_children("variables");
-					active->remove_attribute("variables");
+					active->clear_children(str_variables);
+					active->remove_attribute(str_variables);
 					if (!bactive.empty())
-						active->add_child("variables", bactive);
+						active->add_child(str_variables, bactive);
 				}
 			}
 			ret = exists;
@@ -149,9 +149,9 @@ bool persist_file_context::clear_var(const std::string &global, bool immediate)
 			break;
 		}
 		active->clear_children(namespace_.node_);
-		if (active->has_child("variables") && active->mandatory_child("variables").empty()) {
-			active->clear_children("variables");
-			active->remove_attribute("variables");
+		if (active->has_child(str_variables) && active->mandatory_child(str_variables).empty()) {
+			active->clear_children(str_variables);
+			active->remove_attribute(str_variables);
 		}
 		namespace_ = prev;
 	}
@@ -162,8 +162,8 @@ config persist_file_context::get_var(const std::string &global) const
 {
 	config ret;
 	const config *active = get_node(cfg_, namespace_);
-	if (active && (active->has_child("variables"))) {
-		const config &cfg = active->mandatory_child("variables");
+	if (active && (active->has_child(str_variables))) {
+		const config &cfg = active->mandatory_child(str_variables);
 		std::size_t arrsize = cfg.child_count(global);
 		if (arrsize > 0) {
 			for (std::size_t i = 0; i < arrsize; i++)
@@ -206,12 +206,12 @@ bool persist_file_context::set_var(const std::string &global,const config &val, 
 	config bactive;
 	if (immediate) {
 		bak = cfg_;
-		bactive = get_node(bak, namespace_, true)->child_or_add("variables");
+		bactive = get_node(bak, namespace_, true)->child_or_add(str_variables);
 		load();
 	}
 
 	config *active = get_node(cfg_, namespace_, true);
-	config &cfg = active->child_or_add("variables");
+	config &cfg = active->child_or_add(str_variables);
 	if (val.has_attribute(global)) {
 		if (val[global].empty()) {
 			clear_var(global,immediate);
@@ -234,9 +234,9 @@ bool persist_file_context::set_var(const std::string &global,const config &val, 
 		bool ret = save_context();
 		cfg_ = bak;
 		active = get_node(cfg_, namespace_, true);
-		active->clear_children("variables");
-		active->remove_attribute("variables");
-		active->add_child("variables",bactive);
+		active->clear_children(str_variables);
+		active->remove_attribute(str_variables);
+		active->add_child(str_variables,bactive);
 		return ret;
 	} else
 		return true;

@@ -60,17 +60,17 @@ void save_index_class::rebuild(const std::string& name, const std::time_t& modif
 
 		extract_summary_from_config(full, summary);
 	} catch(const game::load_game_failed&) {
-		summary["corrupt"] = true;
+		summary[str_corrupt] = true;
 	}
 
-	summary["mod_time"] = std::to_string(static_cast<int>(modified));
+	summary[str_mod_time] = std::to_string(static_cast<int>(modified));
 	write_save_index();
 }
 
 void save_index_class::remove(const std::string& name)
 {
 	config& root = data();
-	root.remove_children("save", [&name](const config& d) { return name == d["save"]; });
+	root.remove_children(str_save, [&name](const config& d) { return name == d[str_save]; });
 	write_save_index();
 }
 
@@ -84,7 +84,7 @@ config& save_index_class::get(const std::string& name)
 	config& result = data(name);
 	std::time_t m = modified_[name];
 
-	config::attribute_value& mod_time = result["mod_time"];
+	config::attribute_value& mod_time = result[str_mod_time];
 	if(mod_time.empty() || mod_time.to_time_t() != m) {
 		rebuild(name, m);
 	}
@@ -105,9 +105,9 @@ void save_index_class::clean_up_index()
 	filesystem::get_files_in_dir(dir(), &filenames);
 
 	if(root.all_children_count() > filenames.size()) {
-		root.remove_children("save", [&filenames](const config& d)
+		root.remove_children(str_save, [&filenames](const config& d)
 			{
-				return std::find(filenames.begin(), filenames.end(), d["save"]) == filenames.end();
+				return std::find(filenames.begin(), filenames.end(), d[str_save]) == filenames.end();
 			}
 		);
 	}
@@ -160,13 +160,13 @@ save_index_class::save_index_class(create_for_default_saves_dir)
 config& save_index_class::data(const std::string& name)
 {
 	config& cfg = data();
-	if(auto sv = cfg.find_child("save", "save", name)) {
+	if(auto sv = cfg.find_child(str_save, str_save, name)) {
 		fix_leader_image_path(*sv);
 		return *sv;
 	}
 
-	config& res = cfg.add_child("save");
-	res["save"] = name;
+	config& res = cfg.add_child(str_save);
+	res[str_save] = name;
 	return res;
 }
 
@@ -199,11 +199,11 @@ config& save_index_class::data()
 
 void save_index_class::fix_leader_image_path(config& data)
 {
-	for(config& leader : data.child_range("leader")) {
-		std::string leader_image = leader["leader_image"];
+	for(config& leader : data.child_range(str_leader)) {
+		std::string leader_image = leader[str_leader_image];
 		boost::algorithm::replace_all(leader_image, "\\", "/");
 
-		leader["leader_image"] = leader_image;
+		leader[str_leader_image] = leader_image;
 	}
 }
 
@@ -402,46 +402,46 @@ save_info create_save_info::operator()(const std::string& filename) const
 
 void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 {
-	auto cfg_snapshot = cfg_save.optional_child("snapshot");
+	auto cfg_snapshot = cfg_save.optional_child(str_snapshot);
 
 	// Servergenerated replays contain [scenario] and no [replay_start]
-	auto cfg_replay_start = cfg_save.has_child("replay_start")
-		? cfg_save.optional_child("replay_start")
-		: cfg_save.optional_child("scenario");
+	auto cfg_replay_start = cfg_save.has_child(str_replay_start)
+		? cfg_save.optional_child(str_replay_start)
+		: cfg_save.optional_child(str_scenario);
 
-	auto cfg_replay = cfg_save.optional_child("replay");
+	auto cfg_replay = cfg_save.optional_child(str_replay);
 	const bool has_replay = cfg_replay && !cfg_replay->empty();
-	const bool has_snapshot = cfg_snapshot && cfg_snapshot->has_child("side");
+	const bool has_snapshot = cfg_snapshot && cfg_snapshot->has_child(str_side);
 
-	cfg_summary["replay"] = has_replay;
-	cfg_summary["snapshot"] = has_snapshot;
+	cfg_summary[str_replay] = has_replay;
+	cfg_summary[str_snapshot] = has_snapshot;
 
-	cfg_summary["label"] = cfg_save["label"];
-	cfg_summary["campaign_type"] = cfg_save["campaign_type"];
+	cfg_summary[str_label] = cfg_save[str_label];
+	cfg_summary[str_campaign_type] = cfg_save[str_campaign_type];
 
-	if(cfg_save.has_child("carryover_sides_start")) {
-		cfg_summary["scenario"] = cfg_save.mandatory_child("carryover_sides_start")["next_scenario"];
+	if(cfg_save.has_child(str_carryover_sides_start)) {
+		cfg_summary[str_scenario] = cfg_save.mandatory_child(str_carryover_sides_start)[str_next_scenario];
 	} else {
-		cfg_summary["scenario"] = cfg_save["scenario"];
+		cfg_summary[str_scenario] = cfg_save[str_scenario];
 	}
 
-	cfg_summary["difficulty"] = cfg_save["difficulty"];
-	cfg_summary["random_mode"] = cfg_save["random_mode"];
+	cfg_summary[str_difficulty] = cfg_save[str_difficulty];
+	cfg_summary[str_random_mode] = cfg_save[str_random_mode];
 
-	cfg_summary["active_mods"] = cfg_save.child_or_empty("multiplayer")["active_mods"];
-	cfg_summary["campaign"] = cfg_save["campaign"];
-	cfg_summary["version"] = cfg_save["version"];
-	cfg_summary["corrupt"] = "";
+	cfg_summary[str_active_mods] = cfg_save.child_or_empty(str_multiplayer)[str_active_mods];
+	cfg_summary[str_campaign] = cfg_save[str_campaign];
+	cfg_summary[str_version] = cfg_save[str_version];
+	cfg_summary[str_corrupt] = "";
 
 	if(has_snapshot) {
-		cfg_summary["turn"] = cfg_snapshot["turn_at"];
-		if(cfg_snapshot["turns"] != "-1") {
-			cfg_summary["turn"] = cfg_summary["turn"].str() + "/" + cfg_snapshot["turns"].str();
+		cfg_summary[str_turn] = cfg_snapshot[str_turn_at];
+		if(cfg_snapshot[str_turns] != "-1") {
+			cfg_summary[str_turn] = cfg_summary[str_turn].str() + "/" + cfg_snapshot[str_turns].str();
 		}
 	}
 
 	// Ensure we don't get duplicate [leader] tags
-	cfg_summary.clear_children("leader");
+	cfg_summary.clear_children(str_leader);
 
 	// Find the human leaders so we can display their icons and names in the load menu.
 	config leader_config;
@@ -449,31 +449,31 @@ void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 	bool shrouded = false;
 
 	if(auto snapshot = (has_snapshot ? cfg_snapshot : cfg_replay_start)) {
-		for(const config& side : snapshot->child_range("side")) {
+		for(const config& side : snapshot->child_range(str_side)) {
 			std::string leader;
 			std::string leader_image;
 			std::string leader_image_tc_modifier;
 			std::string leader_name;
-			int gold = side["gold"];
+			int gold = side[str_gold];
 			int units = 0, recall_units = 0;
 
-			if(side["controller"] != side_controller::human) {
+			if(side[str_controller] != side_controller::human) {
 				continue;
 			}
 
-			if(side["shroud"].to_bool()) {
+			if(side[str_shroud].to_bool()) {
 				shrouded = true;
 			}
 
-			for(const config& u : side.child_range("unit")) {
-				if(u.has_attribute("x") && u.has_attribute("y")) {
+			for(const config& u : side.child_range(str_unit)) {
+				if(u.has_attribute(str_x) && u.has_attribute(str_y)) {
 					units++;
 				} else {
 					recall_units++;
 				}
 
 				// Only take the first leader
-				if(!leader.empty() || !u["canrecruit"].to_bool()) {
+				if(!leader.empty() || !u[str_canrecruit].to_bool()) {
 					continue;
 				}
 
@@ -481,10 +481,10 @@ void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 
 				// Don't count it among the troops
 				units--;
-				leader = u["id"].str();
-				leader_name = u["name"].str();
-				leader_image = u["image"].str();
-				leader_image_tc_modifier = "~RC(" + u["flag_rgb"].str() + ">" + tc_color + ")";
+				leader = u[str_id].str();
+				leader_name = u[str_name].str();
+				leader_image = u[str_image].str();
+				leader_image_tc_modifier = "~RC(" + u[str_flag_rgb].str() + ">" + tc_color + ")";
 			}
 
 			// We need a binary path-independent path to the leader image here so it can be displayed
@@ -501,28 +501,28 @@ void extract_summary_from_config(config& cfg_save, config& cfg_summary)
 				leader_image = leader_image_path;
 			}
 
-			leader_config["leader"] = leader;
-			leader_config["leader_name"] = leader_name;
-			leader_config["leader_image"] = leader_image;
-			leader_config["leader_image_tc_modifier"] = leader_image_tc_modifier;
-			leader_config["gold"] = gold;
-			leader_config["units"] = units;
-			leader_config["recall_units"] = recall_units;
+			leader_config[str_leader] = leader;
+			leader_config[str_leader_name] = leader_name;
+			leader_config[str_leader_image] = leader_image;
+			leader_config[str_leader_image_tc_modifier] = leader_image_tc_modifier;
+			leader_config[str_gold] = gold;
+			leader_config[str_units] = units;
+			leader_config[str_recall_units] = recall_units;
 
-			cfg_summary.add_child("leader", leader_config);
+			cfg_summary.add_child(str_leader, leader_config);
 		}
 	}
 
 	if(!shrouded) {
 		if(has_snapshot) {
-			if(!cfg_snapshot->find_child("side", "shroud", "yes") && cfg_snapshot->has_attribute("map_data")) {
-				cfg_summary["map_data"] = cfg_snapshot["map_data"].str();
+			if(!cfg_snapshot->find_child(str_side, str_shroud, str_yes) && cfg_snapshot->has_attribute(str_map_data)) {
+				cfg_summary[str_map_data] = cfg_snapshot[str_map_data].str();
 			} else {
 				ERR_SAVE << "Not saving map because there is shroud";
 			}
 		} else if(has_replay) {
-			if(!cfg_replay_start->find_child("side", "shroud", "yes") && cfg_replay_start->has_attribute("map_data")) {
-				cfg_summary["map_data"] = cfg_replay_start["map_data"];
+			if(!cfg_replay_start->find_child(str_side, str_shroud, str_yes) && cfg_replay_start->has_attribute(str_map_data)) {
+				cfg_summary[str_map_data] = cfg_replay_start[str_map_data];
 			} else {
 				ERR_SAVE << "Not saving map because there is shroud";
 			}

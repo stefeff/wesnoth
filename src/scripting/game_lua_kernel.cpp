@@ -176,10 +176,10 @@ struct map_locker
 void game_lua_kernel::extract_preload_scripts(const game_config_view& game_config)
 {
 	game_lua_kernel::preload_scripts.clear();
-	for (const config& cfg : game_config.child_range("lua")) {
+	for (const config& cfg : game_config.child_range(str_lua)) {
 		game_lua_kernel::preload_scripts.push_back(cfg);
 	}
-	game_lua_kernel::preload_config = game_config.mandatory_child("game_config");
+	game_lua_kernel::preload_config = game_config.mandatory_child(str_game_config);
 }
 
 void game_lua_kernel::log_error(char const * msg, char const * context)
@@ -203,7 +203,7 @@ void game_lua_kernel::lua_chat(const std::string& caption, const std::string& ms
 std::vector<int> game_lua_kernel::get_sides_vector(const vconfig& cfg)
 {
 	const config::attribute_value sides = cfg[str_side];
-	const vconfig &ssf = cfg.child("filter_side");
+	const vconfig &ssf = cfg.child(str_filter_side);
 
 	if (!ssf.null()) {
 		if(!sides.empty()) { WRN_LUA << "ignoring duplicate side filter information (inline side=)"; }
@@ -632,13 +632,13 @@ int game_lua_kernel::intf_fire_event(lua_State *L, const bool by_id)
 	luaW_toconfig(L, pos, data);
 
 	// Support WML names for some common data
-	if(data.has_child("primary_attack")) {
-		data.add_child("first", data.mandatory_child("primary_attack"));
-		data.remove_children("primary_attack");
+	if(data.has_child(str_primary_attack)) {
+		data.add_child(str_first, data.mandatory_child(str_primary_attack));
+		data.remove_children(str_primary_attack);
 	}
-	if(data.has_child("secondary_attack")) {
-		data.add_child("second", data.mandatory_child("secondary_attack"));
-		data.remove_children("secondary_attack");
+	if(data.has_child(str_secondary_attack)) {
+		data.add_child(str_second, data.mandatory_child(str_secondary_attack));
+		data.remove_children(str_secondary_attack);
 	}
 
 	bool b = false;
@@ -1238,7 +1238,7 @@ int game_lua_kernel::intf_get_selected_tile(lua_State *L)
 static int intf_get_resource(lua_State *L)
 {
 	std::string m = luaL_checkstring(L, 1);
-	if(auto res = game_config_manager::get()->game_config().find_child("resource","id",m)) {
+	if(auto res = game_config_manager::get()->game_config().find_child(str_resource,str_id,m)) {
 		luaW_pushconfig(L, *res);
 		return 1;
 	}
@@ -1256,7 +1256,7 @@ static int intf_get_resource(lua_State *L)
 static int intf_get_era(lua_State *L)
 {
 	std::string m = luaL_checkstring(L, 1);
-	if(auto res = game_config_manager::get()->game_config().find_child("era","id",m)) {
+	if(auto res = game_config_manager::get()->game_config().find_child(str_era,str_id,m)) {
 		luaW_pushconfig(L, *res);
 		return 1;
 	}
@@ -1719,12 +1719,12 @@ int game_lua_kernel::impl_current_get(lua_State *L)
 		config cfg;
 		cfg[str_name] = ev.name;
 		cfg[str_id]   = ev.id;
-		cfg.add_child("data", ev.data);
-		if (auto weapon = ev.data.optional_child("first")) {
-			cfg.add_child("weapon", *weapon);
+		cfg.add_child(str_data, ev.data);
+		if (auto weapon = ev.data.optional_child(str_first)) {
+			cfg.add_child(str_weapon, *weapon);
 		}
-		if (auto weapon = ev.data.optional_child("second")) {
-			cfg.add_child("second_weapon", *weapon);
+		if (auto weapon = ev.data.optional_child(str_second)) {
+			cfg.add_child(str_second_weapon, *weapon);
 		}
 
 		const config::attribute_value di = ev.data[str_damage_inflicted];
@@ -3171,7 +3171,7 @@ int game_lua_kernel::intf_get_achievement(lua_State *L)
 					cfg[str_current_progress] = achieve.current_progress_;
 
 					for(const auto& sub_ach : achieve.sub_achievements_) {
-						config& sub = cfg.add_child("sub_achievement");
+						config& sub = cfg.add_child(str_sub_achievement);
 						sub[str_id] = sub_ach.id_;
 						sub[str_description] = sub_ach.description_;
 						sub[str_icon] = sub_ach.icon_;
@@ -3681,8 +3681,8 @@ static int intf_modify_ai(lua_State *L, const char* action)
 	}
 	std::string path = luaL_checkstring(L, 2);
 	config cfg {
-		"action", action,
-		"path", path
+		str_action, action,
+		str_path, path
 	};
 	if(strcmp(action, "delete") == 0) {
 		ai::manager::get_singleton().modify_active_ai_for_side(side_num, cfg);
@@ -3729,13 +3729,13 @@ static int intf_append_ai(lua_State *L)
 		side_num = luaL_checkinteger(L, 1);
 	}
 	config cfg = luaW_checkconfig(L, 2);
-	if(!cfg.has_child("ai")) {
-		cfg = config {"ai", cfg};
+	if(!cfg.has_child(str_ai)) {
+		cfg = config {str_ai, cfg};
 	}
 	bool added_dummy_stage = false;
-	if(!cfg.mandatory_child("ai").has_child("stage")) {
+	if(!cfg.mandatory_child(str_ai).has_child(str_stage)) {
 		added_dummy_stage = true;
-		cfg.mandatory_child("ai").add_child("stage", config {"name", "empty"});
+		cfg.mandatory_child(str_ai).add_child(str_stage, config {str_name, "empty"});
 	}
 	ai::configuration::expand_simplified_aspects(side_num, cfg);
 	if(added_dummy_stage) {
@@ -3745,7 +3745,7 @@ static int intf_append_ai(lua_State *L)
 			}
 		}
 	}
-	ai::manager::get_singleton().append_active_ai_for_side(side_num, cfg.mandatory_child("ai"));
+	ai::manager::get_singleton().append_active_ai_for_side(side_num, cfg.mandatory_child(str_ai));
 	return 0;
 }
 
@@ -3904,7 +3904,7 @@ int game_lua_kernel::intf_add_tile_overlay(lua_State *L)
 {
 	map_location loc = luaW_checklocation(L, 1);
 	vconfig cfg = luaW_checkvconfig(L, 2);
-	const vconfig &ssf = cfg.child("filter_team");
+	const vconfig &ssf = cfg.child(str_filter_team);
 
 	std::string team_name;
 	if (!ssf.null()) {
@@ -3984,7 +3984,7 @@ struct lua_event_filter : public game_events::event_filter
 		lk.clear_wml_event(ref_);
 	}
 	void serialize(config& cfg) const override {
-		cfg.add_child("filter_lua")[str_code] = "<function>";
+		cfg.add_child(str_filter_lua)[str_code] = "<function>";
 	}
 private:
 	game_lua_kernel& lk;
@@ -4053,7 +4053,7 @@ int game_lua_kernel::intf_add_event(lua_State *L)
 	auto new_handler = man.add_event_handler_from_lua(name, id, repeat, priority, is_menu_item);
 	if(new_handler.valid()) {
 		bool has_lua_filter = false;
-		new_handler->set_arguments(luaW_table_get_def(L, 1, "content", config{"__empty_lua_event", true}));
+		new_handler->set_arguments(luaW_table_get_def(L, 1, "content", config{str___empty_lua_event, true}));
 
 		if(luaW_tableget(L, 1, "filter")) {
 			int filterIdx = lua_gettop(L);
@@ -4068,21 +4068,21 @@ int game_lua_kernel::intf_add_event(lua_State *L)
 					do { \
 						if(luaW_tableget(L, filterIdx, key)) { \
 							if(lua_isstring(L, -1)) { \
-								filters.add_child("insert_tag", config{ \
-									"name", tag, \
-									"variable", luaL_checkstring(L, -1) \
+								filters.add_child(str_insert_tag, config{ \
+									str_name, tag, \
+									str_variable, luaL_checkstring(L, -1) \
 								}); \
 							} else { \
 								filters.add_child(tag, luaW_checkconfig(L, -1)); \
 							} \
 						} \
 					} while(false);
-					READ_ONE_FILTER("condition", "filter_condition");
-					READ_ONE_FILTER("side", "filter_side");
-					READ_ONE_FILTER("unit", "filter");
-					READ_ONE_FILTER("attack", "filter_attack");
-					READ_ONE_FILTER("second_unit", "filter_second");
-					READ_ONE_FILTER("second_attack", "filter_second_attack");
+					READ_ONE_FILTER("condition", str_filter_condition);
+					READ_ONE_FILTER("side", str_filter_side);
+					READ_ONE_FILTER("unit", str_filter);
+					READ_ONE_FILTER("attack", str_filter_attack);
+					READ_ONE_FILTER("second_unit", str_filter_second);
+					READ_ONE_FILTER("second_attack", str_filter_second_attack);
 #undef READ_ONE_FILTER
 					if(luaW_tableget(L, filterIdx, "formula")) {
 						filters[str_filter_formula] = luaL_checkstring(L, -1);
@@ -4151,7 +4151,7 @@ int game_lua_kernel::intf_add_event_simple(lua_State *L)
 	auto new_handler = man.add_event_handler_from_lua(name, id, repeat, priority, is_menu_item);
 	if(new_handler.valid()) {
 		// An event with empty arguments is not added, so set some dummy arguments
-		new_handler->set_arguments(config{"__quick_lua_event", true});
+		new_handler->set_arguments(config{str___quick_lua_event, true});
 		new_handler->set_event_ref(save_wml_event(2), has_preloaded_);
 	}
 	return 0;
@@ -4506,7 +4506,7 @@ static int intf_debug_ai(lua_State *L)
 
 		//and add the dummy engine as a component
 		//to the manager, so we could use it later
-		cfg.add_child("engine", lua_engine->to_config());
+		cfg.add_child(str_engine, lua_engine->to_config());
 		ai::component_manager::add_component(c, "engine[]", cfg);
 	}
 
@@ -4642,7 +4642,7 @@ int game_lua_kernel::intf_replace_schedule(lua_State * L)
 	} else {
 		vconfig cfg = luaW_checkvconfig(L, 1);
 
-		if(cfg.get_children("time").empty()) {
+		if(cfg.get_children(str_time).empty()) {
 			ERR_LUA << "attempted to to replace ToD schedule with empty schedule";
 		} else {
 			tod_man().replace_schedule(cfg.get_parsed_config());
@@ -4901,10 +4901,10 @@ static int intf_invoke_synced_command(lua_State* L)
 		if(!luaW_getglobal(L, "wesnoth", "custom_synced_commands", name)) {
 			return luaL_argerror(L, 1, "Unknown synced command");
 		}
-		config& cmd_tag = cmd.child_or_add("custom_command");
+		config& cmd_tag = cmd.child_or_add(str_custom_command);
 		cmd_tag[str_name] = name;
 		if(!lua_isnoneornil(L, 2)) {
-			cmd_tag.add_child("data", luaW_checkconfig(L, 2));
+			cmd_tag.add_child(str_data, luaW_checkconfig(L, 2));
 		}
 	} else {
 		// Built-in command
@@ -5418,7 +5418,7 @@ void game_lua_kernel::initialize(const config& level)
 	for (const config &cfg : game_lua_kernel::preload_scripts) {
 		run_lua_tag(cfg);
 	}
-	for (const config &cfg : level_lua_.child_range("lua")) {
+	for (const config &cfg : level_lua_.child_range(str_lua)) {
 		run_lua_tag(cfg);
 	}
 }

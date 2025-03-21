@@ -63,7 +63,7 @@ bool synced_context::run(const std::string& commandname,
 
 	synced_command::map::iterator it = synced_command::registry().find(commandname);
 	if(it == synced_command::registry().end()) {
-		error_handler("commandname [" + commandname + "] not found");
+		error_handler("commandname [str_ + commandname + ] not found");
 	} else {
 		bool success = it->second(data, use_undo, show, error_handler);
 		if(!success) {
@@ -142,7 +142,7 @@ bool synced_context::run_in_synced_context_if_not_already(const std::string& com
 	case(synced_context::SYNCED): {
 		synced_command::map::iterator it = synced_command::registry().find(commandname);
 		if(it == synced_command::registry().end()) {
-			error_handler("commandname [" + commandname + "] not found");
+			error_handler("commandname [str_ + commandname + ] not found");
 			return false;
 		} else {
 			return it->second(data, /*use_undo*/ false, show, error_handler);
@@ -178,7 +178,7 @@ public:
 	/** We are in a game with no mp server and need to do this choice locally. */
 	virtual config local_choice() const override
 	{
-		return config{"new_seed", seed_rng::next_seed_str()};
+		return config{str_new_seed, seed_rng::next_seed_str()};
 	}
 
 	/** The request which is sent to the mp server. */
@@ -197,7 +197,7 @@ public:
 std::string synced_context::generate_random_seed()
 {
 	config retv_c = synced_context::ask_server_choice(random_server_choice());
-	config::attribute_value seed_val = retv_c["new_seed"];
+	config::attribute_value seed_val = retv_c[str_new_seed];
 
 	return seed_val.str();
 }
@@ -259,8 +259,8 @@ int synced_context::server_choice::request_id() const
 void synced_context::server_choice::send_request() const
 {
 	resources::controller->send_to_wesnothd(config {
-		"request_choice", config {
-			"request_id", request_id(),
+		str_request_choice, config {
+			str_request_id, request_id(),
 			name(), request(),
 		},
 	});
@@ -294,7 +294,7 @@ config synced_context::ask_server_choice(const server_choice& sch)
 			DBG_REPLAY << "MP synchronization: local server choice";
 			leave_synced_context sync;
 			config cfg = sch.local_choice();
-			cfg["request_id"] = sch.request_id();
+			cfg[str_request_id] = sch.request_id();
 			//-1 for "server" todo: change that.
 			resources::recorder->user_input(sch.name(), cfg, -1);
 			return cfg;
@@ -325,28 +325,28 @@ config synced_context::ask_server_choice(const server_choice& sch)
 
 			const config* action = resources::recorder->get_next_action();
 			if(!action) {
-				replay::process_error("[" + std::string(sch.name()) + "] expected but none found\n");
+				replay::process_error("[str_ + std::string(sch.name()) + ] expected but none found\n");
 				resources::recorder->revert_action();
 				return sch.local_choice();
 			}
 
 			if(!action->has_child(sch.name())) {
-				replay::process_error("[" + std::string(sch.name()) + "] expected but none found, found instead:\n "
+				replay::process_error("[str_ + std::string(sch.name()) + ] expected but none found, found instead:\n "
 									  + action->debug() + "\n");
 
 				resources::recorder->revert_action();
 				return sch.local_choice();
 			}
 
-			if((*action)["from_side"].str() != "server" || (*action)["side_invalid"].to_bool(false)) {
+			if((*action)[str_from_side].str() != "server" || (*action)[str_side_invalid].to_bool(false)) {
 				// we can proceed without getting OOS in this case, but allowing this would allow a "player chan choose
 				// their attack results in mp" cheat
 				replay::process_error("wrong from_side or side_invalid this could mean someone wants to cheat\n");
 			}
 
 			config res = action->mandatory_child(sch.name());
-			if(res["request_id"] != sch.request_id()) {
-				WRN_REPLAY << "Unexpected request_id: " << res["request_id"] << " expected: " <<  sch.request_id();
+			if(res[str_request_id] != sch.request_id()) {
+				WRN_REPLAY << "Unexpected request_id: " << res[str_request_id] << " expected: " <<  sch.request_id();
 			}
 			return res;
 		}
@@ -444,17 +444,17 @@ void set_scontext_synced::do_final_checkup(bool dont_throw)
 		return;
 	}
 
-	if(co["random_calls"].empty()) {
+	if(co[str_random_calls].empty()) {
 		msg << "cannot find random_calls check in replay" << std::endl;
-	} else if(co["random_calls"] != cn["random_calls"]) {
+	} else if(co[str_random_calls] != cn[str_random_calls]) {
 		msg << "We called random " << new_rng_->get_random_calls() << " times, but the original game called random "
-			<< co["random_calls"].to_int() << " times." << std::endl;
+			<< co[str_random_calls].to_int() << " times." << std::endl;
 	}
 
 	// Ignore empty next_unit_id to prevent false positives with older saves.
-	if(!co["next_unit_id"].empty() && co["next_unit_id"] != cn["next_unit_id"]) {
-		msg << "Our next unit id is " << cn["next_unit_id"].to_int() << " but during the original the next unit id was "
-			<< co["next_unit_id"].to_int() << std::endl;
+	if(!co[str_next_unit_id].empty() && co[str_next_unit_id] != cn[str_next_unit_id]) {
+		msg << "Our next unit id is " << cn[str_next_unit_id].to_int() << " but during the original the next unit id was "
+			<< co[str_next_unit_id].to_int() << std::endl;
 	}
 
 	if(!msg.str().empty()) {

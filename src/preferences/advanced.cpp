@@ -31,7 +31,7 @@ static std::unique_ptr<preferences::advanced_manager> singleton = nullptr;
 advanced_manager::advanced_manager(const game_config_view& gc)
 	: prefs()
 {
-	for(const config& pref : gc.child_range("advanced_preference")) {
+	for(const config& pref : gc.child_range(str_advanced_preference)) {
 		try {
 			prefs.emplace_back(pref);
 		} catch(const std::invalid_argument& e) {
@@ -44,7 +44,7 @@ advanced_manager::advanced_manager(const game_config_view& gc)
 	if(game_config::wesnoth_version.is_dev_version()) {
 		for(option& op : prefs) {
 			if(op.field == "show_deprecation") {
-				op.cfg["default"] = true;
+				op.cfg[str_default] = true;
 			}
 		}
 	}
@@ -59,12 +59,12 @@ advanced_manager::~advanced_manager()
 
 advanced_manager::option::option(const config& pref)
 	: type()
-	, name(pref["name"].t_str())
-	, description(pref["description"].t_str())
-	, field(pref["field"].str())
+	, name(pref[str_name].t_str())
+	, description(pref[str_description].t_str())
+	, field(pref[str_field].str())
 	, cfg(pref)
 {
-	const std::string p_type = cfg["type"];
+	const std::string p_type = cfg[str_type];
 
 	if(p_type == "boolean") {
 		type = avd_type::TOGGLE;

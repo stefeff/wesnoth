@@ -150,20 +150,20 @@ static bool is_cjk_char(const char32_t ch)
 
 bool section_is_referenced(const std::string &section_id, const config &cfg)
 {
-	if (auto toplevel = cfg.optional_child("toplevel"))
+	if (auto toplevel = cfg.optional_child(str_toplevel))
 	{
 		const std::vector<std::string> toplevel_refs
-			= utils::quoted_split(toplevel["sections"]);
+			= utils::quoted_split(toplevel[str_sections]);
 		if (std::find(toplevel_refs.begin(), toplevel_refs.end(), section_id)
 			!= toplevel_refs.end()) {
 			return true;
 		}
 	}
 
-	for (const config &section : cfg.child_range("section"))
+	for (const config &section : cfg.child_range(str_section))
 	{
 		const std::vector<std::string> sections_refd
-			= utils::quoted_split(section["sections"]);
+			= utils::quoted_split(section[str_sections]);
 		if (std::find(sections_refd.begin(), sections_refd.end(), section_id)
 			!= sections_refd.end()) {
 			return true;
@@ -174,20 +174,20 @@ bool section_is_referenced(const std::string &section_id, const config &cfg)
 
 bool topic_is_referenced(const std::string &topic_id, const config &cfg)
 {
-	if (auto toplevel = cfg.optional_child("toplevel"))
+	if (auto toplevel = cfg.optional_child(str_toplevel))
 	{
 		const std::vector<std::string> toplevel_refs
-			= utils::quoted_split(toplevel["topics"]);
+			= utils::quoted_split(toplevel[str_topics]);
 		if (std::find(toplevel_refs.begin(), toplevel_refs.end(), topic_id)
 			!= toplevel_refs.end()) {
 			return true;
 		}
 	}
 
-	for (const config &section : cfg.child_range("section"))
+	for (const config &section : cfg.child_range(str_section))
 	{
 		const std::vector<std::string> topics_refd
-			= utils::quoted_split(section["topics"]);
+			= utils::quoted_split(section[str_topics]);
 		if (std::find(topics_refd.begin(), topics_refd.end(), topic_id)
 			!= topics_refd.end()) {
 			return true;
@@ -203,8 +203,8 @@ void parse_config_internal(const config *help_cfg, const config *section_cfg,
 		PLAIN_LOG << "Maximum section depth has been reached. Maybe circular dependency?";
 	}
 	else if (section_cfg != nullptr) {
-		const std::vector<std::string> sections = utils::quoted_split((*section_cfg)["sections"]);
-		std::string id = level == 0 ? "toplevel" : (*section_cfg)["id"].str();
+		const std::vector<std::string> sections = utils::quoted_split((*section_cfg)[str_sections]);
+		std::string id = level == 0 ? "toplevel" : (*section_cfg)[str_id].str();
 		if (level != 0) {
 			if (!is_valid_id(id)) {
 				std::stringstream ss;
@@ -212,13 +212,13 @@ void parse_config_internal(const config *help_cfg, const config *section_cfg,
 				throw parse_error(ss.str());
 			}
 		}
-		std::string title = level == 0 ? "" : (*section_cfg)["title"].str();
+		std::string title = level == 0 ? "" : (*section_cfg)[str_title].str();
 		sec.id = id;
 		sec.title = title;
 		std::vector<std::string>::const_iterator it;
 		// Find all child sections.
 		for (it = sections.begin(); it != sections.end(); ++it) {
-			if (auto child_cfg = help_cfg->find_child("section", "id", *it))
+			if (auto child_cfg = help_cfg->find_child(str_section, str_id, *it))
 			{
 				section child_section;
 				parse_config_internal(help_cfg, child_cfg.ptr(), child_section, level + 1);
@@ -232,42 +232,42 @@ void parse_config_internal(const config *help_cfg, const config *section_cfg,
 			}
 		}
 
-		generate_sections(help_cfg, (*section_cfg)["sections_generator"], sec, level);
-		if ((*section_cfg)["sort_sections"] == "yes") {
+		generate_sections(help_cfg, (*section_cfg)[str_sections_generator], sec, level);
+		if ((*section_cfg)[str_sort_sections] == "yes") {
 			sec.sections.sort(section_less());
 		}
 
 		bool sort_topics = false;
 		bool sort_generated = true;
 
-		if ((*section_cfg)["sort_topics"] == "yes") {
+		if ((*section_cfg)[str_sort_topics] == "yes") {
 		  sort_topics = true;
 		  sort_generated = false;
-		} else if ((*section_cfg)["sort_topics"] == "no") {
+		} else if ((*section_cfg)[str_sort_topics] == "no") {
 		  sort_topics = false;
 		  sort_generated = false;
-		} else if ((*section_cfg)["sort_topics"] == "generated") {
+		} else if ((*section_cfg)[str_sort_topics] == "generated") {
 		  sort_topics = false;
 		  sort_generated = true;
-		} else if (!(*section_cfg)["sort_topics"].empty()) {
+		} else if (!(*section_cfg)[str_sort_topics].empty()) {
 		  std::stringstream ss;
-		  ss << "Invalid sort option: '" << (*section_cfg)["sort_topics"] << "'";
+		  ss << "Invalid sort option: '" << (*section_cfg)[str_sort_topics] << "'";
 		  throw parse_error(ss.str());
 		}
 
 		std::vector<topic> generated_topics =
-		generate_topics(sort_generated,(*section_cfg)["generator"]);
+		generate_topics(sort_generated,(*section_cfg)[str_generator]);
 
-		const std::vector<std::string> topics_id = utils::quoted_split((*section_cfg)["topics"]);
+		const std::vector<std::string> topics_id = utils::quoted_split((*section_cfg)[str_topics]);
 		std::vector<topic> topics;
 
 		// Find all topics in this section.
 		for (it = topics_id.begin(); it != topics_id.end(); ++it) {
-			if (auto topic_cfg = help_cfg->find_child("topic", "id", *it))
+			if (auto topic_cfg = help_cfg->find_child(str_topic, str_id, *it))
 			{
-				std::string text = topic_cfg["text"];
-				text += generate_topic_text(topic_cfg["generator"], help_cfg, sec, generated_topics);
-				topic child_topic(topic_cfg["title"], topic_cfg["id"], text);
+				std::string text = topic_cfg[str_text];
+				text += generate_topic_text(topic_cfg[str_generator], help_cfg, sec, generated_topics);
+				topic child_topic(topic_cfg[str_title], topic_cfg[str_id], text);
 				if (!is_valid_id(child_topic.id)) {
 					std::stringstream ss;
 					ss << "Invalid ID, used for internal purpose: '" << id << "'";
@@ -304,7 +304,7 @@ section parse_config(const config *cfg)
 {
 	section sec;
 	if (cfg != nullptr) {
-		auto toplevel_cfg = cfg->optional_child("toplevel");
+		auto toplevel_cfg = cfg->optional_child(str_toplevel);
 		parse_config_internal(cfg, toplevel_cfg.ptr(), sec);
 	}
 	return sec;
@@ -481,11 +481,11 @@ std::vector<topic> generate_weapon_special_topics(const bool sort_generated)
 		}
 
 		for(config adv : type.modification_advancements()) {
-			for(config effect : adv.child_range("effect")) {
-				if(effect["apply_to"] == "new_attack" && effect.has_child("specials")) {
-					for(config::any_child spec : effect.mandatory_child("specials").all_children_range()) {
-						if(!spec.cfg["name"].empty()) {
-							special_description.emplace(spec.cfg["name"].t_str(), spec.cfg["description"].t_str());
+			for(config effect : adv.child_range(str_effect)) {
+				if(effect[str_apply_to] == "new_attack" && effect.has_child(str_specials)) {
+					for(config::any_child spec : effect.mandatory_child(str_specials).all_children_range()) {
+						if(!spec.cfg[str_name].empty()) {
+							special_description.emplace(spec.cfg[str_name].t_str(), spec.cfg[str_description].t_str());
 							if(!type.hide_help()) {
 								//add a link in the list of units having this special
 								std::string type_name = type.type_name();
@@ -495,14 +495,14 @@ std::vector<topic> generate_weapon_special_topics(const bool sort_generated)
 								//we put the translated name at the beginning of the hyperlink,
 								//so the automatic alphabetic sorting of std::set can use it
 								std::string link = make_link(type_name, ref_id);
-								special_units[spec.cfg["name"]].insert(link);
+								special_units[spec.cfg[str_name]].insert(link);
 							}
 						}
 					}
-				} else if(effect["apply_to"] == "attack" && effect.has_child("set_specials")) {
-					for(config::any_child spec : effect.mandatory_child("set_specials").all_children_range()) {
-						if(!spec.cfg["name"].empty()) {
-							special_description.emplace(spec.cfg["name"].t_str(), spec.cfg["description"].t_str());
+				} else if(effect[str_apply_to] == "attack" && effect.has_child(str_set_specials)) {
+					for(config::any_child spec : effect.mandatory_child(str_set_specials).all_children_range()) {
+						if(!spec.cfg[str_name].empty()) {
+							special_description.emplace(spec.cfg[str_name].t_str(), spec.cfg[str_description].t_str());
 							if(!type.hide_help()) {
 								//add a link in the list of units having this special
 								std::string type_name = type.type_name();
@@ -512,7 +512,7 @@ std::vector<topic> generate_weapon_special_topics(const bool sort_generated)
 								//we put the translated name at the beginning of the hyperlink,
 								//so the automatic alphabetic sorting of std::set can use it
 								std::string link = make_link(type_name, ref_id);
-								special_units[spec.cfg["name"]].insert(link);
+								special_units[spec.cfg[str_name]].insert(link);
 							}
 						}
 					}
@@ -611,8 +611,8 @@ std::vector<topic> generate_era_topics(const bool sort_generated, const std::str
 {
 	std::vector<topic> topics;
 
-	auto era = game_cfg->find_child("era","id", era_id);
-	if(era && !era["hide_help"].to_bool()) {
+	auto era = game_cfg->find_child(str_era, str_id, era_id);
+	if(era && !era[str_hide_help].to_bool()) {
 		topics = generate_faction_topics(*era, sort_generated);
 
 		std::vector<std::string> faction_links;
@@ -621,9 +621,9 @@ std::vector<topic> generate_era_topics(const bool sort_generated, const std::str
 		}
 
 		std::stringstream text;
-		text << "<header>text='" << _("Era:") << " " << era["name"] << "'</header>" << "\n";
+		text << "<header>text='" << _("Era:") << " " << era[str_name] << "'</header>" << "\n";
 		text << "\n";
-		const config::attribute_value& description = era["description"];
+		const config::attribute_value& description = era[str_description];
 		if (!description.empty()) {
 			text << description.t_str() << "\n";
 			text << "\n";
@@ -636,7 +636,7 @@ std::vector<topic> generate_era_topics(const bool sort_generated, const std::str
 			text << font::unicode_bullet << " " << link << "\n";
 		}
 
-		topic era_topic(era["name"], ".." + era_prefix + era["id"].str(), text.str());
+		topic era_topic(era[str_name], ".." + era_prefix + era[str_id].str(), text.str());
 
 		topics.push_back( era_topic );
 	}
@@ -646,20 +646,20 @@ std::vector<topic> generate_era_topics(const bool sort_generated, const std::str
 std::vector<topic> generate_faction_topics(const config & era, const bool sort_generated)
 {
 	std::vector<topic> topics;
-	for (const config &f : era.child_range("multiplayer_side")) {
-		const std::string& id = f["id"];
+	for (const config &f : era.child_range(str_multiplayer_side)) {
+		const std::string& id = f[str_id];
 		if (id == "Random")
 			continue;
 
 		std::stringstream text;
 
-		const config::attribute_value& description = f["description"];
+		const config::attribute_value& description = f[str_description];
 		if (!description.empty()) {
 			text << description.t_str() << "\n";
 			text << "\n";
 		}
 
-		const std::vector<std::string> recruit_ids = utils::split(f["recruit"]);
+		const std::vector<std::string> recruit_ids = utils::split(f[str_recruit]);
 		std::set<std::string> races;
 		std::set<std::string> alignments;
 
@@ -695,7 +695,7 @@ std::vector<topic> generate_faction_topics(const config & era, const bool sort_g
 
 		text << "<header>text='" << _("Leaders") << "'</header>" << "\n";
 		const std::vector<std::string> leaders =
-				make_unit_links_list( utils::split(f["leader"]), true );
+				make_unit_links_list( utils::split(f[str_leader]), true );
 		for (const std::string &link : leaders) {
 			text << font::unicode_bullet << " " << link << "\n";
 		}
@@ -709,8 +709,8 @@ std::vector<topic> generate_faction_topics(const config & era, const bool sort_g
 			text << font::unicode_bullet << " " << link << "\n";
 		}
 
-		const std::string name = f["name"];
-		const std::string ref_id = faction_prefix + era["id"] + "_" + id;
+		const std::string name = f[str_name];
+		const std::string ref_id = faction_prefix + era[str_id] + "_" + id;
 		topics.emplace_back(name, ref_id, text.str());
 	}
 	if (sort_generated)
@@ -727,7 +727,7 @@ std::vector<topic> generate_trait_topics(const bool sort_generated)
 
 	// The global traits that are direct children of a [units] tag
 	for (const config & trait : unit_types.traits()) {
-		trait_list.emplace(trait["id"], trait);
+		trait_list.emplace(trait[str_id], trait);
 	}
 
 	// Search for discovered unit types
@@ -753,7 +753,7 @@ std::vector<topic> generate_trait_topics(const bool sort_generated)
 		// with ignore_race_traits=no have inherited from their [race] tag.
 		if (desc_type == FULL_DESCRIPTION || desc_type == HIDDEN_BUT_SHOW_MACROS) {
 			for (const config& trait : type.possible_traits()) {
-				trait_list.emplace(trait["id"], trait);
+				trait_list.emplace(trait[str_id], trait);
 			}
 		}
 	}
@@ -766,7 +766,7 @@ std::vector<topic> generate_trait_topics(const bool sort_generated)
 	for(const auto& race_id : races) {
 		if(const unit_race *r = unit_types.find_race(race_id)) {
 			for(const config & trait : r->additional_traits()) {
-				trait_list.emplace(trait["id"], trait);
+				trait_list.emplace(trait[str_id], trait);
 			}
 		}
 	}
@@ -776,16 +776,16 @@ std::vector<topic> generate_trait_topics(const bool sort_generated)
 		std::string id = "traits_" + a.first;
 		const config& trait = a.second;
 
-		std::string name = trait["male_name"].str();
-		if (name.empty()) name = trait["female_name"].str();
-		if (name.empty()) name = trait["name"].str();
+		std::string name = trait[str_male_name].str();
+		if (name.empty()) name = trait[str_female_name].str();
+		if (name.empty()) name = trait[str_name].str();
 		if (name.empty()) continue; // Hidden trait
 
 		std::stringstream text;
-		if (!trait["help_text"].empty()) {
-			text << trait["help_text"];
-		} else if (!trait["description"].empty()) {
-			text << trait["description"];
+		if (!trait[str_help_text].empty()) {
+			text << trait[str_help_text];
+		} else if (!trait[str_description].empty()) {
+			text << trait[str_description];
 		} else {
 			text << _("No description available.");
 		}
@@ -889,7 +889,7 @@ void generate_races_sections(const config* help_cfg, section& sec, int level)
 
 		bool hidden = (visible_races.count(race_id) == 0);
 
-		section_cfg["id"] = hidden_symbol(hidden) + race_prefix + race_id;
+		section_cfg[str_id] = hidden_symbol(hidden) + race_prefix + race_id;
 
 		std::string title;
 		std::string help_taxonomy;
@@ -900,10 +900,10 @@ void generate_races_sections(const config* help_cfg, section& sec, int level)
 			title = _("race^Miscellaneous");
 			// leave help_taxonomy empty
 		}
-		section_cfg["title"] = title;
+		section_cfg[str_title] = title;
 
-		section_cfg["sections_generator"] = "units:" + race_id;
-		section_cfg["generator"] = "units:" + race_id;
+		section_cfg[str_sections_generator] = "units:" + race_id;
+		section_cfg[str_generator] = "units:" + race_id;
 
 		parse_config_internal(help_cfg, &section_cfg, race_section, level + 1);
 
@@ -941,19 +941,19 @@ void generate_races_sections(const config* help_cfg, section& sec, int level)
 
 void generate_era_sections(const config* help_cfg, section & sec, int level)
 {
-	for (const config & era : game_cfg->child_range("era")) {
-		if (era["hide_help"].to_bool()) {
+	for (const config & era : game_cfg->child_range(str_era)) {
+		if (era[str_hide_help].to_bool()) {
 			continue;
 		}
 
-		DBG_HP << "Adding help section: " << era["id"].str();
+		DBG_HP << "Adding help section: " << era[str_id].str();
 
 		section era_section;
 		config section_cfg;
-		section_cfg["id"] = era_prefix + era["id"].str();
-		section_cfg["title"] = era["name"];
+		section_cfg[str_id] = era_prefix + era[str_id].str();
+		section_cfg[str_title] = era[str_name];
 
-		section_cfg["generator"] = "era:" + era["id"].str();
+		section_cfg[str_generator] = "era:" + era[str_id].str();
 
 		DBG_HP << section_cfg.debug();
 
@@ -1095,9 +1095,9 @@ std::vector<topic> generate_unit_topics(const bool sort_generated, const std::st
 		// if (description.empty()) description =  _("No description Available");
 		for (const config &additional_topic : r->additional_topics())
 		  {
-		    std::string id = additional_topic["id"];
-		    std::string title = additional_topic["title"];
-		    std::string text = additional_topic["text"];
+		    std::string id = additional_topic[str_id];
+		    std::string title = additional_topic[str_title];
+		    std::string text = additional_topic[str_text];
 		    //topic additional_topic(title, id, text);
 		    topics.emplace_back(title,id,text);
 			std::string link = make_link(title, id);
@@ -1136,13 +1136,13 @@ std::vector<topic> generate_unit_topics(const bool sort_generated, const std::st
 
 	if (!race_help_taxonomy.empty()) {
 		utils::string_map symbols;
-		symbols["topic_id"] = "..race_"+race_help_taxonomy;
+		symbols[str_topic_id] = "..race_"+race_help_taxonomy;
 		if (const unit_race *r = unit_types.find_race(race_help_taxonomy)) {
-			symbols["help_taxonomy"] = r->plural_name();
+			symbols[str_help_taxonomy] = r->plural_name();
 		} else {
 			// Fall back to using showing the race id for the race that we couldn't find.
 			// Not great, but probably useful if UMC has a broken link.
-			symbols["help_taxonomy"] = race_help_taxonomy;
+			symbols[str_help_taxonomy] = race_help_taxonomy;
 		}
 		// TRANSLATORS: this is expected to say "[Dunefolk are] a group of units, all of whom are Humans",
 		// or "[Quenoth Elves are] a group of units, all of whom are Elves".
@@ -1200,14 +1200,14 @@ UNIT_DESCRIPTION_TYPE description_type(const unit_type &type)
 
 std::string generate_contents_links(const std::string& section_name, config const *help_cfg)
 {
-	auto section_cfg = help_cfg->find_child("section", "id", section_name);
+	auto section_cfg = help_cfg->find_child(str_section, str_id, section_name);
 	if (!section_cfg) {
 		return std::string();
 	}
 
 	std::ostringstream res;
 
-		std::vector<std::string> topics = utils::quoted_split(section_cfg["topics"]);
+		std::vector<std::string> topics = utils::quoted_split(section_cfg[str_topics]);
 
 		// we use an intermediate structure to allow a conditional sorting
 		typedef std::pair<std::string,std::string> link;
@@ -1216,14 +1216,14 @@ std::string generate_contents_links(const std::string& section_name, config cons
 		std::vector<std::string>::iterator t;
 		// Find all topics in this section.
 		for (t = topics.begin(); t != topics.end(); ++t) {
-			if (auto topic_cfg = help_cfg->find_child("topic", "id", *t)) {
-				std::string id = topic_cfg["id"];
+			if (auto topic_cfg = help_cfg->find_child(str_topic, str_id, *t)) {
+				std::string id = topic_cfg[str_id];
 				if (is_visible_id(id))
-					topics_links.emplace_back(topic_cfg["title"], id);
+					topics_links.emplace_back(topic_cfg[str_title], id);
 			}
 		}
 
-		if (section_cfg["sort_topics"] == "yes") {
+		if (section_cfg[str_sort_topics] == "yes") {
 			std::sort(topics_links.begin(),topics_links.end());
 		}
 
@@ -1530,7 +1530,7 @@ void generate_contents()
 	default_toplevel.clear();
 	hidden_sections.clear();
 	if (game_cfg != nullptr) {
-		const config *help_config = &game_cfg->child_or_empty("help");
+		const config *help_config = &game_cfg->child_or_empty(str_help);
 		try {
 			default_toplevel = parse_config(help_config);
 			// Create a config object that contains everything that is
@@ -1541,9 +1541,9 @@ void generate_contents()
 			// opening the help browser in the default manner.
 			config hidden_toplevel;
 			std::stringstream ss;
-			for (const config &section : help_config->child_range("section"))
+			for (const config &section : help_config->child_range(str_section))
 			{
-				const std::string id = section["id"];
+				const std::string id = section[str_id];
 				if (find_section(default_toplevel, id) == nullptr) {
 					// This section does not exist referenced from the
 					// toplevel. Hence, add it to the hidden ones if it
@@ -1556,11 +1556,11 @@ void generate_contents()
 					}
 				}
 			}
-			hidden_toplevel["sections"] = ss.str();
+			hidden_toplevel[str_sections] = ss.str();
 			ss.str("");
-			for (const config &topic : help_config->child_range("topic"))
+			for (const config &topic : help_config->child_range(str_topic))
 			{
-				const std::string id = topic["id"];
+				const std::string id = topic[str_id];
 				if (find_topic(default_toplevel, id) == nullptr) {
 					if (!topic_is_referenced(id, *help_config)) {
 						if (!ss.str().empty()) {
@@ -1570,11 +1570,11 @@ void generate_contents()
 					}
 				}
 			}
-			hidden_toplevel["topics"] = ss.str();
+			hidden_toplevel[str_topics] = ss.str();
 			config hidden_cfg = *help_config;
 			// Change the toplevel to our new, custom built one.
-			hidden_cfg.clear_children("toplevel");
-			hidden_cfg.add_child("toplevel", std::move(hidden_toplevel));
+			hidden_cfg.clear_children(str_toplevel);
+			hidden_cfg.add_child(str_toplevel, std::move(hidden_toplevel));
 			hidden_sections = parse_config(&hidden_cfg);
 		}
 		catch (parse_error& e) {

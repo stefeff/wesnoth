@@ -25,9 +25,9 @@
 config replay_helper::get_recruit(const std::string& type_id, const map_location& loc, const map_location& from)
 {
 	config val;
-	val["type"] = type_id;
+	val[str_type] = type_id;
 	loc.write(val);
-	config& leader_position = val.add_child("from");
+	config& leader_position = val.add_child(str_from);
 	from.write(leader_position);
 
 	return val;
@@ -37,9 +37,9 @@ config replay_helper::get_recall(const std::string& unit_id, const map_location&
 {
 
 	config val;
-	val["value"] = unit_id;
+	val[str_value] = unit_id;
 	loc.write(val);
-	config& leader_position = val.add_child("from");
+	config& leader_position = val.add_child(str_from);
 	from.write(leader_position);
 
 	return val;
@@ -49,7 +49,7 @@ config replay_helper::get_disband(const std::string& unit_id)
 {
 	config val;
 
-	val["value"] = unit_id;
+	val[str_value] = unit_id;
 
 	return val;
 }
@@ -68,11 +68,11 @@ config replay_helper::get_movement(const std::vector<map_location>& steps, bool 
 	if(skip_sighted)
 	{
 		//note, that skip_ally_sighted has no effect if skip_sighted is true
-		move["skip_sighted"] = "all";
+		move[str_skip_sighted] = "all";
 	}
 	else if(skip_ally_sighted && !skip_sighted)
 	{
-		move["skip_sighted"] = "only_ally";
+		move[str_skip_sighted] = "only_ally";
 	}
 	else
 	{
@@ -95,18 +95,18 @@ config replay_helper::get_attack(const map_location& a, const map_location& b,
 	a.write(src);
 	b.write(dst);
 
-	move.add_child("source", std::move(src));
-	move.add_child("destination", std::move(dst));
+	move.add_child(str_source, std::move(src));
+	move.add_child(str_destination, std::move(dst));
 
 
-	move["weapon"] = att_weapon;
-	move["defender_weapon"] = def_weapon;
-	move["attacker_type"] = attacker_type_id;
-	move["defender_type"] = defender_type_id;
-	move["attacker_lvl"] = attacker_lvl;
-	move["defender_lvl"] = defender_lvl;
-	move["turn"] = static_cast<int>(turn);
-	move["tod"] = t.id;
+	move[str_weapon] = att_weapon;
+	move[str_defender_weapon] = def_weapon;
+	move[str_attacker_type] = attacker_type_id;
+	move[str_defender_type] = defender_type_id;
+	move[str_attacker_lvl] = attacker_lvl;
+	move[str_defender_lvl] = defender_lvl;
+	move[str_turn] = static_cast<int>(turn);
+	move[str_tod] = t.id;
 	/*
 	add_unit_checksum(a,current_);
 	add_unit_checksum(b,current_);
@@ -120,7 +120,7 @@ config replay_helper::get_attack(const map_location& a, const map_location& b,
 config replay_helper::get_auto_shroud(bool turned_on)
 {
 	config child;
-	child["active"] = turned_on;
+	child[str_active] = turned_on;
 	return child;
 }
 
@@ -136,21 +136,21 @@ config replay_helper::get_update_shroud()
 config replay_helper::get_init_side()
 {
 	config init_side;
-		init_side["side_number"] = resources::controller->current_side();
+		init_side[str_side_number] = resources::controller->current_side();
 	return init_side;
 }
 
 config replay_helper::get_event(const std::string& name, const map_location& loc, const map_location*  last_select_loc)
 {
 	config ev;
-	ev["raise"] = name;
+	ev[str_raise] = name;
 	if(loc.valid()) {
-		config& source = ev.add_child("source");
+		config& source = ev.add_child(str_source);
 		loc.write(source);
 	}
 	if(last_select_loc != nullptr && last_select_loc->valid())
 	{
-		config& source = ev.add_child("last_select");
+		config& source = ev.add_child(str_last_select);
 		last_select_loc->write(source);
 	}
 	return ev;
@@ -159,6 +159,6 @@ config replay_helper::get_event(const std::string& name, const map_location& loc
 config replay_helper::get_lua_ai(const std::string& lua_code)
 {
 	config child;
-	child["code"] = lua_code;
+	child[str_code] = lua_code;
 	return child;
 }

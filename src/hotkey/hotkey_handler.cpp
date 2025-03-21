@@ -233,7 +233,7 @@ void play_controller::hotkey_handler::toggle_accelerated_speed()
 	if (preferences::turbo())
 	{
 		utils::string_map symbols;
-		symbols["hk"] = hotkey::get_names(hotkey::hotkey_command::get_command_by_command(hotkey::HOTKEY_ACCELERATED).id);
+		symbols[str_hk] = hotkey::get_names(hotkey::hotkey_command::get_command_by_command(hotkey::HOTKEY_ACCELERATED).id);
 		gui()->announce(_("Accelerated speed enabled!") + "\n" + VGETTEXT("(press $hk to disable)", symbols), font::NORMAL_COLOR, ao);
 	}
 	else
@@ -439,7 +439,7 @@ void play_controller::hotkey_handler::expand_autosaves(std::vector<config>& item
 	foreach_autosave(play_controller_.turn(), saved_game_, [&](int turn, const std::string& filename) {
 		// TODO: should this use variable substitution instead?
 		std::string label = turn > 0 ? _("Back to Turn ") + std::to_string(turn) : _("Back to Start");
-		newitems.emplace_back("label", label, "id", quickload_prefix + filename);
+		newitems.emplace_back(str_label, label, str_id, quickload_prefix + filename);
 	});
 	// Make sure list doesn't get too long: keep top two, midpoint and bottom.
 	trim_items(newitems);
@@ -455,7 +455,7 @@ void play_controller::hotkey_handler::expand_quickreplay(std::vector<config>& it
 	foreach_autosave(play_controller_.turn(), saved_game_, [&](int turn, const std::string& filename) {
 		// TODO: should this use variable substitution instead?
 		std::string label = turn > 0 ? _("Replay from Turn ") + std::to_string(turn) : _("Replay from Start");
-		newitems.emplace_back("label", label, "id", quickreplay_prefix + filename);
+		newitems.emplace_back(str_label, label, str_id, quickreplay_prefix + filename);
 	});
 	// Make sure list doesn't get too long: keep top two, midpoint and bottom.
 	trim_items(newitems);
@@ -486,22 +486,22 @@ void play_controller::hotkey_handler::show_menu(const std::vector<config>& items
 	std::vector<config> items;
 	for(const auto& item : items_arg) {
 
-		std::string id = item["id"];
+		std::string id = item[str_id];
 		hotkey::ui_command cmd = hotkey::ui_command(id);
 
 		if(id == "wml" || (can_execute_command(cmd) && (!context_menu || in_context_menu(cmd)))) {
-			items.emplace_back("id", id);
+			items.emplace_back(str_id, id);
 		}
 	}
 
 
 	// Iterate in reverse to avoid also iterating over the new inserted items
 	for(int i = items.size() - 1; i >= 0; i--) {
-		if(items[i]["id"] == "AUTOSAVES") {
+		if(items[i][str_id] == "AUTOSAVES") {
 			expand_autosaves(items, i);
-		} else if(items[i]["id"] == "QUICKREPLAY") {
+		} else if(items[i][str_id] == "QUICKREPLAY") {
 			expand_quickreplay(items, i);
-		} else if(items[i]["id"] == "wml") {
+		} else if(items[i][str_id] == "wml") {
 			expand_wml_commands(items, i);
 		}
 	}

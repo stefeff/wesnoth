@@ -98,10 +98,10 @@ config& config::operator=(config&& cfg)
 
 bool config::valid_tag(config_key_type name)
 {
-	if(name == "") {
+	if(name.empty()) {
 		// Empty strings not allowed
 		return false;
-	} else if(name == "_") {
+	} else if(name == str__) {
 		// A lone underscore isn't a valid tag name
 		return false;
 	} else {

@@ -66,25 +66,25 @@ void unit_advance::pre_show(window& window)
 		// This checks if we've finished iterating over the last unit type advancements
 		// and are into the modification-based advancements.
 		if(i >= last_real_advancement_) {
-			const auto range = sample.get_modifications().child_range("advancement");
+			const auto range = sample.get_modifications().child_range(str_advancement);
 			const auto& back = range.back();
 
-			if(back.has_attribute("image")) {
-				image_string = back["image"].str();
+			if(back.has_attribute(str_image)) {
+				image_string = back[str_image].str();
 			}
 
-			name = back["description"].str();
+			name = back[str_description].str();
 		}
 
 		if(image_string.empty()) {
 			image_string = sample.type().image() + sample.image_mods();
 		}
 
-		column["label"] = image_string;
-		row_data.emplace("advancement_image", column);
+		column[str_label] = image_string;
+		row_data.emplace(str_advancement_image, column);
 
-		column["label"] = name;
-		row_data.emplace("advancement_name", column);
+		column[str_label] = name;
+		row_data.emplace(str_advancement_name, column);
 
 		list.add_row(row_data);
 	}

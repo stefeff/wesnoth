@@ -67,9 +67,9 @@ void mp_match_history::pre_show(window& win)
 	search_player.set_value(player_name_);
 
 	std::vector<config> content_types;
-	content_types.emplace_back("label", _("Scenario"));
-	content_types.emplace_back("label", _("Era"));
-	content_types.emplace_back("label", _("Modification"));
+	content_types.emplace_back(str_label, _("Scenario"));
+	content_types.emplace_back(str_label, _("Era"));
+	content_types.emplace_back(str_label, _("Modification"));
 
 	find_widget<menu_button>(&win, "search_content_type", false).set_values(content_types);
 
@@ -143,7 +143,7 @@ bool mp_match_history::update_display()
 	tab_bar->select_row(0);
 
 	int i = 0;
-	for(const config& game : history.mandatory_child("game_history_results").child_range("game_history_result")) {
+	for(const config& game : history.mandatory_child(str_game_history_results).child_range(str_game_history_result)) {
 		widget_data row;
 		grid& history_grid = history_box->add_row(row);
 
@@ -166,7 +166,7 @@ bool mp_match_history::update_display()
 
 		std::vector<std::string> player_list;
 		std::vector<std::string> player_faction_list;
-		for(const config& player : game.child_range("player")) {
+		for(const config& player : game.child_range(str_player)) {
 			player_list.emplace_back(font::unicode_bullet + " " + player[str_name].str() + ":");
 			player_faction_list.emplace_back(player[str_faction].str());
 		}
@@ -180,11 +180,11 @@ bool mp_match_history::update_display()
 		history_grid.find("player_grid", false)->set_visible(gui2::widget::visibility::invisible);
 
 		label* modifications = dynamic_cast<label*>(history_grid.find("modifications", false));
-		const auto& children = game.child_range("modification");
+		const auto& children = game.child_range(str_modification);
 		if(!children.empty()) {
 			std::vector<std::string> modifications_list;
 
-			for(const config& modification : game.child_range("modification")) {
+			for(const config& modification : game.child_range(str_modification)) {
 				modifications_list.emplace_back(font::unicode_bullet + " " + modification[str_name].str());
 			}
 
@@ -209,7 +209,7 @@ bool mp_match_history::update_display()
 
 	// the server returns up to 11 and the client displays at most 10
 	// if fewer than 11 rows are returned, then there are no older rows left to get next
-	if(history.child_count("game_history_result") < 11) {
+	if(history.child_count(str_game_history_result) < 11) {
 		button* older_history = find_widget<button>(get_window(), "older_history", false, true);
 		older_history->set_active(false);
 	} else {
@@ -223,7 +223,7 @@ bool mp_match_history::update_display()
 const config mp_match_history::request_history()
 {
 	config request;
-	config& child = request.add_child("game_history_request");
+	config& child = request.add_child(str_game_history_request);
 	child[str_offset] = offset_;
 	child[str_search_player] = player_name_;
 	child[str_search_game_name] = find_widget<text_box>(get_window(), "search_game_name", false).get_value();
@@ -243,14 +243,14 @@ const config mp_match_history::request_history()
 		// lobby responses are not received while this method is running, and are handled in the lobby after it completes
 		// history results are never received in the lobby
 		if(connection_.receive_data(response)) {
-			if(response.child_count("game_history_results") == 0) {
+			if(response.child_count(str_game_history_results) == 0) {
 				DBG_NW << "Received non-history data: " << response.debug();
 				if(!response[str_error].str().empty()) {
 					ERR_NW << "Received error from server: " << response[str_error].str();
 					gui2::show_error_message(_("The server responded with an error:")+" "+response[str_error].str());
 					return {};
 				}
-			} else if(response.mandatory_child("game_history_results").child_count("game_history_result") == 0) {
+			} else if(response.mandatory_child(str_game_history_results).child_count(str_game_history_result) == 0) {
 				DBG_NW << "Player has no game history data.";
 				gui2::show_error_message(_("No game history found."));
 				return {};

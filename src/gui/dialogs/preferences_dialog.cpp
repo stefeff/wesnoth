@@ -135,14 +135,14 @@ void preferences_dialog::set_resolution_list(menu_button& res_list)
 	std::vector<config> options;
 	for(const point& res : resolutions_) {
 		config option;
-		option["label"] = formatter() << res.x << font::unicode_multiplication_sign << res.y;
+		option[str_label] = formatter() << res.x << font::unicode_multiplication_sign << res.y;
 
 		const int div = std::gcd(res.x, res.y);
 		const int x_ratio = res.x / div;
 		const int y_ratio = res.y / div;
 
 		if(x_ratio <= 10 || y_ratio <= 10) {
-			option["details"] = formatter() << "<span color='#777777'>(" << x_ratio << ':' << y_ratio << ")</span>";
+			option[str_details] = formatter() << "<span color='#777777'>(" << x_ratio << ':' << y_ratio << ")</span>";
 		}
 
 		options.push_back(std::move(option));
@@ -161,7 +161,7 @@ void preferences_dialog::set_theme_list(menu_button& theme_list)
 	std::vector<config> options;
 	std::size_t current_theme = 0;
 	for(std::size_t i = 0; i < themes_.size(); ++i) {
-		options.emplace_back("label", themes_[i].name, "tooltip", themes_[i].description);
+		options.emplace_back(str_label, themes_[i].name, str_tooltip, themes_[i].description);
 		if(themes_[i].id == preferences::theme()) {
 			current_theme = i;
 		}
@@ -188,15 +188,15 @@ widget_data preferences_dialog::get_friends_list_row_data(const acquaintance& en
 		notes = " <small>(" + entry.get_notes() + ")</small>";
 	}
 
-	item["use_markup"] = "true";
+	item[str_use_markup] = "true";
 
-	item["label"] = "misc/status-" + image;
+	item[str_label] = "misc/status-" + image;
 	data.emplace("friend_icon", item);
 
-	item["label"] = entry.get_nick() + notes;
+	item[str_label] = entry.get_nick() + notes;
 	data.emplace("friend_name", item);
 
-	item["label"] = "<small>" + descriptor + "</small>";
+	item[str_label] = "<small>" + descriptor + "</small>";
 	data.emplace("friend_status", item);
 
 	return data;
@@ -636,7 +636,7 @@ void preferences_dialog::initialize_callbacks()
 	for(const auto& option : adv_preferences_) {
 		const std::string& pref_name = option.field;
 
-		row_data["pref_name"]["label"] = option.name;
+		row_data[str_pref_name][str_label] = option.name;
 		grid* main_grid = &advanced.add_row(row_data);
 
 		grid& details_grid = find_widget<grid>(main_grid, "prefs_setter_grid", false);
@@ -655,7 +655,7 @@ void preferences_dialog::initialize_callbacks()
 				//main_grid->remove_child("setter");
 
 				toggle_box.set_visible(widget::visibility::visible);
-				toggle_box.set_value(get(pref_name, option.cfg["default"].to_bool()));
+				toggle_box.set_value(get(pref_name, option.cfg[str_default].to_bool()));
 
 				// We need to bind a lambda here since preferences::set is overloaded.
 				// A lambda alone would be more verbose because it'd need to specify all the parameters.
@@ -670,17 +670,17 @@ void preferences_dialog::initialize_callbacks()
 			}
 
 			case avp::avd_type::SLIDER: {
-				auto setter_widget = build_single_widget_instance<slider>(config {"definition", "minimal"});
+				auto setter_widget = build_single_widget_instance<slider>(config {str_definition, "minimal"});
 				setter_widget->set_id("setter");
 				// Maximum must be set first or this will assert
-				setter_widget->set_value_range(option.cfg["min"].to_int(), option.cfg["max"].to_int());
-				setter_widget->set_step_size(option.cfg["step"].to_int(1));
+				setter_widget->set_value_range(option.cfg[str_min].to_int(), option.cfg[str_max].to_int());
+				setter_widget->set_step_size(option.cfg[str_step].to_int(1));
 
 				details_grid.swap_child("setter", std::move(setter_widget), true);
 
 				slider& slide = find_widget<slider>(&details_grid, "setter", false);
 
-				slide.set_value(lexical_cast_default<int>(get(pref_name), option.cfg["default"].to_int()));
+				slide.set_value(lexical_cast_default<int>(get(pref_name), option.cfg[str_default].to_int()));
 
 				// We need to bind a lambda here since preferences::set is overloaded.
 				// A lambda alone would be more verbose because it'd need to specify all the parameters.
@@ -697,19 +697,19 @@ void preferences_dialog::initialize_callbacks()
 				std::vector<config> menu_data;
 				std::vector<std::string> option_ids;
 
-				for(const config& choice : option.cfg.child_range("option")) {
+				for(const config& choice : option.cfg.child_range(str_option)) {
 					config menu_item;
-					menu_item["label"] = choice["name"];
-					if(choice.has_attribute("description")) {
-						menu_item["details"] = std::string("<span color='#777'>") + choice["description"] + "</span>";
+					menu_item[str_label] = choice[str_name];
+					if(choice.has_attribute(str_description)) {
+						menu_item[str_details] = std::string("<span color='#777'>") + choice[str_description] + "</span>";
 					}
 					menu_data.push_back(menu_item);
-					option_ids.push_back(choice["id"]);
+					option_ids.push_back(choice[str_id]);
 				}
 
 				// Attempt to find an initial selection
 				int selected = std::distance(option_ids.begin(), std::find(option_ids.begin(), option_ids.end(),
-					get(pref_name, option.cfg["default"].str())
+					get(pref_name, option.cfg[str_default].str())
 				));
 
 				// If the saved option value was invalid, reset selection to 0.
@@ -805,13 +805,13 @@ listbox& preferences_dialog::setup_hotkey_list()
 {
 	widget_data row_data;
 
-	t_string& row_icon   = row_data["img_icon"]["label"];
-	t_string& row_action = row_data["lbl_desc"]["label"];
-	t_string& row_hotkey = row_data["lbl_hotkey"]["label"];
+	t_string& row_icon   = row_data[str_img_icon][str_label];
+	t_string& row_action = row_data[str_lbl_desc][str_label];
+	t_string& row_hotkey = row_data[str_lbl_hotkey][str_label];
 
-	t_string& row_is_g   = row_data["lbl_is_game"]["label"];
-	t_string& row_is_e   = row_data["lbl_is_editor"]["label"];
-	t_string& row_is_m   = row_data["lbl_is_mainmenu"]["label"];
+	t_string& row_is_g   = row_data[str_lbl_is_game][str_label];
+	t_string& row_is_e   = row_data[str_lbl_is_editor][str_label];
+	t_string& row_is_m   = row_data[str_lbl_is_mainmenu][str_label];
 
 	listbox& hotkey_list = find_widget<listbox>(this, "list_hotkeys", false);
 
@@ -858,7 +858,7 @@ listbox& preferences_dialog::setup_hotkey_list()
 
 	std::vector<config> filter_ops;
 	for(const hotkey::HOTKEY_CATEGORY& cat : visible_categories_) {
-		filter_ops.emplace_back("label", hotkey::get_translatable_category_name(cat), "checkbox", false);
+		filter_ops.emplace_back(str_label, hotkey::get_translatable_category_name(cat), str_checkbox, false);
 	}
 
 	find_widget<multimenu_button>(this, "hotkey_category_menu", false).set_values(filter_ops);

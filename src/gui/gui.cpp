@@ -68,8 +68,8 @@ void init()
 	//
 	const std::string& current_theme = preferences::gui_theme();
 
-	for(const config& g : cfg.child_range("gui")) {
-		const std::string id = g["id"];
+	for(const config& g : cfg.child_range(str_gui)) {
+		const std::string id = g[str_id];
 
 		auto iter = guis.emplace(id, gui_definition(g)).first;
 

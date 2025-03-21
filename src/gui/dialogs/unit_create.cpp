@@ -100,12 +100,12 @@ void unit_create::pre_show(window& window)
 		widget_data row_data;
 		widget_item column;
 
-		column["label"] = units_.back()->race()->plural_name();
+		column[str_label] = units_.back()->race()->plural_name();
 		row_data.emplace("race", column);
 
-		column["label"] = units_.back()->type_name();
+		column[str_label] = units_.back()->type_name();
 		if(units_.back()->type_name().str() != units_.back()->id()) {
-			column["label"] += " (" + units_.back()->id() + ")";
+			column[str_label] += " (" + units_.back()->id() + ")";
 		}
 		row_data.emplace("unit_type", column);
 
@@ -193,7 +193,7 @@ void unit_create::list_item_clicked()
 
 	menu_button& var_box = find_widget<menu_button>(this, "variation_box", false);
 	std::vector<config> var_box_values;
-	var_box_values.emplace_back("label", _("unit_variation^Default Variation"), "variation_id", "");
+	var_box_values.emplace_back(str_label, _("unit_variation^Default Variation"), str_variation_id, "");
 
 	const auto& ut = *units_[selected_row];
 	const auto& uvars = ut.variation_types();
@@ -217,7 +217,7 @@ void unit_create::list_item_clicked()
 			uv_label = uv_id;
 		}
 
-		var_box_values.emplace_back("label", uv_label, "variation_id", uv_id);
+		var_box_values.emplace_back(str_label, uv_label, str_variation_id, uv_id);
 
 		if(uv_id == variation_) {
 			selection = n;
@@ -289,7 +289,7 @@ void unit_create::gender_toggle_callback(const unit_race::GENDER val)
 void unit_create::variation_menu_callback()
 {
 	menu_button& var_box = find_widget<menu_button>(this, "variation_box", false);
-	variation_ = var_box.get_value_config()["variation_id"].str();
+	variation_ = var_box.get_value_config()[str_variation_id].str();
 
 	update_displayed_type();
 }

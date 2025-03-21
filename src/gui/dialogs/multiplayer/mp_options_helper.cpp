@@ -40,8 +40,8 @@ mp_options_helper::mp_options_helper(window& window, ng::create_engine& create_e
 	, options_data_()
 {
 	for(const auto c : preferences::options().all_children_range()) {
-		for(const auto& saved_option : c.cfg.child_range("option")) {
-			options_data_[c.cfg["id"]][saved_option["id"]] = saved_option["value"];
+		for(const auto& saved_option : c.cfg.child_range(str_option)) {
+			options_data_[c.cfg[str_id]][saved_option[str_id]] = saved_option[str_value];
 		}
 	}
 
@@ -156,7 +156,7 @@ void mp_options_helper::update_options_data_map(toggle_button* widget, const opt
 
 void mp_options_helper::update_options_data_map_menu_button(menu_button* widget, const option_source& source, const config& cfg)
 {
-	options_data_[source.id][widget->id()] = cfg.child_range("item")[widget->get_value()]["value"].str();
+	options_data_[source.id][widget->id()] = cfg.child_range(str_item)[widget->get_value()][str_value].str();
 }
 
 void mp_options_helper::reset_options_data(const option_source& source, bool& handled, bool& halt)
@@ -184,15 +184,15 @@ std::pair<T*, config::attribute_value> mp_options_helper::add_node_and_get_widge
 	T* widget = dynamic_cast<T*>(node.find(id, true));
 	VALIDATE(widget, missing_widget(id));
 
-	const std::string widget_id = cfg["id"];
+	const std::string widget_id = cfg[str_id];
 
 	auto& option_config = options_data_[visible_options_.back().id];
 	if(!option_config.has_attribute(widget_id) || option_config[widget_id].empty()) {
-		option_config[widget_id] = cfg["default"];
+		option_config[widget_id] = cfg[str_default];
 	}
 
 	widget->set_id(widget_id);
-	widget->set_tooltip(cfg["description"]);
+	widget->set_tooltip(cfg[str_description]);
 
 	return {widget, option_config[widget_id]};
 }
@@ -205,20 +205,20 @@ void mp_options_helper::display_custom_options(const std::string& type, int node
 	// This ensures that any game, era, or mod with no options doesn't get an entry in the visible_options_
 	// vector and prevents invalid options from different games, era, or mods being created when the options
 	// config is created.
-	if(!cfg.has_child("options")) {
+	if(!cfg.has_child(str_options)) {
 		return;
 	}
 
-	visible_options_.push_back({type, cfg["id"]});
+	visible_options_.push_back({type, cfg[str_id]});
 
 	// Get the node vector for this specific source type
 	node_vector& type_node_vector = node_data_map_[type].nodes;
 
-	for(const auto& options : cfg.child_range("options")) {
+	for(const auto& options : cfg.child_range(str_options)) {
 		widget_data data;
 		widget_item item;
 
-		item["label"] = cfg["name"];
+		item[str_label] = cfg[str_name];
 		data.emplace("tree_view_node_label", item);
 
 		tree_view_node& option_node = options_tree_.add_node("option_node", data, node_position);
@@ -231,7 +231,7 @@ void mp_options_helper::display_custom_options(const std::string& type, int node
 			const config& option_cfg = opt.cfg;
 
 			const auto add_name = [&](const std::string& id) {
-				item["label"] = option_cfg["name"];
+				item[str_label] = option_cfg[str_name];
 				data.emplace(id, item);
 			};
 
@@ -252,7 +252,7 @@ void mp_options_helper::display_custom_options(const std::string& type, int node
 				option_node.add_child("options_spacer_node", empty_map);
 
 			} else if(opt.key == "choice") {
-				if(!option_cfg.has_child("item")) {
+				if(!option_cfg.has_child(str_item)) {
 					continue;
 				}
 
@@ -261,12 +261,12 @@ void mp_options_helper::display_custom_options(const std::string& type, int node
 				std::vector<config> combo_items;
 				std::vector<std::string> combo_values;
 
-				for(auto i : option_cfg.child_range("item")) {
+				for(auto i : option_cfg.child_range(str_item)) {
 					// Comboboxes expect this key to be 'label' not 'name'
-					i["label"] = i["name"];
+					i[str_label] = i[str_name];
 
 					combo_items.push_back(i);
-					combo_values.push_back(i["value"]);
+					combo_values.push_back(i[str_value]);
 				}
 
 				menu_button* menu;
@@ -290,8 +290,8 @@ void mp_options_helper::display_custom_options(const std::string& type, int node
 				slider* slide;
 				std::tie(slide, val) = add_node_and_get_widget<slider>(option_node, "option_slider", data, option_cfg);
 
-				slide->set_value_range(option_cfg["min"].to_int(), option_cfg["max"].to_int());
-				slide->set_step_size(option_cfg["step"].to_int(1));
+				slide->set_value_range(option_cfg[str_min].to_int(), option_cfg[str_max].to_int());
+				slide->set_step_size(option_cfg[str_step].to_int(1));
 				slide->set_value(val.to_int());
 
 				connect_signal_notify_modified(*slide,
@@ -323,13 +323,13 @@ config mp_options_helper::get_options_config()
 	config options;
 	for(const auto& source : visible_options_) {
 		config& mod = options.add_child(source.level_type);
-		mod["id"] = source.id;
+		mod[str_id] = source.id;
 #if 0
 		// TODO: enable this as soon as we drop the old mp configure screen.
 		mod.add_child("options", options_data_[source.id]);
 #else
 		for(const auto& option : options_data_[source.id].attribute_range()) {
-			mod.add_child("option", config {"id", option.first, "value", option.second});
+			mod.add_child(str_option, config {str_id, option.first, str_value, option.second});
 		}
 #endif
 	}

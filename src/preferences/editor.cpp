@@ -88,9 +88,9 @@ namespace editor {
 				return mru;
 			}
 
-			for(const config& child : cfg->child_range("entry"))
+			for(const config& child : cfg->child_range(str_entry))
 			{
-				const std::string& entry = child["path"].str();
+				const std::string& entry = child[str_path].str();
 				if(!entry.empty()) {
 					mru.push_back(entry);
 				}
@@ -112,8 +112,8 @@ namespace editor {
 					continue;
 				}
 
-				config& child = cfg.add_child("entry");
-				child["path"] = entry;
+				config& child = cfg.add_child(str_entry);
+				child[str_path] = entry;
 
 				if(++n >= editor_mru_limit()) {
 					break;

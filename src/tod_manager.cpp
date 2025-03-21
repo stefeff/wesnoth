@@ -41,15 +41,15 @@ tod_manager::tod_manager(const config& scenario_cfg)
 	, times_()
 	, areas_()
 	, liminal_bonus_(25)
-	, turn_(scenario_cfg["turn_at"].to_int(1))
-	, num_turns_(scenario_cfg["turns"].to_int(-1))
-	, has_turn_event_fired_(!scenario_cfg["it_is_a_new_turn"].to_bool(true))
+	, turn_(scenario_cfg[str_turn_at].to_int(1))
+	, num_turns_(scenario_cfg[str_turns].to_int(-1))
+	, has_turn_event_fired_(!scenario_cfg[str_it_is_a_new_turn].to_bool(true))
 	, has_tod_bonus_changed_(false)
 	, has_cfg_liminal_bonus_(false)
 {
 	// ? : operator doesn't work in this case.
-	if(scenario_cfg["current_time"].to_int(-17403) == -17403) {
-		random_tod_ = scenario_cfg["random_start_time"];
+	if(scenario_cfg[str_current_time].to_int(-17403) == -17403) {
+		random_tod_ = scenario_cfg[str_random_start_time];
 	} else {
 		random_tod_ = false;
 	}
@@ -57,13 +57,13 @@ tod_manager::tod_manager(const config& scenario_cfg)
 	time_of_day::parse_times(scenario_cfg, times_);
 	liminal_bonus_ = std::max(25, calculate_best_liminal_bonus(times_));
 
-	if(scenario_cfg.has_attribute("liminal_bonus")) {
-		liminal_bonus_ = scenario_cfg["liminal_bonus"].to_int(liminal_bonus_);
+	if(scenario_cfg.has_attribute(str_liminal_bonus)) {
+		liminal_bonus_ = scenario_cfg[str_liminal_bonus].to_int(liminal_bonus_);
 		has_cfg_liminal_bonus_ = true;
 	}
 
 	// We need to call parse_times before fix_time_index because otherwise the first parameter will always be 0.
-	currentTime_ = fix_time_index(times_.size(), scenario_cfg["current_time"].to_int(0));
+	currentTime_ = fix_time_index(times_.size(), scenario_cfg[str_current_time].to_int(0));
 }
 
 void tod_manager::resolve_random(randomness::rng& r)
@@ -98,19 +98,19 @@ void tod_manager::resolve_random(randomness::rng& r)
 config tod_manager::to_config(std::string textdomain) const
 {
 	config cfg;
-	cfg["turn_at"] = turn_;
-	cfg["turns"] = num_turns_;
+	cfg[str_turn_at] = turn_;
+	cfg[str_turns] = num_turns_;
 
 	// this 'if' is for the editor.
 	if(times_.size() != 0) {
-		cfg["current_time"] = currentTime_;
+		cfg[str_current_time] = currentTime_;
 	}
 
-	cfg["random_start_time"] = random_tod_;
-	cfg["it_is_a_new_turn"] = !has_turn_event_fired_;
+	cfg[str_random_start_time] = random_tod_;
+	cfg[str_it_is_a_new_turn] = !has_turn_event_fired_;
 
 	if(has_cfg_liminal_bonus_) {
-		cfg["liminal_bonus"] = liminal_bonus_;
+		cfg[str_liminal_bonus] = liminal_bonus_;
 	}
 
 	for(const time_of_day& tod : times_) {
@@ -127,8 +127,8 @@ config tod_manager::to_config(std::string textdomain) const
 		if(a_tod.xsrc.empty() && a_tod.ysrc.empty()) {
 			write_location_range(a_tod.hexes, area);
 		} else {
-			area["x"] = a_tod.xsrc;
-			area["y"] = a_tod.ysrc;
+			area[str_x] = a_tod.xsrc;
+			area[str_y] = a_tod.ysrc;
 		}
 
 		for(const time_of_day& tod : a_tod.times) {
@@ -138,10 +138,10 @@ config tod_manager::to_config(std::string textdomain) const
 			}
 		}
 
-		area["current_time"] = a_tod.currentTime;
+		area[str_current_time] = a_tod.currentTime;
 
 		if(!a_tod.id.empty()) {
-			area["id"] = a_tod.id;
+			area[str_id] = a_tod.id;
 		}
 	}
 
@@ -293,7 +293,7 @@ void tod_manager::replace_schedule(const config& time_cfg)
 {
 	std::vector<time_of_day> new_scedule;
 	time_of_day::parse_times(time_cfg, new_scedule);
-	replace_schedule(new_scedule, time_cfg["current_time"].to_int(0));
+	replace_schedule(new_scedule, time_cfg[str_current_time].to_int(0));
 }
 
 void tod_manager::replace_schedule(const std::vector<time_of_day>& schedule, int initial_time)
@@ -387,10 +387,10 @@ void tod_manager::add_time_area(const gamemap& map, const config& cfg)
 {
 	areas_.emplace_back();
 	area_time_of_day& area = areas_.back();
-	area.id = cfg["id"].str();
-	area.xsrc = cfg["x"].str();
-	area.ysrc = cfg["y"].str();
-	area.currentTime = cfg["current_time"].to_int(0);
+	area.id = cfg[str_id].str();
+	area.xsrc = cfg[str_x].str();
+	area.ysrc = cfg[str_y].str();
+	area.currentTime = cfg[str_current_time].to_int(0);
 	const std::vector<map_location>& locs(map.parse_location_range(area.xsrc, area.ysrc, true));
 	area.hexes.insert(locs.begin(), locs.end());
 	time_of_day::parse_times(cfg, area.times);
@@ -403,7 +403,7 @@ void tod_manager::add_time_area(const std::string& id, const std::set<map_locati
 	area_time_of_day& area = areas_.back();
 	area.id = id;
 	area.hexes = locs;
-	area.currentTime = time_cfg["current_time"].to_int(0);
+	area.currentTime = time_cfg[str_current_time].to_int(0);
 	time_of_day::parse_times(time_cfg, area.times);
 	has_tod_bonus_changed_ = true;
 }

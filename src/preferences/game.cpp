@@ -80,9 +80,9 @@ manager::~manager()
 	config campaigns;
 	for(const auto& elem : completed_campaigns) {
 		config cmp;
-		cmp["name"] = elem.first;
-		cmp["difficulty_levels"] = utils::join(elem.second);
-		campaigns.add_child("campaign", cmp);
+		cmp[str_name] = elem.first;
+		cmp[str_difficulty_levels] = utils::join(elem.second);
+		campaigns.add_child(str_campaign, cmp);
 	}
 
 	preferences::set_child("completed_campaigns", campaigns);
@@ -104,13 +104,13 @@ manager::~manager()
 		for(const std::string& line : history_id.second) {
 			config cfg; // [line]
 
-			cfg["message"] = line;
-			history_id_cfg.add_child("line", std::move(cfg));
+			cfg[str_message] = line;
+			history_id_cfg.add_child(str_line, std::move(cfg));
 		}
 
 		history.add_child(history_id.first, history_id_cfg);
 	}
-	preferences::set_child("history", history);
+	preferences::set_child(str_history, history);
 
 	history_map.clear();
 	encountered_units_set.clear();
@@ -139,10 +139,10 @@ void load_game_prefs()
 		completed_campaigns[c]; // create the elements
 	}
 
-	if(auto ccc = preferences::get_child("completed_campaigns")) {
-		for(const config& cc : ccc->child_range("campaign")) {
-			std::set<std::string>& d = completed_campaigns[cc["name"]];
-			std::vector<std::string> nd = utils::split(cc["difficulty_levels"]);
+	if(auto ccc = preferences::get_child(str_completed_campaigns)) {
+		for(const config& cc : ccc->child_range(str_campaign)) {
+			std::set<std::string>& d = completed_campaigns[cc[str_name]];
+			std::vector<std::string> nd = utils::split(cc[str_difficulty_levels]);
 			std::copy(nd.begin(), nd.end(), std::inserter(d, d.begin()));
 		}
 	}
@@ -152,7 +152,7 @@ void load_game_prefs()
 	const t_translation::ter_list terrain(t_translation::read_list(preferences::get("encountered_terrain_list")));
 	encountered_terrains_set.insert(terrain.begin(), terrain.end());
 
-	if(auto history = preferences::get_child("history")) {
+	if(auto history = preferences::get_child(str_history)) {
 		/* Structure of the history
 			[history]
 				[history_id]
@@ -161,8 +161,8 @@ void load_game_prefs()
 					[/line]
 		*/
 		for(const config::any_child h : history->all_children_range()) {
-			for(const config& l : h.cfg.child_range("line")) {
-				history_map[h.key].push_back(l["message"]);
+			for(const config& l : h.cfg.child_range(str_line)) {
+				history_map[h.key].push_back(l[str_message]);
 			}
 		}
 	}
@@ -171,7 +171,7 @@ void load_game_prefs()
 static void load_acquaintances()
 {
 	if(acquaintances.empty()) {
-		for(const config& acfg : preferences::get_prefs()->child_range("acquaintance")) {
+		for(const config& acfg : preferences::get_prefs()->child_range(str_acquaintance)) {
 			acquaintance ac = acquaintance(acfg);
 			acquaintances[ac.get_nick()] = ac;
 		}
@@ -181,10 +181,10 @@ static void load_acquaintances()
 static void save_acquaintances()
 {
 	config* cfg = preferences::get_prefs();
-	cfg->clear_children("acquaintance");
+	cfg->clear_children(str_acquaintance);
 
 	for(auto& a : acquaintances) {
-		config& item = cfg->add_child("acquaintance");
+		config& item = cfg->add_child(str_acquaintance);
 		a.second.save(item);
 	}
 }
@@ -363,10 +363,10 @@ std::vector<game_config::server_info> user_servers_list()
 {
 	std::vector<game_config::server_info> pref_servers;
 
-	for(const config& server : get_prefs()->child_range("server")) {
+	for(const config& server : get_prefs()->child_range(str_server)) {
 		pref_servers.emplace_back();
-		pref_servers.back().name = server["name"].str();
-		pref_servers.back().address = server["address"].str();
+		pref_servers.back().name = server[str_name].str();
+		pref_servers.back().address = server[str_address].str();
 	}
 
 	return pref_servers;
@@ -375,18 +375,18 @@ std::vector<game_config::server_info> user_servers_list()
 void set_user_servers_list(const std::vector<game_config::server_info>& value)
 {
 	config& prefs = *get_prefs();
-	prefs.clear_children("server");
+	prefs.clear_children(str_server);
 
 	for(const auto& svinfo : value) {
-		config& sv_cfg = prefs.add_child("server");
-		sv_cfg["name"] = svinfo.name;
-		sv_cfg["address"] = svinfo.address;
+		config& sv_cfg = prefs.add_child(str_server);
+		sv_cfg[str_name] = svinfo.name;
+		sv_cfg[str_address] = svinfo.address;
 	}
 }
 
 std::string network_host()
 {
-	const std::string res = preferences::get("host");
+	const std::string res = preferences::get(str_host);
 	if(res.empty()) {
 		return builtin_servers_list().front().address;
 	} else {
@@ -558,13 +558,13 @@ const config& options()
 		return option_values;
 	}
 
-	if(!preferences::get_child("options")) {
+	if(!preferences::get_child(str_options)) {
 		// It may be an invalid config, which would cause problems in
 		// multiplayer_create, so let's replace it with an empty but valid
 		// config
 		option_values.clear();
 	} else {
-		option_values = *preferences::get_child("options");
+		option_values = *preferences::get_child(str_options);
 	}
 
 	options_initialized = true;
@@ -574,7 +574,7 @@ const config& options()
 
 void set_options(const config& values)
 {
-	preferences::set_child("options", values);
+	preferences::set_child(str_options, values);
 	options_initialized = false;
 }
 
@@ -1007,16 +1007,16 @@ void encounter_all_content(const game_board& gameboard_)
 
 void acquaintance::load_from_config(const config& cfg)
 {
-	nick_ = cfg["nick"].str();
-	status_ = cfg["status"].str();
-	notes_ = cfg["notes"].str();
+	nick_ = cfg[str_nick].str();
+	status_ = cfg[str_status].str();
+	notes_ = cfg[str_notes].str();
 }
 
 void acquaintance::save(config& item)
 {
-	item["nick"] = nick_;
-	item["status"] = status_;
-	item["notes"] = notes_;
+	item[str_nick] = nick_;
+	item[str_status] = status_;
+	item[str_notes] = notes_;
 }
 
 } // namespace preferences

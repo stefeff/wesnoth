@@ -77,10 +77,10 @@ void statistics_dialog::pre_show(window& window)
 	std::vector<config> menu_items;
 
 	// Keep this first!
-	menu_items.emplace_back("label", _("All Scenarios"));
+	menu_items.emplace_back(str_label, _("All Scenarios"));
 
 	for(const auto& scenario : scenarios_) {
-		menu_items.emplace_back("label", *scenario.first);
+		menu_items.emplace_back(str_label, *scenario.first);
 	}
 
 	menu_button& scenario_menu = find_widget<menu_button>(&window, "scenario_menu", false);
@@ -113,13 +113,13 @@ void statistics_dialog::add_stat_row(const std::string& type, const statistics_t
 	widget_data data;
 	widget_item item;
 
-	item["label"] = type;
+	item[str_label] = type;
 	data.emplace("stat_type", item);
 
-	item["label"] = std::to_string(statistics_t::sum_str_int_map(value));
+	item[str_label] = std::to_string(statistics_t::sum_str_int_map(value));
 	data.emplace("stat_detail", item);
 
-	item["label"] = has_cost ? std::to_string(statistics_t::sum_cost_str_int_map(value)) : font::unicode_em_dash;
+	item[str_label] = has_cost ? std::to_string(statistics_t::sum_cost_str_int_map(value)) : font::unicode_em_dash;
 	data.emplace("stat_cost", item);
 
 	stat_list.add_row(data);
@@ -155,7 +155,7 @@ void statistics_dialog::add_damage_row(
 	widget_data data;
 	widget_item item;
 
-	item["label"] = type;
+	item[str_label] = type;
 	data.emplace("damage_type", item);
 
 	static const int shift = statistics_t::stats::decimal_shift;
@@ -167,20 +167,20 @@ void statistics_dialog::add_damage_row(
 		return str.str();
 	};
 
-	item["label"] = damage_str(damage, expected);
+	item[str_label] = damage_str(damage, expected);
 	data.emplace("damage_overall", item);
 
-	item["label"] = "";
+	item[str_label] = "";
 	data.emplace("overall_score", item);
 
 	if(show_this_turn) {
 		label& this_turn_header = find_widget<label>(get_window(), "damage_this_turn_header", false);
 		this_turn_header.set_label(_("This Turn"));
 
-		item["label"] = damage_str(turn_damage, turn_expected);
+		item[str_label] = damage_str(turn_damage, turn_expected);
 		data.emplace("damage_this_turn", item);
 
-		item["label"] = "";
+		item[str_label] = "";
 		data.emplace("this_turn_score", item);
 	} else {
 		// TODO: Setting the label to "" causes "This Turn" not to be drawn when changing back to the current scenario view, so set the label to " " (a single space) instead.
@@ -229,10 +229,10 @@ static hitrate_table_element tally(const statistics_t::stats::hitrate_map& by_ct
 	// Compute the a priori probability of this actual result, by simulating many attacks against a single defender.
 	{
 		config defender_cfg(
-			"id", "statistics_dialog_dummy_defender",
-			"hide_help", true,
-			"do_not_list", true,
-			"hitpoints", overall_strikes
+			str_id, "statistics_dialog_dummy_defender",
+			str_hide_help, true,
+			str_do_not_list, true,
+			str_hitpoints, overall_strikes
 		);
 		unit_type defender_type(defender_cfg);
 		unit_types.build_unit_type(defender_type, unit_type::BUILD_STATUS::FULL);
@@ -243,20 +243,20 @@ static hitrate_table_element tally(const statistics_t::stats::hitrate_map& by_ct
 		for(const auto& i : by_cth) {
 			int cth = i.first;
 			config attacker_cfg(
-				"id", "statistics_dialog_dummy_attacker" + std::to_string(cth),
-				"hide_help", true,
-				"do_not_list", true,
-				"hitpoints", 1
+				str_id, "statistics_dialog_dummy_attacker" + std::to_string(cth),
+				str_hide_help, true,
+				str_do_not_list, true,
+				str_hitpoints, 1
 			);
 			unit_type attacker_type(attacker_cfg);
 			unit_types.build_unit_type(attacker_type, unit_type::BUILD_STATUS::FULL);
 
 			auto attack = std::make_shared<attack_type>(config(
-				"type", "blade",
-				"range", "melee",
-				"name", "dummy attack",
-				"damage", 1,
-				"number", i.second.strikes
+				str_type, "blade",
+				str_range, "melee",
+				str_name, "dummy attack",
+				str_damage, 1,
+				str_number, i.second.strikes
 			));
 
 			battle_context_unit_stats attacker_bc(&attacker_type, attack, true, &defender_type, nullptr, 100 - cth);
@@ -317,7 +317,7 @@ void statistics_dialog::add_hits_row(
 
 	hitrate_table_element element;
 
-	item["label"] = type;
+	item[str_label] = type;
 	data.emplace("hits_type", item);
 
 	const auto tooltip_static_part = _(
@@ -325,8 +325,8 @@ void statistics_dialog::add_hits_row(
 		"The first number in parentheses is the expected number of hits inflicted/taken.\n"
 		"The sum (or difference) of the two numbers in parentheses is the actual number of hits inflicted/taken.");
 	element = tally(by_cth, more_is_better);
-	item["tooltip"] = tooltip_static_part + element.tooltip;
-	item["label"] = element.hitrate_str;
+	item[str_tooltip] = tooltip_static_part + element.tooltip;
+	item[str_label] = element.hitrate_str;
 	data.emplace("hits_overall", item);
 
 	// Don't set the tooltip; it's set in WML.
@@ -337,8 +337,8 @@ void statistics_dialog::add_hits_row(
 		this_turn_header.set_label(_("This Turn"));
 
 		element = tally(turn_by_cth, more_is_better);
-		item["tooltip"] = tooltip_static_part + element.tooltip;
-		item["label"] = element.hitrate_str;
+		item[str_tooltip] = tooltip_static_part + element.tooltip;
+		item[str_label] = element.hitrate_str;
 		data.emplace("hits_this_turn", item);
 
 		// Don't set the tooltip; it's set in WML.
@@ -448,11 +448,11 @@ void statistics_dialog::on_primary_list_select()
 		widget_data data;
 		widget_item item;
 
-		item["label"] = (formatter() << type->image() << "~RC(" << type->flag_rgb() << ">" << current_team_.color() << ")").str();
+		item[str_label] = (formatter() << type->image() << "~RC(" << type->flag_rgb() << ">" << current_team_.color() << ")").str();
 		data.emplace("unit_image", item);
 
 		// Note: the x here is a font::unicode_multiplication_sign
-		item["label"] = VGETTEXT("$count|× $name", {{"count", std::to_string(i.second)}, {"name", type->type_name()}});
+		item[str_label] = VGETTEXT("$count|× $name", {{"count", std::to_string(i.second)}, {"name", type->type_name()}});
 		data.emplace("unit_name", item);
 
 		unit_list.add_row(data);

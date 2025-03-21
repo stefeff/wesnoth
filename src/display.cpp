@@ -215,7 +215,7 @@ display::display(const display_context* dc,
 
 	blindfold_ctr_ = 0;
 
-	read(level.child_or_empty("display"));
+	read(level.child_or_empty(str_display));
 
 	fill_images_list(game_config::fog_prefix, fog_images_);
 	fill_images_list(game_config::shroud_prefix, shroud_images_);
@@ -2956,14 +2956,14 @@ void display::refresh_report(const std::string& report_name, const config * new_
 	std::string str = item->prefix();
 	if (!str.empty()) {
 		config &e = report.add_child_at("element", config(), 0);
-		e["text"] = str;
-		e["tooltip"] = report.mandatory_child("element")["tooltip"];
+		e[str_text] = str;
+		e[str_tooltip] = report.mandatory_child("element")[str_tooltip];
 	}
 	str = item->postfix();
 	if (!str.empty()) {
 		config &e = report.add_child("element");
-		e["text"] = str;
-		e["tooltip"] = report.mandatory_child("element", -1)["tooltip"];
+		e[str_text] = str;
+		e[str_tooltip] = report.mandatory_child("element", -1)[str_tooltip];
 	}
 
 	// Do a fake run of drawing the report, so tooltips can be determined.
@@ -2999,7 +2999,7 @@ void display::draw_report(const std::string& report_name, bool tooltip_test)
 		SDL_Rect area {x, y, loc.w + loc.x - x, loc.h + loc.y - y};
 		if (area.h <= 0) break;
 
-		std::string t = elements.front()["text"];
+		std::string t = elements.front()[str_text];
 		if (!t.empty())
 		{
 			if (used_ellipsis) goto skip_element;
@@ -3036,7 +3036,7 @@ void display::draw_report(const std::string& report_name, bool tooltip_test)
 			const int minimal_text = 12; // width in pixels
 			config::const_child_iterator ee = elements.begin();
 			if (!eol && loc.w - (x - loc.x + tsize.x) < minimal_text &&
-				++ee != elements.end() && !(*ee)["text"].empty())
+				++ee != elements.end() && !(*ee)[str_text].empty())
 			{
 				// make this element longer to trigger rendering of ellipsis
 				// (to indicate that next elements have not enough space)
@@ -3068,7 +3068,7 @@ void display::draw_report(const std::string& report_name, bool tooltip_test)
 				x += area.w;
 			}
 		}
-		else if (!(t = elements.front()["image"].str()).empty())
+		else if (!(t = elements.front()[str_image].str()).empty())
 		{
 			if (used_ellipsis) goto skip_element;
 
@@ -3110,10 +3110,10 @@ void display::draw_report(const std::string& report_name, bool tooltip_test)
 		}
 
 		skip_element:
-		t = elements.front()["tooltip"].t_str().c_str();
+		t = elements.front()[str_tooltip].t_str().c_str();
 		if (!t.empty()) {
 			if (tooltip_test && !used_ellipsis) {
-				tooltips::add_tooltip(area, t, elements.front()["help"].t_str().c_str());
+				tooltips::add_tooltip(area, t, elements.front()[str_help].t_str().c_str());
 			} else {
 				// Collect all tooltips for the ellipsis.
 				// TODO: need a better separator
@@ -3309,19 +3309,19 @@ map_location display::get_middle_location() const
 
 void display::write(config& cfg) const
 {
-	cfg["view_locked"] = view_locked_;
-	cfg["color_adjust_red"] = color_adjust_.r;
-	cfg["color_adjust_green"] = color_adjust_.g;
-	cfg["color_adjust_blue"] = color_adjust_.b;
+	cfg[str_view_locked] = view_locked_;
+	cfg[str_color_adjust_red] = color_adjust_.r;
+	cfg[str_color_adjust_green] = color_adjust_.g;
+	cfg[str_color_adjust_blue] = color_adjust_.b;
 	get_middle_location().write(cfg.add_child("location"));
 }
 
 void display::read(const config& cfg)
 {
-	view_locked_ = cfg["view_locked"].to_bool(false);
-	color_adjust_.r = cfg["color_adjust_red"].to_int(0);
-	color_adjust_.g = cfg["color_adjust_green"].to_int(0);
-	color_adjust_.b = cfg["color_adjust_blue"].to_int(0);
+	view_locked_ = cfg[str_view_locked].to_bool(false);
+	color_adjust_.r = cfg[str_color_adjust_red].to_int(0);
+	color_adjust_.g = cfg[str_color_adjust_green].to_int(0);
+	color_adjust_.b = cfg[str_color_adjust_blue].to_int(0);
 }
 
 void display::process_reachmap_changes()

@@ -133,7 +133,7 @@ void help_text_area::set_items()
 				read(cfg, stream);
 
 #define TRY(name) do { \
-				if (auto child = cfg.optional_child(#name)) \
+				if (auto child = cfg.optional_child(str_##name)) \
 					handle_##name##_cfg(*child); \
 				} while (0)
 

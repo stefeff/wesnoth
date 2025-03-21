@@ -92,7 +92,7 @@ turn_info::PROCESS_DATA_RESULT turn_info::handle_turn(const config& t, bool chat
 	//t can contain a [command] or a [upload_log]
 	assert(t.all_children_count() == 1);
 
-	if(!t.child_or_empty("command").has_child("speak") && chat_only) {
+	if(!t.child_or_empty(str_command).has_child(str_speak) && chat_only) {
 		return PROCESS_CANNOT_HANDLE;
 	}
 	/** @todo FIXME: Check what commands we execute when it's our turn! */
@@ -135,50 +135,50 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 		ERR_NW << "processing network data while still having data on the replay.";
 	}
 
-	if (const auto message = cfg.optional_child("message"))
+	if (const auto message = cfg.optional_child(str_message))
 	{
-		game_display::get_singleton()->get_chat_manager().add_chat_message(std::time(nullptr), message.value()["sender"], message.value()["side"],
-				message.value()["message"], events::chat_handler::MESSAGE_PUBLIC,
+		game_display::get_singleton()->get_chat_manager().add_chat_message(std::time(nullptr), message.value()[str_sender], message.value()[str_side],
+				message.value()[str_message], events::chat_handler::MESSAGE_PUBLIC,
 				preferences::message_bell());
 	}
-	else if (auto whisper = cfg.optional_child("whisper") /*&& is_observer()*/)
+	else if (auto whisper = cfg.optional_child(str_whisper) /*&& is_observer()*/)
 	{
-		game_display::get_singleton()->get_chat_manager().add_chat_message(std::time(nullptr), "whisper: " + whisper["sender"].str(), 0,
-				whisper["message"], events::chat_handler::MESSAGE_PRIVATE,
+		game_display::get_singleton()->get_chat_manager().add_chat_message(std::time(nullptr), "whisper: " + whisper[str_sender].str(), 0,
+				whisper[str_message], events::chat_handler::MESSAGE_PRIVATE,
 				preferences::message_bell());
 	}
-	else if (auto observer = cfg.optional_child("observer") )
+	else if (auto observer = cfg.optional_child(str_observer) )
 	{
-		game_display::get_singleton()->get_chat_manager().add_observer(observer["name"]);
+		game_display::get_singleton()->get_chat_manager().add_observer(observer[str_name]);
 	}
-	else if (auto observer_quit = cfg.optional_child("observer_quit"))
+	else if (auto observer_quit = cfg.optional_child(str_observer_quit))
 	{
-		game_display::get_singleton()->get_chat_manager().remove_observer(observer_quit["name"]);
+		game_display::get_singleton()->get_chat_manager().remove_observer(observer_quit[str_name]);
 	}
-	else if (cfg.has_child("leave_game")) {
-		const bool has_reason = cfg.mandatory_child("leave_game").has_attribute("reason");
-		throw leavegame_wesnothd_error(has_reason ? cfg.mandatory_child("leave_game")["reason"].str() : "");
+	else if (cfg.has_child(str_leave_game)) {
+		const bool has_reason = cfg.mandatory_child(str_leave_game).has_attribute(str_reason);
+		throw leavegame_wesnothd_error(has_reason ? cfg.mandatory_child(str_leave_game)[str_reason].str() : "");
 	}
-	else if (auto turn = cfg.optional_child("turn"))
+	else if (auto turn = cfg.optional_child(str_turn))
 	{
 		return handle_turn(*turn, chat_only);
 	}
-	else if (cfg.has_child("whiteboard"))
+	else if (cfg.has_child(str_whiteboard))
 	{
 		set_scontext_unsynced scontext;
 		resources::whiteboard->process_network_data(cfg);
 	}
-	else if (auto change = cfg.optional_child("change_controller"))
+	else if (auto change = cfg.optional_child(str_change_controller))
 	{
 		if(change->empty()) {
 			ERR_NW << "Bad [change_controller] signal from server, [change_controller] tag was empty.";
 			return PROCESS_CONTINUE;
 		}
 
-		const int side = change["side"].to_int();
-		const bool is_local = change["is_local"].to_bool();
-		const std::string player = change["player"];
-		const std::string controller_type = change["controller"];
+		const int side = change[str_side].to_int();
+		const bool is_local = change[str_is_local].to_bool();
+		const std::string player = change[str_player];
+		const std::string controller_type = change[str_controller];
 		const std::size_t index = side - 1;
 		if(index >= resources::gameboard->teams().size()) {
 			ERR_NW << "Bad [change_controller] signal from server, side out of bounds: " << change->debug();
@@ -218,10 +218,10 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 		return restart ? PROCESS_RESTART_TURN : PROCESS_CONTINUE;
 	}
 
-	else if (auto side_drop_c = cfg.optional_child("side_drop"))
+	else if (auto side_drop_c = cfg.optional_child(str_side_drop))
 	{
 		// Only the host receives this message when a player leaves/disconnects.
-		const int  side_drop = side_drop_c["side_num"].to_int(0);
+		const int  side_drop = side_drop_c[str_side_num].to_int(0);
 		std::size_t index = side_drop -1;
 
 		bool restart = side_drop == game_display::get_singleton()->playing_side();
@@ -231,9 +231,9 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 			throw ingame_wesnothd_error("");
 		}
 
-		auto ctrl = side_controller::get_enum(side_drop_c["controller"].str());
+		auto ctrl = side_controller::get_enum(side_drop_c[str_controller].str());
 		if(!ctrl) {
-			ERR_NW << "unknown controller type issued from server on side drop: " << side_drop_c["controller"];
+			ERR_NW << "unknown controller type issued from server on side drop: " << side_drop_c[str_controller];
 			throw ingame_wesnothd_error("");
 		}
 
@@ -274,7 +274,7 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 				//if this is an ally of the dropping side and it is not us (choose local player
 				//if you want that) and not ai or empty and if it is not the dropping side itself,
 				//get this team in as well
-				t_vars["player"] = t->current_player();
+				t_vars[str_player] = t->current_player();
 				options.emplace_back(VGETTEXT("Give control to their ally $player", t_vars));
 				control_change_options++;
 			}
@@ -283,7 +283,7 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 
 			//get all observers in as options to transfer control
 			for (const std::string &screen_observers : game_display::get_singleton()->observers()) {
-				t_vars["player"] = screen_observers;
+				t_vars[str_player] = screen_observers;
 				options.emplace_back(VGETTEXT("Give control to observer $player", t_vars));
 				observers.push_back(screen_observers);
 				control_change_options++;
@@ -294,8 +294,8 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 			options.emplace_back(_("Set side to idle"));
 			options.emplace_back(_("Save and abort game"));
 
-			t_vars["player"] = tm.current_player();
-			t_vars["side_drop"] = std::to_string(side_drop);
+			t_vars[str_player] = tm.current_player();
+			t_vars[str_side_drop] = std::to_string(side_drop);
 			const std::string gettext_message =  VGETTEXT("$player who controlled side $side_drop has left the game. What do you want to do?", t_vars);
 			gui2::dialogs::simple_item_selector dlg("", gettext_message, options);
 			dlg.set_single_button(true);
@@ -362,7 +362,7 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 
 	// The host has ended linger mode in a campaign -> enable the "End scenario" button
 	// and tell we did get the notification.
-	else if (cfg.has_child("notify_next_scenario")) {
+	else if (cfg.has_child(str_notify_next_scenario)) {
 		if(chat_only) {
 			return PROCESS_CANNOT_HANDLE;
 		}
@@ -370,7 +370,7 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 	}
 
 	//If this client becomes the new host, notify the play_controller object about it
-	else if (cfg.has_child("host_transfer")){
+	else if (cfg.has_child(str_host_transfer)){
 		host_transfer_.notify_observers();
 	}
 	else
@@ -385,9 +385,9 @@ turn_info::PROCESS_DATA_RESULT turn_info::process_network_data(const config& cfg
 void turn_info::change_side_controller(int side, const std::string& player)
 {
 	config cfg;
-	config& change = cfg.add_child("change_controller");
-	change["side"] = side;
-	change["player"] = player;
+	config& change = cfg.add_child(str_change_controller);
+	change[str_side] = side;
+	change[str_player] = player;
 	resources::controller->send_to_wesnothd(cfg);
 }
 

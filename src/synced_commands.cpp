@@ -73,7 +73,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(recruit, child, use_undo, show, error_handler)
 	team &current_team = resources::gameboard->get_team(current_team_num);
 
 	map_location loc(child, resources::gamedata);
-	map_location from(child.child_or_empty("from"), resources::gamedata);
+	map_location from(child.child_or_empty(str_from), resources::gamedata);
 	// Validate "from".
 	if ( !from.valid() ) {
 		// This will be the case for AI recruits in replays saved
@@ -89,7 +89,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(recruit, child, use_undo, show, error_handler)
 	}
 
 	// Get the unit_type ID.
-	std::string type_id = child["type"];
+	std::string type_id = child[str_type];
 	if ( type_id.empty() ) {
 		error_handler("Recruitment is missing a unit type.");
 		return false;
@@ -137,9 +137,9 @@ SYNCED_COMMAND_HANDLER_FUNCTION(recall, child, use_undo, show, error_handler)
 	int current_team_num = resources::controller->current_side();
 	team &current_team = resources::gameboard->get_team(current_team_num);
 
-	const std::string& unit_id = child["value"];
+	const std::string& unit_id = child[str_value];
 	map_location loc(child, resources::gamedata);
-	map_location from(child.child_or_empty("from"), resources::gamedata);
+	map_location from(child.child_or_empty(str_from), resources::gamedata);
 
 	if ( !actions::recall_unit(unit_id, current_team, loc, from, map_location::NDIRECTIONS, show, use_undo) ) {
 		error_handler("illegal recall: unit_id '" + unit_id + "' could not be found within the recall list.\n");
@@ -151,8 +151,8 @@ SYNCED_COMMAND_HANDLER_FUNCTION(recall, child, use_undo, show, error_handler)
 
 SYNCED_COMMAND_HANDLER_FUNCTION(attack, child, /*use_undo*/, show, error_handler)
 {
-	const auto destination = child.optional_child("destination");
-	const auto source = child.optional_child("source");
+	const auto destination = child.optional_child(str_destination);
+	const auto source = child.optional_child(str_source);
 	//check_checksums(*cfg);
 
 	if (!destination) {
@@ -170,13 +170,13 @@ SYNCED_COMMAND_HANDLER_FUNCTION(attack, child, /*use_undo*/, show, error_handler
 	const map_location src(source.value(), resources::gamedata);
 	const map_location dst(destination.value(), resources::gamedata);
 
-	int weapon_num = child["weapon"];
+	int weapon_num = child[str_weapon];
 	// having defender_weapon in the replay fixes a bug (OOS) where one player (or observer) chooses a different defensive weapon.
 	// Xan pointed out this was a possibility: we calculate defense weapon
 	// now based on attack_prediction code, but this uses floating point
 	// calculations, which means that in the case where results are close,
 	// rounding differences can mean that both ends choose different weapons.
-	int def_weapon_num = child["defender_weapon"].to_int(-2);
+	int def_weapon_num = child[str_defender_weapon].to_int(-2);
 	if (def_weapon_num == -2) {
 		// Let's not gratuitously destroy backwards compatibility.
 		LOG_REPLAY << "Old data, having to guess weapon";
@@ -189,8 +189,8 @@ SYNCED_COMMAND_HANDLER_FUNCTION(attack, child, /*use_undo*/, show, error_handler
 		return false;
 	}
 
-	if (child.has_attribute("attacker_type")) {
-		const std::string &att_type_id = child["attacker_type"];
+	if (child.has_attribute(str_attacker_type)) {
+		const std::string &att_type_id = child[str_attacker_type];
 		if (u->type_id() != att_type_id) {
 			WRN_REPLAY << "unexpected attacker type: " << att_type_id << "(game state gives: " << u->type_id() << ")";
 		}
@@ -210,8 +210,8 @@ SYNCED_COMMAND_HANDLER_FUNCTION(attack, child, /*use_undo*/, show, error_handler
 		return false;
 	}
 
-	if (child.has_attribute("defender_type")) {
-		const std::string &def_type_id = child["defender_type"];
+	if (child.has_attribute(str_defender_type)) {
+		const std::string &def_type_id = child[str_defender_type];
 		if (tgt->type_id() != def_type_id) {
 			WRN_REPLAY << "unexpected defender type: " << def_type_id << "(game state gives: " << tgt->type_id() << ")";
 		}
@@ -236,7 +236,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(disband, child, /*use_undo*/, /*show*/, error_ha
 	int current_team_num = resources::controller->current_side();
 	team &current_team = resources::gameboard->get_team(current_team_num);
 
-	const std::string& unit_id = child["value"];
+	const std::string& unit_id = child[str_value];
 	std::size_t old_size = current_team.recall_list().size();
 
 	// Find the unit in the recall list.
@@ -304,11 +304,11 @@ SYNCED_COMMAND_HANDLER_FUNCTION(move, child,  use_undo, show, error_handler)
 	}
 	bool skip_sighted = false;
 	bool skip_ally_sighted = false;
-	if(child["skip_sighted"] == "all")
+	if(child[str_skip_sighted] == "all")
 	{
 		skip_sighted = true;
 	}
-	else if(child["skip_sighted"] == "only_ally")
+	else if(child[str_skip_sighted] == "only_ally")
 	{
 		skip_ally_sighted = true;
 	}
@@ -327,13 +327,13 @@ SYNCED_COMMAND_HANDLER_FUNCTION(fire_event, child,  use_undo, /*show*/, /*error_
 {
 	bool undoable = true;
 
-	if(const auto last_select = child.optional_child("last_select"))
+	if(const auto last_select = child.optional_child(str_last_select))
 	{
 		//the select event cannot clear the undo stack.
 		resources::game_events->pump().fire("select", map_location(last_select.value(), resources::gamedata));
 	}
-	const std::string &event_name = child["raise"];
-	if (const auto source = child.optional_child("source")) {
+	const std::string &event_name = child[str_raise];
+	if (const auto source = child.optional_child(str_source)) {
 		undoable = undoable & !std::get<0>(resources::game_events->pump().fire(event_name, map_location(source.value(), resources::gamedata)));
 	} else {
 		undoable = undoable & !std::get<0>(resources::game_events->pump().fire(event_name));
@@ -353,7 +353,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(fire_event, child,  use_undo, /*show*/, /*error_
 SYNCED_COMMAND_HANDLER_FUNCTION(custom_command, child,  use_undo, /*show*/, /*error_handler*/)
 {
 	assert(resources::lua_kernel);
-	resources::lua_kernel->custom_command(child["name"], child.child_or_empty("data"));
+	resources::lua_kernel->custom_command(child[str_name], child.child_or_empty(str_data));
 	if(use_undo) {
 		if(synced_context::undo_blocked()) {
 			resources::undo_stack->clear();
@@ -369,7 +369,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(auto_shroud, child,  use_undo, /*show*/, /*error
 	assert(use_undo);
 	team &current_team = resources::controller->current_team();
 
-	bool active = child["active"].to_bool();
+	bool active = child[str_active].to_bool();
 	if(active && !current_team.auto_shroud_updates()) {
 		resources::undo_stack->commit_vision();
 	}
@@ -411,12 +411,12 @@ namespace
 		std::string message;
 		utils::string_map i18n_vars = {{ "player", current_team.current_player() }};
 
-		if(i18n_vars["player"].empty()) {
-			i18n_vars["player"] = _("(unknown player)");
+		if(i18n_vars[str_player].empty()) {
+			i18n_vars[str_player] = _("(unknown player)");
 		}
 
 		if(message_is_command) {
-			i18n_vars["command"] = text;
+			i18n_vars[str_command] = text;
 			message = VGETTEXT("The :$command debug command was used during $player’s turn", i18n_vars);
 		} else {
 			message = VGETTEXT(text.c_str(), i18n_vars);
@@ -455,8 +455,8 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_terrain, child, use_undo, /*show*/, /*erro
 	debug_cmd_notification("terrain");
 
 	map_location loc(child);
-	const std::string& terrain_type = child["terrain_type"];
-	const std::string& mode_str = child["mode_str"];
+	const std::string& terrain_type = child[str_terrain_type];
+	const std::string& mode_str = child[str_mode_str];
 
 	bool result = resources::gameboard->change_terrain(loc, terrain_type, mode_str, false);
 	if(result) {
@@ -474,8 +474,8 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_unit, child,  use_undo, /*show*/, /*error_
 	}
 	debug_cmd_notification("unit");
 	map_location loc(child);
-	const std::string name = child["name"];
-	const std::string value = child["value"];
+	const std::string name = child[str_name];
+	const std::string value = child[str_value];
 
 	unit_map::iterator i = resources::gameboard->units().find(loc);
 	if (i == resources::gameboard->units().end()) {
@@ -547,9 +547,9 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_create_unit, child,  use_undo, /*show*/, e
 	debug_notification(N_("A unit was created using debug mode during $player’s turn"));
 	map_location loc(child);
 	resources::whiteboard->on_kill_unit();
-	const std::string& variation = child["variation"].str();
-	const unit_race::GENDER gender = string_gender(child["gender"], unit_race::NUM_GENDERS);
-	const unit_type *u_type = unit_types.find(child["type"]);
+	const std::string& variation = child[str_variation].str();
+	const unit_race::GENDER gender = string_gender(child[str_gender], unit_race::NUM_GENDERS);
+	const unit_type *u_type = unit_types.find(child[str_type]);
 	if (!u_type) {
 		error_handler("Invalid unit type");
 		return false;
@@ -592,7 +592,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_lua, child, use_undo, /*show*/, /*error_ha
 		resources::undo_stack->clear();
 	}
 	debug_cmd_notification("lua");
-	resources::lua_kernel->run(child["code"].str().c_str(), "debug command");
+	resources::lua_kernel->run(child[str_code].str().c_str(), "debug command");
 	resources::controller->pump().flush_messages();
 
 	return true;
@@ -605,7 +605,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_kill, child, use_undo, /*show*/, /*error_h
 	}
 	debug_cmd_notification("kill");
 
-	const map_location loc(child["x"].to_int(), child["y"].to_int(), wml_loc());
+	const map_location loc(child[str_x].to_int(), child[str_y].to_int(), wml_loc());
 	const unit_map::iterator i = resources::gameboard->units().find(loc);
 	if (i != resources::gameboard->units().end()) {
 		const int dying_side = i->side();
@@ -635,7 +635,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_next_level, child, use_undo, /*show*/, /*e
 
 	debug_cmd_notification("next_level");
 
-	std::string next_level = child["next_level"];
+	std::string next_level = child[str_next_level];
 	if (!next_level.empty())
 		resources::gamedata->set_next_scenario(next_level);
 	end_level_data e;
@@ -659,7 +659,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_turn_limit, child, use_undo, /*show*/, /*e
 
 	debug_cmd_notification("turn_limit");
 
-	resources::tod_manager->set_number_of_turns(child["turn_limit"].to_int(-1));
+	resources::tod_manager->set_number_of_turns(child[str_turn_limit].to_int(-1));
 	display::get_singleton()->queue_rerender();
 	return true;
 }
@@ -672,7 +672,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_turn, child, use_undo, /*show*/, /*error_h
 
 	debug_cmd_notification("turn");
 
-	resources::tod_manager->set_turn(child["turn"].to_int(1), resources::gamedata);
+	resources::tod_manager->set_turn(child[str_turn].to_int(1), resources::gamedata);
 
 	game_display::get_singleton()->new_turn();
 	display::get_singleton()->queue_rerender();
@@ -689,7 +689,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_set_var, child, use_undo, /*show*/, /*erro
 	debug_cmd_notification("set_var");
 
 	try {
-		resources::gamedata->set_variable(child["name"],child["value"]);
+		resources::gamedata->set_variable(child[str_name],child[str_value]);
 	}
 	catch(const invalid_variablename_exception&) {
 	//	command_failed(_("Variable not found"));
@@ -706,7 +706,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_gold, child, use_undo, /*show*/, /*error_h
 
 	debug_cmd_notification("gold");
 
-	resources::controller->current_team().spend_gold(-child["gold"].to_int(0));
+	resources::controller->current_team().spend_gold(-child[str_gold].to_int(0));
 	display::get_singleton()->queue_rerender();
 	return true;
 }
@@ -720,7 +720,7 @@ SYNCED_COMMAND_HANDLER_FUNCTION(debug_event, child, use_undo, /*show*/, /*error_
 
 	debug_cmd_notification("throw");
 
-	resources::controller->pump().fire(child["eventname"]);
+	resources::controller->pump().fire(child[str_eventname]);
 	display::get_singleton()->queue_rerender();
 
 	return true;

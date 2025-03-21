@@ -44,7 +44,7 @@ void playturn_network_adapter::read_from_network()
 		throw;
 	}
 	//ping is handeled by network.cpp and we can ignore it.
-	back.remove_attribute("ping");
+	back.remove_attribute(str_ping);
 	if((!has_data) || back.empty())
 	{
 		this->data_.pop_back();

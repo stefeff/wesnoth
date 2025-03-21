@@ -818,18 +818,18 @@ movetype::movetype() :
  * Constructor from a config
  */
 movetype::movetype(const config & cfg) :
-	movement_(cfg.child_or_empty("movement_costs"), mvj_params_, nullptr),
-	vision_(cfg.child_or_empty("vision_costs"), mvj_params_, &movement_),
-	jamming_(cfg.child_or_empty("jamming_costs"), mvj_params_, &vision_),
-	defense_(cfg.child_or_empty("defense")),
-	resist_(cfg.child_or_empty("resistance")),
-	flying_(cfg["flies"].to_bool(false))
+	movement_(cfg.child_or_empty(str_movement_costs), mvj_params_, nullptr),
+	vision_(cfg.child_or_empty(str_vision_costs), mvj_params_, &movement_),
+	jamming_(cfg.child_or_empty(str_jamming_costs), mvj_params_, &vision_),
+	defense_(cfg.child_or_empty(str_defense)),
+	resist_(cfg.child_or_empty(str_resistance)),
+	flying_(cfg[str_flies].to_bool(false))
 {
 	// 1.15 will support both "flying" and "flies", with "flies" being deprecated
-	flying_ = cfg["flying"].to_bool(flying_);
+	flying_ = cfg[str_flying].to_bool(flying_);
 
-	for(const config& sn : cfg.child_range("special_note")) {
-		special_notes_.push_back(sn["note"]);
+	for(const config& sn : cfg.child_range(str_special_note)) {
+		special_notes_.push_back(sn[str_note]);
 	}
 }
 
@@ -885,8 +885,8 @@ void movetype::merge(const config & new_cfg, bool overwrite)
 	// "flying" is used when WML defines a unit.
 	// It's easier to support both than to track which case we are in.
 	// Note: in 1.15 "flies" is deprecated, with "flying" preferred in movetype too.
-	flying_ = new_cfg["flies"].to_bool(flying_);
-	flying_ = new_cfg["flying"].to_bool(flying_);
+	flying_ = new_cfg[str_flies].to_bool(flying_);
+	flying_ = new_cfg[str_flying].to_bool(flying_);
 }
 
 void movetype::merge(const config & new_cfg, const std::string & applies_to, bool overwrite)
@@ -926,11 +926,11 @@ void movetype::write(config& cfg, bool include_notes) const
 	resist_.write(cfg, "resistance");
 
 	if(flying_)
-		cfg["flying"] = true;
+		cfg[str_flying] = true;
 
 	if(include_notes) {
 		for(const auto& note : special_notes_) {
-			cfg.add_child("special_note", config{"note", note});
+			cfg.add_child(str_special_note, config{str_note, note});
 		}
 	}
 }

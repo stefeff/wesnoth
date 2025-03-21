@@ -163,7 +163,7 @@ void mp_create_game::pre_show(window& win)
 	//
 	std::vector<config> game_types;
 	for(level_type_info& type_info : level_types_) {
-		game_types.emplace_back("label", type_info.second);
+		game_types.emplace_back(str_label, type_info.second);
 	}
 
 	if(game_types.empty()) {
@@ -201,7 +201,7 @@ void mp_create_game::pre_show(window& win)
 		widget_data data;
 		widget_item item;
 
-		item["label"] = mod->name;
+		item[str_label] = mod->name;
 		data.emplace("mod_name", item);
 
 		grid* row_grid = &mod_list_->add_row(data);
@@ -230,7 +230,7 @@ void mp_create_game::pre_show(window& win)
 
 	std::vector<config> era_names;
 	for(const auto& era : create_engine_.get_const_extras_by_type(ng::create_engine::ERA)) {
-		era_names.emplace_back("label", era->name, "tooltip", era->description);
+		era_names.emplace_back(str_label, era->name, str_tooltip, era->description);
 	}
 
 	if(era_names.empty()) {
@@ -336,7 +336,7 @@ void mp_create_game::pre_show(window& win)
 	plugins_context_->set_callback("load",   [this](const config&) { load_game_callback(); }, false);
 
 #define UPDATE_ATTRIBUTE(field, convert) \
-	do { if(cfg.has_attribute(#field)) { field##_->set_widget_value(cfg[#field].convert()); } } while(false) \
+	do { if(cfg.has_attribute(str_##field)) { field##_->set_widget_value(cfg[str_##field].convert()); } } while(false) \
 
 	plugins_context_->set_callback("update_settings", [this](const config& cfg) {
 		UPDATE_ATTRIBUTE(turns, to_int);
@@ -360,52 +360,52 @@ void mp_create_game::pre_show(window& win)
 #undef UPDATE_ATTRIBUTE
 
 	plugins_context_->set_callback("set_name",     [this](const config& cfg) {
-		config_engine_->set_game_name(cfg["name"]); }, true);
+		config_engine_->set_game_name(cfg[str_name]); }, true);
 
 	plugins_context_->set_callback("set_password", [this](const config& cfg) {
-		config_engine_->set_game_password(cfg["password"]); }, true);
+		config_engine_->set_game_password(cfg[str_password]); }, true);
 
 	plugins_context_->set_callback("select_level", [this](const config& cfg) {
-		selected_game_index_ = convert_to_game_filtered_index(cfg["index"].to_int());
+		selected_game_index_ = convert_to_game_filtered_index(cfg[str_index].to_int());
 		create_engine_.set_current_level(selected_game_index_);
 	}, true);
 
 	plugins_context_->set_callback("select_type",  [this](const config& cfg) {
-		create_engine_.set_current_level_type(level_type::get_enum(cfg["type"].str()).value_or(level_type::type::scenario)); }, true);
+		create_engine_.set_current_level_type(level_type::get_enum(cfg[str_type].str()).value_or(level_type::type::scenario)); }, true);
 
 	plugins_context_->set_callback("select_era",   [this](const config& cfg) {
-		create_engine_.set_current_era_index(cfg["index"].to_int()); }, true);
+		create_engine_.set_current_era_index(cfg[str_index].to_int()); }, true);
 
 	plugins_context_->set_callback("select_mod",   [this](const config& cfg) {
-		on_mod_toggle(cfg["id"].str(), nullptr);
+		on_mod_toggle(cfg[str_id].str(), nullptr);
 	}, true);
 
 	plugins_context_->set_accessor("get_selected", [this](const config&) {
 		const ng::level& current_level = create_engine_.current_level();
 		return config {
-			"id", current_level.id(),
-			"name", current_level.name(),
-			"icon", current_level.icon(),
-			"description", current_level.description(),
-			"allow_era_choice", current_level.allow_era_choice(),
-			"type", level_type::get_string(create_engine_.current_level_type()),
+			str_id, current_level.id(),
+			str_name, current_level.name(),
+			str_icon, current_level.icon(),
+			str_description, current_level.description(),
+			str_allow_era_choice, current_level.allow_era_choice(),
+			str_type, level_type::get_string(create_engine_.current_level_type()),
 		};
 	});
 
 	plugins_context_->set_accessor("find_level",   [this](const config& cfg) {
-		const std::string id = cfg["id"].str();
+		const std::string id = cfg[str_id].str();
 		return config {
-			"index", create_engine_.find_level_by_id(id).second,
-			"type", level_type::get_string(create_engine_.find_level_by_id(id).first),
+			str_index, create_engine_.find_level_by_id(id).second,
+			str_type, level_type::get_string(create_engine_.find_level_by_id(id).first),
 		};
 	});
 
 	plugins_context_->set_accessor_int("find_era", [this](const config& cfg) {
-		return create_engine_.find_extra_by_id(ng::create_engine::ERA, cfg["id"]);
+		return create_engine_.find_extra_by_id(ng::create_engine::ERA, cfg[str_id]);
 	});
 
 	plugins_context_->set_accessor_int("find_mod", [this](const config& cfg) {
-		return create_engine_.find_extra_by_id(ng::create_engine::MOD, cfg["id"]);
+		return create_engine_.find_extra_by_id(ng::create_engine::MOD, cfg[str_id]);
 	});
 }
 
@@ -580,11 +580,11 @@ void mp_create_game::display_games_of_type(level_type::type type, const std::str
 		widget_item item;
 
 		if(type == level_type::type::campaign || type == level_type::type::sp_campaign) {
-			item["label"] = game->icon();
+			item[str_label] = game->icon();
 			data.emplace("game_icon", item);
 		}
 
-		item["label"] = game->name();
+		item[str_label] = game->name();
 		data.emplace("game_name", item);
 
 		list.add_row(data);
@@ -640,8 +640,8 @@ void mp_create_game::update_details()
 	if(create_engine_.current_level_type() == level_type::type::random_map) {
 		// If the current random map doesn't have data, generate it
 		if(create_engine_.generator_assigned() &&
-			create_engine_.current_level().data()["map_data"].empty() &&
-			create_engine_.current_level().data()["map_file"].empty()) {
+			create_engine_.current_level().data()[str_map_data].empty() &&
+			create_engine_.current_level().data()[str_map_file].empty()) {
 			create_engine_.init_generated_level_data();
 		}
 
@@ -674,12 +674,12 @@ void mp_create_game::update_details()
 
 			find_widget<stacked_widget>(get_window(), "minimap_stack", false).select_layer(0);
 
-			if(current_scenario->data()["map_data"].empty()) {
+			if(current_scenario->data()[str_map_data].empty()) {
 				saved_game::expand_map_file(current_scenario->data());
 				current_scenario->set_metadata();
 			}
 
-			find_widget<minimap>(get_window(), "minimap", false).set_map_data(current_scenario->data()["map_data"]);
+			find_widget<minimap>(get_window(), "minimap", false).set_map_data(current_scenario->data()[str_map_data]);
 
 			players.set_label(std::to_string(current_scenario->num_players()));
 			map_size.set_label(current_scenario->map_size());
@@ -692,9 +692,9 @@ void mp_create_game::update_details()
 
 			assert(current_campaign);
 
-			create_engine_.get_state().classification().campaign = current_campaign->data()["id"].str();
+			create_engine_.get_state().classification().campaign = current_campaign->data()[str_id].str();
 
-			const std::string img = formatter() << current_campaign->data()["image"] << "~SCALE_INTO(265,265)";
+			const std::string img = formatter() << current_campaign->data()[str_image] << "~SCALE_INTO(265,265)";
 
 			find_widget<stacked_widget>(get_window(), "minimap_stack", false).select_layer(1);
 			find_widget<image>(get_window(), "campaign_image", false).set_image(img);
@@ -881,13 +881,13 @@ void mp_create_game::post_show(window& window)
 		const auto& tagname = create_engine_.get_state().classification().get_tagname();
 
 		if(tagname == "scenario") {
-			const std::string first_scenario = create_engine_.current_level().data()["first_scenario"];
+			const std::string first_scenario = create_engine_.current_level().data()[str_first_scenario];
 			for(const config& scenario : game_config_manager::get()->game_config().child_range(tagname)) {
-				const bool is_first = scenario["id"] == first_scenario;
-				if(scenario["allow_new_game"].to_bool(false) || is_first || game_config::debug ) {
-					const std::string& title = !scenario["new_game_title"].empty()
-						? scenario["new_game_title"]
-						: scenario["name"];
+				const bool is_first = scenario[str_id] == first_scenario;
+				if(scenario[str_allow_new_game].to_bool(false) || is_first || game_config::debug ) {
+					const std::string& title = !scenario[str_new_game_title].empty()
+						? scenario[str_new_game_title]
+						: scenario[str_name];
 
 					entry_points.insert(is_first ? entry_points.begin() : entry_points.end(), &scenario);
 					entry_point_titles.insert(is_first ? entry_point_titles.begin() : entry_point_titles.end(), title);

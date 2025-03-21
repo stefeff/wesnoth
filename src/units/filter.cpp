@@ -132,7 +132,7 @@ struct unit_filter_adjacent : public unit_filter_base
 		const auto adjacent = get_adjacent_tiles(args.loc);
 		int match_count=0;
 
-		config::attribute_value i_adjacent = cfg_["adjacent"];
+		config::attribute_value i_adjacent = cfg_[str_adjacent];
 		std::vector<map_location::DIRECTION> dirs;
 		if (i_adjacent.empty()) {
 			dirs = map_location::default_dirs();
@@ -144,7 +144,7 @@ struct unit_filter_adjacent : public unit_filter_base
 			if (unit_itor == units.end() || !child_.matches(unit_filter_args{*unit_itor, unit_itor->get_location(), &args.u, args.fc, args.use_flat_tod} )) {
 				continue;
 			}
-			auto is_enemy = cfg_["is_enemy"];
+			auto is_enemy = cfg_[str_is_enemy];
 			if (!is_enemy.empty() && is_enemy.to_bool() != args.context().get_disp_context().get_team(args.u.side()).is_enemy(unit_itor->side())) {
 				continue;
 			}
@@ -152,7 +152,7 @@ struct unit_filter_adjacent : public unit_filter_base
 		}
 
 		static std::vector<std::pair<int,int>> default_counts = utils::parse_ranges_unsigned("1-6");
-		config::attribute_value i_count = cfg_["count"];
+		config::attribute_value i_count = cfg_[str_count];
 		return in_ranges(match_count, !i_count.blank() ? utils::parse_ranges_unsigned(i_count) : default_counts);
 	}
 
@@ -306,7 +306,7 @@ namespace {
 	                           const config& parent, const std::string& id) {
 		for (const config::any_child sp : parent.all_children_range())
 		{
-			if(sp.cfg["id"] == id) {
+			if(sp.cfg[str_id] == id) {
 				ability_match special = { sp.key, &sp.cfg };
 				id_result.push_back(special);
 			}
@@ -321,12 +321,12 @@ void unit_filter_compound::fill(vconfig cfg)
 		//optimisation
 		if(literal.empty()) { return; }
 
-		create_attribute(literal["name"],
+		create_attribute(literal[str_name],
 			[](const config::attribute_value& c) { return c.t_str(); },
 			[](const t_string& str, const unit_filter_args& args) { return str == args.u.name(); }
 		);
 
-		create_attribute(literal["id"],
+		create_attribute(literal[str_id],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& id_list, const unit_filter_args& args)
 			{
@@ -334,7 +334,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["type"],
+		create_attribute(literal[str_type],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& types, const unit_filter_args& args)
 			{
@@ -342,7 +342,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["type_adv_tree"],
+		create_attribute(literal[str_type_adv_tree],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& types, const unit_filter_args& args)
 			{
@@ -361,7 +361,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["variation"],
+		create_attribute(literal[str_variation],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& types, const unit_filter_args& args)
 			{
@@ -369,7 +369,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["has_variation"],
+		create_attribute(literal[str_has_variation],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& types, const unit_filter_args& args)
 			{
@@ -386,7 +386,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["ability"],
+		create_attribute(literal[str_ability],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& abilities, const unit_filter_args& args)
 			{
@@ -399,7 +399,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["ability_type"],
+		create_attribute(literal[str_ability_type],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& abilities, const unit_filter_args& args)
 			{
@@ -412,7 +412,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["ability_id_active"],
+		create_attribute(literal[str_ability_id_active],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& abilities, const unit_filter_args& args)
 			{
@@ -448,7 +448,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["ability_type_active"],
+		create_attribute(literal[str_ability_type_active],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& abilities, const unit_filter_args& args)
 			{
@@ -461,7 +461,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["trait"],
+		create_attribute(literal[str_trait],
 			[](const config::attribute_value& c)
 			{
 				auto res = utils::split(c.str());
@@ -480,7 +480,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["race"],
+		create_attribute(literal[str_race],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& races, const unit_filter_args& args)
 			{
@@ -488,7 +488,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["gender"],
+		create_attribute(literal[str_gender],
 			[](const config::attribute_value& c) { return string_gender(c.str()); },
 			[](unit_race::GENDER gender, const unit_filter_args& args)
 			{
@@ -496,7 +496,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["upkeep"],
+		create_attribute(literal[str_upkeep],
 			[](const config::attribute_value& c) -> unit::upkeep_t
 			{
 				try {
@@ -511,7 +511,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["side"],
+		create_attribute(literal[str_side],
 			[](const config::attribute_value& c)
 			{
 				std::vector<int> res;
@@ -530,7 +530,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["status"],
+		create_attribute(literal[str_status],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& statuses, const unit_filter_args& args)
 			{
@@ -543,7 +543,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["has_weapon"],
+		create_attribute(literal[str_has_weapon],
 			[](const config::attribute_value& c) { return c.str(); },
 			[](const std::string& weapon, const unit_filter_args& args)
 			{
@@ -557,7 +557,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["role"],
+		create_attribute(literal[str_role],
 			[](const config::attribute_value& c) { return c.str(); },
 			[](const std::string& role, const unit_filter_args& args)
 			{
@@ -565,7 +565,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["alignment"],
+		create_attribute(literal[str_alignment],
 			[](const config::attribute_value& c) { return c.str(); },
 			[](const std::string& alignment, const unit_filter_args& args)
 			{
@@ -573,7 +573,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["ai_special"],
+		create_attribute(literal[str_ai_special],
 			[](const config::attribute_value& c) { return c.str(); },
 			[](const std::string& ai_special, const unit_filter_args& args)
 			{
@@ -581,7 +581,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["usage"],
+		create_attribute(literal[str_usage],
 			[](const config::attribute_value& c) { return utils::split(c.str()); },
 			[](const std::vector<std::string>& usages, const unit_filter_args& args)
 			{
@@ -594,7 +594,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["canrecruit"],
+		create_attribute(literal[str_canrecruit],
 			[](const config::attribute_value& c) { return c.to_bool(); },
 			[](bool canrecruit, const unit_filter_args& args)
 			{
@@ -602,7 +602,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["recall_cost"],
+		create_attribute(literal[str_recall_cost],
 			[](const config::attribute_value& c) { return utils::parse_ranges_unsigned(c.str()); },
 			[](const std::vector<std::pair<int,int>>& ranges, const unit_filter_args& args)
 			{
@@ -615,7 +615,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["level"],
+		create_attribute(literal[str_level],
 			[](const config::attribute_value& c) { return utils::parse_ranges_unsigned(c.str()); },
 			[](const std::vector<std::pair<int,int>>& ranges, const unit_filter_args& args)
 			{
@@ -628,7 +628,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["defense"],
+		create_attribute(literal[str_defense],
 			[](const config::attribute_value& c) { return utils::parse_ranges_unsigned(c.str()); },
 			[](const std::vector<std::pair<int,int>>& ranges, const unit_filter_args& args)
 			{
@@ -642,7 +642,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["movement_cost"],
+		create_attribute(literal[str_movement_cost],
 			[](const config::attribute_value& c) { return utils::parse_ranges_unsigned(c.str()); },
 			[](const std::vector<std::pair<int,int>>& ranges, const unit_filter_args& args)
 			{
@@ -656,7 +656,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["vision_cost"],
+		create_attribute(literal[str_vision_cost],
 			[](const config::attribute_value& c) { return utils::parse_ranges_unsigned(c.str()); },
 			[](const std::vector<std::pair<int,int>>& ranges, const unit_filter_args& args)
 			{
@@ -670,7 +670,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["jamming_cost"],
+		create_attribute(literal[str_jamming_cost],
 			[](const config::attribute_value& c) { return utils::parse_ranges_unsigned(c.str()); },
 			[](const std::vector<std::pair<int,int>>& ranges, const unit_filter_args& args)
 			{
@@ -684,7 +684,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["lua_function"],
+		create_attribute(literal[str_lua_function],
 			[](const config::attribute_value& c) { return c.str(); },
 			[](const std::string& lua_function, const unit_filter_args& args)
 			{
@@ -695,7 +695,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["formula"],
+		create_attribute(literal[str_formula],
 			[](const config::attribute_value& c)
 			{
 				//TODO: catch syntax error.
@@ -724,7 +724,7 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		create_attribute(literal["find_in"],
+		create_attribute(literal[str_find_in],
 			[](const config::attribute_value& c) { return c.str(); },
 			[](const std::string& find_in, const unit_filter_args& args)
 			{
@@ -734,7 +734,7 @@ void unit_filter_compound::fill(vconfig cfg)
 					{
 						for (const config& c : gd->get_variable_access_read(find_in).as_array())
 						{
-							if(c["id"] == args.u.id()) {
+							if(c[str_id] == args.u.id()) {
 								return true;
 							}
 						}
@@ -749,8 +749,8 @@ void unit_filter_compound::fill(vconfig cfg)
 			}
 		);
 
-		if (!literal["x"].blank() || !literal["y"].blank()) {
-			children_.emplace_back(new unit_filter_xy(literal["x"], literal["y"]));
+		if (!literal[str_x].blank() || !literal[str_y].blank()) {
+			children_.emplace_back(new unit_filter_xy(literal[str_x], literal[str_y]));
 		}
 
 		for(auto child : cfg.all_ordered()) {
@@ -786,7 +786,7 @@ void unit_filter_compound::fill(vconfig cfg)
 						// Check is_enemy() before invisible() to prevent infinite recursion in [abilities][hides][filter_self][filter_vision]
 						bool hiding = args.context().get_disp_context().get_team(viewer).is_enemy(args.u.side()) && args.u.invisible(args.loc);
 						bool unit_hidden = fogged || hiding;
-						if (c["visible"].to_bool(true) != unit_hidden) {
+						if (c[str_visible].to_bool(true) != unit_hidden) {
 							return true;
 						}
 					}

@@ -139,7 +139,7 @@ static int impl_music_get(lua_State* L) {
 	if(strcmp(m, "all") == 0) {
 		config playlist;
 		sound::write_music_play_list(playlist);
-		const auto& range = playlist.child_range("music");
+		const auto& range = playlist.child_range(str_music);
 		std::vector<config> tracks(range.begin(), range.end());
 		lua_push(L, tracks);
 		return 1;
@@ -160,9 +160,9 @@ static int impl_music_set(lua_State* L) {
 			}
 		} else if(luaW_toconfig(L, 3, cfg)) {
 			// Don't clear the playlist
-			cfg["append"] = true;
+			cfg[str_append] = true;
 			// Don't allow play_once=yes
-			if(cfg["play_once"]) {
+			if(cfg[str_play_once]) {
 				return luaL_argerror(L, 3, "For play_once, use wesnoth.music_list.play instead");
 			}
 			if(i >= sound::get_num_tracks()) {
@@ -215,8 +215,8 @@ static int intf_music_add(lua_State* L) {
 		lua_remove(L, 1);
 	}
 	config cfg = config {
-		"name", luaL_checkstring(L, 1),
-		"append", true,
+		str_name, luaL_checkstring(L, 1),
+		str_append, true,
 	};
 	bool found_ms_before = false, found_ms_after = false, found_imm = false;
 	for(int i = 2; i <= lua_gettop(L); i++) {
@@ -224,16 +224,16 @@ static int intf_music_add(lua_State* L) {
 			if(found_imm) {
 				return luaL_argerror(L, i, "only one boolean argument may be passed");
 			} else {
-				cfg["immediate"] = luaW_toboolean(L, i);
+				cfg[str_immediate] = luaW_toboolean(L, i);
 			}
 		} else if(lua_isnumber(L, i)) {
 			if(found_ms_after) {
 				return luaL_argerror(L, i, "only two integer arguments may be passed");
 			} else if(found_ms_before) {
-				cfg["ms_after"] = lua_tointeger(L, i);
+				cfg[str_ms_after] = lua_tointeger(L, i);
 				found_ms_after = true;
 			} else {
-				cfg["ms_before"] = lua_tointeger(L, i);
+				cfg[str_ms_before] = lua_tointeger(L, i);
 				found_ms_before = true;
 			}
 		} else {
@@ -286,14 +286,14 @@ static int impl_track_get(lua_State* L) {
 	return_string_attrib("title", (*track)->title());
 
 	return_cfg_attrib("__cfg",
-						cfg["append"]=(*track)->append();
-						cfg["shuffle"]=(*track)->shuffle();
-						cfg["immediate"]=(*track)->immediate();
-						cfg["once"]=(*track)->play_once();
-						cfg["ms_before"]=(*track)->ms_before();
-						cfg["ms_after"]=(*track)->ms_after();
-						cfg["name"]=(*track)->id();
-						cfg["title"]=(*track)->title());
+						cfg[str_append]=(*track)->append();
+						cfg[str_shuffle]=(*track)->shuffle();
+						cfg[str_immediate]=(*track)->immediate();
+						cfg[str_once]=(*track)->play_once();
+						cfg[str_ms_before]=(*track)->ms_before();
+						cfg[str_ms_after]=(*track)->ms_after();
+						cfg[str_name]=(*track)->id();
+						cfg[str_title]=(*track)->title());
 
 	return luaW_getmetafield(L, 1, m);
 }
@@ -365,7 +365,7 @@ static int impl_sndsrc_set(lua_State* L) {
 	if(lua_isnil(L, 3)) {
 		resources::soundsources->remove(id);
 	} else if(luaW_toconfig(L, 3, cfg)) {
-		cfg["id"] = id;
+		cfg[str_id] = id;
 		soundsource::sourcespec spec(cfg);
 		resources::soundsources->add(spec);
 		resources::soundsources->update();

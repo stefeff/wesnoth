@@ -84,7 +84,7 @@ static config write_battle_result_map(const stats_t::battle_result_map& m)
 	for(stats_t::battle_result_map::const_iterator i = m.begin(); i != m.end(); ++i) {
 		config& new_cfg = res.add_child("sequence");
 		new_cfg = write_str_int_map(i->second);
-		new_cfg["_num"] = i->first;
+		new_cfg[str__num] = i->first;
 	}
 
 	return res;
@@ -105,7 +105,7 @@ static stats_t::battle_result_map read_battle_result_map(const config& cfg)
 	stats_t::battle_result_map m;
 	for(const config& i : cfg.child_range("sequence")) {
 		config item = i;
-		int key = item["_num"];
+		int key = item[str__num];
 		item.remove_attribute("_num");
 		m[key] = read_str_int_map(item);
 	}
@@ -157,7 +157,7 @@ static stats_t::hitrate_map read_by_cth_map(const config& cfg)
 {
 	stats_t::hitrate_map m;
 	for(const config& i : cfg.child_range("hitrate_map_entry")) {
-		m.emplace(i["cth"], stats_t::hitrate_t(i.mandatory_child("stats")));
+		m.emplace(i[str_cth], stats_t::hitrate_t(i.mandatory_child("stats")));
 	}
 	return m;
 }
@@ -258,20 +258,20 @@ config stats_t::write() const
 	res.add_child("turn_by_cth_inflicted", write_by_cth_map(turn_by_cth_inflicted));
 	res.add_child("turn_by_cth_taken", write_by_cth_map(turn_by_cth_taken));
 
-	res["recruit_cost"] = recruit_cost;
-	res["recall_cost"] = recall_cost;
+	res[str_recruit_cost] = recruit_cost;
+	res[str_recall_cost] = recall_cost;
 
-	res["damage_inflicted"] = damage_inflicted;
-	res["damage_taken"] = damage_taken;
-	res["expected_damage_inflicted"] = expected_damage_inflicted;
-	res["expected_damage_taken"] = expected_damage_taken;
+	res[str_damage_inflicted] = damage_inflicted;
+	res[str_damage_taken] = damage_taken;
+	res[str_expected_damage_inflicted] = expected_damage_inflicted;
+	res[str_expected_damage_taken] = expected_damage_taken;
 
-	res["turn_damage_inflicted"] = turn_damage_inflicted;
-	res["turn_damage_taken"] = turn_damage_taken;
-	res["turn_expected_damage_inflicted"] = turn_expected_damage_inflicted;
-	res["turn_expected_damage_taken"] = turn_expected_damage_taken;
+	res[str_turn_damage_inflicted] = turn_damage_inflicted;
+	res[str_turn_damage_taken] = turn_damage_taken;
+	res[str_turn_expected_damage_inflicted] = turn_expected_damage_inflicted;
+	res[str_turn_expected_damage_taken] = turn_expected_damage_taken;
 
-	res["save_id"] = save_id;
+	res[str_save_id] = save_id;
 
 	return res;
 }
@@ -331,10 +331,10 @@ void stats_t::write(config_writer& out) const
 
 void stats_t::read(const config& cfg)
 {
-	if(const auto c = cfg.optional_child("recruits")) {
+	if(const auto c = cfg.optional_child(str_recruits)) {
 		recruits = read_str_int_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("recalls")) {
+	if(const auto c = cfg.optional_child(str_recalls)) {
 		recalls = read_str_int_map(c.value());
 	}
 	if(const auto c = cfg.optional_child("advances")) {
@@ -372,20 +372,20 @@ void stats_t::read(const config& cfg)
 		turn_by_cth_taken = read_by_cth_map(c.value());
 	}
 
-	recruit_cost = cfg["recruit_cost"].to_int();
-	recall_cost = cfg["recall_cost"].to_int();
+	recruit_cost = cfg[str_recruit_cost].to_int();
+	recall_cost = cfg[str_recall_cost].to_int();
 
-	damage_inflicted = cfg["damage_inflicted"].to_long_long();
-	damage_taken = cfg["damage_taken"].to_long_long();
-	expected_damage_inflicted = cfg["expected_damage_inflicted"].to_long_long();
-	expected_damage_taken = cfg["expected_damage_taken"].to_long_long();
+	damage_inflicted = cfg[str_damage_inflicted].to_long_long();
+	damage_taken = cfg[str_damage_taken].to_long_long();
+	expected_damage_inflicted = cfg[str_expected_damage_inflicted].to_long_long();
+	expected_damage_taken = cfg[str_expected_damage_taken].to_long_long();
 
-	turn_damage_inflicted = cfg["turn_damage_inflicted"].to_long_long();
-	turn_damage_taken = cfg["turn_damage_taken"].to_long_long();
-	turn_expected_damage_inflicted = cfg["turn_expected_damage_inflicted"].to_long_long();
-	turn_expected_damage_taken = cfg["turn_expected_damage_taken"].to_long_long();
+	turn_damage_inflicted = cfg[str_turn_damage_inflicted].to_long_long();
+	turn_damage_taken = cfg[str_turn_damage_taken].to_long_long();
+	turn_expected_damage_inflicted = cfg[str_turn_expected_damage_inflicted].to_long_long();
+	turn_expected_damage_taken = cfg[str_turn_expected_damage_taken].to_long_long();
 
-	save_id = cfg["save_id"].str();
+	save_id = cfg[str_save_id].str();
 }
 
 void stats_t::merge_with(const stats_t& b)
@@ -425,17 +425,17 @@ void stats_t::merge_with(const stats_t& b)
 
 scenario_stats_t::scenario_stats_t(const config& cfg)
 	: team_stats()
-	, scenario_name(cfg["scenario"])
+	, scenario_name(cfg[str_scenario])
 {
-	for(const config& team : cfg.child_range("team")) {
-		team_stats[team["save_id"]] = stats_t(team);
+	for(const config& team : cfg.child_range(str_team)) {
+		team_stats[team[str_save_id]] = stats_t(team);
 	}
 }
 
 config scenario_stats_t::write() const
 {
 	config res;
-	res["scenario"] = scenario_name;
+	res[str_scenario] = scenario_name;
 	for(team_stats_t::const_iterator i = team_stats.begin(); i != team_stats.end(); ++i) {
 		res.add_child("team", i->second.write());
 	}
@@ -459,8 +459,8 @@ config stats_t::hitrate_t::write() const
 }
 
 stats_t::hitrate_t::hitrate_t(const config& cfg)
-	: strikes(cfg["strikes"])
-	, hits(cfg["hits"])
+	: strikes(cfg[str_strikes])
+	, hits(cfg[str_hits])
 {
 }
 

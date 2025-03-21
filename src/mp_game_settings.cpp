@@ -61,38 +61,38 @@ mp_game_settings::mp_game_settings() :
 {}
 
 mp_game_settings::mp_game_settings(const config& cfg)
-	: name(cfg["scenario"].str())
+	: name(cfg[str_scenario].str())
 	, password()
-	, hash(cfg["hash"].str())
-	, mp_era_name(cfg["mp_era_name"].str())
-	, mp_scenario(cfg["mp_scenario"].str())
-	, mp_scenario_name(cfg["mp_scenario_name"].str())
-	, mp_campaign(cfg["mp_campaign"].str())
-	, side_users(utils::map_split(cfg["side_users"]))
-	, num_turns(cfg["mp_num_turns"])
-	, village_gold(cfg["mp_village_gold"])
-	, village_support(cfg["mp_village_support"])
-	, xp_modifier(cfg["experience_modifier"].to_int(100))
-	, mp_countdown_init_time(cfg["mp_countdown_init_time"])
-	, mp_countdown_reservoir_time(cfg["mp_countdown_reservoir_time"])
-	, mp_countdown_turn_bonus(cfg["mp_countdown_turn_bonus"])
-	, mp_countdown_action_bonus(cfg["mp_countdown_action_bonus"])
-	, mp_countdown(cfg["mp_countdown"].to_bool())
-	, use_map_settings(cfg["mp_use_map_settings"].to_bool())
-	, random_start_time(cfg["mp_random_start_time"].to_bool())
-	, fog_game(cfg["mp_fog"].to_bool())
-	, shroud_game(cfg["mp_shroud"].to_bool())
-	, allow_observers(cfg["observer"].to_bool())
-	, private_replay(cfg["private_replay"].to_bool())
-	, shuffle_sides(cfg["shuffle_sides"].to_bool())
-	, saved_game(saved_game_mode::get_enum(cfg["savegame"].str()).value_or(saved_game_mode::type::no))
-	, mode(random_faction_mode::get_enum(cfg["random_faction_mode"].str()).value_or(random_faction_mode::type::independent))
-	, options(cfg.child_or_empty("options"))
+	, hash(cfg[str_hash].str())
+	, mp_era_name(cfg[str_mp_era_name].str())
+	, mp_scenario(cfg[str_mp_scenario].str())
+	, mp_scenario_name(cfg[str_mp_scenario_name].str())
+	, mp_campaign(cfg[str_mp_campaign].str())
+	, side_users(utils::map_split(cfg[str_side_users]))
+	, num_turns(cfg[str_mp_num_turns])
+	, village_gold(cfg[str_mp_village_gold])
+	, village_support(cfg[str_mp_village_support])
+	, xp_modifier(cfg[str_experience_modifier].to_int(100))
+	, mp_countdown_init_time(cfg[str_mp_countdown_init_time])
+	, mp_countdown_reservoir_time(cfg[str_mp_countdown_reservoir_time])
+	, mp_countdown_turn_bonus(cfg[str_mp_countdown_turn_bonus])
+	, mp_countdown_action_bonus(cfg[str_mp_countdown_action_bonus])
+	, mp_countdown(cfg[str_mp_countdown].to_bool())
+	, use_map_settings(cfg[str_mp_use_map_settings].to_bool())
+	, random_start_time(cfg[str_mp_random_start_time].to_bool())
+	, fog_game(cfg[str_mp_fog].to_bool())
+	, shroud_game(cfg[str_mp_shroud].to_bool())
+	, allow_observers(cfg[str_observer].to_bool())
+	, private_replay(cfg[str_private_replay].to_bool())
+	, shuffle_sides(cfg[str_shuffle_sides].to_bool())
+	, saved_game(saved_game_mode::get_enum(cfg[str_savegame].str()).value_or(saved_game_mode::type::no))
+	, mode(random_faction_mode::get_enum(cfg[str_random_faction_mode].str()).value_or(random_faction_mode::type::independent))
+	, options(cfg.child_or_empty(str_options))
 	, addons()
 {
-	for (const config & a : cfg.child_range("addon")) {
-		if (!a["id"].empty()) {
-			addons.emplace(a["id"].str(), addon_version_info(a));
+	for (const config & a : cfg.child_range(str_addon)) {
+		if (!a[str_id].empty()) {
+			addons.emplace(a[str_id].str(), addon_version_info(a));
 		}
 	}
 }
@@ -101,37 +101,37 @@ config mp_game_settings::to_config() const
 {
 	config cfg;
 
-	cfg["scenario"] = name;
-	cfg["hash"] = hash;
-	cfg["mp_era_name"] = mp_era_name;
-	cfg["mp_scenario"] = mp_scenario;
-	cfg["mp_scenario_name"] = mp_scenario_name;
-	cfg["mp_campaign"] = mp_campaign;
-	cfg["side_users"] = utils::join_map(side_users);
-	cfg["experience_modifier"] = xp_modifier;
-	cfg["mp_countdown"] = mp_countdown;
-	cfg["mp_countdown_init_time"] = mp_countdown_init_time;
-	cfg["mp_countdown_turn_bonus"] = mp_countdown_turn_bonus;
-	cfg["mp_countdown_reservoir_time"] = mp_countdown_reservoir_time;
-	cfg["mp_countdown_action_bonus"] = mp_countdown_action_bonus;
-	cfg["mp_num_turns"] = num_turns;
-	cfg["mp_village_gold"] = village_gold;
-	cfg["mp_village_support"] = village_support;
-	cfg["mp_fog"] = fog_game;
-	cfg["mp_shroud"] = shroud_game;
-	cfg["mp_use_map_settings"] = use_map_settings;
-	cfg["mp_random_start_time"] = random_start_time;
-	cfg["observer"] = allow_observers;
-	cfg["private_replay"] = private_replay;
-	cfg["shuffle_sides"] = shuffle_sides;
-	cfg["random_faction_mode"] = random_faction_mode::get_string(mode);
-	cfg["savegame"] = saved_game_mode::get_string(saved_game);
-	cfg.add_child("options", options);
+	cfg[str_scenario] = name;
+	cfg[str_hash] = hash;
+	cfg[str_mp_era_name] = mp_era_name;
+	cfg[str_mp_scenario] = mp_scenario;
+	cfg[str_mp_scenario_name] = mp_scenario_name;
+	cfg[str_mp_campaign] = mp_campaign;
+	cfg[str_side_users] = utils::join_map(side_users);
+	cfg[str_experience_modifier] = xp_modifier;
+	cfg[str_mp_countdown] = mp_countdown;
+	cfg[str_mp_countdown_init_time] = mp_countdown_init_time;
+	cfg[str_mp_countdown_turn_bonus] = mp_countdown_turn_bonus;
+	cfg[str_mp_countdown_reservoir_time] = mp_countdown_reservoir_time;
+	cfg[str_mp_countdown_action_bonus] = mp_countdown_action_bonus;
+	cfg[str_mp_num_turns] = num_turns;
+	cfg[str_mp_village_gold] = village_gold;
+	cfg[str_mp_village_support] = village_support;
+	cfg[str_mp_fog] = fog_game;
+	cfg[str_mp_shroud] = shroud_game;
+	cfg[str_mp_use_map_settings] = use_map_settings;
+	cfg[str_mp_random_start_time] = random_start_time;
+	cfg[str_observer] = allow_observers;
+	cfg[str_private_replay] = private_replay;
+	cfg[str_shuffle_sides] = shuffle_sides;
+	cfg[str_random_faction_mode] = random_faction_mode::get_string(mode);
+	cfg[str_savegame] = saved_game_mode::get_string(saved_game);
+	cfg.add_child(str_options, options);
 
 	for(auto& p : addons) {
-		config & c = cfg.add_child("addon");
+		config & c = cfg.add_child(str_addon);
 		p.second.write(c);
-		c["id"] = p.first;
+		c[str_id] = p.first;
 	}
 
 	return cfg;
@@ -140,41 +140,41 @@ config mp_game_settings::to_config() const
 mp_game_settings::addon_version_info::addon_version_info(const config & cfg)
 	: version()
 	, min_version()
-	, name(cfg["name"])
-	, required(cfg["required"].to_bool(false))
+	, name(cfg[str_name])
+	, required(cfg[str_required].to_bool(false))
 	, content()
 {
-	if (!cfg["version"].empty()) {
-		version = cfg["version"].str();
+	if (!cfg[str_version].empty()) {
+		version = cfg[str_version].str();
 	}
-	if (!cfg["min_version"].empty()) {
-		min_version = cfg["min_version"].str();
+	if (!cfg[str_min_version].empty()) {
+		min_version = cfg[str_min_version].str();
 	}
-	for(const auto& child : cfg.child_range("content")) {
-		content.emplace_back(addon_content{ child["id"].str(), child["name"].str(), child["type"].str() });
+	for(const auto& child : cfg.child_range(str_content)) {
+		content.emplace_back(addon_content{ child[str_id].str(), child[str_name].str(), child[str_type].str() });
 	}
 }
 
 void mp_game_settings::addon_version_info::write(config & cfg) const {
 	if (version) {
-		cfg["version"] = *version;
+		cfg[str_version] = *version;
 	}
 	if (min_version) {
-		cfg["min_version"] = *min_version;
+		cfg[str_min_version] = *min_version;
 	}
 
-	cfg["name"]	= name;
-	cfg["required"] = required;
+	cfg[str_name]	= name;
+	cfg[str_required] = required;
 	for(const auto& item : content) {
-		config& c = cfg.add_child("content");
-		c["id"] = item.id;
-		c["name"] = item.name;
-		c["type"] = item.type;
+		config& c = cfg.add_child(str_content);
+		c[str_id] = item.id;
+		c[str_name] = item.name;
+		c[str_type] = item.type;
 	}
 }
 
 void mp_game_settings::update_addon_requirements(const config & cfg) {
-	if (cfg["id"].empty()) {
+	if (cfg[str_id].empty()) {
 		WRN_NG << "Tried to add add-on metadata to a game, missing mandatory id field... skipping.\n" << cfg.debug();
 		return;
 	}
@@ -190,7 +190,7 @@ void mp_game_settings::update_addon_requirements(const config & cfg) {
 		new_data.min_version = new_data.version;
 	}
 
-	std::map<std::string, addon_version_info>::iterator it = addons.find(cfg["id"].str());
+	std::map<std::string, addon_version_info>::iterator it = addons.find(cfg[str_id].str());
 	// Check if this add-on already has an entry as a dependency for this scenario. If so, try to reconcile their version info,
 	// by taking the larger of the min versions. The version should be the same for all WML from the same add-on...
 	if (it != addons.end()) {
@@ -203,7 +203,7 @@ void mp_game_settings::update_addon_requirements(const config & cfg) {
 		}
 
 		if(addon.version != new_data.version) {
-			ERR_NG << "Addon version data mismatch! Not all local WML has same version of the addon: '" << cfg["id"].str() << "'.";
+			ERR_NG << "Addon version data mismatch! Not all local WML has same version of the addon: '" << cfg[str_id].str() << "'.";
 		}
 
 		if(new_data.required) {
@@ -216,6 +216,6 @@ void mp_game_settings::update_addon_requirements(const config & cfg) {
 		}
 	} else {
 		// Didn't find this addon-id in the map, so make a new entry.
-		addons.emplace(cfg["id"].str(), new_data);
+		addons.emplace(cfg[str_id].str(), new_data);
 	}
 }

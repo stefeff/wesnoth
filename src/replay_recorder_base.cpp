@@ -96,11 +96,11 @@ config& replay_recorder_base::insert_command(int index)
 
 void replay_recorder_base::append_config(const config& data)
 {
-	if(const auto upload_log = data.optional_child("upload_log"))
+	if(const auto upload_log = data.optional_child(str_upload_log))
 	{
 		upload_log_ = upload_log.value();
 	}
-	for(const config& command : data.child_range("command"))
+	for(const config& command : data.child_range(str_command))
 	{
 		commands_.push_back(new config(command));
 	}
@@ -108,11 +108,11 @@ void replay_recorder_base::append_config(const config& data)
 
 void replay_recorder_base::append_config(config& data)
 {
-	if(auto upload_log = data.optional_child("upload_log"))
+	if(auto upload_log = data.optional_child(str_upload_log))
 	{
 		upload_log_.swap(upload_log.value());
 	}
-	for(config& command : data.child_range("command"))
+	for(config& command : data.child_range(str_command))
 	{
 		config* new_config = new config();
 		new_config->swap(command);
@@ -124,19 +124,19 @@ void replay_recorder_base::append_config(config& data)
 
 void replay_recorder_base::write(config_writer& out) const
 {
-	out.write_child("upload_log", upload_log_);
+	out.write_child(str_upload_log, upload_log_);
 	for(int i = 0; i < pos_; ++i)
 	{
-		out.write_child("command", commands_[i]);
+		out.write_child(str_command, commands_[i]);
 	}
 }
 
 void replay_recorder_base::write(config& out) const
 {
-	out.add_child("upload_log", upload_log_);
+	out.add_child(str_upload_log, upload_log_);
 	for(int i = 0; i < pos_; ++i)
 	{
-		out.add_child("command", commands_[i]);
+		out.add_child(str_command, commands_[i]);
 	}
 }
 void replay_recorder_base::delete_upcoming_commands()
@@ -146,7 +146,7 @@ void replay_recorder_base::delete_upcoming_commands()
 
 bool replay_recorder_base::is_ancestor(const config& other_replay) const
 {
-	auto other_commands = other_replay.child_range("command");
+	auto other_commands = other_replay.child_range(str_command);
 	if(other_commands.size() > commands_.size()) {
 		return false;
 	}
