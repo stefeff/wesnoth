@@ -104,8 +104,8 @@ std::string dump_games_map(const lobby_info::game_info_map& games)
 std::string dump_games_config(const config& gamelist)
 {
 	std::stringstream ss;
-	for(const auto& c : gamelist.child_range("game")) {
-		ss << "g" << c["id"] << "(" << c["name"] << ") " << c[config::diff_track_attribute] << " ";
+	for(const auto& c : gamelist.child_range(str_game)) {
+		ss << "g" << c[str_id] << "(" << c[str_name] << ") " << c[config::diff_track_attribute] << " ";
 	}
 
 	ss << "\n";
@@ -126,63 +126,63 @@ void lobby_info::process_gamelist(const config& data)
 	for(const config& game : prefs::get().get_game_presets()) {
 		const game_config_view& game_config = game_config_manager::get()->game_config();
 
-		optional_const_config scenario = game_config.find_child("multiplayer", "id", game["scenario"].str());
+		optional_const_config scenario = game_config.find_child("multiplayer", "id", game[str_scenario].str());
 		if(!scenario) {
-			ERR_LB << "Scenario " << game["scenario"].str() << " not found in game config " << game["id"];
+			ERR_LB << "Scenario " << game[str_scenario].str() << " not found in game config " << game[str_id];
 			continue;
 		}
-		optional_const_config era = game_config.find_child("era", "id", game["era"].str());
+		optional_const_config era = game_config.find_child("era", "id", game[str_era].str());
 		if(!era) {
-			ERR_LB << "Era " << game["era"].str() << " not found in game config " << game["id"];
+			ERR_LB << "Era " << game[str_era].str() << " not found in game config " << game[str_id];
 			continue;
 		}
 
 		config qgame;
 		int human_sides = 0;
 		for(const auto& side : scenario->child_range("side")) {
-			if(side["controller"].str() == "human") {
+			if(side[str_controller].str() == "human") {
 				human_sides++;
 			}
 		}
 		if(human_sides == 0) {
-			ERR_LB << "No human sides for scenario " << game["scenario"];
+			ERR_LB << "No human sides for scenario " << game[str_scenario];
 			continue;
 		}
 		// negative id means a game preset
-		qgame["id"] = game["id"].to_int();
+		qgame[str_id] = game[str_id].to_int();
 		// all are set as game_preset so they show up in that tab of the MP lobby
-		qgame["game_preset"] = true;
+		qgame[str_game_preset] = true;
 
-		qgame["name"] = scenario["name"];
-		qgame["mp_scenario"] = game["scenario"];
-		qgame["mp_era"] = game["era"];
-		qgame["mp_use_map_settings"] = game["use_map_settings"];
-		qgame["mp_fog"] = game["fog"];
-		qgame["mp_shroud"] = game["shroud"];
-		qgame["mp_village_gold"] = game["village_gold"];
-		qgame["experience_modifier"] = game["experience_modifier"];
-		qgame["random_faction_mode"] = game["random_faction_mode"];
+		qgame[str_name] = scenario[str_name];
+		qgame[str_mp_scenario] = game[str_scenario];
+		qgame[str_mp_era] = game[str_era];
+		qgame[str_mp_use_map_settings] = game[str_use_map_settings];
+		qgame[str_mp_fog] = game[str_fog];
+		qgame[str_mp_shroud] = game[str_shroud];
+		qgame[str_mp_village_gold] = game[str_village_gold];
+		qgame[str_experience_modifier] = game[str_experience_modifier];
+		qgame[str_random_faction_mode] = game[str_random_faction_mode];
 
-		qgame["mp_countdown"] = game["countdown"];
-		if(qgame["mp_countdown"].to_bool()) {
-			qgame["mp_countdown_reservoir_time"] = game["countdown_reservoir_time"];
-			qgame["mp_countdown_init_time"] = game["countdown_init_time"];
-			qgame["mp_countdown_action_bonus"] = game["countdown_action_bonus"];
-			qgame["mp_countdown_turn_bonus"] = game["countdown_turn_bonus"];
+		qgame[str_mp_countdown] = game[str_countdown];
+		if(qgame[str_mp_countdown].to_bool()) {
+			qgame[str_mp_countdown_reservoir_time] = game[str_countdown_reservoir_time];
+			qgame[str_mp_countdown_init_time] = game[str_countdown_init_time];
+			qgame[str_mp_countdown_action_bonus] = game[str_countdown_action_bonus];
+			qgame[str_mp_countdown_turn_bonus] = game[str_countdown_turn_bonus];
 		}
 
-		qgame["observer"] = game["observer"];
-		qgame["human_sides"] = human_sides;
+		qgame[str_observer] = game[str_observer];
+		qgame[str_human_sides] = human_sides;
 
-		for(const std::string& mod : utils::split(game["modifications"].str())) {
+		for(const std::string& mod : utils::split(game[str_modifications].str())) {
 			auto cfg = game_config.find_child("modification", "id", mod);
 
 			if(!cfg) {
-				ERR_LB << "Modification " << mod << " not found in game config " << game["id"];
+				ERR_LB << "Modification " << mod << " not found in game config " << game[str_id];
 				continue;
 			}
 
-			qgame.add_child("modification", config{ "name", cfg["name"], "id", mod });
+			qgame.add_child("modification", config{ "name", cfg[str_name], "id", mod });
 		}
 
 		if(game.has_child("options")) {
@@ -190,15 +190,15 @@ void lobby_info::process_gamelist(const config& data)
 		}
 
 		if(scenario->has_attribute("map_data")) {
-			qgame["map_data"] = scenario["map_data"];
+			qgame[str_map_data] = scenario[str_map_data];
 		} else {
-			qgame["map_data"] = filesystem::read_map(scenario["map_file"]);
+			qgame[str_map_data] = filesystem::read_map(scenario[str_map_file]);
 		}
-		qgame["hash"] = game_config.mandatory_child("multiplayer_hashes")[game["scenario"].str()];
+		qgame[str_hash] = game_config.mandatory_child("multiplayer_hashes")[game[str_scenario].str()];
 
 		config& qchild = qgame.add_child("slot_data");
-		qchild["vacant"] = human_sides;
-		qchild["max"] = human_sides;
+		qchild[str_vacant] = human_sides;
+		qchild[str_max] = human_sides;
 
 		game_info g(qgame, installed_addons_);
 		games_by_id_.emplace(g.id, std::move(g));
@@ -210,7 +210,7 @@ void lobby_info::process_gamelist(const config& data)
 	}
 
 	DBG_LB << dump_games_map(games_by_id_);
-	DBG_LB << dump_games_config(gamelist_.mandatory_child("gamelist"));
+	DBG_LB << dump_games_config(gamelist_.mandatory_child(str_gamelist));
 
 	process_userlist();
 }
@@ -233,7 +233,7 @@ bool lobby_info::process_gamelist_diff_impl(const config& data)
 		return false;
 	}
 
-	DBG_LB << "prediff " << dump_games_config(gamelist_.mandatory_child("gamelist"));
+	DBG_LB << "prediff " << dump_games_config(gamelist_.mandatory_child(str_gamelist));
 
 	try {
 		gamelist_.apply_diff(data, true);
@@ -242,13 +242,13 @@ bool lobby_info::process_gamelist_diff_impl(const config& data)
 		return false;
 	}
 
-	DBG_LB << "postdiff " << dump_games_config(gamelist_.mandatory_child("gamelist"));
+	DBG_LB << "postdiff " << dump_games_config(gamelist_.mandatory_child(str_gamelist));
 	DBG_LB << dump_games_map(games_by_id_);
 
-	for(config& c : gamelist_.mandatory_child("gamelist").child_range("game")) {
-		DBG_LB << "data process: " << c["id"] << " (" << c[config::diff_track_attribute] << ")";
+	for(config& c : gamelist_.mandatory_child(str_gamelist).child_range(str_game)) {
+		DBG_LB << "data process: " << c[str_id] << " (" << c[config::diff_track_attribute] << ")";
 
-		const int game_id = c["id"].to_int();
+		const int game_id = c[str_id].to_int();
 		if(game_id == 0) {
 			ERR_LB << "game with id 0 in gamelist config";
 			return false;
@@ -297,7 +297,7 @@ bool lobby_info::process_gamelist_diff_impl(const config& data)
 		return false;
 	}
 
-	DBG_LB << "postclean " << dump_games_config(gamelist_.mandatory_child("gamelist"));
+	DBG_LB << "postclean " << dump_games_config(gamelist_.mandatory_child(str_gamelist));
 
 	process_userlist();
 	return true;
@@ -308,7 +308,7 @@ void lobby_info::process_userlist()
 	SCOPE_LB;
 
 	users_.clear();
-	for(const auto& c : gamelist_.child_range("user")) {
+	for(const auto& c : gamelist_.child_range(str_user)) {
 		user_info& ui = users_.emplace_back(c);
 
 		if(ui.game_id == 0) {

@@ -189,8 +189,8 @@ config vconfig::get_parsed_config() const
 	{
 		if (key == "insert_tag") {
 			vconfig insert_cfg(cfg, *variables_);
-			std::string name = insert_cfg["name"];
-			std::string vname = insert_cfg["variable"];
+			std::string name = insert_cfg[str_name];
+			std::string vname = insert_cfg[str_variable];
 			if(!vconfig_recursion.insert(vname).second) {
 				throw recursion_error("vconfig::get_parsed_config() infinite recursion detected, aborting");
 			}
@@ -224,7 +224,7 @@ config vconfig::get_parsed_config() const
 	return res;
 }
 
-vconfig::child_list vconfig::get_children(const std::string& key_to_get) const
+vconfig::child_list vconfig::get_children(const config_key_type& key) const
 {
 	vconfig::child_list res;
 
@@ -234,11 +234,11 @@ vconfig::child_list vconfig::get_children(const std::string& key_to_get) const
 			res.push_back(vconfig(cfg, cache_, *variables_));
 		} else if (key == "insert_tag") {
 			vconfig insert_cfg(cfg, *variables_);
-			if(insert_cfg["name"] == key_to_get)
+			if(insert_cfg[str_name] == key_to_get)
 			{
 				try
 				{
-					config::const_child_itors range = as_nonempty_range(insert_cfg["variable"], *variables_);
+					config::const_child_itors range = as_nonempty_range(insert_cfg[str_variable], *variables_);
 					for (const config& ch : range)
 					{
 						res.push_back(vconfig(ch, true, variables_));
@@ -254,7 +254,7 @@ vconfig::child_list vconfig::get_children(const std::string& key_to_get) const
 	return res;
 }
 
-std::size_t vconfig::count_children(const std::string& key_to_count) const
+std::size_t vconfig::count_children(const config_key_type& key) const
 {
 	std::size_t n = 0;
 
@@ -264,11 +264,11 @@ std::size_t vconfig::count_children(const std::string& key_to_count) const
 			n++;
 		} else if (key == "insert_tag") {
 			vconfig insert_cfg(cfg, *variables_);
-			if(insert_cfg["name"] == key_to_count)
+			if(insert_cfg[str_name] == key_to_count)
 			{
 				try
 				{
-					config::const_child_itors range = as_nonempty_range(insert_cfg["variable"], *variables_);
+					config::const_child_itors range = as_nonempty_range(insert_cfg[str_variable], *variables_);
 					n += range.size();
 				}
 				catch(const invalid_variablename_exception&)
@@ -286,7 +286,7 @@ std::size_t vconfig::count_children(const std::string& key_to_count) const
  * If no such child exists, returns an unconstructed vconfig (use null() to test
  * for this).
  */
-vconfig vconfig::child(const std::string& key) const
+vconfig vconfig::child(const config_key_type& key) const
 {
 	if (auto natural = cfg_->optional_child(key)) {
 		return vconfig(*natural, cache_, *variables_);
@@ -294,11 +294,11 @@ vconfig vconfig::child(const std::string& key) const
 	for (const config &ins : cfg_->child_range("insert_tag"))
 	{
 		vconfig insert_cfg(ins, *variables_);
-		if(insert_cfg["name"] == key)
+		if(insert_cfg[str_name] == key)
 		{
 			try
 			{
-				config::const_child_itors range = as_nonempty_range(insert_cfg["variable"], *variables_);
+				config::const_child_itors range = as_nonempty_range(insert_cfg[str_variable], *variables_);
 				return vconfig(range.front(), true, variables_);
 			}
 			catch(const invalid_variablename_exception&)
@@ -313,7 +313,7 @@ vconfig vconfig::child(const std::string& key) const
 /**
  * Returns whether or not *this has a child whose key is @a key.
  */
-bool vconfig::has_child(const std::string& key) const
+bool vconfig::has_child(const config_key_type& key) const
 {
 	if (cfg_->has_child(key)) {
 		return true;
@@ -321,7 +321,7 @@ bool vconfig::has_child(const std::string& key) const
 	for (const config &ins : cfg_->child_range("insert_tag"))
 	{
 		vconfig insert_cfg(ins, *variables_);
-		if(insert_cfg["name"] == key) {
+		if(insert_cfg[str_name] == key) {
 			return true;
 		}
 	}
@@ -350,14 +350,14 @@ namespace {
 	};
 }//unnamed namespace
 
-config::attribute_value vconfig::expand(const std::string &key) const
+config::attribute_value vconfig::expand(const config_key_type &key) const
 {
 	config::attribute_value val = (*cfg_)[key];
 	val.apply_visitor(vconfig_expand_visitor(val, *variables_));
 	return val;
 }
 
-std::string vconfig::expand_str(const std::string &key) const
+std::string vconfig::expand_str(const config_key_type &key) const
 {
 	std::string val = (*cfg_)[key];
 	return utils::interpolate_variables_into_string(val, *variables_);
@@ -394,7 +394,7 @@ vconfig::all_children_iterator& vconfig::all_children_iterator::operator++()
 	{
 		try
 		{
-			variable_access_const vinfo = variables_->get_variable_access_read(vconfig(i_->cfg, *variables_)["variable"]);
+			variable_access_const vinfo = variables_->get_variable_access_read(vconfig(i_->cfg, *variables_)[str_variable]);
 
 			config::const_child_itors range = vinfo.as_array();
 
@@ -455,7 +455,7 @@ std::string vconfig::all_children_iterator::get_key() const
 {
 	const std::string &key = i_->key;
 	if (inner_index_ >= 0 && key == "insert_tag") {
-		return vconfig(i_->cfg, *variables_)["name"];
+		return vconfig(i_->cfg, *variables_)[str_name];
 	}
 	return key;
 }
@@ -466,7 +466,7 @@ vconfig vconfig::all_children_iterator::get_child() const
 	{
 		try
 		{
-			config::const_child_itors range = as_nonempty_range(vconfig(i_->cfg, *variables_)["variable"], *variables_);
+			config::const_child_itors range = as_nonempty_range(vconfig(i_->cfg, *variables_)[str_variable], *variables_);
 
 			range.advance_begin(inner_index_);
 			return vconfig(range.front(), true, variables_);
@@ -555,8 +555,8 @@ void scoped_xy_unit::activate()
 	if(itor != umap_.end()) {
 		config &tmp_cfg = store();
 		itor->write(tmp_cfg);
-		tmp_cfg["x"] = loc_.wml_x();
-		tmp_cfg["y"] = loc_.wml_y();
+		tmp_cfg[str_x] = loc_.wml_x();
+		tmp_cfg[str_y] = loc_.wml_y();
 		LOG_NG << "auto-storing $" << name() << " at (" << loc_ << ")";
 	} else {
 		ERR_NG << "failed to auto-store $" << name() << " at (" << loc_ << ")";
@@ -581,8 +581,8 @@ void scoped_recall_unit::activate()
 		if(team_it->recall_list().size() > recall_index_) {
 			config &tmp_cfg = store();
 			team_it->recall_list()[recall_index_]->write(tmp_cfg);
-			tmp_cfg["x"] = "recall";
-			tmp_cfg["y"] = "recall";
+			tmp_cfg[str_x] = "recall";
+			tmp_cfg[str_y] = "recall";
 			LOG_NG << "auto-storing $" << name() << " for player: " << player_
 				<< " at recall index: " << recall_index_;
 		} else {

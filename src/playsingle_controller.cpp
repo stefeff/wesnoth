@@ -146,7 +146,7 @@ void playsingle_controller::play_scenario_init(const config& level)
 
 	// Read sound sources
 	assert(soundsources_manager_ != nullptr);
-	for(const config& s : level.child_range("sound_source")) {
+	for(const config& s : level.child_range(str_sound_source)) {
 		try {
 			soundsource::sourcespec spec(s);
 			soundsources_manager_->add(spec);
@@ -330,7 +330,7 @@ void playsingle_controller::play_scenario_main_loop()
 				get_saved_game().statistics().clear_current_scenario();
 			}
 
-			reset_gamestate(*ex.level, (*ex.level)["replay_pos"].to_int());
+			reset_gamestate(*ex.level, (*ex.level)[str_replay_pos].to_int());
 
 			for(std::size_t i = 0; i < local_players.size(); ++i) {
 				resources::gameboard->teams()[i].set_local(local_players[i]);
@@ -387,10 +387,10 @@ void playsingle_controller::do_end_level()
 	// If we're a player, and the result is victory/defeat, then send
 	// a message to notify the server of the reason for the game ending.
 	send_to_wesnothd(config {
-		"info", config {
-			"type", "termination",
-			"condition", "game over",
-			"result", is_victory ? level_result::victory : level_result::defeat,
+		str_info, config {
+			str_type, str_termination,
+			str_condition, str_game_over,
+			str_result, is_victory ? level_result::victory : level_result::defeat,
 		},
 	});
 
@@ -416,7 +416,7 @@ level_result::type playsingle_controller::play_scenario(const config& level)
 	LOG_NG << "in playsingle_controller::play_scenario()...";
 
 	// Start music.
-	for(const config& m : level.child_range("music")) {
+	for(const config& m : level.child_range(str_music)) {
 		sound::play_music_config(m, true);
 	}
 
@@ -426,7 +426,7 @@ level_result::type playsingle_controller::play_scenario(const config& level)
 		// Combine all the [story] tags into a single config. Handle this here since
 		// storyscreen::controller doesn't have a default constructor.
 		config cfg;
-		for(const auto& iter : level.child_range("story")) {
+		for(const auto& iter : level.child_range(str_story)) {
 			cfg.append_children(iter);
 		}
 
@@ -556,7 +556,7 @@ void playsingle_controller::show_turn_dialog()
 		gui_->queue_rerender();
 		std::string message = _("It is now $name|’s turn");
 		utils::string_map symbols;
-		symbols["name"] = gamestate().board_.get_team(current_side()).side_name();
+		symbols[str_name] = gamestate().board_.get_team(current_side()).side_name();
 		message = utils::interpolate_variables_into_string(message, &symbols);
 		gui2::show_transient_message("", message);
 	}

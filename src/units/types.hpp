@@ -181,9 +181,9 @@ public:
 	const std::string& icon() const { return icon_; }
 	const std::string& small_profile() const { return small_profile_; }
 	const std::string& big_profile() const { return profile_; }
-	std::string halo() const { return get_cfg()["halo"]; }
-	std::string ellipse() const { return get_cfg()["ellipse"]; }
-	bool generate_name() const { return get_cfg()["generate_name"].to_bool(true); }
+	std::string halo() const { return get_cfg()[str_halo]; }
+	std::string ellipse() const { return get_cfg()[str_ellipse]; }
+	bool generate_name() const { return get_cfg()[str_generate_name].to_bool(true); }
 	const std::vector<unit_animation>& animations() const;
 
 	const std::string& flag_rgb() const;
@@ -236,7 +236,7 @@ public:
 	std::vector<std::string> get_ability_id_list() const;
 
 	config::const_child_itors possible_traits() const
-	{ return possible_traits_.child_range("trait"); }
+	{ return possible_traits_.child_range(str_trait); }
 
 	config abilities_cfg() const;
 
@@ -244,7 +244,7 @@ public:
 	{ return advancements_; }
 
 	config::const_child_itors events() const
-	{ return get_cfg().child_range("event"); }
+	{ return get_cfg().child_range(str_event); }
 
 	/**
 	 * The returned vector will not be empty, provided this has been built
@@ -270,7 +270,7 @@ public:
 	bool show_variations_in_help() const;
 
 	/** Returns the ID of this type's race without the need to build the type. */
-	std::string race_id() const { return get_cfg()["race"]; } //race_->id(); }
+	std::string race_id() const { return get_cfg()[str_race]; } //race_->id(); }
 	/**
 	 * Never returns nullptr, but may point to the null race.
 	 * Requires building to the HELP_INDEXED status to get the correct race.
@@ -408,7 +408,7 @@ public:
 	const movement_type_map& movement_types() const { return movement_types_; }
 	const std::map<std::string, config>& abilities() const { return abilities_registry_; }
 	const std::map<std::string, config>& specials() const { return specials_registry_; }
-	config_array_view traits() const { return units_cfg().child_range("trait"); }
+	config_array_view traits() const { return units_cfg().child_range(str_trait); }
 
 	static config add_registry_entries(
 		const config& base_cfg,

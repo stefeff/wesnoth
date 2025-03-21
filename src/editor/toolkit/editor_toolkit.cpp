@@ -46,7 +46,7 @@ editor_toolkit::~editor_toolkit() = default;
 
 void editor_toolkit::init_brushes(const game_config_view& game_config)
 {
-	for (const config &i : game_config.child_range("brush")) {
+	for (const config &i : game_config.child_range(str_brush)) {
 		brushes_.emplace_back(i);
 	}
 	if (brushes_.empty()) {

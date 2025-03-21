@@ -88,12 +88,12 @@ auto parse_map_generators(const config_array_view& multiplayer_tag_range)
 	std::vector<std::unique_ptr<map_generator>> generators;
 
 	for(const config& i : multiplayer_tag_range) {
-		if(i["map_generation"].empty() && i["scenario_generation"].empty()) {
+		if(i[str_map_generation].empty() && i[str_scenario_generation].empty()) {
 			continue;
 		}
 
 		if(const auto generator_cfg = i.optional_child("generator")) {
-			generators.emplace_back(create_map_generator(i["map_generation"].str(i["scenario_generation"]), generator_cfg.value()));
+			generators.emplace_back(create_map_generator(i[str_map_generation].str(i[str_scenario_generation]), generator_cfg.value()));
 		}
 	}
 
@@ -155,11 +155,11 @@ void editor_controller::init_gui()
 
 void editor_controller::init_tods(const game_config_view& game_config)
 {
-	for (const config &schedule : game_config.child_range("editor_times")) {
+	for (const config &schedule : game_config.child_range(str_editor_times)) {
 
-		const std::string& schedule_id = schedule["id"];
+		const std::string& schedule_id = schedule[str_id];
 		/* Use schedule id as the name if schedule name is empty */
-		const std::string& schedule_name = schedule["name"].empty() ? schedule["id"] : schedule["name"];
+		const std::string& schedule_name = schedule[str_name].empty() ? schedule[str_id] : schedule[str_name];
 		if (schedule_id.empty()) {
 			ERR_ED << "Missing ID attribute in a TOD Schedule.";
 			continue;
@@ -175,7 +175,7 @@ void editor_controller::init_tods(const game_config_view& game_config)
 			continue;
 		}
 
-		for (const config &time : schedule.child_range("time")) {
+		for (const config &time : schedule.child_range(str_time)) {
 			times->second.second.emplace_back(time);
 		}
 
@@ -1201,13 +1201,13 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, const po
 
 	std::vector<config> items;
 	for(const auto& c : items_arg) {
-		const std::string& id = c["id"];
+		const std::string& id = c[str_id];
 		const auto cmd = hotkey::ui_command(id);
 
 		if((can_execute_command(cmd) && (!context_menu || in_context_menu(cmd)))
 			|| cmd.hotkey_command == hotkey::HOTKEY_NULL)
 		{
-			items.emplace_back("id", id);
+			items.emplace_back(str_id, id);
 		}
 	}
 
@@ -1217,7 +1217,7 @@ void editor_controller::show_menu(const std::vector<config>& items_arg, const po
 	}
 
 	// Based on the ID of the first entry, we fill the menu contextually.
-	const std::string& first_id = items.front()["id"];
+	const std::string& first_id = items.front()[str_id];
 
 	// All generated items (might be empty).
 	std::vector<config> generated;

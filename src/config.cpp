@@ -40,14 +40,9 @@ static lg::log_domain log_config("config");
 static lg::log_domain log_wml("wml");
 #define ERR_WML LOG_STREAM(err, log_wml)
 
-static const utils::interned_string str_insert{"insert"};
-static const utils::interned_string str_not{"not"};
-static const utils::interned_string str_and{"and"};
-static const utils::interned_string str_or{"or"};
-
 /* ** config implementation ** */
 
-const char* config::diff_track_attribute = "__diff_track";
+const utils::interned_string config::diff_track_attribute{"__diff_track"};
 
 config::config()
 	: values_()
@@ -883,7 +878,7 @@ void config::get_diff(const config& c, config& res) const
 		const attribute_map::const_iterator itor = values_.find(key);
 		if(itor == values_.end() || itor->second.blank()) {
 			if(deletes == nullptr) {
-				deletes = &res.add_child("delete");
+				deletes = &res.add_child(str_delete);
 			}
 
 			(*deletes)[key] = "x";
@@ -927,9 +922,9 @@ void config::get_diff(const config& c, config& res) const
 				// If b has more elements than a, then we assume this element
 				// is an element that needs deleting.
 				if(b.size() - bi > a.size() - ai) {
-					config& new_delete = res.add_child("delete_child");
+					config& new_delete = res.add_child(str_delete_child);
 					buf << bi - ndeletes;
-					new_delete.values_["index"] = buf.str();
+					new_delete.values_[str_index] = buf.str();
 					new_delete.add_child(entity);
 
 					++ndeletes;
@@ -939,9 +934,9 @@ void config::get_diff(const config& c, config& res) const
 				// If b has less elements than a, then we assume this element
 				// is an element that needs inserting.
 				else if(b.size() - bi < a.size() - ai) {
-					config& new_insert = res.add_child("insert_child");
+					config& new_insert = res.add_child(str_insert_child);
 					buf << ai;
-					new_insert.values_["index"] = buf.str();
+					new_insert.values_[str_index] = buf.str();
 					new_insert.add_child(entity, *a[ai]);
 
 					++ai;
@@ -950,9 +945,9 @@ void config::get_diff(const config& c, config& res) const
 				// Otherwise, they have the same number of elements,
 				// so try just changing this element to match.
 				else {
-					config& new_change = res.add_child("change_child");
+					config& new_change = res.add_child(str_change_child);
 					buf << bi;
-					new_change.values_["index"] = buf.str();
+					new_change.values_[str_index] = buf.str();
 					new_change.add_child(entity, a[ai]->get_diff(*b[bi]));
 
 					++ai;
@@ -975,14 +970,14 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 		}
 	}
 
-	if(const auto deletes = diff.optional_child("delete")) {
+	if(const auto deletes = diff.optional_child(str_delete)) {
 		for(const attribute& v : deletes->attribute_range()) {
 			values_.erase(v.first);
 		}
 	}
 
 	for(const config& i : diff.child_range("change_child")) {
-		const std::size_t index = i["index"].to_size_t();
+		const std::size_t index = i[str_index].to_size_t();
 		for(const auto [key, cfg] : i.all_children_view()) {
 			if(key.empty()) {
 				continue;
@@ -998,7 +993,7 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 	}
 
 	for(const config& i : diff.child_range("insert_child")) {
-		const std::size_t index = i["index"].to_size_t();
+		const std::size_t index = i[str_index].to_size_t();
 		for(const auto [key, cfg] : i.all_children_view()) {
 			config& inserted = add_child_at(key, cfg, index);
 			if(track) {
@@ -1008,7 +1003,7 @@ void config::apply_diff(const config& diff, bool track /* = false */)
 	}
 
 	for(const config& i : diff.child_range("delete_child")) {
-		const std::size_t index = i["index"].to_size_t();
+		const std::size_t index = i[str_index].to_size_t();
 		for(const auto [key, cfg] : i.all_children_view()) {
 			if(!track) {
 				remove_child(key, index);
@@ -1028,14 +1023,14 @@ void config::clear_diff_track(const config& diff)
 {
 	remove_attribute(diff_track_attribute);
 	for(const config& i : diff.child_range("delete_child")) {
-		const std::size_t index = i["index"].to_size_t();
+		const std::size_t index = i[str_index].to_size_t();
 		for(const auto [key, cfg] : i.all_children_view()) {
 			remove_child(key, index);
 		}
 	}
 
 	for(const config& i : diff.child_range("change_child")) {
-		const std::size_t index = i["index"].to_size_t();
+		const std::size_t index = i[str_index].to_size_t();
 		for(const auto [key, cfg] : i.all_children_view()) {
 			if(key.empty()) {
 				continue;
@@ -1081,7 +1076,7 @@ void config::merge_with(const config& c)
 				// Get a const config so we do not add attributes.
 				const config& merge_child = *j->second[visits++];
 
-				if(merge_child["__remove"].to_bool()) {
+				if(merge_child[str___remove].to_bool()) {
 					to_remove.push_back(*i);
 				} else {
 					(i->pos->second[i->index])->merge_with(merge_child);

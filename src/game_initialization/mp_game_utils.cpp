@@ -41,13 +41,13 @@ namespace mp
 // This is for the wesnothd server, it expects a more detailed summary in [multiplayer]
 static void add_multiplayer_classification(config& multiplayer, saved_game& state)
 {
-	multiplayer["mp_scenario"] = state.get_scenario_id();
-	multiplayer["mp_scenario_name"] = state.get_starting_point()["name"];
-	multiplayer["difficulty_define"] = state.classification().difficulty;
-	multiplayer["mp_campaign"] = state.classification().campaign;
-	multiplayer["mp_campaign_name"] = state.classification().campaign_name;
-	multiplayer["mp_era"] = state.classification().era_id;
-	multiplayer["active_mods"] = utils::join(state.classification().active_mods, ",");
+	multiplayer[str_mp_scenario] = state.get_scenario_id();
+	multiplayer[str_mp_scenario_name] = state.get_starting_point()[str_name];
+	multiplayer[str_difficulty_define] = state.classification().difficulty;
+	multiplayer[str_mp_campaign] = state.classification().campaign;
+	multiplayer[str_mp_campaign_name] = state.classification().campaign_name;
+	multiplayer[str_mp_era] = state.classification().era_id;
+	multiplayer[str_active_mods] = utils::join(state.classification().active_mods, ",");
 }
 
 config initial_level_config(saved_game& state)
@@ -70,17 +70,17 @@ config initial_level_config(saved_game& state)
 		state.set_random_seed();
 	}
 
-	if(scenario["objectives"].empty()) {
+	if(scenario[str_objectives].empty()) {
 		// Generic victory objectives.
 		std::ostringstream ss;
 		ss << markup::tag("big", t_string(N_("Victory:"), "wesnoth")) << "\n";
 		ss << markup::span_color("#00ff00",
 			font::unicode_bullet, " ", t_string(N_("Defeat enemy leader(s)"), "wesnoth"));
-		scenario["objectives"] = ss.str();
+		scenario[str_objectives] = ss.str();
 	}
 
 	config level = state.to_config();
-	add_multiplayer_classification(level.child_or_add("multiplayer"), state);
+	add_multiplayer_classification(level.child_or_add(str_multiplayer), state);
 
 	// [multiplayer] mp_era= should be persistent over saves.
 	std::string era = state.classification().era_id;
@@ -95,7 +95,7 @@ config initial_level_config(saved_game& state)
 	 */
 
 	const game_config_view& game_config = game_config_manager::get()->game_config();
-	auto era_cfg = game_config.find_child("era", "id", era);
+	auto era_cfg = game_config.find_child(str_era, str_id, era);
 
 	if(!era_cfg) {
 		if(params.saved_game == saved_game_mode::type::no) {
@@ -106,25 +106,25 @@ config initial_level_config(saved_game& state)
 		WRN_CF << "Missing era in MP load game '" << era << "'";
 
 	} else {
-		level.add_child("era", *era_cfg);
+		level.add_child(str_era, *era_cfg);
 
 		// Initialize the list of sides available for the current era.
 		// We also need this so not to get a segfault in mp_staging for ai configuration.
-		const config& custom_side = game_config.find_mandatory_child("multiplayer_side", "id", "Custom");
-		level.mandatory_child("era").add_child_at("multiplayer_side", custom_side, 0);
+		const config& custom_side = game_config.find_mandatory_child(str_multiplayer_side, str_id, str_Custom);
+		level.mandatory_child(str_era).add_child_at(str_multiplayer_side, custom_side, 0);
 	}
 
 	// Add modifications, needed for ai algorithms which are applied in mp_staging.
 	const std::vector<std::string>& mods = state.classification().active_mods;
 
 	for(unsigned i = 0; i < mods.size(); ++i) {
-		if(auto mod_cfg = game_config.find_child("modification", "id", mods[i])) {
-			level.add_child("modification", *mod_cfg);
+		if(auto mod_cfg = game_config.find_child(str_modification, str_id, mods[i])) {
+			level.add_child(str_modification, *mod_cfg);
 		}
 	}
 
 	// This will force connecting clients to be using the same version number as us.
-	level["version"] = game_config::wesnoth_version.str();
+	level[str_version] = game_config::wesnoth_version.str();
 	return level;
 }
 

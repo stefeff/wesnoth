@@ -13,6 +13,7 @@ class interned_string
 {
 public:
 
+    interned_string() = default;
     interned_string(const char* s) { init(s); }
     interned_string(const std::string& s) { init(s); }
 
@@ -22,6 +23,9 @@ public:
     const std::string& str() const { return get_shared().storage[index_]; }
     operator const std::string&() const { return str(); }
     const char* c_str() const { return str().c_str(); }
+
+    const char& operator[](std::size_t index) const { return get_shared().storage[index_][index]; }
+
     std::size_t size() const { return str().size(); }
     std::size_t length() const { return size(); }
 
@@ -64,6 +68,11 @@ inline std::ostream& operator<<(std::ostream& os, const utils::interned_string& 
 inline std::string operator+(const char* lhs, const utils::interned_string& rhs)
 {
     return lhs + rhs.str();
+}
+
+inline bool operator==(const std::string& lhs, const utils::interned_string& rhs)
+{
+    return lhs == rhs.str();
 }
 
 namespace std

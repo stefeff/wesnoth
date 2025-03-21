@@ -252,22 +252,22 @@ unsigned add_user_bookmark(const std::string& label, const std::string& path)
 {
 	config cfg = get_bookmarks_config();
 
-	config& bookmark_cfg = cfg.add_child("bookmark");
-	bookmark_cfg["label"] = label;
-	bookmark_cfg["path"]  = path;
+	config& bookmark_cfg = cfg.add_child(str_bookmark);
+	bookmark_cfg[str_label] = label;
+	bookmark_cfg[str_path]  = path;
 
 	commit_bookmarks_config(cfg);
 
-	return cfg.child_count("bookmark");
+	return cfg.child_count(str_bookmark);
 }
 
 void remove_user_bookmark(unsigned index)
 {
 	config cfg = get_bookmarks_config();
-	const unsigned prev_size = cfg.child_count("bookmark");
+	const unsigned prev_size = cfg.child_count(str_bookmark);
 
 	if(index < prev_size) {
-		cfg.remove_child("bookmark", index);
+		cfg.remove_child(str_bookmark, index);
 	}
 
 	commit_bookmarks_config(cfg);
@@ -278,9 +278,9 @@ std::vector<bookmark_info> user_bookmarks()
 	const config& cfg = get_bookmarks_config();
 	std::vector<bookmark_info> res;
 
-	if(cfg.has_child("bookmark")) {
-		for(const config& bookmark_cfg : cfg.child_range("bookmark")) {
-			res.push_back({ bookmark_cfg["label"], bookmark_cfg["path"] });
+	if(cfg.has_child(str_bookmark)) {
+		for(const config& bookmark_cfg : cfg.child_range(str_bookmark)) {
+			res.push_back({ bookmark_cfg[str_label], bookmark_cfg[str_path] });
 		}
 	}
 

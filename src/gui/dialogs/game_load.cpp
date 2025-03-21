@@ -184,10 +184,10 @@ void game_load::display_savegame_internal(const savegame::save_info& game)
 	summary_  = game.summary();
 
 	find_widget<minimap>("minimap")
-			.set_map_data(summary_["map_data"]);
+			.set_map_data(summary_[str_map_data]);
 
 	find_widget<label>("lblScenario")
-			.set_label(summary_["label"].t_str());
+			.set_label(summary_[str_label].t_str());
 
 	listbox& leader_list = find_widget<listbox>("leader_list");
 
@@ -203,35 +203,35 @@ void game_load::display_savegame_internal(const savegame::save_info& game)
 		// First, we evaluate whether the leader image as provided exists.
 		// If not, we try getting a binary path-independent path. If that still doesn't
 		// work, we fallback on unknown-unit.png.
-		std::string leader_image = leader["leader_image"].str();
+		std::string leader_image = leader[str_leader_image].str();
 		if(!::image::exists(leader_image)) {
 			auto indep_path = filesystem::get_independent_binary_file_path("images", leader_image);
 
 			// The leader TC modifier isn't appending if the independent image path can't
 			// be resolved during save_index entry creation, so we need to add it here.
 			if(indep_path) {
-				leader_image = indep_path.value() + leader["leader_image_tc_modifier"].str();
+				leader_image = indep_path.value() + leader[str_leader_image_tc_modifier].str();
 			}
 		}
 
 		if(leader_image.empty()) {
-			leader_image = "units/unknown-unit.png" + leader["leader_image_tc_modifier"].str();
+			leader_image = "units/unknown-unit.png" + leader[str_leader_image_tc_modifier].str();
 		} else {
 			// Scale down any sprites larger than 72x72
 			leader_image += sprite_scale_mod + "~FL(horiz)";
 		}
 
-		item["label"] = leader_image;
+		item[str_label] = leader_image;
 		data.emplace("imgLeader", item);
 
-		item["label"] = leader["leader_name"].t_str();
+		item[str_label] = leader[str_leader_name].t_str();
 		data.emplace("leader_name", item);
 
-		item["label"] = leader["gold"].str();
+		item[str_label] = leader[str_gold].str();
 		data.emplace("leader_gold", item);
 
 		// TRANSLATORS: "reserve" refers to units on the recall list
-		item["label"] = VGETTEXT("$active active, $reserve reserve", {{"active", leader["units"].str()}, {"reserve", leader["recall_units"].str()}});
+		item[str_label] = VGETTEXT("$active active, $reserve reserve", {{"active", leader[str_units].str()}, {"reserve", leader[str_recall_units].str()}});
 		data.emplace("leader_troops", item);
 
 		leader_list.add_row(data);
@@ -256,7 +256,7 @@ void game_load::display_savegame_internal(const savegame::save_info& game)
 	toggle_button& change_difficulty_toggle = dynamic_cast<toggle_button&>(*change_difficulty_->get_widget());
 
 	const bool is_replay = savegame::is_replay_save(summary_);
-	const bool is_scenario_start = summary_["turn"].empty();
+	const bool is_scenario_start = summary_[str_turn].empty();
 
 	// Always toggle show_replay on if the save is a replay
 	replay_toggle.set_value(is_replay);
@@ -325,7 +325,7 @@ void game_load::apply_filter_text(const std::string& text)
 
 void game_load::evaluate_summary_string(std::stringstream& str, const config& cfg_summary)
 {
-	if(cfg_summary["corrupt"].to_bool()) {
+	if(cfg_summary[str_corrupt].to_bool()) {
 		str << "\n" << markup::span_color("#f00", _("(Invalid)"));
 		// \todo: this skips the catch() statement in display_savegame. Low priority, as the
 		// dialog's state is reasonable; the "load" button is inactive, the "delete" button is
@@ -334,8 +334,8 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 		return;
 	}
 
-	const std::string& campaign_type = cfg_summary["campaign_type"];
-	const std::string campaign_id = cfg_summary["campaign"];
+	const std::string& campaign_type = cfg_summary[str_campaign_type];
+	const std::string campaign_id = cfg_summary[str_campaign];
 	auto campaign_type_enum = campaign_type::get_enum(campaign_type);
 
 	if(campaign_type_enum) {
@@ -345,10 +345,10 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 				utils::string_map symbols;
 
 				if(campaign) {
-					symbols["campaign_name"] = (*campaign)["name"].t_str();
+					symbols[str_campaign_name] = (*campaign)[str_name].t_str();
 				} else {
 					// Fallback to nontranslatable campaign id.
-					symbols["campaign_name"] = "(" + campaign_id + ")";
+					symbols[str_campaign_name] = "(" + campaign_id + ")";
 				}
 
 				str << VGETTEXT("Campaign: $campaign_name", symbols);
@@ -377,8 +377,8 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 
 	if(savegame::is_replay_save(cfg_summary)) {
 		str << _("Replay");
-	} else if(!cfg_summary["turn"].empty()) {
-		str << _("Turn") << " " << cfg_summary["turn"];
+	} else if(!cfg_summary[str_turn].empty()) {
+		str << _("Turn") << " " << cfg_summary[str_turn];
 	} else {
 		str << _("Scenario start");
 	}
@@ -394,14 +394,14 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 			if(auto campaign = cache_config_.find_child("campaign", "id", campaign_id)) {
 				str << "\n" << _("Difficulty: ");
 				try {
-					const config& difficulty = campaign->find_mandatory_child("difficulty", "define", cfg_summary["difficulty"]);
+					const config& difficulty = campaign->find_mandatory_child("difficulty", "define", cfg_summary[str_difficulty]);
 					std::ostringstream ss;
-					ss << difficulty["label"] << " (" << difficulty["description"] << ")";
+					ss << difficulty[str_label] << " (" << difficulty[str_description] << ")";
 					str << ss.str();
 				}
 				catch (const config::error&) {
 					// fall back to standard difficulty string in case of exception
-					str << string_table[cfg_summary["difficulty"]];
+					str << string_table[cfg_summary[str_difficulty]];
 				}
 			}
 
@@ -414,17 +414,17 @@ void game_load::evaluate_summary_string(std::stringstream& str, const config& cf
 	} else {
 	}
 
-	if(!cfg_summary["version"].empty()) {
-		str << "\n" << _("Version: ") << cfg_summary["version"];
+	if(!cfg_summary[str_version].empty()) {
+		str << "\n" << _("Version: ") << cfg_summary[str_version];
 	}
 
-	const std::vector<std::string>& active_mods = utils::split(cfg_summary["active_mods"]);
+	const std::vector<std::string>& active_mods = utils::split(cfg_summary[str_active_mods]);
 	if(!active_mods.empty()) {
 		str << "\n" << _("Modifications: ");
 		for(const auto& mod_id : active_mods) {
 			std::string mod_name;
 			try {
-				mod_name = cache_config_.find_mandatory_child("modification", "id", mod_id)["name"].str();
+				mod_name = cache_config_.find_mandatory_child("modification", "id", mod_id)[str_name].str();
 			} catch(const config::error&) {
 				// Fallback to nontranslatable mod id.
 				mod_name = "(" + mod_id + ")";
@@ -489,7 +489,7 @@ void game_load::handle_dir_select()
 {
 	menu_button& dir_list = find_widget<menu_button>("dirList");
 
-	const auto& path = dir_list.get_value_config()["path"].str();
+	const auto& path = dir_list.get_value_config()[str_path].str();
 	if(path.empty()) {
 		save_index_manager_ = savegame::save_index_class::default_saves_dir();
 	} else {

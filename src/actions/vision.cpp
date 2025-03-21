@@ -107,10 +107,10 @@ clearer_info::clearer_info(const unit & viewer) :
  * Constructor from a config.
  */
 clearer_info::clearer_info(const config & cfg) :
-	underlying_id(cfg["underlying_id"].to_size_t()),
-	sight_range(cfg["vision"].to_int()),
-	slowed(cfg.child_or_empty("status")["slowed"].to_bool()),
-	costs(movetype::read_terrain_costs(cfg.child_or_empty("vision_costs")))
+	underlying_id(cfg[str_underlying_id].to_size_t()),
+	sight_range(cfg[str_vision].to_int()),
+	slowed(cfg.child_or_empty(str_status)[str_slowed].to_bool()),
+	costs(movetype::read_terrain_costs(cfg.child_or_empty(str_vision_costs)))
 {
 }
 
@@ -121,10 +121,10 @@ void clearer_info::write(config & cfg) const
 {
 	// The key and tag names are intended to mirror those used by [unit]
 	// (so a clearer_info can be constructed from a unit's config).
-	cfg["underlying_id"] = underlying_id;
-	cfg["vision"] = sight_range;
+	cfg[str_underlying_id] = underlying_id;
+	cfg[str_vision] = sight_range;
 	if ( slowed )
-		cfg.add_child("status")["slowed"] = true;
+		cfg.add_child(str_status)[str_slowed] = true;
 	costs->write(cfg, "vision_costs");
 }
 

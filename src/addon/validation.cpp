@@ -83,8 +83,8 @@ bool check_names_legal_internal(const config& dir, std::string current_prefix, s
 		current_prefix += '/';
 	}
 
-	for(const config& path : dir.child_range("file")) {
-		const std::string& filename = path["name"];
+	for(const config& path : dir.child_range(str_file)) {
+		const std::string& filename = path[str_name];
 
 		if(!addon_filename_legal(filename)) {
 			if(badlist) {
@@ -95,8 +95,8 @@ bool check_names_legal_internal(const config& dir, std::string current_prefix, s
 		}
 	}
 
-	for(const config& path : dir.child_range("dir")) {
-		const std::string& dirname = path["name"];
+	for(const config& path : dir.child_range(str_dir)) {
+		const std::string& dirname = path[str_name];
 		const std::string& new_prefix = current_prefix + dirname;
 
 		if(!addon_filename_legal(dirname)) {
@@ -122,8 +122,8 @@ bool check_case_insensitive_duplicates_internal(const config& dir, const std::st
 	bool inserted;
 	bool printed;
 	std::string original;
-	for (const config &path : dir.child_range("file")) {
-		const config::attribute_value &filename = path["name"];
+	for (const config &path : dir.child_range(str_file)) {
+		const config::attribute_value &filename = path[str_name];
 		const std::string lowercase = boost::algorithm::to_lower_copy(filename.str(), std::locale::classic());
 		const std::string with_prefix = prefix + filename.str();
 		std::tie(std::ignore, inserted) = filenames.emplace(lowercase, std::pair(false, with_prefix));
@@ -140,8 +140,8 @@ bool check_case_insensitive_duplicates_internal(const config& dir, const std::st
 			}
 		}
 	}
-	for (const config &path : dir.child_range("dir")) {
-		const config::attribute_value &filename = path["name"];
+	for (const config &path : dir.child_range(str_dir)) {
+		const config::attribute_value &filename = path[str_name];
 		const std::string lowercase = boost::algorithm::to_lower_copy(filename.str(), std::locale::classic());
 		const std::string with_prefix = prefix + filename.str();
 		std::tie(std::ignore, inserted) = filenames.emplace(lowercase, std::pair(false, with_prefix));
@@ -256,12 +256,12 @@ std::string unencode_binary(const std::string& str)
 
 static std::string file_hash_raw(const config& file)
 {
-	return utils::md5(file["contents"].str()).base64_digest();
+	return utils::md5(file[str_contents].str()).base64_digest();
 }
 
 std::string file_hash(const config& file)
 {
-	std::string hash = file["hash"].str();
+	std::string hash = file[str_hash].str();
 	if(hash.empty()) {
 		hash = file_hash_raw(file);
 	}
@@ -270,30 +270,30 @@ std::string file_hash(const config& file)
 
 bool comp_file_hash(const config& file_a, const config& file_b)
 {
-	return file_a["name"] == file_b["name"] && file_hash(file_a) == file_hash(file_b);
+	return file_a[str_name] == file_b[str_name] && file_hash(file_a) == file_hash(file_b);
 }
 
 void write_hashlist(config& hashlist, const config& data)
 {
-	hashlist["name"] = data["name"];
+	hashlist[str_name] = data[str_name];
 
-	for(const config& f : data.child_range("file")) {
-		config& file = hashlist.add_child("file");
-		file["name"] = f["name"];
-		file["hash"] = file_hash_raw(f);
+	for(const config& f : data.child_range(str_file)) {
+		config& file = hashlist.add_child(str_file);
+		file[str_name] = f[str_name];
+		file[str_hash] = file_hash_raw(f);
 	}
 
-	for(const config& d : data.child_range("dir")) {
-		config& dir = hashlist.add_child("dir");
+	for(const config& d : data.child_range(str_dir)) {
+		config& dir = hashlist.add_child(str_dir);
 		write_hashlist(dir, d);
 	}
 }
 
 bool contains_hashlist(const config& from, const config& to)
 {
-	for(const config& f : to.child_range("file")) {
+	for(const config& f : to.child_range(str_file)) {
 		bool found = false;
-		for(const config& d : from.child_range("file")) {
+		for(const config& d : from.child_range(str_file)) {
 			found |= comp_file_hash(f, d);
 			if(found)
 				break;
@@ -303,15 +303,15 @@ bool contains_hashlist(const config& from, const config& to)
 		}
 	}
 
-	for(const config& d : to.child_range("dir")) {
-		auto origin_dir = from.find_child("dir", "name", d["name"]);
+	for(const config& d : to.child_range(str_dir)) {
+		auto origin_dir = from.find_child(str_dir, "name", d[str_name]);
 		if(origin_dir) {
 			if(!contains_hashlist(*origin_dir, d)) {
 				return false;
 			}
 		} else {
 			// The case of empty new subdirectories
-			const config dummy_dir = config("name", d["name"]);
+			const config dummy_dir = config(str_name, d[str_name]);
 			if(!contains_hashlist(dummy_dir, d)) {
 				return false;
 			}
@@ -324,39 +324,39 @@ bool contains_hashlist(const config& from, const config& to)
 /** Surround with [dir][/dir] */
 static bool write_difference(config& pack, const config& from, const config& to, bool with_content)
 {
-	pack["name"] = to["name"];
+	pack[str_name] = to[str_name];
 	bool has_changes = false;
 
-	for(const config& f : to.child_range("file")) {
+	for(const config& f : to.child_range(str_file)) {
 		bool found = false;
-		for(const config& d : from.child_range("file")) {
+		for(const config& d : from.child_range(str_file)) {
 			found |= comp_file_hash(f, d);
 			if(found)
 				break;
 		}
 		if(!found) {
-			config& file = pack.add_child("file");
-			file["name"] = f["name"];
+			config& file = pack.add_child(str_file);
+			file[str_name] = f[str_name];
 			if(with_content) {
-				file["contents"] = f["contents"];
-				file["hash"] = file_hash(f);
+				file[str_contents] = f[str_contents];
+				file[str_hash] = file_hash(f);
 			}
 			has_changes = true;
 		}
 	}
 
-	for(const config& d : to.child_range("dir")) {
-		auto origin_dir = from.find_child("dir", "name", d["name"]);
+	for(const config& d : to.child_range(str_dir)) {
+		auto origin_dir = from.find_child(str_dir, "name", d[str_name]);
 		config dir;
 		if(origin_dir) {
 			if(write_difference(dir, *origin_dir, d, with_content)) {
-				pack.add_child("dir", dir);
+				pack.add_child(str_dir, dir);
 				has_changes = true;
 			}
 		} else {
-			const config dummy_dir = config("name", d["name"]);
+			const config dummy_dir = config(str_name, d[str_name]);
 			if(write_difference(dir, dummy_dir, d, with_content)) {
-				pack.add_child("dir", dir);
+				pack.add_child(str_dir, dir);
 				has_changes = true;
 			}
 		}
@@ -373,9 +373,9 @@ static bool write_difference(config& pack, const config& from, const config& to,
  */
 void make_updatepack(config& pack, const config& from, const config& to)
 {
-	config& removelist = pack.add_child("removelist");
+	config& removelist = pack.add_child(str_removelist);
 	write_difference(removelist, to, from, false);
-	config& addlist = pack.add_child("addlist");
+	config& addlist = pack.add_child(str_addlist);
 	write_difference(addlist, from, to, true);
 }
 

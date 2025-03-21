@@ -2,6 +2,7 @@ commandline_argv.cpp
 config.cpp
 config_attribute_value.cpp
 config_cache.cpp
+config_strings.cpp
 crypt_blowfish/crypt_blowfish.c
 filesystem.cpp
 filesystem_common.cpp

@@ -351,11 +351,11 @@ void addon_manager::pre_show()
 	std::vector<config> status_filter_entries;
 	for(const auto& f : status_filter_types_) {
 		if(f.first == FILTER_ALL) {
-			status_filter_entries.emplace_back("label", t_string(f.second, GETTEXT_DOMAIN)+" ("+std::to_string(addons_.size())+")");
+			status_filter_entries.emplace_back(str_label, t_string(f.second, GETTEXT_DOMAIN)+" ("+std::to_string(addons_.size())+")");
 		} else if(f.first == FILTER_INSTALLED) {
-			status_filter_entries.emplace_back("label", t_string(f.second, GETTEXT_DOMAIN)+" ("+std::to_string(installed_addons().size())+")");
+			status_filter_entries.emplace_back(str_label, t_string(f.second, GETTEXT_DOMAIN)+" ("+std::to_string(installed_addons().size())+")");
 		} else {
-			status_filter_entries.emplace_back("label", t_string(f.second, GETTEXT_DOMAIN));
+			status_filter_entries.emplace_back(str_label, t_string(f.second, GETTEXT_DOMAIN));
 		}
 	}
 
@@ -369,9 +369,9 @@ void addon_manager::pre_show()
 
 	std::vector<config> tag_filter_entries;
 	for(const auto& f : tag_filter_types_) {
-		tag_filter_entries.emplace_back("label", t_string(f.label, GETTEXT_DOMAIN), "checkbox", false);
+		tag_filter_entries.emplace_back(str_label, t_string(f.label, GETTEXT_DOMAIN), str_checkbox, false);
 		if(!f.tooltip.empty()) {
-			tag_filter_entries.back()["tooltip"] = t_string(f.tooltip, GETTEXT_DOMAIN);
+			tag_filter_entries.back()[str_tooltip] = t_string(f.tooltip, GETTEXT_DOMAIN);
 		}
 	}
 
@@ -404,7 +404,7 @@ void addon_manager::pre_show()
 
 	std::vector<config> type_filter_entries;
 	for(const auto& f : type_filter_types_) {
-		type_filter_entries.emplace_back("label", t_string(f.second, GETTEXT_DOMAIN)+" ("+std::to_string(type_counts[f.first])+")", "checkbox", false);
+		type_filter_entries.emplace_back(str_label, t_string(f.second, GETTEXT_DOMAIN)+" ("+std::to_string(type_counts[f.first])+")", "checkbox", false);
 	}
 
 	type_filter.set_values(type_filter_entries);
@@ -436,7 +436,7 @@ void addon_manager::pre_show()
 	multimenu_button& language_filter = find_widget<multimenu_button>("language_filter");
 	std::vector<config> language_filter_entries;
 	for(const auto& f : language_filter_types_) {
-		language_filter_entries.emplace_back("label", f.second, "checkbox", false);
+		language_filter_entries.emplace_back(str_label, f.second, str_checkbox, false);
 	}
 
 	language_filter.set_values(language_filter_entries);
@@ -451,15 +451,15 @@ void addon_manager::pre_show()
 	for(const auto& f : all_orders_) {
 		utils::string_map symbols;
 
-		symbols["order"] = _("ascending");
+		symbols[str_order] = _("ascending");
 		// TRANSLATORS: Sorting order of dates, oldest first
-		symbols["datelike_order"] = _("oldest to newest");
-		config entry{"label", VGETTEXT(f.label.c_str(), symbols)};
+		symbols[str_datelike_order] = _("oldest to newest");
+		config entry{str_label, VGETTEXT(f.label.c_str(), symbols)};
 		order_dropdown_entries.push_back(entry);
-		symbols["order"] = _("descending");
+		symbols[str_order] = _("descending");
 		// TRANSLATORS: Sorting order of dates, newest first
-		symbols["datelike_order"] = _("newest to oldest");
-		entry["label"] = VGETTEXT(f.label.c_str(), symbols);
+		symbols[str_datelike_order] = _("newest to oldest");
+		entry[str_label] = VGETTEXT(f.label.c_str(), symbols);
 		order_dropdown_entries.push_back(entry);
 	}
 
@@ -599,15 +599,15 @@ void addon_manager::load_addon_list()
 			// and recreated by read_addons_list.
 			try {
 				config pbl_cfg = get_addon_pbl_info(id, false);
-				pbl_cfg["name"] = id;
-				pbl_cfg["local_only"] = true;
+				pbl_cfg[str_name] = id;
+				pbl_cfg[str_local_only] = true;
 
 				// Add the add-on to the list.
 				addon_info addon(pbl_cfg);
 				addons_[id] = addon;
 
 				// Add the addon to the config entry
-				cfg_.add_child("campaign", std::move(pbl_cfg));
+				cfg_.add_child(str_campaign, std::move(pbl_cfg));
 			} catch(invalid_pbl_exception&) {}
 		}
 	}
@@ -650,12 +650,12 @@ boost::dynamic_bitset<> addon_manager::get_name_filter_visibility() const
 	filter_transform filter(utils::split(text, ' '));
 	boost::dynamic_bitset<> res;
 
-	const config::const_child_itors& addon_cfgs = cfg_.child_range("campaign");
+	const config::const_child_itors& addon_cfgs = cfg_.child_range(str_campaign);
 
 	for(const auto& a : addons_)
 	{
 		const config& addon_cfg = *utils::ranges::find(addon_cfgs, a.first,
-			[](const config& cfg) { return cfg["name"]; });
+			[](const config& cfg) { return cfg[str_name]; });
 
 		res.push_back(filter(addon_cfg));
 	}
@@ -962,7 +962,7 @@ void addon_manager::publish_addon(const addon_info& addon)
 	// Since the user is planning to upload an addon, this is the right time to validate the .pbl.
 	config cfg = get_addon_pbl_info(addon_id, true);
 
-	const version_info& version_to_publish = cfg["version"].str();
+	const version_info& version_to_publish = cfg[str_version].str();
 
 	if(version_to_publish <= tracking_info_[addon_id].remote_version) {
 		const int res = gui2::show_message(_("Warning"),
@@ -975,20 +975,20 @@ void addon_manager::publish_addon(const addon_info& addon)
 	}
 
 	// if the passphrase isn't provided from the _server.pbl, try to pre-populate it from the preferences before prompting for it
-	if(cfg["passphrase"].empty()) {
-		cfg["passphrase"] = prefs::get().password(prefs::get().campaign_server(), cfg["author"]);
+	if(cfg[str_passphrase].empty()) {
+		cfg[str_passphrase] = prefs::get().password(prefs::get().campaign_server(), cfg[str_author]);
 		if(!gui2::dialogs::addon_auth::execute(cfg)) {
 			return;
 		} else {
-			prefs::get().set_password(prefs::get().campaign_server(), cfg["author"], cfg["passphrase"]);
+			prefs::get().set_password(prefs::get().campaign_server(), cfg[str_author], cfg[str_passphrase]);
 		}
-	} else if(cfg["forum_auth"].to_bool()) {
+	} else if(cfg[str_forum_auth].to_bool()) {
 		// if the uploader's forum password is present in the _server.pbl
 		gui2::show_error_message(_("The passphrase attribute cannot be present when forum_auth is used."));
 		return;
 	}
 
-	if(!::image::exists(cfg["icon"].str())) {
+	if(!::image::exists(cfg[str_icon].str())) {
 		gui2::show_error_message(_("Invalid icon path. Make sure the path points to a valid image."));
 	} else if(!client_.request_distribution_terms(server_msg)) {
 		gui2::show_error_message(
@@ -1170,7 +1170,7 @@ void addon_manager::on_addon_select()
 		parent->find_widget<button>("uninstall").set_active(installed);
 
 		for(const auto& f : info->versions) {
-			version_filter_entries.emplace_back("label", f.str());
+			version_filter_entries.emplace_back(str_label, f.str());
 		}
 	} else {
 		action_stack.select_layer(1);
@@ -1180,7 +1180,7 @@ void addon_manager::on_addon_select()
 		parent->find_widget<button>("delete").set_active(!info->local_only);
 
 		// Show only the version to be published
-		version_filter_entries.emplace_back("label", info->current_version.str());
+		version_filter_entries.emplace_back(str_label, info->current_version.str());
 	}
 
 	version_filter.set_values(version_filter_entries);

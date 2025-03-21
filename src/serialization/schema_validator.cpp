@@ -284,17 +284,17 @@ bool schema_validator::read_config_file(const std::string& filename)
 		return false;
 	}
 
-	for(const config& g : cfg.child_range("wml_schema")) {
-		for(const config& schema : g.child_range("tag")) {
-			if(schema["name"].str() == "root") {
+	for(const config& g : cfg.child_range(str_wml_schema)) {
+		for(const config& schema : g.child_range(str_tag)) {
+			if(schema[str_name] == str_root) {
 				//@NOTE Don't know, maybe merging of roots needed.
 				root_ = wml_tag(schema);
 			}
 		}
-		types_["t_string"] = std::make_shared<wml_type_tstring>();
-		for(const config& type : g.child_range("type")) {
+		types_[str_t_string] = std::make_shared<wml_type_tstring>();
+		for(const config& type : g.child_range(str_type)) {
 			try {
-				types_[type["name"].str()] = wml_type::from_config(type);
+				types_[type[str_name].str()] = wml_type::from_config(type);
 			} catch(const std::exception&) {
 				// Need to check all type values in schema-generator
 			}
@@ -874,17 +874,17 @@ void schema_self_validator::validate_key(const config& cfg, const std::string& n
 	if(have_active_tag() && !active_tag().get_name().empty() && is_valid()) {
 		const std::string& tag_name = active_tag().get_name();
 		if(tag_name == "key" && name == "type" ) {
-			for(auto& possible_type : utils::split(cfg["type"])) {
+			for(auto& possible_type : utils::split(cfg[str_type])) {
 				referenced_types_.emplace_back(possible_type, file, start_line, tag_name);
 			}
 		} else if((tag_name == "type" || tag_name == "element") && name == "link") {
-			referenced_types_.emplace_back(cfg["link"], file, start_line, tag_name);
+			referenced_types_.emplace_back(cfg[str_link], file, start_line, tag_name);
 		} else if(tag_name == "link" && name == "name") {
-			referenced_tag_paths_.emplace_back(cfg["name"], file, start_line, tag_name);
-			std::string link_name = utils::split(cfg["name"].str(), '/').back();
-			links_.emplace(current_path() + "/" + link_name, cfg["name"]);
+			referenced_tag_paths_.emplace_back(cfg[str_name], file, start_line, tag_name);
+			std::string link_name = utils::split(cfg[str_name].str(), '/').back();
+			links_.emplace(current_path() + "/" + link_name, cfg[str_name]);
 		} else if(tag_name == "tag" && name == "super") {
-			for(auto super : utils::split(cfg["super"])) {
+			for(auto super : utils::split(cfg[str_super])) {
 				const auto full_path = current_path();
 
 				const auto& ref = referenced_tag_paths_.emplace_back(super, file, start_line, tag_name);
@@ -892,7 +892,7 @@ void schema_self_validator::validate_key(const config& cfg, const std::string& n
 					continue;
 				}
 				if(full_path == super) {
-					queue_message(cfg, SUPER_LOOP, file, start_line, cfg["super"].str().find(super), tag_name, "super", super);
+					queue_message(cfg, SUPER_LOOP, file, start_line, cfg[str_super].str().find(super), tag_name, "super", super);
 					continue;
 				}
 				derivations_.emplace(full_path, super);
@@ -921,9 +921,9 @@ void schema_self_validator::detect_schema_derivation_cycles()
 	boost::depth_first_search(schema_derivation_graph_,
 		boost::visitor(utils::back_edge_detector([&](const schema_derivation_graph_t::edge_descriptor edge) {
 			const auto& [cfg, ref] = schema_derivation_graph_[edge];
-			assert(cfg.has_attribute("super"));
+			assert(cfg.has_attribute(str_super));
 
-			queue_message(cfg, SUPER_LOOP, ref.file_, ref.line_, cfg.get("super")->str().find(ref.value_), ref.tag_,
+			queue_message(cfg, SUPER_LOOP, ref.file_, ref.line_, cfg.get(str_super)->str().find(ref.value_), ref.tag_,
 				"super", ref.value_);
 		})));
 }

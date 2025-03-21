@@ -1344,9 +1344,9 @@ static void move_unit_internal(unit_mover& mover)
 
 	config co;
 	config cn {
-		"stopped_early", mover.stopped_early(),
-		"final_hex_x", mover.final_hex().wml_x(),
-		"final_hex_y", mover.final_hex().wml_y(),
+		str_stopped_early, mover.stopped_early(),
+		str_final_hex_x, mover.final_hex().wml_x(),
+		str_final_hex_y, mover.final_hex().wml_y(),
 	};
 	bool matches_replay = checkup_instance->local_checkup(cn,co);
 	if(!matches_replay)

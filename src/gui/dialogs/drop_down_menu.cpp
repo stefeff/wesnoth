@@ -37,28 +37,28 @@ REGISTER_DIALOG(drop_down_menu)
 drop_down_menu::entry_data::entry_data(const config& cfg)
 	: checkbox()
 	, radio()
-	, icon(cfg["icon"].str())
+	, icon(cfg[str_icon].str())
 	, image()
-	, label(cfg["label"].t_str())
+	, label(cfg[str_label].t_str())
 	, details()
-	, tooltip(cfg["tooltip"].t_str())
+	, tooltip(cfg[str_tooltip].t_str())
 {
 	// Checkboxes take precedence in column 1
-	if(cfg.has_attribute("checkbox")) {
-		checkbox = cfg["checkbox"].to_bool(false);
+	if(cfg.has_attribute(str_checkbox)) {
+		checkbox = cfg[str_checkbox].to_bool(false);
 	}
 
 	if(cfg.has_attribute("radio")) {
-		radio = cfg["radio"].to_bool(false);
+		radio = cfg[str_radio].to_bool(false);
 	}
 
 	// Images take precedence in column 2
-	if(cfg.has_attribute("image")) {
-		image = cfg["image"].str();
+	if(cfg.has_attribute(str_image)) {
+		image = cfg[str_image].str();
 	}
 
-	if(cfg.has_attribute("details")) {
-		details = cfg["details"].t_str();
+	if(cfg.has_attribute(str_details)) {
+		details = cfg[str_details].t_str();
 	}
 }
 
@@ -177,20 +177,20 @@ void drop_down_menu::pre_show()
 		//
 		// These widgets can be initialized here since they don't require widget type swapping.
 		//
-		item["use_markup"] = utils::bool_string(use_markup_);
+		item[str_use_markup] = utils::bool_string(use_markup_);
 		if(!entry.checkbox) {
-			item["label"] = entry.icon;
-			data.emplace("icon", item);
+			item[str_label] = entry.icon;
+			data.emplace(str_icon, item);
 		}
 
 		if(!entry.image) {
-			item["label"] = entry.label;
-			data.emplace("label", item);
+			item[str_label] = entry.label;
+			data.emplace(str_label, item);
 		}
 
 		if(entry.details) {
-			item["label"] = *entry.details;
-			data.emplace("details", item);
+			item[str_label] = *entry.details;
+			data.emplace(str_details, item);
 		}
 
 		grid& new_row = list.add_row(data);
@@ -200,7 +200,7 @@ void drop_down_menu::pre_show()
 		new_row.find_widget<toggle_panel>("panel").set_tooltip(entry.tooltip);
 
 		if(entry.checkbox) {
-			auto checkbox = build_single_widget_instance<toggle_button>(config{"definition", "no_label"});
+			auto checkbox = build_single_widget_instance<toggle_button>(config{str_definition, str_no_label});
 			checkbox->set_id("checkbox");
 			checkbox->set_value_bool(*entry.checkbox);
 			checkbox->set_linked_group("icons");

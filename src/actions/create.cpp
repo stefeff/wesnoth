@@ -512,18 +512,18 @@ namespace { // Helpers for place_recruit()
 		const std::string checksum = get_checksum(new_unit);
 		config original_checksum_config;
 
-		bool checksum_equals = checkup_instance->local_checkup(config {"checksum", checksum},original_checksum_config);
+		bool checksum_equals = checkup_instance->local_checkup(config {str_checksum, checksum},original_checksum_config);
 		if(!checksum_equals)
 		{
 			// This can't call local_checkup() again, but local_checkup() should have already stored the
 			// expected value in original_checksum_config. If it hasn't then the result will be the same as
 			// if the checksum didn't match, which is a reasonably graceful failure.
 			const std::string alternate_checksum = get_checksum(new_unit, backwards_compatibility::unit_checksum_version::version_1_16_or_older);
-			checksum_equals = original_checksum_config["checksum"] == alternate_checksum;
+			checksum_equals = original_checksum_config[str_checksum] == alternate_checksum;
 		}
 		if(!checksum_equals)
 		{
-			const std::string old_checksum = original_checksum_config["checksum"];
+			const std::string old_checksum = original_checksum_config[str_checksum];
 			std::stringstream error_msg;
 			error_msg << "SYNC: In recruit " << new_unit.type_id() <<
 				": has checksum " << checksum <<

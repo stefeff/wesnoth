@@ -196,14 +196,14 @@ std::map<std::string, std::string> installed_addons_and_versions()
 		if(have_addon_pbl_info(addon_id)) {
 			try {
 				// Just grabbing the version, so don't bother validating the pbl
-				addons[addon_id] = get_addon_pbl_info(addon_id, false)["version"].str();
+				addons[addon_id] = get_addon_pbl_info(addon_id, false)[str_version].str();
 			} catch(const invalid_pbl_exception&) {
 				addons[addon_id] = "Invalid pbl file, version unknown";
 			}
 		} else if(filesystem::file_exists(get_info_file_path(addon_id))) {
 			config info_cfg;
 			get_addon_install_info(addon_id, info_cfg);
-			addons[addon_id] = !info_cfg.empty() ? info_cfg["version"].str() : "Unknown";
+			addons[addon_id] = !info_cfg.empty() ? info_cfg[str_version].str() : "Unknown";
 		} else {
 			addons[addon_id] = "Unknown";
 		}
@@ -261,13 +261,13 @@ static filesystem::blacklist_pattern_list read_ignore_patterns(const std::string
 
 static void archive_file(const std::string& path, const std::string& fname, config& cfg)
 {
-	cfg["name"] = fname;
-	cfg["contents"] = encode_binary(strip_cr(filesystem::read_file(path + '/' + fname), filesystem::is_cfg(fname)));
+	cfg[str_name] = fname;
+	cfg[str_contents] = encode_binary(strip_cr(filesystem::read_file(path + '/' + fname), filesystem::is_cfg(fname)));
 }
 
 static void archive_dir(const std::string& path, const std::string& dirname, config& cfg, const filesystem::blacklist_pattern_list& ignore_patterns)
 {
-	cfg["name"] = dirname;
+	cfg[str_name] = dirname;
 	const std::string dir = path + '/' + dirname;
 
 	std::vector<std::string> files, dirs;
@@ -275,14 +275,14 @@ static void archive_dir(const std::string& path, const std::string& dirname, con
 	for(const std::string& name : files) {
 		bool valid = !filesystem::looks_like_pbl(name) && !ignore_patterns.match_file(name);
 		if (valid) {
-			archive_file(dir,name,cfg.add_child("file"));
+			archive_file(dir,name,cfg.add_child(str_file));
 		}
 	}
 
 	for(const std::string& name : dirs) {
 		bool valid = !ignore_patterns.match_dir(name);
 		if (valid) {
-			archive_dir(dir,name,cfg.add_child("dir"),ignore_patterns);
+			archive_dir(dir,name,cfg.add_child(str_dir),ignore_patterns);
 		}
 	}
 }
@@ -292,29 +292,29 @@ void archive_addon(const std::string& addon_name, config& cfg)
 	const std::string parentd = filesystem::get_addons_dir();
 
 	filesystem::blacklist_pattern_list ignore_patterns(read_ignore_patterns(addon_name));
-	archive_dir(parentd, addon_name, cfg.add_child("dir"), ignore_patterns);
+	archive_dir(parentd, addon_name, cfg.add_child(str_dir), ignore_patterns);
 }
 
 static void unarchive_file(const std::string& path, const config& cfg)
 {
-	filesystem::write_file(path + '/' + cfg["name"].str(), unencode_binary(cfg["contents"]));
+	filesystem::write_file(path + '/' + cfg[str_name].str(), unencode_binary(cfg[str_contents]));
 }
 
 static void unarchive_dir(const std::string& path, const config& cfg, const std::function<void()>& file_callback = {})
 {
 	std::string dir;
-	if (cfg["name"].empty())
+	if (cfg[str_name].empty())
 		dir = path;
 	else
-		dir = path + '/' + cfg["name"].str();
+		dir = path + '/' + cfg[str_name].str();
 
 	filesystem::make_directory(dir);
 
-	for(const config &d : cfg.child_range("dir")) {
+	for(const config &d : cfg.child_range(str_dir)) {
 		unarchive_dir(dir, d, file_callback);
 	}
 
-	for(const config &f : cfg.child_range("file")) {
+	for(const config &f : cfg.child_range(str_file)) {
 		unarchive_file(dir, f);
 		if(file_callback) {
 			file_callback();
@@ -326,11 +326,11 @@ static unsigned count_pack_files(const config& cfg)
 {
 	unsigned count = 0;
 
-	for(const config& d : cfg.child_range("dir")) {
+	for(const config& d : cfg.child_range(str_dir)) {
 		count += count_pack_files(d);
 	}
 
-	return count + cfg.child_count("file");
+	return count + cfg.child_count(str_file);
 }
 
 void unarchive_addon(const config& cfg, std::function<void(unsigned)> progress_callback)
@@ -346,21 +346,21 @@ void unarchive_addon(const config& cfg, std::function<void(unsigned)> progress_c
 static void purge_dir(const std::string& path, const config& removelist)
 {
 	std::string dir;
-	if(removelist["name"].empty())
+	if(removelist[str_name].empty())
 		dir = path;
 	else
-		dir = path + '/' + removelist["name"].str();
+		dir = path + '/' + removelist[str_name].str();
 
 	if(!filesystem::is_directory(dir)) {
 		return;
 	}
 
-	for(const config& d : removelist.child_range("dir")) {
+	for(const config& d : removelist.child_range(str_dir)) {
 		purge_dir(dir, d);
 	}
 
-	for(const config& f : removelist.child_range("file")) {
-		filesystem::delete_file(dir + '/' + f["name"].str());
+	for(const config& f : removelist.child_range(str_file)) {
+		filesystem::delete_file(dir + '/' + f[str_name].str());
 	}
 
 	if(filesystem::dir_size(dir) < 1) {
@@ -408,7 +408,7 @@ void refresh_addon_version_info_cache()
 				continue;
 			}
 
-			const std::string& version = info_cfg["version"].str();
+			const std::string& version = info_cfg[str_version].str();
 			LOG_CFG << "cached add-on version: " << addon << " [" << version << "]";
 
 			version_info_cache[addon] = version;

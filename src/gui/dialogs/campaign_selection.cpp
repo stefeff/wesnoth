@@ -87,7 +87,7 @@ void campaign_selection::campaign_selected()
 	engine_.set_current_level(choice);
 
 	styled_widget& background = find_widget<styled_widget>("campaign_background");
-	background.set_label(engine_.current_level().data()["background"].str());
+	background.set_label(engine_.current_level().data()[str_background].str());
 
 	// Rebuild difficulty menu
 	difficulties_.clear();
@@ -110,10 +110,10 @@ void campaign_selection::campaign_selected()
 		config entry;
 
 		// FIXME: description may have markup that will display weird on the menu_button proper
-		entry["label"] = cfg["label"].str() + " (" + cfg["description"].str() + ")";
-		entry["image"] = cfg["image"].str("misc/blank-hex.png");
+		entry[str_label] = cfg[str_label].str() + " (" + cfg[str_description].str() + ")";
+		entry[str_image] = cfg[str_image].str("misc/blank-hex.png");
 
-		if(prefs::get().is_campaign_completed(campaign_id, cfg["define"])) {
+		if(prefs::get().is_campaign_completed(campaign_id, cfg[str_define])) {
 			std::string laurel;
 
 			if(n + 1 >= difficulty_count) {
@@ -124,28 +124,28 @@ void campaign_selection::campaign_selected()
 				laurel = game_config::images::victory_laurel;
 			}
 
-			entry["image"] = laurel + "~BLIT(" + entry["image"].str() + ")";
+			entry[str_image] = laurel + "~BLIT(" + entry[str_image].str() + ")";
 		}
 
-		if(!cfg["description"].empty()) {
+		if(!cfg[str_description].empty()) {
 			std::string desc;
-			if(cfg["auto_markup"].to_bool(true) == false) {
-				desc = cfg["description"].str();
+			if(cfg[str_auto_markup].to_bool(true) == false) {
+				desc = cfg[str_description].str();
 			} else {
-				desc = markup::span_color(font::GRAY_COLOR, "(", cfg["description"].str(), ")");
+				desc = markup::span_color(font::GRAY_COLOR, "(", cfg[str_description].str(), ")");
 			}
 
 			// Icons get displayed instead of the labels on the dropdown menu itself,
 			// so we want to prepend each label to its description here
-			desc = cfg["label"].str() + "\n" + desc;
+			desc = cfg[str_label].str() + "\n" + desc;
 
-			entry["details"] = std::move(desc);
+			entry[str_details] = std::move(desc);
 		}
 
 		entry_list.emplace_back(std::move(entry));
-		difficulties_.emplace_back(cfg["define"].str());
+		difficulties_.emplace_back(cfg[str_define].str());
 
-		if(cfg["default"].to_bool(false)) {
+		if(cfg[str_default].to_bool(false)) {
 			selection = n;
 		}
 
@@ -223,11 +223,11 @@ void campaign_selection::sort_campaigns(campaign_selection::CAMPAIGN_ORDER order
 			bool found = false;
 			for(const auto& word : last_search_words_) {
 				found = translation::ci_search(levels[i]->name(), word) ||
-						translation::ci_search(levels[i]->data()["name"].t_str().base_str(), word) ||
+						translation::ci_search(levels[i]->data()[str_name].t_str().base_str(), word) ||
 						translation::ci_search(levels[i]->description(), word) ||
-						translation::ci_search(levels[i]->data()["description"].t_str().base_str(), word) ||
-						translation::ci_search(levels[i]->data()["abbrev"], word) ||
-						translation::ci_search(levels[i]->data()["abbrev"].t_str().base_str(), word);
+						translation::ci_search(levels[i]->data()[str_description].t_str().base_str(), word) ||
+						translation::ci_search(levels[i]->data()[str_abbrev], word) ||
+						translation::ci_search(levels[i]->data()[str_abbrev].t_str().base_str(), word);
 
 				if(!found) {
 					break;
@@ -243,9 +243,9 @@ void campaign_selection::sort_campaigns(campaign_selection::CAMPAIGN_ORDER order
 
 	bool exists_in_filtered_result = false;
 	for(unsigned i = 0; i < levels.size(); ++i) {
-		bool completed = prefs::get().is_campaign_completed(levels[i]->data()["id"]);
+		bool completed = prefs::get().is_campaign_completed(levels[i]->data()[str_id]);
 		config::const_child_itors difficulties = levels[i]->data().child_range("difficulty");
-		auto did_complete_at = [](const config& c) { return c["completed_at"].to_bool(); };
+		auto did_complete_at = [](const config& c) { return c[str_completed_at].to_bool(); };
 
 		// Check for non-completion on every difficulty save the first.
 		const bool only_first_completed = difficulties.size() > 1 &&
@@ -369,25 +369,25 @@ void campaign_selection::pre_show()
 		/*** Add detail item ***/
 		pages.add_page({
 			{"description", {
-				{"label", campaign["description"].t_str()},
-				{"text_alignment", campaign["description_alignment"].str("left")},
+				{"label", campaign[str_description].t_str()},
+				{"text_alignment", campaign[str_description_alignment].str("left")},
 				{"use_markup", "true"}
 			}},
 			{"image", {
-				{"label", campaign["image"].str()}
+				{"label", campaign[str_image].str()}
 			}}
 		});
-		page_ids_.push_back(campaign["id"]);
+		page_ids_.push_back(campaign[str_id]);
 	}
 
 	//
 	// Addon Manager link
 	//
 	config addons;
-	addons["icon"] = "icons/icon-game.png~BLIT(icons/icon-addon-publish.png)";
-	addons["name"] = _("More campaigns...");
-	addons["completed"] = false;
-	addons["id"] = addons_;
+	addons[str_icon] = "icons/icon-game.png~BLIT(icons/icon-addon-publish.png)";
+	addons[str_name] = _("More campaigns...");
+	addons[str_completed] = false;
+	addons[str_id] = addons_;
 
 	add_campaign_to_tree(addons);
 
@@ -398,10 +398,10 @@ void campaign_selection::pre_show()
 	filesystem::get_files_in_dir(game_config::path + "/data/campaigns", nullptr, &dirs);
 	if(dirs.size() <= 15) {
 		config missing;
-		missing["icon"] = "units/unknown-unit.png";
-		missing["name"] = _("Missing Campaigns");
-		missing["completed"] = false;
-		missing["id"] = missing_campaign_;
+		missing[str_icon] = "units/unknown-unit.png";
+		missing[str_name] = _("Missing Campaigns");
+		missing[str_completed] = false;
+		missing[str_id] = missing_campaign_;
 
 		add_campaign_to_tree(missing);
 
@@ -451,7 +451,7 @@ void campaign_selection::pre_show()
 	plugins_context_->set_callback("quit", [this](const config&) { set_retval(retval::CANCEL); }, false);
 
 	plugins_context_->set_accessor("find_level", [this](const config& cfg) {
-		const std::string id = cfg["id"].str();
+		const std::string id = cfg[str_id].str();
 		auto result = engine_.find_level_by_id(id);
 		return config {
 			"index", result.second,
@@ -460,11 +460,11 @@ void campaign_selection::pre_show()
 	});
 
 	plugins_context_->set_accessor_int("find_mod", [this](const config& cfg) {
-		return engine_.find_extra_by_id(ng::create_engine::MOD, cfg["id"]);
+		return engine_.find_extra_by_id(ng::create_engine::MOD, cfg[str_id]);
 	});
 
 	plugins_context_->set_callback("select_level", [this](const config& cfg) {
-		choice_ = cfg["index"].to_int();
+		choice_ = cfg[str_index].to_int();
 		engine_.set_current_level(choice_);
 	}, true);
 }
@@ -473,12 +473,12 @@ void campaign_selection::add_campaign_to_tree(const config& campaign)
 {
 	// We completed the campaign! Calculate the appropriate victory laurel.
 	const auto get_laurel = [&campaign] {
-		if(!campaign["completed"].to_bool()) {
+		if(!campaign[str_completed].to_bool()) {
 			return std::string{};
 		}
 
 		config::const_child_itors difficulties = campaign.child_range("difficulty");
-		auto did_complete_at = [](const config& c) { return c["completed_at"].to_bool(); };
+		auto did_complete_at = [](const config& c) { return c[str_completed_at].to_bool(); };
 
 		// Check for non-completion on every difficulty save the first.
 		const bool only_first_completed = difficulties.size() > 1 &&
@@ -507,17 +507,17 @@ void campaign_selection::add_campaign_to_tree(const config& campaign)
 	auto& node = find_widget<tree_view>("campaign_tree")
 		.add_node("campaign", {
 			{"icon", {
-				{"label", campaign["icon"].str()}
+				{"label", campaign[str_icon].str()}
 			}},
 			{"name", {
-				{"label", campaign["name"].t_str()}
+				{"label", campaign[str_name].t_str()}
 			}},
 			{"victory", {
 				{"label", get_laurel()}
 			}}
 		});
 
-	node.set_id(campaign["id"]);
+	node.set_id(campaign[str_id]);
 	connect_signal_mouse_left_double_click(
 		node.find_widget<toggle_panel>("tree_view_node_label"),
 		std::bind(&campaign_selection::proceed, this)

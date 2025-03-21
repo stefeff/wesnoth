@@ -116,7 +116,7 @@ bool game_config_manager::init_game_config(FORCE_RELOAD_CONFIG force_reload)
 
 	load_game_config_with_loadscreen(force_reload, nullptr, "");
 
-	game_config::load_config(game_config().mandatory_child("game_config"));
+	game_config::load_config(game_config().mandatory_child(str_game_config));
 
 	// It's necessary to block the event thread while load_hotkeys() runs, otherwise keyboard input
 	// can cause a crash by accessing the list of hotkeys while it's being modified.
@@ -236,8 +236,8 @@ void game_config_manager::load_game_config(bool reload_everything, const game_cl
 			bool current_core_valid = false;
 			std::string wml_tree_root;
 
-			for(const config& core : cores_cfg.child_range("core")) {
-				const std::string& id = core["id"];
+			for(const config& core : cores_cfg.child_range(str_core)) {
+				const std::string& id = core[str_id];
 				if(id.empty()) {
 					events::call_in_main_thread([&]() {
 						gui2::dialogs::wml_error::display(
@@ -248,7 +248,7 @@ void game_config_manager::load_game_config(bool reload_everything, const game_cl
 					continue;
 				}
 
-				if(valid_cores.find_child("core", "id", id)) {
+				if(valid_cores.find_child(str_core, "id", id)) {
 					events::call_in_main_thread([&]() {
 						gui2::dialogs::wml_error::display(
 							_("Error validating data core."),
@@ -259,7 +259,7 @@ void game_config_manager::load_game_config(bool reload_everything, const game_cl
 					continue;
 				}
 
-				const std::string& path = core["path"];
+				const std::string& path = core[str_path];
 				if(!filesystem::get_wml_location(path)) {
 					events::call_in_main_thread([&]() {
 						gui2::dialogs::wml_error::display(
@@ -280,7 +280,7 @@ void game_config_manager::load_game_config(bool reload_everything, const game_cl
 					wml_tree_root = path;
 				}
 
-				valid_cores.add_child("core", core);  // append(core);
+				valid_cores.add_child(str_core, core);  // append(core);
 			}
 
 			if(!current_core_valid) {
@@ -391,12 +391,12 @@ void game_config_manager::load_game_config(bool reload_everything, const game_cl
 }
 static void show_deprecated_warnings(config& umc_cfg)
 {
-	for(auto& units : umc_cfg.child_range("units")) {
-		for(auto& unit_type : units.child_range("unit_type")) {
-			for(const auto& advancefrom : unit_type.child_range("advancefrom")) {
+	for(auto& units : umc_cfg.child_range(str_units)) {
+		for(auto& unit_type : units.child_range(str_unit_type)) {
+			for(const auto& advancefrom : unit_type.child_range(str_advancefrom)) {
 				auto symbols = utils::string_map {
-					{"lower_level", advancefrom["unit"].str()},
-					{"higher_level", unit_type["id"].str()}
+					{"lower_level", advancefrom[str_unit].str()},
+					{"higher_level", unit_type[str_id].str()}
 				};
 				auto message = VGETTEXT(
 					// TRANSLATORS: For example, 'Cuttle Fish' units will not be able to advance to 'Kraken'.
@@ -426,8 +426,8 @@ static void show_deprecated_warnings(config& umc_cfg)
 		"ENABLE_WOSE_SHAMAN"
 	};
 
-	for(auto& campaign : umc_cfg.child_range("campaign")) {
-		for(auto str : utils::split(campaign["extra_defines"])) {
+	for(auto& campaign : umc_cfg.child_range(str_campaign)) {
+		for(auto str : utils::split(campaign[str_extra_defines])) {
 			if(deprecated_defines.count(str) > 0) {
 				//TODO: we could try to implement a compatibility path by
 				//      somehow getting the content of that macro from the
@@ -436,7 +436,7 @@ static void show_deprecated_warnings(config& umc_cfg)
 				//      it before also didn't work in all cases (see #4402)
 				//      i don't think it is worth it.
 				deprecated_message(
-					"campaign id='" + campaign["id"].str() + "' has extra_defines=" + str,
+					"campaign id='" + campaign[str_id].str() + "' has extra_defines=" + str,
 					DEP_LEVEL::REMOVED,
 					{1, 15, 4},
 					_("instead, use the macro with the same name in the [campaign] tag")
@@ -525,23 +525,23 @@ void game_config_manager::load_addons_cfg()
 			metadata = cache_.get_config(info_cfg).child_or_empty("info");
 		}
 
-		std::string using_core = metadata["core"];
+		std::string using_core = metadata[str_core];
 		if(using_core.empty()) {
 			using_core = "default";
 		}
 
 		// Skip add-ons not matching our current core. Cores themselves should be selectable
 		// at all times, so they aren't considered here.
-		if(!metadata.empty() && metadata["type"] != "core" && using_core != prefs::get().core()) {
+		if(!metadata.empty() && metadata[str_type] != "core" && using_core != prefs::get().core()) {
 			continue;
 		}
 
-		std::string addon_title = metadata["title"].str();
+		std::string addon_title = metadata[str_title].str();
 		if(addon_title.empty()) {
 			addon_title = addon_id;
 		}
 
-		version_info addon_version(metadata["version"]);
+		version_info addon_version(metadata[str_version]);
 
 		try {
 			std::unique_ptr<schema_validation::schema_validator> validator;
@@ -568,10 +568,10 @@ void game_config_manager::load_addons_cfg()
 			// Annotate appropriate addon types with addon_id info.
 			for(auto [key, cfg] : umc_cfg.all_children_view()) {
 				if(tags_with_addon_id.count(key) > 0) {
-					cfg["addon_id"] = addon_id;
-					cfg["addon_title"] = addon_title;
+					cfg[str_addon_id] = addon_id;
+					cfg[str_addon_title] = addon_title;
 					// Note that this may reformat the string in a canonical form.
-					cfg["addon_version"] = addon_version.str();
+					cfg[str_addon_version] = addon_version.str();
 				}
 			}
 
@@ -645,16 +645,16 @@ void game_config_manager::load_addons_cfg()
 
 void game_config_manager::set_multiplayer_hashes()
 {
-	config& hashes = game_config_.add_child("multiplayer_hashes");
-	for(const config& ch : game_config().child_range("multiplayer")) {
-		hashes[ch["id"].str()] = ch.hash();
+	config& hashes = game_config_.add_child(str_multiplayer_hashes);
+	for(const config& ch : game_config().child_range(str_multiplayer)) {
+		hashes[ch[str_id].str()] = ch.hash();
 	}
 }
 
 void game_config_manager::set_unit_data()
 {
 	gui2::dialogs::loading_screen::progress(loading_stage::load_unit_types);
-	unit_types.set_config(game_config().merged_children_view("units"));
+	unit_types.set_config(game_config().merged_children_view(str_units));
 }
 
 void game_config_manager::reload_changed_game_config()

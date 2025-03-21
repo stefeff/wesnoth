@@ -35,7 +35,7 @@ public:
 	static bool execute(ng::create_engine& create_engine)
 	{
 		// Check campaign options.
-		const auto& campaign_mods = create_engine.current_level().data().child_range("options");
+		const auto& campaign_mods = create_engine.current_level().data().child_range(str_options);
 
 		const bool have_campaign_options = std::any_of(campaign_mods.begin(), campaign_mods.end(), [](config& mod) {
 			return !mod.empty();
@@ -45,11 +45,11 @@ public:
 		bool have_mod_options = false;
 
 		for(const auto& mod : create_engine.active_mods_data()) {
-			if(!(*mod->cfg).has_child("options")) {
+			if(!(*mod->cfg).has_child(str_options)) {
 				continue;
 			}
 
-			const auto& opt_range = (*mod->cfg).child_range("options");
+			const auto& opt_range = (*mod->cfg).child_range(str_options);
 
 			if(std::any_of(opt_range.begin(), opt_range.end(), [](const config& options) {
 				return !options.empty();

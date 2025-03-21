@@ -54,25 +54,25 @@ std::shared_ptr<wml_type> wml_type::from_config(const config& cfg)
 {
 	utils::optional<config::const_child_itors> composite_range;
 	std::shared_ptr<wml_type> type;
-	if(cfg.has_child("union")) {
-		type = std::make_shared<wml_type_union>(cfg["name"]);
-		composite_range.emplace(cfg.mandatory_child("union").child_range("type"));
-	} else if(cfg.has_child("intersection")) {
-		type = std::make_shared<wml_type_intersection>(cfg["name"]);
-		composite_range.emplace(cfg.mandatory_child("intersection").child_range("type"));
-	} else if(cfg.has_child("list")) {
-		const config& list_cfg = cfg.mandatory_child("list");
-		int list_min = list_cfg["min"].to_int();
-		int list_max = list_cfg["max"].str() == "infinite" ? -1 : list_cfg["max"].to_int(-1);
+	if(cfg.has_child(str_union)) {
+		type = std::make_shared<wml_type_union>(cfg[str_name]);
+		composite_range.emplace(cfg.mandatory_child(str_union).child_range(str_type));
+	} else if(cfg.has_child(str_intersection)) {
+		type = std::make_shared<wml_type_intersection>(cfg[str_name]);
+		composite_range.emplace(cfg.mandatory_child(str_intersection).child_range(str_type));
+	} else if(cfg.has_child(str_list)) {
+		const config& list_cfg = cfg.mandatory_child(str_list);
+		int list_min = list_cfg[str_min].to_int();
+		int list_max = list_cfg[str_max].str() == "infinite" ? -1 : list_cfg[str_max].to_int(-1);
 		if(list_max < 0) list_max = std::numeric_limits<int>::max();
-		type = std::make_shared<wml_type_list>(cfg["name"], list_cfg["split"].str("\\s*,\\s*"), list_min, list_max);
-		composite_range.emplace(list_cfg.child_range("element"));
-	} else if(cfg.has_attribute("value")) {
-		auto t = std::make_shared<wml_type_simple>(cfg["name"], cfg["value"]);
-		if(cfg["allow_translatable"].to_bool()) t->allow_translatable();
+		type = std::make_shared<wml_type_list>(cfg[str_name], list_cfg[str_split].str("\\s*,\\s*"), list_min, list_max);
+		composite_range.emplace(list_cfg.child_range(str_element));
+	} else if(cfg.has_attribute(str_value)) {
+		auto t = std::make_shared<wml_type_simple>(cfg[str_name], cfg[str_value]);
+		if(cfg[str_allow_translatable].to_bool()) t->allow_translatable();
 		type = t;
-	} else if(cfg.has_attribute("link")) {
-		type = std::make_shared<wml_type_alias>(cfg["name"], cfg["link"]);
+	} else if(cfg.has_attribute(str_link)) {
+		type = std::make_shared<wml_type_alias>(cfg[str_name], cfg[str_link]);
 	}
 	if(composite_range) {
 		auto composite_type = std::dynamic_pointer_cast<wml_type_composite>(type);

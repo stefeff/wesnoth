@@ -51,16 +51,16 @@ auto operator<=>(const faction_sorter& lhs, const faction_sorter& rhs)
 {
 	// Since some eras have multiple random options we can't just
 	// assume there is only one random faction on top of the list.
-	bool lhs_rand = (*lhs.cfg)["random_faction"].to_bool();
-	bool rhs_rand = (*rhs.cfg)["random_faction"].to_bool();
+	bool lhs_rand = (*lhs.cfg)[str_random_faction].to_bool();
+	bool rhs_rand = (*rhs.cfg)[str_random_faction].to_bool();
 
 	// Group random factions together.
 	if(lhs_rand <=> rhs_rand != 0) {
 		return std::strong_ordering::greater;
 	}
 
-	std::string lhs_name = (*lhs.cfg)["name"];
-	std::string rhs_name = (*rhs.cfg)["name"];
+	std::string lhs_name = (*lhs.cfg)[str_name];
+	std::string rhs_name = (*rhs.cfg)[str_name];
 
 	// TODO C++20: define three-way comparison for t_string?
 	auto cmp = translation::compare(lhs_name, rhs_name);
@@ -74,24 +74,24 @@ auto operator<=>(const faction_sorter& lhs, const faction_sorter& rhs)
 
 bool operator<(const faction_sorter& lhs, const faction_sorter& rhs)
 {
-	bool lhs_rand = (*lhs.cfg)["random_faction"].to_bool();
-	bool rhs_rand = (*rhs.cfg)["random_faction"].to_bool();
+	bool lhs_rand = (*lhs.cfg)[str_random_faction].to_bool();
+	bool rhs_rand = (*rhs.cfg)[str_random_faction].to_bool();
 
 	if(lhs_rand && !rhs_rand) return true;
 	if(!lhs_rand && rhs_rand) return false;
 
-	return translation::compare((*lhs.cfg)["name"].str(), (*rhs.cfg)["name"].str()) < 0;
+	return translation::compare((*lhs.cfg)[str_name].str(), (*rhs.cfg)[str_name].str()) < 0;
 }
 
 bool operator>(const faction_sorter& lhs, const faction_sorter& rhs)
 {
-	bool lhs_rand = (*lhs.cfg)["random_faction"].to_bool();
-	bool rhs_rand = (*rhs.cfg)["random_faction"].to_bool();
+	bool lhs_rand = (*lhs.cfg)[str_random_faction].to_bool();
+	bool rhs_rand = (*rhs.cfg)[str_random_faction].to_bool();
 
 	if(lhs_rand && !rhs_rand) return false;
 	if(!lhs_rand && rhs_rand) return true;
 
-	return translation::compare((*lhs.cfg)["name"].str(), (*rhs.cfg)["name"].str()) > 0;
+	return translation::compare((*lhs.cfg)[str_name].str(), (*rhs.cfg)[str_name].str()) > 0;
 }
 
 #endif
@@ -155,14 +155,14 @@ void faction_select::pre_show()
 		const config& side = *s;
 
 		// flag_rgb here is unrelated to any handling in the unit class
-		const std::string flag_rgb = !side["flag_rgb"].empty() ? side["flag_rgb"].str() : "magenta";
+		const std::string flag_rgb = !side[str_flag_rgb].empty() ? side[str_flag_rgb].str() : "magenta";
 
 		list.add_row(widget_data{
 			{ "faction_image", {
-				{ "label", (formatter() << side["image"] << "~RC(" << flag_rgb << ">" << tc_color_ << ")").str() }
+				{ "label", (formatter() << side[str_image] << "~RC(" << flag_rgb << ">" << tc_color_ << ")").str() }
 			}},
 			{ "faction_name", {
-				{ "label", side["name"].str() }
+				{ "label", side[str_name].str() }
 			}},
 		});
 	}
@@ -214,7 +214,7 @@ void faction_select::on_faction_select()
 
 	// Print recruits
 	std::vector<t_string> recruit_names;
-	for(const auto& recruit : utils::split(flg_manager_.current_faction()["recruit"])) {
+	for(const auto& recruit : utils::split(flg_manager_.current_faction()[str_recruit])) {
 		if(const unit_type* rt = unit_types.find(recruit)) {
 			recruit_names.push_back(rt->type_name());
 		}

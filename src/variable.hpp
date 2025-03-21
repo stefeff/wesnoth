@@ -76,10 +76,10 @@ public:
 	config get_parsed_config() const;
 
 	typedef std::vector<vconfig> child_list;
-	child_list get_children(const std::string& key) const;
-	std::size_t count_children(const std::string& key) const;
-	vconfig child(const std::string& key) const;
-	bool has_child(const std::string& key) const;
+	child_list get_children(const config_key_type& key) const;
+	std::size_t count_children(const config_key_type& key) const;
+	vconfig child(const config_key_type& key) const;
+	bool has_child(const config_key_type& key) const;
 
 	/**
 	 * Note: vconfig::operator[] returns const, and this should not be changed
@@ -93,11 +93,11 @@ public:
 	 * lifetime ends which causes UB. Instead use:
 	 * const std::string temp = vcfg["foo"];
 	 */
-	const config::attribute_value operator[](const std::string &key) const
+	const config::attribute_value operator[](const config_key_type &key) const
 	{ return expand(key); }
-	config::attribute_value expand(const std::string&) const; /** < Synonym for operator[] */
-	std::string expand_str(const std::string &key) const;
-	bool has_attribute(const std::string& key) const { return cfg_->has_attribute(key); }
+	config::attribute_value expand(const config_key_type&) const; /** < Synonym for operator[] */
+	std::string expand_str(const config_key_type &key) const;
+	bool has_attribute(const config_key_type& key) const { return cfg_->has_attribute(key); }
 	bool empty() const { return (null() || cfg_->empty()); }
 
 	struct attribute_iterator

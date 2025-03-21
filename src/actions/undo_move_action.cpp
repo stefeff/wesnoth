@@ -48,11 +48,11 @@ void move_action::write(config & cfg) const
 {
 	undo_action::write(cfg);
 	shroud_clearing_action::write(cfg);
-	cfg["starting_direction"] = map_location::write_direction(starting_dir);
-	cfg["starting_moves"] = starting_moves;
-	config & child = cfg.mandatory_child("unit");
-	child["goto_x"] = goto_hex.wml_x();
-	child["goto_y"] = goto_hex.wml_y();
+	cfg[str_starting_direction] = map_location::write_direction(starting_dir);
+	cfg[str_starting_moves] = starting_moves;
+	config & child = cfg.mandatory_child(str_unit);
+	child[str_goto_x] = goto_hex.wml_x();
+	child[str_goto_y] = goto_hex.wml_y();
 }
 
 /**

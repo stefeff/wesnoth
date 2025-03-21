@@ -37,7 +37,7 @@ public:
 
 	static T cfg_to_value(const config &cfg)
 	{
-		return cfg["value"].to(T{});
+		return cfg[str_value].to(T{});
 	}
 
 	static void cfg_to_value(const config &cfg, T &value)
@@ -47,7 +47,7 @@ public:
 
 	static void value_to_cfg(const T &value, config &cfg)
 	{
-		cfg["value"] = value;
+		cfg[str_value] = value;
 	}
 
 	static config value_to_cfg(const T &value)
@@ -64,7 +64,7 @@ public:
 
 	static std::string cfg_to_value(const config &cfg)
 	{
-		return cfg["value"].str();
+		return cfg[str_value].str();
 	}
 
 	static void cfg_to_value(const config &cfg, std::string &value)
@@ -74,7 +74,7 @@ public:
 
 	static void value_to_cfg(const std::string &value, config &cfg)
 	{
-		cfg["value"] = value;
+		cfg[str_value] = value;
 	}
 
 	static config value_to_cfg(const std::string &value)
@@ -92,7 +92,7 @@ public:
 
 	static bool cfg_to_value(const config &cfg)
 	{
-		return cfg["value"].to_bool();
+		return cfg[str_value].to_bool();
 	}
 
 	static void cfg_to_value(const config &cfg, bool &value)
@@ -102,7 +102,7 @@ public:
 
 	static void value_to_cfg(const bool &value, config &cfg)
 	{
-		cfg["value"] = value;
+		cfg[str_value] = value;
 	}
 
 	static config value_to_cfg(const bool &value)
@@ -135,10 +135,10 @@ public:
 
 	static utils::variant<bool, std::vector<std::string>> cfg_to_value(const config &cfg)
 	{
-		if (cfg["value"].to_bool(true) == cfg["value"].to_bool(false)) {
-			return cfg["value"].to_bool();
+		if (cfg[str_value].to_bool(true) == cfg[str_value].to_bool(false)) {
+			return cfg[str_value].to_bool();
 		}
-		return utils::split(cfg["value"]);
+		return utils::split(cfg[str_value]);
 	}
 
 	static void cfg_to_value(const config &cfg, utils::variant<bool, std::vector<std::string>> &value)
@@ -148,7 +148,7 @@ public:
 
 	static void value_to_cfg(const utils::variant<bool, std::vector<std::string>> &value, config &cfg)
 	{
-		cfg["value"] = utils::visit(leader_aspects_visitor(), value);
+		cfg[str_value] = utils::visit(leader_aspects_visitor(), value);
 	}
 
 	static config value_to_cfg(const utils::variant<bool, std::vector<std::string>> &value)
@@ -165,7 +165,7 @@ public:
 
 	static std::vector<std::string> cfg_to_value(const config &cfg)
 	{
-		return utils::split(cfg["value"]);
+		return utils::split(cfg[str_value]);
 	}
 
 	static void cfg_to_value(const config &cfg, std::vector<std::string> &value)
@@ -175,7 +175,7 @@ public:
 
 	static void value_to_cfg(const std::vector<std::string> &value, config &cfg)
 	{
-		cfg["value"] = utils::join(value);
+		cfg[str_value] = utils::join(value);
 	}
 
 	static config value_to_cfg(const std::vector<std::string> &value)
@@ -192,7 +192,7 @@ public:
 
 	static void cfg_to_value(const config &cfg, config &value)
 	{
-		if (auto v = cfg.optional_child("value")) {
+		if (auto v = cfg.optional_child(str_value)) {
 			value = *v;
 		} else {
 			value.clear();
@@ -201,7 +201,7 @@ public:
 
 	static void value_to_cfg(const config &value, config &cfg)
 	{
-		cfg.add_child("value",value);
+		cfg.add_child(str_value,value);
 	}
 
 	static config value_to_cfg(const config &value)
@@ -213,7 +213,7 @@ public:
 
 	static config cfg_to_value(const config &cfg)
 	{
-		return cfg.child_or_empty("value");
+		return cfg.child_or_empty(str_value);
 	}
 };
 
@@ -223,10 +223,10 @@ public:
 
 	static terrain_filter cfg_to_value(const config &cfg)
 	{
-		if (auto v = cfg.optional_child("value")) {
+		if (auto v = cfg.optional_child(str_value)) {
 			return terrain_filter(vconfig(*v), resources::filter_con, false);
 		}
-		static config c("not");
+		static config c(str_not);
 		return terrain_filter(vconfig(c),resources::filter_con, false);
 	}
 
@@ -237,7 +237,7 @@ public:
 
 	static void value_to_cfg(const terrain_filter &value, config &cfg)
 	{
-		cfg.add_child("value",value.to_config());
+		cfg.add_child(str_value,value.to_config());
 	}
 
 	static config value_to_cfg(const terrain_filter &value)
@@ -254,7 +254,7 @@ public:
 
 	static unit_advancements_aspect cfg_to_value(const config &cfg)
 	{
-		return unit_advancements_aspect(cfg["value"]);
+		return unit_advancements_aspect(cfg[str_value]);
 	}
 
 	static void cfg_to_value(const config &cfg, unit_advancements_aspect &value)
@@ -264,7 +264,7 @@ public:
 
 	static void value_to_cfg(const unit_advancements_aspect &value, config &cfg)
 	{
-		cfg["value"] = value.get_value();
+		cfg[str_value] = value.get_value();
 
 	}
 

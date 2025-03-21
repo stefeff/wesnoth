@@ -37,7 +37,7 @@ REGISTER_DIALOG(campaign_difficulty)
 campaign_difficulty::campaign_difficulty(const config& campaign)
 	: modal_dialog(window_id())
 	, difficulties_()
-	, campaign_id_(campaign["id"])
+	, campaign_id_(campaign[str_id])
 	, selected_difficulty_("CANCEL")
 {
 	// Populate local config with difficulty children
@@ -53,19 +53,19 @@ void campaign_difficulty::pre_show()
 	const unsigned difficulty_max = difficulties_.child_count("difficulty");
 	for(const config& d : difficulties_.child_range("difficulty")) {
 		std::ostringstream ss;
-		ss << d["label"];
+		ss << d[str_label];
 
-		if(!d["description"].empty()) {
-			if (d["auto_markup"].to_bool(true) == false) {
-				ss << "\n" << d["description"].str();
+		if(!d[str_description].empty()) {
+			if (d[str_auto_markup].to_bool(true) == false) {
+				ss << "\n" << d[str_description].str();
 			} else {
-				ss << "\n" << markup::tag("small", markup::span_color(font::GRAY_COLOR, "(", d["description"], ")"));
+				ss << "\n" << markup::tag("small", markup::span_color(font::GRAY_COLOR, "(", d[str_description], ")"));
 			}
 		}
 
 		grid& grid = list.add_row(widget_data{
 			{ "icon", {
-				{ "label", d["image"].t_str() }
+				{ "label", d[str_image].t_str() }
 			}},
 			{ "label", {
 				{ "label", ss.str() },
@@ -73,12 +73,12 @@ void campaign_difficulty::pre_show()
 			}},
 		});
 
-		if(d["default"].to_bool(false)) {
+		if(d[str_default].to_bool(false)) {
 			list.select_last_row();
 		}
 
 		styled_widget& widget = grid.find_widget<styled_widget>("victory");
-		if(prefs::get().is_campaign_completed(campaign_id_, d["define"])) {
+		if(prefs::get().is_campaign_completed(campaign_id_, d[str_define])) {
 			// Use different laurels according to the difficulty level, following the
 			// pre-existing convention established in campaign_selection class.
 			// Assumes ascending order of difficulty and gold laurel is set first
@@ -102,7 +102,7 @@ void campaign_difficulty::post_show()
 {
 	if(get_retval() == retval::OK) {
 		listbox& list = find_widget<listbox>("listbox");
-		selected_difficulty_ = difficulties_.mandatory_child("difficulty", list.get_selected_row())["define"].str();
+		selected_difficulty_ = difficulties_.mandatory_child("difficulty", list.get_selected_row())[str_define].str();
 	}
 }
 } // namespace dialogs

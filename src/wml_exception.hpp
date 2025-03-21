@@ -46,7 +46,7 @@
 
 #define VALIDATE_WML_CHILD(cfg, key, message)                                             \
     ([](auto c, auto k) {                                                             \
-        if(auto child = c.optional_child(k)) { return *child; }                       \
+        if(auto child = c.optional_child(utils::interned_string(k))) { return *child; }                       \
         throw_wml_exception( "Missing [" key "]", __FILE__, __LINE__, __func__, message); \
     })(cfg, key)                                                                          \
 

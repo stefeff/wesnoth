@@ -69,60 +69,60 @@ manager::manager(const game_config_view& gamecfg, bool mp)
 {
 	DBG_MP << "Initializing the dependency manager";
 
-	for(const config& cfg : gamecfg.child_range("modification")) {
-		component_availability::type type = component_availability::get_enum(cfg["type"].str()).value_or(component_availability::type::hybrid);
+	for(const config& cfg : gamecfg.child_range(str_modification)) {
+		component_availability::type type = component_availability::get_enum(cfg[str_type].str()).value_or(component_availability::type::hybrid);
 
 		if((type != component_availability::type::mp || mp) && (type != component_availability::type::sp || !mp)) {
 			config info;
-			info["id"] = cfg["id"];
-			info["name"] = cfg["name"];
+			info[str_id] = cfg[str_id];
+			info[str_name] = cfg[str_name];
 
 			copy_keys(info, cfg, "scenario");
 			copy_keys(info, cfg, "era");
 			copy_keys(info, cfg, "modification");
 
-			depinfo_.add_child("modification", std::move(info));
+			depinfo_.add_child(str_modification, std::move(info));
 		}
 	}
 
-	for(const config& cfg : gamecfg.child_range("era")) {
-		component_availability::type type = component_availability::get_enum(cfg["type"].str()).value_or(component_availability::type::mp);
+	for(const config& cfg : gamecfg.child_range(str_era)) {
+		component_availability::type type = component_availability::get_enum(cfg[str_type].str()).value_or(component_availability::type::mp);
 
 		if((type != component_availability::type::mp || mp) && (type != component_availability::type::sp || !mp)) {
 			config info;
-			info["id"] = cfg["id"];
-			info["name"] = cfg["name"];
+			info[str_id] = cfg[str_id];
+			info[str_name] = cfg[str_name];
 
 			copy_keys(info, cfg, "scenario");
 			copy_keys(info, cfg, "modification", true);
 
-			depinfo_.add_child("era", std::move(info));
+			depinfo_.add_child(str_era, std::move(info));
 		}
 	}
 
-	for(const config& cfg : gamecfg.child_range("multiplayer")) {
-		if(cfg["allow_new_game"].to_bool(true)) {
+	for(const config& cfg : gamecfg.child_range(str_multiplayer)) {
+		if(cfg[str_allow_new_game].to_bool(true)) {
 			config info;
-			info["id"] = cfg["id"];
-			info["name"] = cfg["name"];
+			info[str_id] = cfg[str_id];
+			info[str_name] = cfg[str_name];
 
 			copy_keys(info, cfg, "era");
 			copy_keys(info, cfg, "modification", true);
 
-			depinfo_.add_child("scenario", std::move(info));
+			depinfo_.add_child(str_scenario, std::move(info));
 		}
 	}
 
-	for(const config& cfg : gamecfg.child_range("campaign")) {
+	for(const config& cfg : gamecfg.child_range(str_campaign)) {
 		config info;
-		info["id"] = cfg["id"];
-		info["name"] = cfg["name"];
-		info["allow_era_choice"] = cfg["allow_era_choice"];
+		info[str_id] = cfg[str_id];
+		info[str_name] = cfg[str_name];
+		info[str_allow_era_choice] = cfg[str_allow_era_choice];
 
 		copy_keys(info, cfg, "era");
 		copy_keys(info, cfg, "modification", true);
 
-		depinfo_.add_child("scenario", std::move(info));
+		depinfo_.add_child(str_scenario, std::move(info));
 	}
 }
 
@@ -145,7 +145,7 @@ void manager::revert()
 bool manager::exists(const elem& e) const
 {
 	for(const config& cfg : depinfo_.child_range(e.type)) {
-		if(cfg["id"] == e.id) {
+		if(cfg[str_id] == e.id) {
 			return true;
 		}
 	}
@@ -156,7 +156,7 @@ bool manager::exists(const elem& e) const
 std::string manager::find_name_for(const elem& e) const
 {
 	auto cfg = depinfo_.find_mandatory_child(e.type, "id", e.id);
-	return cfg["name"];
+	return cfg[str_name];
 }
 
 std::vector<std::string> manager::get_required_not_installed(const elem& e) const
@@ -184,8 +184,8 @@ std::vector<std::string> manager::get_required(const elem& e) const
 
 	config data = depinfo_.find_mandatory_child(e.type, "id", e.id);
 
-	if(data.has_attribute("force_modification")) {
-		result = utils::split(data["force_modification"].str(), ',');
+	if(data.has_attribute(str_force_modification)) {
+		result = utils::split(data[str_force_modification].str(), ',');
 	}
 
 	return result;
@@ -250,7 +250,7 @@ bool manager::does_conflict(const elem& elem1, const elem& elem2, bool directonl
 		}
 	}
 
-	if((elem1.type == "era" && data2["allow_era_choice"].to_bool(false)) ||(elem2.type == "era" && data1["allow_era_choice"].to_bool(false))) {
+	if((elem1.type == "era" && data2[str_allow_era_choice].to_bool(false)) ||(elem2.type == "era" && data1[str_allow_era_choice].to_bool(false))) {
 		return false;
 	}
 
@@ -325,8 +325,8 @@ bool manager::does_require(const elem& elem1, const elem& elem2) const
 
 	config data = depinfo_.find_mandatory_child(elem1.type, "id", elem1.id);
 
-	if(data.has_attribute("force_modification")) {
-		std::vector<std::string> required = utils::split(data["force_modification"]);
+	if(data.has_attribute(str_force_modification)) {
+		std::vector<std::string> required = utils::split(data[str_force_modification]);
 
 		return utils::contains(required, elem2.id);
 	}
@@ -387,19 +387,19 @@ void manager::try_modification_by_id(const std::string& id, bool activate, bool 
 
 void manager::try_era_by_index(int index, bool force)
 {
-	try_era(depinfo_.mandatory_child("era", index)["id"], force);
+	try_era(depinfo_.mandatory_child(str_era, index)[str_id], force);
 }
 
 void manager::try_scenario_by_index(int index, bool force)
 {
-	try_scenario(depinfo_.mandatory_child("scenario", index)["id"], force);
+	try_scenario(depinfo_.mandatory_child(str_scenario, index)[str_id], force);
 }
 
 int manager::get_era_index() const
 {
 	int result = 0;
-	for(const config& i : depinfo_.child_range("era")) {
-		if(i["id"] == era_) {
+	for(const config& i : depinfo_.child_range(str_era)) {
+		if(i[str_id] == era_) {
 			return result;
 		}
 
@@ -413,7 +413,7 @@ int manager::get_era_index(const std::string& id) const
 {
 	int result = 0;
 	for(const config& i : depinfo_.child_range("era")) {
-		if(i["id"] == id) {
+		if(i[str_id] == id) {
 			return result;
 		}
 
@@ -427,8 +427,8 @@ int manager::get_scenario_index() const
 {
 	int result = 0;
 
-	for(const config& i : depinfo_.child_range("scenario")) {
-		if(i["id"] == scenario_) {
+	for(const config& i : depinfo_.child_range(str_scenario)) {
+		if(i[str_id] == scenario_) {
 			return result;
 		}
 
@@ -440,7 +440,7 @@ int manager::get_scenario_index() const
 
 bool manager::is_modification_active(int index) const
 {
-	return utils::contains(mods_, depinfo_.mandatory_child("modification", index)["id"].str());
+	return utils::contains(mods_, depinfo_.mandatory_child("modification", index)[str_id].str());
 }
 
 bool manager::is_modification_active(const std::string& id) const
@@ -452,7 +452,7 @@ bool manager::enable_mods_dialog(const std::vector<std::string>& mods, const std
 {
 	std::vector<std::string> items;
 	for(const std::string& mod : mods) {
-		items.push_back(depinfo_.find_mandatory_child("modification", "id", mod)["name"]);
+		items.push_back(depinfo_.find_mandatory_child(str_modification, str_id, mod)[str_name]);
 	}
 
 	return gui2::dialogs::depcheck_confirm_change::execute(true, items, requester);
@@ -462,7 +462,7 @@ bool manager::disable_mods_dialog(const std::vector<std::string>& mods, const st
 {
 	std::vector<std::string> items;
 	for(const std::string& mod : mods) {
-		items.push_back(depinfo_.find_mandatory_child("modification", "id", mod)["name"]);
+		items.push_back(depinfo_.find_mandatory_child(str_modification, str_id, mod)[str_name]);
 	}
 
 	return gui2::dialogs::depcheck_confirm_change::execute(false, items, requester);
@@ -472,7 +472,7 @@ std::string manager::change_era_dialog(const std::vector<std::string>& eras)
 {
 	std::vector<std::string> items;
 	for(const std::string& era : eras) {
-		items.push_back(depinfo_.find_mandatory_child("era", "id", era)["name"]);
+		items.push_back(depinfo_.find_mandatory_child(str_era, str_id, era)[str_name]);
 	}
 
 	gui2::dialogs::depcheck_select_new dialog(ERA, items);
@@ -488,7 +488,7 @@ std::string manager::change_scenario_dialog(const std::vector<std::string>& scen
 {
 	std::vector<std::string> items;
 	for(const std::string& scenario : scenarios) {
-		items.push_back(depinfo_.find_mandatory_child("scenario", "id", scenario)["name"]);
+		items.push_back(depinfo_.find_mandatory_child(str_scenario, str_id, scenario)[str_name]);
 	}
 
 	gui2::dialogs::depcheck_select_new dialog(SCENARIO, items);
@@ -506,17 +506,17 @@ void manager::failure_dialog(const std::string& msg)
 
 void manager::insert_element(component_type type, const config& data, int index)
 {
-	std::string type_str;
+	config_key_type type_str;
 
 	switch(type) {
 	case ERA:
-		type_str = "era";
+		type_str = str_era;
 		break;
 	case SCENARIO:
-		type_str = "scenario";
+		type_str = str_scenario;
 		break;
 	case MODIFICATION:
-		type_str = "modification";
+		type_str = str_modification;
 	}
 
 	depinfo_.add_child_at(type_str, data, index);
@@ -571,9 +571,9 @@ bool manager::change_scenario(const std::string& id)
 	}
 
 	std::vector<std::string> compatible;
-	for(const config& i : depinfo_.child_range("era")) {
-		if(!does_conflict(scen, elem(i["id"], "era"))) {
-			compatible.push_back(i["id"]);
+	for(const config& i : depinfo_.child_range(str_era)) {
+		if(!does_conflict(scen, elem(i[str_id], "era"))) {
+			compatible.push_back(i[str_id]);
 		}
 	}
 
@@ -639,9 +639,9 @@ bool manager::change_era(const std::string& id)
 	}
 
 	std::vector<std::string> compatible;
-	for(const config& i : depinfo_.child_range("scenario")) {
-		if(!does_conflict(era, elem(i["id"], "scenario"))) {
-			compatible.push_back(i["id"]);
+	for(const config& i : depinfo_.child_range(str_scenario)) {
+		if(!does_conflict(era, elem(i[str_id], "scenario"))) {
+			compatible.push_back(i[str_id]);
 		}
 	}
 
@@ -686,8 +686,8 @@ bool manager::change_modifications(const std::vector<std::string>& modifications
 	// Checking if the currently selected era is compatible with the set
 	// modifications, and changing era if necessary
 	std::vector<std::string> compatible;
-	for(const config& c : depinfo_.child_range("era")) {
-		elem era(c["id"], "era");
+	for(const config& c : depinfo_.child_range(str_era)) {
+		elem era(c[str_id], "era");
 		bool ok = true;
 
 		for(const std::string& s : mods_) {
@@ -724,8 +724,8 @@ bool manager::change_modifications(const std::vector<std::string>& modifications
 
 	// Checking if the currently selected scenario is compatible with
 	// the set modifications, and changing scenario if necessary
-	for(const config& c : depinfo_.child_range("scenario")) {
-		elem scen(c["id"], "scenario");
+	for(const config& c : depinfo_.child_range(str_scenario)) {
+		elem scen(c[str_id], "scenario");
 		bool ok = true;
 		for(const std::string& s : mods_) {
 			ok = ok && !does_conflict(scen, elem(s, "modification"));

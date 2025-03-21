@@ -93,8 +93,8 @@ public:
 		if (!handle_delete(child)) {
 			return false;
 		}
-		if (!cfg.has_attribute("id")) {
-			cfg["id"] = child.id;
+		if (!cfg.has_attribute(str_id)) {
+			cfg[str_id] = child.id;
 		}
 
 		return handle_add(child,cfg);
@@ -102,9 +102,9 @@ public:
 	bool handle_add(const path_element &child, const config &cfg)
 	{
 		//if the id is not empty, try to delete all with this id
-		if (!cfg["id"].empty()) {
+		if (!cfg[str_id].empty()) {
 			path_element with_same_id;
-			with_same_id.id = cfg["id"].str();
+			with_same_id.id = cfg[str_id].str();
 			with_same_id.property = property_;
 			with_same_id.position=-1;
 			handle_delete(with_same_id);
@@ -237,10 +237,10 @@ public:
 		if (aspects_.find(child.id) == aspects_.end()) {
 			return false;
 		}
-		if (!cfg.has_attribute("name")) {
-			cfg["name"] = "composite_aspect";
+		if (!cfg.has_attribute(str_name)) {
+			cfg[str_name] = "composite_aspect";
 		}
-		cfg["id"] = child.id;
+		cfg[str_id] = child.id;
 		factory_(aspects_, cfg, child.id);
 		return true;
 	}

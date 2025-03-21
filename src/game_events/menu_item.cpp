@@ -72,20 +72,20 @@ wml_menu_item::wml_menu_item(const std::string& id, const config& cfg)
 	, event_name_(make_item_name(id))
 	, hotkey_id_(make_item_hotkey(id))
 	, hotkey_record_()
-	, image_(cfg["image"].str())
-	, description_(cfg["description"].t_str())
+	, image_(cfg[str_image].str())
+	, description_(cfg[str_description].t_str())
 	, show_if_(cfg.child_or_empty("show_if"), true)
 	, filter_location_(cfg.child_or_empty("filter_location"), true)
 	, command_(cfg.child_or_empty("command"))
 	, default_hotkey_(cfg.child_or_empty("default_hotkey"))
-	, use_hotkey_(cfg["use_hotkey"].to_bool(true))
-	, use_wml_menu_(cfg["use_hotkey"].str() != "only")
-	, is_synced_(cfg["synced"].to_bool(true))
-	, persistent_(cfg["persistent"].to_bool(true))
-	, needs_select_(cfg["needs_select"].to_bool(false))
+	, use_hotkey_(cfg[str_use_hotkey].to_bool(true))
+	, use_wml_menu_(cfg[str_use_hotkey].str() != "only")
+	, is_synced_(cfg[str_synced].to_bool(true))
+	, persistent_(cfg[str_persistent].to_bool(true))
+	, needs_select_(cfg[str_needs_select].to_bool(false))
 {
-	if(cfg.has_attribute("needs_select")) {
-		deprecated_message("needs_select", DEP_LEVEL::INDEFINITE, {1, 15, 0});
+	if(cfg.has_attribute(str_needs_select)) {
+		deprecated_message(str_needs_select, DEP_LEVEL::INDEFINITE, {1, 15, 0});
 	}
 }
 
@@ -197,7 +197,7 @@ void wml_menu_item::finish_handler()
 {
 	if(!command_.empty()) {
 		assert(resources::game_events);
-		resources::game_events->remove_event_handler(command_["id"]);
+		resources::game_events->remove_event_handler(command_[str_id]);
 	}
 
 	// Hotkey support
@@ -222,47 +222,47 @@ void wml_menu_item::init_handler(game_lua_kernel& lk)
 
 void wml_menu_item::to_config(config& cfg) const
 {
-	cfg["id"] = item_id_;
-	cfg["image"] = image_;
-	cfg["description"] = description_;
-	cfg["synced"] = is_synced_;
+	cfg[str_id] = item_id_;
+	cfg[str_image] = image_;
+	cfg[str_description] = description_;
+	cfg[str_synced] = is_synced_;
 
 	if(needs_select_) {
-		cfg["needs_select"] = true;
+		cfg[str_needs_select] = true;
 	}
 
 	if(use_hotkey_ && use_wml_menu_) {
-		cfg["use_hotkey"] = true;
+		cfg[str_use_hotkey] = true;
 	}
 
 	if(use_hotkey_ && !use_wml_menu_) {
-		cfg["use_hotkey"] = "only";
+		cfg[str_use_hotkey] = "only";
 	}
 
 	if(!use_hotkey_ && use_wml_menu_) {
-		cfg["use_hotkey"] = false;
+		cfg[str_use_hotkey] = false;
 	}
 
 	if(!use_hotkey_ && !use_wml_menu_) {
 		ERR_NG << "Bad data: wml_menu_item with both use_wml_menu and "
 		          "use_hotkey set to false is not supposed to be possible.";
-		cfg["use_hotkey"] = false;
+		cfg[str_use_hotkey] = false;
 	}
 
 	if(!show_if_.empty()) {
-		cfg.add_child("show_if", show_if_.get_config());
+		cfg.add_child(str_show_if, show_if_.get_config());
 	}
 
 	if(!filter_location_.empty()) {
-		cfg.add_child("filter_location", filter_location_.get_config());
+		cfg.add_child(str_filter_location, filter_location_.get_config());
 	}
 
 	if(!command_.empty()) {
-		cfg.add_child("command", command_);
+		cfg.add_child(str_command, command_);
 	}
 
 	if(!default_hotkey_.empty()) {
-		cfg.add_child("default_hotkey", default_hotkey_);
+		cfg.add_child(str_default_hotkey, default_hotkey_);
 	}
 }
 
@@ -272,52 +272,52 @@ void wml_menu_item::update(const vconfig& vcfg)
 	// Tracks whether or not the hotkey has been updated.
 	bool hotkey_updated = false;
 
-	if(vcfg.has_attribute("image")) {
-		image_ = vcfg["image"].str();
+	if(vcfg.has_attribute(str_image)) {
+		image_ = vcfg[str_image].str();
 	}
 
-	if(vcfg.has_attribute("description")) {
-		description_ = vcfg["description"].t_str();
+	if(vcfg.has_attribute(str_description)) {
+		description_ = vcfg[str_description].t_str();
 		hotkey_updated = true;
 	}
 
-	if(vcfg.has_attribute("needs_select")) {
+	if(vcfg.has_attribute(str_needs_select)) {
 		deprecated_message("needs_select", DEP_LEVEL::INDEFINITE, {1, 15, 0});
-		needs_select_ = vcfg["needs_select"].to_bool();
+		needs_select_ = vcfg[str_needs_select].to_bool();
 	}
 
-	if(vcfg.has_attribute("synced")) {
-		is_synced_ = vcfg["synced"].to_bool(true);
+	if(vcfg.has_attribute(str_synced)) {
+		is_synced_ = vcfg[str_synced].to_bool(true);
 	}
 
-	if(vcfg.has_attribute("persistent")) {
-		persistent_ = vcfg["persistent"].to_bool(true);
+	if(vcfg.has_attribute(str_persistent)) {
+		persistent_ = vcfg[str_persistent].to_bool(true);
 	}
 
-	if(const vconfig& child = vcfg.child("show_if")) {
+	if(const vconfig& child = vcfg.child(str_show_if)) {
 		show_if_ = child;
 		show_if_.make_safe();
 	}
 
-	if(const vconfig& child = vcfg.child("filter_location")) {
+	if(const vconfig& child = vcfg.child(str_filter_location)) {
 		filter_location_ = child;
 		filter_location_.make_safe();
 	}
 
-	if(const vconfig& child = vcfg.child("default_hotkey")) {
+	if(const vconfig& child = vcfg.child(str_default_hotkey)) {
 		default_hotkey_ = child.get_parsed_config();
 		hotkey_updated = true;
 	}
 
-	if(vcfg.has_attribute("use_hotkey")) {
-		const config::attribute_value& use_hotkey_av = vcfg["use_hotkey"];
+	if(vcfg.has_attribute(str_use_hotkey)) {
+		const config::attribute_value& use_hotkey_av = vcfg[str_use_hotkey];
 
 		use_hotkey_ = use_hotkey_av.to_bool(true);
 		use_wml_menu_ = use_hotkey_av.str() != "only";
 	}
 
-	if(const vconfig& cmd = vcfg.child("command")) {
-		const bool delayed = cmd["delayed_variable_substitution"].to_bool(true);
+	if(const vconfig& cmd = vcfg.child(str_command)) {
+		const bool delayed = cmd[str_delayed_variable_substitution].to_bool(true);
 		update_command(delayed ? cmd.get_config() : cmd.get_parsed_config());
 	}
 
@@ -345,7 +345,7 @@ void wml_menu_item::update_command(const config& new_command)
 	resources::game_events->execute_on_events(event_name_, [&](game_events::manager& man, handler_ptr& ptr) {
 		if(ptr->is_menu_item()) {
 			LOG_NG << "Removing command for " << event_name_ << ".";
-			man.remove_event_handler(command_["id"].str());
+			man.remove_event_handler(command_[str_id].str());
 		}
 	});
 
@@ -356,14 +356,14 @@ void wml_menu_item::update_command(const config& new_command)
 		command_ = new_command;
 
 		// Set some fields required by event processing.
-		config::attribute_value& event_id = command_["id"];
+		config::attribute_value& event_id = command_[str_id];
 		if(event_id.empty() && !item_id_.empty()) {
 			event_id = item_id_;
 		}
 
-		command_["name"] = event_name_;
-		command_["first_time_only"] = false;
-		command_["priority"] = 0.;
+		command_[str_name] = event_name_;
+		command_[str_first_time_only] = false;
+		command_[str_priority] = 0.;
 
 		// Register the event.
 		LOG_NG << "Setting command for " << event_name_ << " to:\n" << command_;

@@ -50,7 +50,7 @@ goal::goal(readonly_context &context, const config &cfg)
 
 void goal::on_create()
 {
-	LOG_AI_GOAL << "side " << get_side() << " : " << " created goal with name=[" << cfg_["name"] << "]";
+	LOG_AI_GOAL << "side " << get_side() << " : " << " created goal with name=[" << cfg_[str_name] << "]";
 }
 
 // In this case, the API is intended to cause an error with this specific type.
@@ -62,7 +62,7 @@ void goal::on_create(std::shared_ptr<ai::lua_ai_context>)
 
 void goal::unrecognized()
 {
-	ERR_AI_GOAL << "side " << get_side() << " : " << " tried to create goal with name=[" << cfg_["name"] << "], but the [" << cfg_["engine"] << "] engine did not recognize that type of goal. ";
+	ERR_AI_GOAL << "side " << get_side() << " : " << " tried to create goal with name=[" << cfg_[str_name] << "], but the [" << cfg_[str_engine] << "] engine did not recognize that type of goal. ";
 	ok_ = false;
 }
 
@@ -81,17 +81,17 @@ config goal::to_config() const
 
 std::string goal::get_id() const
 {
-	return cfg_["id"];
+	return cfg_[str_id];
 }
 
 std::string goal::get_name() const
 {
-	return cfg_["id"];
+	return cfg_[str_id];
 }
 
 std::string goal::get_engine() const
 {
-	return cfg_["engine"];
+	return cfg_[str_engine];
 }
 
 bool goal::redeploy(const config &cfg)
@@ -108,18 +108,18 @@ bool goal::ok() const
 
 bool goal::active() const
 {
-	return is_active(cfg_["time_of_day"],cfg_["turns"]);
+	return is_active(cfg_[str_time_of_day],cfg_[str_turns]);
 }
 
 void target_unit_goal::on_create()
 {
 	goal::on_create();
-	if (!cfg_["engine"].empty() && cfg_["engine"] != "cpp") {
+	if (!cfg_[str_engine].empty() && cfg_[str_engine] != "cpp") {
 		unrecognized();
 		value_ = 0;
 		return;
 	}
-	if (const config::attribute_value *v = cfg_.get("value")) {
+	if (const config::attribute_value *v = cfg_.get(str_value)) {
 		value_ = v->to_double(0);
 	}
 }
@@ -130,7 +130,7 @@ void target_unit_goal::add_targets(std::back_insert_iterator< std::vector< targe
 		return;
 	}
 
-	auto criteria = cfg_.optional_child("criteria");
+	auto criteria = cfg_.optional_child(str_criteria);
 	if (!criteria) return;
 
 	//find the enemy leaders and explicit targets
@@ -153,15 +153,15 @@ target_unit_goal::target_unit_goal(readonly_context &context, const config &cfg)
 void target_location_goal::on_create()
 {
 	goal::on_create();
-	if (!cfg_["engine"].empty() && cfg_["engine"] != "cpp") {
+	if (!cfg_[str_engine].empty() && cfg_[str_engine] != "cpp") {
 		unrecognized();
 		value_ = 0;
 		return;
 	}
-	if (cfg_.has_attribute("value")) {
-		value_ = cfg_["value"].to_double(0);
+	if (cfg_.has_attribute(str_value)) {
+		value_ = cfg_[str_value].to_double(0);
 	}
-	auto criteria = cfg_.optional_child("criteria");
+	auto criteria = cfg_.optional_child(str_criteria);
 	if (criteria) {
 		filter_ptr_.reset(new terrain_filter(vconfig(*criteria),resources::filter_con, false));
 	}
@@ -195,22 +195,22 @@ target_location_goal::target_location_goal(readonly_context &context, const conf
 void protect_goal::on_create()
 {
 	goal::on_create();
-	if (!cfg_["engine"].empty() && cfg_["engine"] != "cpp") {
+	if (!cfg_[str_engine].empty() && cfg_[str_engine] != "cpp") {
 		unrecognized();
 		value_ = 0;
 		return;
 	}
-	if (const config::attribute_value *v = cfg_.get("value")) {
+	if (const config::attribute_value *v = cfg_.get(str_value)) {
 		value_ = v->to_double(0);
 	}
-	if (const config::attribute_value *v = cfg_.get("protect_radius")) {
+	if (const config::attribute_value *v = cfg_.get(str_protect_radius)) {
 		radius_ = (*v).to_int(1);
 	}
 
 	if (radius_<1) {
 		radius_=20;
 	}
-	auto criteria = cfg_.optional_child("criteria");
+	auto criteria = cfg_.optional_child(str_criteria);
 	if (criteria) {
 		filter_ptr_.reset(new terrain_filter(vconfig(*criteria), resources::filter_con, false));
 	}
@@ -231,12 +231,12 @@ void protect_goal::add_targets(std::back_insert_iterator< std::vector< target >>
 		return;
 	}
 
-	auto criteria = cfg_.optional_child("criteria");
+	auto criteria = cfg_.optional_child(str_criteria);
 	if (!criteria) {
 		LOG_AI_GOAL << "skipping " << goal_type << " goal - no criteria given";
 		return;
 	} else {
-		DBG_AI_GOAL << "side " << get_side() << ": "<< goal_type << " goal with criteria" << std::endl << cfg_.mandatory_child("criteria");
+		DBG_AI_GOAL << "side " << get_side() << ": "<< goal_type << " goal with criteria" << std::endl << cfg_.mandatory_child(str_criteria);
 	}
 
 	unit_map &units = resources::gameboard->units();
@@ -293,8 +293,8 @@ lua_goal::lua_goal(readonly_context &context, const config &cfg)
 	, code_()
 	, handler_()
 {
-	if (cfg.has_attribute("code")) {
-		code_ = cfg["code"].str();
+	if (cfg.has_attribute(str_code)) {
+		code_ = cfg[str_code].str();
 	}
 	else
 	{
@@ -310,7 +310,7 @@ void lua_goal::on_create(std::shared_ptr<ai::lua_ai_context> l_ctx)
 void lua_goal::add_targets(std::back_insert_iterator< std::vector< target >> target_list)
 {
 	std::shared_ptr<lua_object<std::vector<target>>> l_obj = std::make_shared<lua_object<std::vector<target>>>();
-	config c(cfg_.child_or_empty("args"));
+	config c(cfg_.child_or_empty(str_args));
 	const config empty_cfg;
 	handler_->handle(c, empty_cfg, true, l_obj);
 

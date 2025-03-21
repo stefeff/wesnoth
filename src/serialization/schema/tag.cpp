@@ -39,19 +39,19 @@ wml_tag::wml_tag(const std::string& name, int min, int max, const std::string& s
 }
 
 wml_tag::wml_tag(const config& cfg)
-	: name_(cfg["name"].str())
-	, min_(cfg["min"].to_int())
-	, max_(cfg["max"].str() == "infinite" ? -1 : cfg["max"].to_int(1))
-	, min_children_(cfg["min_tags"].to_int())
-	, max_children_(cfg["max_tags"].str() == "infinite" ? -1 : cfg["max_tags"].to_int(-1))
-	, super_("")
+	: name_(cfg[str_name].str())
+	, min_(cfg[str_min].to_int())
+	, max_(cfg[str_max].str() == "infinite" ? -1 : cfg[str_max].to_int(1))
+	, min_children_(cfg[str_min_tags].to_int())
+	, max_children_(cfg[str_max_tags].str() == "infinite" ? -1 : cfg[str_max_tags].to_int(-1))
+	, super_()
 	, tags_()
 	, keys_()
 	, links_()
 	, conditions_()
 	, super_refs_()
 	, fuzzy_(name_.find_first_of("*?+") != std::string::npos)
-	, any_tag_(cfg["any_tag"].to_bool())
+	, any_tag_(cfg[str_any_tag].to_bool())
 {
 	if(max_ < 0) {
 		max_ = std::numeric_limits<int>::max();
@@ -60,30 +60,30 @@ wml_tag::wml_tag(const config& cfg)
 		max_children_ = std::numeric_limits<int>::max();
 	}
 
-	if(cfg.has_attribute("super")) {
-		super_ = cfg["super"].str();
+	if(cfg.has_attribute(str_super)) {
+		super_ = cfg[str_super].str();
 	}
 
-	for(const config& child : cfg.child_range("tag")) {
+	for(const config& child : cfg.child_range(str_tag)) {
 		wml_tag child_tag(child);
 		add_tag(child_tag);
 	}
 
-	for(const config& child : cfg.child_range("key")) {
+	for(const config& child : cfg.child_range(str_key)) {
 		wml_key child_key(child);
 		add_key(child_key);
 	}
 
-	for(const config& link : cfg.child_range("link")) {
-		std::string link_name = link["name"].str();
+	for(const config& link : cfg.child_range(str_link)) {
+		std::string link_name = link[str_name].str();
 		add_link(link_name);
 	}
 
-	for(const config& sw : cfg.child_range("switch")) {
+	for(const config& sw : cfg.child_range(str_switch)) {
 		add_switch(sw);
 	}
 
-	for(const config& filter : cfg.child_range("if")) {
+	for(const config& filter : cfg.child_range(str_if)) {
 		add_filter(filter);
 	}
 }
@@ -407,11 +407,11 @@ void wml_tag::expand(wml_tag& root)
 void wml_tag::add_switch(const config& switch_cfg)
 {
 	config default_cfg;
-	const std::string key = switch_cfg["key"];
+	const utils::interned_string key = switch_cfg[str_key].str();
 	bool allow_missing = false;
-	for(const auto& case_cfg : switch_cfg.child_range("case")) {
-		if(case_cfg.has_attribute("value")) {
-			const std::vector<std::string> values = utils::split(case_cfg["value"].str(), ',', utils::STRIP_SPACES);
+	for(const auto& case_cfg : switch_cfg.child_range(str_case)) {
+		if(case_cfg.has_attribute(str_value)) {
+			const std::vector<std::string> values = utils::split(case_cfg[str_value].str(), ',', utils::STRIP_SPACES);
 			config filter;
 			for(const auto& value : values) {
 				// An [or] filter only works if there's something in the main filter.
@@ -419,12 +419,12 @@ void wml_tag::add_switch(const config& switch_cfg)
 				if(filter.empty()) {
 					filter[key] = value;
 				} else {
-					filter.add_child("or")[key] = value;
+					filter.add_child(str_or)[key] = value;
 				}
-				default_cfg.add_child("not")[key] = value;
+				default_cfg.add_child(str_not)[key] = value;
 			}
-			if(!allow_missing && case_cfg["trigger_if_missing"].to_bool()) {
-				config& missing_filter = filter.add_child("or").add_child("not");
+			if(!allow_missing && case_cfg[str_trigger_if_missing].to_bool()) {
+				config& missing_filter = filter.add_child(str_or).add_child(str_not);
 				missing_filter["glob_on_" + key] = "*";
 				allow_missing = true;
 			}
@@ -433,17 +433,17 @@ void wml_tag::add_switch(const config& switch_cfg)
 			// Match if the attribute is missing
 			conditions_.emplace_back(case_cfg, config());
 		}
-		const std::string name = formatter() << get_name() << '[' << key << '=' << case_cfg["value"] << ']';
+		const std::string name = formatter() << get_name() << '[' << key << '=' << case_cfg[str_value] << ']';
 		conditions_.back().set_name(name);
 	}
-	if(switch_cfg.has_child("else")) {
+	if(switch_cfg.has_child(str_else)) {
 		if(allow_missing) {
 			// If a [case] matches the absence of the key, then [else] should not
 			// The previous [not] keys already failed if it had a value matched by another [case]
 			// So just add an [and] tag that matches any other value
-			default_cfg.add_child("and")["glob_on_" + key] = "*";
+			default_cfg.add_child(str_and)["glob_on_" + key] = "*";
 		}
-		conditions_.emplace_back(switch_cfg.mandatory_child("else"), default_cfg);
+		conditions_.emplace_back(switch_cfg.mandatory_child(str_else), default_cfg);
 		const std::string name = formatter() << get_name() << "[else]";
 		conditions_.back().set_name(name);
 	}
@@ -452,28 +452,28 @@ void wml_tag::add_switch(const config& switch_cfg)
 void wml_tag::add_filter(const config& cond_cfg)
 {
 	config filter = cond_cfg, else_filter;
-	filter.clear_children("then", "else", "elseif");
+	filter.clear_children(str_then, str_else, str_elseif);
 	// Note in case someone gets trigger-happy:
 	// DO NOT MOVE THIS! It needs to be copied!
-	else_filter.add_child("not", filter);
-	if(cond_cfg.has_child("then")) {
-		conditions_.emplace_back(cond_cfg.mandatory_child("then"), filter);
+	else_filter.add_child(str_not, filter);
+	if(cond_cfg.has_child(str_then)) {
+		conditions_.emplace_back(cond_cfg.mandatory_child(str_then), filter);
 		const std::string name = formatter() << get_name() << "[then]";
 		conditions_.back().set_name(name);
 	}
 	int i = 1;
-	for(auto elseif_cfg : cond_cfg.child_range("elseif")) {
+	for(auto elseif_cfg : cond_cfg.child_range(str_elseif)) {
 		config elseif_filter = elseif_cfg, old_else_filter = else_filter;
-		elseif_filter.clear_children("then");
-		else_filter.add_child("not", elseif_filter);
+		elseif_filter.clear_children(str_then);
+		else_filter.add_child(str_not, elseif_filter);
 		// Ensure it won't match for any of the preceding cases, either
 		elseif_filter.append_children(old_else_filter);
-		conditions_.emplace_back(elseif_cfg.child_or_empty("then"), elseif_filter);
+		conditions_.emplace_back(elseif_cfg.child_or_empty(str_then), elseif_filter);
 		const std::string name = formatter() << get_name() << "[elseif " << i++ << "]";
 		conditions_.back().set_name(name);
 	}
-	if(cond_cfg.has_child("else")) {
-		conditions_.emplace_back(cond_cfg.mandatory_child("else"), else_filter);
+	if(cond_cfg.has_child(str_else)) {
+		conditions_.emplace_back(cond_cfg.mandatory_child(str_else), else_filter);
 		const std::string name = formatter() << get_name() << "[else]";
 		conditions_.back().set_name(name);
 	}

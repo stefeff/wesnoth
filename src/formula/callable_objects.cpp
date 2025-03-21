@@ -999,13 +999,13 @@ variant event_callable::get_value(const std::string &key) const
 			return variant(std::make_shared<unit_callable>(*u2));
 		}
 	} else if(key == "weapon") {
-		if(event_info.data.has_child("first")) {
-			first_weapon = std::make_shared<attack_type>(event_info.data.mandatory_child("first"));
+		if(event_info.data.has_child(str_first)) {
+			first_weapon = std::make_shared<attack_type>(event_info.data.mandatory_child(str_first));
 			return variant(std::make_shared<attack_type_callable>(*first_weapon));
 		}
 	} else if(key == "second_weapon") {
-		if(event_info.data.has_child("second")) {
-			second_weapon = std::make_shared<attack_type>(event_info.data.mandatory_child("second"));
+		if(event_info.data.has_child(str_second)) {
+			second_weapon = std::make_shared<attack_type>(event_info.data.mandatory_child(str_second));
 			return variant(std::make_shared<attack_type_callable>(*second_weapon));
 		}
 	}

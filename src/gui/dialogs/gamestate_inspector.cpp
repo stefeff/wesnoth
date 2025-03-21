@@ -147,8 +147,8 @@ public:
 	stuff_list_adder& widget(const std::string& ref, const std::string& label, bool markup = false)
 	{
 		widget_item& item = data_[ref];
-		item["label"] = label;
-		item["use_markup"] = utils::bool_string(markup);
+		item[str_label] = label;
+		item[str_use_markup] = utils::bool_string(markup);
 		return *this;
 	}
 
@@ -551,8 +551,8 @@ void event_mode_controller::show_list(tree_view_node& node, bool is_wmi)
 
 	for(const auto & cfg : events.child_range(is_wmi ? "menu_item" : "event"))
 	{
-		std::string name = is_wmi ? cfg["id"] : cfg["name"];
-		bool named_event = !is_wmi && !cfg["id"].empty();
+		std::string name = is_wmi ? cfg[str_id] : cfg[str_name];
+		bool named_event = !is_wmi && !cfg[str_id].empty();
 
 		auto progress = view()
 			.stuff_list_entry(&node, named_event ? "named_event" : "basic")
@@ -560,7 +560,7 @@ void event_mode_controller::show_list(tree_view_node& node, bool is_wmi)
 
 		if(named_event) {
 			std::ostringstream out;
-			out << "id=\"" << cfg["id"] << '"';
+			out << "id=\"" << cfg[str_id] << '"';
 			progress.widget("id", out.str());
 		}
 

@@ -35,14 +35,14 @@ std::string item_palette::get_help_string() const
 
 void item_palette::setup(const game_config_view& cfg)
 {
-	for(const config& group : cfg.child_range("item_group")) {
+	for(const config& group : cfg.child_range(str_item_group)) {
 		groups_.emplace_back(group);
 
-		for(const config& item : group.child_range("item")) {
-			item_map_.emplace(item["id"], overlay(item));
-			group_map_[group["id"]].push_back(item["id"]);
-			if(!group["core"].to_bool(false))
-				non_core_items_.insert(item["id"]);
+		for(const config& item : group.child_range(str_item)) {
+			item_map_.emplace(item[str_id], overlay(item));
+			group_map_[group[str_id]].push_back(item[str_id]);
+			if(!group[str_core].to_bool(false))
+				non_core_items_.insert(item[str_id]);
 		}
 	}
 

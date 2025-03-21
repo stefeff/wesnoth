@@ -211,12 +211,12 @@ void wmi_manager::set_item(const std::string& id, const vconfig& menu_item)
 void wmi_manager::set_menu_items(const config& cfg)
 {
 	wml_menu_items_.clear();
-	for(const config& item : cfg.child_range("menu_item")) {
-		if(!item.has_attribute("id")) {
+	for(const config& item : cfg.child_range(str_menu_item)) {
+		if(!item.has_attribute(str_id)) {
 			continue;
 		}
 
-		const std::string& id = item["id"];
+		const std::string& id = item[str_id];
 		auto [iter, success] = wml_menu_items_.emplace(id, std::make_shared<wml_menu_item>(id, item));
 
 		if(!success) {

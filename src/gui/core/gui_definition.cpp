@@ -36,8 +36,8 @@ gui_theme_map_t::iterator default_gui = guis.end();
 gui_definition::gui_definition(const config& cfg)
 	: widget_types()
 	, window_types()
-	, id_(cfg["id"])
-	, description_(cfg["description"].t_str())
+	, id_(cfg[str_id])
+	, description_(cfg[str_description].t_str())
 	, settings_(cfg.mandatory_child("settings"))
 	, tips_(tip_of_the_day::load(cfg))
 {
@@ -89,8 +89,8 @@ gui_definition::gui_definition(const config& cfg)
 	//
 
 	/** Parse each window. */
-	for(auto& w : cfg.child_range("window")) {
-		window_types.emplace(w["id"], builder_window(w));
+	for(auto& w : cfg.child_range(str_window)) {
+		window_types.emplace(w[str_id], builder_window(w));
 	}
 
 	if(id_ == "default") {
@@ -107,16 +107,16 @@ gui_definition::gui_definition(const config& cfg)
 }
 
 gui_definition::settings_helper::settings_helper(const config& cfg)
-	: popup_show_delay(chrono::parse_duration(cfg["popup_show_delay"], 0ms))
-	, popup_show_time(chrono::parse_duration(cfg["popup_show_time"], 0ms))
-	, help_show_time(chrono::parse_duration(cfg["help_show_time"], 0ms))
-	, double_click_time(chrono::parse_duration(cfg["double_click_time"], 0ms))
-	, repeat_button_repeat_time(chrono::parse_duration(cfg["repeat_button_repeat_time"], 0ms))
-	, sound_button_click(cfg["sound_button_click"])
-	, sound_toggle_button_click(cfg["sound_toggle_button_click"])
-	, sound_toggle_panel_click(cfg["sound_toggle_panel_click"])
-	, sound_slider_adjust(cfg["sound_slider_adjust"])
-	, has_helptip_message(cfg["has_helptip_message"].t_str())
+	: popup_show_delay(chrono::parse_duration(cfg[str_popup_show_delay], 0ms))
+	, popup_show_time(chrono::parse_duration(cfg[str_popup_show_time], 0ms))
+	, help_show_time(chrono::parse_duration(cfg[str_help_show_time], 0ms))
+	, double_click_time(chrono::parse_duration(cfg[str_double_click_time], 0ms))
+	, repeat_button_repeat_time(chrono::parse_duration(cfg[str_repeat_button_repeat_time], 0ms))
+	, sound_button_click(cfg[str_sound_button_click])
+	, sound_toggle_button_click(cfg[str_sound_toggle_button_click])
+	, sound_toggle_panel_click(cfg[str_sound_toggle_panel_click])
+	, sound_slider_adjust(cfg[str_sound_slider_adjust])
+	, has_helptip_message(cfg[str_has_helptip_message].t_str())
 {
 	VALIDATE(double_click_time > 0ms,
 		missing_mandatory_wml_key("settings", "double_click_time"));

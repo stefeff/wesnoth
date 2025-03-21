@@ -108,17 +108,17 @@ void editor_edit_pbl::pre_show()
 	}
 
 	text_box* name = find_widget<text_box>("name", false, true);
-	name->set_value(pbl["title"]);
+	name->set_value(pbl[str_title]);
 	keyboard_capture(name);
 
-	find_widget<scroll_text>("description").set_value(pbl["description"].t_str());
-	find_widget<text_box>("icon").set_value(pbl["icon"]);
-	if(!pbl["icon"].empty()) {
+	find_widget<scroll_text>("description").set_value(pbl[str_description].t_str());
+	find_widget<text_box>("icon").set_value(pbl[str_icon]);
+	if(!pbl[str_icon].empty()) {
 		drawing& img = find_widget<drawing>("preview");
-		img.set_label(pbl["icon"].str());
+		img.set_label(pbl[str_icon].str());
 	}
-	find_widget<text_box>("author").set_value(pbl["author"]);
-	find_widget<text_box>("version").set_value(pbl["version"]);
+	find_widget<text_box>("author").set_value(pbl[str_author]);
+	find_widget<text_box>("version").set_value(pbl[str_version]);
 
 	multimenu_button& dependencies = find_widget<multimenu_button>("dependencies");
 	std::vector<config> addons_list;
@@ -128,21 +128,21 @@ void editor_edit_pbl::pre_show()
 	}
 
 	for(const std::string& dir : dirs_) {
-		addons_list.emplace_back("label", dir, "checkbox", false);
+		addons_list.emplace_back(str_label, dir, str_checkbox, false);
 	}
 	dependencies.set_values(addons_list);
 
-	std::vector<std::string> existing_dependencies = utils::split(pbl["dependencies"].str(), ',');
+	std::vector<std::string> existing_dependencies = utils::split(pbl[str_dependencies].str(), ',');
 	for(unsigned i = 0; i < dirs_.size(); i++) {
 		if(utils::contains(existing_dependencies, dirs_[i])) {
 			dependencies.select_option(i);
 		}
 	}
 
-	if(pbl["forum_auth"].to_bool()) {
+	if(pbl[str_forum_auth].to_bool()) {
 		find_widget<toggle_button>("forum_auth").set_value(true);
-		find_widget<text_box>("primary_authors").set_value(pbl["primary_authors"]);
-		find_widget<text_box>("secondary_authors").set_value(pbl["secondary_authors"]);
+		find_widget<text_box>("primary_authors").set_value(pbl[str_primary_authors]);
+		find_widget<text_box>("secondary_authors").set_value(pbl[str_secondary_authors]);
 		find_widget<text_box>("email").set_visible(gui2::widget::visibility::invisible);
 		find_widget<label>("email_label").set_visible(gui2::widget::visibility::invisible);
 		find_widget<text_box>("password").set_visible(gui2::widget::visibility::invisible);
@@ -152,8 +152,8 @@ void editor_edit_pbl::pre_show()
 		find_widget<text_box>("secondary_authors").set_visible(gui2::widget::visibility::visible);
 		find_widget<label>("secondary_authors_label").set_visible(gui2::widget::visibility::visible);
 	} else {
-		find_widget<text_box>("email").set_value(pbl["email"]);
-		find_widget<text_box>("password").set_value(pbl["passphrase"]);
+		find_widget<text_box>("email").set_value(pbl[str_email]);
+		find_widget<text_box>("password").set_value(pbl[str_passphrase]);
 		find_widget<text_box>("primary_authors").set_visible(gui2::widget::visibility::invisible);
 		find_widget<label>("primary_authors_label").set_visible(gui2::widget::visibility::invisible);
 		find_widget<text_box>("secondary_authors").set_visible(gui2::widget::visibility::invisible);
@@ -161,12 +161,12 @@ void editor_edit_pbl::pre_show()
 	}
 
 	if(pbl.has_child("feedback")) {
-		find_widget<text_box>("forum_thread").set_value(pbl.mandatory_child("feedback")["topic_id"]);
+		find_widget<text_box>("forum_thread").set_value(pbl.mandatory_child("feedback")[str_topic_id]);
 	}
 
 	unsigned selected = 0;
 	for(unsigned i = 0; i < type_values.size(); i++) {
-		if(pbl["type"] == type_values[i]) {
+		if(pbl[str_type] == type_values[i]) {
 			selected = i;
 			break;
 		}
@@ -193,15 +193,15 @@ void editor_edit_pbl::pre_show()
 
 	multimenu_button& tags = find_widget<multimenu_button>("tags");
 	std::vector<config> tags_list;
-	tags_list.emplace_back("label", _("Cooperative"), "checkbox", false);
-	tags_list.emplace_back("label", _("Cosmetic"), "checkbox", false);
-	tags_list.emplace_back("label", _("Difficulty"), "checkbox", false);
-	tags_list.emplace_back("label", _("RNG"), "checkbox", false);
-	tags_list.emplace_back("label", _("Survival"), "checkbox", false);
-	tags_list.emplace_back("label", _("Terraforming"), "checkbox", false);
+	tags_list.emplace_back(str_label, _("Cooperative"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Cosmetic"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Difficulty"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("RNG"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Survival"), str_checkbox, false);
+	tags_list.emplace_back(str_label, _("Terraforming"), str_checkbox, false);
 	tags.set_values(tags_list);
 
-	std::vector<std::string> chosen_tags = utils::split(pbl["tags"].str(), ',');
+	std::vector<std::string> chosen_tags = utils::split(pbl[str_tags].str(), ',');
 	for(unsigned i = 0; i < tag_values.size(); i++) {
 		if(utils::contains(chosen_tags, tag_values[i])) {
 			tags.select_option(i);
@@ -214,13 +214,13 @@ void editor_edit_pbl::pre_show()
 	for(const config& child : pbl.child_range("translation")) {
 		translations.add_row(widget_data{
 			{ "translations_language", {
-				{ "label", child["language"].str() }
+				{ "label", child[str_language].str() }
 			}},
 			{ "translations_title", {
-				{ "label", child["title"].str() }
+				{ "label", child[str_title].str() }
 			}},
 			{ "translations_description", {
-				{ "label", child["description"].str() }
+				{ "label", child[str_description].str() }
 			}},
 		});
 	}
@@ -247,19 +247,19 @@ config editor_edit_pbl::create_cfg()
 	config cfg;
 
 	if(const std::string& name = find_widget<text_box>("name").get_value(); !name.empty()) {
-		cfg["title"] = name;
+		cfg[str_title] = name;
 	}
 	if(const std::string& description = find_widget<scroll_text>("description").get_value(); !description.empty()) {
-		cfg["description"] = description;
+		cfg[str_description] = description;
 	}
 	if(const std::string& icon = find_widget<text_box>("icon").get_value(); !icon.empty()) {
-		cfg["icon"] = icon;
+		cfg[str_icon] = icon;
 	}
 	if(const std::string& author = find_widget<text_box>("author").get_value(); !author.empty()) {
-		cfg["author"] = author;
+		cfg[str_author] = author;
 	}
 	if(const std::string& version = find_widget<text_box>("version").get_value(); !version.empty()) {
-		cfg["version"] = version;
+		cfg[str_version] = version;
 	}
 
 	multimenu_button& dependencies = find_widget<multimenu_button>("dependencies");
@@ -271,35 +271,35 @@ config editor_edit_pbl::create_cfg()
 		}
 	}
 	if(chosen_deps.size() > 0) {
-		cfg["dependencies"] = utils::join(chosen_deps, ",");
+		cfg[str_dependencies] = utils::join(chosen_deps, ",");
 	}
 
 	if(find_widget<toggle_button>("forum_auth").get_value_bool()) {
-		cfg["forum_auth"] = true;
+		cfg[str_forum_auth] = true;
 
 		if(const std::string& primary_authors = find_widget<text_box>("primary_authors").get_value(); !primary_authors.empty()) {
-			cfg["primary_authors"] = primary_authors;
+			cfg[str_primary_authors] = primary_authors;
 		}
 
 		if(const std::string& secondary_authors = find_widget<text_box>("secondary_authors").get_value(); !secondary_authors.empty()) {
-			cfg["secondary_authors"] = secondary_authors;
+			cfg[str_secondary_authors] = secondary_authors;
 		}
 	} else {
 		if(const std::string& email = find_widget<text_box>("email").get_value(); !email.empty()) {
-			cfg["email"] = email;
+			cfg[str_email] = email;
 		}
 		if(const std::string& passphrase = find_widget<text_box>("password").get_value(); !passphrase.empty()) {
-			cfg["passphrase"] = passphrase;
+			cfg[str_passphrase] = passphrase;
 		}
 	}
 
 	if(const std::string& topic_id = find_widget<text_box>("forum_thread").get_value(); !topic_id.empty()) {
 		config& feedback = cfg.add_child("feedback");
-		feedback["topic_id"] = topic_id;
+		feedback[str_topic_id] = topic_id;
 	}
 
 	if(unsigned value = find_widget<menu_button>("type").get_value(); value != 0) {
-		cfg["type"] = type_values[value];
+		cfg[str_type] = type_values[value];
 	}
 
 	multimenu_button& tags = find_widget<multimenu_button>("tags");
@@ -311,17 +311,17 @@ config editor_edit_pbl::create_cfg()
 		}
 	}
 	if(chosen_tags.size() > 0) {
-		cfg["tags"] = utils::join(chosen_tags, ",");
+		cfg[str_tags] = utils::join(chosen_tags, ",");
 	}
 
 	listbox& translations = find_widget<listbox>("translations");
 	for(unsigned i = 0; i < translations.get_item_count(); i++) {
 		grid* row = translations.get_row_grid(i);
-		config& translation = cfg.add_child("translation");
+		config& translation = cfg.add_child(str_translation);
 
-		translation["language"] = dynamic_cast<label*>(row->find("translations_language", false))->get_label();
-		translation["title"] = dynamic_cast<label*>(row->find("translations_title", false))->get_label();
-		translation["description"] = dynamic_cast<label*>(row->find("translations_description", false))->get_label();
+		translation[str_language] = dynamic_cast<label*>(row->find("translations_language", false))->get_label();
+		translation[str_title] = dynamic_cast<label*>(row->find("translations_title", false))->get_label();
+		translation[str_description] = dynamic_cast<label*>(row->find("translations_description", false))->get_label();
 	}
 
 	return cfg;
@@ -398,7 +398,7 @@ void editor_edit_pbl::validate()
 
 	if(!validator->get_errors().empty()) {
 		gui2::show_error_message(utils::join(validator->get_errors(), "\n"));
-	} else if(addon_icon_too_large(temp["icon"].str())) {
+	} else if(addon_icon_too_large(temp[str_icon].str())) {
 		gui2::show_error_message(_("The icon’s file size is too large"));
 	} else {
 		gui2::show_message(_("Success"), _("No validation errors"), gui2::dialogs::message::button_style::auto_close);

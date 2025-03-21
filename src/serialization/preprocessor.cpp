@@ -150,42 +150,37 @@ bool preproc_define::operator<(const preproc_define& v) const
 
 void preproc_define::write_argument(config_writer& writer, const std::string& arg) const
 {
-	const std::string key = "argument";
+	writer.open_child(str_argument);
 
-	writer.open_child(key);
-
-	writer.write_key_val("name", arg);
-	writer.close_child(key);
+	writer.write_key_val(str_name, arg);
+	writer.close_child(str_argument);
 }
 
 void preproc_define::write_argument(config_writer& writer, const std::string& arg, const std::string& default_value) const
 {
-	const std::string key = "argument";
+	writer.open_child(str_argument);
 
-	writer.open_child(key);
-
-	writer.write_key_val("name", arg);
-	writer.write_key_val("default", default_value);
-	writer.close_child(key);
+	writer.write_key_val(str_name, arg);
+	writer.write_key_val(str_default, default_value);
+	writer.close_child(str_argument);
 }
 
 void preproc_define::write(config_writer& writer, const std::string& name) const
 {
-	const std::string key = "preproc_define";
-	writer.open_child(key);
+	writer.open_child(str_preproc_define);
 
-	writer.write_key_val("name", name);
-	writer.write_key_val("value", value);
-	writer.write_key_val("textdomain", textdomain);
-	writer.write_key_val("linenum", std::to_string(linenum));
-	writer.write_key_val("location", get_location(location));
+	writer.write_key_val(str_name, name);
+	writer.write_key_val(str_value, value);
+	writer.write_key_val(str_textdomain, textdomain);
+	writer.write_key_val(str_linenum, std::to_string(linenum));
+	writer.write_key_val(str_location, get_location(location));
 
 	if(is_deprecated()) {
-		writer.open_child("deprecated");
-		writer.write_key_val("level", int(*deprecation_level));
-		writer.write_key_val("version", deprecation_version.str());
-		writer.write_key_val("message", deprecation_message);
-		writer.close_child("deprecated");
+		writer.open_child(str_deprecated);
+		writer.write_key_val(str_level, int(*deprecation_level));
+		writer.write_key_val(str_version, deprecation_version.str());
+		writer.write_key_val(str_message, deprecation_message);
+		writer.close_child(str_deprecated);
 	}
 
 	for(const std::string& arg : arguments) {
@@ -196,39 +191,39 @@ void preproc_define::write(config_writer& writer, const std::string& name) const
 		write_argument(writer, key, default_value);
 	}
 
-	writer.close_child(key);
+	writer.close_child(str_preproc_define);
 }
 
 void preproc_define::read_argument(const config& cfg)
 {
-	if(cfg.has_attribute("default")) {
-		optional_arguments.emplace(cfg["name"], cfg["default"]);
+	if(cfg.has_attribute(str_default)) {
+		optional_arguments.emplace(cfg[str_name], cfg[str_default]);
 	} else {
-		arguments.push_back(cfg["name"]);
+		arguments.push_back(cfg[str_name]);
 	}
 }
 
 void preproc_define::read(const config& cfg)
 {
-	value = cfg["value"].str();
-	textdomain = cfg["textdomain"].str();
-	linenum = cfg["linenum"].to_int();
-	location = cfg["location"].str();
+	value = cfg[str_value].str();
+	textdomain = cfg[str_textdomain].str();
+	linenum = cfg[str_linenum].to_int();
+	location = cfg[str_location].str();
 
-	if(auto deprecated = cfg.optional_child("deprecated")) {
-		deprecation_level = DEP_LEVEL(deprecated.value()["level"].to_int());
-		deprecation_version = deprecated.value()["version"].str();
-		deprecation_message = deprecated.value()["message"].str();
+	if(auto deprecated = cfg.optional_child(str_deprecated)) {
+		deprecation_level = DEP_LEVEL(deprecated.value()[str_level].to_int());
+		deprecation_version = deprecated.value()[str_version].str();
+		deprecation_message = deprecated.value()[str_message].str();
 	}
 
-	for(const config& arg : cfg.child_range("argument")) {
+	for(const config& arg : cfg.child_range(str_argument)) {
 		read_argument(arg);
 	}
 }
 
 void preproc_define::insert(preproc_map& map, const config& cfg)
 {
-	map.try_emplace(cfg["name"], cfg);
+	map.try_emplace(cfg[str_name], cfg);
 }
 
 std::ostream& operator<<(std::ostream& stream, const preproc_define& def)
@@ -310,12 +305,12 @@ class preprocessor_streambuf : public std::streambuf
 public:
 	preprocessor_streambuf(preproc_map& def)
 		: std::streambuf()
-		, out_buffer_("")
+		, out_buffer_()
 		, buffer_()
 		, preprocessor_queue_()
 		, defines_(def)
 		, textdomain_(PACKAGE)
-		, location_("")
+		, location_()
 		, linenum_(0)
 		, quoted_(false)
 	{
@@ -352,12 +347,12 @@ public:
 private:
 	preprocessor_streambuf(const preprocessor_streambuf& t)
 		: std::streambuf()
-		, out_buffer_("")
+		, out_buffer_()
 		, buffer_()
 		, preprocessor_queue_()
 		, defines_(t.defines_)
 		, textdomain_(PACKAGE)
-		, location_("")
+		, location_()
 		, linenum_(0)
 		, quoted_(t.quoted_)
 	{
@@ -1166,10 +1161,10 @@ bool preprocessor_data::get_chunk()
 	} else if(c == ')' && token.type == token_desc::token_type::macro_parens) {
 		pop_token();
 	} else if(c == '#' && !parent_.quoted_) {
-		std::string command = read_word();
+		utils::interned_string command{ read_word() };
 		bool comment = false;
 
-		if(command == "define") {
+		if(command == str_define) {
 			skip_spaces();
 			int linenum = linenum_;
 			std::vector<std::string> items = utils::split(read_line(), ' ');
@@ -1311,7 +1306,7 @@ bool preprocessor_data::get_chunk()
 
 				LOG_PREPROC << "defining macro " << symbol << " (location " << get_location(parent_.location_) << ")";
 			}
-		} else if(command == "ifdef" || command == "ifndef") {
+		} else if(command == str_ifdef || command == str_ifndef) {
 			const bool negate = command[2] == 'n';
 			skip_spaces();
 			const std::string& symbol = read_word();
@@ -1321,7 +1316,7 @@ bool preprocessor_data::get_chunk()
 			bool found = parent_.defines_.count(symbol) != 0;
 			DBG_PREPROC << "testing for macro " << symbol << ": " << (found ? "defined" : "not defined");
 			conditional_skip(negate ? found : !found);
-		} else if(command == "ifhave" || command == "ifnhave") {
+		} else if(command == str_ifhave || command == str_ifnhave) {
 			const bool negate = command[2] == 'n';
 			skip_spaces();
 			const std::string& symbol = read_word();
@@ -1331,7 +1326,7 @@ bool preprocessor_data::get_chunk()
 			bool found = filesystem::get_wml_location(symbol, directory_).has_value();
 			DBG_PREPROC << "testing for file or directory " << symbol << ": " << (found ? "found" : "not found");
 			conditional_skip(negate ? found : !found);
-		} else if(command == "ifver" || command == "ifnver") {
+		} else if(command == str_ifver || command == str_ifnver) {
 			const bool negate = command[2] == 'n';
 
 			skip_spaces();
@@ -1366,7 +1361,7 @@ bool preprocessor_data::get_chunk()
 				err += "'";
 				parent_.error(err, linenum_);
 			}
-		} else if(command == "else") {
+		} else if(command == str_else) {
 			if(token.type == token_desc::token_type::skip_else) {
 				pop_token();
 				--skipping_;
@@ -1378,7 +1373,7 @@ bool preprocessor_data::get_chunk()
 			} else {
 				parent_.error("Unexpected #else", linenum_);
 			}
-		} else if(command == "endif") {
+		} else if(command == str_endif) {
 			switch(token.type) {
 			case token_desc::token_type::skip_if:
 			case token_desc::token_type::skip_else:
@@ -1390,7 +1385,7 @@ bool preprocessor_data::get_chunk()
 				parent_.error("Unexpected #endif", linenum_);
 			}
 			pop_token();
-		} else if(command == "textdomain") {
+		} else if(command == str_textdomain) {
 			skip_spaces();
 			const std::string& s = read_word();
 			if(s != parent_.textdomain_) {
@@ -1399,16 +1394,16 @@ bool preprocessor_data::get_chunk()
 				parent_.textdomain_ = s;
 			}
 			comment = true;
-		} else if(command == "enddef") {
+		} else if(command == str_enddef) {
 			parent_.error("Unexpected #enddef", linenum_);
-		} else if(command == "undef") {
+		} else if(command == str_undef) {
 			skip_spaces();
 			const std::string& symbol = read_word();
 			if(!skipping_) {
 				parent_.defines_.erase(symbol);
 				LOG_PREPROC << "undefine macro " << symbol << " (location " << get_location(parent_.location_) << ")";
 			}
-		} else if(command == "error") {
+		} else if(command == str_error) {
 			if(!skipping_) {
 				skip_spaces();
 				std::ostringstream error;
@@ -1416,7 +1411,7 @@ bool preprocessor_data::get_chunk()
 				parent_.error(error.str(), linenum_);
 			} else
 				DBG_PREPROC << "Skipped an error";
-		} else if(command == "warning") {
+		} else if(command == str_warning) {
 			if(!skipping_) {
 				skip_spaces();
 				std::ostringstream warning;
@@ -1425,7 +1420,7 @@ bool preprocessor_data::get_chunk()
 			} else {
 				DBG_PREPROC << "Skipped a warning";
 			}
-		} else if(command == "deprecated") {
+		} else if(command == str_deprecated) {
 			// The current file is deprecated, so print a message
 			skip_spaces();
 			DEP_LEVEL level = DEP_LEVEL::PREEMPTIVE;

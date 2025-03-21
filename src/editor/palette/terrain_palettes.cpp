@@ -79,27 +79,27 @@ void terrain_palette::setup(const game_config_view& cfg)
 
 	// Get the available groups and add them to the structure
 	std::set<std::string> group_names;
-	for(const config &group : cfg.child_range("terrain_group")) {
-		if(group_names.count(group["id"]) == 0) {
+	for(const config &group : cfg.child_range(str_terrain_group)) {
+		if(group_names.count(group[str_id]) == 0) {
 			config group_cfg;
-			group_cfg["id"] = group["id"];
-			group_cfg["name"] = group["name"];
+			group_cfg[str_id] = group[str_id];
+			group_cfg[str_name] = group[str_name];
 
-			group_cfg["icon"] = group["icon"].str();
-			group_cfg["core"] = group["core"];
+			group_cfg[str_icon] = group[str_icon].str();
+			group_cfg[str_core] = group[str_core];
 			groups_.emplace_back(group_cfg);
 
 			group_names.insert(groups_.back().id);
 		}
 	}
-	for(const config &group : cfg.child_range("editor_group")) {
-		if(group_names.count(group["id"]) == 0) {
+	for(const config &group : cfg.child_range(str_editor_group)) {
+		if(group_names.count(group[str_id]) == 0) {
 			config group_cfg;
-			group_cfg["id"] = group["id"];
-			group_cfg["name"] = group["name"];
+			group_cfg[str_id] = group[str_id];
+			group_cfg[str_name] = group[str_name];
 
-			group_cfg["icon"] = "icons/terrain/terrain_" + group["icon"].str();
-			group_cfg["core"] = group["core"];
+			group_cfg[str_icon] = "icons/terrain/terrain_" + group[str_icon].str();
+			group_cfg[str_core] = group[str_core];
 			groups_.emplace_back(group_cfg);
 
 			group_names.insert(groups_.back().id);
@@ -145,7 +145,7 @@ void terrain_palette::setup(const game_config_view& cfg)
 		// one core terrain group
 		if (core) {
 			// Add the terrain to the default group
-			group_map_["all"].push_back(get_id(t));
+			group_map_[str_all].push_back(get_id(t));
 		} else {
 			non_core_items_.insert(get_id(t));
 		}

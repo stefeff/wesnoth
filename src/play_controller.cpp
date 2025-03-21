@@ -148,7 +148,7 @@ play_controller::play_controller(const config& level, saved_game& state_of_game)
 	, soundsources_manager_()
 	, persist_()
 	, gui_()
-	, xp_mod_(new unit_experience_accelerator(level["experience_modifier"].to_int(100)))
+	, xp_mod_(new unit_experience_accelerator(level[str_experience_modifier].to_int(100)))
 	, statistics_context_(new statistics_t(state_of_game.statistics()))
 	, replay_(new replay(state_of_game.get_replay()))
 	, skip_replay_(false)
@@ -273,8 +273,8 @@ void play_controller::init(const config& level)
 		gamestate().lua_kernel_->load_game(level);
 
 		plugins_context_.reset(new plugins_context("Game"));
-		plugins_context_->set_callback("save_game", [this](const config& cfg) { save_game_auto(cfg["filename"]); }, true);
-		plugins_context_->set_callback("save_replay", [this](const config& cfg) { save_replay_auto(cfg["filename"]); }, true);
+		plugins_context_->set_callback("save_game", [this](const config& cfg) { save_game_auto(cfg[str_filename]); }, true);
+		plugins_context_->set_callback("save_replay", [this](const config& cfg) { save_replay_auto(cfg[str_filename]); }, true);
 		plugins_context_->set_callback("quit", [](const config&) { throw_quit_game_exception(); }, false);
 		plugins_context_->set_callback_execute(*resources::lua_kernel);
 		plugins_context_->set_accessor_string("scenario_name", [this](const config&) { return get_scenario_name(); });
@@ -588,7 +588,7 @@ config play_controller::to_config() const
 {
 	config cfg = level_;
 
-	cfg["replay_pos"] = saved_game_.get_replay().get_pos();
+	cfg[str_replay_pos] = saved_game_.get_replay().get_pos();
 	gamestate().write(cfg);
 
 	gui_->write(cfg.add_child("display"));
@@ -599,7 +599,7 @@ config play_controller::to_config() const
 	gui_->labels().write(cfg);
 	sound::write_music_play_list(cfg);
 
-	if(cfg["replay_pos"].to_int(0) > 0 && cfg["playing_team"].empty()) {
+	if(cfg[str_replay_pos].to_int(0) > 0 && cfg[str_playing_team].empty()) {
 		gui2::show_error_message(_("Trying to create a corrupt file, please report this bug"));
 	}
 
@@ -1190,9 +1190,9 @@ void play_controller::start_game()
  * Find all [endlevel]next_scenario= attributes, and add them to @a result.
  */
 static void find_next_scenarios(const config& parent, std::set<std::string>& result) {
-	for(const auto& endlevel : parent.child_range("endlevel")) {
-		if(endlevel.has_attribute("next_scenario")) {
-			result.insert(endlevel["next_scenario"]);
+	for(const auto& endlevel : parent.child_range(str_endlevel)) {
+		if(endlevel.has_attribute(str_next_scenario)) {
+			result.insert(endlevel[str_next_scenario]);
 		}
 	}
 	for(const auto [key, cfg] : parent.all_children_view()) {
@@ -1263,7 +1263,7 @@ void play_controller::check_next_scenario_is_known() {
 		unknown_list << font::unicode_bullet << " " << x << "\n";
 	}
 	utils::string_map symbols;
-	symbols["unknown_list"] = unknown_list.str();
+	symbols[str_unknown_list] = unknown_list.str();
 	auto message_str = utils::interpolate_variables_into_string(message.str(), &symbols);
 	ERR_NG << message_str;
 	gui2::show_message(title, message_str, gui2::dialogs::message::close_button);

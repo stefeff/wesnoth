@@ -129,7 +129,7 @@ bool mp_match_history::update_display()
 	const config history = request_history();
 
 	// request failed, nothing to do
-	if(history.child_count("game_history_results") == 0) {
+	if(history.child_count(str_game_history_results) == 0) {
 		return false;
 	}
 
@@ -145,14 +145,14 @@ bool mp_match_history::update_display()
 		widget_data row;
 		grid& history_grid = history_box->add_row(row);
 
-		dynamic_cast<label*>(history_grid.find("game_name", false))->set_label(key_with_fallback(game["game_name"]));
-		dynamic_cast<label*>(history_grid.find("scenario_name", false))->set_label(key_with_fallback(game["scenario_name"]));
-		dynamic_cast<label*>(history_grid.find("era_name", false))->set_label(markup::span_color("#baac7d", _("Era: ")) + key_with_fallback(game["era_name"]));
-		dynamic_cast<label*>(history_grid.find("game_start", false))->set_label(key_with_fallback(game["game_start"]) + _(" UTC+0"));
-		dynamic_cast<label*>(history_grid.find("version", false))->set_label(key_with_fallback(game["version"]));
+		dynamic_cast<label*>(history_grid.find("game_name", false))->set_label(key_with_fallback(game[str_game_name]));
+		dynamic_cast<label*>(history_grid.find("scenario_name", false))->set_label(key_with_fallback(game[str_scenario_name]));
+		dynamic_cast<label*>(history_grid.find("era_name", false))->set_label(markup::span_color("#baac7d", _("Era: ")) + key_with_fallback(game[str_era_name]));
+		dynamic_cast<label*>(history_grid.find("game_start", false))->set_label(key_with_fallback(game[str_game_start]) + _(" UTC+0"));
+		dynamic_cast<label*>(history_grid.find("version", false))->set_label(key_with_fallback(game[str_version]));
 
 		button* replay_download = dynamic_cast<button*>(history_grid.find("replay_download", false));
-		std::string replay_url = game["replay_url"].str();
+		std::string replay_url = game[str_replay_url].str();
 		if(!replay_url.empty()) {
 			std::string filename = utils::split(replay_url, '/').back();
 			std::string local_save = filesystem::get_saves_dir()+"/"+filename;
@@ -165,8 +165,8 @@ bool mp_match_history::update_display()
 		std::vector<std::string> player_list;
 		std::vector<std::string> player_faction_list;
 		for(const config& player : game.child_range("player")) {
-			player_list.emplace_back(font::unicode_bullet + " " + player["name"].str() + ":");
-			player_faction_list.emplace_back(player["faction"].str());
+			player_list.emplace_back(font::unicode_bullet + " " + player[str_name].str() + ":");
+			player_faction_list.emplace_back(player[str_faction].str());
 		}
 
 		label* players = dynamic_cast<label*>(history_grid.find("players", false));
@@ -183,7 +183,7 @@ bool mp_match_history::update_display()
 			std::vector<std::string> modifications_list;
 
 			for(const config& modification : game.child_range("modification")) {
-				modifications_list.emplace_back(font::unicode_bullet + " " + modification["name"].str());
+				modifications_list.emplace_back(font::unicode_bullet + " " + modification[str_name].str());
 			}
 
 			modifications->set_label(utils::join(modifications_list, "\n"));
@@ -222,11 +222,11 @@ const config mp_match_history::request_history()
 {
 	config request;
 	config& child = request.add_child("game_history_request");
-	child["offset"] = offset_;
-	child["search_player"] = player_name_;
-	child["search_game_name"] = find_widget<text_box>("search_game_name").get_value();
-	child["search_content_type"] = find_widget<menu_button>("search_content_type").get_value();
-	child["search_content"] = find_widget<text_box>("search_content").get_value();
+	child[str_offset] = offset_;
+	child[str_search_player] = player_name_;
+	child[str_search_game_name] = find_widget<text_box>("search_game_name").get_value();
+	child[str_search_content_type] = find_widget<menu_button>("search_content_type").get_value();
+	child[str_search_content] = find_widget<text_box>("search_content").get_value();
 	DBG_NW << request.debug();
 	connection_.send_data(request);
 
@@ -243,9 +243,9 @@ const config mp_match_history::request_history()
 		if(connection_.receive_data(response)) {
 			if(response.child_count("game_history_results") == 0) {
 				DBG_NW << "Received non-history data: " << response.debug();
-				if(!response["error"].str().empty()) {
-					ERR_NW << "Received error from server: " << response["error"].str();
-					gui2::show_error_message(_("The server responded with an error:")+" "+response["error"].str());
+				if(!response[str_error].str().empty()) {
+					ERR_NW << "Received error from server: " << response[str_error].str();
+					gui2::show_error_message(_("The server responded with an error:")+" "+response[str_error].str());
 					return {};
 				}
 			} else if(response.mandatory_child("game_history_results").child_count("game_history_result") == 0) {

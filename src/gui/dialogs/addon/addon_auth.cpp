@@ -42,14 +42,14 @@ void addon_auth::pre_show()
 {
 	text_box* pwd = find_widget<text_box>("password", false, true);
 	add_to_tab_order(pwd);
-	pwd->set_value(cfg_["passphrase"].str(""));
+	pwd->set_value(cfg_[str_passphrase].str(""));
 
 	std::vector<config> content_list;
 
-	for(const auto& author : utils::split(cfg_["primary_authors"].str(""), ',')) {
+	for(const auto& author : utils::split(cfg_[str_primary_authors].str(""), ',')) {
 		content_list.emplace_back("label", author);
 	}
-	for(const auto& author : utils::split(cfg_["secondary_authors"].str(""), ',')) {
+	for(const auto& author : utils::split(cfg_[str_secondary_authors].str(""), ',')) {
 		content_list.emplace_back("label", author);
 	}
 	if(content_list.size() > 0) {
@@ -61,8 +61,8 @@ void addon_auth::post_show()
 {
 	if(get_retval() == gui2::retval::OK)
 	{
-		cfg_["passphrase"] = find_widget<password_box>("password").get_real_value();
-		cfg_["uploader"] = find_widget<menu_button>("choose_uploader").get_value_string();
+		cfg_[str_passphrase] = find_widget<password_box>("password").get_real_value();
+		cfg_[str_uploader] = find_widget<menu_button>("choose_uploader").get_value_string();
 	}
 }
 

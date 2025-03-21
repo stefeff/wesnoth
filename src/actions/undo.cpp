@@ -199,7 +199,7 @@ void undo_list::new_side_turn(int side)
 void undo_list::read(const config& cfg, int current_side)
 {
 	side_ = current_side;
-	committed_actions_ = committed_actions_ || cfg["committed"].to_bool();
+	committed_actions_ = committed_actions_ || cfg[str_committed].to_bool();
 
 	//If we have the side parameter this means that this was the old format pre 1.19.7, we ignore this since it's incompatible.
 	if(cfg.has_attribute("side")) {
@@ -238,13 +238,13 @@ void undo_list::read(const config& cfg, int current_side)
  */
 void undo_list::write(config & cfg) const
 {
-	cfg["committed"] = committed_actions_;
+	cfg[str_committed] = committed_actions_;
 
 	for ( const auto& action_ptr : undos_)
-		action_ptr->write(cfg.add_child("undo"));
+		action_ptr->write(cfg.add_child(str_undo));
 
 	for ( const auto& cfg_ptr : redos_)
-		cfg.add_child("redo") = *cfg_ptr;
+		cfg.add_child(str_redo) = *cfg_ptr;
 }
 
 

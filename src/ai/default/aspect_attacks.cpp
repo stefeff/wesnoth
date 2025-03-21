@@ -52,13 +52,13 @@ aspect_attacks::aspect_attacks(readonly_context& context, const config& cfg, con
 	, filter_own_()
 	, filter_enemy_()
 {
-	if(auto filter_own = cfg.optional_child("filter_own")) {
+	if(auto filter_own = cfg.optional_child(str_filter_own)) {
 		vconfig vcfg(*filter_own);
 		vcfg.make_safe();
 		filter_own_.reset(new unit_filter(vcfg));
 	}
 
-	if(auto filter_enemy = cfg.optional_child("filter_enemy")) {
+	if(auto filter_enemy = cfg.optional_child(str_filter_enemy)) {
 		vconfig vcfg(*filter_enemy);
 		vcfg.make_safe();
 		filter_enemy_.reset(new unit_filter(vcfg));
@@ -366,11 +366,11 @@ config aspect_attacks::to_config() const
 {
 	config cfg = typesafe_aspect<attacks_vector>::to_config();
 	if(filter_own_ && !filter_own_->empty()) {
-		cfg.add_child("filter_own", filter_own_->to_config());
+		cfg.add_child(str_filter_own, filter_own_->to_config());
 	}
 
 	if(filter_enemy_ && !filter_enemy_->empty()) {
-		cfg.add_child("filter_enemy", filter_enemy_->to_config());
+		cfg.add_child(str_filter_enemy, filter_enemy_->to_config());
 	}
 
 	return cfg;
@@ -410,13 +410,13 @@ aspect_attacks_lua::aspect_attacks_lua(
 	: aspect_attacks_base(context, cfg, id)
 	, handler_()
 	, code_()
-	, params_(cfg.child_or_empty("args"))
+	, params_(cfg.child_or_empty(str_args))
 {
 	this->name_ = "lua_aspect";
-	if(cfg.has_attribute("code")) {
-		code_ = cfg["code"].str();
-	} else if(cfg.has_attribute("value")) {
-		code_ = "return " + cfg["value"].apply_visitor(lua_aspect_visitor());
+	if(cfg.has_attribute(str_code)) {
+		code_ = cfg[str_code].str();
+	} else if(cfg.has_attribute(str_value)) {
+		code_ = "return " + cfg[str_value].apply_visitor(lua_aspect_visitor());
 	} else {
 		// error
 		return;
@@ -449,9 +449,9 @@ void aspect_attacks_lua::recalculate() const
 config aspect_attacks_lua::to_config() const
 {
 	config cfg = aspect::to_config();
-	cfg["code"] = code_;
+	cfg[str_code] = code_;
 	if(!params_.empty()) {
-		cfg.add_child("args", params_);
+		cfg.add_child(str_args, params_);
 	}
 
 	return cfg;

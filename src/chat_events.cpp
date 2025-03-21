@@ -52,7 +52,7 @@ void chat_handler::change_logging(const std::string& data) {
 	else if (level == "debug") severity = lg::debug().get_severity();
 	else {
 		utils::string_map symbols;
-		symbols["level"] = level;
+		symbols[str_level] = level;
 		const std::string& msg =
 			VGETTEXT("Unknown debug level: '$level'.", symbols);
 		ERR_NG << msg;
@@ -61,7 +61,7 @@ void chat_handler::change_logging(const std::string& data) {
 	}
 	if (!lg::set_log_domain_severity(domain, severity)) {
 		utils::string_map symbols;
-		symbols["domain"] = domain;
+		symbols[str_domain] = domain;
 		const std::string& msg =
 			VGETTEXT("Unknown debug domain: '$domain'.", symbols);
 		ERR_NG << msg;
@@ -70,8 +70,8 @@ void chat_handler::change_logging(const std::string& data) {
 	}
 	else {
 		utils::string_map symbols;
-		symbols["level"] = level;
-		symbols["domain"] = domain;
+		symbols[str_level] = level;
+		symbols[str_domain] = domain;
 		const std::string& msg =
 			VGETTEXT("Switched domain: '$domain' to level: '$level'.", symbols);
 		LOG_NG << msg;
@@ -85,22 +85,22 @@ void chat_handler::send_command(const std::string& cmd, const std::string& args 
 		data.add_child(cmd);
 	}
 	else if (cmd == "query") {
-		data.add_child(cmd)["type"] = args;
+		data.add_child(cmd)[str_type] = args;
 	}
 	else if (cmd == "ban" || cmd == "unban" || cmd == "kick"
 		|| cmd == "mute" || cmd == "unmute") {
-		data.add_child(cmd)["username"] = args;
+		data.add_child(cmd)[str_username] = args;
 	}
 	else if (cmd == "ping") {
 		// Not using serialize_timestamp here since we need the steady clock
 		auto now = std::chrono::steady_clock::now();
-		data.add_child("ping")["requested_at"] = now.time_since_epoch();
+		data.add_child("ping")[str_requested_at] = now.time_since_epoch();
 	}
 	else if (cmd == "report") {
-		data.add_child("query")["type"] = "report " + args;
+		data.add_child(str_query)[str_type] = "report " + args;
 	}
 	else if (cmd == "roll") {
-		data.add_child("query")["type"] = "roll " + args;
+		data.add_child(str_query)[str_type] = "roll " + args;
 	}
 	send_to_server(data);
 }
@@ -140,14 +140,14 @@ void chat_handler::send_whisper(const std::string& receiver, const std::string& 
 void chat_handler::add_whisper_sent(const std::string& receiver, const std::string& message)
 {
 	utils::string_map symbols;
-	symbols["receiver"] = receiver;
+	symbols[str_receiver] = receiver;
 	add_chat_message(std::chrono::system_clock::now(), VGETTEXT("whisper to $receiver", symbols), 0, message);
 }
 
 void chat_handler::add_whisper_received(const std::string& sender, const std::string& message)
 {
 	utils::string_map symbols;
-	symbols["sender"] = sender;
+	symbols[str_sender] = sender;
 	add_chat_message(std::chrono::system_clock::now(), VGETTEXT("whisper: $sender", symbols), 0, message);
 }
 

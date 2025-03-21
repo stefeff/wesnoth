@@ -49,14 +49,14 @@ namespace gui2
 
 line_shape::line_shape(const config& cfg)
 	: shape(cfg)
-	, x1_(cfg["x1"])
-	, y1_(cfg["y1"])
-	, x2_(cfg["x2"])
-	, y2_(cfg["y2"])
-	, color_(cfg["color"])
-	, thickness_(cfg["thickness"].to_unsigned())
+	, x1_(cfg[str_x1])
+	, y1_(cfg[str_y1])
+	, x2_(cfg[str_x2])
+	, y2_(cfg[str_y2])
+	, color_(cfg[str_color])
+	, thickness_(cfg[str_thickness].to_unsigned())
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Line: found debug message '" << debug << "'.";
 	}
@@ -86,16 +86,16 @@ void line_shape::draw(wfl::map_formula_callable& variables)
 
 rectangle_shape::rectangle_shape(const config& cfg)
 	: rect_bounded_shape(cfg)
-	, border_thickness_(cfg["border_thickness"].to_int())
-	, border_color_(cfg["border_color"], color_t::null_color())
-	, fill_color_(cfg["fill_color"], color_t::null_color())
+	, border_thickness_(cfg[str_border_thickness].to_int())
+	, border_color_(cfg[str_border_color], color_t::null_color())
+	, fill_color_(cfg[str_fill_color], color_t::null_color())
 {
 	// Check if a raw color string evaluates to a null color.
 	if(!border_color_.has_formula() && border_color_().null()) {
 		border_thickness_ = 0;
 	}
 
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Rectangle: found debug message '" << debug << "'.";
 	}
@@ -133,17 +133,17 @@ void rectangle_shape::draw(wfl::map_formula_callable& variables)
 
 round_rectangle_shape::round_rectangle_shape(const config& cfg)
 	: rect_bounded_shape(cfg)
-	, r_(cfg["corner_radius"])
-	, border_thickness_(cfg["border_thickness"].to_int())
-	, border_color_(cfg["border_color"], color_t::null_color())
-	, fill_color_(cfg["fill_color"], color_t::null_color())
+	, r_(cfg[str_corner_radius])
+	, border_thickness_(cfg[str_border_thickness].to_int())
+	, border_color_(cfg[str_border_color], color_t::null_color())
+	, fill_color_(cfg[str_fill_color], color_t::null_color())
 {
 	// Check if a raw color string evaluates to a null color.
 	if(!border_color_.has_formula() && border_color_().null()) {
 		border_thickness_ = 0;
 	}
 
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Rounded Rectangle: found debug message '" << debug << "'.";
 	}
@@ -198,14 +198,14 @@ void round_rectangle_shape::draw(wfl::map_formula_callable& variables)
 
 circle_shape::circle_shape(const config& cfg)
 	: shape(cfg)
-	, x_(cfg["x"])
-	, y_(cfg["y"])
-	, radius_(cfg["radius"])
-	, border_color_(cfg["border_color"])
-	, fill_color_(cfg["fill_color"])
-	, border_thickness_(cfg["border_thickness"].to_int(1))
+	, x_(cfg[str_x])
+	, y_(cfg[str_y])
+	, radius_(cfg[str_radius])
+	, border_color_(cfg[str_border_color])
+	, fill_color_(cfg[str_fill_color])
+	, border_thickness_(cfg[str_border_thickness].to_int(1))
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Circle: found debug message '" << debug << "'.";
 	}
@@ -236,17 +236,17 @@ void circle_shape::draw(wfl::map_formula_callable& variables)
 
 image_shape::image_shape(const config& cfg, wfl::action_function_symbol_table& functions)
 	: shape(cfg)
-	, x_(cfg["x"])
-	, y_(cfg["y"])
-	, w_(cfg["w"])
-	, h_(cfg["h"])
-	, image_name_(cfg["name"])
-	, resize_mode_(get_resize_mode(cfg["resize_mode"]))
+	, x_(cfg[str_x])
+	, y_(cfg[str_y])
+	, w_(cfg[str_w])
+	, h_(cfg[str_h])
+	, image_name_(cfg[str_name])
+	, resize_mode_(get_resize_mode(cfg[str_resize_mode]))
 	, mirror_(cfg.get_old_attribute("mirror", "vertical_mirror", "image"))
-	, actions_formula_(cfg["actions"], &functions)
+	, actions_formula_(cfg[str_actions], &functions)
 	, failure_logged_(false)
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Image: found debug message '" << debug << "'.";
 	}
@@ -404,14 +404,14 @@ auto parse_attributes(const config::const_child_itors& range)
 	font::attribute_list text_attributes;
 
 	for(const config& attr : range) {
-		const std::string name = attr["name"];
+		const std::string name = attr[str_name];
 
 		if(name.empty()) {
 			continue;
 		}
 
-		const unsigned start = attr["start"].to_int(PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING);
-		const unsigned end = attr["end"].to_int(PANGO_ATTR_INDEX_TO_TEXT_END);
+		const unsigned start = attr[str_start].to_int(PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING);
+		const unsigned end = attr[str_end].to_int(PANGO_ATTR_INDEX_TO_TEXT_END);
 
 		// Attributes with start == end set won't do anything, so skip
 		if (start == end) {
@@ -420,17 +420,17 @@ auto parse_attributes(const config::const_child_itors& range)
 		}
 
 		if (name == "color" || name == "fgcolor" || name == "foreground") {
-			add_attribute_fg_color(text_attributes, start, end, attr["value"].empty() ? font::NORMAL_COLOR : font::string_to_color(attr["value"]));
+			add_attribute_fg_color(text_attributes, start, end, attr[str_value].empty() ? font::NORMAL_COLOR : font::string_to_color(attr[str_value]));
 		} else if (name == "bgcolor" || name == "background") {
-			add_attribute_bg_color(text_attributes, start, end, attr["value"].empty() ? font::GOOD_COLOR : font::string_to_color(attr["value"]));
+			add_attribute_bg_color(text_attributes, start, end, attr[str_value].empty() ? font::GOOD_COLOR : font::string_to_color(attr[str_value]));
 		} else if (name == "font_size" || name == "size") {
-			add_attribute_size(text_attributes, start, end, attr["value"].to_int(font::SIZE_NORMAL));
+			add_attribute_size(text_attributes, start, end, attr[str_value].to_int(font::SIZE_NORMAL));
 		} else if (name == "font_family" || name == "face") {
-			add_attribute_font_family(text_attributes, start, end, font::decode_family_class(attr["value"]));
+			add_attribute_font_family(text_attributes, start, end, font::decode_family_class(attr[str_value]));
 		} else if (name == "weight") {
-			add_attribute_weight(text_attributes, start, end, decode_text_weight(attr["value"]));
+			add_attribute_weight(text_attributes, start, end, decode_text_weight(attr[str_value]));
 		} else if (name == "style") {
-			add_attribute_style(text_attributes, start, end, decode_text_style(attr["value"]));
+			add_attribute_style(text_attributes, start, end, decode_text_style(attr[str_value]));
 		} else if (name == "bold" || name == "b") {
 			add_attribute_weight(text_attributes, start, end, PANGO_WEIGHT_BOLD);
 		} else if (name == "italic" || name == "i") {
@@ -438,9 +438,9 @@ auto parse_attributes(const config::const_child_itors& range)
 		} else if (name == "underline" || name == "u") {
 			add_attribute_underline(text_attributes, start, end, PANGO_UNDERLINE_SINGLE);
 		} else if (name == "line_height") {
-			add_attribute_line_height(text_attributes, start, end, attr["value"].to_double());
+			add_attribute_line_height(text_attributes, start, end, attr[str_value].to_double());
 		} else if (name == "image") { // An inline image that behave as a custom text glyph
-			add_attribute_image_shape(text_attributes, start, end, attr["value"]);
+			add_attribute_image_shape(text_attributes, start, end, attr[str_value]);
 		} else {
 			// Unsupported formatting or normal text
 			add_attribute_weight(text_attributes, start, end, PANGO_WEIGHT_NORMAL);
@@ -455,28 +455,28 @@ auto parse_attributes(const config::const_child_itors& range)
 
 text_shape::text_shape(const config& cfg, wfl::action_function_symbol_table& functions)
 	: rect_bounded_shape(cfg)
-	, font_family_(font::decode_family_class(cfg["font_family"]))
-	, font_size_(cfg["font_size"], font::SIZE_NORMAL)
-	, font_style_(decode_font_style(cfg["font_style"]))
-	, text_alignment_(cfg["text_alignment"])
-	, color_(cfg["color"], font::NORMAL_COLOR)
-	, text_(cfg["text"])
-	, parse_text_as_formula_(cfg["parse_text_as_formula"].to_bool(true))
-	, text_markup_(cfg["text_markup"], false)
-	, link_aware_(cfg["text_link_aware"], false)
-	, link_color_(cfg["text_link_color"], font::YELLOW_COLOR)
-	, maximum_width_(cfg["maximum_width"], -1)
-	, characters_per_line_(cfg["text_characters_per_line"].to_unsigned())
-	, maximum_height_(cfg["maximum_height"], -1)
-	, highlight_start_(cfg["highlight_start"])
-	, highlight_end_(cfg["highlight_end"])
-	, highlight_color_(cfg["highlight_color"], color_t::from_hex_string("215380"))
-	, line_spacing_(cfg["line_spacing"].to_double(font::get_line_spacing_factor()))
-	, outline_(cfg["outline"], false)
-	, actions_formula_(cfg["actions"], &functions)
+	, font_family_(font::decode_family_class(cfg[str_font_family]))
+	, font_size_(cfg[str_font_size], font::SIZE_NORMAL)
+	, font_style_(decode_font_style(cfg[str_font_style]))
+	, text_alignment_(cfg[str_text_alignment])
+	, color_(cfg[str_color], font::NORMAL_COLOR)
+	, text_(cfg[str_text])
+	, parse_text_as_formula_(cfg[str_parse_text_as_formula].to_bool(true))
+	, text_markup_(cfg[str_text_markup], false)
+	, link_aware_(cfg[str_text_link_aware], false)
+	, link_color_(cfg[str_text_link_color], font::YELLOW_COLOR)
+	, maximum_width_(cfg[str_maximum_width], -1)
+	, characters_per_line_(cfg[str_text_characters_per_line].to_unsigned())
+	, maximum_height_(cfg[str_maximum_height], -1)
+	, highlight_start_(cfg[str_highlight_start])
+	, highlight_end_(cfg[str_highlight_end])
+	, highlight_color_(cfg[str_highlight_color], color_t::from_hex_string("215380"))
+	, line_spacing_(cfg[str_line_spacing].to_double(font::get_line_spacing_factor()))
+	, outline_(cfg[str_outline], false)
+	, actions_formula_(cfg[str_actions], &functions)
 	, text_attributes_(parse_attributes(cfg.child_range("attribute")))
 {
-	const std::string& debug = (cfg["debug"]);
+	const std::string& debug = (cfg[str_debug]);
 	if(!debug.empty()) {
 		DBG_GUI_P << "Text: found debug message '" << debug << "'.";
 	}
@@ -699,7 +699,7 @@ void canvas::parse_cfg(const config& cfg)
 			for(const auto [func_key, func_cfg] : data.all_children_view())
 			{
 				if(func_key == "blur") {
-					blur_depth_ = func_cfg["depth"].to_unsigned();
+					blur_depth_ = func_cfg[str_depth].to_unsigned();
 				} else {
 					ERR_GUI_P << "Canvas: found a pre commit function"
 							  << " of an invalid type " << type << ".";

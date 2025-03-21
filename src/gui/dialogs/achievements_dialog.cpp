@@ -62,7 +62,7 @@ void achievements_dialog::pre_show()
 		}
 
 		// populate all possibilities into the dropdown
-		content_list.emplace_back("label", list.display_name_);
+		content_list.emplace_back(str_label, list.display_name_);
 	}
 
 	if(content_list.size() > 0) {
@@ -101,20 +101,20 @@ void achievements_dialog::set_achievements_row()
 			}}));
 
 		grid& newrow = achievements_box_->add_row(widget_data{
-			{ "icon", {
-				{ "label", ach.achieved_
+			{ str_icon, {
+				{ str_label, ach.achieved_
 					? ach.icon_completed_
 					: ach.icon_
 				}
 			}},
-			{ "name", {
-				{ "label", ach.achieved_
+			{ str_name, {
+				{ str_label, ach.achieved_
 					? ach.name_completed_
 					: in_progress_name
 				}
 			}},
-			{ "description", {
-				{ "label", ach.achieved_
+			{ str_description, {
+				{ str_label, ach.achieved_
 					? t_string(markup::span_color("green", ach.description_completed_))
 					: ach.description_
 				}

@@ -71,7 +71,7 @@ void addons_client::connect()
 	LOG_ADDONS << "connecting to server " << host_ << " on port " << port_;
 
 	utils::string_map i18n_symbols;
-	i18n_symbols["server_address"] = addr_;
+	i18n_symbols[str_server_address] = addr_;
 
 	conn_.reset(new network_asio::connection(host_, port_));
 
@@ -86,15 +86,15 @@ void addons_client::connect()
 
 	if(!is_error_response(response_buf)) {
 		if(auto info = response_buf.optional_child("server_id")) {
-			server_id_ = info["id"].str();
-			server_version_ = info["version"].str();
+			server_id_ = info[str_id].str();
+			server_version_ = info[str_version].str();
 
-			for(const auto& cap : utils::split(info["cap"].str())) {
+			for(const auto& cap : utils::split(info[str_cap].str())) {
 				server_capabilities_.insert(cap);
 			}
 
-			server_url_ = info["url"].str();
-			license_notice_ = info["license_notice"].str();
+			server_url_ = info[str_url].str();
+			license_notice_ = info[str_license_notice].str();
 		}
 	} else {
 		clear_last_error();
@@ -140,7 +140,7 @@ config addons_client::get_addon_downloads_by_version(const std::string& addon)
 	config response;
 	config request;
 	config& child = request.add_child("addon_downloads_by_version");
-	child["addon"] = addon;
+	child[str_addon] = addon;
 
 	send_request(request, response);
 	wait_for_transfer_done(_("Requesting add-on downloads by version..."));
@@ -195,8 +195,8 @@ config addons_client::get_hidden_addons(const std::string& username, const std::
 	config response;
 	config request;
 	config& child = request.add_child("list_hidden");
-	child["username"] = username;
-	child["passphrase"] = passphrase;
+	child[str_username] = username;
+	child[str_passphrase] = passphrase;
 
 	send_request(request, response);
 	wait_for_transfer_done(_("Getting list of hidden add-ons..."));
@@ -215,9 +215,9 @@ bool addons_client::hide_addon(const std::string& addon, const std::string& user
 	config response;
 	config request;
 	config& child = request.add_child("hide_addon");
-	child["addon"] = addon;
-	child["username"] = username;
-	child["passphrase"] = passphrase;
+	child[str_addon] = addon;
+	child[str_username] = username;
+	child[str_passphrase] = passphrase;
 
 	send_request(request, response);
 	wait_for_transfer_done(_("Hiding add-on..."));
@@ -235,9 +235,9 @@ bool addons_client::unhide_addon(const std::string& addon, const std::string& us
 	config response;
 	config request;
 	config& child = request.add_child("unhide_addon");
-	child["addon"] = addon;
-	child["username"] = username;
-	child["passphrase"] = passphrase;
+	child[str_addon] = addon;
+	child[str_username] = username;
+	child[str_passphrase] = passphrase;
 
 	send_request(request, response);
 	wait_for_transfer_done(_("Unhiding add-on..."));
@@ -255,8 +255,8 @@ bool addons_client::request_addons_list(config& cfg, bool icons)
 	cfg.clear();
 
 	config request;
-	config& req_child = request.add_child("request_campaign_list");
-	req_child["send_icons"] = icons;
+	config& req_child = request.add_child(str_request_campaign_list);
+	req_child[str_send_icons] = icons;
 
 	config response_buf;
 
@@ -266,7 +266,7 @@ bool addons_client::request_addons_list(config& cfg, bool icons)
 	send_request(request, response_buf);
 	wait_for_transfer_done(_("Downloading list of add-ons..."));
 
-	std::swap(cfg, response_buf.mandatory_child("campaigns"));
+	std::swap(cfg, response_buf.mandatory_child(str_campaigns));
 
 	return !is_error_response(response_buf);
 }
@@ -287,8 +287,8 @@ bool addons_client::request_distribution_terms(std::string& terms)
 	send_simple_request("request_terms", response_buf);
 	wait_for_transfer_done(_("Requesting distribution terms..."));
 
-	if(auto msg_cfg = response_buf.optional_child("message")) {
-		terms = msg_cfg["message"].str();
+	if(auto msg_cfg = response_buf.optional_child(str_message)) {
+		terms = msg_cfg[str_message].str();
 	}
 
 	return !is_error_response(response_buf);
@@ -301,20 +301,20 @@ bool addons_client::upload_addon(const std::string& id, std::string& response_me
 	response_message.clear();
 
 	utils::string_map i18n_symbols;
-	i18n_symbols["addon_title"] = font::escape_text(cfg["title"].str());
-	if(i18n_symbols["addon_title"].empty()) {
-		i18n_symbols["addon_title"] = font::escape_text(make_addon_title(id));
+	i18n_symbols[str_addon_title] = font::escape_text(cfg[str_title].str());
+	if(i18n_symbols[str_addon_title].empty()) {
+		i18n_symbols[str_addon_title] = font::escape_text(make_addon_title(id));
 	}
 
 	if(!addon_name_legal(id)){
-		i18n_symbols["addon_id"] = font::escape_text(id);
+		i18n_symbols[str_addon_id] = font::escape_text(id);
 		last_error_ =
 			VGETTEXT("The add-on <i>$addon_title</i> has an invalid id '$addon_id' "
 				"and cannot be published.", i18n_symbols);
 		return false;
 	}
 
-	cfg["name"] = id;
+	cfg[str_name] = id;
 
 	config addon_data;
 	try {
@@ -346,12 +346,12 @@ bool addons_client::upload_addon(const std::string& id, std::string& response_me
 		return false;
 	}
 
-	if(cfg["forum_auth"].to_bool() && !conn_->using_tls() && !game_config::allow_insecure) {
+	if(cfg[str_forum_auth].to_bool() && !conn_->using_tls() && !game_config::allow_insecure) {
 		last_error_ = VGETTEXT("The connection to the remote server is not secure. The add-on <i>$addon_title</i> cannot be uploaded.", i18n_symbols);
 		return false;
 	}
 
-	if(addon_icon_too_large(cfg["icon"].str())) {
+	if(addon_icon_too_large(cfg[str_icon].str())) {
 		last_error_ = VGETTEXT("The file size for the icon for the add-on <i>$addon_title</i> is too large.", i18n_symbols);
 		return false;
 	}
@@ -359,16 +359,16 @@ bool addons_client::upload_addon(const std::string& id, std::string& response_me
 	if(!local_only) {
 		// Try to make an upload pack if it's avaible on the server
 		config hashlist, hash_request;
-		config& request_body = hash_request.add_child("request_campaign_hash");
+		config& request_body = hash_request.add_child(str_request_campaign_hash);
 		// We're requesting the latest version of an addon, so we may not specify it
 		// #TODO: Make a selection of the base version for the update ?
-		request_body["name"] = cfg["name"];
-		// request_body["from"] = ???
+		request_body[str_name] = cfg[str_name];
+		// request_body[str_from] = ???
 		send_request(hash_request, hashlist);
 		wait_for_transfer_done(_("Requesting file index..."));
 
 		// A silent error check
-		if(!hashlist.has_child("error")) {
+		if(!hashlist.has_child(str_error)) {
 			if(!contains_hashlist(addon_data, hashlist) || !contains_hashlist(hashlist, addon_data)) {
 				LOG_ADDONS << "making an update pack for the add-on " << id;
 				config updatepack;
@@ -377,15 +377,15 @@ bool addons_client::upload_addon(const std::string& id, std::string& response_me
 				make_updatepack(updatepack, hashlist, addon_data);
 
 				config request_buf, response_buf;
-				request_buf.add_child("upload", cfg).append(std::move(updatepack));
+				request_buf.add_child(str_upload, cfg).append(std::move(updatepack));
 				// #TODO: Make a selection of the base version for the update ? ,
 				// For now, if it's unspecified we'll use the latest avaible before the upload version
 				send_request(request_buf, response_buf);
 				wait_for_transfer_done(VGETTEXT("Sending an update pack for the add-on <i>$addon_title</i>...", i18n_symbols
 				), transfer_mode::upload);
 
-				if(auto message_cfg = response_buf.optional_child("message")) {
-					response_message = message_cfg["message"].str();
+				if(auto message_cfg = response_buf.optional_child(str_message)) {
+					response_message = message_cfg[str_message].str();
 					LOG_ADDONS << "server response: " << response_message;
 				}
 
@@ -397,7 +397,7 @@ bool addons_client::upload_addon(const std::string& id, std::string& response_me
 	// If there is an error including an unrecognised request for old servers or no hash data for new uploads we'll just send a full pack
 
 	config request_buf, response_buf;
-	request_buf.add_child("upload", cfg).add_child("data", std::move(addon_data));
+	request_buf.add_child(str_upload, cfg).add_child(str_data, std::move(addon_data));
 
 	LOG_ADDONS << "sending " << id;
 
@@ -405,8 +405,8 @@ bool addons_client::upload_addon(const std::string& id, std::string& response_me
 	wait_for_transfer_done(VGETTEXT("Sending add-on <i>$addon_title</i>...", i18n_symbols
 	), transfer_mode::upload);
 
-	if(auto message_cfg = response_buf.optional_child("message")) {
-		response_message = message_cfg["message"].str();
+	if(auto message_cfg = response_buf.optional_child(str_message)) {
+		response_message = message_cfg[str_message].str();
 		LOG_ADDONS << "server response: " << response_message;
 	}
 
@@ -423,44 +423,44 @@ bool addons_client::delete_remote_addon(const std::string& id, std::string& resp
 		// No point in validating when we're deleting it.
 		cfg = get_addon_pbl_info(id, false);
 	} else {
-		cfg["primary_authors"] = utils::join(admin_set);
+		cfg[str_primary_authors] = utils::join(admin_set);
 	}
 
 	utils::string_map i18n_symbols;
-	i18n_symbols["addon_title"] = font::escape_text(cfg["title"].str());
-	if(i18n_symbols["addon_title"].empty()) {
-		i18n_symbols["addon_title"] = font::escape_text(make_addon_title(id));
+	i18n_symbols[str_addon_title] = font::escape_text(cfg[str_title].str());
+	if(i18n_symbols[str_addon_title].empty()) {
+		i18n_symbols[str_addon_title] = font::escape_text(make_addon_title(id));
 	}
 
 	config request_buf, response_buf;
-	config& request_body = request_buf.add_child("delete");
+	config& request_body = request_buf.add_child(str_delete);
 
 	// if the passphrase isn't provided from the _server.pbl, try to pre-populate it from the preferences before prompting for it
-	if(cfg["passphrase"].empty()) {
-		cfg["passphrase"] = prefs::get().password(prefs::get().campaign_server(), cfg["author"]);
+	if(cfg[str_passphrase].empty()) {
+		cfg[str_passphrase] = prefs::get().password(prefs::get().campaign_server(), cfg[str_author]);
 		if(!gui2::dialogs::addon_auth::execute(cfg)) {
 			config dummy;
 			config& error = dummy.add_child("error");
-			error["message"] = "Password not provided.";
+			error[str_message] = "Password not provided.";
 			return !is_error_response(dummy);
 		} else {
-			prefs::get().set_password(prefs::get().campaign_server(), cfg["author"], cfg["passphrase"]);
+			prefs::get().set_password(prefs::get().campaign_server(), cfg[str_author], cfg[str_passphrase]);
 		}
 	}
 
-	request_body["admin"] = admin_set.size() > 0;
-	request_body["name"] = id;
-	request_body["passphrase"] = cfg["passphrase"];
+	request_body[str_admin] = admin_set.size() > 0;
+	request_body[str_name] = id;
+	request_body[str_passphrase] = cfg[str_passphrase];
 	// needed in case of forum_auth authentication since the author stored on disk on the server is not necessarily the current primary author
-	request_body["uploader"] = cfg["uploader"];
+	request_body[str_uploader] = cfg[str_uploader];
 
 	LOG_ADDONS << "requesting server to delete " << id;
 
 	send_request(request_buf, response_buf);
 	wait_for_transfer_done(VGETTEXT("Removing add-on <i>$addon_title</i> from the server...", i18n_symbols));
 
-	if(auto message_cfg = response_buf.optional_child("message")) {
-		response_message = message_cfg["message"].str();
+	if(auto message_cfg = response_buf.optional_child(str_message)) {
+		response_message = message_cfg[str_message].str();
 		LOG_ADDONS << "server response: " << response_message;
 	}
 
@@ -472,15 +472,15 @@ bool addons_client::download_addon(config& archive_cfg, const std::string& id, c
 	archive_cfg.clear();
 
 	config request_buf;
-	config& request_body = request_buf.add_child("request_campaign");
+	config& request_body = request_buf.add_child(str_request_campaign);
 
-	request_body["name"] = id;
-	request_body["increase_downloads"] = increase_downloads;
-	request_body["version"] = version.str();
-	request_body["from_version"] = get_addon_version_info(id);
+	request_body[str_name] = id;
+	request_body[str_increase_downloads] = increase_downloads;
+	request_body[str_version] = version.str();
+	request_body[str_from_version] = get_addon_version_info(id);
 
 	utils::string_map i18n_symbols;
-	i18n_symbols["addon_title"] = font::escape_text(title);
+	i18n_symbols[str_addon_title] = font::escape_text(title);
 
 	LOG_ADDONS << "downloading " << id;
 
@@ -495,14 +495,14 @@ bool addons_client::install_addon(config& archive_cfg, const addon_info& info)
 	const cursor::setter cursor_setter(cursor::WAIT);
 
 	utils::string_map i18n_symbols;
-	i18n_symbols["addon_title"] = font::escape_text(info.title);
+	i18n_symbols[str_addon_title] = font::escape_text(info.title);
 
 	auto progress_dlg = gui2::dialogs::file_progress::display(_("Add-ons Manager"), VGETTEXT("Installing add-on <i>$addon_title</i>...", i18n_symbols));
 	auto progress_cb = [&progress_dlg](unsigned value) {
 		progress_dlg->update_progress(value);
 	};
 
-	if(archive_cfg.has_child("removelist") || archive_cfg.has_child("addlist")) {
+	if(archive_cfg.has_child(str_removelist) || archive_cfg.has_child(str_addlist)) {
 		LOG_ADDONS << "Received an updatepack for the addon '" << info.id << "'";
 
 		// A consistency check
@@ -701,7 +701,7 @@ bool addons_client::do_check_before_overwriting_addon(const addon_info& addon)
 	}
 
 	utils::string_map symbols;
-	symbols["addon"] = font::escape_text(addon.title);
+	symbols[str_addon] = font::escape_text(addon.title);
 	std::string text;
 	std::vector<std::string> extra_items;
 
@@ -750,14 +750,14 @@ addons_client::install_result addons_client::install_addon_with_checks(const add
 
 bool addons_client::is_error_response(const config& response_cfg)
 {
-	if(auto error = response_cfg.optional_child("error")) {
-		if(error->has_attribute("status_code")) {
-			const auto& status_msg = translated_addon_check_status(error["status_code"].to_unsigned());
+	if(auto error = response_cfg.optional_child(str_error)) {
+		if(error->has_attribute(str_status_code)) {
+			const auto& status_msg = translated_addon_check_status(error[str_status_code].to_unsigned());
 			last_error_ = font::escape_text(status_msg);
 		} else {
-			last_error_ = font::escape_text(error["message"].str());
+			last_error_ = font::escape_text(error[str_message].str());
 		}
-		last_error_data_ = font::escape_text(error["extra_data"].str());
+		last_error_data_ = font::escape_text(error[str_extra_data].str());
 		ERR_ADDONS << "server error: " << *error;
 		return true;
 	} else {

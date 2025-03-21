@@ -150,7 +150,7 @@ void attack_predictions::set_data(const combatant_data& attacker, const combatan
 		ss << weapon->damage() << " (" << markup::italic(weapon->name()) << ")";
 	} else {
 		assert(set_dmg_effect->ability);
-		ss << set_dmg_effect->value << " (" << markup::italic((*set_dmg_effect->ability)["name"]) << ")";
+		ss << set_dmg_effect->value << " (" << markup::italic((*set_dmg_effect->ability)[str_name]) << ")";
 	}
 
 	// Process the ADD damage modifiers.
@@ -163,7 +163,7 @@ void attack_predictions::set_data(const combatant_data& attacker, const combatan
 			}
 
 			ss << e.value;
-			ss << " (" << markup::italic((*e.ability)["name"]) << ")";
+			ss << " (" << markup::italic((*e.ability)[str_name]) << ")";
 		}
 	}
 
@@ -180,7 +180,7 @@ void attack_predictions::set_data(const combatant_data& attacker, const combatan
 				}
 			}
 
-			ss << " (" << markup::italic((*e.ability)["name"]) << ")";
+			ss << " (" << markup::italic((*e.ability)[str_name]) << ")";
 		}
 	}
 
@@ -322,28 +322,28 @@ void attack_predictions::draw_hp_graph(drawing& hp_graph, const combatant_data& 
 			row_color = {8, 202, 0};
 		}
 
-		shape["text"] = hp;
-		shape["x"] = 4;
-		shape["y"] = 2 + (fs + 2) * i;
-		shape["w"] = "(text_width)";
-		shape["h"] = "(text_height)";
-		shape["font_size"] = 12;
-		shape["color"] = "255, 255, 255, 255";
-		shape["text_alignment"] = "(text_alignment)";
+		shape[str_text] = hp;
+		shape[str_x] = 4;
+		shape[str_y] = 2 + (fs + 2) * i;
+		shape[str_w] = "(text_width)";
+		shape[str_h] = "(text_height)";
+		shape[str_font_size] = 12;
+		shape[str_color] = "255, 255, 255, 255";
+		shape[str_text_alignment] = "(text_alignment)";
 
-		cfg.add_child("text", shape);
+		cfg.add_child(str_text, shape);
 
 		shape.clear();
-		shape["text"] = get_probability_string(prob);
-		shape["x"] = graph_width - percent_sep + 2;
-		shape["y"] = 2 + (fs + 2) * i;
-		shape["w"] = "(text_width)";
-		shape["h"] = "(text_height)";
-		shape["font_size"] = 12;
-		shape["color"] = "255, 255, 255, 255";
-		shape["text_alignment"] = "(text_alignment)";
+		shape[str_text] = get_probability_string(prob);
+		shape[str_x] = graph_width - percent_sep + 2;
+		shape[str_y] = 2 + (fs + 2) * i;
+		shape[str_w] = "(text_width)";
+		shape[str_h] = "(text_height)";
+		shape[str_font_size] = 12;
+		shape[str_color] = "255, 255, 255, 255";
+		shape[str_text_alignment] = "(text_alignment)";
 
-		cfg.add_child("text", shape);
+		cfg.add_child(str_text, shape);
 
 		const int bar_len = std::max(static_cast<int>((prob * (bar_space - 4)) + 0.5), 2);
 
@@ -355,13 +355,13 @@ void attack_predictions::draw_hp_graph(drawing& hp_graph, const combatant_data& 
 		};
 
 		shape.clear();
-		shape["x"] = bar_rect_1.x;
-		shape["y"] = bar_rect_1.y;
-		shape["w"] = bar_rect_1.w;
-		shape["h"] = bar_rect_1.h;
-		shape["fill_color"] = row_color.to_rgba_string();
+		shape[str_x] = bar_rect_1.x;
+		shape[str_y] = bar_rect_1.y;
+		shape[str_w] = bar_rect_1.w;
+		shape[str_h] = bar_rect_1.h;
+		shape[str_fill_color] = row_color.to_rgba_string();
 
-		cfg.add_child("rectangle", shape);
+		cfg.add_child(str_rectangle, shape);
 
 		++i;
 	}

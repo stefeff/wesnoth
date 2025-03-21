@@ -68,10 +68,10 @@ namespace game_events
 void manager::add_event_handler_from_wml(const config& handler, game_lua_kernel& lk, bool is_menu_item)
 {
 	auto new_handler = event_handlers_->add_event_handler(
-		handler["name"],
-		handler["id"],
-		!handler["first_time_only"].to_bool(true),
-		handler["priority"].to_double(0.),
+		handler[str_name],
+		handler[str_id],
+		!handler[str_first_time_only].to_bool(true),
+		handler[str_priority].to_double(0.),
 		is_menu_item
 	);
 	if(new_handler.valid()) {
@@ -134,11 +134,11 @@ manager::manager()
 
 void manager::read_scenario(const config& scenario_cfg, game_lua_kernel& lk)
 {
-	for(const config& ev : scenario_cfg.child_range("event")) {
+	for(const config& ev : scenario_cfg.child_range(str_event)) {
 		add_event_handler_from_wml(ev, lk);
 	}
 
-	for(const std::string& id : utils::split(scenario_cfg["unit_wml_ids"])) {
+	for(const std::string& id : utils::split(scenario_cfg[str_unit_wml_ids])) {
 		unit_wml_ids_.insert(id);
 	}
 
@@ -163,7 +163,7 @@ void manager::add_events(const config::const_child_itors& cfgs, game_lua_kernel&
 	}
 
 	for(const config& new_ev : cfgs) {
-		if(type.empty() && new_ev["id"].empty()) {
+		if(type.empty() && new_ev[str_id].empty()) {
 			WRN_NG << "attempt to add an [event] with empty id= from [unit], ignoring ";
 			continue;
 		}
@@ -198,11 +198,11 @@ void manager::write_events(config& cfg, bool include_nonserializable) const
 		config event_cfg;
 		eh->write_config(event_cfg, include_nonserializable);
 		if(!event_cfg.empty()) {
-			cfg.add_child("event", std::move(event_cfg));
+			cfg.add_child(str_event, std::move(event_cfg));
 		}
 	}
 
-	cfg["unit_wml_ids"] = utils::join(unit_wml_ids_);
+	cfg[str_unit_wml_ids] = utils::join(unit_wml_ids_);
 	wml_menu_items_.to_config(cfg);
 }
 

@@ -244,7 +244,7 @@ inline std::shared_ptr<terrain_filter> lua_object<terrain_filter>::to_type(lua_S
 	auto cfg = std::make_shared<config>();
 	auto vcfg = std::make_shared<vconfig>(*cfg);
 	if (!luaW_tovconfig(L, n, *vcfg)) {
-		cfg->add_child("not");
+		cfg->add_child(str_not);
 	}
 	vcfg->make_safe();
 	return std::make_shared<terrain_filter>(*vcfg, resources::filter_con, false);

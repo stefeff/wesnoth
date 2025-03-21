@@ -36,7 +36,7 @@ game_data::game_data(const config& level)
 	, scoped_variables()
 	, last_selected(map_location::null_location())
 	, rng_(level)
-	, variables_(level.child_or_empty("variables"))
+	, variables_(level.child_or_empty(str_variables))
 	, phase_(INITIAL)
 	, can_end_turn_(level["can_end_turn"].to_bool(true))
 	, end_turn_forced_(level["end_turn"].to_bool())
@@ -142,7 +142,7 @@ void game_data::write_snapshot(config& cfg) const
 	cfg["random_seed"] = rng_.get_random_seed_str();
 	cfg["random_calls"] = rng_.get_random_calls();
 
-	cfg.add_child("variables", variables_);
+	cfg.add_child(str_variables, variables_);
 
 }
 
@@ -182,7 +182,7 @@ game_data::PHASE game_data::read_phase(const config& cfg)
 	if(!cfg["init_side_done"].to_bool()) {
 		return game_data::TURN_STARTING_WAITING;
 	}
-	if(cfg.has_child("end_level_data")) {
+	if(cfg.has_child(str_end_level_data)) {
 		return game_data::GAME_ENDED;
 	}
 	return game_data::TURN_PLAYING;

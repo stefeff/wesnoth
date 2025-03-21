@@ -100,17 +100,17 @@ private:
 		session_metadata() = default;
 
 		session_metadata(const config& cfg)
-			: is_moderator(cfg["is_moderator"].to_bool(false))
-			, profile_url_prefix(cfg["profile_url_prefix"].str())
+			: is_moderator(cfg[str_is_moderator].to_bool(false))
+			, profile_url_prefix(cfg[str_profile_url_prefix].str())
 			, queues()
 		{
 			if(cfg.has_child("queues")) {
 				for(const config& queue : cfg.mandatory_child("queues").child_range("queue")) {
 					queue_info info;
-					info.id = queue["id"].to_int();
-					info.display_name = queue["display_name"].str();
-					info.players_required = queue["players_required"].to_int();
-					info.current_players = utils::split_set(queue["current_players"].str());
+					info.id = queue[str_id].to_int();
+					info.display_name = queue[str_display_name].str();
+					info.players_required = queue[str_players_required].to_int();
+					info.current_players = utils::split_set(queue[str_current_players].str());
 					queues.emplace_back(info);
 				}
 			}
@@ -207,16 +207,16 @@ mp_manager::mp_manager(const utils::optional<std::string> host)
 			while(!stop) {
 				connection->wait_and_receive_data(data);
 
-				if(const auto error = data.optional_child("error")) {
-					throw wesnothd_error((*error)["message"]);
+				if(const auto error = data.optional_child(str_error)) {
+					throw wesnothd_error((*error)[str_message]);
 				}
 
-				else if(data.has_child("gamelist")) {
+				else if(data.has_child(str_gamelist)) {
 					this->lobby_info.process_gamelist(data);
 					break;
 				}
 
-				else if(const auto gamelist_diff = data.optional_child("gamelist_diff")) {
+				else if(const auto gamelist_diff = data.optional_child(str_gamelist_diff)) {
 					this->lobby_info.process_gamelist_diff(*gamelist_diff);
 				}
 
@@ -272,28 +272,28 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 		data.clear();
 		conn->wait_and_receive_data(data);
 
-		if(const auto reject = data.optional_child("reject"); reject || data.has_attribute("version")) {
+		if(const auto reject = data.optional_child(str_reject); reject || data.has_attribute(str_version)) {
 			std::string version;
 
 			if(reject) {
-				version = (*reject)["accepted_versions"].str();
+				version = (*reject)[str_accepted_versions].str();
 			} else {
 				// Backwards-compatibility "version" attribute
-				version = data["version"].str();
+				version = data[str_version].str();
 			}
 
 			utils::string_map i18n_symbols;
-			i18n_symbols["required_version"] = version;
-			i18n_symbols["your_version"] = game_config::wesnoth_version.str();
+			i18n_symbols[str_required_version] = version;
+			i18n_symbols[str_your_version] = game_config::wesnoth_version.str();
 
 			const std::string errorstring = VGETTEXT("The server accepts versions ‘$required_version’, but you are using version ‘$your_version’", i18n_symbols);
 			throw wesnothd_error(errorstring);
 		}
 
 		// Check for "redirect" messages
-		if(const auto redirect = data.optional_child("redirect")) {
-			auto redirect_host = (*redirect)["host"].str();
-			auto redirect_port = (*redirect)["port"].str("15000");
+		if(const auto redirect = data.optional_child(str_redirect)) {
+			auto redirect_host = (*redirect)[str_host].str();
+			auto redirect_port = (*redirect)[str_port].str("15000");
 
 			bool recorded_host;
 			std::tie(std::ignore, recorded_host) = shown_hosts.emplace(redirect_host, redirect_port);
@@ -321,12 +321,12 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 			conn->send_data(config{"version", config{"version", version, "client_source", channel}});
 		}
 
-		if(const auto error = data.optional_child("error")) {
-			throw wesnothd_rejected_client_error((*error)["message"].str());
+		if(const auto error = data.optional_child(str_error)) {
+			throw wesnothd_rejected_client_error((*error)[str_message].str());
 		}
 
 		// Continue if we did not get a direction to login
-		if(!data.has_child("mustlogin")) {
+		if(!data.has_child(str_mustlogin)) {
 			continue;
 		}
 
@@ -339,16 +339,16 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 
 			gui2::dialogs::loading_screen::progress(loading_stage::login_response);
 
-			if(const auto warning = data.optional_child("warning")) {
+			if(const auto warning = data.optional_child(str_warning)) {
 				std::string warning_msg;
 
-				if((*warning)["warning_code"] == MP_NAME_INACTIVE_WARNING) {
+				if((*warning)[str_warning_code] == MP_NAME_INACTIVE_WARNING) {
 					warning_msg = VGETTEXT("The nickname ‘$nick’ is inactive. "
 						"You cannot claim ownership of this nickname until you "
 						"activate your account via email or ask an "
 						"administrator to do it for you.", {{"nick", login}});
 				} else {
-					warning_msg = (*warning)["message"].str();
+					warning_msg = (*warning)[str_message].str();
 				}
 
 				warning_msg += "\n\n";
@@ -361,7 +361,7 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 				}
 			}
 
-			auto error = data.optional_child("error");
+			auto error = data.optional_child(str_error);
 
 			// ... and get us out of here if the server did not complain
 			if(!error) break;
@@ -369,8 +369,8 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 			do {
 				std::string password = prefs::get().password(host, login);
 
-				const bool fall_through = (*error)["force_confirmation"].to_bool()
-					? (gui2::show_message(_("Confirm"), (*error)["message"], gui2::dialogs::message::ok_cancel_buttons) == gui2::retval::CANCEL)
+				const bool fall_through = (*error)[str_force_confirmation].to_bool()
+					? (gui2::show_message(_("Confirm"), (*error)[str_message], gui2::dialogs::message::ok_cancel_buttons) == gui2::retval::CANCEL)
 					: false;
 
 				// If:
@@ -380,7 +380,7 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 				// * the connection is secure or the client was started with the option to use insecure connections
 				// send the password to the server
 				// otherwise go directly to the username/password dialog
-				if(!(*error)["password_request"].empty() && !password.empty() && !fall_through && (conn->using_tls() || game_config::allow_insecure)) {
+				if(!(*error)[str_password_request].empty() && !password.empty() && !fall_through && (conn->using_tls() || game_config::allow_insecure)) {
 					// the possible cases here are that either:
 					// 1) TLS encryption is enabled, thus sending the plaintext password is still secure
 					// 2) TLS encryption is not enabled, in which case the server should not be requesting a password in the first place
@@ -392,7 +392,7 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 
 					gui2::dialogs::loading_screen::progress(loading_stage::login_response);
 
-					error = data.optional_child("error");
+					error = data.optional_child(str_error);
 
 					// ... and get us out of here if the server is happy now
 					if(!error) break;
@@ -405,17 +405,17 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 
 				std::string error_message;
 				utils::string_map i18n_symbols;
-				i18n_symbols["nick"] = login;
+				i18n_symbols[str_nick] = login;
 
-				const auto extra_data = error->optional_child("data");
+				const auto extra_data = error->optional_child(str_data);
 				if(extra_data) {
 					using namespace std::chrono_literals;
-					i18n_symbols["duration"] = utils::format_timespan(chrono::parse_duration((*extra_data)["duration"], 0s));
+					i18n_symbols[str_duration] = utils::format_timespan(chrono::parse_duration((*extra_data)[str_duration], 0s));
 				}
 
-				const std::string ec = (*error)["error_code"];
+				const std::string ec = (*error)[str_error_code];
 
-				if(!(*error)["password_request"].empty() && !conn->using_tls() && !game_config::allow_insecure) {
+				if(!(*error)[str_password_request].empty() && !conn->using_tls() && !game_config::allow_insecure) {
 					error_message = _("The remote server requested a password while using an insecure connection.");
 				} else if(ec == MP_MUST_LOGIN) {
 					error_message = _("You must login first.");
@@ -469,10 +469,10 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 				} else if(ec == MP_HASHING_PASSWORD_FAILED) {
 					error_message = _("Password hashing failed.");
 				} else {
-					error_message = (*error)["message"].str();
+					error_message = (*error)[str_message].str();
 				}
 
-				gui2::dialogs::mp_login dlg(host, error_message, !((*error)["password_request"].empty()));
+				gui2::dialogs::mp_login dlg(host, error_message, !((*error)[str_password_request].empty()));
 
 				// Need to show the dialog from the main thread or it won't appear.
 				events::call_in_main_thread([&dlg]() { dlg.show(); });
@@ -494,7 +494,7 @@ std::unique_ptr<wesnothd_connection> mp_manager::open_connection(const std::stri
 			if(!error) break;
 		} // end login loop
 
-		if(const auto join_lobby = data.optional_child("join_lobby")) {
+		if(const auto join_lobby = data.optional_child(str_join_lobby)) {
 			// Note any session data sent with the response. This should be the only place session_info is set.
 			session_info = { join_lobby.value() };
 
@@ -535,8 +535,8 @@ bool mp_manager::enter_lobby_mode()
 
 	// We use a loop here to allow returning to the lobby if you, say, cancel game creation.
 	while(true) {
-		if(auto cfg = game_config_manager::get()->game_config().optional_child("lobby_music")) {
-			for(const config& i : cfg->child_range("music")) {
+		if(auto cfg = game_config_manager::get()->game_config().optional_child(str_lobby_music)) {
+			for(const config& i : cfg->child_range(str_music)) {
 				sound::play_music_config(i);
 			}
 
@@ -767,8 +767,8 @@ void start_local_game_commandline(const commandline_options& cmdline_opts)
 		state.classification().era_id = *cmdline_opts.multiplayer_era;
 	}
 
-	if(auto cfg_era = game_config.find_child("era", "id", state.classification().era_id)) {
-		state.classification().era_define = cfg_era["define"].str();
+	if(auto cfg_era = game_config.find_child(str_era, str_id, state.classification().era_id)) {
+		state.classification().era_define = cfg_era[str_define].str();
 	} else {
 		PLAIN_LOG << "Could not find era '" << state.classification().era_id << "'";
 		return;
@@ -779,15 +779,15 @@ void start_local_game_commandline(const commandline_options& cmdline_opts)
 		parameters.name = *cmdline_opts.multiplayer_scenario;
 	}
 
-	if(auto cfg_multiplayer = game_config.find_child("multiplayer", "id", parameters.name)) {
-		state.classification().scenario_define = cfg_multiplayer["define"].str();
+	if(auto cfg_multiplayer = game_config.find_child(str_multiplayer, str_id, parameters.name)) {
+		state.classification().scenario_define = cfg_multiplayer[str_define].str();
 	} else {
 		PLAIN_LOG << "Could not find [multiplayer] '" << parameters.name << "'";
 		return;
 	}
 
 	state.set_carryover_sides_start(
-		config {"next_scenario", parameters.name}
+		config {str_next_scenario, parameters.name}
 	);
 
 	game_config_manager::get()->load_game_config_for_game(state.classification(), state.get_scenario_id());
@@ -798,8 +798,8 @@ void start_local_game_commandline(const commandline_options& cmdline_opts)
 
 	// Should number of turns be determined from scenario data?
 	if(parameters.use_map_settings && state.get_starting_point().has_attribute("turns")) {
-		DBG_MP << "setting turns from scenario data: " << state.get_starting_point()["turns"];
-		parameters.num_turns = state.get_starting_point()["turns"].to_int();
+		DBG_MP << "setting turns from scenario data: " << state.get_starting_point()[str_turns];
+		parameters.num_turns = state.get_starting_point()[str_turns].to_int();
 	}
 
 	DBG_MP << "entering connect mode";

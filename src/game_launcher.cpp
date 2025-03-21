@@ -424,7 +424,7 @@ void game_launcher::set_test(const std::string& id)
 	state_.classification().campaign_define = "TEST";
 	state_.classification().era_id = "era_default";
 
-	state_.set_carryover_sides_start(config{"next_scenario", id});
+	state_.set_carryover_sides_start(config{str_next_scenario, id});
 }
 
 bool game_launcher::play_test()

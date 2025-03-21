@@ -66,10 +66,10 @@ void undo_action_container::add(t_step_ptr&& action)
 void undo_action_container::read(const config& cfg)
 {
 	for(const config& step : cfg.child_range("step")) {
-		if(auto* factory = utils::find(get_factories(), step["type"].str())) {
+		if(auto* factory = utils::find(get_factories(), step[str_type].str())) {
 			add(factory->second(step));
 		} else {
-			throw config::error("Invalid undo action type: '" + step["type"].str() + "'");
+			throw config::error("Invalid undo action type: '" + step[str_type].str() + "'");
 		}
 	}
 }
@@ -135,14 +135,14 @@ undo_event::undo_event(const config& cmds, const game_events::queued_event& ctx)
 undo_event::undo_event(const config& first, const config& second, const config& weapons, const config& cmds)
 	: commands(cmds)
 	, data(weapons)
-	, loc1(first["x"], first["y"], wml_loc())
-	, loc2(second["x"], second["y"], wml_loc())
-	, filter_loc1(first["filter_x"], first["filter_y"], wml_loc())
-	, filter_loc2(second["filter_x"], second["filter_y"], wml_loc())
-	, uid1(first["underlying_id"].to_size_t())
-	, uid2(second["underlying_id"].to_size_t())
-	, id1(first["id"])
-	, id2(second["id"])
+	, loc1(first[str_x], first[str_y], wml_loc())
+	, loc2(second[str_x], second[str_y], wml_loc())
+	, filter_loc1(first[str_filter_x], first[str_filter_y], wml_loc())
+	, filter_loc2(second[str_filter_x], second[str_filter_y], wml_loc())
+	, uid1(first[str_underlying_id].to_size_t())
+	, uid2(second[str_underlying_id].to_size_t())
+	, id1(first[str_id])
+	, id2(second[str_id])
 {
 }
 
@@ -224,19 +224,19 @@ void undo_event::write(config& cfg) const
 	entry.add_child("data", evt.data);
 	entry.add_child("command", evt.commands);
 	// First location
-	first["filter_x"] = evt.filter_loc1.wml_x();
-	first["filter_y"] = evt.filter_loc1.wml_y();
-	first["underlying_id"] = evt.uid1;
-	first["id"] = evt.id1;
-	first["x"] = evt.loc1.wml_x();
-	first["y"] = evt.loc1.wml_y();
+	first[str_filter_x] = evt.filter_loc1.wml_x();
+	first[str_filter_y] = evt.filter_loc1.wml_y();
+	first[str_underlying_id] = evt.uid1;
+	first[str_id] = evt.id1;
+	first[str_x] = evt.loc1.wml_x();
+	first[str_y] = evt.loc1.wml_y();
 	// Second location
-	second["filter_x"] = evt.filter_loc2.wml_x();
-	second["filter_y"] = evt.filter_loc2.wml_y();
-	second["underlying_id"] = evt.uid2;
-	second["id"] = evt.id2;
-	second["x"] = evt.loc2.wml_x();
-	second["y"] = evt.loc2.wml_y();
+	second[str_filter_x] = evt.filter_loc2.wml_x();
+	second[str_filter_y] = evt.filter_loc2.wml_y();
+	second[str_underlying_id] = evt.uid2;
+	second[str_id] = evt.id2;
+	second[str_x] = evt.loc2.wml_x();
+	second[str_y] = evt.loc2.wml_y();
 }
 
 

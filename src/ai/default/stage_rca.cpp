@@ -48,7 +48,7 @@ candidate_action_evaluation_loop::candidate_action_evaluation_loop( ai_context &
 void candidate_action_evaluation_loop::on_create()
 {
 	//init the candidate actions
-	for (const config &cfg_element : cfg_.child_range("candidate_action")) {
+	for (const config &cfg_element : cfg_.child_range(str_candidate_action)) {
 		engine::parse_candidate_action_from_config(*this,cfg_element,back_inserter(candidate_actions_));
 	}
 
@@ -62,7 +62,7 @@ config candidate_action_evaluation_loop::to_config() const
 {
 	config cfg = stage::to_config();
 	for (candidate_action_ptr ca : candidate_actions_) {
-		cfg.add_child("candidate_action",ca->to_config());
+		cfg.add_child(str_candidate_action,ca->to_config());
 	}
 	return cfg;
 }

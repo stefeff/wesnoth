@@ -83,7 +83,7 @@ bool select_campaign(saved_game& state, jump_to_campaign_info jump_to_campaign)
 
 			// Checking for valid campaign name
 			const auto campaign = utils::ranges::find(campaigns, jump_to_campaign.campaign_id,
-				[](const ng::create_engine::level_ptr& level) { return level->data()["id"]; });
+				[](const ng::create_engine::level_ptr& level) { return level->data()[str_id]; });
 
 			// Didn't find a campaign with that id
 			if(campaign == campaigns.end()) {
@@ -113,7 +113,7 @@ bool select_campaign(saved_game& state, jump_to_campaign_info jump_to_campaign)
 
 		if(!jump_to_campaign.scenario_id.empty()) {
 			state.set_carryover_sides_start(
-				config {"next_scenario", jump_to_campaign.scenario_id}
+				config {str_next_scenario, jump_to_campaign.scenario_id}
 			);
 		}
 

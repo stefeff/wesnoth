@@ -123,7 +123,7 @@ void mp_staging::pre_show()
 
 	plugins_context_->set_callback("launch", [this](const config&) { set_retval(retval::OK); }, false);
 	plugins_context_->set_callback("quit",   [this](const config&) { set_retval(retval::CANCEL); }, false);
-	plugins_context_->set_callback("chat",   [&chat](const config& cfg) { chat.send_chat_message(cfg["message"], false); }, true);
+	plugins_context_->set_callback("chat",   [&chat](const config& cfg) { chat.send_chat_message(cfg[str_message], false); }, true);
 }
 
 int mp_staging::get_side_node_position(const ng::side_engine_ptr& side) const
@@ -153,7 +153,7 @@ tree_view_node& mp_staging::add_side_to_team_node(const ng::side_engine_ptr& sid
 		widget_data tree_data;
 		widget_item tree_item;
 
-		tree_item["label"] = side->user_team_name();
+		tree_item[str_label] = side->user_team_name();
 		tree_data.emplace("tree_view_node_label", tree_item);
 
 		team_node = &tree.add_node("team_header", tree_data);
@@ -171,14 +171,14 @@ void mp_staging::add_side_node(const ng::side_engine_ptr& side)
 	widget_data data;
 	widget_item item;
 
-	item["label"] = std::to_string(side->index() + 1);
+	item[str_label] = std::to_string(side->index() + 1);
 	data.emplace("side_number", item);
 
 	// TODO: don't hardcode magenta?
-	item["label"] = "units/unknown-unit.png~RC(magenta>" + side->color_id() + ")";
+	item[str_label] = "units/unknown-unit.png~RC(magenta>" + side->color_id() + ")";
 	data.emplace("leader_image", item);
 
-	item["label"] = "icons/icon-random.png";
+	item[str_label] = "icons/icon-random.png";
 	data.emplace("leader_gender", item);
 
 	tree_view_node& node = add_side_to_team_node(side, "side_panel", data, get_side_node_position(side));
@@ -193,10 +193,10 @@ void mp_staging::add_side_node(const ng::side_engine_ptr& side)
 	const bool fls = connect_engine_.force_lock_settings();
 	const bool ums = connect_engine_.params().use_map_settings;
 
-	const bool lock_gold   = side->cfg()["gold_lock"].to_bool(fls);
-	const bool lock_income = side->cfg()["income_lock"].to_bool(fls);
-	const bool lock_team   = side->cfg()["team_lock"].to_bool(fls);
-	const bool lock_color  = side->cfg()["color_lock"].to_bool(fls);
+	const bool lock_gold   = side->cfg()[str_gold_lock].to_bool(fls);
+	const bool lock_income = side->cfg()[str_income_lock].to_bool(fls);
+	const bool lock_team   = side->cfg()[str_team_lock].to_bool(fls);
+	const bool lock_color  = side->cfg()[str_color_lock].to_bool(fls);
 
 	const bool saved_game = connect_engine_.params().saved_game == saved_game_mode::type::midgame;
 
@@ -211,10 +211,10 @@ void mp_staging::add_side_node(const ng::side_engine_ptr& side)
 	// This results in a mismatch between the indices of ai_options and ai_algorithms_
 	// that we need to account for later.
 	if(saved_game) {
-		ai_options.emplace_back("label", "Keep saved AI");
+		ai_options.emplace_back(str_label, "Keep saved AI");
 	}
 	for(unsigned i = 0; i < ai_algorithms_.size(); ++i) {
-		ai_options.emplace_back("label", ai_algorithms_[i]->text);
+		ai_options.emplace_back(str_label, ai_algorithms_[i]->text);
 
 		if(ai_algorithms_[i]->id == side->ai_algorithm()) {
 			selection = i;
@@ -234,7 +234,7 @@ void mp_staging::add_side_node(const ng::side_engine_ptr& side)
 	//
 	std::vector<config> controller_names;
 	for(const auto& controller : side->controller_options()) {
-		controller_names.emplace_back("label", controller.second);
+		controller_names.emplace_back(str_label, controller.second);
 	}
 
 	menu_button& controller_selection = row_grid.find_widget<menu_button>("controller");
@@ -272,12 +272,12 @@ void mp_staging::add_side_node(const ng::side_engine_ptr& side)
 		}
 
 		config entry;
-		entry["label"] = t_string::from_serialized(tdata.user_team_name);
+		entry[str_label] = t_string::from_serialized(tdata.user_team_name);
 
 		// Since we're not necessarily displaying every every team, we need to store the
 		// index a displayed team has in the connect_engine's team_data vector. This is
 		// then utilized in the click callback.
-		entry["team_index"] = i;
+		entry[str_team_index] = i;
 
 		team_names.push_back(std::move(entry));
 
@@ -312,8 +312,8 @@ void mp_staging::add_side_node(const ng::side_engine_ptr& side)
 		}
 
 		color_options.emplace_back(
-			"label", team_color,
-			"icon", (formatter() << "misc/status.png~RC(magenta>" << color_opt << ")").str()
+			str_label, team_color,
+			str_icon, (formatter() << "misc/status.png~RC(magenta>" << color_opt << ")").str()
 		);
 	}
 
@@ -416,7 +416,7 @@ void mp_staging::on_team_select(const ng::side_engine_ptr& side, menu_button& te
 	// use the selected index to set a side's team. Instead, we grab the index we stored
 	// in add_side_node from the selected config, which should correspond to the
 	// appropriate entry in the connect_engine's team name vector.
-	const unsigned team_index = team_menu.get_value_config()["team_index"].to_unsigned();
+	const unsigned team_index = team_menu.get_value_config()[str_team_index].to_unsigned();
 
 	if(team_index == side->team()) {
 		return;
@@ -491,12 +491,12 @@ void mp_staging::update_leader_display(const ng::side_engine_ptr& side, grid& ro
 	row_grid.find_widget<drawing>("leader_image").set_label(new_image);
 
 	// Faction and leader
-	if(!side->cfg()["name"].empty()) {
+	if(!side->cfg()[str_name].empty()) {
 		current_leader = formatter() << side->cfg()["name"] << " (" << markup::italic(current_leader) << ")";
 	}
 
 	row_grid.find_widget<label>("leader_type").set_label(current_leader == "random" ? _("Random") : current_leader);
-	row_grid.find_widget<label>("leader_faction").set_label(side->flg().current_faction()["name"].t_str());
+	row_grid.find_widget<label>("leader_faction").set_label(side->flg().current_faction()[str_name].t_str());
 
 	// Gender
 	if(current_gender != font::unicode_em_dash) {
@@ -553,7 +553,7 @@ void mp_staging::network_handler()
 
 		std::vector<config> controller_names;
 		for(const auto& controller : side->controller_options()) {
-			controller_names.emplace_back("label", controller.second);
+			controller_names.emplace_back(str_label, controller.second);
 		}
 
 		menu_button& controller_selection = row_grid.find_widget<menu_button>("controller");
@@ -563,8 +563,8 @@ void mp_staging::network_handler()
 	}
 
 	// Update player list
-	if(data.has_child("user")) {
-		player_list_->update_list(data.child_range("user"));
+	if(data.has_child(str_user)) {
+		player_list_->update_list(data.child_range(str_user));
 	}
 
 	// Update status label and buttons

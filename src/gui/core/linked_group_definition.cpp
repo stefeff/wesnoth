@@ -25,13 +25,13 @@ std::vector<linked_group_definition> parse_linked_group_definitions(const config
 {
 	std::vector<linked_group_definition> definitions;
 
-	for(const auto& lg : cfg.child_range("linked_group")) {
+	for(const auto& lg : cfg.child_range(str_linked_group)) {
 		definitions.emplace_back();
 		linked_group_definition& linked_group = definitions.back();
 
-		linked_group.id = lg["id"].str();
-		linked_group.fixed_width = lg["fixed_width"].to_bool();
-		linked_group.fixed_height = lg["fixed_height"].to_bool();
+		linked_group.id = lg[str_id].str();
+		linked_group.fixed_width = lg[str_fixed_width].to_bool();
+		linked_group.fixed_height = lg[str_fixed_height].to_bool();
 
 		VALIDATE(!linked_group.id.empty(), missing_mandatory_wml_key("linked_group", "id"));
 

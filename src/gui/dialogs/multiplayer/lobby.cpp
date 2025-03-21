@@ -380,7 +380,7 @@ widget_data mp_lobby::make_game_row_data(const mp::game_info& game)
 	widget_data data;
 	widget_item item;
 
-	item["use_markup"] = "true";
+	item[str_use_markup] = "true";
 
 	color_t color_string;
 	if(game.vacant_slots > 0) {
@@ -392,13 +392,13 @@ widget_data mp_lobby::make_game_row_data(const mp::game_info& game)
 		{"era_name", game.era}
 	});
 
-	item["label"] = game.vacant_slots > 0 ? markup::span_color(color_string, game.name) : game.name;
+	item[str_label] = game.vacant_slots > 0 ? markup::span_color(color_string, game.name) : game.name;
 	data.emplace("name", item);
 
-	item["label"] = markup::span_color(font::GRAY_COLOR, game.type_marker, markup::italic(scenario_text));
+	item[str_label] = markup::span_color(font::GRAY_COLOR, game.type_marker, markup::italic(scenario_text));
 	data.emplace("scenario", item);
 
-	item["label"] = markup::span_color(color_string, game.status);
+	item[str_label] = markup::span_color(color_string, game.status);
 	data.emplace("status", item);
 
 	return data;
@@ -700,9 +700,9 @@ void mp_lobby::pre_show()
 	plugins_context_->set_callback("create", [this](const config&) { set_retval(CREATE); }, true);
 	plugins_context_->set_callback("quit", [this](const config&) { set_retval(retval::CANCEL); }, false);
 
-	plugins_context_->set_callback("chat", [this](const config& cfg) { chatbox_->send_chat_message(cfg["message"], false); }, true);
+	plugins_context_->set_callback("chat", [this](const config& cfg) { chatbox_->send_chat_message(cfg[str_message], false); }, true);
 	plugins_context_->set_callback("select_game", [this](const config& cfg) {
-		selected_game_id_ = cfg.has_attribute("id") ? cfg["id"].to_int() : lobby_info_.games()[cfg["index"].to_int()]->id;
+		selected_game_id_ = cfg.has_attribute(str_id) ? cfg[str_id].to_int() : lobby_info_.games()[cfg[str_index].to_int()]->id;
 	}, true);
 
 	plugins_context_->set_accessor("game_list",   [this](const config&) { return lobby_info_.gamelist(); });
@@ -810,13 +810,13 @@ void mp_lobby::update_queue_list()
 		widget_data data;
 		widget_item item;
 
-		item["label"] = info.current_players.count(prefs::get().login()) > 0 ? "x" : "o";
+		item[str_label] = info.current_players.count(prefs::get().login()) > 0 ? "x" : "o";
 		data.emplace("is_in_queue", item);
 
-		item["label"] = info.display_name;
+		item[str_label] = info.display_name;
 		data.emplace("queue_name", item);
 
-		item["label"] = std::to_string(info.current_players.size())+"/"+std::to_string(info.players_required);
+		item[str_label] = std::to_string(info.current_players.size())+"/"+std::to_string(info.players_required);
 		data.emplace("queue_player_count", item);
 
 		queues_listbox->add_row(data);
@@ -825,49 +825,49 @@ void mp_lobby::update_queue_list()
 
 void mp_lobby::process_network_data(const config& data)
 {
-	if(auto error = data.optional_child("error")) {
-		throw wesnothd_error(error["message"]);
-	} else if(data.has_child("gamelist")) {
+	if(auto error = data.optional_child(str_error)) {
+		throw wesnothd_error(error[str_message]);
+	} else if(data.has_child(str_gamelist)) {
 		process_gamelist(data);
-	} else if(auto gamelist_diff = data.optional_child("gamelist_diff")) {
+	} else if(auto gamelist_diff = data.optional_child(str_gamelist_diff)) {
 		process_gamelist_diff(*gamelist_diff);
-	} else if(auto info = data.optional_child("message")) {
-		if(info["type"] == "server_info") {
-			server_information_ = info["message"].str();
+	} else if(auto info = data.optional_child(str_message)) {
+		if(info[str_type] == "server_info") {
+			server_information_ = info[str_message].str();
 			return;
-		} else if(info["type"] == "announcements") {
-			announcements_ = info["message"].str();
+		} else if(info[str_type] == "announcements") {
+			announcements_ = info[str_message].str();
 			return;
 		}
 	} else if(auto create = data.optional_child("create_game")) {
 		queue_game_server_preset_ = create.value().mandatory_child("game");
-		queue_id_ = create["queue_id"].to_int();
+		queue_id_ = create[str_queue_id].to_int();
 		set_retval(CREATE_PRESET);
 		return;
 	} else if(auto join_game = data.optional_child("join_game")) {
-		enter_game_by_id(join_game["id"].to_int(), JOIN_MODE::DO_JOIN);
+		enter_game_by_id(join_game[str_id].to_int(), JOIN_MODE::DO_JOIN);
 		return;
 	} else if(auto queue_update = data.optional_child("queue_update")) {
 		std::vector<mp::queue_info>& queues = mp::get_server_queues();
-		if(queue_update["action"].str() == "add") {
+		if(queue_update[str_action].str() == "add") {
 			mp::queue_info& new_info = queues.emplace_back();
-			new_info.id = queue_update["queue_id"].to_int();
-			new_info.players_required = queue_update["players_required"].to_int();
-			new_info.display_name = queue_update["display_name"].str();
+			new_info.id = queue_update[str_queue_id].to_int();
+			new_info.players_required = queue_update[str_players_required].to_int();
+			new_info.display_name = queue_update[str_display_name].str();
 		} else {
 			for(mp::queue_info& info : queues) {
-				if(info.id == queue_update["queue_id"].to_int()) {
-					if(queue_update["action"].str() == "remove") {
-						utils::erase_if(queues, [&](const mp::queue_info& i) { return i.id == queue_update["queue_id"].to_int(); });
-					} else if(queue_update["action"].str() == "update") {
+				if(info.id == queue_update[str_queue_id].to_int()) {
+					if(queue_update[str_action].str() == "remove") {
+						utils::erase_if(queues, [&](const mp::queue_info& i) { return i.id == queue_update[str_queue_id].to_int(); });
+					} else if(queue_update[str_action].str() == "update") {
 						if(queue_update->has_attribute("display_name")) {
-							info.display_name = queue_update["display_name"].str();
+							info.display_name = queue_update[str_display_name].str();
 						}
 						if(queue_update->has_attribute("players_required")) {
-							info.players_required = queue_update["players_required"].to_int();
+							info.players_required = queue_update[str_players_required].to_int();
 						}
 						if(queue_update->has_attribute("current_players")){
-							info.current_players = utils::split_set(queue_update["current_players"].str());
+							info.current_players = utils::split_set(queue_update[str_current_players].str());
 						}
 					} else {
 						continue;
@@ -905,8 +905,8 @@ void mp_lobby::process_gamelist_diff(const config& data)
 		ERR_LB << "process_gamelist_diff failed!";
 		refresh_lobby();
 	}
-	const int joined = data.child_count("insert_child");
-	const int left = data.child_count("remove_child");
+	const int joined = data.child_count(str_insert_child);
+	const int left = data.child_count(str_remove_child);
 	if(joined > 0 || left > 0) {
 		if(left > joined) {
 			do_notify(mp::notify_mode::lobby_quit);
@@ -923,7 +923,7 @@ void mp_lobby::enter_game(const mp::game_info& game, JOIN_MODE mode)
 
 		if(preset) {
 			queue_game_server_preset_ = *preset;
-			queue_id_ = preset["id"].to_int();
+			queue_id_ = preset[str_id].to_int();
 			set_retval(CREATE_PRESET);
 			return;
 		}
@@ -985,8 +985,8 @@ void mp_lobby::enter_game(const mp::game_info& game, JOIN_MODE mode)
 	}
 
 	config join_data;
-	join_data["id"] = std::to_string(game.id);
-	join_data["observe"] = try_obsv;
+	join_data[str_id] = std::to_string(game.id);
+	join_data[str_observe] = try_obsv;
 
 	if(mp::logged_in_as_moderator() && game.password_required) {
 		if(gui2::show_message(_("Join"), _("This game is password protected. Join using moderator rights anyway?"), gui2::dialogs::message::yes_no_buttons) != gui2::retval::OK) {
@@ -999,10 +999,10 @@ void mp_lobby::enter_game(const mp::game_info& game, JOIN_MODE mode)
 			return;
 		}
 
-		join_data["password"] = password;
+		join_data[str_password] = password;
 	}
 
-	join_data["mp_scenario"] = game.scenario_id;
+	join_data[str_mp_scenario] = game.scenario_id;
 	mp::send_to_server(config{"join", std::move(join_data)});
 
 	joined_game_id_ = game.id;
@@ -1034,7 +1034,7 @@ void mp_lobby::enter_selected_game(JOIN_MODE mode)
 
 void mp_lobby::refresh_lobby()
 {
-	mp::send_to_server(config("refresh_lobby"));
+	mp::send_to_server(config(str_refresh_lobby));
 }
 
 void mp_lobby::show_preferences_button_callback()

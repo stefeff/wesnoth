@@ -181,7 +181,7 @@ tree_view_node& help_browser::add_topic(const std::string& topic_id, const std::
 	widget_data data;
 	widget_item item;
 
-	item["label"] = topic_title;
+	item[str_label] = topic_title;
 	data.emplace("topic_name", item);
 
 	tree_view_node& new_node = parent.add_child(expands ? "section" : "topic", data);

@@ -26,9 +26,9 @@
 namespace gui2
 {
 game_tip::game_tip(const config& cfg)
-	: text(cfg["text"].t_str())
-	, source(cfg["source"].t_str())
-	, unit_filter(utils::split(cfg["encountered_units"]))
+	: text(cfg[str_text].t_str())
+	, source(cfg[str_source].t_str())
+	, unit_filter(utils::split(cfg[str_encountered_units]))
 {
 }
 
