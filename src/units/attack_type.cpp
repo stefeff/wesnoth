@@ -54,22 +54,22 @@ static lg::log_domain log_engine("engine");
 
 attack_type::attack_type(const config& cfg)
 	: context_()
-	, description_(cfg["description"].t_str())
-	, id_(cfg["name"])
-	, type_(cfg["type"])
-	, icon_(cfg["icon"])
-	, range_(cfg["range"])
-	, min_range_(cfg["min_range"].to_int(1))
-	, max_range_(cfg["max_range"].to_int(1))
-	, alignment_(unit_alignments::get_enum(cfg["alignment"].str()))
-	, damage_(cfg["damage"].to_int())
-	, num_attacks_(cfg["number"].to_int())
-	, attack_weight_(cfg["attack_weight"].to_double(1.0))
-	, defense_weight_(cfg["defense_weight"].to_double(1.0))
-	, accuracy_(cfg["accuracy"].to_int())
-	, movement_used_(cfg["movement_used"].to_int(100000))
-	, attacks_used_(cfg["attacks_used"].to_int(1))
-	, parry_(cfg["parry"].to_int())
+	, description_(cfg[str_description].t_str())
+	, id_(cfg[str_name])
+	, type_(cfg[str_type])
+	, icon_(cfg[str_icon])
+	, range_(cfg[str_range])
+	, min_range_(cfg[str_min_range].to_int(1))
+	, max_range_(cfg[str_max_range].to_int(1))
+	, alignment_(unit_alignments::get_enum(cfg[str_alignment].str()))
+	, damage_(cfg[str_damage].to_int())
+	, num_attacks_(cfg[str_number].to_int())
+	, attack_weight_(cfg[str_attack_weight].to_double(1.0))
+	, defense_weight_(cfg[str_defense_weight].to_double(1.0))
+	, accuracy_(cfg[str_accuracy].to_int())
+	, movement_used_(cfg[str_movement_used].to_int(100000))
+	, attacks_used_(cfg[str_attacks_used].to_int(1))
+	, parry_(cfg[str_parry].to_int())
 	, specials_()
 	, changed_(true)
 {
@@ -143,9 +143,9 @@ bool attack_type::has_filter_special_or_ability(const config& filter) const
 	if (range().empty()) {
 		return false;
 	}
-	const std::set<std::string> filter_special = utils::split_set(filter["special"].str());
-	const std::set<std::string> filter_special_id = utils::split_set(filter["special_id"].str());
-	const std::set<std::string> filter_special_type = utils::split_set(filter["special_type"].str());
+	const std::set<std::string> filter_special = utils::split_set(filter[str_special].str());
+	const std::set<std::string> filter_special_id = utils::split_set(filter[str_special_id].str());
+	const std::set<std::string> filter_special_type = utils::split_set(filter[str_special_type].str());
 	for (const auto& p_ab : specials()) {
 		if (special_checking(p_ab->id(), p_ab->tag(), filter_special, filter_special_id, filter_special_type)) {
 			return true;
@@ -160,23 +160,23 @@ bool attack_type::has_filter_special_or_ability(const config& filter) const
  */
 static bool matches_simple_filter(const attack_type & attack, const config & filter, const std::string& check_if_recursion)
 {
-	const std::set<std::string> filter_range = utils::split_set(filter["range"].str());
-	const std::string& filter_min_range = filter["min_range"];
-	const std::string& filter_max_range = filter["max_range"];
-	const std::string& filter_damage = filter["damage"];
-	const std::string& filter_attacks = filter["number"];
-	const std::string& filter_accuracy = filter["accuracy"];
-	const std::string& filter_parry = filter["parry"];
-	const std::string& filter_movement = filter["movement_used"];
-	const std::string& filter_attacks_used = filter["attacks_used"];
-	const std::set<std::string> filter_alignment = utils::split_set(filter["alignment"].str());
-	const std::set<std::string> filter_name = utils::split_set(filter["name"].str());
-	const std::set<std::string> filter_type = utils::split_set(filter["type"].str());
-	const std::set<std::string> filter_base_type = utils::split_set(filter["base_type"].str());
-	const std::vector<std::string> filter_special_active = utils::split(filter["special_active"]);
-	const std::vector<std::string> filter_special_id_active = utils::split(filter["special_id_active"]);
-	const std::vector<std::string> filter_special_type_active = utils::split(filter["special_type_active"]);
-	const std::string filter_formula = filter["formula"];
+	const std::set<std::string> filter_range = utils::split_set(filter[str_range].str());
+	const std::string& filter_min_range = filter[str_min_range];
+	const std::string& filter_max_range = filter[str_max_range];
+	const std::string& filter_damage = filter[str_damage];
+	const std::string& filter_attacks = filter[str_number];
+	const std::string& filter_accuracy = filter[str_accuracy];
+	const std::string& filter_parry = filter[str_parry];
+	const std::string& filter_movement = filter[str_movement_used];
+	const std::string& filter_attacks_used = filter[str_attacks_used];
+	const std::set<std::string> filter_alignment = utils::split_set(filter[str_alignment].str());
+	const std::set<std::string> filter_name = utils::split_set(filter[str_name].str());
+	const std::set<std::string> filter_type = utils::split_set(filter[str_type].str());
+	const std::set<std::string> filter_base_type = utils::split_set(filter[str_base_type].str());
+	const std::vector<std::string> filter_special_active = utils::split(filter[str_special_active]);
+	const std::vector<std::string> filter_special_id_active = utils::split(filter[str_special_id_active]);
+	const std::vector<std::string> filter_special_type_active = utils::split(filter[str_special_type_active]);
+	const std::string filter_formula = filter[str_formula];
 
 	if (!filter_min_range.empty() && !in_ranges(attack.min_range(), utils::parse_ranges_int(filter_min_range)))
 		return false;
@@ -337,33 +337,33 @@ void attack_type::remove_special_by_filter(const config& filter)
 void attack_type::apply_effect(const config& cfg)
 {
 	set_changed(true);
-	const config::attribute_value& set_name = cfg["set_name"];
-	const t_string& set_desc = cfg["set_description"].t_str();
-	const config::attribute_value& set_type = cfg["set_type"];
-	const config::attribute_value& set_range = cfg["set_range"];
-	const config::attribute_value& set_attack_alignment = cfg["set_alignment"];
-	const config::attribute_value& set_icon = cfg["set_icon"];
-	const config::attribute_value& del_specials = cfg["remove_specials"];
+	const config::attribute_value& set_name = cfg[str_set_name];
+	const t_string& set_desc = cfg[str_set_description].t_str();
+	const config::attribute_value& set_type = cfg[str_set_type];
+	const config::attribute_value& set_range = cfg[str_set_range];
+	const config::attribute_value& set_attack_alignment = cfg[str_set_alignment];
+	const config::attribute_value& set_icon = cfg[str_set_icon];
+	const config::attribute_value& del_specials = cfg[str_remove_specials];
 	auto set_specials = cfg.optional_child("set_specials");
-	const config::attribute_value& increase_min_range = cfg["increase_min_range"];
-	const config::attribute_value& set_min_range = cfg["set_min_range"];
-	const config::attribute_value& increase_max_range = cfg["increase_max_range"];
-	const config::attribute_value& set_max_range = cfg["set_max_range"];
+	const config::attribute_value& increase_min_range = cfg[str_increase_min_range];
+	const config::attribute_value& set_min_range = cfg[str_set_min_range];
+	const config::attribute_value& increase_max_range = cfg[str_increase_max_range];
+	const config::attribute_value& set_max_range = cfg[str_set_max_range];
 	auto remove_specials = cfg.optional_child("remove_specials");
-	const config::attribute_value& increase_damage = cfg["increase_damage"];
-	const config::attribute_value& set_damage = cfg["set_damage"];
-	const config::attribute_value& increase_attacks = cfg["increase_attacks"];
-	const config::attribute_value& set_attacks = cfg["set_attacks"];
-	const config::attribute_value& set_attack_weight = cfg["attack_weight"];
-	const config::attribute_value& set_defense_weight = cfg["defense_weight"];
-	const config::attribute_value& increase_accuracy = cfg["increase_accuracy"];
-	const config::attribute_value& set_accuracy = cfg["set_accuracy"];
-	const config::attribute_value& increase_parry = cfg["increase_parry"];
-	const config::attribute_value& set_parry = cfg["set_parry"];
-	const config::attribute_value& increase_movement = cfg["increase_movement_used"];
-	const config::attribute_value& set_movement = cfg["set_movement_used"];
-	const config::attribute_value& increase_attacks_used = cfg["increase_attacks_used"];
-	const config::attribute_value& set_attacks_used = cfg["set_attacks_used"];
+	const config::attribute_value& increase_damage = cfg[str_increase_damage];
+	const config::attribute_value& set_damage = cfg[str_set_damage];
+	const config::attribute_value& increase_attacks = cfg[str_increase_attacks];
+	const config::attribute_value& set_attacks = cfg[str_set_attacks];
+	const config::attribute_value& set_attack_weight = cfg[str_attack_weight];
+	const config::attribute_value& set_defense_weight = cfg[str_defense_weight];
+	const config::attribute_value& increase_accuracy = cfg[str_increase_accuracy];
+	const config::attribute_value& set_accuracy = cfg[str_set_accuracy];
+	const config::attribute_value& increase_parry = cfg[str_increase_parry];
+	const config::attribute_value& set_parry = cfg[str_set_parry];
+	const config::attribute_value& increase_movement = cfg[str_increase_movement_used];
+	const config::attribute_value& set_movement = cfg[str_set_movement_used];
+	const config::attribute_value& increase_attacks_used = cfg[str_increase_attacks_used];
+	const config::attribute_value& set_attacks_used = cfg[str_set_attacks_used];
 	// NB: If you add something here that requires a description,
 	// it needs to be added to describe_effect as well.
 
@@ -403,7 +403,7 @@ void attack_type::apply_effect(const config& cfg)
 	}
 
 	if(set_specials) {
-		const std::string &mode = set_specials["mode"];
+		const std::string &mode = set_specials[str_mode];
 		if(mode.empty()){
 			deprecated_message("[set_specials]mode=<unset>", DEP_LEVEL::INDEFINITE, "",
 				"The mode defaults to 'replace', but should often be 'append' instead. The default may change in a future version, or the attribute may become mandatory.");
@@ -414,7 +414,7 @@ void attack_type::apply_effect(const config& cfg)
 		}
 		// expand and add registry weapon specials
 		config registry_specials = unit_type_data::add_registry_entries(
-					config{"specials_list", set_specials["specials_list"]}, "specials", unit_types.specials());
+					config{"specials_list", set_specials[str_specials_list]}, "specials", unit_types.specials());
 		for(const auto [key, cfg] : registry_specials.all_children_view()) {
 			specials_.push_back(unit_ability_t::create(key, cfg, true));
 		}
@@ -513,22 +513,22 @@ void attack_type::apply_effect(const config& cfg)
 
 std::string attack_type::describe_effect(const config& cfg)
 {
-	const config::attribute_value& increase_min_range = cfg["increase_min_range"];
-	const config::attribute_value& set_min_range = cfg["set_min_range"];
-	const config::attribute_value& increase_max_range = cfg["increase_max_range"];
-	const config::attribute_value& set_max_range = cfg["set_max_range"];
-	const config::attribute_value& increase_damage = cfg["increase_damage"];
-	const config::attribute_value& set_damage = cfg["set_damage"];
-	const config::attribute_value& increase_attacks = cfg["increase_attacks"];
-	const config::attribute_value& set_attacks = cfg["set_attacks"];
-	const config::attribute_value& increase_accuracy = cfg["increase_accuracy"];
-	const config::attribute_value& set_accuracy = cfg["set_accuracy"];
-	const config::attribute_value& increase_parry = cfg["increase_parry"];
-	const config::attribute_value& set_parry = cfg["set_parry"];
-	const config::attribute_value& increase_movement = cfg["increase_movement_used"];
-	const config::attribute_value& set_movement = cfg["set_movement_used"];
-	const config::attribute_value& increase_attacks_used = cfg["increase_attacks_used"];
-	const config::attribute_value& set_attacks_used = cfg["set_attacks_used"];
+	const config::attribute_value& increase_min_range = cfg[str_increase_min_range];
+	const config::attribute_value& set_min_range = cfg[str_set_min_range];
+	const config::attribute_value& increase_max_range = cfg[str_increase_max_range];
+	const config::attribute_value& set_max_range = cfg[str_set_max_range];
+	const config::attribute_value& increase_damage = cfg[str_increase_damage];
+	const config::attribute_value& set_damage = cfg[str_set_damage];
+	const config::attribute_value& increase_attacks = cfg[str_increase_attacks];
+	const config::attribute_value& set_attacks = cfg[str_set_attacks];
+	const config::attribute_value& increase_accuracy = cfg[str_increase_accuracy];
+	const config::attribute_value& set_accuracy = cfg[str_set_accuracy];
+	const config::attribute_value& increase_parry = cfg[str_increase_parry];
+	const config::attribute_value& set_parry = cfg[str_set_parry];
+	const config::attribute_value& increase_movement = cfg[str_increase_movement_used];
+	const config::attribute_value& set_movement = cfg[str_set_movement_used];
+	const config::attribute_value& increase_attacks_used = cfg[str_increase_attacks_used];
+	const config::attribute_value& set_attacks_used = cfg[str_set_attacks_used];
 
 	const auto format_modifier = [](const config::attribute_value& attr) -> utils::string_map {
 		return {{"number_or_percent", utils::print_modifier(attr)}, {"color", attr.to_int() < 0 ? "#f00" : "#0f0"}};
@@ -669,22 +669,22 @@ std::string attack_type::describe_effect(const config& cfg)
 
 void attack_type::write(config& cfg) const
 {
-	cfg["description"] = description_;
-	cfg["name"] = id_;
-	cfg["type"] = type_;
-	cfg["icon"] = icon_;
-	cfg["range"] = range_;
-	cfg["min_range"] = min_range_;
-	cfg["max_range"] = max_range_;
-	cfg["alignment"] = alignment_str();
-	cfg["damage"] = damage_;
-	cfg["number"] = num_attacks_;
-	cfg["attack_weight"] = attack_weight_;
-	cfg["defense_weight"] = defense_weight_;
-	cfg["accuracy"] = accuracy_;
-	cfg["movement_used"] = movement_used_;
-	cfg["attacks_used"] = attacks_used_;
-	cfg["parry"] = parry_;
+	cfg[str_description] = description_;
+	cfg[str_name] = id_;
+	cfg[str_type] = type_;
+	cfg[str_icon] = icon_;
+	cfg[str_range] = range_;
+	cfg[str_min_range] = min_range_;
+	cfg[str_max_range] = max_range_;
+	cfg[str_alignment] = alignment_str();
+	cfg[str_damage] = damage_;
+	cfg[str_number] = num_attacks_;
+	cfg[str_attack_weight] = attack_weight_;
+	cfg[str_defense_weight] = defense_weight_;
+	cfg[str_accuracy] = accuracy_;
+	cfg[str_movement_used] = movement_used_;
+	cfg[str_attacks_used] = attacks_used_;
+	cfg[str_parry] = parry_;
 	cfg.add_child("specials", specials_cfg());
 }
 
@@ -732,7 +732,7 @@ std::string attack_type::select_replacement_type(const active_ability_list& dama
 	for (auto& i : damage_type_list) {
 		const config& c = i.ability_cfg();
 		if (c.has_attribute("replacement_type")) {
-			std::string type = c["replacement_type"].str();
+			std::string type = c[str_replacement_type].str();
 			unsigned int count = ++type_count[type];
 			if ((count > max)) {
 				max = count;
@@ -764,7 +764,7 @@ std::pair<std::string, int> attack_type::select_alternative_type(const active_ab
 		for (auto& i : damage_type_list) {
 			const config& c = i.ability_cfg();
 			if (c.has_attribute("alternative_type")) {
-				std::string type = c["alternative_type"].str();
+				std::string type = c[str_alternative_type].str();
 				if (type_res.count(type) == 0) {
 					type_res[type] = other.un->resistance_value(resistance_list, type);
 					max_res = std::max(max_res, type_res[type]);
@@ -834,7 +834,7 @@ std::pair<std::string, std::set<std::string>> attack_type::damage_types() const
 	for (auto& i : damage_type_list) {
 		const config& c = i.ability_cfg();
 		if (c.has_attribute("alternative_type")) {
-			alternative_damage_types.insert(c["alternative_type"].str());
+			alternative_damage_types.insert(c[str_alternative_type].str());
 		}
 	}
 
@@ -912,7 +912,7 @@ bool attack_type::has_active_special_or_ability_id(const std::string& special) c
 
 bool attack_type::has_special_or_ability_with_filter(const config& filter) const
 {
-	if (!filter["active"].to_bool()) {
+	if (!filter[str_active].to_bool()) {
 		return utils::find_if(specials(), [&](const ability_ptr& p_ab) { return p_ab->matches_filter(filter); });
 	}
 

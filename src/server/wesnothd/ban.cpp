@@ -164,55 +164,55 @@ void banned::read(const config& cfg)
 {
 	{
 		// parse ip and mask
-		ip_text_ = cfg["ip"].str();
+		ip_text_ = cfg[str_ip].str();
 		ip_mask pair = parse_ip(ip_text_);
 		ip_ = pair.first;
 		mask_ = pair.second;
 	}
 
-	nick_ = cfg["nick"].str();
+	nick_ = cfg[str_nick].str();
 
 	if(cfg.has_attribute("end_time")) {
-		end_time_ = chrono::parse_timestamp(cfg["end_time"]);
+		end_time_ = chrono::parse_timestamp(cfg[str_end_time]);
 	}
 
 	if(cfg.has_attribute("start_time")) {
-		start_time_ = chrono::parse_timestamp(cfg["start_time"]);
+		start_time_ = chrono::parse_timestamp(cfg[str_start_time]);
 	}
 
-	reason_ = cfg["reason"].str();
+	reason_ = cfg[str_reason].str();
 
 	// only overwrite defaults if exists
-	if(cfg.has_attribute("who_banned")) {
-		who_banned_ = cfg["who_banned"].str();
+	if(cfg.has_attribute(str_who_banned)) {
+		who_banned_ = cfg[str_who_banned].str();
 	}
 
-	if(cfg.has_attribute("group")) {
-		group_ = cfg["group"].str();
+	if(cfg.has_attribute(str_group)) {
+		group_ = cfg[str_group].str();
 	}
 }
 
 void banned::write(config& cfg) const
 {
-	cfg["ip"] = get_ip();
-	cfg["nick"] = get_nick();
+	cfg[str_ip] = get_ip();
+	cfg[str_nick] = get_nick();
 
 	if(end_time_) {
-		cfg["end_time"] = chrono::serialize_timestamp(*end_time_);
+		cfg[str_end_time] = chrono::serialize_timestamp(*end_time_);
 	}
 
 	if(start_time_) {
-		cfg["start_time"] = chrono::serialize_timestamp(*start_time_);
+		cfg[str_start_time] = chrono::serialize_timestamp(*start_time_);
 	}
 
-	cfg["reason"] = reason_;
+	cfg[str_reason] = reason_;
 
 	if(who_banned_ != who_banned_default_) {
-		cfg["who_banned"] = who_banned_;
+		cfg[str_who_banned] = who_banned_;
 	}
 
 	if(!group_.empty()) {
-		cfg["group"] = group_;
+		cfg[str_group] = group_;
 	}
 }
 
@@ -277,7 +277,7 @@ void ban_manager::read()
 	filesystem::scoped_istream ban_file = filesystem::istream_file(filename_);
 	config cfg = io::read_gz(*ban_file);
 
-	for(const config& b : cfg.child_range("ban")) {
+	for(const config& b : cfg.child_range(str_ban)) {
 		try {
 			auto new_ban = std::make_shared<banned>(b);
 			assert(bans_.insert(new_ban).second);
@@ -290,8 +290,8 @@ void ban_manager::read()
 	}
 
 	// load deleted too
-	if(auto cfg_del = cfg.optional_child("deleted")) {
-		for(const config& b : cfg_del->child_range("ban")) {
+	if(auto cfg_del = cfg.optional_child(str_deleted)) {
+		for(const config& b : cfg_del->child_range(str_ban)) {
 			try {
 				auto new_ban = std::make_shared<banned>(b);
 				deleted_bans_.push_back(new_ban);
@@ -313,13 +313,13 @@ void ban_manager::write()
 
 	config cfg;
 	for(const auto& b : bans_) {
-		config& child = cfg.add_child("ban");
+		config& child = cfg.add_child(str_ban);
 		b->write(child);
 	}
 
-	config& deleted = cfg.add_child("deleted");
+	config& deleted = cfg.add_child(str_deleted);
 	for(const auto& db : deleted_bans_) {
-		config& child = deleted.add_child("ban");
+		config& child = deleted.add_child(str_ban);
 		db->write(child);
 	}
 
@@ -694,18 +694,18 @@ void ban_manager::load_config(const config& cfg)
 	ban_times_.clear();
 	for(const config& bt : cfg.child_range("ban_time")) {
 		// Use the zero time point so we can easily convert the end time point to a duration
-		auto [success, end_time] = parse_time(bt["time"], {});
+		auto [success, end_time] = parse_time(bt[str_time], {});
 
 		if(success) {
 			auto duration = end_time.value_or(decltype(end_time)::value_type{}).time_since_epoch();
-			ban_times_.emplace(bt["name"], std::chrono::duration_cast<std::chrono::seconds>(duration));
+			ban_times_.emplace(bt[str_name], std::chrono::duration_cast<std::chrono::seconds>(duration));
 		}
 	}
 
 	init_ban_help();
-	if(cfg["ban_save_file"] != filename_) {
+	if(cfg[str_ban_save_file] != filename_) {
 		dirty_ = true;
-		filename_ = cfg["ban_save_file"].str();
+		filename_ = cfg[str_ban_save_file].str();
 	}
 }
 

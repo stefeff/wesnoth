@@ -812,7 +812,7 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			anim[str_layer] = move_layer;
 		}
 
-		config::const_child_itors missile_fs = anim.child_range("missile_frame");
+		config::const_child_itors missile_fs = anim.child_range(str_missile_frame);
 		if(anim[str_offset].empty() && missile_fs.empty()) {
 			anim[str_offset] ="0~0.6,0.6~0";
 		}
@@ -829,8 +829,8 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 			config tmp;
 			tmp[str_duration] = 1;
 
-			anim.add_child("missile_frame", tmp);
-			anim.add_child_at("missile_frame", tmp, 0);
+			anim.add_child(str_missile_frame, tmp);
+			anim.add_child_at(str_missile_frame, tmp, 0);
 		}
 
 		animations.emplace_back(anim);

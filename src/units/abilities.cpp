@@ -792,7 +792,7 @@ bool unit::ability_affects_adjacent(const unit_ability_t& ab, std::size_t dist, 
 				continue;
 			}
 		}
-		auto filter = i.optional_child("filter");
+		auto filter = i.optional_child(str_filter);
 		if (!filter || //filter tag given
 			unit_filter(vconfig(*filter)).set_use_flat_tod(illuminates).matches(*this, loc, from) ) {
 			return true;
@@ -1992,7 +1992,7 @@ void individual_effect::set(value_modifier t, int val, const config& abil, const
 
 bool filter_base_matches(const config& cfg, int def)
 {
-	if (auto apply_filter = cfg.optional_child("filter_base_value")) {
+	if (auto apply_filter = cfg.optional_child(str_filter_base_value)) {
 		config::attribute_value cond_eq = apply_filter[str_equals];
 		config::attribute_value cond_ne = apply_filter[str_not_equals];
 		config::attribute_value cond_lt = apply_filter[str_less_than];

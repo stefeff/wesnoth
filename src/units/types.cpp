@@ -100,7 +100,7 @@ unit_type::unit_type(default_ctor_t, const config& cfg, const std::string & pare
 	, animations_()
 	, build_status_(NOT_BUILT)
 {
-	if(auto base_unit = cfg.optional_child("base_unit")) {
+	if(auto base_unit = cfg.optional_child(str_base_unit)) {
 		base_unit_id_ = base_unit[str_id].str();
 		LOG_UT << "type '" <<  id_ << "' has base unit '" << base_unit_id_ << "'";
 	}
@@ -298,7 +298,7 @@ void unit_type::build_help_index(
 	movement_type_.merge(cfg);
 
 	for(const config& t : traits) {
-		possible_traits_.add_child("trait", t);
+		possible_traits_.add_child(str_trait, t);
 	}
 
 	if(race_ != &unit_race::null_race) {
@@ -311,7 +311,7 @@ void unit_type::build_help_index(
 		} else {
 			for(const config& t : race_->additional_traits()) {
 				if(alignment_ != unit_alignments::type::neutral || t[str_id] != "fearless")
-					possible_traits_.add_child("trait", t);
+					possible_traits_.add_child(str_trait, t);
 			}
 		}
 
@@ -321,8 +321,8 @@ void unit_type::build_help_index(
 	}
 
 	// Insert any traits that are just for this unit type
-	for(const config& trait : cfg.child_range("trait")) {
-		possible_traits_.add_child("trait", trait);
+	for(const config& trait : cfg.child_range(str_trait)) {
+		possible_traits_.add_child(str_trait, trait);
 	}
 
 	hide_help_ = cfg[str_hide_help].to_bool();
@@ -508,7 +508,7 @@ const_attack_itors unit_type::attacks() const
 		return make_attack_itors(attacks_cache_);
 	}
 
-	for(const config& att : get_cfg().child_range("attack")) {
+	for(const config& att : get_cfg().child_range(str_attack)) {
 		attacks_cache_.emplace_back(new attack_type(att));
 	}
 
@@ -641,7 +641,7 @@ bool unit_type::musthave_status(const std::string& status_name) const
 			continue;
 		}
 
-		for(const config& effect : mod.child_range("effect")) {
+		for(const config& effect : mod.child_range(str_effect)) {
 			// See if the effect only applies to
 			// certain unit types But don't worry
 			// about gender checks, since we don't
@@ -886,7 +886,7 @@ void patch_movetype(movetype& mt,
 
 		// These three need to follow movetype's fallback system, where values for
 		// movement costs are used for vision too.
-		const std::array fallback_children {"movement_costs", "vision_costs", "jamming_costs"};
+		const std::array fallback_children { str_movement_costs, str_vision_costs, str_jamming_costs };
 		config cumulative_values;
 		for(const auto& x : fallback_children) {
 			if(mt_cfg.has_child(x)) {
@@ -903,7 +903,7 @@ void patch_movetype(movetype& mt,
 		}
 
 		// These don't need the fallback system
-		const std::array child_names {"defense", "resistance"};
+		const std::array child_names { str_defense, str_resistance };
 		for(const auto& x : child_names) {
 			if(mt_cfg.has_child(x)) {
 				const auto& subtag = mt_cfg.mandatory_child(x);
@@ -980,8 +980,8 @@ std::unique_ptr<unit_type> unit_type::create_sub_type(const config& var_cfg, boo
 		var_copy.inherit_from(get_cfg());
 	}
 
-	var_copy.clear_children("male");
-	var_copy.clear_children("female");
+	var_copy.clear_children(str_male);
+	var_copy.clear_children(str_female);
 
 	return std::make_unique<unit_type>(std::move(var_copy), parent_id());
 }
@@ -993,12 +993,12 @@ std::unique_ptr<unit_type> unit_type::create_sub_type(const config& var_cfg, boo
 void unit_type::fill_variations()
 {
 	// Most unit types do not have variations.
-	if(!get_cfg().has_child("variation")) {
+	if(!get_cfg().has_child(str_variation)) {
 		return;
 	}
 
 	// Handle each variation's inheritance.
-	for(const config& var_cfg : get_cfg().child_range("variation")) {
+	for(const config& var_cfg : get_cfg().child_range(str_variation)) {
 
 		std::unique_ptr<unit_type> var = create_sub_type(var_cfg, false);
 
@@ -1077,7 +1077,7 @@ void unit_type_data::set_config(const game_config_view& cfg)
 		gui2::dialogs::loading_screen::progress();
 	}
 
-	for(const config& r : cfg.child_range("race")) {
+	for(const config& r : cfg.child_range(str_race)) {
 		const unit_race race(r);
 		races_.emplace(race.id(), race);
 
@@ -1406,7 +1406,7 @@ void unit_type::apply_scenario_fix(const config& cfg)
 		}
 	}
 
-	if(get_cfg().has_child("variation")) {
+	if(get_cfg().has_child(str_variation)) {
 		// Make sure the variations are created.
 		unit_types.build_unit_type(*this, VARIATIONS);
 		for (auto& cv : cfg.child_range("variation")){
