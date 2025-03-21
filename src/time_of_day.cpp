@@ -26,15 +26,15 @@ std::ostream& operator<<(std::ostream& s, const tod_color& c)
 }
 
 time_of_day::time_of_day(const config& cfg)
-	: lawful_bonus(cfg["lawful_bonus"].to_int())
+	: lawful_bonus(cfg[str_lawful_bonus].to_int())
 	, bonus_modified(0)
-	, image(cfg["image"])
-	, name(cfg["name"].t_str())
-	, description(cfg["description"].t_str())
-	, id(cfg["id"])
-	, image_mask(cfg["mask"])
-	, color(cfg["red"].to_int(), cfg["green"].to_int(), cfg["blue"].to_int())
-	, sounds(cfg["sound"])
+	, image(cfg[str_image])
+	, name(cfg[str_name].t_str())
+	, description(cfg[str_description].t_str())
+	, id(cfg[str_id])
+	, image_mask(cfg[str_mask])
+	, color(cfg[str_red].to_int(), cfg[str_green].to_int(), cfg[str_blue].to_int())
+	, sounds(cfg[str_sound])
 {
 }
 
@@ -53,18 +53,18 @@ time_of_day::time_of_day()
 
 void time_of_day::write(config& cfg, const std::string& textdomain) const
 {
-	cfg["lawful_bonus"] = lawful_bonus;
-	cfg["red"] = color.r;
-	cfg["green"] = color.g;
-	cfg["blue"] = color.b;
-	cfg["image"] = image;
-	cfg["name"] = textdomain.empty() ? name : t_string(name, textdomain);
-	cfg["id"] = id;
+	cfg[str_lawful_bonus] = lawful_bonus;
+	cfg[str_red] = color.r;
+	cfg[str_green] = color.g;
+	cfg[str_blue] = color.b;
+	cfg[str_image] = image;
+	cfg[str_name] = textdomain.empty() ? name : t_string(name, textdomain);
+	cfg[str_id] = id;
 
 	// Optional keys
-	cfg["description"].write_if_not_empty(textdomain.empty() ? description : t_string(description, textdomain));
-	cfg["mask"].write_if_not_empty(image_mask);
-	cfg["sound"].write_if_not_empty(sounds);
+	cfg[str_description].write_if_not_empty(textdomain.empty() ? description : t_string(description, textdomain));
+	cfg[str_mask].write_if_not_empty(image_mask);
+	cfg[str_sound].write_if_not_empty(sounds);
 }
 
 std::vector<time_of_day> time_of_day::parse_times(const config& cfg)

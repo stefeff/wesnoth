@@ -254,7 +254,7 @@ void synced_context::server_choice::send_request() const
 	resources::controller->send_to_wesnothd(config {
 		str_request_choice, config {
 			str_request_id, request_id(),
-			name(), request(),
+			utils::interned_string{name()}, request(),
 		},
 	});
 }
@@ -321,7 +321,8 @@ config synced_context::ask_server_choice(const server_choice& sch)
 				return sch.local_choice();
 			}
 
-			if(!action->has_child(sch.name())) {
+			utils::interned_string name{sch.name()};
+			if(!action->has_child(name)) {
 				replay::process_error("[str_ + std::string(sch.name()) + ] expected but none found, found instead:\n "
 									  + action->debug() + "\n");
 
@@ -418,8 +419,8 @@ void set_scontext_synced::do_final_checkup(bool dont_throw)
 	std::stringstream msg;
 	config co;
 	config cn {
-		"random_calls", new_rng_->get_random_calls(),
-		"next_unit_id", resources::gameboard->unit_id_manager().get_save_id() + 1,
+		str_random_calls, new_rng_->get_random_calls(),
+		str_next_unit_id, resources::gameboard->unit_id_manager().get_save_id() + 1,
 	};
 
 	if(checkup_instance->local_checkup(cn, co)) {

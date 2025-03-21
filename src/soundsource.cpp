@@ -101,7 +101,7 @@ void manager::write_sourcespecs(config& cfg) const
 	for(positional_source_const_iterator i = sources_.begin(); i != sources_.end(); ++i) {
 		assert(i->second);
 
-		config& child = cfg.add_child("sound_source");
+		config& child = cfg.add_child(str_sound_source);
 		child["id"] = i->first;
 		i->second->write_config(child);
 	}

@@ -24,7 +24,7 @@
 #include "wml_exception.hpp"
 
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -108,10 +108,10 @@ panel_definition::panel_definition(const config& cfg)
 
 panel_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, top_border(cfg["top_border"].to_unsigned())
-	, bottom_border(cfg["bottom_border"].to_unsigned())
-	, left_border(cfg["left_border"].to_unsigned())
-	, right_border(cfg["right_border"].to_unsigned())
+	, top_border(cfg[str_top_border].to_unsigned())
+	, bottom_border(cfg[str_bottom_border].to_unsigned())
+	, left_border(cfg[str_left_border].to_unsigned())
+	, right_border(cfg[str_right_border].to_unsigned())
 {
 	// The panel needs to know the order.
 	state.emplace_back(VALIDATE_WML_CHILD(cfg, "background", missing_mandatory_wml_tag("panel_definition][resolution", "background")));
@@ -126,7 +126,7 @@ namespace implementation
 builder_panel::builder_panel(const config& cfg)
 	: builder_styled_widget(cfg), grid(nullptr)
 {
-	auto c = cfg.optional_child("grid");
+	auto c = cfg.optional_child(str_grid);
 
 	VALIDATE(c, _("No grid defined."));
 

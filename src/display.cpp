@@ -2764,15 +2764,15 @@ void display::refresh_report(const std::string& report_name, const config * new_
 	// as the guys around them.
 	std::string str = item->prefix();
 	if (!str.empty()) {
-		config &e = report.add_child_at("element", config(), 0);
+		config &e = report.add_child_at(str_element, config(), 0);
 		e[str_text] = str;
-		e[str_tooltip] = report.mandatory_child("element")[str_tooltip];
+		e[str_tooltip] = report.mandatory_child(str_element)[str_tooltip];
 	}
 	str = item->postfix();
 	if (!str.empty()) {
-		config &e = report.add_child("element");
+		config &e = report.add_child(str_element);
 		e[str_text] = str;
-		e[str_tooltip] = report.mandatory_child("element", -1)[str_tooltip];
+		e[str_tooltip] = report.mandatory_child(str_element, -1)[str_tooltip];
 	}
 
 	// Do a fake run of drawing the report, so tooltips can be determined.
@@ -2802,7 +2802,7 @@ void display::draw_report(const std::string& report_name, bool tooltip_test)
 	std::ostringstream ellipsis_tooltip;
 	rect ellipsis_area = loc;
 
-	for (config::const_child_itors elements = report.child_range("element");
+	for (config::const_child_itors elements = report.child_range(str_element);
 		 elements.begin() != elements.end(); elements.pop_front())
 	{
 		rect area {x, y, loc.w + loc.x - x, loc.h + loc.y - y};
@@ -3122,7 +3122,7 @@ void display::write(config& cfg) const
 	cfg[str_color_adjust_red] = color_adjust_.r;
 	cfg[str_color_adjust_green] = color_adjust_.g;
 	cfg[str_color_adjust_blue] = color_adjust_.b;
-	get_middle_location().write(cfg.add_child("location"));
+	get_middle_location().write(cfg.add_child(str_location));
 }
 
 void display::read(const config& cfg)

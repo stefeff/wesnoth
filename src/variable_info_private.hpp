@@ -47,7 +47,7 @@ void resolve_negative_value(int size, int& val)
 	}
 }
 
-const config non_empty_const_cfg("_");
+const config non_empty_const_cfg(str__);
 
 /**
  * Parses a ']' terminated string.

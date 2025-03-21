@@ -29,7 +29,7 @@
 #include "gettext.hpp"
 #include "wml_exception.hpp"
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -47,7 +47,7 @@ multimenu_button::multimenu_button(const implementation::builder_multimenu_butto
 	, toggle_states_()
 	, droplist_(nullptr)
 {
-	values_.emplace_back("label", this->get_label());
+	values_.emplace_back(str_label, this->get_label());
 
 	connect_signal<event::MOUSE_ENTER>(
 		std::bind(&multimenu_button::signal_handler_mouse_enter, this, std::placeholders::_2, std::placeholders::_3));
@@ -164,7 +164,7 @@ void multimenu_button::update_label()
 			continue;
 		}
 
-		selected.push_back(values_[i]["label"].t_str());
+		selected.push_back(values_[i][str_label].t_str());
 	}
 
 	if(selected.size() == values_.size()) {
@@ -187,7 +187,7 @@ void multimenu_button::update_config_from_toggle_states()
 	for(unsigned i = 0; i < values_.size(); i++) {
 		::config& c = values_[i];
 
-		c["checkbox"] = toggle_states_[i];
+		c[str_checkbox] = toggle_states_[i];
 	}
 }
 
@@ -260,10 +260,10 @@ namespace implementation
 
 builder_multimenu_button::builder_multimenu_button(const config& cfg)
 	: builder_styled_widget(cfg)
-	, max_shown_(cfg["maximum_shown"].to_unsigned(1))
+	, max_shown_(cfg[str_maximum_shown].to_unsigned(1))
 	, options_()
 {
-	for(const auto& option : cfg.child_range("option")) {
+	for(const auto& option : cfg.child_range(str_option)) {
 		options_.push_back(option);
 	}
 }

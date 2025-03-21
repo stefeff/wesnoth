@@ -47,9 +47,9 @@ struct font_families
 	font_families() = default;
 
 	explicit font_families(const config& cfg)
-		: sans(cfg["family_order"].t_str())
-		, mono(cfg["family_order_monospace"].t_str())
-		, script(cfg["family_order_script"].t_str())
+		: sans(cfg[str_family_order].t_str())
+		, mono(cfg[str_family_order_monospace].t_str())
+		, script(cfg[str_family_order_script].t_str())
 	{
 		if(mono.empty()) {
 			ERR_FT << "No monospace font family defined, falling back to sans serif";

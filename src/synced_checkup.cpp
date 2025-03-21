@@ -63,17 +63,17 @@ synced_checkup::~synced_checkup()
 bool synced_checkup::local_checkup(const config& expected_data, config& real_data)
 {
 	assert(real_data.empty());
-	if(buffer_.child_count("result") > pos_)
+	if(buffer_.child_count(str_result) > pos_)
 	{
 		//copying objects :o
-		real_data = buffer_.mandatory_child("result",pos_);
+		real_data = buffer_.mandatory_child(str_result,pos_);
 		pos_ ++;
 		return real_data == expected_data;
 	}
 	else
 	{
-		assert(buffer_.child_count("result") == pos_);
-		buffer_.add_child("result", expected_data);
+		assert(buffer_.child_count(str_result) == pos_);
+		buffer_.add_child(str_result, expected_data);
 		pos_++;
 		return true;
 	}

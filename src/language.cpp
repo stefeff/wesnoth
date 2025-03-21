@@ -100,12 +100,12 @@ language_def::language_def()
 }
 
 language_def::language_def(const config& cfg)
-	: localename(cfg["locale"])
-	, alternates(utils::split(cfg["alternates"]))
-	, language(cfg["name"].t_str())
-	, sort_name(cfg["sort_name"].str(language))
-	, rtl(cfg["dir"] == "rtl")
-	, percent(cfg["percent"].to_int())
+	: localename(cfg[str_locale])
+	, alternates(utils::split(cfg[str_alternates]))
+	, language(cfg[str_name].t_str())
+	, sort_name(cfg[str_sort_name].str(language))
+	, rtl(cfg[str_dir] == "rtl")
+	, percent(cfg[str_percent].to_int())
 {
 }
 
@@ -367,10 +367,10 @@ const language_def& get_locale()
 
 void init_textdomains(const game_config_view& cfg)
 {
-	for (const config &t : cfg.child_range("textdomain"))
+	for (const config &t : cfg.child_range(str_textdomain))
 	{
-		const std::string &name = t["name"];
-		const std::string &path = t["path"];
+		const std::string &name = t[str_name];
+		const std::string &path = t[str_path];
 
 		if(path.empty()) {
 			t_string::add_textdomain(name, filesystem::get_intl_dir());
@@ -386,7 +386,7 @@ void init_textdomains(const game_config_view& cfg)
 bool init_strings(const game_config_view& cfg)
 {
 	languages.clear();
-	for (const config &l : cfg.child_range("language")) {
+	for (const config &l : cfg.child_range(str_language)) {
 		languages.push_back(l);
 	}
 	return load_strings(true);

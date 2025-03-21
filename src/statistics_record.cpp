@@ -81,7 +81,7 @@ static config write_battle_result_map(const stats_t::battle_result_map& m)
 {
 	config res;
 	for(stats_t::battle_result_map::const_iterator i = m.begin(); i != m.end(); ++i) {
-		config& new_cfg = res.add_child("sequence");
+		config& new_cfg = res.add_child(str_sequence);
 		new_cfg = write_str_int_map(i->second);
 		new_cfg[str__num] = i->first;
 	}
@@ -102,7 +102,7 @@ static void write_battle_result_map(config_writer& out, const stats_t::battle_re
 static stats_t::battle_result_map read_battle_result_map(const config& cfg)
 {
 	stats_t::battle_result_map m;
-	for(const config& i : cfg.child_range("sequence")) {
+	for(const config& i : cfg.child_range(str_sequence)) {
 		config item = i;
 		int key = item[str__num].to_int();
 		item.remove_attribute("_num");
@@ -116,7 +116,7 @@ static config write_by_cth_map(const stats_t::hitrate_map& m)
 {
 	config res;
 	for(const auto& i : m) {
-		res.add_child("hitrate_map_entry", config{"cth", i.first, "stats", i.second.write()});
+		res.add_child(str_hitrate_map_entry, config{str_cth, i.first, str_stats, i.second.write()});
 	}
 	return res;
 }
@@ -244,18 +244,18 @@ stats_t::stats_t(const config& cfg)
 config stats_t::write() const
 {
 	config res;
-	res.add_child("recruits", write_str_int_map(recruits));
-	res.add_child("recalls", write_str_int_map(recalls));
-	res.add_child("advances", write_str_int_map(advanced_to));
-	res.add_child("deaths", write_str_int_map(deaths));
-	res.add_child("killed", write_str_int_map(killed));
-	res.add_child("attacks", write_battle_result_map(attacks_inflicted));
-	res.add_child("defends", write_battle_result_map(defends_inflicted));
-	res.add_child("attacks_taken", write_battle_result_map(attacks_taken));
-	res.add_child("defends_taken", write_battle_result_map(defends_taken));
+	res.add_child(str_recruits, write_str_int_map(recruits));
+	res.add_child(str_recalls, write_str_int_map(recalls));
+	res.add_child(str_advances, write_str_int_map(advanced_to));
+	res.add_child(str_deaths, write_str_int_map(deaths));
+	res.add_child(str_killed, write_str_int_map(killed));
+	res.add_child(str_attacks, write_battle_result_map(attacks_inflicted));
+	res.add_child(str_defends, write_battle_result_map(defends_inflicted));
+	res.add_child(str_attacks_taken, write_battle_result_map(attacks_taken));
+	res.add_child(str_defends_taken, write_battle_result_map(defends_taken));
 	// Don't serialize by_cth_inflicted / by_cth_taken; they're deserialized from attacks_inflicted/defends_inflicted.
-	res.add_child("turn_by_cth_inflicted", write_by_cth_map(turn_by_cth_inflicted));
-	res.add_child("turn_by_cth_taken", write_by_cth_map(turn_by_cth_taken));
+	res.add_child(str_turn_by_cth_inflicted, write_by_cth_map(turn_by_cth_inflicted));
+	res.add_child(str_turn_by_cth_taken, write_by_cth_map(turn_by_cth_taken));
 
 	res[str_recruit_cost] = recruit_cost;
 	res[str_recall_cost] = recall_cost;
@@ -336,38 +336,38 @@ void stats_t::read(const config& cfg)
 	if(const auto c = cfg.optional_child(str_recalls)) {
 		recalls = read_str_int_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("advances")) {
+	if(const auto c = cfg.optional_child(str_advances)) {
 		advanced_to = read_str_int_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("deaths")) {
+	if(const auto c = cfg.optional_child(str_deaths)) {
 		deaths = read_str_int_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("killed")) {
+	if(const auto c = cfg.optional_child(str_killed)) {
 		killed = read_str_int_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("recalls")) {
+	if(const auto c = cfg.optional_child(str_recalls)) {
 		recalls = read_str_int_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("attacks")) {
+	if(const auto c = cfg.optional_child(str_attacks)) {
 		attacks_inflicted = read_battle_result_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("defends")) {
+	if(const auto c = cfg.optional_child(str_defends)) {
 		defends_inflicted = read_battle_result_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("attacks_taken")) {
+	if(const auto c = cfg.optional_child(str_attacks_taken)) {
 		attacks_taken = read_battle_result_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("defends_taken")) {
+	if(const auto c = cfg.optional_child(str_defends_taken)) {
 		defends_taken = read_battle_result_map(c.value());
 	}
 	by_cth_inflicted = read_by_cth_map_from_battle_result_maps(attacks_inflicted, defends_inflicted);
 	// by_cth_taken will be an empty map in old (pre-#4070) savefiles that don't have
 	// [attacks_taken]/[defends_taken] tags in their [statistics] tags
 	by_cth_taken = read_by_cth_map_from_battle_result_maps(attacks_taken, defends_taken);
-	if(const auto c = cfg.optional_child("turn_by_cth_inflicted")) {
+	if(const auto c = cfg.optional_child(str_turn_by_cth_inflicted)) {
 		turn_by_cth_inflicted = read_by_cth_map(c.value());
 	}
-	if(const auto c = cfg.optional_child("turn_by_cth_taken")) {
+	if(const auto c = cfg.optional_child(str_turn_by_cth_taken)) {
 		turn_by_cth_taken = read_by_cth_map(c.value());
 	}
 
@@ -436,7 +436,7 @@ config scenario_stats_t::write() const
 	config res;
 	res[str_scenario] = scenario_name;
 	for(team_stats_t::const_iterator i = team_stats.begin(); i != team_stats.end(); ++i) {
-		res.add_child("team", i->second.write());
+		res.add_child(str_team, i->second.write());
 	}
 
 	return res;
@@ -454,7 +454,7 @@ void scenario_stats_t::write(config_writer& out) const
 
 config stats_t::hitrate_t::write() const
 {
-	return config("hits", hits, "strikes", strikes);
+	return config(str_hits, hits, str_strikes, strikes);
 }
 
 stats_t::hitrate_t::hitrate_t(const config& cfg)
@@ -468,7 +468,7 @@ config campaign_stats_t::to_config() const
 	config res;
 
 	for(std::vector<scenario_stats_t>::const_iterator i = master_record.begin(); i != master_record.end(); ++i) {
-		res.add_child("scenario", i->write());
+		res.add_child(str_scenario, i->write());
 	}
 
 	return res;
@@ -488,7 +488,7 @@ void campaign_stats_t::read(const config& cfg, bool append)
 	if(!append) {
 		master_record.clear();
 	}
-	for(const config& s : cfg.child_range("scenario")) {
+	for(const config& s : cfg.child_range(str_scenario)) {
 		master_record.emplace_back(s);
 	}
 }

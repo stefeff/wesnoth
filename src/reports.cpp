@@ -53,19 +53,19 @@
 static void add_text(config &report, const std::string &text,
 	const std::string &tooltip, const std::string &help = "")
 {
-	config &element = report.add_child("element");
-	element["text"] = text;
-	if (!tooltip.empty()) element["tooltip"] = tooltip;
-	if (!help.empty()) element["help"] = help;
+	config &element = report.add_child(str_element);
+	element[str_text] = text;
+	if (!tooltip.empty()) element[str_tooltip] = tooltip;
+	if (!help.empty()) element[str_help] = help;
 }
 
 static void add_image(config &report, const std::string &image,
 	const std::string &tooltip, const std::string &help = "")
 {
-	config &element = report.add_child("element");
-	element["image"] = image;
-	if (!tooltip.empty()) element["tooltip"] = tooltip;
-	if (!help.empty()) element["help"] = help;
+	config &element = report.add_child(str_element);
+	element[str_image] = image;
+	if (!tooltip.empty()) element[str_tooltip] = tooltip;
+	if (!help.empty()) element[str_help] = help;
 }
 
 static config text_report(const std::string &text,

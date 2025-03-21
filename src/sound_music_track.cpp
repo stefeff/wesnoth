@@ -69,11 +69,11 @@ utils::optional<std::string> resolve_track_path(const std::string& track_file)
 
 std::shared_ptr<music_track> music_track::create(const config& cfg)
 {
-	if(auto path = resolve_track_path(cfg["name"])) {
+	if(auto path = resolve_track_path(cfg[str_name])) {
 		return std::make_shared<music_track>(*path, cfg);
 	}
 
-	LOG_AUDIO << "could not find track '" << cfg["name"] << "'";
+	LOG_AUDIO << "could not find track '" << cfg[str_name] << "'";
 	return nullptr;
 }
 
@@ -88,15 +88,15 @@ std::shared_ptr<music_track> music_track::create(const std::string& file)
 }
 
 music_track::music_track(const std::string& file_path, const config& node)
-	: id_(node["name"])
+	: id_(node[str_name])
 	, file_path_(file_path)
-	, title_(node["title"])
-	, ms_before_(node["ms_before"].to_int())
-	, ms_after_(node["ms_after"].to_int())
-	, once_(node["play_once"].to_bool())
-	, append_(node["append"].to_bool())
-	, immediate_(node["immediate"].to_bool())
-	, shuffle_(node["shuffle"].to_bool(true))
+	, title_(node[str_title])
+	, ms_before_(node[str_ms_before].to_int())
+	, ms_after_(node[str_ms_after].to_int())
+	, once_(node[str_play_once].to_bool())
+	, append_(node[str_append].to_bool())
+	, immediate_(node[str_immediate].to_bool())
+	, shuffle_(node[str_shuffle].to_bool(true))
 {
 	if(title_.empty()) {
 		title_ = title_from_file(file_path_);
@@ -112,15 +112,15 @@ music_track::music_track(const std::string& file_path, const std::string& file)
 
 void music_track::write(config &parent_node, bool append) const
 {
-	config& m = parent_node.add_child("music");
-	m["name"] = id_;
-	m["ms_before"] = ms_before_;
-	m["ms_after"] = ms_after_;
+	config& m = parent_node.add_child(str_music);
+	m[str_name] = id_;
+	m[str_ms_before] = ms_before_;
+	m[str_ms_after] = ms_after_;
 	if(append) {
-		m["append"] = true;
+		m[str_append] = true;
 	}
 	//default behaviour is to shuffle
-	m["shuffle"] = shuffle_;
+	m[str_shuffle] = shuffle_;
 }
 
 } /* end namespace sound */

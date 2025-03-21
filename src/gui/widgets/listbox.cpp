@@ -32,7 +32,7 @@
 #include <functional>
 #include "utils/optional_fwd.hpp"
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -689,8 +689,8 @@ static std::vector<widget_data> parse_list_data(const config& data, const unsign
 {
 	std::vector<widget_data> list_data;
 
-	for(const auto& row : data.child_range("row")) {
-		auto cols = row.child_range("column");
+	for(const auto& row : data.child_range(str_row)) {
+		auto cols = row.child_range(str_column);
 
 		VALIDATE(static_cast<unsigned>(cols.size()) == req_cols,
 			_("‘list_data’ must have the same number of columns as the ‘list_definition’.")
@@ -700,14 +700,14 @@ static std::vector<widget_data> parse_list_data(const config& data, const unsign
 			list_data.emplace_back();
 
 			for(const auto& [key, value] : c.attribute_range()) {
-				list_data.back()[""][key] = value.t_str();
+				list_data.back()[str_][key] = value.t_str();
 			}
 
-			for(const auto& w : c.child_range("widget")) {
-				VALIDATE(w.has_attribute("id"), missing_mandatory_wml_key("[list_data][row][column][widget]", "id"));
+			for(const auto& w : c.child_range(str_widget)) {
+				VALIDATE(w.has_attribute(str_id), missing_mandatory_wml_key("[list_data][row][column][widget]", "id"));
 
 				for(const auto& [key, value] : w.attribute_range()) {
-					list_data.back()[w["id"]][key] = value.t_str();
+					list_data.back()[w[str_id]][key] = value.t_str();
 				}
 			}
 		}
@@ -723,9 +723,9 @@ builder_listbox_base::builder_listbox_base(const config& cfg, const generator_ba
 	, footer(nullptr)
 	, list_builder(nullptr)
 	, list_data()
-	, has_minimum(cfg["has_minimum"].to_bool(true))
-	, has_maximum(cfg["has_maximum"].to_bool(true))
-	, allow_selection(cfg["allow_selection"].to_bool(true))
+	, has_minimum(cfg[str_has_minimum].to_bool(true))
+	, has_maximum(cfg[str_has_maximum].to_bool(true))
+	, allow_selection(cfg[str_allow_selection].to_bool(true))
 {
 	auto l = cfg.optional_child("list_definition");
 	VALIDATE(l, _("No list defined."));
@@ -750,11 +750,11 @@ std::unique_ptr<widget> builder_listbox_base::build() const
 builder_listbox::builder_listbox(const config& cfg)
 	: builder_listbox_base(cfg, generator_base::vertical_list)
 {
-	if(auto h = cfg.optional_child("header")) {
+	if(auto h = cfg.optional_child(str_header)) {
 		header = std::make_shared<builder_grid>(*h);
 	}
 
-	if(auto f = cfg.optional_child("footer")) {
+	if(auto f = cfg.optional_child(str_abbrev)) {
 		footer = std::make_shared<builder_grid>(*f);
 	}
 }

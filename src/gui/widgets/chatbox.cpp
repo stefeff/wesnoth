@@ -41,7 +41,7 @@ static lg::log_domain log_lobby("lobby");
 #define LOG_LB LOG_STREAM(info, log_lobby)
 #define ERR_LB LOG_STREAM(err, log_lobby)
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -411,12 +411,12 @@ lobby_chat_window* chatbox::find_or_create_window(const std::string& name,
 	// Add a new chat log page.
 	//
 	widget_item item;
-	item["use_markup"] = "true";
-	item["label"] = initial_text;
+	item[str_use_markup] = "true";
+	item[str_label] = initial_text;
 	widget_data data{{"log_text", item}};
 
 	if(log_ != nullptr) {
-		log_->emplace(name, chatroom_log{item["label"], whisper});
+		log_->emplace(name, chatroom_log{item[str_label], whisper});
 	}
 
 	chat_log_container_->add_page(data);
@@ -428,9 +428,9 @@ lobby_chat_window* chatbox::find_or_create_window(const std::string& name,
 	item.clear();
 
 	if(!whisper) {
-		item["label"] = translation::dsgettext("wesnoth-lib", name.c_str());
+		item[str_label] = translation::dsgettext("wesnoth-lib", name.c_str());
 	} else {
-		item["label"] = "<" + name + ">";
+		item[str_label] = "<" + name + ">";
 	}
 
 	data.emplace("room", item);
@@ -574,15 +574,15 @@ void chatbox::add_active_window_message(const std::string& sender,
 
 void chatbox::process_message(const ::config& data, bool whisper /*= false*/)
 {
-	std::string sender = data["sender"];
+	std::string sender = data[str_sender];
 	DBG_LB << "process message from " << sender << " " << (whisper ? "(w)" : "")
-		<< ", len " << data["message"].str().size();
+		<< ", len " << data[str_message].str().size();
 
 	if(prefs::get().is_ignored(sender)) {
 		return;
 	}
 
-	const std::string& message = data["message"];
+	const std::string& message = data[str_message];
 	//prefs::get().parse_admin_authentication(sender, message); TODO: replace
 
 	if(whisper) {
@@ -590,7 +590,7 @@ void chatbox::process_message(const ::config& data, bool whisper /*= false*/)
 	} else {
 		if (!prefs::get().parse_should_show_lobby_join(sender, message)) return;
 
-		std::string room = data["room"];
+		std::string room = data[str_room];
 
 		// Attempt to send to the currently active room first.
 		if(room.empty()) {
@@ -604,7 +604,7 @@ void chatbox::process_message(const ::config& data, bool whisper /*= false*/)
 			room = "lobby";
 		}
 
-		if(log_ != nullptr && data["type"].str() == "motd") {
+		if(log_ != nullptr && data[str_type].str() == "motd") {
 			if(log_->at("lobby").received_motd == message) {
 				LOG_LB << "Ignoring repeated motd";
 				return;
@@ -618,15 +618,15 @@ void chatbox::process_message(const ::config& data, bool whisper /*= false*/)
 
 	// Notify plugins about the message
 	::config plugin_data = data;
-	plugin_data["whisper"] = whisper;
+	plugin_data[str_whisper] = whisper;
 	plugins_manager::get()->notify_event("chat", plugin_data);
 }
 
 void chatbox::process_network_data(const ::config& data)
 {
-	if(const auto message = data.optional_child("message")) {
+	if(const auto message = data.optional_child(str_message)) {
 		process_message(*message);
-	} else if(const auto whisper = data.optional_child("whisper")) {
+	} else if(const auto whisper = data.optional_child(str_whisper)) {
 		process_message(*whisper, true);
 	}
 }

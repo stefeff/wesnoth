@@ -85,7 +85,7 @@ void map_labels::write(config& res) const
 			config item;
 			label.second.write(item);
 
-			res.add_child("label", std::move(item));
+			res.add_child(str_label, std::move(item));
 		}
 	}
 }
@@ -94,7 +94,7 @@ void map_labels::read(const config& cfg)
 {
 	clear_all();
 
-	for(const config& i : cfg.child_range("label")) {
+	for(const config& i : cfg.child_range(str_label)) {
 		add_label(*this, i);
 	}
 
@@ -390,20 +390,20 @@ void terrain_label::read(const config& cfg)
 	loc_ = map_location(cfg, &vs);
 	color_t color = font::LABEL_COLOR;
 
-	std::string tmp_color = cfg["color"];
+	std::string tmp_color = cfg[str_color];
 
-	text_ = cfg["text"].t_str();
-	tooltip_ = cfg["tooltip"].t_str();
-	team_name_ = cfg["team_name"].str();
-	visible_in_fog_ = cfg["visible_in_fog"].to_bool(true);
-	visible_in_shroud_ = cfg["visible_in_shroud"].to_bool();
-	immutable_ = cfg["immutable"].to_bool(true);
-	category_ = cfg["category"].str();
+	text_ = cfg[str_text].t_str();
+	tooltip_ = cfg[str_tooltip].t_str();
+	team_name_ = cfg[str_team_name].str();
+	visible_in_fog_ = cfg[str_visible_in_fog].to_bool(true);
+	visible_in_shroud_ = cfg[str_visible_in_shroud].to_bool();
+	immutable_ = cfg[str_immutable].to_bool(true);
+	category_ = cfg[str_category].str();
 
-	int side = cfg["side"].to_int(-1);
+	int side = cfg[str_side].to_int(-1);
 	if(side >= 0) {
 		creator_ = side - 1;
-	} else if(cfg["side"].str() == "current") {
+	} else if(cfg[str_side].str() == "current") {
 		config::attribute_value current_side = vs.get_variable_const("side_number");
 		if(!current_side.empty()) {
 			creator_ = current_side.to_int();
@@ -434,15 +434,15 @@ void terrain_label::write(config& cfg) const
 {
 	loc_.write(cfg);
 
-	cfg["text"] = text();
-	cfg["tooltip"] = tooltip();
-	cfg["team_name"] = (this->team_name());
-	cfg["color"] = color_.to_rgb_string();
-	cfg["visible_in_fog"] = visible_in_fog_;
-	cfg["visible_in_shroud"] = visible_in_shroud_;
-	cfg["immutable"] = immutable_;
-	cfg["category"] = category_;
-	cfg["side"] = creator_ + 1;
+	cfg[str_text] = text();
+	cfg[str_tooltip] = tooltip();
+	cfg[str_team_name] = (this->team_name());
+	cfg[str_color] = color_.to_rgb_string();
+	cfg[str_visible_in_fog] = visible_in_fog_;
+	cfg[str_visible_in_shroud] = visible_in_shroud_;
+	cfg[str_immutable] = immutable_;
+	cfg[str_category] = category_;
+	cfg[str_side] = creator_ + 1;
 }
 
 void terrain_label::update_info(const t_string& text,

@@ -105,25 +105,25 @@ move::move(const config& cfg, bool hidden)
 	, fake_unit_hidden_(false)
 {
 	// Construct and validate unit_
-	unit_map::iterator unit_itor = resources::gameboard->units().find(cfg["unit_"].to_size_t());
+	unit_map::iterator unit_itor = resources::gameboard->units().find(cfg[str_unit_].to_size_t());
 	if(unit_itor == resources::gameboard->units().end())
 		throw action::ctor_err("move: Invalid underlying_id");
 	unit_underlying_id_ = unit_itor->underlying_id();
 
 	// Construct and validate route_
-	auto route_cfg = cfg.optional_child("route_");
+	auto route_cfg = cfg.optional_child(str_route_);
 	if(!route_cfg)
 		throw action::ctor_err("move: Invalid route_");
-	route_->move_cost = route_cfg["move_cost"].to_int();
+	route_->move_cost = route_cfg[str_move_cost].to_int();
 	for(const config& loc_cfg : route_cfg->child_range("step")) {
-		route_->steps.emplace_back(loc_cfg["x"],loc_cfg["y"], wml_loc());
+		route_->steps.emplace_back(loc_cfg[str_x],loc_cfg[str_y], wml_loc());
 	}
 	for(const config& mark_cfg : route_cfg->child_range("mark")) {
-		route_->marks[map_location(mark_cfg["x"],mark_cfg["y"], wml_loc())]
-			= pathfind::marked_route::mark(mark_cfg["turns"].to_int(),
-				mark_cfg["zoc"].to_bool(),
-				mark_cfg["capture"].to_bool(),
-				mark_cfg["invisible"].to_bool());
+		route_->marks[map_location(mark_cfg[str_x],mark_cfg[str_y], wml_loc())]
+			= pathfind::marked_route::mark(mark_cfg[str_turns].to_int(),
+				mark_cfg[str_zoc].to_bool(),
+				mark_cfg[str_capture].to_bool(),
+				mark_cfg[str_invisible].to_bool());
 	}
 
 	// Validate route_ some more
@@ -507,34 +507,34 @@ config move::to_config() const
 {
 	config final_cfg = action::to_config();
 
-	final_cfg["type"]="move";
-	final_cfg["unit_"]=static_cast<int>(unit_underlying_id_);
-//	final_cfg["movement_cost_"]=movement_cost_; //Unnecessary
-//	final_cfg["unit_id_"]=unit_id_; //Unnecessary
+	final_cfg[str_type]="move";
+	final_cfg[str_unit_]=static_cast<int>(unit_underlying_id_);
+//	final_cfg[str_movement_cost_]=movement_cost_; //Unnecessary
+//	final_cfg[str_unit_id_]=unit_id_; //Unnecessary
 
 	//Serialize route_
 	config route_cfg;
-	route_cfg["move_cost"]=route_->move_cost;
+	route_cfg[str_move_cost]=route_->move_cost;
 	for(const map_location& loc : route_->steps)
 	{
 		config loc_cfg;
-		loc_cfg["x"]=loc.wml_x();
-		loc_cfg["y"]=loc.wml_y();
-		route_cfg.add_child("step", std::move(loc_cfg));
+		loc_cfg[str_x]=loc.wml_x();
+		loc_cfg[str_y]=loc.wml_y();
+		route_cfg.add_child(str_step, std::move(loc_cfg));
 	}
 	typedef std::pair<map_location,pathfind::marked_route::mark> pair_loc_mark;
 	for(const pair_loc_mark item : route_->marks)
 	{
 		config mark_cfg;
-		mark_cfg["x"]=item.first.wml_x();
-		mark_cfg["y"]=item.first.wml_y();
-		mark_cfg["turns"]=item.second.turns;
-		mark_cfg["zoc"]=item.second.zoc;
-		mark_cfg["capture"]=item.second.capture;
-		mark_cfg["invisible"]=item.second.invisible;
-		route_cfg.add_child("mark", std::move(mark_cfg));
+		mark_cfg[str_x]=item.first.wml_x();
+		mark_cfg[str_y]=item.first.wml_y();
+		mark_cfg[str_turns]=item.second.turns;
+		mark_cfg[str_zoc]=item.second.zoc;
+		mark_cfg[str_capture]=item.second.capture;
+		mark_cfg[str_invisible]=item.second.invisible;
+		route_cfg.add_child(str_mark, std::move(mark_cfg));
 	}
-	final_cfg.add_child("route_", std::move(route_cfg));
+	final_cfg.add_child(str_route_, std::move(route_cfg));
 
 	return final_cfg;
 }

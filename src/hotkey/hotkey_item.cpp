@@ -110,13 +110,13 @@ bool hotkey_base::matches(const SDL_Event& event) const
 
 void hotkey_base::save(config& item) const
 {
-	item["command"] = get_command();
-	item["disabled"] = is_disabled();
+	item[str_command] = get_command();
+	item[str_disabled] = is_disabled();
 
-	item["shift"] = !!(mod_ & KMOD_SHIFT);
-	item["ctrl"] = !!(mod_ & KMOD_CTRL);
-	item["cmd"] = !!(mod_ & KMOD_GUI);
-	item["alt"] = !!(mod_ & KMOD_ALT);
+	item[str_shift] = !!(mod_ & KMOD_SHIFT);
+	item[str_ctrl] = !!(mod_ & KMOD_CTRL);
+	item[str_cmd] = !!(mod_ & KMOD_GUI);
+	item[str_alt] = !!(mod_ & KMOD_ALT);
 
 	save_helper(item);
 }
@@ -177,7 +177,7 @@ hotkey_ptr load_from_config(const config& cfg)
 {
 	hotkey_ptr base = std::make_shared<hotkey_void>();
 
-	const config::attribute_value& mouse_cfg = cfg["mouse"];
+	const config::attribute_value& mouse_cfg = cfg[str_mouse];
 	if(!mouse_cfg.empty()) {
 		auto mouse = std::make_shared<hotkey_mouse>();
 		base = std::dynamic_pointer_cast<hotkey_base>(mouse);
@@ -185,7 +185,7 @@ hotkey_ptr load_from_config(const config& cfg)
 		if(mouse_cfg.to_int() == TOUCH_MOUSE_INDEX) {
 			mouse->set_button(TOUCH_MOUSE_INDEX);
 		} else {
-			mouse->set_button(cfg["button"].to_int());
+			mouse->set_button(cfg[str_button].to_int());
 		}
 
 		if(!cfg["click"].empty()) {
@@ -193,7 +193,7 @@ hotkey_ptr load_from_config(const config& cfg)
 		}
 	}
 
-	const std::string& key_cfg = cfg["key"];
+	const std::string& key_cfg = cfg[str_key];
 	if(!key_cfg.empty()) {
 		auto keyboard = std::make_shared<hotkey_keyboard>();
 		base = std::dynamic_pointer_cast<hotkey_base>(keyboard);
@@ -212,19 +212,19 @@ hotkey_ptr load_from_config(const config& cfg)
 
 	unsigned int mods = 0;
 
-	if(cfg["shift"].to_bool())
+	if(cfg[str_shift].to_bool())
 		mods |= KMOD_SHIFT;
-	if(cfg["ctrl"].to_bool())
+	if(cfg[str_ctrl].to_bool())
 		mods |= KMOD_CTRL;
-	if(cfg["cmd"].to_bool())
+	if(cfg[str_cmd].to_bool())
 		mods |= KMOD_GUI;
-	if(cfg["alt"].to_bool())
+	if(cfg[str_alt].to_bool())
 		mods |= KMOD_ALT;
 
 	base->set_mods(mods);
-	base->set_command(cfg["command"].str());
+	base->set_command(cfg[str_command].str());
 
-	cfg["disabled"].to_bool() ? base->disable() : base->enable();
+	cfg[str_disabled].to_bool() ? base->disable() : base->enable();
 
 	return base;
 }
@@ -288,9 +288,9 @@ const std::string hotkey_mouse::get_name_helper() const
 
 void hotkey_mouse::save_helper(config& item) const
 {
-	item["mouse"] = 0;
+	item[str_mouse] = 0;
 	if(button_ != 0) {
-		item["button"] = button_;
+		item[str_button] = button_;
 	}
 }
 
@@ -341,7 +341,7 @@ bool hotkey_mouse::bindings_equal_helper(hotkey_ptr other) const
 void hotkey_keyboard::save_helper(config& item) const
 {
 	if(!text_.empty()) {
-		item["key"] = text_;
+		item[str_key] = text_;
 	}
 }
 
@@ -410,7 +410,7 @@ const hotkey_ptr get_hotkey(const SDL_Event& event)
 void load_default_hotkeys(const game_config_view& cfg)
 {
 	hotkey_list new_hotkeys;
-	for(const config& hk : cfg.child_range("hotkey")) {
+	for(const config& hk : cfg.child_range(str_hotkey)) {
 		if(hotkey_ptr item = load_from_config(hk); !item->null()) {
 			new_hotkeys.push_back(std::move(item));
 		}
@@ -422,7 +422,7 @@ void load_default_hotkeys(const game_config_view& cfg)
 
 void load_custom_hotkeys(const game_config_view& cfg)
 {
-	for(const config& hk : cfg.child_range("hotkey")) {
+	for(const config& hk : cfg.child_range(str_hotkey)) {
 		if(hotkey_ptr item = load_from_config(hk); !item->null()) {
 			item->unset_default();
 			add_hotkey(item);
@@ -434,7 +434,7 @@ void reset_default_hotkeys()
 {
 	hotkeys_.clear();
 
-	if(!default_hotkey_cfg_.child_range("hotkey").empty()) {
+	if(!default_hotkey_cfg_.child_range(str_hotkey).empty()) {
 		load_default_hotkeys(default_hotkey_cfg_);
 	} else {
 		ERR_G << "no default hotkeys set yet; all hotkeys are now unassigned!";
@@ -448,11 +448,11 @@ const hotkey_list& get_hotkeys()
 
 void save_hotkeys(config& cfg)
 {
-	cfg.clear_children("hotkey");
+	cfg.clear_children(str_hotkey);
 
 	for(hotkey_ptr& item : hotkeys_) {
 		if((!item->is_default() && item->active()) || (item->is_default() && item->is_disabled())) {
-			item->save(cfg.add_child("hotkey"));
+			item->save(cfg.add_child(str_hotkey));
 		}
 	}
 }

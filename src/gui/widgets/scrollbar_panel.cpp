@@ -81,7 +81,7 @@ builder_scrollbar_panel::builder_scrollbar_panel(const config& cfg)
 	: builder_scrollbar_container(cfg)
 	, grid_(nullptr)
 {
-	auto grid_definition = cfg.optional_child("definition");
+	auto grid_definition = cfg.optional_child(str_definition);
 
 	VALIDATE(grid_definition, _("No list defined."));
 	grid_ = std::make_shared<builder_grid>(*grid_definition);

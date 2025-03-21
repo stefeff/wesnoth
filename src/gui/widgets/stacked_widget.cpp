@@ -222,10 +222,10 @@ stacked_widget_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg), grid(nullptr)
 {
 	// Add a dummy state since every widget needs a state.
-	static config dummy("draw");
+	static config dummy(str_draw);
 	state.emplace_back(dummy);
 
-	auto child = cfg.optional_child("grid");
+	auto child = cfg.optional_child(str_grid);
 	VALIDATE(child, _("No grid defined."));
 
 	grid = std::make_shared<builder_grid>(*child);

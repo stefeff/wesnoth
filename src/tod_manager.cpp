@@ -113,12 +113,12 @@ config tod_manager::to_config(const std::string& textdomain) const
 	for(const time_of_day& tod : times_) {
 		// Don't write stub ToD
 		if(tod.id != "nulltod") {
-			tod.write(cfg.add_child("time"), textdomain);
+			tod.write(cfg.add_child(str_time), textdomain);
 		}
 	}
 
 	for(const area_time_of_day& a_tod : areas_) {
-		config& area = cfg.add_child("time_area");
+		config& area = cfg.add_child(str_time_area);
 
 		// If no ranges, then use hexes to generate ranges
 		if(a_tod.xsrc.empty() && a_tod.ysrc.empty()) {
@@ -131,7 +131,7 @@ config tod_manager::to_config(const std::string& textdomain) const
 		for(const time_of_day& tod : a_tod.times) {
 			// Don't write the stub default ToD if it happens to be present.
 			if(tod.id != "nulltod") {
-				tod.write(area.add_child("time"), textdomain);
+				tod.write(area.add_child(str_time), textdomain);
 			}
 		}
 
@@ -466,9 +466,9 @@ void tod_manager::update_server_information() const
 		// about those changes in 100% of cases. But that is ok because the information is only
 		// used to display the turn limit in the lobby (as opposed to things that cause OOS).
 		resources::controller->send_to_wesnothd(config {
-			"change_turns_wml", config {
-				"current", turn_,
-				"max", num_turns_,
+			str_change_turns_wml, config {
+				str_current, turn_,
+				str_max, num_turns_,
 			},
 		});
 	}

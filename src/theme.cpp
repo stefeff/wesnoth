@@ -74,7 +74,7 @@ static std::size_t compute(std::string expr, std::size_t ref1, std::size_t ref2 
 static _rect read_rect(const config& cfg)
 {
 	_rect rect {0, 0, 0, 0};
-	std::vector<std::string> items = utils::split(cfg["rect"].str());
+	std::vector<std::string> items = utils::split(cfg[str_rect].str());
 	if(items.size() >= 1)
 		rect.x1 = parse_signed_string(items[0]);
 
@@ -141,7 +141,7 @@ static config& find_ref(const std::string& id, config& cfg, bool remove = false)
 	config::all_children_itors itors = cfg.all_children_range();
 	for(config::all_children_iterator i = itors.begin(); i != itors.end(); ++i) {
 		config& icfg = i->cfg;
-		if(i->cfg["id"] == id) {
+		if(i->cfg[str_id] == id) {
 			if(remove) {
 				cfg.erase(i);
 				return empty_config;
@@ -194,8 +194,8 @@ static config& result = find_ref("", cfg);
  */
 static config get_resolution(const config& resolutions, const std::string& id)
 {
-	for(const auto& resolution : resolutions.child_range("resolution")) {
-		if(resolution["id"] == id) {
+	for(const auto& resolution : resolutions.child_range(str_resolution)) {
+		if(resolution[str_id] == id) {
 			return resolution;
 		}
 	}
@@ -218,25 +218,25 @@ static config expand_partialresolution(const config& theme)
 	config result;
 
 	// Add all the resolutions
-	for(const auto& resolution : theme.child_range("resolution")) {
-		result.add_child("resolution", resolution);
+	for(const auto& resolution : theme.child_range(str_resolution)) {
+		result.add_child(str_resolution, resolution);
 	}
 
 	// Resolve all the partialresolutions
-	for(const auto& part : theme.child_range("partialresolution")) {
-		config resolution = get_resolution(result, part["inherits"]);
+	for(const auto& part : theme.child_range(str_partialresolution)) {
+		config resolution = get_resolution(result, part[str_inherits]);
 		resolution.merge_attributes(part);
 
-		for(const auto& remove : part.child_range("remove")) {
-			VALIDATE(!remove["id"].empty(), missing_mandatory_wml_key("[theme][partialresolution][remove]", "id"));
+		for(const auto& remove : part.child_range(str_remove)) {
+			VALIDATE(!remove[str_id].empty(), missing_mandatory_wml_key("[theme][partialresolution][remove]", "id"));
 
-			find_ref(remove["id"], resolution, true);
+			find_ref(remove[str_id], resolution, true);
 		}
 
-		for(const auto& change : part.child_range("change")) {
-			VALIDATE(!change["id"].empty(), missing_mandatory_wml_key("[theme][partialresolution][change]", "id"));
+		for(const auto& change : part.child_range(str_change)) {
+			VALIDATE(!change[str_id].empty(), missing_mandatory_wml_key("[theme][partialresolution][change]", "id"));
 
-			config& target = find_ref(change["id"], resolution, false);
+			config& target = find_ref(change[str_id], resolution, false);
 			target.merge_attributes(change);
 		}
 
@@ -247,7 +247,7 @@ static config expand_partialresolution(const config& theme)
 			}
 		}
 
-		result.add_child("resolution", resolution);
+		result.add_child(str_resolution, resolution);
 	}
 
 	return result;
@@ -265,25 +265,25 @@ static void do_resolve_rects(const config& cfg, config& resolved_config, config*
 	resolved_config.merge_attributes(cfg);
 
 	// override default reference rect with "ref" parameter if any
-	if(!cfg["ref"].empty()) {
+	if(!cfg[str_ref].empty()) {
 		if(resol_cfg == nullptr) {
 			ERR_DP << "Use of ref= outside a [resolution] block";
 		} else {
-			// DBG_DP << ">> Looking for " << cfg["ref"];
-			const config& ref = find_ref(cfg["ref"], *resol_cfg);
+			// DBG_DP << ">> Looking for " << cfg[str_ref];
+			const config& ref = find_ref(cfg[str_ref], *resol_cfg);
 
-			if(ref["id"].empty()) {
-				ERR_DP << "Reference to non-existent rect id \"" << cfg["ref"] << "\"";
-			} else if(ref["rect"].empty()) {
-				ERR_DP << "Reference to id \"" << cfg["ref"] << "\" which does not have a \"rect\"";
+			if(ref[str_id].empty()) {
+				ERR_DP << "Reference to non-existent rect id \"" << cfg[str_ref] << "\"";
+			} else if(ref[str_rect].empty()) {
+				ERR_DP << "Reference to id \"" << cfg[str_ref] << "\" which does not have a \"rect\"";
 			} else {
 				ref_rect = read_rect(ref);
 			}
 		}
 	}
 	// resolve the rect value to absolute coordinates
-	if(!cfg["rect"].empty()) {
-		resolved_config["rect"] = resolve_rect(cfg["rect"]);
+	if(!cfg[str_rect].empty()) {
+		resolved_config[str_rect] = resolve_rect(cfg[str_rect]);
 	}
 }
 
@@ -301,12 +301,12 @@ theme::object::object()
 }
 
 theme::object::object(std::size_t sw, std::size_t sh, const config& cfg)
-	: id_(cfg["id"])
+	: id_(cfg[str_id])
 	, loc_(read_sdl_rect(cfg))
 	, relative_loc_()
 	, last_screen_()
-	, xanchor_(read_anchor(cfg["xanchor"]))
-	, yanchor_(read_anchor(cfg["yanchor"]))
+	, xanchor_(read_anchor(cfg[str_xanchor]))
+	, yanchor_(read_anchor(cfg[str_yanchor]))
 	, spec_width_(sw)
 	, spec_height_(sh)
 {
@@ -321,10 +321,10 @@ theme::border_t::border_t()
 }
 
 theme::border_t::border_t(const config& cfg)
-	: size(cfg["border_size"].to_double())
-	, background_image(cfg["background_image"])
-	, tile_image(cfg["tile_image"])
-	, show_border(cfg["show_border"].to_bool(true))
+	: size(cfg[str_border_size].to_double())
+	, background_image(cfg[str_background_image])
+	, tile_image(cfg[str_tile_image])
+	, show_border(cfg[str_show_border].to_bool(true))
 {
 	VALIDATE(size >= 0.0 && size <= 0.5, _("border_size should be between 0.0 and 0.5."));
 }
@@ -442,9 +442,9 @@ theme::label::label()
 
 theme::label::label(std::size_t sw, std::size_t sh, const config& cfg)
 	: object(sw, sh, cfg)
-	, text_(cfg["prefix"].str() + cfg["prefix_literal"].str() + cfg["text"].str() + cfg["postfix_literal"].str() + cfg["postfix"].str())
-	, icon_(cfg["icon"])
-	, font_(cfg["font_size"].to_size_t())
+	, text_(cfg[str_prefix].str() + cfg[str_prefix_literal].str() + cfg[str_text].str() + cfg[str_postfix_literal].str() + cfg[str_postfix].str())
+	, icon_(cfg[str_icon])
+	, font_(cfg[str_font_size].to_size_t())
 	, font_rgb_set_(false)
 	, font_rgb_(DefaultFontRGB)
 {
@@ -452,36 +452,36 @@ theme::label::label(std::size_t sw, std::size_t sh, const config& cfg)
 		font_ = DefaultFontSize;
 
 	if(cfg.has_attribute("font_rgb")) {
-		font_rgb_ = color_t::from_rgb_string(cfg["font_rgb"].str());
+		font_rgb_ = color_t::from_rgb_string(cfg[str_font_rgb].str());
 		font_rgb_set_ = true;
 	}
 }
 
 theme::status_item::status_item(std::size_t sw, std::size_t sh, const config& cfg)
 	: object(sw, sh, cfg)
-	, prefix_(cfg["prefix"].str() + cfg["prefix_literal"].str())
-	, postfix_(cfg["postfix_literal"].str() + cfg["postfix"].str())
+	, prefix_(cfg[str_prefix].str() + cfg[str_prefix_literal].str())
+	, postfix_(cfg[str_postfix_literal].str() + cfg[str_postfix].str())
 	, label_()
-	, font_(cfg["font_size"].to_size_t())
+	, font_(cfg[str_font_size].to_size_t())
 	, font_rgb_set_(false)
 	, font_rgb_(DefaultFontRGB)
 {
 	if(font_ == 0)
 		font_ = DefaultFontSize;
 
-	if(auto label_child = cfg.optional_child("label")) {
+	if(auto label_child = cfg.optional_child(str_label)) {
 		label_ = label(sw, sh, *label_child);
 	}
 
 	if(cfg.has_attribute("font_rgb")) {
-		font_rgb_ = color_t::from_rgb_string(cfg["font_rgb"].str());
+		font_rgb_ = color_t::from_rgb_string(cfg[str_font_rgb].str());
 		font_rgb_set_ = true;
 	}
 }
 
 theme::panel::panel(std::size_t sw, std::size_t sh, const config& cfg)
 	: object(sw, sh, cfg)
-	, image_(cfg["image"])
+	, image_(cfg[str_image])
 {
 }
 
@@ -496,11 +496,11 @@ theme::slider::slider()
 }
 theme::slider::slider(std::size_t sw, std::size_t sh, const config& cfg)
 	: object(sw, sh, cfg)
-	, title_(cfg["title"].str() + cfg["title_literal"].str())
-	, tooltip_(cfg["tooltip"])
-	, image_(cfg["image"])
-	, overlay_(cfg["overlay"])
-	, black_line_(cfg["black_line"].to_bool(false))
+	, title_(cfg[str_title].str() + cfg[str_title_literal].str())
+	, tooltip_(cfg[str_tooltip])
+	, image_(cfg[str_image])
+	, overlay_(cfg[str_overlay])
+	, black_line_(cfg[str_black_line].to_bool(false))
 {
 }
 
@@ -518,23 +518,23 @@ theme::menu::menu()
 
 theme::menu::menu(std::size_t sw, std::size_t sh, const config& cfg)
 	: object(sw, sh, cfg)
-	, button_(cfg["button"].to_bool(true))
-	, context_(cfg["is_context_menu"].to_bool(false))
-	, title_(cfg["title"].str() + cfg["title_literal"].str())
-	, tooltip_(cfg["tooltip"])
-	, image_(cfg["image"])
-	, overlay_(cfg["overlay"])
+	, button_(cfg[str_button].to_bool(true))
+	, context_(cfg[str_is_context_menu].to_bool(false))
+	, title_(cfg[str_title].str() + cfg[str_title_literal].str())
+	, tooltip_(cfg[str_tooltip])
+	, image_(cfg[str_image])
+	, overlay_(cfg[str_overlay])
 	, items_()
 {
-	for(const auto& item : utils::split(cfg["items"])) {
-		items_.emplace_back("id", item);
+	for(const auto& item : utils::split(cfg[str_items])) {
+		items_.emplace_back(str_id, item);
 	}
 
-	const auto& cmd = hotkey::get_hotkey_command(items_[0]["id"].str());
-	if(cfg["auto_tooltip"].to_bool() && tooltip_.empty() && items_.size() == 1) {
-		tooltip_ = cmd.description + hotkey::get_names(items_[0]["id"]) + "\n" + cmd.tooltip;
-	} else if(cfg["tooltip_name_prepend"].to_bool() && items_.size() == 1) {
-		tooltip_ = cmd.description + hotkey::get_names(items_[0]["id"]) + "\n" + tooltip_;
+	const auto& cmd = hotkey::get_hotkey_command(items_[0][str_id].str());
+	if(cfg[str_auto_tooltip].to_bool() && tooltip_.empty() && items_.size() == 1) {
+		tooltip_ = cmd.description + hotkey::get_names(items_[0][str_id]) + "\n" + cmd.tooltip;
+	} else if(cfg[str_tooltip_name_prepend].to_bool() && items_.size() == 1) {
+		tooltip_ = cmd.description + hotkey::get_names(items_[0][str_id]) + "\n" + tooltip_;
 	}
 }
 
@@ -554,15 +554,15 @@ theme::action::action()
 
 theme::action::action(std::size_t sw, std::size_t sh, const config& cfg)
 	: object(sw, sh, cfg)
-	, context_(cfg["is_context_menu"].to_bool())
-	, auto_tooltip_(cfg["auto_tooltip"].to_bool(false))
-	, tooltip_name_prepend_(cfg["tooltip_name_prepend"].to_bool(false))
-	, title_(cfg["title"].str() + cfg["title_literal"].str())
-	, tooltip_(cfg["tooltip"])
-	, image_(cfg["image"])
-	, overlay_(cfg["overlay"])
-	, type_(cfg["type"])
-	, items_(utils::split(cfg["items"]))
+	, context_(cfg[str_is_context_menu].to_bool())
+	, auto_tooltip_(cfg[str_auto_tooltip].to_bool(false))
+	, tooltip_name_prepend_(cfg[str_tooltip_name_prepend].to_bool(false))
+	, title_(cfg[str_title].str() + cfg[str_title_literal].str())
+	, tooltip_(cfg[str_tooltip])
+	, image_(cfg[str_image])
+	, overlay_(cfg[str_overlay])
+	, type_(cfg[str_type])
+	, items_(utils::split(cfg[str_items]))
 {
 }
 
@@ -619,8 +619,8 @@ bool theme::set_resolution(const rect& screen)
 	int current_rating = 1000000;
 	const config* current = nullptr;
 	for(const config& i : cfg_.child_range("resolution")) {
-		int width = i["width"].to_int();
-		int height = i["height"].to_int();
+		int width = i[str_width].to_int();
+		int height = i[str_height].to_int();
 		LOG_DP << "comparing resolution " << screen.w << "," << screen.h << " to " << width << "," << height;
 		if(screen.w >= width && screen.h >= height) {
 			LOG_DP << "loading theme: " << width << "," << height;
@@ -637,13 +637,13 @@ bool theme::set_resolution(const rect& screen)
 	}
 
 	if(!current) {
-		if(cfg_.child_count("resolution")) {
+		if(cfg_.child_count(str_resolution)) {
 			ERR_DP << "No valid resolution found";
 		}
 		return false;
 	}
-	cur_spec_width_ = (*current)["width"].to_size_t();
-	cur_spec_height_ = (*current)["height"].to_size_t();
+	cur_spec_width_ = (*current)[str_width].to_size_t();
+	cur_spec_height_ = (*current)[str_height].to_size_t();
 
 	std::map<std::string, std::string> title_stash_menus;
 	std::vector<theme::menu>::iterator m;
@@ -685,15 +685,15 @@ bool theme::set_resolution(const rect& screen)
 
 void theme::add_object(std::size_t sw, std::size_t sh, const config& cfg)
 {
-	if(const auto c = cfg.optional_child("main_map")) {
+	if(const auto c = cfg.optional_child(str_main_map)) {
 		main_map_ = object(sw, sh, c.value());
 	}
 
-	if(const auto c = cfg.optional_child("mini_map")) {
+	if(const auto c = cfg.optional_child(str_mini_map)) {
 		mini_map_ = object(sw, sh, c.value());
 	}
 
-	if(const auto c = cfg.optional_child("palette")) {
+	if(const auto c = cfg.optional_child(str_palette)) {
 		palette_ = object(sw, sh, c.value());
 	}
 
@@ -701,61 +701,61 @@ void theme::add_object(std::size_t sw, std::size_t sh, const config& cfg)
 		for(const auto [child_key, child_cfg] : status_cfg->all_children_view()) {
 			status_[child_key].reset(new status_item(sw, sh, child_cfg));
 		}
-		if(const auto unit_image_cfg = status_cfg->optional_child("unit_image")) {
+		if(const auto unit_image_cfg = status_cfg->optional_child(str_unit_image)) {
 			unit_image_ = object(sw, sh, unit_image_cfg.value());
 		} else {
 			unit_image_ = object();
 		}
 	}
 
-	for(const config& p : cfg.child_range("panel")) {
+	for(const config& p : cfg.child_range(str_panel)) {
 		panel new_panel(sw, sh, p);
-		set_object_location(new_panel, p["rect"], p["ref"]);
+		set_object_location(new_panel, p[str_rect], p[str_ref]);
 		panels_.push_back(new_panel);
 	}
 
-	for(const config& lb : cfg.child_range("label")) {
+	for(const config& lb : cfg.child_range(str_label)) {
 		label new_label(sw, sh, lb);
-		set_object_location(new_label, lb["rect"], lb["ref"]);
+		set_object_location(new_label, lb[str_rect], lb[str_ref]);
 		labels_.push_back(new_label);
 	}
 
-	for(const config& m : cfg.child_range("menu")) {
+	for(const config& m : cfg.child_range(str_menu)) {
 		menu new_menu(sw, sh, m);
 		DBG_DP << "adding menu: " << (new_menu.is_context() ? "is context" : "not context");
 		if(new_menu.is_context())
 			context_ = new_menu;
 		else {
-			set_object_location(new_menu, m["rect"], m["ref"]);
+			set_object_location(new_menu, m[str_rect], m[str_ref]);
 			menus_.push_back(new_menu);
 		}
 
 		DBG_DP << "done adding menu...";
 	}
 
-	for(const config& a : cfg.child_range("action")) {
+	for(const config& a : cfg.child_range(str_action)) {
 		action new_action(sw, sh, a);
 		DBG_DP << "adding action: " << (new_action.is_context() ? "is context" : "not context");
 		if(new_action.is_context())
 			action_context_ = new_action;
 		else {
-			set_object_location(new_action, a["rect"], a["ref"]);
+			set_object_location(new_action, a[str_rect], a[str_ref]);
 			actions_.push_back(new_action);
 		}
 
 		DBG_DP << "done adding action...";
 	}
 
-	for(const config& s : cfg.child_range("slider")) {
+	for(const config& s : cfg.child_range(str_slider)) {
 		slider new_slider(sw, sh, s);
 		DBG_DP << "adding slider";
-		set_object_location(new_slider, s["rect"], s["ref"]);
+		set_object_location(new_slider, s[str_rect], s[str_ref]);
 		sliders_.push_back(new_slider);
 
 		DBG_DP << "done adding slider...";
 	}
 
-	if(auto c = cfg.optional_child("main_map_border")) {
+	if(auto c = cfg.optional_child(str_main_map_border)) {
 		border_ = border_t(*c);
 	}
 
@@ -763,7 +763,7 @@ void theme::add_object(std::size_t sw, std::size_t sh, const config& cfg)
 	// (GitHub issue #3714)
 	static const int BATTERY_ICON_MIN_WIDTH = 1152;
 	if(!desktop::battery_info::does_device_have_battery() || screen_dimensions_.w < BATTERY_ICON_MIN_WIDTH) {
-		if(auto c = cfg.optional_child("no_battery")) {
+		if(auto c = cfg.optional_child(str_no_battery)) {
 			modify(*c);
 		}
 	}
@@ -841,22 +841,22 @@ void theme::modify(const config& cfg)
 	}
 
 	// Change existing theme objects.
-	for(const config& c : cfg.child_range("change")) {
-		std::string id = c["id"];
-		std::string ref_id = c["ref"];
+	for(const config& c : cfg.child_range(str_change)) {
+		std::string id = c[str_id];
+		std::string ref_id = c[str_ref];
 		theme::object& element = find_element(id);
 		if(element.get_id() == id)
-			set_object_location(element, c["rect"], ref_id);
+			set_object_location(element, c[str_rect], ref_id);
 	}
 
 	// Add new theme objects.
-	for(const config& c : cfg.child_range("add")) {
+	for(const config& c : cfg.child_range(str_add)) {
 		add_object(cur_spec_width_, cur_spec_height_, c);
 	}
 
 	// Remove existent theme objects.
-	for(const config& c : cfg.child_range("remove")) {
-		remove_object(c["id"]);
+	for(const config& c : cfg.child_range(str_remove)) {
+		remove_object(c[str_id]);
 	}
 
 	for(m = menus_.begin(); m != menus_.end(); ++m) {
@@ -970,7 +970,7 @@ theme::object* theme::refresh_title2(const std::string& id, const std::string& t
 	if(!cfg[title_tag].empty())
 		new_title = cfg[title_tag].str();
 
-	return refresh_title(id, new_title + cfg["title_literal"].str());
+	return refresh_title(id, new_title + cfg[str_title_literal].str());
 }
 
 void theme::modify_label(const std::string& id, const std::string& text)
@@ -987,8 +987,8 @@ void theme::set_known_themes(const game_config_view* cfg)
 {
 	if(cfg) {
 		known_themes.clear();
-		for(const config& thm : cfg->child_range("theme")) {
-			known_themes[thm["id"]] = thm;
+		for(const config& thm : cfg->child_range(str_theme)) {
+			known_themes[thm[str_id]] = thm;
 		}
 	}
 }
@@ -998,11 +998,11 @@ std::vector<theme_info> theme::get_basic_theme_info(bool include_hidden)
 	std::vector<theme_info> res;
 
 	for(const auto& [id, cfg] : known_themes) {
-		if(!cfg["hidden"].to_bool(false) || include_hidden) {
+		if(!cfg[str_hidden].to_bool(false) || include_hidden) {
 			auto& info = res.emplace_back();
 			info.id = id;
-			info.name = cfg["name"].t_str();
-			info.description = cfg["description"].t_str();
+			info.name = cfg[str_name].t_str();
+			info.description = cfg[str_description].t_str();
 		}
 	}
 

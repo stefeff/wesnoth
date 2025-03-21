@@ -177,7 +177,7 @@ multi_page_definition::multi_page_definition(const config& cfg)
 multi_page_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg), grid(nullptr)
 {
-	auto child = cfg.optional_child("grid");
+	auto child = cfg.optional_child(str_grid);
 	VALIDATE(child, _("No grid defined."));
 
 	grid = std::make_shared<builder_grid>(*child);
@@ -191,26 +191,26 @@ namespace implementation
 builder_multi_page::builder_multi_page(const config& cfg)
 	: implementation::builder_styled_widget(cfg), builders(), data()
 {
-	for (const config& page : cfg.child_range("page_definition"))
+	for (const config& page : cfg.child_range(str_page_definition))
 	{
 		auto builder = std::make_shared<builder_grid>(page);
 		assert(builder);
-		builders[page["id"]] = builder;
+		builders[page[str_id]] = builder;
 	}
 	VALIDATE(!builders.empty(), _("No page defined."));
 
 	/** @todo This part is untested. */
-	auto d = cfg.optional_child("page_data");
+	auto d = cfg.optional_child(str_page_data);
 	if(!d) {
 		return;
 	}
 
 	auto builder = builders.begin()->second;
-	for(const auto & row : d->child_range("row"))
+	for(const auto & row : d->child_range(str_row))
 	{
 		unsigned col = 0;
 
-		for(const auto & column : row.child_range("column"))
+		for(const auto & column : row.child_range(str_column))
 		{
 			data.emplace_back();
 			for(const auto& [key, value] : column.attribute_range())

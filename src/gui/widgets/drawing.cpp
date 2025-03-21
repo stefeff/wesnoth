@@ -97,7 +97,7 @@ drawing_definition::resolution::resolution(const config& cfg)
 	 * Normally the [draw] section is in the config, but for this widget the
 	 * original draw section is ignored, so send a dummy.
 	 */
-	static const config dummy("draw");
+	static const config dummy(str_draw);
 	state.emplace_back(dummy);
 }
 
@@ -108,8 +108,8 @@ namespace implementation
 
 builder_drawing::builder_drawing(const config& cfg)
 	: builder_styled_widget(cfg)
-	, width(cfg["width"])
-	, height(cfg["height"])
+	, width(cfg[str_width])
+	, height(cfg[str_height])
 	, draw(VALIDATE_WML_CHILD(cfg, "draw", missing_mandatory_wml_tag("drawing", "draw")))
 {
 }

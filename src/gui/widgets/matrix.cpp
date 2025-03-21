@@ -26,7 +26,7 @@
 #include "gui/core/register_widget.hpp"
 #include "wml_exception.hpp"
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -197,28 +197,28 @@ namespace implementation
 builder_matrix::builder_matrix(const config& cfg)
 	: builder_styled_widget(cfg)
 	, vertical_scrollbar_mode(
-			  get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
+			  get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
 	, horizontal_scrollbar_mode(
-			  get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
+			  get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
 	, builder_top(nullptr)
 	, builder_bottom(nullptr)
 	, builder_left(nullptr)
 	, builder_right(nullptr)
 	, builder_main(create_widget_builder(VALIDATE_WML_CHILD(cfg, "main", missing_mandatory_wml_tag("matrix", "main"))))
 {
-	if(auto top = cfg.optional_child("top")) {
+	if(auto top = cfg.optional_child(str_top)) {
 		builder_top = std::make_shared<builder_grid>(*top);
 	}
 
-	if(auto bottom = cfg.optional_child("bottom")) {
+	if(auto bottom = cfg.optional_child(str_bottom)) {
 		builder_bottom = std::make_shared<builder_grid>(*bottom);
 	}
 
-	if(auto left = cfg.optional_child("left")) {
+	if(auto left = cfg.optional_child(str_left)) {
 		builder_left = std::make_shared<builder_grid>(*left);
 	}
 
-	if(auto right = cfg.optional_child("right")) {
+	if(auto right = cfg.optional_child(str_right)) {
 		builder_right = std::make_shared<builder_grid>(*right);
 	}
 }

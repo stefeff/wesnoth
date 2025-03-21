@@ -118,7 +118,7 @@ int show_message_dialog(lua_State* L)
 	using portrait = gui2::dialogs::wml_message_portrait;
 	std::unique_ptr<portrait> left;
 	std::unique_ptr<portrait> right;
-	const bool is_double = def_cfg.has_attribute("second_portrait");
+	const bool is_double = def_cfg.has_attribute(str_second_portrait);
 	const bool left_side = def_cfg[str_left_side].to_bool(true);
 	if(is_double || left_side) {
 		left.reset(new portrait {def_cfg[str_portrait], def_cfg[str_mirror].to_bool(false)});

@@ -27,7 +27,7 @@
 
 #include <functional>
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -45,7 +45,7 @@ menu_button::menu_button(const implementation::builder_menu_button& builder)
 	, selected_(0)
 	, keep_open_(false)
 {
-	values_.emplace_back("label", this->get_label());
+	values_.emplace_back(str_label, this->get_label());
 
 	connect_signal<event::MOUSE_ENTER>(
 		std::bind(&menu_button::signal_handler_mouse_enter, this, std::placeholders::_2, std::placeholders::_3));
@@ -187,14 +187,14 @@ void menu_button::set_values(const std::vector<::config>& values, unsigned selec
 	assert(selected < values.size());
 	assert(selected_ < values_.size());
 
-	if(values[selected]["label"] != values_[selected_]["label"]) {
+	if(values[selected][str_label] != values_[selected_][str_label]) {
 		queue_redraw();
 	}
 
 	values_ = values;
 	selected_ = selected;
 
-	set_label(values_[selected_]["label"].t_str());
+	set_label(values_[selected_][str_label].t_str());
 }
 
 void menu_button::set_selected(unsigned selected, bool fire_event)
@@ -208,7 +208,7 @@ void menu_button::set_selected(unsigned selected, bool fire_event)
 
 	selected_ = selected;
 
-	set_label(values_[selected_]["label"].t_str());
+	set_label(values_[selected_][str_label].t_str());
 	if (fire_event) {
 		fire(event::NOTIFY_MODIFIED, *this, nullptr);
 	}
@@ -243,7 +243,7 @@ builder_menu_button::builder_menu_button(const config& cfg)
 	: builder_styled_widget(cfg)
 	, options_()
 {
-	for(const auto& option : cfg.child_range("option")) {
+	for(const auto& option : cfg.child_range(str_option)) {
 		options_.push_back(option);
 	}
 }

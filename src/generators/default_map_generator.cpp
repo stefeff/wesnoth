@@ -33,18 +33,18 @@ namespace {
 }
 
 generator_data::generator_data(const config &cfg)
-	: width(std::max(0, cfg["map_width"].to_int(40)))
-	, height(std::max(0, cfg["map_height"].to_int(40)))
+	: width(std::max(0, cfg[str_map_width].to_int(40)))
+	, height(std::max(0, cfg[str_map_height].to_int(40)))
 	, default_width(width)
 	, default_height(height)
-	, nplayers(std::max(0, cfg["players"].to_int(2)))
-	, nvillages(std::max(0, cfg["villages"].to_int(25)))
-	, iterations(std::max(0, cfg["iterations"].to_int(1000)))
-	, hill_size(std::max(0, cfg["hill_size"].to_int(10)))
-	, castle_size(std::max(0, cfg["castle_size"].to_int(9)))
-	, island_size(std::max(0, cfg["island_size"].to_int(0)))
+	, nplayers(std::max(0, cfg[str_players].to_int(2)))
+	, nvillages(std::max(0, cfg[str_villages].to_int(25)))
+	, iterations(std::max(0, cfg[str_iterations].to_int(1000)))
+	, hill_size(std::max(0, cfg[str_hill_size].to_int(10)))
+	, castle_size(std::max(0, cfg[str_castle_size].to_int(9)))
+	, island_size(std::max(0, cfg[str_island_size].to_int(0)))
 	, island_off_center(0)
-	, max_lakes(std::max(0, cfg["max_lakes"].to_int(20)))
+	, max_lakes(std::max(0, cfg[str_max_lakes].to_int(20)))
 	, link_castles(true)
 	, show_labels(true)
 {
@@ -67,8 +67,8 @@ std::string default_map_generator::name() const { return "default"; }
 
 std::string default_map_generator::config_name() const
 {
-	if (auto c = cfg_.optional_child("scenario"))
-		return c["name"];
+	if (auto c = cfg_.optional_child(str_scenario))
+		return c[str_name];
 
 	return std::string();
 }
@@ -170,7 +170,7 @@ config default_map_generator::create_scenario(utils::optional<uint32_t> randomse
 {
 	DBG_NG << "creating scenario...";
 
-	config res = cfg_.child_or_empty("scenario");
+	config res = cfg_.child_or_empty(str_scenario);
 
 	DBG_NG << "got scenario data...";
 
@@ -178,11 +178,11 @@ config default_map_generator::create_scenario(utils::optional<uint32_t> randomse
 	DBG_NG << "generating map...";
 
 	try{
-		res["map_data"] = generate_map(&labels, randomseed);
+		res[str_map_data] = generate_map(&labels, randomseed);
 	}
 	catch (const mapgen_exception& exc){
-		res["map_data"] = "";
-		res["error_message"] = exc.message;
+		res[str_map_data] = "";
+		res[str_error_message] = exc.message;
 	}
 	DBG_NG << "done generating map..";
 
@@ -193,9 +193,9 @@ config default_map_generator::create_scenario(utils::optional<uint32_t> randomse
 				i->first.x < static_cast<long>(data_.width) &&
 				i->first.y < static_cast<long>(data_.height)) {
 
-			config& label = res.add_child("label");
-			label["text"] = i->second;
-			label["category"] = _("Villages");
+			config& label = res.add_child(str_label);
+			label[str_text] = i->second;
+			label[str_category] = _("Villages");
 			i->first.write(label);
 		}
 	}

@@ -64,10 +64,10 @@ suppose_dead::suppose_dead(const config& cfg, bool hidden)
 	: action(cfg,hidden)
 	, unit_underlying_id_(0)
 	, unit_id_()
-	, loc_(cfg.mandatory_child("loc_")["x"],cfg.mandatory_child("loc_")["y"], wml_loc())
+	, loc_(cfg.mandatory_child(str_loc_)[str_x],cfg.mandatory_child(str_loc_)[str_y], wml_loc())
 {
 	// Construct and validate unit_
-	unit_map::iterator unit_itor = resources::gameboard->units().find(cfg["unit_"].to_size_t());
+	unit_map::iterator unit_itor = resources::gameboard->units().find(cfg[str_unit_].to_size_t());
 	if(unit_itor == resources::gameboard->units().end())
 		throw action::ctor_err("suppose_dead: Invalid underlying_id");
 
@@ -170,14 +170,14 @@ config suppose_dead::to_config() const
 {
 	config final_cfg = action::to_config();
 
-	final_cfg["type"]="suppose_dead";
-	final_cfg["unit_"]=static_cast<int>(unit_underlying_id_);
-	final_cfg["unit_id_"]=unit_id_;
+	final_cfg[str_type]="suppose_dead";
+	final_cfg[str_unit_]=static_cast<int>(unit_underlying_id_);
+	final_cfg[str_unit_id_]=unit_id_;
 
 	config loc_cfg;
-	loc_cfg["x"]=loc_.wml_x();
-	loc_cfg["y"]=loc_.wml_y();
-	final_cfg.add_child("loc_", std::move(loc_cfg));
+	loc_cfg[str_x]=loc_.wml_x();
+	loc_cfg[str_y]=loc_.wml_y();
+	final_cfg.add_child(str_loc_, std::move(loc_cfg));
 
 	return final_cfg;
 }
