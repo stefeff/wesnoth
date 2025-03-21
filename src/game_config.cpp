@@ -261,19 +261,19 @@ void add_color_info(const game_config_view& v)
 
 void load_config(const config &v)
 {
-	base_income      = v["base_income"].to_int(2);
-	village_income   = v["village_income"].to_int(1);
-	village_support  = v["village_support"].to_int(1);
-	poison_amount    = v["poison_amount"].to_int(8);
-	rest_heal_amount = v["rest_heal_amount"].to_int(2);
-	recall_cost      = v["recall_cost"].to_int(20);
-	kill_experience  = v["kill_experience"].to_int(8);
-	combat_experience= v["combat_experience"].to_int(1);
-	lobby_refresh    = v["lobby_refresh"].to_int(2000);
-	default_terrain  = v["default_terrain"].str();
-	tile_size        = v["tile_size"].to_int(72);
+	base_income      = v[str_base_income].to_int(2);
+	village_income   = v[str_village_income].to_int(1);
+	village_support  = v[str_village_support].to_int(1);
+	poison_amount    = v[str_poison_amount].to_int(8);
+	rest_heal_amount = v[str_rest_heal_amount].to_int(2);
+	recall_cost      = v[str_recall_cost].to_int(20);
+	kill_experience  = v[str_kill_experience].to_int(8);
+	combat_experience= v[str_combat_experience].to_int(1);
+	lobby_refresh    = v[str_lobby_refresh].to_int(2000);
+	default_terrain  = v[str_default_terrain].str();
+	tile_size        = v[str_tile_size].to_int(72);
 
-	std::vector<std::string> zoom_levels_str = utils::split(v["zoom_levels"]);
+	std::vector<std::string> zoom_levels_str = utils::split(v[str_zoom_levels]);
 	if(!zoom_levels_str.empty()) {
 		zoom_levels.clear();
 		std::transform(zoom_levels_str.begin(), zoom_levels_str.end(), std::back_inserter(zoom_levels), [](const std::string zoom) {
@@ -286,87 +286,87 @@ void load_config(const config &v)
 		});
 	}
 
-	title_music           = v["title_music"].str();
-	lobby_music           = v["lobby_music"].str();
+	title_music           = v[str_title_music].str();
+	lobby_music           = v[str_lobby_music].str();
 
-	default_victory_music = utils::split(v["default_victory_music"].str());
-	default_defeat_music  = utils::split(v["default_defeat_music"].str());
+	default_victory_music = utils::split(v[str_default_victory_music].str());
+	default_defeat_music  = utils::split(v[str_default_defeat_music].str());
 
-	if(auto i = v.optional_child("colors")){
+	if(auto i = v.optional_child(str_colors)){
 		using namespace game_config::colors;
 
-		moved_orb_color    = i["moved_orb_color"].str();
-		unmoved_orb_color  = i["unmoved_orb_color"].str();
-		partial_orb_color  = i["partial_orb_color"].str();
-		enemy_orb_color    = i["enemy_orb_color"].str();
-		ally_orb_color     = i["ally_orb_color"].str();
+		moved_orb_color    = i[str_moved_orb_color].str();
+		unmoved_orb_color  = i[str_unmoved_orb_color].str();
+		partial_orb_color  = i[str_partial_orb_color].str();
+		enemy_orb_color    = i[str_enemy_orb_color].str();
+		ally_orb_color     = i[str_ally_orb_color].str();
 	} // colors
 
-	show_ally_orb     = v["show_ally_orb"].to_bool(true);
-	show_enemy_orb    = v["show_enemy_orb"].to_bool(false);
-	show_moved_orb    = v["show_moved_orb"].to_bool(true);
-	show_partial_orb  = v["show_partial_orb"].to_bool(true);
-	show_status_on_ally_orb = v["show_status_on_ally_orb"].to_bool(true);
-	show_unmoved_orb  = v["show_unmoved_orb"].to_bool(true);
-	show_disengaged_orb = v["show_disengaged_orb"].to_bool(true);
+	show_ally_orb     = v[str_show_ally_orb].to_bool(true);
+	show_enemy_orb    = v[str_show_enemy_orb].to_bool(false);
+	show_moved_orb    = v[str_show_moved_orb].to_bool(true);
+	show_partial_orb  = v[str_show_partial_orb].to_bool(true);
+	show_status_on_ally_orb = v[str_show_status_on_ally_orb].to_bool(true);
+	show_unmoved_orb  = v[str_show_unmoved_orb].to_bool(true);
+	show_disengaged_orb = v[str_show_disengaged_orb].to_bool(true);
 
-	if(auto i = v.optional_child("images")){
+	if(auto i = v.optional_child(str_images)){
 		using namespace game_config::images;
 
-		game_title            = i["game_title"].str();
-		game_title_background = i["game_title_background"].str();
-		game_logo             = i["game_logo"].str();
-		game_logo_background  = i["game_logo_background"].str();
+		game_title            = i[str_game_title].str();
+		game_title_background = i[str_game_title_background].str();
+		game_logo             = i[str_game_logo].str();
+		game_logo_background  = i[str_game_logo_background].str();
 
-		victory_laurel = i["victory_laurel"].str();
-		victory_laurel_hardest = i["victory_laurel_hardest"].str();
-		victory_laurel_easy = i["victory_laurel_easy"].str();
+		victory_laurel = i[str_victory_laurel].str();
+		victory_laurel_hardest = i[str_victory_laurel_hardest].str();
+		victory_laurel_easy = i[str_victory_laurel_easy].str();
 
-		orb    = i["orb"].str();
-		orb_two_color = i["orb_two_color"].str();
-		energy = i["energy"].str();
+		orb    = i[str_orb].str();
+		orb_two_color = i[str_orb_two_color].str();
+		energy = i[str_energy].str();
 
-		battery_icon = i["battery_icon"].str();
-		time_icon = i["time_icon"].str();
+		battery_icon = i[str_battery_icon].str();
+		time_icon = i[str_time_icon].str();
 
-		flag      = i["flag"].str();
-		flag_icon = i["flag_icon"].str();
+		flag      = i[str_flag].str();
+		flag_icon = i[str_flag_icon].str();
 
-		terrain_mask = i["terrain_mask"].str();
-		grid_top     = i["grid_top"].str();
-		grid_bottom  = i["grid_bottom"].str();
-		mouseover    = i["mouseover"].str();
-		selected     = i["selected"].str();
-		editor_brush = i["editor_brush"].str();
-		unreachable  = i["unreachable"].str();
-		linger       = i["linger"].str();
+		terrain_mask = i[str_terrain_mask].str();
+		grid_top     = i[str_grid_top].str();
+		grid_bottom  = i[str_grid_bottom].str();
+		mouseover    = i[str_mouseover].str();
+		selected     = i[str_selected].str();
+		editor_brush = i[str_editor_brush].str();
+		unreachable  = i[str_unreachable].str();
+		linger       = i[str_linger].str();
 
-		observer   = i["observer"].str();
-		tod_bright = i["tod_bright"].str();
-		tod_dark   = i["tod_dark"].str();
-		level      = i["level"].str();
-		ellipsis   = i["ellipsis"].str();
-		missing    = i["missing"].str();
-		blank      = i["blank"].str();
+		observer   = i[str_observer].str();
+		tod_bright = i[str_tod_bright].str();
+		tod_dark   = i[str_tod_dark].str();
+		level      = i[str_level].str();
+		ellipsis   = i[str_ellipsis].str();
+		missing    = i[str_missing].str();
+		blank      = i[str_blank].str();
 	} // images
 
-	hp_bar_scaling  = v["hp_bar_scaling"].to_double(0.666);
-	xp_bar_scaling  = v["xp_bar_scaling"].to_double(0.5);
+	hp_bar_scaling  = v[str_hp_bar_scaling].to_double(0.666);
+	xp_bar_scaling  = v[str_xp_bar_scaling].to_double(0.5);
 
-	foot_speed_prefix   = utils::split(v["footprint_prefix"]);
-	foot_teleport_enter = v["footprint_teleport_enter"].str();
-	foot_teleport_exit  = v["footprint_teleport_exit"].str();
+	foot_speed_prefix   = utils::split(v[str_footprint_prefix]);
+	foot_teleport_enter = v[str_footprint_teleport_enter].str();
+	foot_teleport_exit  = v[str_footprint_teleport_exit].str();
 
-	shroud_prefix = v["shroud_prefix"].str();
-	fog_prefix    = v["fog_prefix"].str();
+	shroud_prefix = v[str_shroud_prefix].str();
+	fog_prefix    = v[str_fog_prefix].str();
 
 	add_color_info(game_config_view::wrap(v), true);
 
-	if(const config::attribute_value* a = v.get("flag_rgb")) {
+	if(const config::attribute_value* a = v.get(str_flag_rgb)) {
 		flag_rgb = a->str();
 	}
 
-	if(const config::attribute_value* a = v.get("unit_rgb")) {
+	if(const config::attribute_value* a = v.get(str_unit_rgb)) {
 		unit_rgb = a->str();
 	}
 
@@ -395,14 +395,14 @@ void load_config(const config &v)
 
 	server_list.clear();
 
-	for(const config& server : v.child_range("server")) {
+	for(const config& server : v.child_range(str_server)) {
 		server_info sinf;
-		sinf.name = server["name"].str();
-		sinf.address = server["address"].str();
+		sinf.name = server[str_name].str();
+		sinf.address = server[str_address].str();
 		server_list.push_back(sinf);
 	}
 
-	if(auto s = v.optional_child("sounds")) {
+	if(auto s = v.optional_child(str_sounds)) {
 		using namespace game_config::sounds;
 
 		const auto load_attribute = [](const config& c, const std::string& key, std::string& member) {
@@ -425,7 +425,7 @@ void load_config(const config &v)
 		load_attribute(*s, "ready_for_start",  ready_for_start);
 		load_attribute(*s, "game_has_begun",   game_has_begun);
 
-		if(auto ss = s->optional_child("status")) {
+		if(auto ss = s->optional_child(str_status)) {
 			using namespace game_config::sounds::status;
 
 			load_attribute(*ss, "poisoned",  poisoned);
@@ -441,8 +441,8 @@ void add_color_info(const game_config_view& v, bool build_defaults)
 		default_colors.clear();
 	}
 
-	for(const config& teamC : v.child_range("color_range")) {
-		const config::attribute_value* a1 = teamC.get("id"), *a2 = teamC.get("rgb");
+	for(const config& teamC : v.child_range(str_color_range)) {
+		const config::attribute_value* a1 = teamC.get(str_id), *a2 = teamC.get(str_rgb);
 		if(!a1 || !a2) {
 			continue;
 		}
@@ -461,7 +461,7 @@ void add_color_info(const game_config_view& v, bool build_defaults)
 		}
 
 		team_rgb_range.emplace(id, color_range(temp));
-		team_rgb_name.emplace(id, teamC["name"].t_str());
+		team_rgb_name.emplace(id, teamC[str_name].t_str());
 
 		LOG_NG << "registered color range '" << id << "': " << team_rgb_range[id].debug();
 
@@ -471,12 +471,12 @@ void add_color_info(const game_config_view& v, bool build_defaults)
 			team_rgb_colors.emplace(id, tp);
 		}
 
-		if(build_defaults && teamC["default"].to_bool()) {
+		if(build_defaults && teamC[str_default].to_bool()) {
 			default_colors.push_back(*a1);
 		}
 	}
 
-	for(const config &cp : v.child_range("color_palette")) {
+	for(const config &cp : v.child_range(str_color_palette)) {
 		for(const config::attribute& rgb : cp.attribute_range()) {
 			std::vector<color_t> temp;
 			for(const auto& s : utils::split(rgb.second)) {

@@ -69,8 +69,8 @@ attack::attack(std::size_t team_index, bool hidden, unit& u, const map_location&
 
 attack::attack(const config& cfg, bool hidden)
 	: move(cfg,hidden)
-	, target_hex_(cfg.mandatory_child("target_hex_")["x"], cfg.mandatory_child("target_hex_")["y"], wml_loc())
-	, weapon_choice_(cfg["weapon_choice_"].to_int(-1)) //default value: -1
+	, target_hex_(cfg.mandatory_child(str_target_hex_)[str_x], cfg.mandatory_child(str_target_hex_)[str_y], wml_loc())
+	, weapon_choice_(cfg[str_weapon_choice_].to_int(-1)) //default value: -1
 	, attack_movement_cost_()
 	, temp_movement_subtracted_(0)
 	, attack_count_()
@@ -257,15 +257,15 @@ config attack::to_config() const
 {
 	config final_cfg = move::to_config();
 
-	final_cfg["type"] = "attack";
-	final_cfg["weapon_choice_"] = weapon_choice_;
-//	final_cfg["attack_movement_cost_"] = attack_movement_cost_; //Unnecessary
-//	final_cfg["temp_movement_subtracted_"] = temp_movement_subtracted_; //Unnecessary
+	final_cfg[str_type] = "attack";
+	final_cfg[str_weapon_choice_] = weapon_choice_;
+//	final_cfg[str_attack_movement_cost_] = attack_movement_cost_; //Unnecessary
+//	final_cfg[str_temp_movement_subtracted_] = temp_movement_subtracted_; //Unnecessary
 
 	config target_hex_cfg;
-	target_hex_cfg["x"]=target_hex_.wml_x();
-	target_hex_cfg["y"]=target_hex_.wml_y();
-	final_cfg.add_child("target_hex_", std::move(target_hex_cfg));
+	target_hex_cfg[str_x]=target_hex_.wml_x();
+	target_hex_cfg[str_y]=target_hex_.wml_y();
+	final_cfg.add_child(str_target_hex_, std::move(target_hex_cfg));
 
 	return final_cfg;
 }

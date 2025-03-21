@@ -26,7 +26,7 @@
 #include <functional>
 #include "wml_exception.hpp"
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -279,12 +279,12 @@ namespace implementation
 {
 builder_tree_view::builder_tree_view(const config& cfg)
 	: builder_styled_widget(cfg)
-	, vertical_scrollbar_mode(get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
-	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
-	, indentation_step_size(cfg["indentation_step_size"])
+	, vertical_scrollbar_mode(get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
+	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
+	, indentation_step_size(cfg[str_indentation_step_size])
 	, nodes()
 {
-	for(const auto& node : cfg.child_range("node")) {
+	for(const auto& node : cfg.child_range(str_node)) {
 		nodes.emplace_back(node);
 	}
 
@@ -316,8 +316,8 @@ std::unique_ptr<widget> builder_tree_view::build() const
 }
 
 tree_node::tree_node(const config& cfg)
-	: id(cfg["id"])
-	, unfolded(cfg["unfolded"].to_bool(false))
+	: id(cfg[str_id])
+	, unfolded(cfg[str_unfolded].to_bool(false))
 	, builder(nullptr)
 {
 	VALIDATE(!id.empty(), missing_mandatory_wml_key("node", "id"));

@@ -33,7 +33,7 @@
 #include <functional>
 #include <numeric>
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -303,9 +303,9 @@ slider_definition::slider_definition(const config& cfg)
 
 slider_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, positioner_length(cfg["minimum_positioner_length"])
-	, left_offset(cfg["left_offset"])
-	, right_offset(cfg["right_offset"])
+	, positioner_length(cfg[str_minimum_positioner_length])
+	, left_offset(cfg[str_left_offset])
+	, right_offset(cfg[str_right_offset])
 {
 	VALIDATE(positioner_length, missing_mandatory_wml_key("resolution", "minimum_positioner_length"));
 
@@ -322,22 +322,22 @@ namespace implementation
 {
 builder_slider::builder_slider(const config& cfg)
 	: implementation::builder_styled_widget(cfg)
-	, best_slider_length_(cfg["best_slider_length"])
-	, minimum_value_(cfg["minimum_value"])
-	, maximum_value_(cfg["maximum_value"])
-	, step_size_(cfg["step_size"].to_int(1))
-	, value_(cfg["value"])
-	, minimum_value_label_(cfg["minimum_value_label"].t_str())
-	, maximum_value_label_(cfg["maximum_value_label"].t_str())
+	, best_slider_length_(cfg[str_best_slider_length])
+	, minimum_value_(cfg[str_minimum_value])
+	, maximum_value_(cfg[str_maximum_value])
+	, step_size_(cfg[str_step_size].to_int(1))
+	, value_(cfg[str_value])
+	, minimum_value_label_(cfg[str_minimum_value_label].t_str())
+	, maximum_value_label_(cfg[str_maximum_value_label].t_str())
 	, value_labels_()
 {
-	auto labels = cfg.optional_child("value_labels");
+	auto labels = cfg.optional_child(str_value_labels);
 	if(!labels) {
 		return;
 	}
 
-	for(const auto& label : labels->child_range("value")) {
-		value_labels_.push_back(label["label"]);
+	for(const auto& label : labels->child_range(str_value)) {
+		value_labels_.push_back(label[str_label]);
 	}
 }
 

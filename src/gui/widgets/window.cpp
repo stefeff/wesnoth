@@ -261,7 +261,7 @@ window* manager::get_window(const unsigned id)
 } // namespace
 
 window::window(const builder_window::window_resolution& definition)
-	: panel(implementation::builder_window(::config {"definition", definition.definition}), type())
+	: panel(implementation::builder_window(::config {str_definition, definition.definition}), type())
 	, status_(status::NEW)
 	, show_mode_(show_mode::none)
 	, retval_(retval::NONE)
@@ -1418,7 +1418,7 @@ window_definition::window_definition(const config& cfg)
 window_definition::resolution::resolution(const config& cfg)
 	: panel_definition::resolution(cfg), grid(nullptr)
 {
-	auto child = cfg.optional_child("grid");
+	auto child = cfg.optional_child(str_grid);
 	// VALIDATE(child, _("No grid defined."));
 
 	/** @todo Evaluate whether the grid should become mandatory. */

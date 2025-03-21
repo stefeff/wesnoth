@@ -36,7 +36,7 @@ static lg::log_domain log_engine("engine");
 #define ERR_NG LOG_STREAM(err, log_engine)
 namespace
 {
-	const config as_nonempty_range_default("_");
+	const config as_nonempty_range_default(str__);
 	config::const_child_itors as_nonempty_range(const std::string& varname, const variable_set& vars)
 	{
 		config::const_child_itors range = vars.get_variable_access_read(varname).as_array();
@@ -45,7 +45,7 @@ namespace
 			return range;
 		}
 
-		return as_nonempty_range_default.child_range("_");
+		return as_nonempty_range_default.child_range(str__);
 	}
 
 	// doxygen didn't like this as an anonymous struct
@@ -393,7 +393,7 @@ vconfig::all_children_iterator& vconfig::all_children_iterator::operator++()
 	{
 		try
 		{
-			variable_access_const vinfo = variables_->get_variable_access_read(vconfig(i_->cfg, *variables_)["variable"]);
+			variable_access_const vinfo = variables_->get_variable_access_read(vconfig(i_->cfg, *variables_)[str_variable]);
 
 			config::const_child_itors range = vinfo.as_array();
 

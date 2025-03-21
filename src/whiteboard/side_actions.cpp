@@ -779,12 +779,12 @@ side_actions::iterator side_actions::queue_suppose_dead(std::size_t turn, unit& 
 
 void side_actions::execute_net_cmd(const net_cmd& cmd)
 {
-	std::string type = cmd["type"];
+	std::string type = cmd[str_type];
 
 	if(type=="insert") {
-		std::size_t turn = cmd["turn"].to_int();
-		std::size_t pos = cmd["pos"].to_int();
-		action_ptr act = action::from_config(cmd.mandatory_child("action"), hidden_);
+		std::size_t turn = cmd[str_turn].to_int();
+		std::size_t pos = cmd[str_pos].to_int();
+		action_ptr act = action::from_config(cmd.mandatory_child(str_action), hidden_);
 		if(!act) {
 			ERR_WB << "side_actions::execute_network_command(): received invalid action data!";
 			return;
@@ -804,9 +804,9 @@ void side_actions::execute_net_cmd(const net_cmd& cmd)
 			display::get_singleton()->invalidate((*itor)->get_numbering_hex());
 		}
 	} else if(type=="replace") {
-		std::size_t turn = cmd["turn"].to_int();
-		std::size_t pos = cmd["pos"].to_int();
-		action_ptr act = action::from_config(cmd.mandatory_child("action"), hidden_);
+		std::size_t turn = cmd[str_turn].to_int();
+		std::size_t pos = cmd[str_pos].to_int();
+		action_ptr act = action::from_config(cmd.mandatory_child(str_action), hidden_);
 		if(!act) {
 			ERR_WB << "side_actions::execute_network_command(): received invalid action data!";
 			return;
@@ -825,8 +825,8 @@ void side_actions::execute_net_cmd(const net_cmd& cmd)
 
 		LOG_WB << "Command received: action replaced on turn #" << turn << ", position #" << pos << ": " << act;
 	} else if(type=="remove") {
-		std::size_t turn = cmd["turn"].to_int();
-		std::size_t pos = cmd["pos"].to_int();
+		std::size_t turn = cmd[str_turn].to_int();
+		std::size_t pos = cmd[str_pos].to_int();
 
 		iterator itor = turn_begin(turn) + pos;
 		if(itor >= end() || get_turn(itor) != turn) {
@@ -843,8 +843,8 @@ void side_actions::execute_net_cmd(const net_cmd& cmd)
 			display::get_singleton()->invalidate((*itor)->get_numbering_hex());
 		}
 	} else if(type=="bump_later") {
-		std::size_t turn = cmd["turn"].to_int();
-		std::size_t pos = cmd["pos"].to_int();
+		std::size_t turn = cmd[str_turn].to_int();
+		std::size_t pos = cmd[str_pos].to_int();
 
 		iterator itor = turn_begin(turn) + pos;
 		if(itor+1 >= end() || get_turn(itor) != turn) {
@@ -867,7 +867,7 @@ void side_actions::execute_net_cmd(const net_cmd& cmd)
 	} else if(type=="refresh") {
 		LOG_WB << "Command received: refresh";
 		clear();
-		for(const net_cmd& sub_cmd : cmd.child_range("net_cmd"))
+		for(const net_cmd& sub_cmd : cmd.child_range(str_net_cmd))
 			execute_net_cmd(sub_cmd);
 	} else {
 		ERR_WB << "side_actions::execute_network_command(): received invalid type!";
@@ -880,10 +880,10 @@ void side_actions::execute_net_cmd(const net_cmd& cmd)
 side_actions::net_cmd side_actions::make_net_cmd_insert(std::size_t turn_num, std::size_t pos, action_const_ptr act) const
 {
 	net_cmd result;
-	result["type"] = "insert";
-	result["turn"] = static_cast<int>(turn_num);
-	result["pos"] = static_cast<int>(pos);
-	result.add_child("action", act->to_config());
+	result[str_type] = "insert";
+	result[str_turn] = static_cast<int>(turn_num);
+	result[str_pos] = static_cast<int>(pos);
+	result.add_child(str_action, act->to_config());
 	return result;
 }
 side_actions::net_cmd side_actions::make_net_cmd_insert(const const_iterator& pos, action_const_ptr act) const
@@ -898,41 +898,41 @@ side_actions::net_cmd side_actions::make_net_cmd_insert(const const_iterator& po
 side_actions::net_cmd side_actions::make_net_cmd_replace(const const_iterator& pos, action_const_ptr act) const
 {
 	net_cmd result;
-	result["type"] = "replace";
-	result["turn"] = static_cast<int>(get_turn(pos));
-	result["pos"] = static_cast<int>(actions_.position_in_turn(pos));
-	result.add_child("action", act->to_config());
+	result[str_type] = "replace";
+	result[str_turn] = static_cast<int>(get_turn(pos));
+	result[str_pos] = static_cast<int>(actions_.position_in_turn(pos));
+	result.add_child(str_action, act->to_config());
 	return result;
 }
 side_actions::net_cmd side_actions::make_net_cmd_remove(const const_iterator& pos) const
 {
 	net_cmd result;
-	result["type"] = "remove";
-	result["turn"] = static_cast<int>(get_turn(pos));
-	result["pos"] = static_cast<int>(actions_.position_in_turn(pos));
+	result[str_type] = "remove";
+	result[str_turn] = static_cast<int>(get_turn(pos));
+	result[str_pos] = static_cast<int>(actions_.position_in_turn(pos));
 	return result;
 }
 side_actions::net_cmd side_actions::make_net_cmd_bump_later(const const_iterator& pos) const
 {
 	net_cmd result;
-	result["type"] = "bump_later";
-	result["turn"] = static_cast<int>(get_turn(pos));
-	result["pos"] = static_cast<int>(actions_.position_in_turn(pos));
+	result[str_type] = "bump_later";
+	result[str_turn] = static_cast<int>(get_turn(pos));
+	result[str_pos] = static_cast<int>(actions_.position_in_turn(pos));
 	return result;
 }
 side_actions::net_cmd side_actions::make_net_cmd_clear() const
 {
 	net_cmd result;
-	result["type"] = "clear";
+	result[str_type] = "clear";
 	return result;
 }
 side_actions::net_cmd side_actions::make_net_cmd_refresh() const
 {
 	net_cmd result;
-	result["type"] = "refresh";
+	result[str_type] = "refresh";
 
 	for(const_iterator itor = begin(), end_itor = end(); itor != end_itor; ++itor) {
-		result.add_child("net_cmd", make_net_cmd_insert(get_turn(itor), actions_.position_in_turn(itor), *itor));
+		result.add_child(str_net_cmd, make_net_cmd_insert(get_turn(itor), actions_.position_in_turn(itor), *itor));
 	}
 
 	return result;

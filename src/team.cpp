@@ -267,7 +267,7 @@ void team::team_info::read(const config& cfg)
 
 void team::team_info::handle_legacy_share_vision(const config& cfg)
 {
-	if(cfg.has_attribute("share_view") || cfg.has_attribute("share_maps")) {
+	if(cfg.has_attribute(str_share_view) || cfg.has_attribute(str_share_maps)) {
 		if(cfg[str_share_view].to_bool()) {
 			share_vision = team_shared_vision::type::all;
 		} else if(cfg[str_share_maps].to_bool(true)) {
@@ -365,7 +365,7 @@ void team::build(const config& cfg, const gamemap& map, int gold)
 		   << ", fog: " << uses_fog() << ".";
 
 	// Load the WML-cleared fog.
-	auto fog_override = cfg.optional_child("fog_override");
+	auto fog_override = cfg.optional_child(str_fog_override);
 	if(fog_override) {
 		const std::vector<map_location> fog_vector
 				= map.parse_location_range(fog_override[str_x], fog_override[str_y], true);
@@ -384,7 +384,7 @@ void team::build(const config& cfg, const gamemap& map, int gold)
 	// Was it correct?
 
 	// Load in the villages the side controls at the start
-	for(const config& v : cfg.child_range("village")) {
+	for(const config& v : cfg.child_range(str_village)) {
 		map_location loc(v);
 		if(map.is_village(loc)) {
 			villages_.insert(loc);
@@ -410,13 +410,13 @@ void team::write(config& cfg) const
 
 	// Write village locations
 	for(const map_location& loc : villages_) {
-		loc.write(cfg.add_child("village"));
+		loc.write(cfg.add_child(str_village));
 	}
 
 	cfg[str_shroud_data] = shroud_.write();
 	cfg[str_fog_data] = fog_.write();
 	if(!fog_clearer_.empty())
-		write_location_range(fog_clearer_, cfg.add_child("fog_override"));
+		write_location_range(fog_clearer_, cfg.add_child(str_fog_override));
 
 	cfg[str_countdown_time] = countdown_time_;
 	cfg[str_action_bonus_count] = action_bonus_count_;
@@ -440,7 +440,7 @@ game_events::pump_result_t team::get_village(const map_location& loc, const int 
 	game_events::pump_result_t res;
 
 	if(gamedata) {
-		config::attribute_value& var = gamedata->get_variable("owner_side");
+		config::attribute_value& var = gamedata->get_variable(str_owner_side);
 		const config::attribute_value old_value = var;
 		var = owner_side;
 
@@ -559,14 +559,16 @@ public:
 	/** We are in a game with no mp server and need to do this choice locally */
 	virtual config local_choice() const
 	{
-		return config{"controller", side_controller::get_string(new_controller_), "is_local", true};
+		return config{str_controller, side_controller::get_string(new_controller_), str_is_local, true};
 	}
 
 	/** The request which is sent to the mp server. */
 	virtual config request() const
 	{
 		return config{
-				"new_controller", side_controller::get_string(new_controller_), "old_controller", side_controller::get_string(team_.controller()), "side", team_.side(),
+				str_new_controller, side_controller::get_string(new_controller_),
+				str_old_controller, side_controller::get_string(team_.controller()),
+				str_side, team_.side(),
 		};
 	}
 

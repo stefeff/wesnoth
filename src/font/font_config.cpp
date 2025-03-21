@@ -103,14 +103,14 @@ bool load_font_config()
 		return false;
 	}
 
-	auto fonts_config = cfg.optional_child("fonts");
+	auto fonts_config = cfg.optional_child(str_fonts);
 	if (!fonts_config)
 		return false;
 
-	family_order_sans = fonts_config["family_order"];
-	family_order_mono = fonts_config["family_order_monospace"];
-	family_order_light = fonts_config["family_order_light"];
-	family_order_script = fonts_config["family_order_script"];
+	family_order_sans = fonts_config[str_family_order];
+	family_order_mono = fonts_config[str_family_order_monospace];
+	family_order_light = fonts_config[str_family_order_light];
+	family_order_script = fonts_config[str_family_order_script];
 
 	if(family_order_mono.empty()) {
 		ERR_FT << "No monospace font family order defined, falling back to sans serif order";

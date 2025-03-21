@@ -171,13 +171,13 @@ void addon_list::set_addons(const addons_list& addons)
 		widget_item item;
 
 		if(!tracking_info.can_publish) {
-			item["label"] = addon.display_icon();
+			item[str_label] = addon.display_icon();
 			data.emplace("icon", item);
 
-			item["label"] = display_title_full_shift(addon);
+			item[str_label] = display_title_full_shift(addon);
 			data.emplace("name", item);
 		} else {
-			item["label"] = addon.display_icon() + "~SCALE(72,72)~BLIT(icons/icon-addon-publish.png,8,8)";
+			item[str_label] = addon.display_icon() + "~SCALE(72,72)~BLIT(icons/icon-addon-publish.png,8,8)";
 			data.emplace("icon", item);
 
 			const std::string publish_name = formatter()
@@ -185,11 +185,11 @@ void addon_list::set_addons(const addons_list& addons)
 				<< display_title_full_shift(addon)
 				<< "</span>";
 
-			item["label"] = publish_name;
+			item[str_label] = publish_name;
 			data.emplace("name", item);
 		}
 
-		item["label"] = describe_status(tracking_info);
+		item[str_label] = describe_status(tracking_info);
 		data.emplace("installation_status", item);
 
 		// If the addon is upgradable or ourdated on server, we display the two relevant
@@ -209,19 +209,19 @@ void addon_list::set_addons(const addons_list& addons)
 			ss.str(colorize_addon_state_string(ss.str(), tracking_info.state, false));
 		}
 
-		item["label"] = ss.str();
+		item[str_label] = ss.str();
 		data.emplace("version", item);
 
-		item["label"] = addon.author;
+		item[str_label] = addon.author;
 		data.emplace("author", item);
 
-		item["label"] = size_display_string(addon.size);
+		item[str_label] = size_display_string(addon.size);
 		data.emplace("size", item);
 
-		item["label"] = std::to_string(addon.downloads);
+		item[str_label] = std::to_string(addon.downloads);
 		data.emplace("downloads", item);
 
-		item["label"] = addon.display_type();
+		item[str_label] = addon.display_type();
 		data.emplace("type", item);
 
 		grid* row_grid = &list.add_row(data);
@@ -423,10 +423,10 @@ addon_list_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg), grid(nullptr)
 {
 	// Add a dummy state since every widget needs a state.
-	static config dummy("draw");
+	static config dummy(str_draw);
 	state.emplace_back(dummy);
 
-	auto child = cfg.optional_child("grid");
+	auto child = cfg.optional_child(str_grid);
 	VALIDATE(child, _("No grid defined."));
 
 	grid = std::make_shared<builder_grid>(*child);
@@ -453,12 +453,12 @@ builder_addon_list::builder_addon_list(const config& cfg)
 	, install_status_visibility_(widget::visibility::visible)
 	, install_buttons_visibility_(widget::visibility::invisible)
 {
-	if(cfg.has_attribute("install_status_visibility")) {
-		install_status_visibility_ = parse_visibility(cfg["install_status_visibility"]);
+	if(cfg.has_attribute(str_install_status_visibility)) {
+		install_status_visibility_ = parse_visibility(cfg[str_install_status_visibility]);
 	}
 
-	if(cfg.has_attribute("install_buttons_visibility")) {
-		install_buttons_visibility_ = parse_visibility(cfg["install_buttons_visibility"]);
+	if(cfg.has_attribute(str_install_buttons_visibility)) {
+		install_buttons_visibility_ = parse_visibility(cfg[str_install_buttons_visibility]);
 	}
 }
 

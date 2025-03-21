@@ -115,11 +115,11 @@ bool load_language_list()
 	known_languages.clear();
 	known_languages.emplace_back("", t_string(N_("System default language"), "wesnoth"), "ltr", "", "A", "100");
 
-	for (const config &lang : cfg.child_range("locale"))
+	for (const config &lang : cfg.child_range(str_locale))
 	{
 		known_languages.emplace_back(
-			lang["locale"], lang["name"], lang["dir"],
-			lang["alternates"], lang["sort_name"], lang["percent"]);
+			lang[str_locale], lang[str_name], lang[str_dir],
+			lang[str_alternates], lang[str_sort_name], lang[str_percent]);
 	}
 
 	return true;
@@ -372,10 +372,10 @@ const language_def& get_locale()
 
 void init_textdomains(const game_config_view& cfg)
 {
-	for (const config &t : cfg.child_range("textdomain"))
+	for (const config &t : cfg.child_range(str_textdomain))
 	{
-		const std::string &name = t["name"];
-		const std::string &path = t["path"];
+		const std::string &name = t[str_name];
+		const std::string &path = t[str_path];
 
 		if(path.empty()) {
 			t_string::add_textdomain(name, filesystem::get_intl_dir());
@@ -396,7 +396,7 @@ void init_textdomains(const game_config_view& cfg)
 bool init_strings(const game_config_view& cfg)
 {
 	languages_.clear();
-	for (const config &l : cfg.child_range("language")) {
+	for (const config &l : cfg.child_range(str_language)) {
 		languages_.push_back(l);
 	}
 	return load_strings(true);

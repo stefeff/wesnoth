@@ -634,7 +634,7 @@ void manager::send_network_data()
 			continue;
 
 		config packet;
-		config& wb_cfg = packet.add_child("whiteboard",buf_cfg);
+		config& wb_cfg = packet.add_child(str_whiteboard,buf_cfg);
 		wb_cfg[str_side] = static_cast<int>(team_index+1);
 		wb_cfg[str_to_sides] = resources::gameboard->teams().at(team_index).allied_human_teams();
 

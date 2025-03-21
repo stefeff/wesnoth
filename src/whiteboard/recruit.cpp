@@ -67,8 +67,8 @@ recruit::recruit(std::size_t team_index, bool hidden, const std::string& unit_na
 
 recruit::recruit(const config& cfg, bool hidden)
 	: action(cfg,hidden)
-	, unit_name_(cfg["unit_name_"])
-	, recruit_hex_(cfg.mandatory_child("recruit_hex_")["x"],cfg.mandatory_child("recruit_hex_")["y"], wml_loc())
+	, unit_name_(cfg[str_unit_name_])
+	, recruit_hex_(cfg.mandatory_child(str_recruit_hex_)[str_x],cfg.mandatory_child(str_recruit_hex_)[str_y], wml_loc())
 	, temp_unit_()
 	, fake_unit_()
 	, cost_(0)
@@ -233,14 +233,14 @@ config recruit::to_config() const
 {
 	config final_cfg = action::to_config();
 
-	final_cfg["type"] = "recruit";
-	final_cfg["unit_name_"] = unit_name_;
-//	final_cfg["temp_cost_"] = temp_cost_; //Unnecessary
+	final_cfg[str_type] = "recruit";
+	final_cfg[str_unit_name_] = unit_name_;
+//	final_cfg[str_temp_cost_] = temp_cost_; //Unnecessary
 
 	config loc_cfg;
-	loc_cfg["x"]=recruit_hex_.wml_x();
-	loc_cfg["y"]=recruit_hex_.wml_y();
-	final_cfg.add_child("recruit_hex_", std::move(loc_cfg));
+	loc_cfg[str_x]=recruit_hex_.wml_x();
+	loc_cfg[str_y]=recruit_hex_.wml_y();
+	final_cfg.add_child(str_recruit_hex_, std::move(loc_cfg));
 
 	return final_cfg;
 }

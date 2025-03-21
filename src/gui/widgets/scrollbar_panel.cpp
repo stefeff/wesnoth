@@ -82,12 +82,12 @@ namespace implementation
 builder_scrollbar_panel::builder_scrollbar_panel(const config& cfg)
 	: builder_styled_widget(cfg)
 	, vertical_scrollbar_mode(
-			  get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
+			  get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
 	, horizontal_scrollbar_mode(
-			  get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
+			  get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
 	, grid_(nullptr)
 {
-	auto grid_definition = cfg.optional_child("definition");
+	auto grid_definition = cfg.optional_child(str_definition);
 
 	VALIDATE(grid_definition, _("No list defined."));
 	grid_ = std::make_shared<builder_grid>(*grid_definition);

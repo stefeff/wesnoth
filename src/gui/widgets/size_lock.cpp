@@ -104,10 +104,10 @@ size_lock_definition::resolution::resolution(const config& cfg)
 	, grid(nullptr)
 {
 	// Add a dummy state since every widget needs a state.
-	static config dummy("draw");
+	static config dummy(str_draw);
 	state.emplace_back(dummy);
 
-	auto child = cfg.optional_child("grid");
+	auto child = cfg.optional_child(str_grid);
 	VALIDATE(child, _("No grid defined."));
 
 	grid = std::make_shared<builder_grid>(*child);
@@ -117,12 +117,12 @@ namespace implementation
 {
 builder_size_lock::builder_size_lock(const config& cfg)
 	: builder_styled_widget(cfg)
-	, width_(cfg["width"])
-	, height_(cfg["height"])
+	, width_(cfg[str_width])
+	, height_(cfg[str_height])
 	, content_(nullptr)
 {
-	VALIDATE(cfg.has_child("widget"), _("No widget defined."));
-	content_ = create_widget_builder(cfg.mandatory_child("widget"));
+	VALIDATE(cfg.has_child(str_widget), _("No widget defined."));
+	content_ = create_widget_builder(cfg.mandatory_child(str_widget));
 }
 
 std::unique_ptr<widget> builder_size_lock::build() const

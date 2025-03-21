@@ -75,14 +75,14 @@ recall::recall(std::size_t team_index, bool hidden, const unit& u, const map_loc
 recall::recall(const config& cfg, bool hidden)
 	: action(cfg,hidden)
 	, temp_unit_()
-	, recall_hex_(cfg.mandatory_child("recall_hex_")["x"],cfg.mandatory_child("recall_hex_")["y"], wml_loc())
+	, recall_hex_(cfg.mandatory_child(str_recall_hex_)[str_x],cfg.mandatory_child(str_recall_hex_)[str_y], wml_loc())
 	, fake_unit_()
 	, original_mp_(0)
 	, original_ap_(0)
 	, original_recall_pos_(0)
 {
 	// Construct and validate temp_unit_
-	std::size_t underlying_id = cfg["temp_unit_"];
+	std::size_t underlying_id = cfg[str_temp_unit_];
 	for(const unit_ptr & recall_unit : resources::gameboard->teams().at(team_index()).recall_list())
 	{
 		if(recall_unit->underlying_id()==underlying_id)
@@ -253,14 +253,14 @@ config recall::to_config() const
 {
 	config final_cfg = action::to_config();
 
-	final_cfg["type"] = "recall";
-	final_cfg["temp_unit_"] = static_cast<int>(temp_unit_->underlying_id());
-//	final_cfg["temp_cost_"] = temp_cost_; //Unnecessary
+	final_cfg[str_type] = "recall";
+	final_cfg[str_temp_unit_] = static_cast<int>(temp_unit_->underlying_id());
+//	final_cfg[str_temp_cost_] = temp_cost_; //Unnecessary
 
 	config loc_cfg;
-	loc_cfg["x"]=recall_hex_.wml_x();
-	loc_cfg["y"]=recall_hex_.wml_y();
-	final_cfg.add_child("recall_hex_", std::move(loc_cfg));
+	loc_cfg[str_x]=recall_hex_.wml_x();
+	loc_cfg[str_y]=recall_hex_.wml_y();
+	final_cfg.add_child(str_recall_hex_, std::move(loc_cfg));
 
 	return final_cfg;
 }

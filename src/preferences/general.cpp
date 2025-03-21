@@ -103,7 +103,7 @@ base_manager::~base_manager()
 		if (no_preferences_save) return;
 
 		// Set the 'hidden' preferences.
-		prefs["scroll_threshold"] = mouse_scroll_threshold();
+		prefs[str_scroll_threshold] = mouse_scroll_threshold();
 
 		write_preferences();
 	} catch (...) {}
@@ -263,49 +263,49 @@ bool show_ally_orb() {
 	return get("show_ally_orb", game_config::show_ally_orb);
 }
 void set_show_ally_orb(bool show_orb) {
-	prefs["show_ally_orb"] = show_orb;
+	prefs[str_show_ally_orb] = show_orb;
 }
 
 bool show_status_on_ally_orb() {
 	return get("show_status_on_ally_orb", game_config::show_status_on_ally_orb);
 }
 void set_show_status_on_ally_orb(bool show_orb) {
-	prefs["show_status_on_ally_orb"] = show_orb;
+	prefs[str_show_status_on_ally_orb] = show_orb;
 }
 
 bool show_enemy_orb() {
 	return get("show_enemy_orb", game_config::show_enemy_orb);
 }
 void set_show_enemy_orb(bool show_orb) {
-	prefs["show_enemy_orb"] = show_orb;
+	prefs[str_show_enemy_orb] = show_orb;
 }
 
 bool show_moved_orb() {
 	return get("show_moved_orb", game_config::show_moved_orb);
 }
 void set_show_moved_orb(bool show_orb) {
-	prefs["show_moved_orb"] = show_orb;
+	prefs[str_show_moved_orb] = show_orb;
 }
 
 bool show_unmoved_orb() {
 	return get("show_unmoved_orb", game_config::show_unmoved_orb);
 }
 void set_show_unmoved_orb(bool show_orb) {
-	prefs["show_unmoved_orb"] = show_orb;
+	prefs[str_show_unmoved_orb] = show_orb;
 }
 
 bool show_partial_orb() {
 	return get("show_partial_orb", game_config::show_partial_orb);
 }
 void set_show_partial_orb(bool show_orb) {
-	prefs["show_partial_orb"] = show_orb;
+	prefs[str_show_partial_orb] = show_orb;
 }
 
 bool show_disengaged_orb() {
 	return get("show_disengaged_orb", game_config::show_disengaged_orb);
 }
 void set_show_disengaged_orb(bool show_orb) {
-	prefs["show_disengaged_orb"] = show_orb;
+	prefs[str_show_disengaged_orb] = show_orb;
 }
 
 static std::string fix_orb_color_name(const std::string& color) {
@@ -326,14 +326,14 @@ std::string allied_color() {
 	return fix_orb_color_name(ally_color);
 }
 void set_allied_color(const std::string& color_id) {
-	prefs["ally_orb_color"] = color_id;
+	prefs[str_ally_orb_color] = color_id;
 }
 
 bool addon_icons() {
-	return prefs["addon_icons"].to_bool(true);
+	return prefs[str_addon_icons].to_bool(true);
 }
 void set_addon_icons(bool icons) {
-	prefs["addon_icons"] = icons;
+	prefs[str_addon_icons] = icons;
 }
 
 std::string core_id() {
@@ -343,7 +343,7 @@ std::string core_id() {
 	return core_id;
 }
 void set_core_id(const std::string& core_id) {
-	prefs["core"] = core_id;
+	prefs[str_core] = core_id;
 }
 
 std::string enemy_color() {
@@ -353,7 +353,7 @@ std::string enemy_color() {
 	return fix_orb_color_name(enemy_color);
 }
 void set_enemy_color(const std::string& color_id) {
-	prefs["enemy_orb_color"] = color_id;
+	prefs[str_enemy_orb_color] = color_id;
 }
 
 std::string moved_color() {
@@ -363,7 +363,7 @@ std::string moved_color() {
 	return fix_orb_color_name(moved_color);
 }
 void set_moved_color(const std::string& color_id) {
-	prefs["moved_orb_color"] = color_id;
+	prefs[str_moved_orb_color] = color_id;
 }
 
 std::string unmoved_color() {
@@ -373,7 +373,7 @@ std::string unmoved_color() {
 	return fix_orb_color_name(unmoved_color);
 }
 void set_unmoved_color(const std::string& color_id) {
-	prefs["unmoved_orb_color"] = color_id;
+	prefs[str_unmoved_orb_color] = color_id;
 }
 
 std::string partial_color() {
@@ -383,7 +383,7 @@ std::string partial_color() {
 	return fix_orb_color_name(partmoved_color);
 }
 void set_partial_color(const std::string& color_id) {
-	prefs["partial_orb_color"] = color_id;
+	prefs[str_partial_orb_color] = color_id;
 }
 
 bool scroll_to_action()
@@ -393,13 +393,13 @@ bool scroll_to_action()
 
 void set_scroll_to_action(bool ison)
 {
-	prefs["scroll_to_action"] = ison;
+	prefs[str_scroll_to_action] = ison;
 }
 
 point resolution()
 {
-	const unsigned x_res = prefs["xresolution"].to_unsigned();
-	const unsigned y_res = prefs["yresolution"].to_unsigned();
+	const unsigned x_res = prefs[str_xresolution].to_unsigned();
+	const unsigned y_res = prefs[str_yresolution].to_unsigned();
 
 	// Either resolution was unspecified, return default.
 	if(x_res == 0 || y_res == 0) {
@@ -415,12 +415,12 @@ point resolution()
 int pixel_scale()
 {
 	// For now this has a minimum value of 1 and a maximum of 4.
-	return std::max<int>(std::min<int>(prefs["pixel_scale"].to_int(1), max_pixel_scale), min_pixel_scale);
+	return std::max<int>(std::min<int>(prefs[str_pixel_scale].to_int(1), max_pixel_scale), min_pixel_scale);
 }
 
 void set_pixel_scale(const int scale)
 {
-	prefs["pixel_scale"] = std::clamp(scale, min_pixel_scale, max_pixel_scale);
+	prefs[str_pixel_scale] = std::clamp(scale, min_pixel_scale, max_pixel_scale);
 }
 
 bool auto_pixel_scale()
@@ -430,7 +430,7 @@ bool auto_pixel_scale()
 
 void set_auto_pixel_scale(bool choice)
 {
-	prefs["auto_pixel_scale"] = choice;
+	prefs[str_auto_pixel_scale] = choice;
 }
 
 bool maximized()
@@ -456,17 +456,17 @@ void _set_resolution(const point& res)
 
 void _set_maximized(bool ison)
 {
-	prefs["maximized"] = ison;
+	prefs[str_maximized] = ison;
 }
 
 void _set_fullscreen(bool ison)
 {
-	prefs["fullscreen"] = ison;
+	prefs[str_fullscreen] = ison;
 }
 
 void set_vsync(bool ison)
 {
-	prefs["vsync"] = ison;
+	prefs[str_vsync] = ison;
 }
 
 bool turbo()
@@ -480,28 +480,28 @@ bool turbo()
 
 void set_turbo(bool ison)
 {
-	prefs["turbo"] = ison;
+	prefs[str_turbo] = ison;
 }
 
 double turbo_speed()
 {
-	return prefs["turbo_speed"].to_double(2.0);
+	return prefs[str_turbo_speed].to_double(2.0);
 }
 
 void set_turbo_speed(const double speed)
 {
-	prefs["turbo_speed"] = speed;
+	prefs[str_turbo_speed] = speed;
 }
 
 int font_scaling()
 {
 	// Clip at 80 because if it's too low it'll cause crashes
-	return std::max<int>(std::min<int>(prefs["font_scale"].to_int(100), max_font_scaling), min_font_scaling);
+	return std::max<int>(std::min<int>(prefs[str_font_scale].to_int(100), max_font_scaling), min_font_scaling);
 }
 
 void set_font_scaling(int scale)
 {
-	prefs["font_scale"] = std::clamp(scale, min_font_scaling, max_font_scaling);
+	prefs[str_font_scale] = std::clamp(scale, min_font_scaling, max_font_scaling);
 }
 
 int font_scaled(int size)
@@ -511,12 +511,12 @@ int font_scaled(int size)
 
 int keepalive_timeout()
 {
-	return prefs["keepalive_timeout"].to_int(60);
+	return prefs[str_keepalive_timeout].to_int(60);
 }
 
 void keepalive_timeout(int seconds)
 {
-	prefs["keepalive_timeout"] = std::abs(seconds);
+	prefs[str_keepalive_timeout] = std::abs(seconds);
 }
 
 bool idle_anim()
@@ -526,22 +526,22 @@ bool idle_anim()
 
 void set_idle_anim(const bool ison)
 {
-	prefs["idle_anim"] = ison;
+	prefs[str_idle_anim] = ison;
 }
 
 int idle_anim_rate()
 {
-	return prefs["idle_anim_rate"];
+	return prefs[str_idle_anim_rate];
 }
 
 void set_idle_anim_rate(int rate)
 {
-	prefs["idle_anim_rate"] = rate;
+	prefs[str_idle_anim_rate] = rate;
 }
 
 std::string language()
 {
-	return prefs["locale"];
+	return prefs[str_locale];
 }
 
 void set_language(const std::string& s)
@@ -551,7 +551,7 @@ void set_language(const std::string& s)
 
 std::string gui_theme()
 {
-	return prefs["gui2_theme"];
+	return prefs[str_gui2_theme];
 }
 
 void set_gui_theme(const std::string& s)
@@ -589,7 +589,7 @@ std::size_t sound_buffer_size()
 		const std::size_t buf_size = 1024;
 	#endif
 
-	return prefs["sound_buffer_size"].to_int(buf_size);
+	return prefs[str_sound_buffer_size].to_int(buf_size);
 }
 
 void save_sound_buffer_size(const std::size_t size)
@@ -611,7 +611,7 @@ void save_sound_buffer_size(const std::size_t size)
 
 int music_volume()
 {
-	return prefs["music_volume"].to_int(100);
+	return prefs[str_music_volume].to_int(100);
 }
 
 void set_music_volume(int vol)
@@ -620,13 +620,13 @@ void set_music_volume(int vol)
 		return;
 	}
 
-	prefs["music_volume"] = vol;
+	prefs[str_music_volume] = vol;
 	sound::set_music_volume(music_volume());
 }
 
 int sound_volume()
 {
-	return prefs["sound_volume"].to_int(100);
+	return prefs[str_sound_volume].to_int(100);
 }
 
 void set_sound_volume(int vol)
@@ -635,13 +635,13 @@ void set_sound_volume(int vol)
 		return;
 	}
 
-	prefs["sound_volume"] = vol;
+	prefs[str_sound_volume] = vol;
 	sound::set_sound_volume(sound_volume());
 }
 
 int bell_volume()
 {
-	return prefs["bell_volume"].to_int(100);
+	return prefs[str_bell_volume].to_int(100);
 }
 
 void set_bell_volume(int vol)
@@ -650,13 +650,13 @@ void set_bell_volume(int vol)
 		return;
 	}
 
-	prefs["bell_volume"] = vol;
+	prefs[str_bell_volume] = vol;
 	sound::set_bell_volume(bell_volume());
 }
 
 int UI_volume()
 {
-	return prefs["UI_volume"].to_int(100);
+	return prefs[str_UI_volume].to_int(100);
 }
 
 void set_UI_volume(int vol)
@@ -665,18 +665,18 @@ void set_UI_volume(int vol)
 		return;
 	}
 
-	prefs["UI_volume"] = vol;
+	prefs[str_UI_volume] = vol;
 	sound::set_UI_volume(UI_volume());
 }
 
 unsigned int tile_size()
 {
-	return prefs["tile_size"].to_unsigned();
+	return prefs[str_tile_size].to_unsigned();
 }
 
 void set_tile_size(const unsigned int size)
 {
-	prefs["tile_size"] = size;
+	prefs[str_tile_size] = size;
 }
 
 bool turn_bell()
@@ -798,7 +798,7 @@ int scroll_speed()
 
 void set_scroll_speed(const int new_speed)
 {
-	prefs["scroll"] = new_speed;
+	prefs[str_scroll] = new_speed;
 }
 
 bool middle_click_scrolls()
@@ -818,7 +818,7 @@ void enable_mouse_scroll(bool value)
 
 int mouse_scroll_threshold()
 {
-	return prefs["scroll_threshold"].to_int(10);
+	return prefs[str_scroll_threshold].to_int(10);
 }
 
 bool animate_map()
@@ -903,12 +903,12 @@ void set_show_fps(bool value)
 
 int draw_delay()
 {
-	return prefs["draw_delay"].to_int(-1);
+	return prefs[str_draw_delay].to_int(-1);
 }
 
 void set_draw_delay(int value)
 {
-	prefs["draw_delay"] = value;
+	prefs[str_draw_delay] = value;
 }
 
 bool use_color_cursors()
@@ -934,12 +934,12 @@ void save_hotkeys()
 void clear_hotkeys()
 {
 	hotkey::reset_default_hotkeys();
-	prefs.clear_children("hotkey");
+	prefs.clear_children(str_hotkey);
 }
 
 void add_alias(const std::string &alias, const std::string &command)
 {
-	config &alias_list = prefs.child_or_add("alias");
+	config &alias_list = prefs.child_or_add(str_alias);
 	alias_list[alias] = command;
 }
 
@@ -951,7 +951,7 @@ optional_const_config get_alias()
 
 unsigned int sample_rate()
 {
-	return prefs["sample_rate"].to_int(44100);
+	return prefs[str_sample_rate].to_int(44100);
 }
 
 void save_sample_rate(const unsigned int rate)
@@ -959,7 +959,7 @@ void save_sample_rate(const unsigned int rate)
 	if (sample_rate() == rate)
 		return;
 
-	prefs["sample_rate"] = static_cast<int>(rate);
+	prefs[str_sample_rate] = static_cast<int>(rate);
 
 	// If audio is open, we have to re set sample rate
 	sound::reset_sound();
@@ -1027,11 +1027,11 @@ void set_selected_achievement_group(const std::string& content_for)
 
 bool achievement(const std::string& content_for, const std::string& id)
 {
-	for(config& ach : prefs.child_range("achievements"))
+	for(config& ach : prefs.child_range(str_achievements))
 	{
-		if(ach["content_for"].str() == content_for)
+		if(ach[str_content_for].str() == content_for)
 		{
-			std::vector<std::string> ids = utils::split(ach["ids"]);
+			std::vector<std::string> ids = utils::split(ach[str_ids]);
 			return std::find(ids.begin(), ids.end(), id) != ids.end();
 		}
 	}
@@ -1040,31 +1040,31 @@ bool achievement(const std::string& content_for, const std::string& id)
 
 void set_achievement(const std::string& content_for, const std::string& id)
 {
-	for(config& ach : prefs.child_range("achievements"))
+	for(config& ach : prefs.child_range(str_achievements))
 	{
 		// if achievements already exist for this content and the achievement has not already been set, add it
-		if(ach["content_for"].str() == content_for)
+		if(ach[str_content_for].str() == content_for)
 		{
-			std::vector<std::string> ids = utils::split(ach["ids"]);
+			std::vector<std::string> ids = utils::split(ach[str_ids]);
 
 			if(ids.empty())
 			{
-				ach["ids"] = id;
+				ach[str_ids] = id;
 			}
 			else if(std::find(ids.begin(), ids.end(), id) == ids.end())
 			{
-				ach["ids"] = ach["ids"].str() + "," + id;
+				ach[str_ids] = ach[str_ids].str() + "," + id;
 			}
-			ach.remove_children("in_progress", [&id](config cfg){return cfg["id"].str() == id;});
+			ach.remove_children(str_in_progress, [&id](config cfg){return cfg[str_id].str() == id;});
 			return;
 		}
 	}
 
 	// else no achievements have been set for this content yet
 	config ach;
-	ach["content_for"] = content_for;
-	ach["ids"] = id;
-	prefs.add_child("achievements", ach);
+	ach[str_content_for] = content_for;
+	ach[str_ids] = id;
+	prefs.add_child(str_achievements, ach);
 }
 
 int progress_achievement(const std::string& content_for, const std::string& id, int limit, int max_progress, int amount)
@@ -1074,24 +1074,24 @@ int progress_achievement(const std::string& content_for, const std::string& id, 
 		return -1;
 	}
 
-	for(config& ach : prefs.child_range("achievements"))
+	for(config& ach : prefs.child_range(str_achievements))
 	{
 		// if achievements already exist for this content and the achievement has not already been set, add it
-		if(ach["content_for"].str() == content_for)
+		if(ach[str_content_for].str() == content_for)
 		{
 			// check if this achievement has progressed before - if so then increment it
-			for(config& in_progress : ach.child_range("in_progress"))
+			for(config& in_progress : ach.child_range(str_in_progress))
 			{
-				if(in_progress["id"].str() == id)
+				if(in_progress[str_id].str() == id)
 				{
 					// don't let using 'limit' decrease the achievement's current progress
-					int starting_progress = in_progress["progress_at"].to_int();
+					int starting_progress = in_progress[str_progress_at].to_int();
 					if(starting_progress >= limit) {
 						return starting_progress;
 					}
 
-					in_progress["progress_at"] = std::clamp(starting_progress + amount, 0, std::min(limit, max_progress));
-					return in_progress["progress_at"].to_int();
+					in_progress[str_progress_at] = std::clamp(starting_progress + amount, 0, std::min(limit, max_progress));
+					return in_progress[str_progress_at].to_int();
 				}
 			}
 
@@ -1099,11 +1099,11 @@ int progress_achievement(const std::string& content_for, const std::string& id, 
 			if(amount != 0)
 			{
 				config set_progress;
-				set_progress["id"] = id;
-				set_progress["progress_at"] = std::clamp(amount, 0, std::min(limit, max_progress));
+				set_progress[str_id] = id;
+				set_progress[str_progress_at] = std::clamp(amount, 0, std::min(limit, max_progress));
 
-				config& child = ach.add_child("in_progress", set_progress);
-				return child["progress_at"].to_int();
+				config& child = ach.add_child(str_in_progress, set_progress);
+				return child[str_progress_at].to_int();
 			}
 			return 0;
 		}
@@ -1115,15 +1115,15 @@ int progress_achievement(const std::string& content_for, const std::string& id, 
 		config ach;
 		config set_progress;
 
-		set_progress["id"] = id;
-		set_progress["progress_at"] = std::clamp(amount, 0, std::min(limit, max_progress));
+		set_progress[str_id] = id;
+		set_progress[str_progress_at] = std::clamp(amount, 0, std::min(limit, max_progress));
 
-		ach["content_for"] = content_for;
-		ach["ids"] = "";
+		ach[str_content_for] = content_for;
+		ach[str_ids] = "";
 
-		config& child = ach.add_child("in_progress", set_progress);
-		prefs.add_child("achievements", ach);
-		return child["progress_at"].to_int();
+		config& child = ach.add_child(str_in_progress, set_progress);
+		prefs.add_child(str_achievements, ach);
+		return child[str_progress_at].to_int();
 	}
 	return 0;
 }
@@ -1136,16 +1136,16 @@ bool sub_achievement(const std::string& content_for, const std::string& id, cons
 		return true;
 	}
 
-	for(config& ach : prefs.child_range("achievements"))
+	for(config& ach : prefs.child_range(str_achievements))
 	{
-		if(ach["content_for"].str() == content_for)
+		if(ach[str_content_for].str() == content_for)
 		{
 			// check if the specific sub-achievement has been completed but the overall achievement is not completed
-			for(const auto& in_progress : ach.child_range("in_progress"))
+			for(const auto& in_progress : ach.child_range(str_in_progress))
 			{
-				if(in_progress["id"] == id)
+				if(in_progress[str_id] == id)
 				{
-					std::vector<std::string> sub_ids = utils::split(in_progress["sub_ids"]);
+					std::vector<std::string> sub_ids = utils::split(in_progress[str_sub_ids]);
 					return std::find(sub_ids.begin(), sub_ids.end(), sub_id) != sub_ids.end();
 				}
 			}
@@ -1162,34 +1162,34 @@ void set_sub_achievement(const std::string& content_for, const std::string& id, 
 		return;
 	}
 
-	for(config& ach : prefs.child_range("achievements"))
+	for(config& ach : prefs.child_range(str_achievements))
 	{
 		// if achievements already exist for this content and the achievement has not already been set, add it
-		if(ach["content_for"].str() == content_for)
+		if(ach[str_content_for].str() == content_for)
 		{
 			// check if this achievement has had sub-achievements set before
-			for(config& in_progress : ach.child_range("in_progress"))
+			for(config& in_progress : ach.child_range(str_in_progress))
 			{
-				if(in_progress["id"].str() == id)
+				if(in_progress[str_id].str() == id)
 				{
-					std::vector<std::string> sub_ids = utils::split(ach["ids"]);
+					std::vector<std::string> sub_ids = utils::split(ach[str_ids]);
 
 					if(std::find(sub_ids.begin(), sub_ids.end(), sub_id) == sub_ids.end())
 					{
-						in_progress["sub_ids"] = in_progress["sub_ids"].str() + "," + sub_id;
+						in_progress[str_sub_ids] = in_progress[str_sub_ids].str() + "," + sub_id;
 					}
 
-					in_progress["progress_at"] = sub_ids.size()+1;
+					in_progress[str_progress_at] = sub_ids.size()+1;
 					return;
 				}
 			}
 
 			// else if this is the first sub-achievement being set
 			config set_progress;
-			set_progress["id"] = id;
-			set_progress["sub_ids"] = sub_id;
-			set_progress["progress_at"] = 1;
-			ach.add_child("in_progress", set_progress);
+			set_progress[str_id] = id;
+			set_progress[str_sub_ids] = sub_id;
+			set_progress[str_progress_at] = 1;
+			ach.add_child(str_in_progress, set_progress);
 			return;
 		}
 	}
@@ -1198,25 +1198,25 @@ void set_sub_achievement(const std::string& content_for, const std::string& id, 
 	config ach;
 	config set_progress;
 
-	set_progress["id"] = id;
-	set_progress["sub_ids"] = sub_id;
-	set_progress["progress_at"] = 1;
+	set_progress[str_id] = id;
+	set_progress[str_sub_ids] = sub_id;
+	set_progress[str_progress_at] = 1;
 
-	ach["content_for"] = content_for;
-	ach["ids"] = "";
+	ach[str_content_for] = content_for;
+	ach[str_ids] = "";
 
-	ach.add_child("in_progress", set_progress);
-	prefs.add_child("achievements", ach);
+	ach.add_child(str_in_progress, set_progress);
+	prefs.add_child(str_achievements, ach);
 }
 
 void set_editor_chosen_addon(const std::string& addon_id)
 {
-	prefs["editor_chosen_addon"] = addon_id;
+	prefs[str_editor_chosen_addon] = addon_id;
 }
 
 std::string editor_chosen_addon()
 {
-	return prefs["editor_chosen_addon"];
+	return prefs[str_editor_chosen_addon];
 }
 
 } // end namespace preferences

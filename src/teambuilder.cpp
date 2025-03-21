@@ -140,7 +140,7 @@ void team_builder::previous_recruits()
 {
 	log_step("previous recruits");
 
-	if(const config::attribute_value* v = side_cfg_.get("previous_recruits")) {
+	if(const config::attribute_value* v = side_cfg_.get(str_previous_recruits)) {
 		for(const std::string& rec : utils::split(*v)) {
 			DBG_NG_TC << "adding previous recruit: " << rec;
 			team_.add_recruit(rec);
@@ -197,7 +197,7 @@ void team_builder::handle_leader(const config& leader)
 	}
 
     // Remove [ai] tag as it is already added for the side
-	stored.remove_children("ai");
+	stored.remove_children(str_ai);
 
 	// Provide some default values, if not specified.
 	config::attribute_value& a1 = stored[str_canrecruit];
@@ -227,7 +227,7 @@ void team_builder::leader()
 		handle_leader(side_cfg_);
 	}
 
-	for(const config& l : side_cfg_.child_range("leader")) {
+	for(const config& l : side_cfg_.child_range(str_leader)) {
 		handle_leader(l);
 	}
 }
@@ -241,7 +241,7 @@ void team_builder::prepare_units()
 	// for create-or-recall semantics to work: for each unit with non-empty
 	// id, unconditionally put OTHER, later, units with same id directly to
 	// recall list, not including them in unit_configs_
-	for(const config& su : side_cfg_.child_range("unit")) {
+	for(const config& su : side_cfg_.child_range(str_unit)) {
 		handle_unit(su, "side_cfg");
 	}
 }

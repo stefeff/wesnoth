@@ -275,7 +275,7 @@ static void handle_preprocess_command(const commandline_options& cmdline_opts)
 	}
 
 	// add the WESNOTH_VERSION define
-	defines_map["WESNOTH_VERSION"] = preproc_define(game_config::wesnoth_version.str());
+	defines_map[str_WESNOTH_VERSION] = preproc_define(game_config::wesnoth_version.str());
 
 	PLAIN_LOG << "added " << defines_map.size() << " defines.";
 
@@ -329,8 +329,8 @@ static void handle_preprocess_command(const commandline_options& cmdline_opts)
 static int handle_validate_command(const std::string& file, abstract_validator& validator, const std::vector<std::string>& defines) {
 	preproc_map defines_map;
 	// add the WESNOTH_VERSION define
-	defines_map["WESNOTH_VERSION"] = preproc_define(game_config::wesnoth_version.str());
-	defines_map["SCHEMA_VALIDATION"] = preproc_define();
+	defines_map[str_WESNOTH_VERSION] = preproc_define(game_config::wesnoth_version.str());
+	defines_map[str_SCHEMA_VALIDATION] = preproc_define();
 	for(const std::string& define : defines) {
 		if(define.empty()) {
 			PLAIN_LOG << "empty define supplied";
@@ -801,7 +801,7 @@ static int do_gameloop(const std::vector<std::string>& args)
 	// if the optional isn't set, then logging to file has been disabled, so there's no issue.
 	if(!lg::log_dir_writable().value_or(true)) {
 		utils::string_map symbols;
-		symbols["logdir"] = filesystem::get_logs_dir();
+		symbols[str_logdir] = filesystem::get_logs_dir();
 		std::string msg = VGETTEXT("Unable to create log files in directory $logdir. This is often caused by incorrect folder permissions, anti-virus software restricting folder access, or using OneDrive to manage your My Documents folder.", symbols);
 		gui2::show_message(_("Logging Failure"), msg, gui2::dialogs::message::ok_button);
 	}
@@ -855,20 +855,20 @@ static int do_gameloop(const std::vector<std::string>& args)
 
 	plugins_context plugins("titlescreen", callbacks, accessors);
 
-	plugins.set_callback("exit", [](const config& cfg) { safe_exit(cfg["code"].to_int(0)); }, false);
+	plugins.set_callback("exit", [](const config& cfg) { safe_exit(cfg[str_code].to_int(0)); }, false);
 
 	while(true) {
 		if(!game->has_load_data()) {
-			auto cfg = config_manager.game_config().optional_child("titlescreen_music");
+			auto cfg = config_manager.game_config().optional_child(str_titlescreen_music);
 			if(cfg) {
-				for(const config& i : cfg->child_range("music")) {
+				for(const config& i : cfg->child_range(str_music)) {
 					sound::play_music_config(i);
 				}
 
 				config title_music_config;
-				title_music_config["name"] = game_config::title_music;
-				title_music_config["append"] = true;
-				title_music_config["immediate"] = true;
+				title_music_config[str_name] = game_config::title_music;
+				title_music_config[str_append] = true;
+				title_music_config[str_immediate] = true;
 				sound::play_music_config(title_music_config);
 			} else {
 				sound::empty_playlist();

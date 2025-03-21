@@ -33,7 +33,7 @@
 #include <functional>
 #include <optional>
 
-#define LOG_SCOPE_HEADER get_control_type() + " [" + id() + "] " + __func__
+#define LOG_SCOPE_HEADER get_control_type() + " [str_ + id() + ] " + __func__
 #define LOG_HEADER LOG_SCOPE_HEADER + ':'
 
 namespace gui2
@@ -718,8 +718,8 @@ static std::vector<widget_data> parse_list_data(const config& data, const unsign
 {
 	std::vector<widget_data> list_data;
 
-	for(const auto& row : data.child_range("row")) {
-		auto cols = row.child_range("column");
+	for(const auto& row : data.child_range(str_row)) {
+		auto cols = row.child_range(str_column);
 
 		VALIDATE(static_cast<unsigned>(cols.size()) == req_cols,
 			_("'list_data' must have the same number of columns as the 'list_definition'.")
@@ -729,14 +729,14 @@ static std::vector<widget_data> parse_list_data(const config& data, const unsign
 			list_data.emplace_back();
 
 			for(const auto& i : c.attribute_range()) {
-				list_data.back()[""][i.first] = i.second;
+				list_data.back()[{}][i.first] = i.second;
 			}
 
-			for(const auto& w : c.child_range("widget")) {
-				VALIDATE(w.has_attribute("id"), missing_mandatory_wml_key("[list_data][row][column][widget]", "id"));
+			for(const auto& w : c.child_range(str_widget)) {
+				VALIDATE(w.has_attribute(str_id), missing_mandatory_wml_key("[list_data][row][column][widget]", "id"));
 
 				for(const auto& i : w.attribute_range()) {
-					list_data.back()[w["id"]][i.first] = i.second;
+					list_data.back()[w[str_id]][i.first] = i.second;
 				}
 			}
 		}
@@ -747,24 +747,24 @@ static std::vector<widget_data> parse_list_data(const config& data, const unsign
 
 builder_listbox::builder_listbox(const config& cfg)
 	: builder_styled_widget(cfg)
-	, vertical_scrollbar_mode(get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
-	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
+	, vertical_scrollbar_mode(get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
+	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
 	, header(nullptr)
 	, footer(nullptr)
 	, list_builder(nullptr)
 	, list_data()
-	, has_minimum_(cfg["has_minimum"].to_bool(true))
-	, has_maximum_(cfg["has_maximum"].to_bool(true))
+	, has_minimum_(cfg[str_has_minimum].to_bool(true))
+	, has_maximum_(cfg[str_has_maximum].to_bool(true))
 {
-	if(auto h = cfg.optional_child("header")) {
+	if(auto h = cfg.optional_child(str_header)) {
 		header = std::make_shared<builder_grid>(*h);
 	}
 
-	if(auto f = cfg.optional_child("footer")) {
+	if(auto f = cfg.optional_child(str_abbrev)) {
 		footer = std::make_shared<builder_grid>(*f);
 	}
 
-	auto l = cfg.optional_child("list_definition");
+	auto l = cfg.optional_child(str_list_definition);
 
 	VALIDATE(l, _("No list defined."));
 
@@ -773,8 +773,8 @@ builder_listbox::builder_listbox(const config& cfg)
 
 	VALIDATE(list_builder->rows == 1, _("A 'list_definition' should contain one row."));
 
-	if(cfg.has_child("list_data")) {
-		list_data = parse_list_data(cfg.mandatory_child("list_data"), list_builder->cols);
+	if(cfg.has_child(str_list_data)) {
+		list_data = parse_list_data(cfg.mandatory_child(str_list_data), list_builder->cols);
 	}
 }
 
@@ -800,14 +800,14 @@ std::unique_ptr<widget> builder_listbox::build() const
 
 builder_horizontal_listbox::builder_horizontal_listbox(const config& cfg)
 	: builder_styled_widget(cfg)
-	, vertical_scrollbar_mode(get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
-	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
+	, vertical_scrollbar_mode(get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
+	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
 	, list_builder(nullptr)
 	, list_data()
-	, has_minimum_(cfg["has_minimum"].to_bool(true))
-	, has_maximum_(cfg["has_maximum"].to_bool(true))
+	, has_minimum_(cfg[str_has_minimum].to_bool(true))
+	, has_maximum_(cfg[str_has_maximum].to_bool(true))
 {
-	auto l = cfg.optional_child("list_definition");
+	auto l = cfg.optional_child(str_list_definition);
 
 	VALIDATE(l, _("No list defined."));
 
@@ -816,8 +816,8 @@ builder_horizontal_listbox::builder_horizontal_listbox(const config& cfg)
 
 	VALIDATE(list_builder->rows == 1, _("A 'list_definition' should contain one row."));
 
-	if(cfg.has_child("list_data")) {
-		list_data = parse_list_data(cfg.mandatory_child("list_data"), list_builder->cols);
+	if(cfg.has_child(str_list_data)) {
+		list_data = parse_list_data(cfg.mandatory_child(str_list_data), list_builder->cols);
 	}
 }
 
@@ -843,14 +843,14 @@ std::unique_ptr<widget> builder_horizontal_listbox::build() const
 
 builder_grid_listbox::builder_grid_listbox(const config& cfg)
 	: builder_styled_widget(cfg)
-	, vertical_scrollbar_mode(get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
-	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
+	, vertical_scrollbar_mode(get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
+	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
 	, list_builder(nullptr)
 	, list_data()
-	, has_minimum_(cfg["has_minimum"].to_bool(true))
-	, has_maximum_(cfg["has_maximum"].to_bool(true))
+	, has_minimum_(cfg[str_has_minimum].to_bool(true))
+	, has_maximum_(cfg[str_has_maximum].to_bool(true))
 {
-	auto l = cfg.optional_child("list_definition");
+	auto l = cfg.optional_child(str_list_definition);
 
 	VALIDATE(l, _("No list defined."));
 
@@ -859,8 +859,8 @@ builder_grid_listbox::builder_grid_listbox(const config& cfg)
 
 	VALIDATE(list_builder->rows == 1, _("A 'list_definition' should contain one row."));
 
-	if(cfg.has_child("list_data")) {
-		list_data = parse_list_data(cfg.mandatory_child("list_data"), list_builder->cols);
+	if(cfg.has_child(str_list_data)) {
+		list_data = parse_list_data(cfg.mandatory_child(str_list_data), list_builder->cols);
 	}
 }
 

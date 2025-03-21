@@ -218,10 +218,10 @@ stacked_widget_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg), grid(nullptr)
 {
 	// Add a dummy state since every widget needs a state.
-	static config dummy("draw");
+	static config dummy(str_draw);
 	state.emplace_back(dummy);
 
-	auto child = cfg.optional_child("grid");
+	auto child = cfg.optional_child(str_grid);
 	VALIDATE(child, _("No grid defined."));
 
 	grid = std::make_shared<builder_grid>(*child);
@@ -235,13 +235,13 @@ namespace implementation
 builder_stacked_widget::builder_stacked_widget(const config& real_cfg)
 	: builder_styled_widget(real_cfg), stack()
 {
-	const config& cfg = real_cfg.has_child("stack") ? real_cfg.mandatory_child("stack") : real_cfg;
+	const config& cfg = real_cfg.has_child(str_stack) ? real_cfg.mandatory_child(str_stack) : real_cfg;
 	if(&cfg != &real_cfg) {
 		lg::log_to_chat() << "Stacked widgets no longer require a [stack] tag. Instead, place [layer] tags directly in the widget definition.\n";
 		ERR_WML << "Stacked widgets no longer require a [stack] tag. Instead, place [layer] tags directly in the widget definition.";
 	}
-	VALIDATE(cfg.has_child("layer"), _("No stack layers defined."));
-	for(const auto & layer : cfg.child_range("layer"))
+	VALIDATE(cfg.has_child(str_layer), _("No stack layers defined."));
+	for(const auto & layer : cfg.child_range(str_layer))
 	{
 		stack.emplace_back(layer);
 	}

@@ -28,20 +28,20 @@ static lg::log_domain log_mapgen("mapgen");
 #define LOG_NG LOG_STREAM(info, log_mapgen)
 
 lua_map_generator::lua_map_generator(const config & cfg, const config* vars)
-	: id_(cfg["id"])
-	, config_name_(cfg["config_name"])
-	, user_config_(cfg["user_config"])
-	, create_map_(cfg["create_map"])
-	, create_scenario_(cfg["create_scenario"])
+	: id_(cfg[str_id])
+	, config_name_(cfg[str_config_name])
+	, user_config_(cfg[str_user_config])
+	, create_map_(cfg[str_create_map])
+	, create_scenario_(cfg[str_create_scenario])
 	, lk_(vars)
 	, generator_data_(cfg)
 {
 	lk_.load_core();
 	using namespace std::string_literals;
-	const std::array required {"id"s, "config_name"s, "create_map"s};
+	const std::array required { str_id, str_config_name, str_create_map };
 	for(const auto& req : required) {
 		if (!cfg.has_attribute(req)) {
-			if(req == "create_map" && cfg.has_attribute("create_scenario")) {
+			if(req == "create_map" && cfg.has_attribute(str_create_scenario)) {
 				// One of these is required, but not both
 				continue;
 			}

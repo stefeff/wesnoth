@@ -108,7 +108,7 @@ static int intf_default_generate(lua_State *L)
 	arg.show_labels = cfg[str_show_labels].to_bool(0);
 
 	uint32_t seed = cfg[str_seed].to_int(0);
-	if(!cfg.has_attribute("seed")) {
+	if(!cfg.has_attribute(str_seed)) {
 		seed = rng();
 	}
 
@@ -131,7 +131,7 @@ static int intf_default_generate_height_map(lua_State *L)
 
 	config cfg = luaW_checkconfig(L, 3);
 
-	if(!cfg.has_attribute("location_set")) {
+	if(!cfg.has_attribute(str_location_set)) {
 		deprecated_message("generate_height_map(..., {location_set=false})", DEP_LEVEL::PREEMPTIVE, "1.17", "The default value of this option will be changed to true in 1.17.");
 	}
 
@@ -144,7 +144,7 @@ static int intf_default_generate_height_map(lua_State *L)
 	bool as_locset = cfg[str_location_set].to_bool(false);
 	uint32_t seed = cfg[str_seed].to_int(0);
 
-	if(!cfg.has_attribute("seed")) {
+	if(!cfg.has_attribute(str_seed)) {
 		seed = rng();
 	}
 	default_map_generator_job job(seed);
