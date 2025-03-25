@@ -1,5 +1,7 @@
 #pragma once
 
+#include "tstring.hpp"
+
 #include <cstdint>
 #include <ostream>
 #include <string>
@@ -16,12 +18,15 @@ public:
     interned_string() = default;
     interned_string(const char* s) { init(s); }
     interned_string(const std::string& s) { init(s); }
+    interned_string(const t_string& s) { init(s.str()); }
 
     bool operator==(const interned_string& rhs) const { return index_ == rhs.index_; }
     bool operator!=(const interned_string& rhs) const { return !operator==(rhs); }
+    bool operator<(const interned_string& rhs) const { return str() < rhs.str(); }
 
     const std::string& str() const { return shared_->storage[index_]; }
     operator const std::string&() const { return str(); }
+    operator std::string_view() const { return str(); }
     const char* c_str() const { return str().c_str(); }
 
     const char& operator[](std::size_t index) const { return str()[index]; }
