@@ -61,15 +61,16 @@ struct std::hash<image::locator::value>
 		std::size_t hash = std::hash<unsigned>{}(val.type);
 
 		if(val.type == image::locator::FILE || val.type == image::locator::SUB_FILE) {
-			boost::hash_combine(hash, val.filename);
+			boost::hash_combine(hash, std::hash<utils::interned_string>{}(val.filename));
 		}
 
 		if(val.type == image::locator::SUB_FILE) {
-			boost::hash_combine(hash, val.loc.x);
-			boost::hash_combine(hash, val.loc.y);
-			boost::hash_combine(hash, val.center_x);
-			boost::hash_combine(hash, val.center_y);
-			boost::hash_combine(hash, val.modifications);
+			std::uint64_t positions = static_cast<std::uint64_t >(val.loc.x)
+									^ (static_cast<std::uint64_t >(val.loc.y) << 16)
+									^ (static_cast<std::uint64_t >(val.center_x) << 32)
+									^ (static_cast<std::uint64_t >(val.center_y) << 48);
+			boost::hash_combine(hash, positions);
+			boost::hash_combine(hash, std::hash<utils::interned_string>{}(val.modifications));
 		}
 
 		return hash;
@@ -249,7 +250,7 @@ locator locator::clone(const std::string& mods) const
 {
 	locator res = *this;
 	if(!mods.empty()) {
-		res.val_.modifications += mods;
+		res.val_.modifications = utils::interned_string{res.val_.modifications + mods};
 		res.val_.type = SUB_FILE;
 	}
 
@@ -258,17 +259,17 @@ locator locator::clone(const std::string& mods) const
 
 std::ostream& operator<<(std::ostream& s, const locator& l)
 {
-	s << l.get_filename();
+	s << l.get_filename().str();
 	if(!l.get_modifications().empty()) {
 		if(l.get_modifications()[0] != '~') {
 			s << '~';
 		}
-		s << l.get_modifications();
+		s << l.get_modifications().str();
 	}
 	return s;
 }
 
-locator::value::value(const std::string& fn)
+locator::value::value(const utils::interned_string& fn)
 	: type(FILE)
 	, filename(fn)
 {
@@ -276,9 +277,10 @@ locator::value::value(const std::string& fn)
 		return;
 	}
 
-	if(boost::algorithm::starts_with(filename, data_uri_prefix)) {
-		if(parsed_data_URI parsed{ filename }; !parsed.good) {
-			std::string_view view{ filename };
+	const std::string& temp = filename;
+	if(boost::algorithm::starts_with(temp, data_uri_prefix)) {
+		if(parsed_data_URI parsed{ temp }; !parsed.good) {
+			std::string_view view{ temp };
 			std::string_view stripped = view.substr(0, view.find(","));
 			ERR_IMG << "Invalid data URI: " << stripped;
 		}
@@ -286,14 +288,14 @@ locator::value::value(const std::string& fn)
 		is_data_uri = true;
 	}
 
-	if(const std::size_t markup_field = filename.find('~'); markup_field != std::string::npos) {
+	if(const std::size_t markup_field = temp.find('~'); markup_field != std::string::npos) {
 		type = SUB_FILE;
-		modifications = filename.substr(markup_field, filename.size() - markup_field);
-		filename = filename.substr(0, markup_field);
+		modifications = temp.substr(markup_field, temp.size() - markup_field);
+		filename = temp.substr(0, markup_field);
 	}
 }
 
-locator::value::value(const std::string& filename, const std::string& modifications)
+locator::value::value(const utils::interned_string& filename, const utils::interned_string& modifications)
 	: type(SUB_FILE)
 	, filename(filename)
 	, modifications(modifications)
@@ -301,11 +303,11 @@ locator::value::value(const std::string& filename, const std::string& modificati
 }
 
 locator::value::value(
-		const std::string& filename,
+		const utils::interned_string& filename,
 		const map_location& loc,
 		int center_x,
 		int center_y,
-		const std::string& modifications)
+		const utils::interned_string& modifications)
 	: type(SUB_FILE)
 	, filename(filename)
 	, modifications(modifications)
@@ -317,13 +319,13 @@ locator::value::value(
 
 bool locator::value::operator==(const value& a) const
 {
-	if(a.type != type) {
+	if (type == SUB_FILE) [[likely]] {
+		return memcmp(this, &a, sizeof(*this)) == 0;
+	}
+	else if(a.type != type) {
 		return false;
 	} else if(type == FILE) {
 		return filename == a.filename;
-	} else if(type == SUB_FILE) {
-		return std::tie(filename, loc, modifications, center_x, center_y) ==
-			std::tie(a.filename, a.loc, a.modifications, a.center_x, a.center_y);
 	}
 
 	return false;

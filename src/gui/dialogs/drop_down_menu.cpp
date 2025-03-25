@@ -195,7 +195,7 @@ void drop_down_menu::pre_show(window& window)
 		find_widget<toggle_panel>(&new_row, "panel", false).set_tooltip(entry.tooltip);
 
 		if(entry.checkbox) {
-			auto checkbox = build_single_widget_instance<toggle_button>(config{str_definition, str_no_label});
+			auto checkbox = build_single_widget_instance<toggle_button>(config{str_definition, str_no_label.str()});
 			checkbox->set_id("checkbox");
 			checkbox->set_value_bool(*entry.checkbox);
 

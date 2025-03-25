@@ -17,6 +17,7 @@
 
 #include "map/location.hpp"
 #include "terrain/translation.hpp"
+#include "utils/interned_string.hpp"
 
 #include <optional>
 #include <unordered_map>
@@ -63,7 +64,7 @@ class cache_type;
 class locator
 {
 public:
-	enum type { NONE, FILE, SUB_FILE };
+	enum type : std::uint32_t { NONE, FILE, SUB_FILE };
 
 	locator() = default;
 	locator(locator&&) noexcept = default;
@@ -83,12 +84,12 @@ public:
 	bool operator==(const locator& a) const { return val_ == a.val_; }
 	bool operator!=(const locator& a) const { return !operator==(a); }
 
-	const std::string& get_filename() const { return val_.filename; }
+	const utils::interned_string& get_filename() const { return val_.filename; }
 	bool is_data_uri() const { return val_.is_data_uri; }
 	const map_location& get_loc() const { return val_.loc ; }
 	int get_center_x() const { return val_.center_x; }
 	int get_center_y() const { return val_.center_y; }
-	const std::string& get_modifications() const { return val_.modifications; }
+	const utils::interned_string& get_modifications() const { return val_.modifications; }
 	type get_type() const { return val_.type; }
 
 	/**
@@ -129,17 +130,18 @@ private:
 	{
 		value() = default;
 
-		value(const std::string& filename);
-		value(const std::string& filename, const std::string& modifications);
-		value(const std::string& filename, const map_location& loc, int center_x, int center_y, const std::string& modifications = "");
+		value(const utils::interned_string& filename);
+		value(const utils::interned_string& filename, const utils::interned_string& modifications);
+		value(const utils::interned_string& filename, const map_location& loc, int center_x, int center_y, const utils::interned_string& modifications = {});
 
 		bool operator==(const value& a) const;
 		bool operator<(const value& a) const;
 
 		locator::type type = NONE;
 		bool is_data_uri = false;
-		std::string filename{};
-		std::string modifications{};
+		std::uint8_t padding[3]{};
+		utils::interned_string filename{};
+		utils::interned_string modifications{};
 		map_location loc{};
 		int center_x = 0;
 		int center_y = 0;

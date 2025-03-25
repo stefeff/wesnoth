@@ -779,7 +779,7 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 
 			image::locator image_loc = animations.back().get_last_frame().end_parameters().image;
 			animations.back().add_frame(225, frame_builder()
-				.image(image_loc.get_filename()+image_loc.get_modifications())
+				.image(image_loc.get_filename().str() + image_loc.get_modifications().str())
 				.duration(225)
 				.blend("0.0,0.5:75,0.0:75,0.5:75,0.0", {255,0,0}));
 		} else {
@@ -792,7 +792,7 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 				image::locator image_loc = animations.back().get_last_frame().end_parameters().image;
 				if(hit_type == "yes" || hit_type == strike_result::hit || hit_type == strike_result::kill) {
 					animations.back().add_frame(225, frame_builder()
-						.image(image_loc.get_filename() + image_loc.get_modifications())
+						.image(image_loc.get_filename().str() + image_loc.get_modifications().str())
 						.duration(225)
 						.blend("0.0,0.5:75,0.0:75,0.5:75,0.0", {255,0,0}));
 				}
@@ -847,7 +847,7 @@ void unit_animation::add_anims( std::vector<unit_animation> & animations, const 
 		image::locator image_loc = animations.back().get_last_frame().end_parameters().image;
 
 		animations.back().add_frame(600, frame_builder()
-			.image(image_loc.get_filename()+image_loc.get_modifications())
+			.image(image_loc.get_filename().str()+image_loc.get_modifications().str())
 			.duration(600)
 			.highlight("1~0:600"));
 

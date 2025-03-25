@@ -135,6 +135,7 @@ public:
 	config_attribute_value& operator=(const std::string &v);
 	config_attribute_value& operator=(const std::string_view &v);
 	config_attribute_value& operator=(const t_string &v);
+	config_attribute_value& operator=(const utils::interned_string &v) { return operator=(v.str()); };
 
 	/** Calls @ref operator=(const std::string&) if @a v is not empty. */
 	void write_if_not_empty(const std::string& v);

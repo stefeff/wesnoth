@@ -514,7 +514,8 @@ void render_unit_image(
 
 	texture tex;
 	if(!new_modifications.empty()) {
-		tex = image::get_texture({i_locator.get_filename(), i_locator.get_modifications() + new_modifications});
+		utils::interned_string modifications = i_locator.get_modifications().str() + new_modifications;
+		tex = image::get_texture({i_locator.get_filename(), modifications } );
 	} else {
 		tex = image::get_texture(i_locator);
 	}
@@ -541,7 +542,7 @@ void render_unit_image(
 		// Get a pure-white version of the texture
 		const image::locator whiteout_locator(
 			i_locator.get_filename(),
-			i_locator.get_modifications()
+			i_locator.get_modifications().str()
 				+ new_modifications
 				+ "~CHAN(255, 255, 255, alpha)"
 		);
