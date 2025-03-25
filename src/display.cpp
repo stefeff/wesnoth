@@ -1147,7 +1147,7 @@ void display::get_terrain_images(const map_location& loc, const std::string& tim
 			// over the offmap-terrain and these need a ToD coloring.
 			texture tex;
 			const bool off_map = (image.get_filename() == off_map_name
-				|| image.get_modifications().find("NO_TOD_SHIFT()") != std::string::npos);
+				|| image.get_modifications().str().find("NO_TOD_SHIFT()") != std::string::npos);
 
 			if(off_map) {
 				tex = image::get_texture(image, image::HEXED);

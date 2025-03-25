@@ -61,6 +61,30 @@ static lg::log_domain log_config("config");
 
 using game_config::tile_size;
 
+template<>
+struct std::hash<image::locator::value>
+{
+	std::size_t operator()(const image::locator::value& val) const
+	{
+		std::size_t hash = std::hash<unsigned>{}(val.type);
+
+		if(val.type == image::locator::FILE || val.type == image::locator::SUB_FILE) {
+			boost::hash_combine(hash, std::hash<utils::interned_string>{}(val.filename));
+		}
+
+		if(val.type == image::locator::SUB_FILE) {
+			std::uint64_t positions = static_cast<std::uint64_t >(val.loc.x)
+									^ (static_cast<std::uint64_t >(val.loc.y) << 16)
+									^ (static_cast<std::uint64_t >(val.center_x) << 32)
+									^ (static_cast<std::uint64_t >(val.center_y) << 48);
+			boost::hash_combine(hash, positions);
+			boost::hash_combine(hash, std::hash<utils::interned_string>{}(val.modifications));
+		}
+
+		return hash;
+	}
+};
+
 namespace image
 {
 /** Hash function overload for boost::hash. Must be in the image namespace to satisfy ADL. */
@@ -229,8 +253,8 @@ locator locator::clone(const std::string& mods) const
 {
 	locator res = *this;
 	if(!mods.empty()) {
-		res.modifications_ += mods;
-		res.type_ = SUB_FILE;
+		res.val_.modifications = utils::interned_string{res.val_.modifications + mods};
+		res.val_.type = SUB_FILE;
 	}
 
 	return res;
@@ -238,18 +262,19 @@ locator locator::clone(const std::string& mods) const
 
 std::ostream& operator<<(std::ostream& s, const locator& l)
 {
-	s << l.get_filename();
+	s << l.get_filename().str();
 	if(!l.get_modifications().empty()) {
 		if(l.get_modifications()[0] != '~') {
 			s << '~';
 		}
-		s << l.get_modifications();
+		s << l.get_modifications().str();
 	}
 	return s;
 }
 
-locator::locator(const std::string& fn)
-	: filename_(fn)
+locator::value::value(const utils::interned_string& fn)
+	: type(FILE)
+	, filename(fn)
 {
 	if(filename_.empty()) {
 		return;
@@ -265,46 +290,44 @@ locator::locator(const std::string& fn)
 		is_data_uri_ = true;
 	}
 
-	if(const std::size_t markup_field = filename_.find('~'); markup_field != std::string::npos) {
-		type_ = SUB_FILE;
-		modifications_ = filename_.substr(markup_field, filename_.size() - markup_field);
-		filename_ = filename_.substr(0, markup_field);
-	} else {
-		type_ = FILE;
+	if(const std::size_t markup_field = temp.find('~'); markup_field != std::string::npos) {
+		type = SUB_FILE;
+		modifications = temp.substr(markup_field, temp.size() - markup_field);
+		filename = temp.substr(0, markup_field);
 	}
 }
 
-locator::locator(const std::string& filename, const std::string& modifications)
-	: type_(SUB_FILE)
-	, filename_(filename)
-	, modifications_(modifications)
+locator::value::value(const utils::interned_string& filename, const utils::interned_string& modifications)
+	: type(SUB_FILE)
+	, filename(filename)
+	, modifications(modifications)
 {
 }
 
-locator::locator(
-		const std::string& filename,
+locator::value::value(
+		const utils::interned_string& filename,
 		const map_location& loc,
 		int center_x,
 		int center_y,
-		const std::string& modifications)
-	: type_(SUB_FILE)
-	, filename_(filename)
-	, modifications_(modifications)
-	, loc_(loc)
-	, center_x_(center_x)
-	, center_y_(center_y)
+		const utils::interned_string& modifications)
+	: type(SUB_FILE)
+	, filename(filename)
+	, modifications(modifications)
+	, loc(loc)
+	, center_x(center_x)
+	, center_y(center_y)
 {
 }
 
 bool locator::operator==(const locator& a) const
 {
-	if(a.type_ != type_) {
+	if (type == SUB_FILE) [[likely]] {
+		return memcmp(this, &a, sizeof(*this)) == 0;
+	}
+	else if(a.type != type) {
 		return false;
-	} else if(type_ == FILE) {
-		return filename_ == a.filename_;
-	} else if(type_ == SUB_FILE) {
-		return std::tie(filename_, loc_, modifications_, center_x_, center_y_) ==
-			std::tie(a.filename_, a.loc_, a.modifications_, a.center_x_, a.center_y_);
+	} else if(type == FILE) {
+		return filename == a.filename;
 	}
 
 	return false;

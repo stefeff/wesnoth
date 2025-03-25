@@ -133,6 +133,7 @@ public:
 	config_attribute_value& operator=(const std::string &v);
 	config_attribute_value& operator=(const std::string_view &v);
 	config_attribute_value& operator=(const t_string &v);
+	config_attribute_value& operator=(const utils::interned_string &v) { return operator=(v.str()); };
 
 	//TODO: should this be a normal constructor?
 	template<typename T>

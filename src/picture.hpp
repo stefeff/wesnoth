@@ -17,6 +17,7 @@
 
 #include "map/location.hpp"
 #include "terrain/translation.hpp"
+#include "utils/interned_string.hpp"
 
 #include "utils/optional_fwd.hpp"
 
@@ -58,7 +59,7 @@ namespace image {
 class locator
 {
 public:
-	enum type { NONE, FILE, SUB_FILE };
+	enum type : std::uint32_t { NONE, FILE, SUB_FILE };
 
 	locator() = default;
 	locator(locator&&) noexcept = default;
@@ -77,15 +78,13 @@ public:
 	bool operator==(const locator& a) const;
 	bool operator!=(const locator& a) const { return !operator==(a); }
 
-	bool operator<(const locator& a) const;
-
-	const std::string& get_filename() const { return filename_; }
-	bool is_data_uri() const { return is_data_uri_; }
-	const map_location& get_loc() const { return loc_ ; }
-	int get_center_x() const { return center_x_; }
-	int get_center_y() const { return center_y_; }
-	const std::string& get_modifications() const { return modifications_; }
-	type get_type() const { return type_; }
+	const utils::interned_string& get_filename() const { return val_.filename; }
+	bool is_data_uri() const { return val_.is_data_uri; }
+	const map_location& get_loc() const { return val_.loc ; }
+	int get_center_x() const { return val_.center_x; }
+	int get_center_y() const { return val_.center_y; }
+	const utils::interned_string& get_modifications() const { return val_.modifications; }
+	type get_type() const { return val_.type; }
 
 	/**
 	 * Returns @a true if the locator does not correspond to an actual image.
@@ -93,13 +92,28 @@ public:
 	bool is_void() const { return type_ == NONE; }
 
 private:
-	locator::type type_ = NONE;
-	bool is_data_uri_ = false;
-	std::string filename_{};
-	std::string modifications_{};
-	map_location loc_{};
-	int center_x_ = 0;
-	int center_y_ = 0;
+	struct value
+	{
+		value() = default;
+
+		value(const utils::interned_string& filename);
+		value(const utils::interned_string& filename, const utils::interned_string& modifications);
+		value(const utils::interned_string& filename, const map_location& loc, int center_x, int center_y, const utils::interned_string& modifications = {});
+
+		bool operator==(const value& a) const;
+		bool operator<(const value& a) const;
+
+		locator::type type = NONE;
+		bool is_data_uri = false;
+		std::uint8_t padding[3]{};
+		utils::interned_string filename{};
+		utils::interned_string modifications{};
+		map_location loc{};
+		int center_x = 0;
+		int center_y = 0;
+	};
+
+	value val_;
 
 public:
 	friend std::size_t hash_value(const locator&);
