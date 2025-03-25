@@ -20,11 +20,11 @@ public:
     bool operator==(const interned_string& rhs) const { return index_ == rhs.index_; }
     bool operator!=(const interned_string& rhs) const { return !operator==(rhs); }
 
-    const std::string& str() const { return get_shared().storage[index_]; }
+    const std::string& str() const { return shared_->storage[index_]; }
     operator const std::string&() const { return str(); }
     const char* c_str() const { return str().c_str(); }
 
-    const char& operator[](std::size_t index) const { return get_shared().storage[index_][index]; }
+    const char& operator[](std::size_t index) const { return str()[index]; }
 
     std::size_t size() const { return str().size(); }
     std::size_t length() const { return size(); }
@@ -53,7 +53,8 @@ private:
 
     void init(const std::string& s);
 
-    std::size_t index_{0};
+    static shared* shared_;
+    std::uint32_t index_{0};
 
     friend class std::hash<interned_string>;
 };
