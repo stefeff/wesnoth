@@ -99,7 +99,7 @@ void luaW_filltable(lua_State *L, const config& cfg);
  * A named tuple is an array where each index can also be accessed by name.
  * Once it's pushed, you can set the elements, eg with lua_rawseti.
  */
-void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names);
+void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names, const char* key);
 
 /**
  * Converts a map location object to a Lua table pushed at the top of the stack.

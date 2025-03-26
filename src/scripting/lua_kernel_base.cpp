@@ -475,7 +475,7 @@ static int intf_named_tuple(lua_State* L)
 	auto names = lua_check<std::vector<std::string>>(L, 2);
 	lua_len(L, 1);
 	int len = luaL_checkinteger(L, -1);
-	luaW_push_namedtuple(L, names);
+	luaW_push_namedtuple(L, names, nullptr);
 	for(int i = 1; i <= std::max<int>(len, names.size()); i++) {
 		lua_geti(L, 1, i);
 		lua_seti(L, -2, i);

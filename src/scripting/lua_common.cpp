@@ -253,7 +253,7 @@ static int impl_vconfig_get(lua_State *L)
 		}
 		for (int j = 1; i != i_end; ++i, ++j)
 		{
-			luaW_push_namedtuple(L, {"tag", "contents"});
+			luaW_push_namedtuple(L, {"tag", "contents"}, "mt_config");
 			lua_pushstring(L, i.get_key().c_str());
 			lua_rawseti(L, -2, 1);
 			luaW_pushvconfig(L, i.get_child());
@@ -663,7 +663,7 @@ void luaW_filltable(lua_State *L, const config& cfg)
 	int k = 1;
 	for (const config::any_child ch : cfg.all_children_range())
 	{
-		luaW_push_namedtuple(L, {"tag", "contents"});
+		luaW_push_namedtuple(L, {"tag", "contents"}, "mt_config");
 		lua_pushstring(L, ch.key.c_str());
 		lua_rawseti(L, -2, 1);
 		lua_newtable(L);
@@ -713,27 +713,38 @@ static int impl_namedtuple_tostring(lua_State* L)
 	return 1;
 }
 
-void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names)
+void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names, const char* key)
 {
 	lua_createtable(L, names.size(), 0);
-	lua_createtable(L, 0, 4);
-	static luaL_Reg callbacks[] = {
-		{ "__index", &impl_namedtuple_get },
-		{ "__dir", &impl_namedtuple_dir },
-		{ "__tostring", &impl_namedtuple_tostring },
-		{ nullptr, nullptr }
-	};
-	luaL_setfuncs(L, callbacks, 0);
-	lua_pushliteral(L, "named tuple");
-	lua_setfield(L, -2, "__metatable");
-	lua_push(L, names);
-	lua_setfield(L, -2, "__names");
+	bool needs_init = true;
+	if (key == nullptr) {
+		lua_createtable(L, 0, 4);
+	}
+	else {
+		needs_init = luaL_newmetatable(L, key) != 0;
+	}
+
+	if (needs_init) {
+		static luaL_Reg callbacks[] = {
+			{ "__index", &impl_namedtuple_get },
+			{ "__dir", &impl_namedtuple_dir },
+			{ "__tostring", &impl_namedtuple_tostring },
+			{ nullptr, nullptr }
+		};
+
+		luaL_setfuncs(L, callbacks, 0);
+		lua_pushstring(L, key);
+		lua_setfield(L, -2, "__metatable");
+		lua_push(L, names);
+		lua_setfield(L, -2, "__names");
+	}
+
 	lua_setmetatable(L, -2);
 }
 
 void luaW_pushlocation(lua_State *L, const map_location& ml)
 {
-	luaW_push_namedtuple(L, {"x", "y"});
+	luaW_push_namedtuple(L, {"x", "y"}, "mt_loc");
 
 	lua_pushinteger(L, ml.wml_x());
 	lua_rawseti(L, -2, 1);
