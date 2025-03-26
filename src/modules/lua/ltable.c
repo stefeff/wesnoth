@@ -785,6 +785,19 @@ const TValue *luaH_getshortstr (Table *t, TString *key) {
   }
 }
 
+const TValue *luaH_getcshortstr (Table *t, const char *key, unsigned int hash) {
+  Node *n = hashpow2(t, hash);
+  for (;;) {  /* check whether 'key' is somewhere in the chain */
+    if (keyisshrstr(n) && strcmp(keystrval(n)->contents, key) == 0)
+      return gval(n);  /* that's it */
+    else {
+      int nx = gnext(n);
+      if (nx == 0)
+        return &absentkey;  /* not found */
+      n += nx;
+    }
+  }
+}
 
 const TValue *luaH_getstr (Table *t, TString *key) {
   if (key->tt == LUA_VSHRSTR)

@@ -386,7 +386,9 @@ static int impl_unit_get(lua_State *L)
 		{"petrified", petrified}
 	};
 	lua_unit *lu = static_cast<lua_unit *>(lua_touserdata(L, 1));
-	const std::string m = luaL_checkstring(L, 2);
+	size_t len;
+	const char* s = luaL_checklstring(L, 2, &len);
+	std::string m{s, len};
 	const unit* pu = lu->get();
 
 	auto it = attributes.find(m);
@@ -409,9 +411,12 @@ static int impl_unit_get(lua_State *L)
 	}
 
 	if (it == attributes.end()) {
-		static std::vector<std::string> path{"wesnoth", "units", ""};
-		path[2] = m;
-		if(luaW_getglobal(L, path)) {
+		// static std::vector<std::string> path{"wesnoth", "units", ""};
+		// path[2] = m;
+		// if(luaW_getglobal(L, path)) {
+		static const char* path[3] = {"wesnoth", "units", nullptr};
+		path[2] = m.c_str();
+		if(lua_recursiveglobalrawget(L, path, 3)) {
 			return 1;
 		}
 		else {
