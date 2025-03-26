@@ -366,6 +366,12 @@ std::string vconfig::expand_str(const config_key_type &key) const
 	return val;
 }
 
+bool vconfig::non_empty(const config_key_type& key) const
+{
+	const auto* entry = cfg_->get(key);
+	return entry && !entry->empty();
+}
+
 vconfig::attribute_iterator::reference vconfig::attribute_iterator::operator*() const
 {
 	config::attribute val = *i_;

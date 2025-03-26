@@ -300,10 +300,10 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 	}
 
 	//allow filtering on owner (for villages)
-	const config::attribute_value &owner_side = cfg_[str_owner_side];
+	bool has_owner_side = cfg_.non_empty(str_owner_side);
 	const vconfig& filter_owner = cfg_.child(str_filter_owner);
 	if(!filter_owner.null()) {
-		if(!owner_side.empty()) {
+		if(has_owner_side) {
 			WRN_NG << "duplicate side information in a SLF, ignoring inline owner_side=";
 		}
 		if(!fc_->get_disp_context().map().is_village(loc))
@@ -322,8 +322,8 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 		if(!found)
 			return false;
 	}
-	else if(!owner_side.empty()) {
-		const int side_num = owner_side.to_int(0);
+	else if(has_owner_side) {
+		const int side_num = cfg_[str_owner_side].to_int(0);
 		if(fc_->get_disp_context().village_owner(loc) != side_num) {
 			return false;
 		}
