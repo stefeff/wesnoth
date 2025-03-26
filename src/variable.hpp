@@ -97,6 +97,7 @@ public:
 	{ return expand(key); }
 	config::attribute_value expand(const config_key_type&) const; /** < Synonym for operator[] */
 	std::string expand_str(const config_key_type &key) const;
+	bool non_empty(const config_key_type& key) const;
 	bool has_attribute(const config_key_type& key) const { return cfg_->has_attribute(key); }
 	bool empty() const { return (null() || cfg_->empty()); }
 
