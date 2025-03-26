@@ -249,7 +249,7 @@ static int impl_vconfig_get(lua_State *L)
 		}
 		for (int j = 1; i != i_end; ++i, ++j)
 		{
-			luaW_push_namedtuple(L, {"tag", "contents"});
+			luaW_push_namedtuple(L, {"tag", "contents"}, "mt_config");
 			lua_pushlstring(L, i.get_key().c_str(), i.get_key().size());
 			lua_rawseti(L, -2, 1);
 			luaW_pushvconfig(L, i.get_child());
@@ -620,8 +620,8 @@ void luaW_filltable(lua_State *L, const config& cfg)
 	int k = 1;
 	for(const auto [child_key, child_cfg] : cfg.all_children_view())
 	{
-		luaW_push_namedtuple(L, {"tag", "contents"});
-		lua_pushstring(L, child_key.c_str());
+		luaW_push_namedtuple(L, {"tag", "contents"}, "mt_config");
+		lua_pushstring(L, ch.child_key.c_str());
 		lua_rawseti(L, -2, 1);
 		lua_newtable(L);
 		luaW_filltable(L, child_cfg);
@@ -721,35 +721,33 @@ static int impl_namedtuple_compare(lua_State* L) {
 	return 1;
 }
 
-void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names)
+void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names, const char* key)
 {
 	lua_createtable(L, names.size(), 0);
-	lua_createtable(L, 0, 8);
-	static luaL_Reg callbacks[] = {
-		{ "__index", &impl_namedtuple_get },
-		{ "__newindex", &impl_namedtuple_set },
-		{ "__dir", &impl_namedtuple_dir },
-		{ "__eq", &impl_namedtuple_compare },
-		{ "__tostring", &impl_namedtuple_tostring },
-		{ nullptr, nullptr }
-	};
-	luaL_setfuncs(L, callbacks, 0);
-	static const char baseName[] = "named tuple";
-	std::ostringstream str;
-	str << baseName << '(';
-	if(!names.empty()) {
-		str << names[0];
+	bool needs_init = true;
+	if (key == nullptr) {
+		lua_createtable(L, 0, 4);
 	}
-	for(std::size_t i = 1; i < names.size(); i++) {
-		str << ", " << names[i];
+	else {
+		needs_init = luaL_newmetatable(L, key) != 0;
 	}
-	str << ')';
-	lua_push(L, str.str());
-	lua_setfield(L, -2, "__metatable");
-	lua_push(L, names);
-	lua_setfield(L, -2, "__names");
-	lua_pushstring(L, "named tuple");
-	lua_setfield(L, -2, "__name");
+
+	if (needs_init) {
+		static luaL_Reg callbacks[] = {
+			{ "__index", &impl_namedtuple_get },
+			{ "__dir", &impl_namedtuple_dir },
+			{ "__eq", &impl_namedtuple_compare },
+			{ "__tostring", &impl_namedtuple_tostring },
+			{ nullptr, nullptr }
+		};
+
+		luaL_setfuncs(L, callbacks, 0);
+		lua_pushstring(L, key);
+		lua_setfield(L, -2, "__metatable");
+		lua_push(L, names);
+		lua_setfield(L, -2, "__names");
+	}
+
 	lua_setmetatable(L, -2);
 }
 
@@ -768,7 +766,7 @@ std::vector<std::string> luaW_to_namedtuple(lua_State* L, int idx) {
 
 void luaW_pushlocation(lua_State *L, const map_location& ml)
 {
-	luaW_push_namedtuple(L, {"x", "y"});
+	luaW_push_namedtuple(L, {"x", "y"}, "mt_loc");
 
 	lua_pushinteger(L, ml.wml_x());
 	lua_rawseti(L, -2, 1);
