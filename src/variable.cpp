@@ -360,7 +360,10 @@ config::attribute_value vconfig::expand(const config_key_type &key) const
 std::string vconfig::expand_str(const config_key_type &key) const
 {
 	std::string val = (*cfg_)[key];
-	return utils::interpolate_variables_into_string(val, *variables_);
+	if (val.find('$') != val.npos) {
+		val = utils::interpolate_variables_into_string(val, *variables_);
+	}
+	return val;
 }
 
 vconfig::attribute_iterator::reference vconfig::attribute_iterator::operator*() const
