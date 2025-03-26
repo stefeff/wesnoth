@@ -90,12 +90,12 @@ bool side_filter::match_internal(const team &t) const
 	assert(fc_);
 
 	if (cfg_.has_attribute(str_side_in)) {
-		if (!check_side_number(t,cfg_[str_side_in])) {
+		if (!check_side_number(t,cfg_.expand_str(str_side_in))) {
 			return false;
 		}
 	}
 	if (cfg_.has_attribute(str_side)) {
-		if (!check_side_number(t,cfg_[str_side])) {
+		if (!check_side_number(t,cfg_.expand_str(str_side))) {
 			return false;
 		}
 	}
@@ -105,8 +105,8 @@ bool side_filter::match_internal(const team &t) const
 		}
 	}
 
-	config::attribute_value cfg_team_name = cfg_[str_team_name];
-	if (!cfg_team_name.blank()) {
+	auto cfg_team_name = cfg_.expand_str(str_team_name);
+	if (!cfg_team_name.empty()) {
 		const std::string& that_team_name = cfg_team_name;
 		const std::string& this_team_name = t.team_name();
 
@@ -214,8 +214,8 @@ bool side_filter::match_internal(const team &t) const
 	}
 
 
-	const config::attribute_value cfg_controller = cfg_[str_controller];
-	if (!cfg_controller.blank())
+	const auto cfg_controller = cfg_.expand_str(str_controller);
+	if (!cfg_controller.empty())
 	{
 		if (resources::controller->is_networked_mp() && synced_context::is_synced()) {
 			ERR_NG << "ignoring controller= in SSF due to danger of OOS errors";
@@ -237,7 +237,7 @@ bool side_filter::match_internal(const team &t) const
 	if (cfg_.has_attribute(str_formula)) {
 		try {
 			const wfl::team_callable callable(t);
-			const wfl::formula form(cfg_[str_formula], new wfl::gamestate_function_symbol_table);
+			const wfl::formula form(cfg_.expand_str(str_formula), new wfl::gamestate_function_symbol_table);
 			if(!form.evaluate(callable).as_bool()) {
 				return false;
 			}
@@ -251,7 +251,7 @@ bool side_filter::match_internal(const team &t) const
 	}
 
 	if (cfg_.has_attribute(str_lua_function)) {
-		std::string lua_function = cfg_[str_lua_function].str();
+		std::string lua_function = cfg_.expand_str(str_lua_function);
 		if (!lua_function.empty() && fc_->get_lua_kernel()) {
 			if (!fc_->get_lua_kernel()->run_filter(lua_function.c_str(), t)) {
 				return false;
