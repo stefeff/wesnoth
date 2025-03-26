@@ -664,6 +664,15 @@ bool display::fogged(const map_location& loc) const
 	return is_blindfolded() || (dont_show_all_ && viewing_team().fogged(loc));
 }
 
+point display::get_location(const rect& area, const map_location& loc) const
+{
+	auto border_size = theme_.border().size;
+	return {
+		static_cast<int>(area.x + (loc.x + border_size) * hex_width() - xpos_),
+		static_cast<int>(area.y + (loc.y + border_size) * zoom_ - ypos_ + (is_odd(loc.x) ? zoom_/2 : 0))
+	};
+}
+
 point display::get_location(const map_location& loc) const
 {
 	return {
@@ -1771,8 +1780,8 @@ bool display::tile_nearly_on_screen(const map_location& loc) const
 	const auto [x, y] = get_location(loc);
 	const rect area = map_area();
 	int hw = hex_width(), hs = hex_size();
-	return x + hs >= area.x - hw && x < area.x + area.w + hw &&
-	       y + hs >= area.y - hs && y < area.y + area.h + hs;
+	return l.x + hs >= area.x - hw && l.x < area.x + area.w + hw &&
+	       l.y + hs >= area.y - hs && l.y < area.y + area.h + hs;
 }
 
 void display::scroll_to_xy(const point& screen_coordinates, SCROLL_TYPE scroll_type, bool force)
@@ -1888,10 +1897,10 @@ void display::scroll_to_tiles(const std::vector<map_location>& locs,
 		const auto [x, y] = get_location(loc);
 
 		if (!valid) {
-			minx = x;
-			maxx = x;
-			miny = y;
-			maxy = y;
+			minx = l.x;
+			maxx = l.x;
+			miny = l.y;
+			maxy = l.y;
 			valid = true;
 		} else {
 			int minx_new = std::min<int>(minx,x);
@@ -2454,6 +2463,7 @@ void display::draw_invalidated()
 
 	std::vector<rect> to_invalidate;
 	to_invalidate.reserve(invalidated_.size());
+	auto area = map_area();
 	for(const map_location& loc : invalidated_) {
 		rect hex_rect = get_location_rect(loc);
 		if(!hex_rect.overlaps(clip_rect)) {
