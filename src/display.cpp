@@ -121,8 +121,8 @@ void display::add_overlay(const map_location& loc, const std::string& img, const
 {
 	halo::handle halo_handle;
 	if(halo != "") {
-		halo_handle = halo_man_.add(get_location_x(loc) + hex_size() / 2,
-			get_location_y(loc) + hex_size() / 2, halo, loc);
+		auto pos = get_location(loc);
+		halo_handle = halo_man_.add(pos.x + hex_size() / 2, pos.y + hex_size() / 2, halo, loc);
 	}
 
 	std::vector<overlay>& overlays = get_overlays()[loc];
@@ -719,12 +719,18 @@ int display::get_location_y(const map_location& loc) const
 	return static_cast<int>(map_area().y + (loc.y + theme_.border().size) * zoom_ - ypos_ + (is_odd(loc.x) ? zoom_/2 : 0));
 }
 
+point display::get_location(const rect& area, const map_location& loc) const
+{
+	auto border_size = theme_.border().size;
+	return {
+		static_cast<int>(area.x + (loc.x + border_size) * hex_width() - xpos_),
+		static_cast<int>(area.y + (loc.y + border_size) * zoom_ - ypos_ + (is_odd(loc.x) ? zoom_/2 : 0))
+	};
+}
+
 point display::get_location(const map_location& loc) const
 {
-	return {
-		get_location_x(loc),
-		get_location_y(loc)
-	};
+	return get_location(map_area(), loc);
 }
 
 map_location display::minimap_location_on(int x, int y)
@@ -1293,9 +1299,10 @@ uint32_t generate_hex_key(const display::drawing_layer layer, const map_location
 
 void display::drawing_buffer_add(const drawing_layer layer, const map_location& loc, decltype(draw_helper::do_draw) draw_func)
 {
+	auto l = get_location(loc);
 	const rect dest {
-		get_location_x(loc),
-		get_location_y(loc),
+		l.x,
+		l.y,
 		int(zoom_),
 		int(zoom_)
 	};
@@ -1981,19 +1988,18 @@ void display::toggle_default_zoom()
 
 bool display::tile_fully_on_screen(const map_location& loc) const
 {
-	int x = get_location_x(loc);
-	int y = get_location_y(loc);
-	return !outside_area(map_area(), x, y);
+	auto area = map_area();
+	auto l = get_location(area, loc);
+	return !outside_area(area, l.x, l.y);
 }
 
 bool display::tile_nearly_on_screen(const map_location& loc) const
 {
-	int x = get_location_x(loc);
-	int y = get_location_y(loc);
-	const SDL_Rect &area = map_area();
+	auto area = map_area();
+	auto l = get_location(area, loc);
 	int hw = hex_width(), hs = hex_size();
-	return x + hs >= area.x - hw && x < area.x + area.w + hw &&
-	       y + hs >= area.y - hs && y < area.y + area.h + hs;
+	return l.x + hs >= area.x - hw && l.x < area.x + area.w + hw &&
+	       l.y + hs >= area.y - hs && l.y < area.y + area.h + hs;
 }
 
 void display::scroll_to_xy(int screenxpos, int screenypos, SCROLL_TYPE scroll_type, bool force)
@@ -2112,25 +2118,25 @@ void display::scroll_to_tiles(const std::vector<map_location>::const_iterator & 
 	int maxy = 0;
 	bool valid = false;
 
+	auto area = map_area();
+
 	for(std::vector<map_location>::const_iterator itor = begin; itor != end ; ++itor) {
 		if(get_map().on_board(*itor) == false) continue;
 		if(check_fogged && fogged(*itor)) continue;
 
-		int x = get_location_x(*itor);
-		int y = get_location_y(*itor);
-
+		auto l = get_location(area, *itor);
 		if (!valid) {
-			minx = x;
-			maxx = x;
-			miny = y;
-			maxy = y;
+			minx = l.x;
+			maxx = l.x;
+			miny = l.y;
+			maxy = l.y;
 			valid = true;
 		} else {
-			int minx_new = std::min<int>(minx,x);
-			int miny_new = std::min<int>(miny,y);
-			int maxx_new = std::max<int>(maxx,x);
-			int maxy_new = std::max<int>(maxy,y);
-			SDL_Rect r = map_area();
+			int minx_new = std::min<int>(minx,l.x);
+			int miny_new = std::min<int>(miny,l.y);
+			int maxx_new = std::max<int>(maxx,l.x);
+			int maxy_new = std::max<int>(maxy,l.y);
+			SDL_Rect r = area;
 			r.x = minx_new;
 			r.y = miny_new;
 			if(outside_area(r, maxx_new, maxy_new)) {
@@ -2148,7 +2154,7 @@ void display::scroll_to_tiles(const std::vector<map_location>::const_iterator & 
 	if(!valid) return;
 
 	if (scroll_type == ONSCREEN || scroll_type == ONSCREEN_WARP) {
-		SDL_Rect r = map_area();
+		SDL_Rect r = area;
 		int spacing = std::round(add_spacing * hex_size());
 		r.x += spacing;
 		r.y += spacing;
@@ -2172,7 +2178,7 @@ void display::scroll_to_tiles(const std::vector<map_location>::const_iterator & 
 
 	if (scroll_type == ONSCREEN || scroll_type == ONSCREEN_WARP) {
 		// when doing an ONSCREEN scroll we do not center the target unless needed
-		SDL_Rect r = map_area();
+		SDL_Rect r = area;
 		int map_center_x = r.x + r.w/2;
 		int map_center_y = r.y + r.h/2;
 
@@ -2658,9 +2664,11 @@ void display::draw_invalidated()
 
 	std::vector<rect> to_invalidate;
 	to_invalidate.reserve(invalidated_.size());
+	auto area = map_area();
 	for(const map_location& loc : invalidated_) {
-		int xpos = get_location_x(loc);
-		int ypos = get_location_y(loc);
+		auto pos = get_location(area, loc);
+		int xpos = pos.x;
+		int ypos = pos.y;
 
 		rect hex_rect(xpos, ypos, zoom_, zoom_);
 		if(!hex_rect.overlaps(clip_rect)) {

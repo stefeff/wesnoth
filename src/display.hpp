@@ -315,6 +315,7 @@ public:
 	int get_location_x(const map_location& loc) const;
 	int get_location_y(const map_location& loc) const;
 	point get_location(const map_location& loc) const;
+	point get_location(const rect& area, const map_location& loc) const;
 
 	/**
 	 * Rectangular area of hexes, allowing to decide how the top and bottom
