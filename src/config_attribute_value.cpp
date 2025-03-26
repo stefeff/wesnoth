@@ -308,7 +308,7 @@ class config_attribute_value::string_visitor
 	: public boost::static_visitor<std::string>
 #endif
 {
-	const std::string default_;
+	const std::string& default_;
 
 public:
 	string_visitor(const std::string& fallback) : default_(fallback) {}
