@@ -118,7 +118,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 
 	if(cfg_.has_attribute(str_terrain)) {
 		if(cache_.parsed_terrain == nullptr) {
-			cache_.parsed_terrain.reset(new t_translation::ter_match(std::string_view(cfg_[str_terrain].str())));
+			cache_.parsed_terrain.reset(new t_translation::ter_match(std::string_view(cfg_.expand_str(str_terrain))));
 		}
 		if(!cache_.parsed_terrain->is_empty) {
 			const t_translation::terrain_code letter = fc_->get_disp_context().map().get_terrain_info(loc).number();
@@ -138,7 +138,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 			if (const game_data * gd = fc_->get_game_data()) {
 				try
 				{
-					variable_access_const vi = gd->get_variable_access_read(cfg_[str_find_in]);
+					variable_access_const vi = gd->get_variable_access_read(cfg_.expand_str(str_find_in));
 
 					bool found = false;
 					for (const config &cfg : vi.as_array()) {
@@ -157,7 +157,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 		}
 		if (cfg_.has_attribute(str_location_id)) {
 			std::set<map_location> matching_locs;
-			for(const auto& id : utils::split(cfg_[str_location_id])) {
+			for(const auto& id : utils::split(cfg_.expand_str(str_location_id))) {
 				map_location test_loc = fc_->get_disp_context().map().special_location(id);
 				if(test_loc.valid()) {
 					matching_locs.insert(test_loc);
@@ -339,7 +339,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 				// It's not destroyed upon scope exit because the variant holds a reference
 			}
 			wfl::gamestate_function_symbol_table symbols;
-			const wfl::formula form(cfg_[str_formula], &symbols);
+			const wfl::formula form(cfg_.expand_str(str_formula), &symbols);
 			if(!form.evaluate(callable).as_bool()) {
 				return false;
 			}
