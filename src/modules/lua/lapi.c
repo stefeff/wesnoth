@@ -740,6 +740,24 @@ LUA_API int lua_rawget (lua_State *L, int idx) {
   return finishrawget(L, val);
 }
 
+LUA_API int lua_recursiveglobalrawget (lua_State *L, const char** keys, int count) {
+  Table *t;
+  int i;
+  lua_lock(L);
+  api_checknelems(L, 1);
+
+  t = gettable(L, LUA_REGISTRYINDEX);
+  const TValue *val = luaH_getint(t, LUA_RIDX_GLOBALS);
+  for (i = 0; i < count && ttistable(val); ++i) {
+    int l = strlen(keys[i]);
+    unsigned int h = luaS_hash(keys[i], l, G(L)->seed);
+
+    t = hvalue(val);
+    val = luaH_getcshortstr(t, keys[i], h);
+  }
+
+  return finishrawget(L, val);
+}
 
 LUA_API int lua_rawgeti (lua_State *L, int idx, lua_Integer n) {
   Table *t;
