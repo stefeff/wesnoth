@@ -70,6 +70,7 @@ namespace wb {
 #include <list>
 #include <map>
 #include <memory>
+#include <set>
 #include <vector>
 
 struct submerge_data

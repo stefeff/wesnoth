@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include <set>
 
 class ai_testing{
 public:

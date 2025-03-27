@@ -29,6 +29,7 @@ class unit_type;
 #include "map/location.hpp"
 #include "units/ptr.hpp"
 
+#include <set>
 #include <tuple>
 
 namespace actions {

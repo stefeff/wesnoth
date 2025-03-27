@@ -18,6 +18,8 @@
 #include "map/location.hpp"
 #include "tstring.hpp"
 #include "config.hpp"
+#include <cassert>
+#include <set>
 #include <string>
 #include <vector>
 

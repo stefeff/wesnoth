@@ -24,6 +24,8 @@
 #include "map/location.hpp"
 #include "terrain/translation.hpp"
 
+#include <set>
+
 class config;
 class game_config_view;
 
