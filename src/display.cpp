@@ -1031,7 +1031,7 @@ void display::get_terrain_images(const map_location& loc, const std::string& tim
 	std::array<const time_of_day*, adjs.size()> atods;
 
 	for(std::size_t d = 0; d < adjs.size(); ++d) {
-		atods[d] = &get_time_of_day(adjs[d]);
+		atods[d] = &tod;
 	}
 
 	for(int d = 0; d < 6; ++d) {
@@ -1144,7 +1144,7 @@ void display::get_terrain_images(const map_location& loc, const std::string& tim
 
 	if(const terrain_builder::imagelist* const terrains = builder_->get_terrain_at(loc, timeid, builder_terrain_type)) {
 		// Cache the offmap name. Since it is themeable it can change, so don't make it static.
-		const std::string off_map_name = "terrain/" + theme_.border().tile_image;
+		const utils::interned_string off_map_name = "terrain/" + theme_.border().tile_image;
 		terrain_image_vector_.reserve(terrains->size());
 
 		for(const auto& terrain : *terrains) {
@@ -1239,7 +1239,7 @@ uint32_t generate_hex_key(const drawing_layer layer, const map_location& loc)
 }
 } // namespace
 
-void display::drawing_buffer_add(const drawing_layer layer, const map_location& loc, decltype(draw_helper::do_draw) draw_func)
+void display::drawing_buffer_add(const drawing_layer layer, const map_location& loc, decltype(draw_helper::do_draw)&& draw_func)
 {
 	drawing_buffer_.AGGREGATE_EMPLACE(generate_hex_key(layer, loc), std::move(draw_func), get_location_rect(loc));
 }
@@ -1249,8 +1249,14 @@ void display::drawing_buffer_commit()
 	DBG_DP << "committing drawing buffer"
 	       << " with " << drawing_buffer_.size() << " items";
 
-	// std::list::sort() is a stable sort
-	drawing_buffer_.sort();
+	// sorting this index produces a fast stable sort on the drawing_buffer_
+	std::vector<stable_index> sorted{};
+	sorted.reserve(drawing_buffer_.size());
+	size_t index = 0;
+	for(const draw_helper& helper : drawing_buffer_) {
+		sorted.emplace_back(helper, index++);
+	}
+	std::sort(sorted.begin(), sorted.end());
 
 	const auto clipper = draw::reduce_clip(map_area());
 
@@ -1266,7 +1272,8 @@ void display::drawing_buffer_commit()
 	 * This ended in the following priority order:
 	 * layergroup > location > layer > 'draw_helper' > surface
 	 */
-	for(const draw_helper& helper : drawing_buffer_) {
+	for(auto index : sorted) {
+		const draw_helper& helper = drawing_buffer_[index.index()];
 		std::invoke(helper.do_draw, helper.dest);
 	}
 
