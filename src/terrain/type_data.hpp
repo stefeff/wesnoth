@@ -17,8 +17,7 @@
 
 #include "terrain/terrain.hpp"
 
-#include <map>
-#include <memory>
+#include <unordered_map>
 
 class game_config_view;
 
@@ -41,7 +40,7 @@ class game_config_view;
 class terrain_type_data {
 private:
 	mutable t_translation::ter_list terrainList_;
-	using tcodeToTerrain_t = std::map<t_translation::terrain_code, terrain_type>;
+	using tcodeToTerrain_t = std::unordered_map<t_translation::terrain_code, terrain_type>;
 	mutable tcodeToTerrain_t tcodeToTerrain_;
 	mutable bool initialized_;
 	const game_config_view & game_config_;
@@ -68,10 +67,9 @@ public:
 	 * without the delay of loading the data (and it's likely that a different
 	 * config will be loaded before entering the game).
 	 */
-	void lazy_initialization() const;
-
+	void lazy_initialization() const { if(!initialized_) { do_initialization(); } }
 	const t_translation::ter_list & list() const;
-	const std::map<t_translation::terrain_code, terrain_type> & map() const;
+	const tcodeToTerrain_t & map() const;
 
 	/**
 	 * Get the corresponding terrain_type information object for a given type
@@ -131,6 +129,8 @@ public:
 	bool is_known(const t_translation::terrain_code & terrain) const;
 
 private:
+	void do_initialization() const;
+
 	tcodeToTerrain_t::const_iterator find_or_create(t_translation::terrain_code) const;
 
 	static inline terrain_type_data* singleton_{nullptr};

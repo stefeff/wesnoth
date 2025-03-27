@@ -54,18 +54,15 @@ void terrain_type_data::reset() const
 	initialized_ = false;
 }
 
-void terrain_type_data::lazy_initialization() const
+void terrain_type_data::do_initialization() const
 {
-	if(initialized_)
-		return;
-
 	for (const config &terrain_data : game_config_.child_range(str_terrain_type))
 	{
 		terrain_type terrain(terrain_data);
 		DBG_G << "create_terrain_maps: " << terrain.number() << " "
 			<< terrain.id() << " " << terrain.name() << " : " << terrain.editor_group();
 
-		std::pair<std::map<t_translation::terrain_code, terrain_type>::iterator, bool> res;
+		std::pair<tcodeToTerrain_t::iterator, bool> res;
 		res = tcodeToTerrain_.emplace(terrain.number(), terrain);
 		if (!res.second) {
 			terrain_type& curr = res.first->second;
@@ -114,7 +111,7 @@ const t_translation::ter_list & terrain_type_data::list() const
 }
 
 
-const std::map<t_translation::terrain_code, terrain_type> & terrain_type_data::map() const
+const terrain_type_data::tcodeToTerrain_t & terrain_type_data::map() const
 {
 	lazy_initialization();
 	return tcodeToTerrain_;
