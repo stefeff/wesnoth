@@ -30,6 +30,37 @@
 #include <boost/circular_buffer.hpp>
 #include <boost/math/constants/constants.hpp>
 
+#ifdef __SSE2__
+#include <immintrin.h>
+
+#ifdef __SSE4_1__
+#define mm_blendv_epi8 _mm_blendv_epi8
+#define mm_max_epu32 _mm_max_epu32
+#define mm_min_epu32 _mm_min_epu32
+#else
+
+static inline __m128i mm_blendv_epi8(__m128i a, __m128i b, __m128i mask)
+{
+	return _mm_or_si128(_mm_andnot_si128(mask, a), _mm_and_si128(mask, b));
+}
+
+static inline __m128i mm_max_epu32(__m128i a, __m128i b)
+{
+	// not quite correct (ignores lowest bit)
+	// but works for our use case of only caring about the upper 8 bits
+	return mm_blendv_epi8(a,  b, _mm_cmpgt_epi32(_mm_srli_epi32(b, 1), _mm_srli_epi32(a, 1)));
+}
+
+static inline __m128i mm_min_epu32(__m128i a, __m128i b)
+{
+	// not quite correct (ignores lowest bit)
+	// but works for our use case of only caring about the upper 8 bits
+	return mm_blendv_epi8(a,  b, _mm_cmplt_epi32(_mm_srli_epi32(b, 1), _mm_srli_epi32(a, 1)));
+}
+
+#endif
+#endif
+
 static lg::log_domain log_display("display");
 #define ERR_DP LOG_STREAM(err, log_display)
 
@@ -1019,31 +1050,33 @@ surface mask_surface(const surface &surf, const surface &mask, bool* empty_resul
 		const_surface_lock mlock(nmask);
 
 		uint32_t* beg = lock.pixels();
-		uint32_t* end = beg + nsurf->w*surf->h;
 		const uint32_t* mbeg = mlock.pixels();
-		const uint32_t* mend = mbeg + nmask->w*nmask->h;
+		size_t count = std::min(nsurf->w*surf->h, nmask->w*nmask->h);
+		size_t i = 0;
 
-		while(beg != end && mbeg != mend) {
-			uint8_t alpha = (*beg) >> 24;
+#ifdef __SSE2__
+		auto max_result = _mm_setzero_si128();
+		for (; i + 3 < count; i += 4) {
+			auto pixel = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&beg[i]));
+			auto mask = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&mbeg[i]));
+			auto masked = (mask & _mm_set1_epi32(0xff000000)) | (pixel & _mm_set1_epi32(0x00ffffff));
+			auto result = mm_min_epu32(pixel, masked);
 
-			if(alpha) {
-				uint8_t r, g, b;
-				r = (*beg) >> 16;
-				g = (*beg) >> 8;
-				b = (*beg);
+			max_result = mm_max_epu32(max_result, result);
 
-				uint8_t malpha = (*mbeg) >> 24;
-				if (alpha > malpha) {
-					alpha = malpha;
-				}
-				if(alpha)
-					empty = false;
+			_mm_storeu_si128(reinterpret_cast<__m128i*>(&beg[i]), result);
+		}
 
-				*beg = (alpha << 24) + (r << 16) + (g << 8) + b;
-			}
+		empty = _mm_test_all_zeros(_mm_set1_epi32(0xff000000), max_result);
+#endif
 
-			++beg;
-			++mbeg;
+		for (; i < count; ++i) {
+			uint32_t pixel = beg[i];
+			uint32_t mask = mbeg[i];
+			uint32_t masked = (mask & 0xff000000) | (pixel & 0x00ffffff);
+			uint32_t result = std::min(pixel, masked);
+			empty &= result <= 0x00ffffff;
+			beg[i] = result;
 		}
 	}
 	if(empty_result)
