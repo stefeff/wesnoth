@@ -123,7 +123,7 @@ typedef int (*lua_Writer) (lua_State *L, const void *p, size_t sz, void *ud);
 ** Type for memory-allocation functions
 */
 typedef void * (*lua_Alloc) (void *ud, void *ptr, size_t osize, size_t nsize);
-
+typedef void   (*lua_Free) (void *ptr, size_t osize);
 
 /*
 ** Type for warning functions
@@ -160,7 +160,7 @@ extern const char lua_ident[];
 /*
 ** state manipulation
 */
-LUA_API lua_State *(lua_newstate) (lua_Alloc f, void *ud);
+LUA_API lua_State *(lua_newstate) (lua_Alloc f, lua_Free ffree, void *ud);
 LUA_API void       (lua_close) (lua_State *L);
 LUA_API lua_State *(lua_newthread) (lua_State *L);
 LUA_API int        (lua_closethread) (lua_State *L, lua_State *from);
@@ -358,6 +358,7 @@ LUA_API size_t   (lua_stringtonumber) (lua_State *L, const char *s);
 
 LUA_API lua_Alloc (lua_getallocf) (lua_State *L, void **ud);
 LUA_API void      (lua_setallocf) (lua_State *L, lua_Alloc f, void *ud);
+LUA_API void      (lua_setfreef) (lua_State *L, lua_Free f);
 
 LUA_API void (lua_toclose) (lua_State *L, int idx);
 LUA_API void (lua_closeslot) (lua_State *L, int idx);

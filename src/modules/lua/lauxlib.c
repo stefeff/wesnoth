@@ -1033,6 +1033,10 @@ static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
     return realloc(ptr, nsize);
 }
 
+static void l_free (void *ptr, size_t osize) {
+  (void)osize;  /* not used */
+  free(ptr);
+}
 
 /*
 ** Standard panic funcion just prints an error message. The test
@@ -1106,7 +1110,7 @@ static void warnfon (void *ud, const char *message, int tocont) {
 
 
 LUALIB_API lua_State *luaL_newstate (void) {
-  lua_State *L = lua_newstate(l_alloc, NULL);
+  lua_State *L = lua_newstate(l_alloc, l_free, NULL);
   if (l_likely(L)) {
     lua_atpanic(L, &panic);
     lua_setwarnf(L, warnfoff, L);  /* default is warnings off */
