@@ -23,6 +23,7 @@
 
 #include "map/map.hpp"
 
+#include <set>
 
 /**
  * Function that will add to @a result all locations exactly @a radius tiles

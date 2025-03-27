@@ -20,6 +20,7 @@
 
 #pragma once
 
+#include <set>
 #include <vector>
 
 class ai_testing{

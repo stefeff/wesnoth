@@ -18,9 +18,10 @@
 #include "map/location.hpp"
 #include "tstring.hpp"
 #include "config.hpp"
+#include <cassert>
+#include <set>
 #include <string>
 #include <vector>
-#include <cassert>
 
 #include <boost/iterator/indirect_iterator.hpp>
 #include <boost/range/iterator_range.hpp>

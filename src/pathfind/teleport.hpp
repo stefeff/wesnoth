@@ -18,6 +18,8 @@
 #include "config.hpp"
 #include "map/location.hpp"
 
+#include <set>
+
 class team;
 class unit;
 class vconfig;

@@ -15,7 +15,6 @@
 #pragma once
 
 #include "map/location.hpp"
-#include <set>
 
 /**
  * Function that will add to @a result all elements of @a locs, plus all

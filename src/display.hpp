@@ -75,6 +75,7 @@ namespace wb {
 #include <list>
 #include <map>
 #include <memory>
+#include <set>
 #include <vector>
 
 class gamemap;
