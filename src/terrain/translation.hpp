@@ -363,7 +363,7 @@ namespace std {
 template<>
 struct hash<t_translation::terrain_code> {
 	std::size_t operator()(const t_translation::terrain_code& l) const noexcept {
-		return l.base * 16384 + l.overlay;
+		return static_cast<std::size_t>(l.overlay) * 16384 + l.base;
 	}
 };
 }
