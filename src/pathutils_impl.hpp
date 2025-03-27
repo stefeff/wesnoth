@@ -28,9 +28,8 @@
  * @a pred2 a slow predicate (used after cachecheck).
  */
 template<typename FPred1, typename FPred2>
-void get_tiles_radius(std::set<map_location>&& locs, size_t radius, std::set<map_location>& result, const FPred1& pred1, const FPred2& pred2)
+void get_tiles_radius(location_set&& locs, size_t radius, location_set& result, const FPred1& pred1, const FPred2& pred2)
 {
-	typedef std::set<map_location> location_set;
 	location_set must_visit, filtered_out;
 	location_set not_visited = std::move(locs);
 

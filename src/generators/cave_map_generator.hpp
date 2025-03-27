@@ -49,7 +49,7 @@ private:
 			}
 
 			map_location center;
-			std::set<map_location> locs;
+			location_set locs;
 			const config *items;
 		};
 
@@ -62,7 +62,7 @@ private:
 		};
 
 		void generate_chambers();
-		void build_chamber(map_location loc, std::set<map_location>& locs, std::size_t size, std::size_t jagged);
+		void build_chamber(map_location loc, location_set& locs, std::size_t size, std::size_t jagged);
 
 		void place_chamber(const chamber& c);
 

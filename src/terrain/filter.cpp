@@ -156,7 +156,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 			}
 		}
 		if (cfg_.has_attribute(str_location_id)) {
-			std::set<map_location> matching_locs;
+			location_set matching_locs;
 			for(const auto& id : utils::split(cfg_.expand_str(str_location_id))) {
 				map_location test_loc = fc_->get_disp_context().map().special_location(id);
 				if(test_loc.valid()) {
@@ -242,7 +242,7 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 						}
 					} else {
 						assert(index < std::distance(cache_.adjacent_matches->begin(), cache_.adjacent_matches->end()));
-						std::set<map_location> &amc = (*cache_.adjacent_matches)[index];
+						location_set &amc = (*cache_.adjacent_matches)[index];
 						if(amc.find(adj) != amc.end()) {
 							++match_count;
 						}
@@ -373,7 +373,7 @@ bool terrain_filter::match_impl(const map_location& loc, const unit* ref_unit) c
 	if(cfg_[str_x] == str_recall && cfg_[str_y] == str_recall) {
 		return !fc_->get_disp_context().map().on_board(loc);
 	}
-	std::set<map_location> hexes;
+	location_set hexes;
 	std::vector<map_location> loc_vec(1, loc);
 
 	std::unique_ptr<scoped_wml_variable> ref_unit_var;
@@ -406,7 +406,7 @@ bool terrain_filter::match_impl(const map_location& loc, const unit* ref_unit) c
 	}
 
 	std::size_t loop_count = 0;
-	std::set<map_location>::const_iterator i;
+	location_set::const_iterator i;
 	for(i = hexes.begin(); i != hexes.end(); ++i) {
 		bool matches = match_internal(*i, ref_unit, false);
 
@@ -430,7 +430,7 @@ bool terrain_filter::match_impl(const map_location& loc, const unit* ref_unit) c
 			return true;
 		}
 		if(++loop_count > max_loop_) {
-			std::set<map_location>::const_iterator temp = i;
+			location_set::const_iterator temp = i;
 			if(++temp != hexes.end()) {
 				ERR_NG << "terrain_filter: loop count greater than " << max_loop_
 				<< ", aborting";
@@ -444,7 +444,6 @@ bool terrain_filter::match_impl(const map_location& loc, const unit* ref_unit) c
 class terrain_filterimpl
 {
 public:
-	using location_set = std::set<map_location>;
 	struct no_start_set_yet {};
 	struct no_filter
 	{
@@ -465,7 +464,7 @@ public:
 	static void filter_special_loc(T&& src, location_set& dest, const terrain_filter& filter, const F1& f1, const F2& f2)
 	{
 		if (filter.cfg_.has_attribute(str_location_id)) {
-			std::set<map_location> matching_locs;
+			location_set matching_locs;
 			for(const auto& id : utils::split(filter.cfg_[str_location_id])) {
 				map_location test_loc = filter.fc_->get_disp_context().map().special_location(id);
 				if(test_loc.valid()) {
@@ -483,7 +482,7 @@ public:
 	static void filter_area(T&& src, location_set& dest, const terrain_filter& filter, const F1& f1)
 	{
 		if (filter.cfg_.has_attribute(str_area)) {
-			const std::set<map_location>& area = filter.fc_->get_tod_man().get_area_by_id(filter.cfg_[str_area]);
+			const location_set& area = filter.fc_->get_tod_man().get_area_by_id(filter.cfg_[str_area]);
 			filter_special_loc(src, dest, filter, f1, [&area](const map_location& loc) { return area.find(loc) != area.end(); });
 		}
 		else {
@@ -509,7 +508,7 @@ struct cfg_to_loc
 	map_location operator()(const config& cfg) const { return map_location(cfg, nullptr); }
 	typedef map_location result_type;
 };
-void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref_unit, bool with_border) const
+void terrain_filter::get_locs_impl(location_set& locs, const unit* ref_unit, bool with_border) const
 {
 	std::unique_ptr<scoped_wml_variable> ref_unit_var;
 	if(ref_unit) {
@@ -520,7 +519,7 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 		}
 	}
 
-	std::set<map_location> match_set;
+	location_set match_set;
 
 	// See if the caller provided an override to with_border
 	with_border = cfg_[str_include_borders].to_bool(with_border);
@@ -544,7 +543,7 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 		terrain_filterimpl::filter_area(xy_vector, match_set, *this, terrain_filterimpl::no_filter());
 	}
 	else if (cfg_.has_attribute(str_area)) {
-		const std::set<map_location>& area = fc_->get_tod_man().get_area_by_id(cfg_[str_area]);
+		const location_set& area = fc_->get_tod_man().get_area_by_id(cfg_[str_area]);
 		terrain_filterimpl::filter_special_loc(area, match_set, *this, terrain_filterimpl::no_filter(), terrain_filterimpl::no_filter());
 	}
 	else if (cfg_.has_attribute(str_location_id)) {
@@ -574,11 +573,11 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 	//handle location filter
 	if(cfg_.has_child(str_filter_adjacent_location)) {
 		if(cache_.adjacent_matches == nullptr) {
-			cache_.adjacent_matches.reset(new std::vector<std::set<map_location>>());
+			cache_.adjacent_matches.reset(new std::vector<location_set>());
 		}
 		const vconfig::child_list& adj_cfgs = cfg_.get_children(str_filter_adjacent_location);
 		for (unsigned i = 0; i < adj_cfgs.size(); ++i) {
-			std::set<map_location> adj_set;
+			location_set adj_set;
 			/* GCC-3.3 doesn't like operator[] so use at(), which has the same result */
 			terrain_filter(adj_cfgs.at(i), *this).get_locations(adj_set, with_border);
 			cache_.adjacent_matches->push_back(adj_set);
@@ -589,7 +588,7 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 			}
 		}
 	}
-	std::set<map_location>::iterator loc_itor = match_set.begin();
+	auto loc_itor = match_set.begin();
 	while(loc_itor != match_set.end()) {
 		if(match_internal(*loc_itor, ref_unit, true)) {
 			++loc_itor;
@@ -609,9 +608,9 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 
 		// Handle [and]
 		if(key == str_and) {
-			std::set<map_location> intersect_hexes;
+			location_set intersect_hexes;
 			terrain_filter(filter, *this).get_locations(intersect_hexes, with_border);
-			std::set<map_location>::iterator intersect_itor = match_set.begin();
+			location_set::iterator intersect_itor = match_set.begin();
 			while(intersect_itor != match_set.end()) {
 				if(intersect_hexes.find(*intersect_itor) == intersect_hexes.end()) {
 					match_set.erase(*intersect_itor++);
@@ -622,7 +621,7 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 		}
 		// Handle [or]
 		else if(key == str_or) {
-			std::set<map_location> union_hexes;
+			location_set union_hexes;
 			terrain_filter(filter, *this).get_locations(union_hexes, with_border);
 			//match_set.insert(union_hexes.begin(), union_hexes.end()); //doesn't compile on MSVC
 			std::set<map_location>::iterator insert_itor = union_hexes.begin();
@@ -633,7 +632,7 @@ void terrain_filter::get_locs_impl(std::set<map_location>& locs, const unit* ref
 		}
 		// Handle [not]
 		else if(key == str_not) {
-			std::set<map_location> removal_hexes;
+			location_set removal_hexes;
 			terrain_filter(filter, *this).get_locations(removal_hexes, with_border);
 			std::set<map_location>::iterator erase_itor = removal_hexes.begin();
 			while(erase_itor != removal_hexes.end()) {

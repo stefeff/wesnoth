@@ -80,7 +80,7 @@ private:
 	void last_action_redraw(move_ptr);
 
 	map_location mouseover_hex_;
-	std::set<map_location> exclusive_display_hexes_;
+	location_set exclusive_display_hexes_;
 	unit_ptr owner_unit_;
 	unit_ptr selection_candidate_;
 

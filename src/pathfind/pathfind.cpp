@@ -64,14 +64,14 @@ map_location find_vacant_tile(const map_location& loc, VACANT_TILE_TYPE vacancy,
 	if (!map.on_board(loc)) return map_location();
 
 	const bool do_shroud = shroud_check  &&  shroud_check->uses_shroud();
-	std::set<map_location> pending_tiles_to_check, tiles_checked;
+	location_set pending_tiles_to_check, tiles_checked;
 	pending_tiles_to_check.insert(loc);
 	// Iterate out 50 hexes from loc
 	for (int distance = 0; distance < 50; ++distance) {
 		if (pending_tiles_to_check.empty())
 			return map_location();
 		//Copy over the hexes to check and clear the old set
-		std::set<map_location> tiles_checking;
+		location_set tiles_checking;
 		tiles_checking.swap(pending_tiles_to_check);
 		//Iterate over all the hexes we need to check
 		for (const map_location &l : tiles_checking)
@@ -270,7 +270,7 @@ namespace {
 static void find_routes(
 		const map_location & origin, const movetype::terrain_costs & costs,
 		bool slowed, int moves_left, int max_moves, int turns_left,
-		paths::dest_vect & destinations, std::set<map_location> * edges,
+		paths::dest_vect & destinations, location_set * edges,
 		const unit * teleporter, const team * current_team,
 		const unit * skirmisher, const team * viewing_team,
 		const std::map<map_location, int> * jamming_map=nullptr,

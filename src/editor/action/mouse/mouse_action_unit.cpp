@@ -41,7 +41,7 @@ void mouse_action_unit::move(editor_display& disp, const map_location& hex)
 
 	update_brush_highlights(disp, hex);
 
-	std::set<map_location> adjacent_set;
+	location_set adjacent_set;
 	for(const map_location& adj : get_adjacent_tiles(previous_move_hex_)) {
 		adjacent_set.insert(adj);
 	}

@@ -561,7 +561,7 @@ void map_context::draw_terrain_actual(
 }
 
 void map_context::draw_terrain(
-		const t_translation::terrain_code& terrain, const std::set<map_location>& locs, bool one_layer_only)
+		const t_translation::terrain_code& terrain, const location_set& locs, bool one_layer_only)
 {
 	t_translation::terrain_code full_terrain = one_layer_only
 		? terrain
@@ -585,7 +585,7 @@ void map_context::add_changed_location(const map_location& loc)
 	}
 }
 
-void map_context::add_changed_location(const std::set<map_location>& locs)
+void map_context::add_changed_location(const location_set& locs)
 {
 	if(!everything_changed()) {
 		changed_locations_.insert(locs.begin(), locs.end());
@@ -610,7 +610,7 @@ void map_context::clear_starting_position_labels(display& disp)
 
 void map_context::set_starting_position_labels(display& disp)
 {
-	std::set<map_location> new_label_locs = map_.set_starting_position_labels(disp);
+	location_set new_label_locs = map_.set_starting_position_labels(disp);
 	starting_position_label_locs_.insert(new_label_locs.begin(), new_label_locs.end());
 }
 

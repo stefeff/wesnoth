@@ -54,11 +54,11 @@ private:
 
 	bool generate_river_internal(const height_map& heights,
 			terrain_map& terrain, int x, int y, std::vector<map_location>& river,
-			std::set<map_location>& seen_locations, int river_uphill);
+			location_set& seen_locations, int river_uphill);
 
 	std::vector<map_location> generate_river(const height_map& heights, terrain_map& terrain, int x, int y, int river_uphill);
 
-	bool generate_lake(t_translation::ter_map& terrain, int x, int y, int lake_fall_off, std::set<map_location>& locs_touched);
+	bool generate_lake(t_translation::ter_map& terrain, int x, int y, int lake_fall_off, location_set& locs_touched);
 	map_location random_point_at_side(std::size_t width, std::size_t height);
 
 	std::mt19937 rng_;

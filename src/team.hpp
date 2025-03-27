@@ -169,7 +169,7 @@ public:
 	game_events::pump_result_t get_village(const map_location&, const int owner_side, game_data * fire_event);
 	void lose_village(const map_location&);
 	void clear_villages() { villages_.clear(); }
-	const std::set<map_location>& villages() const { return villages_; }
+	const location_set& villages() const { return villages_; }
 	bool owns_village(const map_location& loc) const
 		{ return villages_.count(loc) > 0; }
 
@@ -319,9 +319,9 @@ public:
 
 	bool knows_about_team(std::size_t index) const;
 	/** Records hexes that were cleared of fog via WML. */
-	void add_fog_override(const std::set<map_location> &hexes) { fog_clearer_.insert(hexes.begin(), hexes.end()); }
+	void add_fog_override(const location_set &hexes) { fog_clearer_.insert(hexes.begin(), hexes.end()); }
 	/** Removes the record of hexes that were cleared of fog via WML. */
-	void remove_fog_override(const std::set<map_location> &hexes);
+	void remove_fog_override(const location_set &hexes);
 
 	bool auto_shroud_updates() const { return auto_shroud_updates_; }
 	void set_auto_shroud_updates(bool value) { auto_shroud_updates_ = value; }
@@ -405,11 +405,11 @@ private:
 	const std::vector<const shroud_map*>& ally_fog(const std::vector<team>& teams) const;
 
 	int gold_;
-	std::set<map_location> villages_;
+	location_set villages_;
 
 	shroud_map shroud_, fog_;
 	/** Stores hexes that have been cleared of fog via WML. */
-	std::set<map_location> fog_clearer_;
+	location_set fog_clearer_;
 
 	bool auto_shroud_updates_;
 

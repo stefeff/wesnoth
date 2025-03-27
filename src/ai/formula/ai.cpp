@@ -268,7 +268,7 @@ void formula_ai::add_formula_function(const std::string& name, const_formula_ptr
 namespace
 {
 template<typename Container>
-variant villages_from_set(const Container& villages, const std::set<map_location>* exclude = nullptr)
+variant villages_from_set(const Container& villages, const location_set* exclude = nullptr)
 {
 	std::vector<variant> vars;
 	for(const map_location& loc : villages) {
@@ -311,7 +311,7 @@ variant formula_ai::get_value(const std::string& key) const
 
 	} else if(key == "avoid")
 	{
-		std::set<map_location> av_locs;
+		location_set av_locs;
 		get_avoid().get_locations(av_locs);
 		return villages_from_set(av_locs);
 

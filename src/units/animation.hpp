@@ -148,7 +148,7 @@ private:
 			, const std::string& layer = ""
 			, const std::string& modifiers = "");
 		void redraw(const frame_parameters& value, const map_location& src, const map_location& dst, halo::manager& halo_man);
-		std::set<map_location> get_overlaped_hex(const frame_parameters& value,const map_location& src, const map_location& dst);
+		location_set get_overlaped_hex(const frame_parameters& value,const map_location& src, const map_location& dst);
 		void start_animation(int start_time);
 		const frame_parameters parameters(const frame_parameters& default_val) const
 		{
@@ -185,7 +185,7 @@ private:
 	// optimization
 	bool invalidated_;
 	bool play_offscreen_;
-	std::set<map_location> overlaped_hex_;
+	location_set overlaped_hex_;
 };
 
 class unit_animator

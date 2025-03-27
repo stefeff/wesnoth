@@ -101,7 +101,7 @@ public:
 	/**
 	 * Return the locations of units that can reach @a goal (@see highlight_another_reach()).
 	 */
-	const std::set<map_location>& units_that_can_reach_goal() const { return units_that_can_reach_goal_; }
+	const location_set& units_that_can_reach_goal() const { return units_that_can_reach_goal_; }
 
 	/** Reset highlighting of paths. */
 	bool unhighlight_reach();
@@ -169,7 +169,7 @@ protected:
 	/** Inherited from display. */
 	virtual overlay_map& get_overlays() override;
 
-	std::set<map_location> units_that_can_reach_goal_;
+	location_set units_that_can_reach_goal_;
 
 public:
 	/** Set the attack direction indicator. */

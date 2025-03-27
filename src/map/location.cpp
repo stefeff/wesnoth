@@ -396,7 +396,7 @@ map_location map_location::get_direction(map_location::DIRECTION dir, unsigned i
 	}*/
 }
 
-void write_location_range(const std::set<map_location>& locs, config& cfg)
+void write_location_range(const location_set& locs, config& cfg)
 {
 	if(locs.empty()){
 		cfg["x"] = "";
@@ -408,7 +408,7 @@ void write_location_range(const std::set<map_location>& locs, config& cfg)
 	assert(map_location(0,1) < map_location(1,0));
 
 	std::stringstream x, y;
-	std::set<map_location>::const_iterator
+	location_set::const_iterator
 			i = locs.begin(),
 			first = i,
 			last = i;

@@ -88,7 +88,7 @@ struct node {
 			double new_srch = 1.0;
 			auto sources = teleports->get_sources();
 
-			std::set<map_location>::const_iterator it = sources.begin();
+			location_set::const_iterator it = sources.begin();
 			for(; it != sources.end(); ++it) {
 				const double tmp_srch = heuristic(c, *it);
 				if (tmp_srch < new_srch) { new_srch = tmp_srch; }

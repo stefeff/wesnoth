@@ -171,14 +171,14 @@ void editor_action_chain::perform_without_undo(map_context& mc) const
 	}
 }
 
-void editor_action_area::extend(const editor_map& /*map*/, const std::set<map_location>& locs)
+void editor_action_area::extend(const editor_map& /*map*/, const location_set& locs)
 {
 	area_.insert(locs.begin(), locs.end());
 }
 
 IMPLEMENT_ACTION(paste)
 
-void editor_action_paste::extend(const editor_map& map, const std::set<map_location>& locs)
+void editor_action_paste::extend(const editor_map& map, const location_set& locs)
 {
 	paste_.add_tiles(map, locs);
 }
@@ -220,7 +220,7 @@ IMPLEMENT_ACTION(fill)
 
 std::unique_ptr<editor_action> editor_action_fill::perform(map_context& mc) const
 {
-	std::set<map_location> to_fill = mc.map().get_contiguous_terrain_tiles(loc_);
+	location_set to_fill = mc.map().get_contiguous_terrain_tiles(loc_);
 	auto undo = std::make_unique<editor_action_paint_area>(to_fill, mc.map().get_terrain(loc_));
 
 	mc.draw_terrain(t_, to_fill, one_layer_);
@@ -231,7 +231,7 @@ std::unique_ptr<editor_action> editor_action_fill::perform(map_context& mc) cons
 
 void editor_action_fill::perform_without_undo(map_context& mc) const
 {
-	std::set<map_location> to_fill = mc.map().get_contiguous_terrain_tiles(loc_);
+	location_set to_fill = mc.map().get_contiguous_terrain_tiles(loc_);
 	mc.draw_terrain(t_, to_fill, one_layer_);
 	mc.set_needs_terrain_rebuild();
 }
@@ -323,7 +323,7 @@ void editor_action_shuffle_area::perform_without_undo(map_context& mc) const
 	std::shuffle(shuffle.begin(), shuffle.end(), randomness::rng::default_instance());
 
 	std::vector<map_location>::const_iterator shuffle_it = shuffle.begin();
-	std::set<map_location>::const_iterator orig_it = area_.begin();
+	location_set::const_iterator orig_it = area_.begin();
 
 	while(orig_it != area_.end()) {
 		t_translation::terrain_code tmp = mc.map().get_terrain(*orig_it);

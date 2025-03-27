@@ -58,9 +58,9 @@ void brush::add_relative_location(int relative_x, int relative_y)
 	relative_tiles_.insert(map_location(relative_x, relative_y));
 }
 
-std::set<map_location> brush::project(const map_location& hotspot) const
+location_set brush::project(const map_location& hotspot) const
 {
-	std::set<map_location> result;
+	location_set result;
 	for (const map_location& relative : relative_tiles_) {
 		result.insert(relative.vector_sum(hotspot));
 	}

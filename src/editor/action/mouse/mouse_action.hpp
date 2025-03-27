@@ -63,7 +63,7 @@ public:
 	 * Locations that would be affected by a click, used by move to update highlights. Defaults to highlight the mouseover hex.
 	 * Maybe also used for actually performing the action in click() or drag().
 	 */
-	virtual std::set<map_location> affected_hexes(editor_display& disp, const map_location& hex);
+	virtual location_set affected_hexes(editor_display& disp, const map_location& hex);
 
 	/**
 	 * A click, possibly the beginning of a drag. Must be overridden.
@@ -177,17 +177,17 @@ public:
 	/**
 	 * The affected hexes of a brush action are the result of projecting the current brush on the mouseover hex
 	 */
-	std::set<map_location> affected_hexes(editor_display& disp, const map_location& hex);
+	location_set affected_hexes(editor_display& disp, const map_location& hex);
 
 	/**
 	 * The actual action function which is called by click() and drag(). Derived classes override this instead of click() and drag().
 	 */
-	virtual std::unique_ptr<editor_action> click_perform_left(editor_display& disp, const std::set<map_location>& hexes) = 0;
+	virtual std::unique_ptr<editor_action> click_perform_left(editor_display& disp, const location_set& hexes) = 0;
 
 	/**
 	 * The actual action function which is called by click() and drag(). Derived classes override this instead of click() and drag().
 	 */
-	virtual std::unique_ptr<editor_action> click_perform_right(editor_display& disp, const std::set<map_location>& hexes) = 0;
+	virtual std::unique_ptr<editor_action> click_perform_right(editor_display& disp, const location_set& hexes) = 0;
 
 	/**
 	 * Calls click_perform_left()
@@ -233,7 +233,7 @@ private:
 	 * The drags differ only in the worker function called, which should be
 	 * passed as the template parameter. This exists only to avoid copy-pasting code.
 	 */
-	template <std::unique_ptr<editor_action> (brush_drag_mouse_action::*perform_func)(editor_display&, const std::set<map_location>&)>
+	template <std::unique_ptr<editor_action> (brush_drag_mouse_action::*perform_func)(editor_display&, const location_set&)>
 	std::unique_ptr<editor_action> drag_generic(editor_display& disp, int x, int y, bool& partial, editor_action* last_undo);
 
 	/**
@@ -271,12 +271,12 @@ public:
 	/**
 	 * Create an appropriate editor_action and return it
 	 */
-	std::unique_ptr<editor_action> click_perform_left(editor_display& disp, const std::set<map_location>& hexes) override;
+	std::unique_ptr<editor_action> click_perform_left(editor_display& disp, const location_set& hexes) override;
 
 	/**
 	 * Create an appropriate editor_action and return it
 	 */
-	std::unique_ptr<editor_action> click_perform_right(editor_display& disp, const std::set<map_location>& hexes) override;
+	std::unique_ptr<editor_action> click_perform_right(editor_display& disp, const location_set& hexes) override;
 
 	void set_mouse_overlay(editor_display& disp) override;
 
@@ -306,7 +306,7 @@ public:
 	/**
 	 * Show an outline of where the paste will go
 	 */
-	std::set<map_location> affected_hexes(editor_display& disp, const map_location& hex) override;
+	location_set affected_hexes(editor_display& disp, const map_location& hex) override;
 
 	/**
 	 * Return a paste with offset action
@@ -343,7 +343,7 @@ public:
 	/**
 	 * Tiles that will be painted to, possibly use modifier keys here
 	 */
-	std::set<map_location> affected_hexes(editor_display& disp, const map_location& hex) override;
+	location_set affected_hexes(editor_display& disp, const map_location& hex) override;
 
 	/**
 	 * Left / right click fills with the respective terrain

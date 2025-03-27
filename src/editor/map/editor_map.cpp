@@ -112,10 +112,10 @@ void editor_map::sanity_check()
 	}
 }
 
-std::set<map_location> editor_map::get_contiguous_terrain_tiles(const map_location& start) const
+location_set editor_map::get_contiguous_terrain_tiles(const map_location& start) const
 {
 	t_translation::terrain_code terrain = get_terrain(start);
-	std::set<map_location> result;
+	location_set result;
 	std::deque<map_location> queue;
 	result.insert(start);
 	queue.push_back(start);
@@ -133,9 +133,9 @@ std::set<map_location> editor_map::get_contiguous_terrain_tiles(const map_locati
 	return result;
 }
 
-std::set<map_location> editor_map::set_starting_position_labels(display& disp)
+location_set editor_map::set_starting_position_labels(display& disp)
 {
-	std::set<map_location> label_locs;
+	location_set label_locs;
 	std::string label;
 
 
@@ -165,7 +165,7 @@ bool editor_map::add_to_selection(const map_location& loc)
 	return on_board_with_border(loc) ? selection_.insert(loc).second : false;
 }
 
-bool editor_map::set_selection(const std::set<map_location>& area)
+bool editor_map::set_selection(const location_set& area)
 {
 	clear_selection();
 	for (const map_location& loc : area) {
@@ -187,7 +187,7 @@ void editor_map::clear_selection()
 
 void editor_map::invert_selection()
 {
-	std::set<map_location> new_selection;
+	location_set new_selection;
 	for (int x = -1; x < w() + 1; ++x) {
 		for (int y = -1; y < h() + 1; ++y) {
 			if (selection_.find(map_location(x, y)) == selection_.end()) {

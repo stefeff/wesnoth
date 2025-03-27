@@ -126,7 +126,7 @@ class default_ai_context;
 class default_ai_context : public virtual readwrite_context{
 public:
 
-	virtual int count_free_hexes_in_castle(const map_location& loc, std::set<map_location> &checked_hexes) = 0;
+	virtual int count_free_hexes_in_castle(const map_location& loc, location_set &checked_hexes) = 0;
 
 	/** Constructor */
 	default_ai_context();
@@ -153,7 +153,7 @@ public:
 class default_ai_context_proxy : public virtual default_ai_context, public virtual readwrite_context_proxy {
 public:
 
-	int count_free_hexes_in_castle(const map_location& loc, std::set<map_location> &checked_hexes)
+	int count_free_hexes_in_castle(const map_location& loc, location_set &checked_hexes)
 	{
 		return target_->count_free_hexes_in_castle(loc, checked_hexes);
 	}
@@ -209,7 +209,7 @@ private:
 class default_ai_context_impl : public virtual readwrite_context_proxy, public default_ai_context {
 public:
 
-	int count_free_hexes_in_castle(const map_location& loc, std::set<map_location> &checked_hexes);
+	int count_free_hexes_in_castle(const map_location& loc, location_set &checked_hexes);
 
 	default_ai_context_impl(readwrite_context &context, const config &/*cfg*/)
 		: recursion_counter_(context.get_recursion_count()),additional_targets_()

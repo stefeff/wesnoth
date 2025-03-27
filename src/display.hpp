@@ -434,13 +434,13 @@ public:
 	/** Function to invalidate a specific tile for redrawing. */
 	bool invalidate(const map_location& loc);
 
-	bool invalidate(const std::set<map_location>& locs);
+	bool invalidate(const location_set& locs);
 
 	/**
 	 * If this set is partially invalidated, invalidate all its hexes.
 	 * Returns if any new invalidation was needed
 	 */
-	bool propagate_invalidation(const std::set<map_location>& locs);
+	bool propagate_invalidation(const location_set& locs);
 
 	/** invalidate all hexes under the rectangle rect (in screen coordinates) */
 	bool invalidate_locations_in_rect(const SDL_Rect& rect);
@@ -766,7 +766,7 @@ protected:
 	std::unordered_map<std::string, rect> reportLocations_;
 	std::unordered_map<std::string, config> reports_;
 	std::vector<std::shared_ptr<gui::button>> menu_buttons_, action_buttons_;
-	std::set<map_location> invalidated_;
+	location_set invalidated_;
 	// If we're transitioning from one time of day to the next,
 	// then we will use these two masks on top of all hexes when we blit.
 	texture tod_hex_mask1 = {};

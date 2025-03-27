@@ -25,7 +25,7 @@ class vconfig;
 
 namespace pathfind {
 
-typedef std::pair<std::set<map_location>, std::set<map_location>>
+typedef std::pair<location_set, location_set>
 		teleport_pair;
 
 /*
@@ -120,13 +120,13 @@ public:
 	 * @param loc			the map location for which we want to know the adjacent hexes
 	 * @todo what does this function actually have to do with adjacent hexes?
 	 */
-	std::set<map_location> get_adjacents(map_location loc) const;
+	location_set get_adjacents(map_location loc) const;
 
 	/** Returns the locations that are an entrance of the tunnel. */
-	std::set<map_location> get_sources() const;
+	location_set get_sources() const;
 
 	/** Returns the locations that are an exit of the tunnel. */
-	std::set<map_location> get_targets() const;
+	location_set get_targets() const;
 
 	/*
 	 * @returns whether the teleport_map does contain any defined tunnel
@@ -137,8 +137,8 @@ public:
 
 private:
 	std::map<map_location, std::set<std::string>> teleport_map_;
-	std::map<std::string, std::set<map_location>> sources_;
-	std::map<std::string, std::set<map_location>> targets_;
+	std::map<std::string, location_set> sources_;
+	std::map<std::string, location_set> targets_;
 };
 
 /*

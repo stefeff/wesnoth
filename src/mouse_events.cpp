@@ -1406,9 +1406,9 @@ void mouse_handler::attack_enemy_(const map_location& att_loc, const map_locatio
 	);
 }
 
-std::set<map_location> mouse_handler::get_adj_enemies(const map_location& loc, int side) const
+location_set mouse_handler::get_adj_enemies(const map_location& loc, int side) const
 {
-	std::set<map_location> res;
+	location_set res;
 
 	const team& uteam = pc_.get_teams()[side - 1];
 

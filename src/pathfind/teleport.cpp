@@ -200,7 +200,7 @@ teleport_map::teleport_map(
 		}
 
 		if (!group.pass_allied_units() && !ignore_units && !check_vision) {
-			std::set<map_location>::iterator loc = locations.second.begin();
+			location_set::iterator loc = locations.second.begin();
 			while(loc != locations.second.end()) {
 				unit_map::iterator u;
 				if (see_all) {
@@ -217,7 +217,7 @@ teleport_map::teleport_map(
 		}
 
 		std::string teleport_id = group.get_teleport_id();
-		std::set<map_location>::iterator source_it = locations.first.begin();
+		location_set::iterator source_it = locations.first.begin();
 		for (; source_it != locations.first.end(); ++source_it ) {
 			if(teleport_map_.count(*source_it) == 0) {
 				std::set<std::string> id_set;
@@ -232,14 +232,14 @@ teleport_map::teleport_map(
 	}
 }
 
-std::set<map_location> teleport_map::get_adjacents(map_location loc) const
+location_set teleport_map::get_adjacents(map_location loc) const
 {
 	const auto iter = teleport_map_.find(loc);
 	if(iter == teleport_map_.end()) {
 		return {};
 	}
 
-	std::set<map_location> res;
+	location_set res;
 	for(const std::string& key : iter->second) {
 		const auto& target = targets_.find(key)->second;
 		res.insert(target.begin(), target.end());
@@ -248,9 +248,9 @@ std::set<map_location> teleport_map::get_adjacents(map_location loc) const
 	return res;
 }
 
-std::set<map_location> teleport_map::get_sources() const
+location_set teleport_map::get_sources() const
 {
-	std::set<map_location> res;
+	location_set res;
 	for(const auto& src : sources_) {
 		res.insert(src.second.begin(), src.second.end());
 	}
@@ -258,9 +258,9 @@ std::set<map_location> teleport_map::get_sources() const
 	return res;
 }
 
-std::set<map_location> teleport_map::get_targets() const
+location_set teleport_map::get_targets() const
 {
-	std::set<map_location> res;
+	location_set res;
 	for(const auto& tgt : targets_) {
 		res.insert(tgt.second.begin(), tgt.second.end());
 	}

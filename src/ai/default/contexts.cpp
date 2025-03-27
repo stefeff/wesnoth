@@ -64,7 +64,7 @@ default_ai_context_impl::~default_ai_context_impl()
 {
 }
 
-int default_ai_context_impl::count_free_hexes_in_castle(const map_location &loc, std::set<map_location> &checked_hexes)
+int default_ai_context_impl::count_free_hexes_in_castle(const map_location &loc, location_set &checked_hexes)
 {
 	int ret = 0;
 	unit_map &units_ = resources::gameboard->units();
@@ -141,7 +141,7 @@ std::vector<target> default_ai_context_impl::find_targets(const move_map& enemy_
 		double threat = power_projection(leader->get_location(), enemy_dstsrc);
 		if(threat > 0.0) {
 			//find the location of enemy threats
-			std::set<map_location> threats;
+			location_set threats;
 
 			for(const map_location& adj : get_adjacent_tiles(leader->get_location())) {
 				std::pair<move_map::const_iterator,move_map::const_iterator> itors = enemy_dstsrc.equal_range(adj);
@@ -157,7 +157,7 @@ std::vector<target> default_ai_context_impl::find_targets(const move_map& enemy_
 			assert(threats.empty() == false);
 
 			const double value = threat/static_cast<double>(threats.size());
-			for(std::set<map_location>::const_iterator i = threats.begin(); i != threats.end(); ++i) {
+			for(location_set::const_iterator i = threats.begin(); i != threats.end(); ++i) {
 				LOG_AI << "found threat target... " << *i << " with value: " << value;
 				targets.emplace_back(*i,value,ai_target::type::threat);
 			}

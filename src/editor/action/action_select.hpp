@@ -36,13 +36,13 @@ namespace editor
 class editor_action_select : public editor_action_area
 {
 public:
-	editor_action_select(const std::set<map_location>& area)
+	editor_action_select(const location_set& area)
 		: editor_action_area(area)
 	{
 	}
 
 	std::unique_ptr<editor_action> clone() const override;
-	void extend(const editor_map& map, const std::set<map_location>& locs) override;
+	void extend(const editor_map& map, const location_set& locs) override;
 	std::unique_ptr<editor_action> perform(map_context& mc) const override;
 	void perform_without_undo(map_context& mc) const override;
 	const std::string& get_name() const override;
@@ -54,13 +54,13 @@ public:
 class editor_action_deselect : public editor_action_area
 {
 public:
-	editor_action_deselect(const std::set<map_location>& area)
+	editor_action_deselect(const location_set& area)
 		: editor_action_area(area)
 	{
 	}
 
 	std::unique_ptr<editor_action> clone() const override;
-	void extend(const editor_map& map, const std::set<map_location>& locs) override;
+	void extend(const editor_map& map, const location_set& locs) override;
 	std::unique_ptr<editor_action> perform(map_context& mc) const override;
 	void perform_without_undo(map_context& mc) const override;
 	const std::string& get_name() const override;

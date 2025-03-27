@@ -26,7 +26,7 @@ namespace editor
 {
 IMPLEMENT_ACTION(select)
 
-void editor_action_select::extend(const editor_map& /*map*/, const std::set<map_location>& locs)
+void editor_action_select::extend(const editor_map& /*map*/, const location_set& locs)
 {
 	for(const map_location& loc : locs) {
 		LOG_ED << "Extending by " << loc;
@@ -36,7 +36,7 @@ void editor_action_select::extend(const editor_map& /*map*/, const std::set<map_
 
 std::unique_ptr<editor_action> editor_action_select::perform(map_context& mc) const
 {
-	std::set<map_location> undo_locs;
+	location_set undo_locs;
 	for(const map_location& loc : area_) {
 		undo_locs.insert(loc);
 		mc.add_changed_location(loc);
@@ -56,7 +56,7 @@ void editor_action_select::perform_without_undo(map_context& mc) const
 
 IMPLEMENT_ACTION(deselect)
 
-void editor_action_deselect::extend(const editor_map& map, const std::set<map_location>& locs)
+void editor_action_deselect::extend(const editor_map& map, const location_set& locs)
 {
 	for(const map_location& loc : locs) {
 		LOG_ED << "Checking " << loc;
@@ -69,7 +69,7 @@ void editor_action_deselect::extend(const editor_map& map, const std::set<map_lo
 
 std::unique_ptr<editor_action> editor_action_deselect::perform(map_context& mc) const
 {
-	std::set<map_location> undo_locs;
+	location_set undo_locs;
 	for(const map_location& loc : area_) {
 		if(mc.map().in_selection(loc)) {
 			undo_locs.insert(loc);
@@ -93,11 +93,11 @@ IMPLEMENT_ACTION(select_all)
 
 std::unique_ptr<editor_action> editor_action_select_all::perform(map_context& mc) const
 {
-	std::set<map_location> current = mc.map().selection();
+	location_set current = mc.map().selection();
 	mc.map().select_all();
 
-	std::set<map_location> all = mc.map().selection();
-	std::set<map_location> undo_locs;
+	location_set all = mc.map().selection();
+	location_set undo_locs;
 
 	std::set_difference(
 		all.begin(), all.end(), current.begin(), current.end(), std::inserter(undo_locs, undo_locs.begin()));
@@ -116,7 +116,7 @@ IMPLEMENT_ACTION(select_none)
 
 std::unique_ptr<editor_action> editor_action_select_none::perform(map_context& mc) const
 {
-	std::set<map_location> current = mc.map().selection();
+	location_set current = mc.map().selection();
 	mc.map().clear_selection();
 	mc.set_everything_changed();
 	return std::make_unique<editor_action_select>(current);

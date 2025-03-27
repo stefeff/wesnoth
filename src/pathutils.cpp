@@ -68,7 +68,7 @@ void get_tiles_in_radius(const map_location& center, const int radius,
  * of locations.
  */
 void get_tiles_radius(const map_location& center, std::size_t radius,
-                      std::set<map_location>& result)
+                      location_set& result)
 {
 	// Re-use some logic.
 	std::vector<map_location> internal_result(1, center);
@@ -148,7 +148,7 @@ namespace { // Helpers for get_tiles_radius() without a radius filter.
 	// insertion hint makes insertions O(1). Furthermore, hexes outside the
 	// interval [row_begin, row_end) are skipped and do not count towards the
 	// complexity.
-	void ranges_to_tiles(std::set<map_location> & result,
+	void ranges_to_tiles(location_set & result,
 	                     const column_ranges & collected_tiles,
 	                     int row_begin, int row_end)
 	{
@@ -197,7 +197,7 @@ namespace { // Helpers for get_tiles_radius() without a radius filter.
 // Complexity: O(nr lg(nr) + nr^2), where n = locs.size(), r = radius.
 // The nr^2 term is bounded by the size of the board.
 void get_tiles_radius(const gamemap& map, const std::vector<map_location>& locs,
-                      std::size_t radius, std::set<map_location>& result,
+                      std::size_t radius, location_set& result,
                       bool with_border)
 {
 	// Make sure the provided locations are included.
@@ -236,10 +236,9 @@ void get_tiles_radius(const gamemap& map, const std::vector<map_location>& locs,
  * @a result must be a std::set of locations.
  */
 void get_tiles_radius(const gamemap& map, const std::vector<map_location>& locs,
-                      std::size_t radius, std::set<map_location> &result,
+                      std::size_t radius, location_set &result,
                       bool with_border, const xy_pred& pred)
 {
-	typedef std::set<map_location> location_set;
 	location_set not_visited(locs.begin(), locs.end());
 
 	get_tiles_radius(std::move(not_visited), radius, result,

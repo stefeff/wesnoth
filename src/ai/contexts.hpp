@@ -111,11 +111,11 @@ public:
 	~keeps_cache();
 	void handle_generic_event(const std::string& event_name);
 	void clear();
-	const std::set<map_location>& get();
+	const location_set& get();
 	void init(const gamemap &map);
 private:
 	const gamemap *map_;
-	std::set<map_location> keeps_;
+	location_set keeps_;
 };
 
 // side context
@@ -305,7 +305,7 @@ public:
 
 	virtual void invalidate_keeps_cache() const= 0;
 
-	virtual const std::set<map_location>& keeps() const= 0;
+	virtual const location_set& keeps() const= 0;
 
 	virtual bool leader_can_reach_keep() const = 0;
 
@@ -815,7 +815,7 @@ public:
 		return target_->invalidate_keeps_cache();
 	}
 
-	virtual const std::set<map_location>& keeps() const override
+	virtual const location_set& keeps() const override
 	{
 		return target_->keeps();
 	}
@@ -1242,7 +1242,7 @@ public:
 
 	virtual void invalidate_keeps_cache() const override;
 
-	virtual const std::set<map_location>& keeps() const override;
+	virtual const location_set& keeps() const override;
 
 	virtual bool leader_can_reach_keep() const override;
 

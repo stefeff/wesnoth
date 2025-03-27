@@ -389,7 +389,7 @@ height_map default_map_generator_job::generate_height_map(size_t width, size_t h
  * chance to make another water tile in each of the directions. This will
  * continue recursively.
  */
-bool default_map_generator_job::generate_lake(terrain_map& terrain, int x, int y, int lake_fall_off, std::set<map_location>& locs_touched)
+bool default_map_generator_job::generate_lake(terrain_map& terrain, int x, int y, int lake_fall_off, location_set& locs_touched)
 {
 	if(x < 0 || y < 0 || x >= terrain.w || y >= terrain.h || lake_fall_off < 0) {
 		return false;
@@ -438,7 +438,7 @@ bool default_map_generator_job::generate_lake(terrain_map& terrain, int x, int y
 
 bool default_map_generator_job::generate_river_internal(const height_map& heights,
 	terrain_map& terrain, int x, int y, std::vector<map_location>& river,
-	std::set<map_location>& seen_locations, int river_uphill)
+	location_set& seen_locations, int river_uphill)
 {
 	const bool on_map = x >= 0 && y >= 0 &&
 		x < static_cast<long>(heights.size()) &&
@@ -491,7 +491,7 @@ bool default_map_generator_job::generate_river_internal(const height_map& height
 std::vector<map_location> default_map_generator_job::generate_river(const height_map& heights, terrain_map& terrain, int x, int y, int river_uphill)
 {
 	std::vector<map_location> river;
-	std::set<map_location> seen_locations;
+	location_set seen_locations;
 	const bool res = generate_river_internal(heights,terrain,x,y,river,seen_locations,river_uphill);
 	if(!res) {
 		river.clear();
@@ -615,7 +615,7 @@ static map_location place_village(const t_translation::ter_map& map,
 	tcode_list_cache &adj_liked_cache)
 {
 	const map_location loc(x,y);
-	std::set<map_location> locs;
+	location_set locs;
 	get_tiles_radius(loc,radius,locs);
 	map_location best_loc;
 	int best_rating = 0;
@@ -797,7 +797,7 @@ std::string default_map_generator_job::default_generate_map(generator_data data,
 	 * Each lake will be placed at a random location, if that random location meets theminimum
 	 * terrain requirements for a lake. We will also attempt to source a river from each lake.
 	 */
-	std::set<map_location> lake_locs;
+	location_set lake_locs;
 
 	std::map<map_location, std::string> river_names, lake_names, road_names, bridge_names, mountain_names, forest_names, swamp_names;
 
@@ -832,7 +832,7 @@ std::string default_map_generator_job::default_generate_map(generator_data data,
 
 			LOG_NG << "Generating lake...";
 
-			std::set<map_location> locs;
+			location_set locs;
 			if(generate_lake(terrain, x, y, cfg[str_lake_size], locs) && misc_labels != nullptr) {
 				bool touches_other_lake = false;
 
@@ -924,7 +924,7 @@ std::string default_map_generator_job::default_generate_map(generator_data data,
 	 * If not, we attempt to place them again.
 	 */
 	std::vector<map_location> castles;
-	std::set<map_location> failed_locs;
+	location_set failed_locs;
 
 	if(castle_config) {
 		/*
@@ -991,7 +991,7 @@ std::string default_map_generator_job::default_generate_map(generator_data data,
 		nroads += castles.size()*castles.size();
 	}
 
-	std::set<map_location> bridges;
+	location_set bridges;
 
 	road_path_calculator calc(terrain, cfg, rng_());
 	for(int road = 0; road != nroads; ++road) {
@@ -1233,7 +1233,7 @@ std::string default_map_generator_job::default_generate_map(generator_data data,
 	 * displaced from their position according to terrain and randomness, to
 	 * add some variety.
 	 */
-	std::set<map_location> villages;
+	location_set villages;
 
 	if(data.nvillages > 0) {
 

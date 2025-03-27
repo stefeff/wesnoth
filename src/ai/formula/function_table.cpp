@@ -117,7 +117,7 @@ DEFINE_FAI_FUNCTION(distance_to_nearest_unowned_village, 1, 1)
 	const map_location loc = args()[0]->evaluate(variables, add_debug_info(fdb, 0, "distance_to_nearest_unowned_village:location")).convert_to<location_callable>()->loc();
 	int best = 1000000;
 	const std::vector<map_location>& villages = resources::gameboard->map().villages();
-	const std::set<map_location>& my_villages = ai_.current_team().villages();
+	const location_set& my_villages = ai_.current_team().villages();
 	for(std::vector<map_location>::const_iterator i = villages.begin(); i != villages.end(); ++i) {
 		int distance = distance_between(loc, *i);
 		if(distance < best) {
@@ -182,7 +182,7 @@ namespace {
 	void find_movemap(const unit_adapter& u, const map_location& loc,
 		std::vector<int>& scores, bool allow_teleport, const formula_ai& ai_)
 	{
-		const std::set<map_location>& teleports = allow_teleport ? ai_.current_team().villages() : std::set<map_location>();
+		const location_set& teleports = allow_teleport ? ai_.current_team().villages() : location_set();
 
 		const gamemap& map = resources::gameboard->map();
 
@@ -946,7 +946,7 @@ DEFINE_FAI_FUNCTION(is_unowned_village, 2, 3)
 {
 
 	const gamemap& m = args()[0]->evaluate(variables, add_debug_info(fdb, 0, "is_unowned_village:map")).convert_to<gamemap_callable>()->get_gamemap();
-	const std::set<map_location>& my_villages = ai_.current_team().villages();
+	const location_set& my_villages = ai_.current_team().villages();
 
 	map_location loc;
 	if(args().size() == 2) {

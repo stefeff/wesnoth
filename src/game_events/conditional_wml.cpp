@@ -90,7 +90,7 @@ namespace builtin_conditions {
 
 	bool have_location(const vconfig& cfg)
 	{
-		std::set<map_location> res;
+		location_set res;
 		terrain_filter(cfg, resources::filter_con, false).get_locations(res);
 
 		const std::vector<std::pair<int,int>>& counts = cfg.has_attribute(str_count)

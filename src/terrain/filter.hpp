@@ -60,7 +60,7 @@ public:
 	 * @param[out] locs set to store the results in
 	 * @param[in] with_border whether to include the borders
 	 */
-	void get_locations(std::set<map_location>& locs, bool with_border=false) const {
+	void get_locations(location_set& locs, bool with_border=false) const {
 		return get_locs_impl(locs, nullptr, with_border);
 	}
 
@@ -70,7 +70,7 @@ public:
 	 * @param[in] with_border whether to include the borders
 	 * @param[in] ref_unit A reference unit for the $teleport_unit auto-stored variable
 	 */
-	void get_locations(std::set<map_location>& locs, const unit& ref_unit, bool with_border=false) const {
+	void get_locations(location_set& locs, const unit& ref_unit, bool with_border=false) const {
 		return get_locs_impl(locs, &ref_unit, with_border);
 	}
 
@@ -81,7 +81,7 @@ public:
 	friend class terrain_filterimpl;
 private:
 	bool match_impl(const map_location& loc, const unit* ref_unit) const;
-	void get_locs_impl(std::set<map_location>& locs, const unit* ref_unit, bool with_border) const;
+	void get_locs_impl(location_set& locs, const unit* ref_unit, bool with_border) const;
 	bool match_internal(const map_location& loc, const unit* ref_unit, const bool ignore_xy) const;
 
 	const vconfig cfg_; //config contains WML for a Standard Location Filter
@@ -94,7 +94,7 @@ private:
 		std::unique_ptr<t_translation::ter_match> parsed_terrain;
 
 		//adjacent_matches: optimize handling of [filter_adjacent_location] for get_locations()
-		std::unique_ptr<std::vector<std::set<map_location>>> adjacent_matches;
+		std::unique_ptr<std::vector<location_set>> adjacent_matches;
 
 		//adjacent_match_cache: optimize handling of [filter_adjacent_location] for match()
 		std::vector< std::pair<terrain_filter, std::map<map_location,bool>>> adjacent_match_cache;

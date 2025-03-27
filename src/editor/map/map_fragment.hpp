@@ -52,7 +52,7 @@ class map_fragment
 		/**
 		 * Create a map fragment from the specified locations on the map.
 		 */
-		map_fragment(const gamemap& map, const std::set<map_location>& area);
+		map_fragment(const gamemap& map, const location_set& area);
 
 		/**
 		 * Add a single location and pull its info from the map.
@@ -62,7 +62,7 @@ class map_fragment
 		/**
 		 * Add many locations and pull their info from the map.
 		 */
-		void add_tiles(const gamemap& map, const std::set<map_location>& loc);
+		void add_tiles(const gamemap& map, const location_set& loc);
 
 		/**
 		 * Get the tile_info vector.
@@ -72,12 +72,12 @@ class map_fragment
 		/**
 		 * Get the area covered by this map fragment.
 		 */
-		std::set<map_location> get_area() const;
+		const location_set& get_area() const;
 
 		/**
 		 * Get the area covered by this map fragment, shifted by an offset.
 		 */
-		std::set<map_location> get_offset_area(const map_location& offset) const;
+		location_set get_offset_area(const map_location& offset) const;
 
 		/**
 		 * Paste the map fragment into the map, treating loc as the (0,0) point (offset).
@@ -134,7 +134,7 @@ class map_fragment
 		 * The data of this map_fragment
 		 */
 		std::vector<tile_info> items_;
-		std::set<map_location> area_;
+		location_set area_;
 };
 
 } //end namespace editor

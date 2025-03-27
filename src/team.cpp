@@ -462,7 +462,7 @@ game_events::pump_result_t team::get_village(const map_location& loc, const int 
 
 void team::lose_village(const map_location& loc)
 {
-	const std::set<map_location>::const_iterator vil = villages_.find(loc);
+	const location_set::const_iterator vil = villages_.find(loc);
 	assert(vil != villages_.end());
 	villages_.erase(vil);
 }
@@ -744,7 +744,7 @@ bool team::knows_about_team(std::size_t index) const
  * Removes the record of hexes that were cleared of fog via WML.
  * @param[in] hexes	The hexes to no longer keep clear.
  */
-void team::remove_fog_override(const std::set<map_location>& hexes)
+void team::remove_fog_override(const location_set& hexes)
 {
 	// Take a set difference.
 	std::vector<map_location> result(fog_clearer_.size());

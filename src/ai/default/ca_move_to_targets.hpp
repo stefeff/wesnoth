@@ -50,15 +50,15 @@ protected:
 
 	std::pair<map_location,map_location> choose_move(std::vector<target>& targets);
 
-	double compare_groups(const std::set<map_location>& our_group, const std::set<map_location>& their_group, const std::vector<map_location>& battlefield) const;
+	double compare_groups(const location_set& our_group, const location_set& their_group, const std::vector<map_location>& battlefield) const;
 
-	void enemies_along_path(const std::vector<map_location>& route, const move_map& dstsrc, std::set<map_location>& res);
+	void enemies_along_path(const std::vector<map_location>& route, const move_map& dstsrc, location_set& res);
 
-	map_location form_group(const std::vector<map_location>& route, const move_map& dstsrc, std::set<map_location>& res);
+	map_location form_group(const std::vector<map_location>& route, const move_map& dstsrc, location_set& res);
 
-	bool move_group(const map_location& dst, const std::vector<map_location>& route, const std::set<map_location>& units);
+	bool move_group(const map_location& dst, const std::vector<map_location>& route, const location_set& units);
 
-	double rate_group(const std::set<map_location>& group, const std::vector<map_location>& battlefield) const;
+	double rate_group(const location_set& group, const std::vector<map_location>& battlefield) const;
 
 	/**
 	 * rate a target, but can also return the maximal possible rating

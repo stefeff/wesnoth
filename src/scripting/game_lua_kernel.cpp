@@ -747,7 +747,7 @@ int game_lua_kernel::intf_toggle_shroud(lua_State *L, bool place_shroud)
 	team& t = luaW_checkteam(L, 1, board());
 
 	if(lua_istable(L, 2)) {
-		std::set<map_location> locs = luaW_check_locationset(L, 2);
+		location_set locs = luaW_check_locationset(L, 2);
 
 		for (const map_location& loc : locs)
 		{
@@ -778,7 +778,7 @@ int game_lua_kernel::intf_override_shroud(lua_State *L)
 	team& t = luaW_checkteam(L, 1, board());
 
 	if(lua_istable(L, 2)) {
-		std::set<map_location> locs = luaW_check_locationset(L, 2);
+		location_set locs = luaW_check_locationset(L, 2);
 		t.reshroud();
 		for(const map_location& loc : locs) {
 			t.clear_shroud(loc);
@@ -2229,7 +2229,7 @@ int game_lua_kernel::intf_find_cost_map(lua_State *L)
 
 	// 5. arg - location filter
 	filter = vconfig::unconstructed_vconfig();
-	std::set<map_location> location_set;
+	location_set location_set;
 	luaW_tovconfig(L, arg, filter);
 	if (filter.null())
 	{
@@ -3571,7 +3571,7 @@ int game_lua_kernel::intf_get_locations(lua_State *L)
 {
 	vconfig filter = luaW_checkvconfig(L, 1);
 
-	std::set<map_location> res;
+	location_set res;
 	filter_context & fc = game_state_;
 	const terrain_filter t_filter(filter, &fc, false);
 	if(luaW_isunit(L, 2)) {
@@ -4563,7 +4563,7 @@ int game_lua_kernel::intf_add_time_area(lua_State * L)
 	log_scope("time_area");
 
 	std::string id;
-	std::set<map_location> locs;
+	location_set locs;
 	config times;
 
 	if(lua_gettop(L) == 1) {

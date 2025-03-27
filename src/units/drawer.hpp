@@ -63,7 +63,7 @@ private:
 	map_location sel_hex;
 	map_location mouse_hex;
 	double zoom_factor;
-	std::set<map_location> units_that_can_reach_goal;
+	location_set units_that_can_reach_goal;
 
 	int hex_size;
 	int hex_size_by_2;

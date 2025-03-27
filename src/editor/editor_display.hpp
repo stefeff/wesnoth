@@ -28,7 +28,7 @@ public:
 	bool in_editor() const override { return true; }
 
 	void add_brush_loc(const map_location& hex);
-	void set_brush_locs(const std::set<map_location>& hexes);
+	void set_brush_locs(const location_set& hexes);
 	void clear_brush_locs();
 	void remove_brush_loc(const map_location& hex);
 	const editor_map& map() const { return static_cast<const editor_map&>(get_map()); }
@@ -88,7 +88,7 @@ protected:
 
 	rect get_clip_rect() const override;
 
-	std::set<map_location> brush_locations_;
+	location_set brush_locations_;
 
 	/* The controller that owns this display. */
 	editor_controller& controller_;

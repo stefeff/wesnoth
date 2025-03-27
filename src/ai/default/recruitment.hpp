@@ -252,7 +252,7 @@ private:
 
 	};
 
-	std::set<map_location> important_hexes_;
+	location_set important_hexes_;
 	terrain_count_map important_terrain_;
 	int own_units_in_combat_counter_;
 	std::map<map_location, double> average_local_cost_;

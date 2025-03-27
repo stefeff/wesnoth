@@ -65,7 +65,7 @@ class halo_impl
 		bool expired()     const { return !images_.cycles() && images_.animation_finished(); }
 		bool need_update() const { return images_.need_update(); }
 		bool does_change() const { return !images_.does_not_change(); }
-		bool on_location(const std::set<map_location>& locations) const;
+		bool on_location(const location_set& locations) const;
 		bool location_not_known() const;
 
 	private:

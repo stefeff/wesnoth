@@ -50,7 +50,7 @@ namespace lua_mapgen
 		bool matches(const gamemap_base& m, map_location l);
 		//todo: add a clear cache function.
 	private:
-		std::map<std::string, std::set<map_location>> known_sets_;
+		std::map<std::string, location_set> known_sets_;
 		std::unique_ptr<filter_impl> impl_;
 	};
 

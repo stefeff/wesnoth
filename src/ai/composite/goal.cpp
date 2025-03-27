@@ -175,7 +175,7 @@ void target_location_goal::add_targets(std::back_insert_iterator< std::vector< t
 
 	if (!filter_ptr_) return;
 
-	std::set<map_location> items;
+	location_set items;
 	filter_ptr_->get_locations(items);
 	for (const map_location &loc : items)
 	{
@@ -241,7 +241,7 @@ void protect_goal::add_targets(std::back_insert_iterator< std::vector< target >>
 
 	unit_map &units = resources::gameboard->units();
 
-	std::set<map_location> items;
+	location_set items;
 	if (protect_unit_) {
 		const unit_filter ufilt{ vconfig(*criteria) };
 		for (const unit &u : units)

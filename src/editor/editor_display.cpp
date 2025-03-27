@@ -48,7 +48,7 @@ void editor_display::add_brush_loc(const map_location& hex)
 	invalidate(hex);
 }
 
-void editor_display::set_brush_locs(const std::set<map_location>& hexes)
+void editor_display::set_brush_locs(const location_set& hexes)
 {
 	invalidate(brush_locations_);
 	brush_locations_ = hexes;

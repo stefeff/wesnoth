@@ -488,7 +488,7 @@ static int intf_parse_shroud_bitmap(lua_State* L)
 	shroud_map temp;
 	temp.set_enabled(true);
 	temp.read(luaL_checkstring(L, 1));
-	std::set<map_location> locs;
+	location_set locs;
 	for(int x = 1; x <= temp.width(); x++) {
 		for(int y = 1; y <= temp.height(); y++) {
 			if(!temp.value(x, y)) {
