@@ -475,6 +475,11 @@ surface scale_surface_sharp(const surface& surf, int w, int h)
 	return dst;
 }
 
+static int to_uint8(int v)
+{
+	return std::max<int>(0,std::min<int>(255, v));
+}
+
 surface adjust_surface_color(const surface &surf, int red, int green, int blue)
 {
 	if(surf == nullptr)
@@ -495,25 +500,34 @@ surface adjust_surface_color(const surface &surf, int red, int green, int blue)
 	{
 		surface_lock lock(nsurf);
 		uint32_t* beg = lock.pixels();
-		uint32_t* end = beg + nsurf->w*surf->h;
+		size_t count = nsurf->w*surf->h;
+		size_t i = 0;
 
-		while(beg != end) {
-			uint8_t alpha = (*beg) >> 24;
+#ifdef __SSE2__
+		auto add_color = _mm_set1_epi32((to_uint8(red) << 16) + (to_uint8(green) << 8) + to_uint8(blue));
+		auto sub_color = _mm_set1_epi32((to_uint8(-red) << 16) + (to_uint8(-green) << 8) + to_uint8(-blue));
+		for (; i + 3 < count; i += 4) {
+			auto pixel = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&beg[i]));
+			auto result = _mm_subs_epu8(_mm_adds_epu8(pixel, add_color), sub_color);
+			_mm_storeu_si128(reinterpret_cast<__m128i*>(&beg[i]), result);
+		}
+#endif
+
+		for (; i < count; ++i) {
+			uint8_t alpha = beg[i] >> 24;
 
 			if(alpha) {
 				uint8_t r, g, b;
-				r = (*beg) >> 16;
-				g = (*beg) >> 8;
-				b = (*beg) >> 0;
+				r = beg[i] >> 16;
+				g = beg[i] >> 8;
+				b = beg[i] >> 0;
 
 				r = std::max<int>(0,std::min<int>(255,static_cast<int>(r)+red));
 				g = std::max<int>(0,std::min<int>(255,static_cast<int>(g)+green));
 				b = std::max<int>(0,std::min<int>(255,static_cast<int>(b)+blue));
 
-				*beg = (alpha << 24) + (r << 16) + (g << 8) + b;
+				beg[i] = (alpha << 24) + (r << 16) + (g << 8) + b;
 			}
-
-			++beg;
 		}
 	}
 
