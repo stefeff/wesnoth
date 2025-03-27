@@ -1022,6 +1022,79 @@ LUALIB_API const char *luaL_gsub (lua_State *L, const char *s,
   return lua_tostring(L, -1);
 }
 
+static void * free_mem_heads[8 * sizeof(size_t)] = {};
+
+void* quick_alloc(size_t size)
+{
+  unsigned index = __builtin_clzll(size);
+  if (free_mem_heads[index]) {
+    void* result = free_mem_heads[index];
+    void* next = *(void**)result;
+    free_mem_heads[index] = next;
+    return result;
+  }
+  else {
+    size_t to_alloc = ((size_t)1) << (64 - index);
+    return malloc(to_alloc);
+  }
+}
+
+void quick_free(void* ptr, size_t size)
+{
+  unsigned index = __builtin_clzll(size);
+  *(void**)ptr = free_mem_heads[index];
+  free_mem_heads[index] = ptr;
+}
+
+void* quick_realloc(void* ptr, size_t osize, size_t nsize)
+{
+  if (__builtin_clzll(osize) == __builtin_clzll(nsize)) {
+    return ptr;
+  }
+  else {
+    void *nptr = quick_alloc(nsize);
+    memcpy(nptr, ptr, osize < nsize ? osize : nsize);
+    quick_free(ptr, osize);
+    return nptr;
+  }
+}
+
+static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
+  (void)ud; /* not used */
+  if (nsize == 0) {
+    if (ptr) {
+      if (osize < 64) {
+        osize = 64;
+      }
+      quick_free(ptr, osize);
+    }
+    return NULL;
+  }
+  else if (ptr) {
+    if (nsize < 64) {
+      nsize = 64;
+    }
+    if (osize < 64) {
+      osize = 64;
+    }
+    return quick_realloc(ptr, osize, nsize);
+  }
+  else {
+    if (nsize < 64) {
+      nsize = 64;
+    }
+    return quick_alloc(nsize);
+  }
+}
+
+static void l_free (void *ptr, size_t osize) {
+  if (ptr) {
+    if (osize < 64) {
+      osize = 64;
+    }
+    quick_free(ptr, osize);
+  }
+}
 
 static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
   (void)ud; (void)osize;  /* not used */
