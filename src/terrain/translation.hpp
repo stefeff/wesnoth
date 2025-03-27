@@ -364,3 +364,12 @@ namespace t_translation {
 	ter_map read_builder_map(const std::string& str);
 
 } // end namespace t_translation
+
+namespace std {
+template<>
+struct hash<t_translation::terrain_code> {
+	std::size_t operator()(const t_translation::terrain_code& l) const noexcept {
+		return l.base * 16384 + l.overlay;
+	}
+};
+}
