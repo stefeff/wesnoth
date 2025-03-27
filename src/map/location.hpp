@@ -196,6 +196,8 @@ struct map_location {
 	int x, y;
 };
 
+using location_set = std::unordered_set<map_location>;
+
 /** Function which tells if two locations are adjacent. */
 bool tiles_adjacent(const map_location& a, const map_location& b);
 
@@ -219,7 +221,7 @@ std::size_t distance_between(const map_location& a, const map_location& b);
  * Write a set of locations into a config using ranges,
  * adding keys x=x1,..,xn and y=y1a-y1b,..,yna-ynb
  */
-void write_location_range(const std::set<map_location>& locs, config& cfg);
+void write_location_range(const location_set& locs, config& cfg);
 
 /**
  * Parse x,y keys of a config into a vector of locations

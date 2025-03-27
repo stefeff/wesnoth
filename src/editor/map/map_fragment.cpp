@@ -25,7 +25,7 @@ map_fragment::map_fragment()
 {
 }
 
-map_fragment::map_fragment(const gamemap& map, const std::set<map_location>& area)
+map_fragment::map_fragment(const gamemap& map, const location_set& area)
 	: items_()
 	, area_()
 {
@@ -40,21 +40,21 @@ void map_fragment::add_tile(const gamemap& map, const map_location& loc)
 	}
 }
 
-void map_fragment::add_tiles(const gamemap& map, const std::set<map_location>& locs)
+void map_fragment::add_tiles(const gamemap& map, const location_set& locs)
 {
 	for (const map_location& loc : locs) {
 		add_tile(map, loc);
 	}
 }
 
-std::set<map_location> map_fragment::get_area() const
+const location_set& map_fragment::get_area() const
 {
 	return area_;
 }
 
-std::set<map_location> map_fragment::get_offset_area(const map_location& loc) const
+location_set map_fragment::get_offset_area(const map_location& loc) const
 {
-	std::set<map_location> result;
+	location_set result;
 	for (const tile_info& i : items_) {
 		result.insert(i.offset.vector_sum(loc));
 	}

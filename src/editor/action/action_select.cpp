@@ -26,7 +26,7 @@ namespace editor
 {
 IMPLEMENT_ACTION(select)
 
-void editor_action_select::extend(const editor_map& /*map*/, const std::set<map_location>& locs)
+void editor_action_select::extend(const editor_map& /*map*/, const location_set& locs)
 {
 	for(const map_location& loc : locs) {
 		area_.insert(loc);
@@ -35,7 +35,7 @@ void editor_action_select::extend(const editor_map& /*map*/, const std::set<map_
 
 std::unique_ptr<editor_action> editor_action_select::perform(map_context& mc) const
 {
-	std::set<map_location> undo_locs;
+	location_set undo_locs;
 	for(const map_location& loc : area_) {
 		if(!mc.map().in_selection(loc)) {
 			undo_locs.insert(loc);
@@ -56,7 +56,7 @@ void editor_action_select::perform_without_undo(map_context& mc) const
 
 IMPLEMENT_ACTION(deselect)
 
-void editor_action_deselect::extend(const editor_map& map, const std::set<map_location>& locs)
+void editor_action_deselect::extend(const editor_map& map, const location_set& locs)
 {
 	for(const map_location& loc : locs) {
 		if(!map.in_selection(loc)) {
@@ -67,7 +67,7 @@ void editor_action_deselect::extend(const editor_map& map, const std::set<map_lo
 
 std::unique_ptr<editor_action> editor_action_deselect::perform(map_context& mc) const
 {
-	std::set<map_location> undo_locs;
+	location_set undo_locs;
 	for(const map_location& loc : area_) {
 		if(mc.map().in_selection(loc)) {
 			undo_locs.insert(loc);
@@ -90,7 +90,7 @@ IMPLEMENT_ACTION(select_all)
 
 std::unique_ptr<editor_action> editor_action_select_all::perform(map_context& mc) const
 {
-	std::set<map_location> undo_locs = mc.map().selection_inverse();
+	location_set undo_locs = mc.map().selection_inverse();
 	perform_without_undo(mc);
 	return std::make_unique<editor_action_deselect>(undo_locs);
 }
@@ -105,7 +105,7 @@ IMPLEMENT_ACTION(select_none)
 
 std::unique_ptr<editor_action> editor_action_select_none::perform(map_context& mc) const
 {
-	std::set<map_location> current = mc.map().selection();
+	location_set current = mc.map().selection();
 	perform_without_undo(mc);
 	return std::make_unique<editor_action_select>(current);
 }

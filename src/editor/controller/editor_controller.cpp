@@ -729,7 +729,7 @@ bool editor_controller::do_execute_command(const hotkey::ui_command& cmd, bool p
 		case menu_type::area:
 			{
 				get_current_map_context().set_active_area(index);
-				const std::set<map_location>& area =
+				const location_set& area =
 						get_current_map_context().get_time_manager()->get_area_by_index(index);
 				get_current_map_context().select_area(index);
 				gui_->scroll_to_tiles({ area.begin(), area.end() });
@@ -1398,13 +1398,13 @@ void editor_controller::cut_selection()
 
 void editor_controller::save_area()
 {
-	const std::set<map_location>& area = get_current_map_context().map().selection();
+	const location_set& area = get_current_map_context().map().selection();
 	get_current_map_context().save_area(area);
 }
 
 void editor_controller::add_area()
 {
-	const std::set<map_location>& area = get_current_map_context().map().selection();
+	const location_set& area = get_current_map_context().map().selection();
 	get_current_map_context().new_area(area);
 }
 
@@ -1412,7 +1412,7 @@ void editor_controller::export_selection_coords()
 {
 	std::stringstream ssx, ssy;
 	auto selection = get_current_map_context().map().selection();
-	std::set<map_location>::const_iterator i = selection.begin();
+	location_set::const_iterator i = selection.begin();
 	if (i != selection.end()) {
 		ssx << "x = " << i->wml_x();
 		ssy << "y = " << i->wml_y();

@@ -254,7 +254,7 @@ template <>
 inline void lua_object<terrain_filter>::from_type(lua_State *L, std::shared_ptr<terrain_filter> value)
 {
 	if(value) {
-		std::set<map_location> locs;
+		location_set locs;
 		value->get_locations(locs);
 		lua_createtable(L, locs.size(), 0);
 		for(const map_location& loc : locs) {

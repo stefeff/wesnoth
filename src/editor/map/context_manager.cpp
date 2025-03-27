@@ -526,7 +526,7 @@ void context_manager::refresh_after_action(bool drag_part)
 		return;
 	}
 
-	const std::set<map_location>& changed_locs = get_map_context().changed_locations();
+	const location_set& changed_locs = get_map_context().changed_locations();
 
 	if(get_map_context().needs_terrain_rebuild()) {
 		if((auto_update_transitions_ == pref_constants::TRANSITION_UPDATE_ON)

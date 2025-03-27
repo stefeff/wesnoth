@@ -921,7 +921,7 @@ void menu_handler::execute_gotos(mouse_handler& mousehandler, int side)
 	// so, if possible, it's better to first wait that the blocker move
 
 	bool wait_blocker_move = true;
-	std::set<map_location> fully_moved;
+	location_set fully_moved;
 
 	bool change = false;
 	bool blocked_unit = false;

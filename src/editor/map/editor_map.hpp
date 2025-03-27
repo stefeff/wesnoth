@@ -101,13 +101,13 @@ public:
 	 * Useful for flood fill or magic wand selection
 	 * @return a contiguous set of locations that will always contain at least the starting element
 	 */
-	std::set<map_location> get_contiguous_terrain_tiles(const map_location& start) const;
+	location_set get_contiguous_terrain_tiles(const map_location& start) const;
 
 	/**
 	 * Set labels for staring positions in the given display object.
 	 * @return the locations where the labels were added
 	 */
-	std::set<map_location> set_starting_position_labels(display& disp);
+	location_set set_starting_position_labels(display& disp);
 
 	/**
 	 * @return true when the location is part of the selection, false otherwise
@@ -130,17 +130,17 @@ public:
 	 * Select the given area.
 	 * @param area to select.
 	 */
-	void set_selection(const std::set<map_location>& area);
+	void set_selection(const location_set& area);
 
 	/**
 	 * Return the selection set.
 	 */
-	std::set<map_location> selection() const;
+	location_set selection() const;
 
 	/**
 	 * Returns a set of all hexes *not* currently selected.
 	 */
-	std::set<map_location> selection_inverse() const;
+	location_set selection_inverse() const;
 
 	/**
 	 * Clear the selection
@@ -266,9 +266,9 @@ private:
 			return res;
 		}
 
-		static std::set<map_location> get_locations(const selection_mask& mask)
+		static location_set get_locations(const selection_mask& mask)
 		{
-			std::set<map_location> res;
+			location_set res;
 
 			for(std::size_t i = 0; i < mask.bitset_.size(); ++i) {
 				if(mask.bitset_.test(i)) {

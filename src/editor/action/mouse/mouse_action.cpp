@@ -45,10 +45,10 @@ void mouse_action::update_brush_highlights(editor_display& disp, const map_locat
 	disp.set_brush_locs(affected_hexes(disp, hex));
 }
 
-std::set<map_location> mouse_action::affected_hexes(
+location_set mouse_action::affected_hexes(
 		editor_display& /*disp*/, const map_location& hex)
 {
-	std::set<map_location> res;
+	location_set res;
 	res.insert(hex);
 	return res;
 }
@@ -184,7 +184,7 @@ void mouse_action::set_terrain_mouse_overlay(
 	disp.set_mouseover_hex_overlay(image::get_texture(path.str()));
 }
 
-std::set<map_location> brush_drag_mouse_action::affected_hexes(
+location_set brush_drag_mouse_action::affected_hexes(
 	editor_display& /*disp*/, const map_location& hex)
 {
 	return get_brush().project(hex);
@@ -222,7 +222,7 @@ std::unique_ptr<editor_action> brush_drag_mouse_action::drag_end(
 	return nullptr;
 }
 
-template <std::unique_ptr<editor_action> (brush_drag_mouse_action::*perform_func)(editor_display&, const std::set<map_location>&)>
+template <std::unique_ptr<editor_action> (brush_drag_mouse_action::*perform_func)(editor_display&, const location_set&)>
 std::unique_ptr<editor_action> brush_drag_mouse_action::drag_generic(editor_display& disp, int x, int y, bool& partial, editor_action* last_undo)
 {
 	map_location hex = disp.hex_clicked_on(x, y);
@@ -270,7 +270,7 @@ std::unique_ptr<editor_action> mouse_action_paint::click_right(editor_display& d
 }
 
 std::unique_ptr<editor_action> mouse_action_paint::click_perform_left(
-		editor_display& /*disp*/, const std::set<map_location>& hexes)
+		editor_display& /*disp*/, const location_set& hexes)
 {
 	if (has_ctrl_modifier()) return nullptr;
 	// \todo why is this a chain and not an individual action? I guess that mouse drags were meant
@@ -282,7 +282,7 @@ std::unique_ptr<editor_action> mouse_action_paint::click_perform_left(
 }
 
 std::unique_ptr<editor_action> mouse_action_paint::click_perform_right(
-		editor_display& /*disp*/, const std::set<map_location>& hexes)
+		editor_display& /*disp*/, const location_set& hexes)
 {
 	if (has_ctrl_modifier()) return nullptr;
 	// \todo why is this a chain and not an individual action?
@@ -307,7 +307,7 @@ bool mouse_action_paste::has_context_menu() const
 	return true;
 }
 
-std::set<map_location> mouse_action_paste::affected_hexes(
+location_set mouse_action_paste::affected_hexes(
 	editor_display& /*disp*/, const map_location& hex)
 {
 	return paste_.get_offset_area(hex);
@@ -337,7 +337,7 @@ void mouse_action_paste::set_mouse_overlay(editor_display& disp)
 	);
 }
 
-std::set<map_location> mouse_action_fill::affected_hexes(
+location_set mouse_action_fill::affected_hexes(
 	editor_display& disp, const map_location& hex)
 {
 	return disp.get_map().get_contiguous_terrain_tiles(hex);

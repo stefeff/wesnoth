@@ -197,7 +197,7 @@ teleport_map::teleport_map(
 		}
 
 		if (!group.pass_allied_units() && !ignore_units && !check_vision) {
-			std::set<map_location>::iterator loc = locations.second.begin();
+			location_set::iterator loc = locations.second.begin();
 			while(loc != locations.second.end()) {
 				unit_map::iterator u;
 				if (see_all) {
@@ -213,7 +213,7 @@ teleport_map::teleport_map(
 			}
 		}
 
-		std::set<map_location>::iterator source_it = locations.first.begin();
+		location_set::iterator source_it = locations.first.begin();
 		for (; source_it != locations.first.end(); ++source_it ) {
 			auto map_it = teleport_map_.find(*source_it);
 

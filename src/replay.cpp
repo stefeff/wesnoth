@@ -69,7 +69,7 @@ static void verify(const unit_map& units, const config& cfg) {
 		errbuf << "SYNC VERIFICATION FAILED: number of units from data source differ: "
 			   << nunits << " according to data source. " << units.size() << " locally\n";
 
-		std::set<map_location> locs;
+		location_set locs;
 		for (const config &u : cfg.child_range(str_unit))
 		{
 			const map_location loc(u);

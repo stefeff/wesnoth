@@ -309,7 +309,7 @@ void tod_manager::move_all_areas(int x_offset, int y_offset) {
 	}
 }
 
-void tod_manager::replace_area_locations(int area_index, const std::set<map_location>& locs)
+void tod_manager::replace_area_locations(int area_index, const location_set& locs)
 {
 	assert(area_index < static_cast<int>(areas_.size()));
 	areas_[area_index].hexes = locs;
@@ -356,7 +356,7 @@ std::vector<std::string> tod_manager::get_area_ids() const
 	return areas;
 }
 
-const std::set<map_location>& tod_manager::get_area_by_id(const std::string& id) const
+const location_set& tod_manager::get_area_by_id(const std::string& id) const
 {
 	for(const area_time_of_day& area : areas_) {
 		if(area.id == id) {
@@ -364,11 +364,11 @@ const std::set<map_location>& tod_manager::get_area_by_id(const std::string& id)
 		}
 	}
 
-	static const std::set<map_location> res;
+	static const location_set res;
 	return res;
 }
 
-const std::set<map_location>& tod_manager::get_area_by_index(int index) const
+const location_set& tod_manager::get_area_by_index(int index) const
 {
 	return areas_[index].hexes;
 }
@@ -400,7 +400,7 @@ void tod_manager::add_time_area(const gamemap& map, const config& cfg)
 	has_tod_bonus_changed_ = true;
 }
 
-void tod_manager::add_time_area(const std::string& id, const std::set<map_location>& locs, const config& time_cfg)
+void tod_manager::add_time_area(const std::string& id, const location_set& locs, const config& time_cfg)
 {
 	areas_.emplace_back();
 	area_time_of_day& area = areas_.back();

@@ -832,7 +832,7 @@ map_location luaW_checklocation(lua_State *L, int index)
 	return result;
 }
 
-int luaW_push_locationset(lua_State* L, const std::set<map_location>& locs)
+int luaW_push_locationset(lua_State* L, const location_set& locs)
 {
 	lua_createtable(L, locs.size(), 0);
 	int i = 1;
@@ -844,9 +844,9 @@ int luaW_push_locationset(lua_State* L, const std::set<map_location>& locs)
 	return 1;
 }
 
-std::set<map_location> luaW_check_locationset(lua_State* L, int idx)
+location_set luaW_check_locationset(lua_State* L, int idx)
 {
-	std::set<map_location> locs;
+	location_set locs;
 	if(!lua_istable(L, idx)) {
 		luaW_type_error(L, idx, "array of locations");
 	}

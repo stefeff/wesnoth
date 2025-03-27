@@ -449,7 +449,7 @@ static int impl_source_eq(lua_State* L) {
 		a->fade_range() == b->fade_range() &&
 		a->check_fogged() == b->check_fogged() &&
 		a->check_shrouded() == b->check_shrouded() &&
-		std::set<map_location>(a->get_locations().begin(), a->get_locations().end()) == std::set<map_location>(b->get_locations().begin(), b->get_locations().end())
+		location_set(a->get_locations().begin(), a->get_locations().end()) == location_set(b->get_locations().begin(), b->get_locations().end())
 	);
 	return 1;
 }

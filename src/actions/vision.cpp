@@ -331,7 +331,7 @@ bool shroud_clearer::clear_unit(const map_location &view_loc, team &view_team,
                                 std::size_t viewer_id, int sight_range, bool slowed,
                                 const movetype::terrain_costs & costs,
                                 const map_location & real_loc,
-                                const std::set<map_location>* known_units,
+                                const location_set* known_units,
                                 std::size_t * enemy_count, std::size_t * friend_count,
                                 move_unit_spectator * spectator, bool /*instant*/)
 {
@@ -393,7 +393,7 @@ bool shroud_clearer::clear_unit(const map_location &view_loc, team &view_team,
  */
 bool shroud_clearer::clear_unit(const map_location &view_loc,
                                 const unit &viewer, team &view_team,
-                                const std::set<map_location>* known_units,
+                                const location_set* known_units,
                                 std::size_t * enemy_count, std::size_t * friend_count,
                                 move_unit_spectator * spectator, bool instant)
 {
@@ -702,7 +702,7 @@ void recalculate_fog(int side)
 		return;
 
 	// Exclude currently seen units from sighted events.
-	std::set<map_location> visible_locs;
+	location_set visible_locs;
 	for (const unit &u : resources::gameboard->units()) {
 		const map_location & u_location = u.get_location();
 

@@ -2981,7 +2981,7 @@ bool display::invalidate(const map_location& loc)
 	return tmp;
 }
 
-bool display::invalidate(const std::set<map_location>& locs)
+bool display::invalidate(const location_set& locs)
 {
 	if(invalidateAll_ && !map_screenshot_)
 		return false;
@@ -2992,7 +2992,7 @@ bool display::invalidate(const std::set<map_location>& locs)
 	return ret;
 }
 
-bool display::propagate_invalidation(const std::set<map_location>& locs)
+bool display::propagate_invalidation(const location_set& locs)
 {
 	if(invalidateAll_)
 		return false;
@@ -3003,7 +3003,7 @@ bool display::propagate_invalidation(const std::set<map_location>& locs)
 	bool result = false;
 	{
 		// search the first hex invalidated (if any)
-		std::set<map_location>::const_iterator i = locs.begin();
+		location_set::const_iterator i = locs.begin();
 		for(; i != locs.end() && invalidated_.count(*i) == 0 ; ++i) {}
 
 		if (i != locs.end()) {

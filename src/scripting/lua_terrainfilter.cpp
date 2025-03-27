@@ -46,10 +46,9 @@ private:
 	std::string errormessage_;
 };
 
-using known_sets_t = std::map<std::string, std::set<map_location>>;
+using knows_sets_t = std::map<std::string, location_set>;
 using offset_list_t = std::vector<std::pair<int, int>>;
 using dynamic_bitset  = boost::dynamic_bitset<>;
-using location_set = std::set<map_location>;
 
 static const char terrinfilterKey[] = "terrainfilter";
 #define LOG_MATCHES(NAME) \
@@ -155,9 +154,9 @@ namespace {
 
 } //end namespace
 
-static std::set<map_location> luaW_to_locationset(lua_State* L, int index)
+static location_set luaW_to_locationset(lua_State* L, int index)
 {
-	std::set<map_location> res;
+	location_set res;
 	map_location single;
 	if(luaW_tolocation(L, index, single)) {
 		res.insert(single);
@@ -533,7 +532,7 @@ public:
 	bool matches(const gamemap_base& m, map_location l) const override
 	{
 		LOG_MATCHES(radius);
-		std::set<map_location> result;
+		location_set result;
 
 		get_tiles_radius({{ l }}, radius_, result,
 			[&](const map_location& l) {

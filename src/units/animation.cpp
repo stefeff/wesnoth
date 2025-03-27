@@ -1119,7 +1119,7 @@ bool unit_animation::invalidate(frame_parameters& value)
 			value.primary_frame = false;
 
 			for(auto& anim : sub_anims_) {
-				std::set<map_location> tmp = anim.second.get_overlaped_hex(value, src_, dst_);
+				location_set tmp = anim.second.get_overlaped_hex(value, src_, dst_);
 				overlaped_hex_.insert(tmp.begin(), tmp.end());
 			}
 		} else {
@@ -1275,7 +1275,7 @@ void unit_animation::particle::clear_halo()
 	halo_id_.reset();
 }
 
-std::set<map_location> unit_animation::particle::get_overlaped_hex(const frame_parameters& value, const map_location& src, const map_location& dst)
+location_set unit_animation::particle::get_overlaped_hex(const frame_parameters& value, const map_location& src, const map_location& dst)
 {
 	const unit_frame& current_frame = get_current_frame();
 	const frame_parameters default_val = parameters_.parameters(get_animation_time() - get_begin_time());

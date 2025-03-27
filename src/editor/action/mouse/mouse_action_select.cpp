@@ -20,7 +20,7 @@
 
 namespace editor {
 
-std::set<map_location> mouse_action_select::affected_hexes(
+location_set mouse_action_select::affected_hexes(
 	editor_display& disp, const map_location& hex)
 {
 	if (has_shift_modifier()) {
@@ -39,7 +39,7 @@ std::unique_ptr<editor_action> mouse_action_select::key_event(
 }
 
 std::unique_ptr<editor_action> mouse_action_select::click_perform_left(
-		editor_display& /*disp*/, const std::set<map_location>& hexes)
+		editor_display& /*disp*/, const location_set& hexes)
 {
 	auto chain = std::make_unique<editor_action_chain>();
 	if (has_ctrl_modifier())
@@ -50,7 +50,7 @@ std::unique_ptr<editor_action> mouse_action_select::click_perform_left(
 }
 
 std::unique_ptr<editor_action> mouse_action_select::click_perform_right(
-		editor_display& /*disp*/, const std::set<map_location>& /*hexes*/)
+		editor_display& /*disp*/, const location_set& /*hexes*/)
 {
 	return nullptr;
 }

@@ -91,7 +91,7 @@ public:
 	void replace_schedule(const std::vector<time_of_day>& schedule, int initial_time=0);
 	void replace_local_schedule(const std::vector<time_of_day>& schedule, int area_index, int initial_time=0);
 
-	void replace_area_locations(int index, const std::set<map_location>& locs);
+	void replace_area_locations(int index, const location_set& locs);
 
 	/** Shift all hex locations for all time areas by the given x/y offsets. */
 	void move_all_areas(int x_offset, int y_offset);
@@ -104,13 +104,13 @@ public:
 	/**
 	 * @returns the nth area.
 	 */
-	const std::set<map_location>& get_area_by_index(int index) const;
+	const location_set& get_area_by_index(int index) const;
 
 	/**
 	 * @param id The id of the area to return.
 	 * @returns The area with id @p id.
 	 */
-	const std::set<map_location>& get_area_by_id(const std::string& id) const;
+	const location_set& get_area_by_id(const std::string& id) const;
 
 	/**
 	 * @returns the area ID and index active on the given location.
@@ -136,7 +136,7 @@ public:
 	 * @param locs                Set of locations to be affected.
 	 * @param time_cfg            Config object containing [time] information.
 	 */
-	void add_time_area(const std::string& id, const std::set<map_location>& locs,
+	void add_time_area(const std::string& id, const location_set& locs,
 			const config& time_cfg);
 
 	/**
@@ -248,7 +248,7 @@ private:
 		std::string xsrc, ysrc;
 		std::string id;
 		std::vector<time_of_day> times;
-		std::set<map_location> hexes;
+		location_set hexes;
 		int currentTime{0};
 	};
 

@@ -112,7 +112,7 @@ public:
 	{
 	}
 
-	std::set<map_location> recent_attacks;
+	location_set recent_attacks;
 };
 
 } // of namespace ai

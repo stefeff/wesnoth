@@ -370,7 +370,7 @@ static int cfun_ai_get_attacks(lua_State *L)
 
 static int cfun_ai_get_avoid(lua_State *L)
 {
-	std::set<map_location> locs;
+	location_set locs;
 	terrain_filter avoid = get_readonly_context(L).get_avoid();
 	avoid.get_locations(locs);
 	luaW_push_locationset(L, locs);

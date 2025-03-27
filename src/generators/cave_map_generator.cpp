@@ -125,7 +125,7 @@ cave_map_generator::cave_map_generator_job::cave_map_generator_job(const cave_ma
 	res_[str_map_data] = t_translation::write_game_map(map_, starting_positions_);
 }
 
-void cave_map_generator::cave_map_generator_job::build_chamber(map_location loc, std::set<map_location>& locs, std::size_t size, std::size_t jagged)
+void cave_map_generator::cave_map_generator_job::build_chamber(map_location loc, location_set& locs, std::size_t size, std::size_t jagged)
 {
 	if(size == 0 || locs.count(loc) != 0 || !params.on_board(loc))
 		return;
@@ -240,7 +240,7 @@ void cave_map_generator::cave_map_generator_job::place_chamber(const chamber& c)
 		}
 		std::string loc_var = child_cfg[str_store_location_as];
 
-		std::set<map_location>::const_iterator loc = c.locs.begin();
+		location_set::const_iterator loc = c.locs.begin();
 		std::advance(loc,index);
 
 		cfg[str_x] = loc->x + 1;
@@ -326,7 +326,7 @@ void cave_map_generator::cave_map_generator_job::place_passage(const passage& p)
 	int jagged = p.cfg[str_jagged].to_int();
 
 	for(const map_location& step : rt.steps) {
-		std::set<map_location> locs;
+		location_set locs;
 		build_chamber(step, locs, width, jagged);
 		for(const map_location& loc : locs) {
 			set_terrain(loc, params.clear_);

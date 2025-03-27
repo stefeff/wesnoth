@@ -70,7 +70,7 @@ public:
 	 * same as would be with separate undo actions for every part of
 	 * the drag.
 	 */
-	virtual void extend(const editor_map& map, const std::set<map_location>& locs) = 0;
+	virtual void extend(const editor_map& map, const location_set& locs) = 0;
 
 	const std::string& get_name() const override
 	{
@@ -219,12 +219,12 @@ protected:
 class editor_action_area : public editor_action_extendable
 {
 public:
-	editor_action_area(const std::set<map_location>& area)
+	editor_action_area(const location_set& area)
 		: area_(area)
 	{
 	}
 
-	void extend(const editor_map& map, const std::set<map_location>& locs) override;
+	void extend(const editor_map& map, const location_set& locs) override;
 
 	const std::string& get_name() const override
 	{
@@ -233,7 +233,7 @@ public:
 	}
 
 protected:
-	std::set<map_location> area_;
+	location_set area_;
 };
 
 /**
@@ -251,7 +251,7 @@ public:
 	std::unique_ptr<editor_action> clone() const override;
 	std::unique_ptr<editor_action> perform(map_context& mc) const override;
 	void perform_without_undo(map_context& mc) const override;
-	void extend(const editor_map& map, const std::set<map_location>& locs) override;
+	void extend(const editor_map& map, const location_set& locs) override;
 	const std::string& get_name() const override;
 
 protected:
@@ -266,7 +266,7 @@ class editor_action_paint_area : public editor_action_area
 {
 public:
 	editor_action_paint_area(
-			const std::set<map_location>& area, const t_translation::terrain_code& t, bool one_layer = false)
+			const location_set& area, const t_translation::terrain_code& t, bool one_layer = false)
 		: editor_action_area(area)
 		, t_(t)
 		, one_layer_(one_layer)
@@ -398,7 +398,7 @@ private:
 class editor_action_shuffle_area : public editor_action_area
 {
 public:
-	editor_action_shuffle_area(const std::set<map_location>& area)
+	editor_action_shuffle_area(const location_set& area)
 		: editor_action_area(area)
 	{
 	}

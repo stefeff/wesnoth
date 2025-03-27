@@ -238,7 +238,7 @@ double move_to_targets_phase::rate_target(const target& tg, const unit_map::iter
 				rating *= get_scout_village_targeting();
 		}
 
-		std::set<map_location> enemies_guarding;
+		location_set enemies_guarding;
 		enemies_along_path(rt.steps,enemy_dstsrc,enemies_guarding);
 		// note that an empty route means no guardian and thus optimal rating
 
@@ -488,7 +488,7 @@ std::pair<map_location,map_location> move_to_targets_phase::choose_move(std::vec
 
 	if(dangerous) {
 		LOG_AI << "dangerous path";
-		std::set<map_location> group, enemies;
+		location_set group, enemies;
 		const map_location dst = form_group(best_route.steps,dstsrc,group);
 		enemies_along_path(best_route.steps,enemy_dstsrc,enemies);
 
@@ -524,7 +524,7 @@ std::pair<map_location,map_location> move_to_targets_phase::choose_move(std::vec
 
 			const double max_acceptable_threat = un.hitpoints() / 4.0;
 
-			std::set<map_location> mass_locations;
+			location_set mass_locations;
 
 			const auto itors = srcdst.equal_range(loc);
 			for(move_map::const_iterator i = itors.first; i != itors.second; ++i) {
@@ -544,7 +544,7 @@ std::pair<map_location,map_location> move_to_targets_phase::choose_move(std::vec
 				}
 			}
 
-			for(std::set<map_location>::const_iterator j = mass_locations.begin(); j != mass_locations.end(); ++j) {
+			for(location_set::const_iterator j = mass_locations.begin(); j != mass_locations.end(); ++j) {
 				if(*j != best_loc && distance_between(*j,best_loc) < 3) {
 					LOG_AI << "found mass-to-attack target... " << *j << " with value: " << value*4.0;
 					targets.emplace_back(*j,value*4.0,ai_target::type::mass);
@@ -635,14 +635,14 @@ void move_to_targets_phase::access_points(const move_map& srcdst, const map_loca
 	}
 }
 
-double move_to_targets_phase::compare_groups(const std::set<map_location>& our_group, const std::set<map_location>& their_group, const std::vector<map_location>& battlefield) const
+double move_to_targets_phase::compare_groups(const location_set& our_group, const location_set& their_group, const std::vector<map_location>& battlefield) const
 {
 	const double a = rate_group(our_group,battlefield);
 	const double b = std::max<double>(rate_group(their_group,battlefield),0.01);
 	return a/b;
 }
 
-void move_to_targets_phase::enemies_along_path(const std::vector<map_location>& route, const move_map& dstsrc, std::set<map_location>& res)
+void move_to_targets_phase::enemies_along_path(const std::vector<map_location>& route, const move_map& dstsrc, location_set& res)
 {
 	for(std::vector<map_location>::const_iterator i = route.begin(); i != route.end(); ++i) {
 		for(const map_location& adj : get_adjacent_tiles(*i)) {
@@ -654,7 +654,7 @@ void move_to_targets_phase::enemies_along_path(const std::vector<map_location>& 
 	}
 }
 
-map_location move_to_targets_phase::form_group(const std::vector<map_location>& route, const move_map& dstsrc, std::set<map_location>& res)
+map_location move_to_targets_phase::form_group(const std::vector<map_location>& route, const move_map& dstsrc, location_set& res)
 {
 	unit_map &units_ = resources::gameboard->units();
 	if(route.empty()) {
@@ -696,7 +696,7 @@ map_location move_to_targets_phase::form_group(const std::vector<map_location>& 
 	return *i;
 }
 
-bool move_to_targets_phase::move_group(const map_location& dst, const std::vector<map_location>& route, const std::set<map_location>& units)
+bool move_to_targets_phase::move_group(const map_location& dst, const std::vector<map_location>& route, const location_set& units)
 {
 	unit_map &units_ = resources::gameboard->units();
 	const gamemap &map_ = resources::gameboard->map();
@@ -733,7 +733,7 @@ bool move_to_targets_phase::move_group(const map_location& dst, const std::vecto
 
 	bool gamestate_changed = false;
 
-	for(std::set<map_location>::const_iterator i = units.begin(); i != units.end(); ++i) {
+	for(location_set::const_iterator i = units.begin(); i != units.end(); ++i) {
 		const unit_map::const_iterator un = units_.find(*i);
 		if(un == units_.end()) {
 			continue;
@@ -793,13 +793,13 @@ bool move_to_targets_phase::move_group(const map_location& dst, const std::vecto
 	return gamestate_changed;
 }
 
-double move_to_targets_phase::rate_group(const std::set<map_location>& group, const std::vector<map_location>& battlefield) const
+double move_to_targets_phase::rate_group(const location_set& group, const std::vector<map_location>& battlefield) const
 {
 	unit_map &units_ = resources::gameboard->units();
 	const gamemap &map_ = resources::gameboard->map();
 
 	double strength = 0.0;
-	for(std::set<map_location>::const_iterator i = group.begin(); i != group.end(); ++i) {
+	for(location_set::const_iterator i = group.begin(); i != group.end(); ++i) {
 		const unit_map::const_iterator u = units_.find(*i);
 		if(u == units_.end()) {
 			continue;

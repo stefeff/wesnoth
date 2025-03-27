@@ -793,7 +793,7 @@ void unit_frame::redraw(const std::chrono::milliseconds& frame_time, bool on_sta
 	}
 }
 
-std::set<map_location> unit_frame::get_overlaped_hex(const std::chrono::milliseconds& frame_time, const map_location& src, const map_location& dst,
+location_set unit_frame::get_overlaped_hex(const std::chrono::milliseconds& frame_time, const map_location& src, const map_location& dst,
 		const frame_parameters& animation_val, const frame_parameters& engine_val) const
 {
 	display* disp = display::get_singleton();
@@ -818,7 +818,7 @@ std::set<map_location> unit_frame::get_overlaped_hex(const std::chrono::millisec
 
 	// We always invalidate our own hex because we need to be called at redraw time even
 	// if we don't draw anything in the hex itself
-	std::set<map_location> result;
+	location_set result;
 	if(tmp_offset == 0 && current_data.x == 0 && current_data.directional_x == 0 && image::is_in_hex(image_loc)) {
 		result.insert(src);
 

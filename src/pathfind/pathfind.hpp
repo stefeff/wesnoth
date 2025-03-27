@@ -114,7 +114,7 @@ struct vision_path : public paths
 	virtual ~vision_path();
 
 	/** The edges are the non-destination hexes bordering the destinations. */
-	std::set<map_location> edges;
+	location_set edges;
 };
 
 /**

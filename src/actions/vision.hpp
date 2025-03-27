@@ -22,8 +22,8 @@
 
 #include "movetype.hpp"
 #include "game_events/fwd.hpp"
+#include "map/location.hpp"
 
-struct map_location;
 class  team;
 class  unit;
 
@@ -98,7 +98,7 @@ public:
 	                std::size_t viewer_id, int sight_range, bool slowed,
 	                const movetype::terrain_costs & costs,
 	                const map_location & real_loc,
-					const std::set<map_location>* known_units = nullptr,
+					const location_set* known_units = nullptr,
 	                std::size_t * enemy_count = nullptr, std::size_t * friend_count = nullptr,
 	                move_unit_spectator * spectator = nullptr, bool instant = true);
 	/**
@@ -107,7 +107,7 @@ public:
 	 */
 	bool clear_unit(const map_location &view_loc,
 	                const unit &viewer, team &view_team,
-	                const std::set<map_location>* known_units = nullptr,
+	                const location_set* known_units = nullptr,
 	                std::size_t * enemy_count = nullptr, std::size_t * friend_count = nullptr,
 	                move_unit_spectator * spectator = nullptr, bool instant = true);
 	/**

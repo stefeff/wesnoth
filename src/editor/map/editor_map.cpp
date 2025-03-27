@@ -76,10 +76,10 @@ editor_map::editor_map(const gamemap& map)
 {
 }
 
-std::set<map_location> editor_map::get_contiguous_terrain_tiles(const map_location& start) const
+location_set editor_map::get_contiguous_terrain_tiles(const map_location& start) const
 {
 	t_translation::terrain_code terrain = get_terrain(start);
-	std::set<map_location> result;
+	location_set result;
 	std::deque<map_location> queue;
 	result.insert(start);
 	queue.push_back(start);
@@ -97,9 +97,9 @@ std::set<map_location> editor_map::get_contiguous_terrain_tiles(const map_locati
 	return result;
 }
 
-std::set<map_location> editor_map::set_starting_position_labels(display& disp)
+location_set editor_map::set_starting_position_labels(display& disp)
 {
-	std::set<map_location> label_locs;
+	location_set label_locs;
 	std::string label;
 
 
@@ -129,7 +129,7 @@ bool editor_map::add_to_selection(const map_location& loc)
 	return on_board_with_border(loc) && selection_.select(loc);
 }
 
-void editor_map::set_selection(const std::set<map_location>& area)
+void editor_map::set_selection(const location_set& area)
 {
 	clear_selection();
 	for(const map_location& loc : area) {
@@ -137,12 +137,12 @@ void editor_map::set_selection(const std::set<map_location>& area)
 	}
 }
 
-std::set<map_location> editor_map::selection() const
+location_set editor_map::selection() const
 {
 	return selection_mask::get_locations(selection_);
 }
 
-std::set<map_location> editor_map::selection_inverse() const
+location_set editor_map::selection_inverse() const
 {
 	return selection_mask::get_locations(selection_.inverted());
 }
@@ -197,7 +197,7 @@ void editor_map::resize(int width, int height, int x_offset, int y_offset,
 	}
 
 	// Save the old selections before resizing
-	std::set<map_location> old_selection = selection();
+	location_set old_selection = selection();
 
 	// Determine the amount of resizing is required
 	const int left_resize = -x_offset;

@@ -35,7 +35,7 @@ public:
 	/**
 	 * Overridden to allow special behavior based on modifier keys
 	 */
-	std::set<map_location> affected_hexes(editor_display& disp, const map_location& hex) override;
+	location_set affected_hexes(editor_display& disp, const map_location& hex) override;
 
 	/**
 	 * Force a fake "move" event to update brush overlay on key event
@@ -45,7 +45,7 @@ public:
 	/**
 	 * Left click/drag selects
 	 */
-	std::unique_ptr<editor_action> click_perform_left(editor_display& disp, const std::set<map_location>& hexes) override;
+	std::unique_ptr<editor_action> click_perform_left(editor_display& disp, const location_set& hexes) override;
 
 	/**
 	 * Right click does nothing for now
@@ -56,7 +56,7 @@ public:
 	/**
 	 * Right click/drag
 	 */
-	std::unique_ptr<editor_action> click_perform_right(editor_display& disp, const std::set<map_location>& hexes) override;
+	std::unique_ptr<editor_action> click_perform_right(editor_display& disp, const location_set& hexes) override;
 
 	virtual void set_mouse_overlay(editor_display& disp) override;
 

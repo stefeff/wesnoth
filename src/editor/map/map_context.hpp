@@ -103,11 +103,11 @@ public:
 		++actions_since_save_;
 	}
 
-	void save_area(const std::set<map_location>& area) {
+	void save_area(const location_set& area) {
 		tod_manager_->replace_area_locations(active_area_, area);
 	}
 
-	void new_area(const std::set<map_location>& area) {
+	void new_area(const location_set& area) {
 		tod_manager_->add_time_area("", area, config());
 		active_area_ = tod_manager_->get_area_ids().size() -1;
 		++actions_since_save_;
@@ -233,7 +233,7 @@ public:
 	 * Draw a terrain on a set of locations on the map.
 	 * Sets the refresh flags accordingly.
 	 */
-	void draw_terrain(const t_translation::terrain_code & terrain, const std::set<map_location>& locs,
+	void draw_terrain(const t_translation::terrain_code & terrain, const location_set& locs,
 		bool one_layer_only = false);
 
 	/**
@@ -272,10 +272,10 @@ public:
 	 */
 	void set_needs_labels_reset(bool value=true) { needs_labels_reset_ = value; }
 
-	const std::set<map_location> changed_locations() const { return changed_locations_; }
+	const location_set& changed_locations() const { return changed_locations_; }
 	void clear_changed_locations();
 	void add_changed_location(const map_location& loc);
-	void add_changed_location(const std::set<map_location>& locs);
+	void add_changed_location(const location_set& locs);
 	void set_everything_changed();
 	bool everything_changed() const;
 
@@ -493,12 +493,12 @@ protected:
 
 	bool everything_changed_;
 
-	std::set<map_location> changed_locations_;
+	location_set changed_locations_;
 
 	/**
 	 * Cache of set starting position labels. Necessary for removing them.
 	 */
-	std::set<map_location> starting_position_label_locs_;
+	location_set starting_position_label_locs_;
 
 private:
 	std::string addon_id_;

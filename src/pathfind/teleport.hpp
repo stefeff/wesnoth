@@ -28,7 +28,7 @@ class vconfig;
 
 namespace pathfind {
 
-typedef std::pair<std::set<map_location>, std::set<map_location>>
+typedef std::pair<location_set, location_set>
 		teleport_pair;
 
 /*
