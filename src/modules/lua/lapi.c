@@ -1341,6 +1341,11 @@ LUA_API void lua_setallocf (lua_State *L, lua_Alloc f, void *ud) {
   lua_unlock(L);
 }
 
+LUA_API void lua_setfreef (lua_State *L, lua_Free f) {
+  lua_lock(L);
+  G(L)->ffree = f;
+  lua_unlock(L);
+}
 
 void lua_setwarnf (lua_State *L, lua_WarnFunction f, void *ud) {
   lua_lock(L);

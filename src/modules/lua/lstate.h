@@ -253,7 +253,8 @@ struct CallInfo {
 */
 typedef struct global_State {
   lua_Alloc frealloc;  /* function to reallocate memory */
-  void *ud;         /* auxiliary data to 'frealloc' */
+  lua_Free ffree;  /* function to free memory (alternative to realloc(size=0)*/
+  void *ud;         /* auxiliary data to 'frealloc' and 'ffree' */
   l_mem totalbytes;  /* number of bytes currently allocated - GCdebt */
   l_mem GCdebt;  /* bytes allocated not yet compensated by the collector */
   lu_mem GCestimate;  /* an estimate of the non-garbage memory in use */
