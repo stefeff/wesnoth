@@ -99,8 +99,11 @@ std::unique_ptr<editor_action> editor_action_select_all::perform(map_context& mc
 	location_set all = mc.map().selection();
 	location_set undo_locs;
 
-	std::set_difference(
-		all.begin(), all.end(), current.begin(), current.end(), std::inserter(undo_locs, undo_locs.begin()));
+	for (auto& loc : all) {
+		if (current.count(loc) == 0) {
+			undo_locs.insert(loc);
+		}
+	}
 
 	mc.set_everything_changed();
 	return std::make_unique<editor_action_select>(undo_locs);

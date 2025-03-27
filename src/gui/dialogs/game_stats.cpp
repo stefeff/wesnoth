@@ -213,7 +213,10 @@ void game_stats::pre_show(window& window)
 	stats_list.register_translatable_sorting_option(1, [this](const int i) {
 		return board_.teams()[i].user_team_name().str(); });
 	stats_list.register_sorting_option(2, [this](const int i) { return board_.teams()[i].gold(); });
-	stats_list.register_sorting_option(3, [this](const int i) { return board_.teams()[i].villages(); });
+	stats_list.register_sorting_option(3, [this](const int i) {
+		auto& villages = board_.teams()[i].villages();
+		return std::set<map_location>{villages.begin(), villages.end()};
+	});
 	stats_list.register_sorting_option(4, [this](const int i) { return team_data_[i].units; });
 	stats_list.register_sorting_option(5, [this](const int i) { return team_data_[i].upkeep; });
 	stats_list.register_sorting_option(6, [this](const int i) { return team_data_[i].net_income; });

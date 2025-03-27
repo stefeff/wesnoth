@@ -747,13 +747,17 @@ bool team::knows_about_team(std::size_t index) const
 void team::remove_fog_override(const location_set& hexes)
 {
 	// Take a set difference.
-	std::vector<map_location> result(fog_clearer_.size());
-	std::vector<map_location>::iterator result_end =
-		std::set_difference(fog_clearer_.begin(), fog_clearer_.end(), hexes.begin(), hexes.end(), result.begin());
+	std::vector<map_location> result;
+	result.reserve(fog_clearer_.size());
+	for (auto& loc: fog_clearer_) {
+		if (hexes.count(loc) == 0) {
+			result.push_back(loc);
+		}
+	}
 
 	// Put the result into fog_clearer_.
 	fog_clearer_.clear();
-	fog_clearer_.insert(result.begin(), result_end);
+	fog_clearer_.insert(result.begin(), result.end());
 }
 
 void validate_side(int side)

@@ -610,33 +610,27 @@ void terrain_filter::get_locs_impl(location_set& locs, const unit* ref_unit, boo
 		if(key == str_and) {
 			location_set intersect_hexes;
 			terrain_filter(filter, *this).get_locations(intersect_hexes, with_border);
-			location_set::iterator intersect_itor = match_set.begin();
-			while(intersect_itor != match_set.end()) {
-				if(intersect_hexes.find(*intersect_itor) == intersect_hexes.end()) {
-					match_set.erase(*intersect_itor++);
-				} else {
-					++intersect_itor;
+			location_set intersection;
+			for (auto& loc : match_set) {
+				if (intersect_hexes.count(loc) == 1) {
+					intersection.insert(loc);
 				}
 			}
+			match_set.swap(intersection);
 		}
 		// Handle [or]
 		else if(key == str_or) {
 			location_set union_hexes;
 			terrain_filter(filter, *this).get_locations(union_hexes, with_border);
-			//match_set.insert(union_hexes.begin(), union_hexes.end()); //doesn't compile on MSVC
-			std::set<map_location>::iterator insert_itor = union_hexes.begin();
-			while(insert_itor != union_hexes.end()) {
-				match_set.insert(*insert_itor++);
-			}
+			match_set.insert(union_hexes.begin(), union_hexes.end()); //doesn't compile on MSVC
 			--ors_left;
 		}
 		// Handle [not]
 		else if(key == str_not) {
 			location_set removal_hexes;
 			terrain_filter(filter, *this).get_locations(removal_hexes, with_border);
-			std::set<map_location>::iterator erase_itor = removal_hexes.begin();
-			while(erase_itor != removal_hexes.end()) {
-				match_set.erase(*erase_itor++);
+			for (auto& loc : removal_hexes) {
+				match_set.erase(loc);
 			}
 		}
 	}
