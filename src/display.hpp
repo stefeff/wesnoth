@@ -888,7 +888,7 @@ protected:
 	struct draw_helper
 	{
 		/** Controls the ordering of draw calls by layer and location. */
-		const uint32_t key;
+		uint32_t key;
 
 		/** Handles the actual drawing at this location. */
 		std::function<void(const rect&)> do_draw;
@@ -902,7 +902,31 @@ protected:
 		}
 	};
 
-	std::list<draw_helper> drawing_buffer_;
+	// helper class for stable sort of draw_helper by key.
+	class stable_index
+	{
+	public:
+		stable_index(const draw_helper& rhs, size_t index)
+			: data_((static_cast<uint64_t>(rhs.key) << 32) + index)
+		{
+		}
+
+		size_t index() const
+		{
+			return data_ & 0xffffffff;
+		}
+
+		bool operator<(const stable_index& rhs) const
+		{
+			return data_ < rhs.data_;
+		}
+
+	private:
+
+		uint64_t data_;
+	};
+
+	std::vector<draw_helper> drawing_buffer_;
 
 public:
 	/**
@@ -912,7 +936,7 @@ public:
 	 * @param loc                The hex the image belongs to, needed for the drawing order.
 	 * @param draw_func          The draw operation to be run.
 	 */
-	void drawing_buffer_add(const drawing_layer layer, const map_location& loc, decltype(draw_helper::do_draw) draw_func);
+	void drawing_buffer_add(const drawing_layer layer, const map_location& loc, decltype(draw_helper::do_draw)&& draw_func);
 
 protected:
 
