@@ -607,14 +607,13 @@ void terrain_filter::get_locs_impl(location_set& locs, const unit* ref_unit, boo
 		if(key == str_and) {
 			location_set intersect_hexes;
 			terrain_filter(filter, *this).get_locations(intersect_hexes, with_border);
-			location_set::iterator intersect_itor = match_set.begin();
-			while(intersect_itor != match_set.end()) {
-				if(intersect_hexes.find(*intersect_itor) == intersect_hexes.end()) {
-					match_set.erase(*intersect_itor++);
-				} else {
-					++intersect_itor;
+			location_set intersection;
+			for (auto& loc : match_set) {
+				if (intersect_hexes.count(loc) == 1) {
+					intersection.insert(loc);
 				}
 			}
+			match_set.swap(intersection);
 		}
 		// Handle [or]
 		else if(key == str_or) {
@@ -631,9 +630,8 @@ void terrain_filter::get_locs_impl(location_set& locs, const unit* ref_unit, boo
 		else if(key == str_not) {
 			location_set removal_hexes;
 			terrain_filter(filter, *this).get_locations(removal_hexes, with_border);
-			location_set::iterator erase_itor = removal_hexes.begin();
-			while(erase_itor != removal_hexes.end()) {
-				match_set.erase(*erase_itor++);
+			for (auto& loc : removal_hexes) {
+				match_set.erase(loc);
 			}
 		}
 	}

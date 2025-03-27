@@ -24,8 +24,9 @@ class variable_set;
 #include "utils/span.hpp"
 #include <string>
 #include <tuple>
-#include <vector>
+#include <unordered_set>
 #include <utility>
+#include <vector>
 
 struct wml_loc {};
 
