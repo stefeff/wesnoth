@@ -18,6 +18,8 @@
 class config;
 class variable_set;
 
+#include "utils/quick_hash.hpp"
+
 #include <array>
 #include <string>
 #include <tuple>
@@ -163,7 +165,7 @@ struct map_location {
 	int x, y;
 };
 
-using location_set = std::unordered_set<map_location>;
+using location_set = utils::hash_set<map_location>;
 
 /** Function which tells if two locations are adjacent. */
 bool tiles_adjacent(const map_location& a, const map_location& b);

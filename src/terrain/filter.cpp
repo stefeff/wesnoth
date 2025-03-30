@@ -406,8 +406,7 @@ bool terrain_filter::match_impl(const map_location& loc, const unit* ref_unit) c
 	}
 
 	std::size_t loop_count = 0;
-	location_set::const_iterator i;
-	for(i = hexes.begin(); i != hexes.end(); ++i) {
+	for(auto i = hexes.begin(); i != hexes.end(); ++i) {
 		bool matches = match_internal(*i, ref_unit, false);
 
 		// Handle [and], [or], and [not] with in-order precedence
