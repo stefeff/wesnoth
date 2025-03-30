@@ -449,7 +449,7 @@ game_events::pump_result_t team::get_village(const map_location& loc, const int 
 
 void team::lose_village(const map_location& loc)
 {
-	const location_set::const_iterator vil = villages_.find(loc);
+	const location_set::iterator vil = villages_.find(loc);
 	assert(vil != villages_.end());
 	villages_.erase(vil);
 }

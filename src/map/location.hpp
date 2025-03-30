@@ -19,6 +19,8 @@ class config;
 class config_attribute_value;
 class variable_set;
 
+#include "utils/quick_hash.hpp"
+
 #include <array>
 #include <set>
 #include "utils/span.hpp"
@@ -197,7 +199,7 @@ struct map_location {
 	int x, y;
 };
 
-using location_set = std::unordered_set<map_location>;
+using location_set = utils::hash_set<map_location>;
 
 /** Function which tells if two locations are adjacent. */
 bool tiles_adjacent(const map_location& a, const map_location& b);
