@@ -143,12 +143,12 @@ public:
         friend class iterator;
     };
 
-    hash_base() { index_.resize(16); }
+    hash_base() { }
     hash_base(const hash_base& rhs);
     hash_base(hash_base&& rhs);
     template<class I>
-    hash_base(I first, I last) { index_.resize(16); insert(first, last); }
-    hash_base(std::initializer_list<value_type> init) { index_.resize(16); insert(init.begin(), init.end()); }
+    hash_base(I first, I last) { insert(first, last); }
+    hash_base(std::initializer_list<value_type> init) { insert(init.begin(), init.end()); }
     ~hash_base() { deconstruct_all(); }
 
     hash_base& operator=(const hash_base& rhs);
@@ -251,9 +251,6 @@ hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::hash_base(const hash_base& rhs)
         index_.resize(std::min(rhs.index_.size(), 2 * rhs.size()));
         grow_data(std::min(rhs.data_.size(), 2 * rhs.size()));
         insert(rhs.begin(), rhs.end());
-    }
-    else {
-        index_.resize(16);
     }
 }
 
@@ -451,19 +448,25 @@ template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
 auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::internal_find(const Key& key) const -> lookup_result
 {
     lookup_result result;
-    result.hash_index = hash_(key) % index_.size();
-    result.data_index = index_[result.hash_index];
+    if (count_) {
+        result.hash_index = hash_(key) % index_.size();
+        result.data_index = index_[result.hash_index];
 
-    while (result.data_index) {
-        auto& entry = data_[result.data_index];
-        assert(entry.hash_index == result.hash_index);
-        if (key_access_(entry.template as<T>()) == key) {
-            result.found = true;
-            return result;
+        while (result.data_index) {
+            auto& entry = data_[result.data_index];
+            assert(entry.hash_index == result.hash_index);
+            if (key_access_(entry.template as<T>()) == key) {
+                result.found = true;
+                return result;
+            }
+            else {
+                result.data_index = entry.next;
+            }
         }
-        else {
-            result.data_index = entry.next;
-        }
+    }
+    else {
+        result.hash_index = NO_INDEX;
+        result.data_index = NO_INDEX;
     }
 
     result.found = false;
@@ -506,6 +509,11 @@ template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
 void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::grow_data(std::size_t new_size)
 {
     assert(first_unused_ == NO_INDEX);
+
+    // piggy-back: an empty container does not have an index:
+    if (index_.empty()) {
+        index_.resize(16);
+    }
 
     auto old_size = data_.size();
     data_.resize(new_size);
