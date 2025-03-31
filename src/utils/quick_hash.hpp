@@ -41,18 +41,39 @@ public:
         }
         bool operator!=(const const_iterator& rhs) const { return !operator==(rhs); }
 
-        iterator& operator++() { index_ = data_[index_].next; return *this; }
-        iterator operator++(int) { return { data_, data_[index_].next }; }
-        iterator& operator--() { index_ = data_[index_].prior; return *this; }
-        iterator operator--(int) { return { data_, data_[index_].prior }; }
+        iterator& operator++() { forward(); return *this; }
+        iterator operator++(int) { return ++iterator(*this); }
+        iterator& operator--() { backward(); return *this; }
+        iterator operator--(int) { return --iterator(*this); }
 
     private:
 
-        iterator(typename hash_base::entry_t* data, typename hash_base::index_t index)
-            : data_{data}, index_{index} {}
+        iterator(typename hash_base::entry_t* data,
+                 typename hash_base::index_t index,
+                 typename hash_base::index_t end)
+            : data_{data}, index_{index}, end_{end} {}
+
+        void forward() {
+            if (index_ != end_) {
+                while (++index_ != end_) {
+                    if (data_[index_].hash_index != hash_base::NO_HASH) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        void backward() {
+            while (index_ > 0) {
+                if (data_[--index_].hash_index != hash_base::NO_HASH) {
+                    break;
+                }
+            }
+        }
 
         typename hash_base::entry_t* data_;
         typename hash_base::index_t index_;
+        typename hash_base::index_t end_;
 
         friend class hash_base;
         friend class const_iterator;
@@ -84,18 +105,39 @@ public:
         }
         bool operator!=(const iterator& rhs) const { return !operator==(rhs); }
 
-        const_iterator& operator++() { index_ = data_[index_].next; return *this; }
-        const_iterator operator++(int) { return { data_, data_[index_].next }; }
-        const_iterator& operator--() { index_ = data_[index_].prior; return *this; }
-        const_iterator operator--(int) { return { data_, data_[index_].prior }; }
+        const_iterator& operator++() { forward(); return *this; }
+        const_iterator operator++(int) { return ++const_iterator(*this); }
+        const_iterator& operator--() { backward(); return *this; }
+        const_iterator operator--(int) { return --const_iterator(*this); }
 
     private:
 
-        const_iterator(const typename hash_base::entry_t* data, typename hash_base::index_t index)
-            : data_{data}, index_{index} {}
+        const_iterator(const typename hash_base::entry_t* data,
+                       typename hash_base::index_t index,
+                       typename hash_base::index_t end)
+            : data_{data}, index_{index}, end_{end} {}
+
+        void forward() {
+            if (index_ != end_) {
+                while (++index_ != end_) {
+                    if (data_[index_].hash_index != hash_base::NO_HASH) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        void backward() {
+            while (index_ > 0) {
+                if (data_[--index_].hash_index != hash_base::NO_HASH) {
+                    break;
+                }
+            }
+        }
 
         const typename hash_base::entry_t* data_;
         typename hash_base::index_t index_;
+        typename hash_base::index_t end_;
 
         friend class hash_base;
         friend class iterator;
@@ -119,17 +161,23 @@ public:
     std::size_t size() const { return count_; }
     bool empty() const { return count_ == 0; }
 
-    iterator begin() { return { data_.data(), first_ }; }
-    const_iterator begin() const { return { data_.data(), first_ }; }
-    const_iterator cbegin() const { return { data_.data(), first_ }; }
-    iterator end() { return { data_.data(), NO_INDEX }; }
-    const_iterator end() const { return { data_.data(), NO_INDEX }; }
-    const_iterator cend() const { return { data_.data(), NO_INDEX }; }
+    iterator begin() { return ++iterator{ data_.data(), 0, last_index() }; }
+    const_iterator begin() const { return ++const_iterator{ data_.data(), 0, last_index() }; }
+    const_iterator cbegin() const { return ++const_iterator{ data_.data(), 0, last_index() }; }
+    iterator end() { return { data_.data(), last_index(), last_index() }; }
+    const_iterator end() const { return { data_.data(), last_index(), last_index() }; }
+    const_iterator cend() const { return { data_.data(), last_index(), last_index() }; }
 
     bool contains(const Key& key) const { return internal_find(key).found; }
     std::size_t count(const Key& key) const { return internal_find(key).found ? 1 : 0; }
-    iterator find(const Key& key) { auto pos = internal_find(key); return { data_.data(), pos.found ? pos.data_index : NO_INDEX }; }
-    const_iterator find(const Key& key) const { auto pos = internal_find(key); return { data_.data(), pos.found ? pos.data_index : NO_INDEX }; }
+    iterator find(const Key& key) {
+        auto pos = internal_find(key);
+        return { data_.data(), pos.found ? pos.data_index : last_index(), last_index() };
+    }
+    const_iterator find(const Key& key) const {
+        auto pos = internal_find(key);
+        return { data_.data(), pos.found ? pos.data_index : last_index(), last_index() };
+    }
 
     std::pair<iterator, bool> insert(const T& item);
     template< class... Args >
@@ -145,6 +193,7 @@ private:
 
     using index_t = std::uint32_t;
     static constexpr index_t NO_INDEX = 0;
+    static constexpr index_t NO_HASH = ~0;
 
     struct entry_t
     {
@@ -161,10 +210,7 @@ private:
             return *reinterpret_cast<const Other*>(data);
         }
 
-        index_t prior    : 31;
-        index_t is_start : 1;
-        index_t next     : 31;
-        index_t is_end   : 1;
+        index_t next;
         index_t hash_index;
     };
 
@@ -180,16 +226,15 @@ private:
     void grow_data();
     void grow_data(std::size_t new_size);
     void rehash();
-    void link(index_t index, index_t prior_in_bucket);
+    void link(index_t index);
     void deconstruct_all();
     void verify();
+    index_t last_index() const { return static_cast<index_t>(data_.size()); }
 
     std::vector<index_t> index_;
     std::vector<entry_t> data_;
     std::size_t count_{0};
 
-    index_t first_{NO_INDEX};
-    index_t last_{NO_INDEX};
     index_t first_unused_{NO_INDEX};
 
     KeyAccess key_access_;
@@ -217,13 +262,9 @@ hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::hash_base(hash_base&& rhs)
     : index_{std::move(rhs.index_)}
     , data_{std::move(rhs.data_)}
     , count_{rhs.count_}
-    , first_{rhs.first_}
-    , last_{rhs.last_}
     , first_unused_{rhs.first_unused_}
 {
     rhs.count_ = 0;
-    rhs.first_ = NO_INDEX;
-    rhs.last_ = NO_INDEX;
     rhs.first_unused_ = NO_INDEX;
 }
 
@@ -247,15 +288,11 @@ auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::operator=(hash_base&& rhs) -
     data_.swap(rhs.data_);
 
     count_ = rhs.count_;
-    first_ = rhs.first_;
-    last_ = rhs.last_;
     first_unused_ = rhs.first_unused_;
     key_access_ = rhs.key_access_;
     hash_ = rhs.hash_;
 
     rhs.count_ = 0;
-    rhs.first_ = NO_INDEX;
-    rhs.last_ = NO_INDEX;
     rhs.first_unused_ = NO_INDEX;
 
     return *this;
@@ -266,10 +303,9 @@ void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::swap(hash_base& rhs)
 {
     index_.swap(rhs.index_);
     data_.swap(rhs.data_);
+
     std::swap(count_, rhs.count_);
 
-    std::swap(first_, rhs.first_);
-    std::swap(last_, rhs.last_);
     std::swap(first_unused_, rhs.first_unused_);
 
     std::swap(key_access_, rhs.key_access_);
@@ -298,7 +334,7 @@ auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::insert(const T& item) -> std
     auto& key = key_access_(item);
     auto pos = internal_find(key);
     if (pos.found) {
-        return { { data_.data(), pos.data_index }, false };
+        return { { data_.data(), pos.data_index, last_index() }, false };
     }
     else {
         if (first_unused_ == NO_INDEX) {
@@ -307,21 +343,22 @@ auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::insert(const T& item) -> std
 
         auto index = first_unused_;
         auto& entry = data_[index];
-        first_unused_ = entry.next;
         new (&entry.data) T(item);
+
+        first_unused_ = entry.next;
         ++count_;
 
         entry.hash_index = pos.hash_index;
-        link(index, pos.data_index);
+        link(index);
 
-        if (!entry.is_start && 2 * count_ > index_.size()) {
+        if (entry.next != NO_INDEX && 2 * count_ > index_.size()) {
             rehash();
             pos = internal_find(key);
 
-            return { { data_.data(), pos.data_index }, true };
+            return { { data_.data(), pos.data_index, last_index() }, true };
         }
 
-        return { { data_.data(), index }, true };
+        return { { data_.data(), index, last_index() }, true };
     }
 }
 
@@ -340,7 +377,7 @@ auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::emplace( Args&&... args ) ->
     auto pos = internal_find(key);
     if (pos.found) {
         entry.template as<T>().~T();
-        return { { data_.data(), pos.data_index }, false };
+        return { { data_.data(), pos.data_index, last_index() }, false };
     }
     else {
         auto index = first_unused_;
@@ -348,14 +385,15 @@ auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::emplace( Args&&... args ) ->
         ++count_;
 
         entry.hash_index = pos.hash_index;
-        link(index, pos.data_index);
+        link(index);
 
-        if (2 * count_ > index_.size()) {
-            auto pos = internal_find(key);
-            return { { data_.data(), pos.data_index }, true };
+        if (pos.data_index != NO_INDEX && 2 * count_ > index_.size()) {
+            rehash();
+            pos = internal_find(key);
+            return { { data_.data(), pos.data_index, last_index() }, true };
         }
 
-        return { { data_.data(), index }, true };
+        return { { data_.data(), index, last_index() }, true };
     }
 }
 
@@ -394,20 +432,19 @@ std::size_t hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::erase(const Key& key)
 template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
 void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::clear()
 {
-    for (auto index = first_; index != NO_INDEX; ) {
-        auto& entry = data_[index];
-        index_[entry.hash_index] = NO_INDEX;
-        auto next = entry.next;
-
-        entry.template as<T>().~T();
-        entry.next = first_unused_;
-        first_unused_ = index;
-        index = next;
+    if (count_) {
+        for (index_t index = 1; index < data_.size(); ++index) {
+            auto& entry = data_[index];
+            if (entry.hash_index != NO_HASH) {
+                index_[entry.hash_index] = NO_INDEX;
+                entry.template as<T>().~T();
+                entry.hash_index = NO_HASH;
+                entry.next = first_unused_;
+                first_unused_ = index;
+            }
+        }
+        count_ = 0;
     }
-
-    first_ = NO_INDEX;
-    last_ = NO_INDEX;
-    count_ = 0;
 }
 
 template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
@@ -417,19 +454,15 @@ auto hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::internal_find(const Key& key
     result.hash_index = hash_(key) % index_.size();
     result.data_index = index_[result.hash_index];
 
-    if (result.data_index) {
-        while (true) {
-            auto& entry = data_[result.data_index];
-            if (key_access_(entry.template as<T>()) == key) {
-                result.found = true;
-                return result;
-            }
-            if (entry.is_end) {
-                break;
-            }
-            else {
-                result.data_index = entry.next;
-            }
+    while (result.data_index) {
+        auto& entry = data_[result.data_index];
+        assert(entry.hash_index == result.hash_index);
+        if (key_access_(entry.template as<T>()) == key) {
+            result.found = true;
+            return result;
+        }
+        else {
+            result.data_index = entry.next;
         }
     }
 
@@ -441,33 +474,21 @@ template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
 void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::internal_erase(index_t index)
 {
     auto& entry = data_[index];
+    assert(entry.hash_index != NO_HASH);
 
-    if (entry.is_start) {
-        if (entry.is_end) {
-            index_[entry.hash_index] = NO_INDEX;
-        }
-        else {
-            index_[entry.hash_index] = entry.next;
-        }
-    }
-
-    if (entry.prior == NO_INDEX) {
-        first_ = entry.next;
+    if (index_[entry.hash_index] == index) {
+        index_[entry.hash_index] = entry.next;
     }
     else {
-        data_[entry.prior].next = entry.next;
-        data_[entry.prior].is_end |= entry.is_end;
-    }
-
-    if (entry.next == NO_INDEX) {
-        last_ = entry.prior;
-    }
-    else {
-        data_[entry.next].prior = entry.prior;
-        data_[entry.next].is_start |= entry.is_start;
+        auto prior = index_[entry.hash_index];
+        while (data_[prior].next != index) {
+            prior = data_[prior].next;
+        }
+        data_[prior].next = entry.next;
     }
 
     entry.template as<T>().~T();
+    entry.hash_index = NO_HASH;
     entry.next = first_unused_;
     first_unused_ = index;
 
@@ -489,8 +510,13 @@ void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::grow_data(std::size_t new_si
     auto old_size = data_.size();
     data_.resize(new_size);
     first_unused_ = static_cast<index_t>(old_size ? old_size : 1);
+
+    data_.front().hash_index = NO_HASH;
+    data_.back().hash_index = NO_HASH;
     for (auto i = first_unused_ + 1; i < new_size; ++i) {
-        data_[i - 1].next = i;
+        auto& entry = data_[i - 1];
+        entry.next = i;
+        entry.hash_index = NO_HASH;
     }
 }
 
@@ -501,94 +527,62 @@ void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::rehash()
     index_.clear();
     index_.resize(new_size);
 
-    index_t index = first_;
-    first_ = NO_INDEX;
-    last_ = NO_INDEX;
-    while (index != NO_INDEX) {
+    for (index_t index = 1; index < data_.size(); ++index) {
         auto& entry = data_[index];
-        auto next = entry.next;
-        entry.hash_index = hash_(key_access_(entry.template as<T>())) % index_.size();
-        link(index, index_[entry.hash_index]);
-        index = next;
+        if (entry.hash_index != NO_HASH) {
+            entry.hash_index = hash_(key_access_(entry.template as<T>())) % index_.size();
+            link(index);
+        }
     }
 }
 
 template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
-void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::link(index_t index, index_t prior_in_bucket)
+inline void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::link(index_t index)
 {
     auto& entry = data_[index];
-    if (prior_in_bucket == NO_INDEX) {
-        entry.prior = last_;
-        entry.is_start = true;
-        entry.next = NO_INDEX;
-        entry.is_end = true;
-        index_[entry.hash_index] = index;
-
-        if (first_ == NO_INDEX) {
-            first_ = index;
-        }
-        else {
-            data_[last_].next = index;
-        }
-        last_ = index;
-    }
-    else {
-        auto& prior = data_[prior_in_bucket];
-
-        entry.prior = prior_in_bucket;
-        entry.is_start = false;
-        if (prior_in_bucket == last_) {
-            entry.next = NO_INDEX;
-            entry.is_end = true;
-            last_ = index;
-        }
-        else {
-            entry.next = prior.next;
-            entry.is_end = prior.is_end;
-            data_[entry.next].prior = index;
-        }
-        prior.next = index;
-        prior.is_end = false;
-    }
+    entry.next = index_[entry.hash_index];
+    index_[entry.hash_index] = index;
 }
 
 template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
 void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::deconstruct_all()
 {
-    for (auto index = first_; index != NO_INDEX; ) {
+    for (index_t index = 1; index < data_.size(); ++index) {
         auto& entry = data_[index];
-        entry.template as<T>().~T();
-        index = entry.next;
+        if (entry.hash_index != NO_HASH) {
+            auto& entry = data_[index];
+            entry.template as<T>().~T();
+        }
     }
 }
 
 template <class T, class Key, class ConstKeyT, class KeyAccess, class Hash>
 void hash_base<T, Key, ConstKeyT, KeyAccess, Hash>::verify()
 {
-    for (auto index = first_; index != NO_INDEX; ) {
-        auto& entry = data_[index];
-        assert(entry.prior < data_.size());
-        assert(entry.next < data_.size());
-        assert(entry.hash_index < index_.size());
+    std::size_t visited = 0;
+    for (index_t hash_index = 0; hash_index < index_.size(); ++hash_index) {
+        for (index_t index = index_[hash_index]; index != NO_INDEX; ) {
+            auto& entry = data_[index];
+            assert(entry.next < data_.size());
+            assert(entry.hash_index == hash_index);
+            // index = entry.next;
+            index = entry.is_end ? NO_INDEX : entry.next;
+            ++visited;
 
-        if (entry.is_start) {
-            if (entry.prior != NO_INDEX) {
-                auto& prior = data_[entry.prior];
-                assert(prior.is_end && prior.hash_index != entry.hash_index);
-            }
-            assert(index_[entry.hash_index] == index);
+            // assert(contains(entry.template as<T>()));
         }
-        else {
-            assert(index_[entry.hash_index] != index);
-            assert(entry.prior != NO_INDEX);
-
-            auto& prior = data_[entry.prior];
-            assert(!prior.is_end && prior.hash_index == entry.hash_index);
-        }
-
-        assert((last_ == index) == (entry.next == NO_INDEX));
-        index = entry.next;
     }
+    assert(visited == count_);
+
+    for (auto index = first_unused_; index != NO_INDEX; ) {
+        auto& entry = data_[index];
+        assert(entry.next < data_.size());
+        assert(entry.hash_index == NO_HASH);
+        index = entry.next;
+        ++visited;
+    }
+
+    assert(visited + 1 == data_.size() || data_.empty());
 }
 
 template<class T>
