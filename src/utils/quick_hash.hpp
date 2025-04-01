@@ -89,7 +89,7 @@ public:
         using difference_type = std::size_t;
 
         const_iterator(iterator rhs)
-            : data_{rhs.data_}, index_{rhs.index_} {}
+            : data_{rhs.data_}, index_{rhs.index_}, end_{rhs.end_} {}
 
 		reference operator*() const { return data_[index_].template as<value_type>(); }
 		pointer operator->() const { return &data_[index_].template as<value_type>(); }
