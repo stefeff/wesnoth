@@ -248,7 +248,8 @@ template <class T, class Key, class KeyAccess, class Hash>
 hash_container<T, Key, KeyAccess, Hash>::hash_container(const hash_container& rhs)
 {
     if (!rhs.empty()) {
-        index_.resize(std::min(rhs.index_.size(), 2 * rhs.size()));
+        auto index_size = (4 << (32 - __builtin_clzl(rhs.count_ + 1))) - 1;
+        index_.resize(index_size);
         grow_data(std::min(rhs.data_.size(), 2 * rhs.size()));
         insert(rhs.begin(), rhs.end());
     }
@@ -336,6 +337,7 @@ auto hash_container<T, Key, KeyAccess, Hash>::insert(const T& item) -> std::pair
     else {
         if (first_unused_ == NO_INDEX) {
             grow_data();
+            pos.hash_index = hash_(key) % index_.size();;
         }
 
         auto index = first_unused_;
@@ -512,7 +514,7 @@ void hash_container<T, Key, KeyAccess, Hash>::grow_data(std::size_t new_size)
 
     // piggy-back: an empty container does not have an index:
     if (index_.empty()) {
-        index_.resize(16);
+        index_.resize(13);
     }
 
     auto old_size = data_.size();
