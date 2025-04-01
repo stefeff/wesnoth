@@ -448,7 +448,7 @@ template <class T, class Key, class KeyAccess, class Hash>
 auto hash_container<T, Key, KeyAccess, Hash>::internal_find(const Key& key) const -> lookup_result
 {
     lookup_result result;
-    if (count_) {
+    if (index_.size() > 0) {
         result.hash_index = hash_(key) % index_.size();
         result.data_index = index_[result.hash_index];
 
