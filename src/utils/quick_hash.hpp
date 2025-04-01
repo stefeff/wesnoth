@@ -518,16 +518,31 @@ void hash_container<T, Key, KeyAccess, Hash>::grow_data(std::size_t new_size)
     }
 
     auto old_size = data_.size();
-    data_.resize(new_size);
+    std::vector<entry_t> new_data;
+    new_data.resize(new_size);
     first_unused_ = static_cast<index_t>(old_size ? old_size : 1);
 
-    data_.front().hash_index = NO_HASH;
-    data_.back().hash_index = NO_HASH;
-    for (auto i = first_unused_ + 1; i < new_size; ++i) {
-        auto& entry = data_[i - 1];
+    new_data.front().hash_index = NO_HASH;
+    for (index_t i = 0; i < old_size; ++i) {
+        auto& source = data_[i];
+        auto& dest = new_data[i];
+
+        dest.next = source.next;
+        dest.hash_index = source.hash_index;
+        if (source.hash_index != NO_HASH) {
+            new (&dest.data) T(std::move(source.template as<T>()));
+            source.template as<T>().~T();
+        }
+    }
+
+    new_data.back().hash_index = NO_HASH;
+    for (index_t i = first_unused_ + 1; i < new_size; ++i) {
+        auto& entry = new_data[i - 1];
         entry.next = i;
         entry.hash_index = NO_HASH;
     }
+
+    data_.swap(new_data);
 }
 
 template <class T, class Key, class KeyAccess, class Hash>
