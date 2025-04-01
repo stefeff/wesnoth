@@ -13,6 +13,7 @@ class hash_container
 public:
 
     using value_type = T;
+    using key_type = Key;
     using pointer = value_type*;
     using reference = value_type&;
 
@@ -189,7 +190,7 @@ public:
     std::size_t erase(const Key& key);
     void clear();
 
-private:
+protected:
 
     using index_t = std::uint32_t;
     static constexpr index_t NO_INDEX = 0;
@@ -222,6 +223,7 @@ private:
     };
 
     lookup_result internal_find(const Key& key) const;
+    entry_t& insert_key(const Key& key);
     void internal_erase(index_t index);
     void grow_data();
     void grow_data(std::size_t new_size);
@@ -318,7 +320,7 @@ bool hash_container<T, Key, KeyAccess, Hash>::operator==(const hash_container& r
     }
 
     for (auto& item : *this) {
-        if (!rhs.contains(item)) {
+        if (!rhs.contains(key_access_(item))) {
             return false;
         }
     }
@@ -359,6 +361,30 @@ auto hash_container<T, Key, KeyAccess, Hash>::insert(const T& item) -> std::pair
 
         return { { data_.data(), index, last_index() }, true };
     }
+}
+
+template <class T, class Key, class KeyAccess, class Hash>
+auto hash_container<T, Key, KeyAccess, Hash>::insert_key(const Key& key) -> entry_t&
+{
+    if (first_unused_ == NO_INDEX) {
+        grow_data();
+    }
+    if (2 * count_ > index_.size()) {
+        rehash();
+    }
+
+    auto index = first_unused_;
+    auto& entry = data_[index];
+    new (&entry.data) T(key, typename T::second_type{});
+
+    first_unused_ = entry.next;
+    ++count_;
+
+    entry.hash_index = hash_(key) % index_.size();
+    link(index);
+    // verify();
+
+    return entry;
 }
 
 template <class T, class Key, class KeyAccess, class Hash>
@@ -627,6 +653,30 @@ template <class T, class Hash = std::hash<T> >
 using hash_set = hash_container<T, T, identity<T>, Hash>;
 
 template <class K, class V, class Hash = std::hash<K> >
-using hash_map = hash_container<std::pair<K, V>, K, get_first<K,V>, Hash>;
+class hash_map : public hash_container<std::pair<K, V>, K, get_first<K,V>, Hash>
+{
+private:
+
+    using Base_ = hash_container<std::pair<K, V>, K, get_first<K,V>, Hash>;
+
+public:
+
+    using value_type = typename Base_::value_type;
+
+    hash_map() { }
+    template<class I>
+    hash_map(I first, I last) { insert(first, last); }
+    hash_map(std::initializer_list<value_type> init) { insert(init.begin(), init.end()); }
+
+    V& operator[](const K& key);
+};
+
+template <class K, class V, class Hash>
+V& hash_map<K, V, Hash>::operator[](const K& key)
+{
+    auto pos = Base_::internal_find(key);
+    auto& entry = pos.found ? Base_::data_[pos.data_index] : Base_::insert_key(key);
+    return entry.template as<value_type>().second;
+}
 
 }
