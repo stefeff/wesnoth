@@ -575,11 +575,10 @@ void hash_container<T, Key, KeyAccess, Hash>::verify()
             auto& entry = data_[index];
             assert(entry.next < data_.size());
             assert(entry.hash_index == hash_index);
-            // index = entry.next;
-            index = entry.is_end ? NO_INDEX : entry.next;
+            index = entry.next;
             ++visited;
 
-            // assert(contains(entry.template as<T>()));
+            assert(contains(key_access_(entry.template as<T>())));
         }
     }
     assert(visited == count_);
