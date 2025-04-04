@@ -30,5 +30,6 @@ serialization/unicode.cpp
 serialization/validator.cpp
 server/common/simple_wml.cpp
 tstring.cpp
+utils/arena_allocator.cpp
 utils/general.cpp
 utils/interned_string.cpp
