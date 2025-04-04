@@ -45,24 +45,44 @@ static lg::log_domain log_wml("wml");
 const utils::interned_string config::diff_track_attribute{"__diff_track"};
 
 config::config()
-	: values_()
-	, children_()
-	, ordered_children_()
+	: arena_{}
+	, values_( arena_ )
+	, children_( arena_ )
+	, ordered_children( arena_ )
+{
+}
+
+config::config(const utils::arena_pointer& arena)
+	: arena_{ arena }
+	, values_( arena_ )
+	, children_( arena_ )
+	, ordered_children( arena_ )
 {
 }
 
 config::config(const config& cfg)
-	: values_(cfg.values_)
-	, children_()
-	, ordered_children_()
+	: arena_{}
+	, values_( cfg.values_, arena_ )
+	, children_( arena_ )
+	, ordered_children( arena_ )
 {
 	append_children(cfg);
 }
 
-config::config(std::string_view child)
-	: values_()
-	, children_()
-	, ordered_children_()
+config::config(const utils::arena_pointer& arena, const config &cfg)
+	: arena_{ arena }
+	, values_( cfg.values_, arena_ )
+	, children_( arena_ )
+	, ordered_children( arena_ )
+{
+	append_children(cfg);
+}
+
+config::config(config_key_type child)
+	: arena_{}
+	, values_( arena_ )
+	, children_( arena_ )
+	, ordered_children( arena_ )
 {
 	add_child(child);
 }
@@ -83,8 +103,9 @@ config& config::operator=(const config& cfg)
 	return *this;
 }
 
-config::config(config&& cfg) noexcept
-	: values_(std::move(cfg.values_))
+config::config(config&& cfg)
+	: arena_(std::move(cfg.arena_))
+	, values_(std::move(cfg.values_))
 	, children_(std::move(cfg.children_))
 	, ordered_children_(std::move(cfg.ordered_children_))
 {
@@ -92,7 +113,6 @@ config::config(config&& cfg) noexcept
 
 config& config::operator=(config&& cfg) noexcept
 {
-	clear();
 	swap(cfg);
 	return *this;
 }
@@ -424,16 +444,16 @@ config::const_child_itors config::get_deprecated_child_range(std::string_view ol
 config& config::add_child(std::string_view key)
 {
 	child_list& v = children_[key];
-	v.emplace_back(new config());
-	ordered_children_.emplace_back(iter, v.size() - 1);
+	v.emplace_back(new config(arena_));
+	ordered_children.emplace_back(children_.find(key), v.size() - 1);
 	return *v.back();
 }
 
 config& config::add_child(std::string_view key, const config& val)
 {
 	child_list& v = children_[key];
-	v.emplace_back(new config(val));
-	ordered_children_.emplace_back(iter, v.size() - 1);
+	v.emplace_back(new config(arena_, val));
+	ordered_children.emplace_back(children_.find(key), v.size() - 1);
 
 	return *v.back();
 }
@@ -441,8 +461,8 @@ config& config::add_child(std::string_view key, const config& val)
 config& config::add_child(std::string_view key, config&& val)
 {
 	child_list& v = children_[key];
-	v.emplace_back(new config(std::move(val)));
-	ordered_children_.emplace_back(iter, v.size() - 1);
+	v.emplace_back(new config(arena_, std::move(val)));
+	ordered_children.emplace_back(children_.find(key), v.size() - 1);
 
 	return *v.back();
 }
@@ -454,14 +474,14 @@ config& config::add_child_at(std::string_view key, const config& val, std::size_
 		throw error("illegal index to add child at");
 	}
 
-	v.emplace(v.begin() + index, new config(val));
+	v.emplace(v.begin() + index, new config(arena_, val));
 
 	bool inserted = false;
 
 	const child_pos value(iter, index);
 
-	std::vector<child_pos>::iterator ord = ordered_children_.begin();
-	for(; ord != ordered_children_.end(); ++ord) {
+	auto ord = ordered_children.begin();
+	for(; ord != ordered_children.end(); ++ord) {
 		if(ord->pos != value.pos)
 			continue;
 		if(!inserted && ord->index == index) {
@@ -575,7 +595,7 @@ void config::recursive_clear_value(std::string_view key)
 	}
 }
 
-std::vector<config::child_pos>::iterator config::remove_child(const child_map::iterator& pos, std::size_t index)
+auto config::remove_child(const child_map::iterator& pos, std::size_t index) -> ordered_children_list::iterator
 {
 	/* Find the position with the correct index and decrement all the
 	   indices in the ordering that are above this index. */
