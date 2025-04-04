@@ -145,56 +145,80 @@ public:
 	frame_parsed_parameters(const frame_builder& builder = frame_builder(), int override_duration = 0);
 
 	void override(int duration,
-		const std::string& highlight = "",
-		const std::string& blend_ratio = "",
+		const std::string& highlight = {},
+		const std::string& blend_ratio = {},
 		color_t blend_color = {0,0,0},
-		const std::string& offset = "",
-		const std::string& layer = "",
-		const std::string& modifiers = "");
+		const std::string& offset = {},
+		const std::string& layer = {},
+		const std::string& modifiers = {});
 
 	/** Getters for the different parameters */
-	const frame_parameters parameters(int current_time) const;
+	const frame_parameters parameters(int current_time) const { return data_->parameters(current_time); }
 
-	int duration() const{ return duration_;}
-	bool does_not_change() const;
-	bool need_update() const;
+	int duration() const{ return data_->duration_;}
+	bool does_not_change() const { return data_->does_not_change(); }
+	bool need_update() const { return !does_not_change(); }
 
 	/** Contents of frame in strings */
-	std::vector<std::string> debug_strings() const;
+	std::vector<std::string> debug_strings() const { return data_->debug_strings(); }
 
 private:
-	int duration_;
 
-	progressive_image image_;
-	progressive_image image_diagonal_;
+	struct data {
+		int duration_;
 
-	std::string image_mod_;
+		progressive_image image_;
+		progressive_image image_diagonal_;
 
-	progressive_string halo_;
-	progressive_int halo_x_;
-	progressive_int halo_y_;
+		std::string image_mod_;
 
-	std::string halo_mod_;
-	std::string sound_;
-	std::string text_;
+		progressive_string halo_;
+		progressive_int halo_x_;
+		progressive_int halo_y_;
 
-	std::optional<color_t> text_color_;
-	std::optional<color_t> blend_with_;
+		std::string halo_mod_;
+		std::string sound_;
+		std::string text_;
 
-	progressive_double blend_ratio_;
-	progressive_double highlight_ratio_;
-	progressive_double offset_;
-	progressive_double submerge_;
-	progressive_int x_;
-	progressive_int y_;
-	progressive_int directional_x_;
-	progressive_int directional_y_;
+		std::optional<color_t> text_color_;
+		std::optional<color_t> blend_with_;
 
-	boost::tribool auto_vflip_;
-	boost::tribool auto_hflip_;
-	boost::tribool primary_frame_;
+		progressive_double blend_ratio_;
+		progressive_double highlight_ratio_;
+		progressive_double offset_;
+		progressive_double submerge_;
+		progressive_int x_;
+		progressive_int y_;
+		progressive_int directional_x_;
+		progressive_int directional_y_;
 
-	progressive_int drawing_layer_;
+		boost::tribool auto_vflip_;
+		boost::tribool auto_hflip_;
+		boost::tribool primary_frame_;
+
+		progressive_int drawing_layer_;
+
+		data(const frame_builder& builder, int override_duration);
+
+		void override(int duration,
+			const std::string& highlight,
+			const std::string& blend_ratio,
+			color_t blend_color,
+			const std::string& offset,
+			const std::string& layer,
+			const std::string& modifiers);
+
+		/** Getters for the different parameters */
+		const frame_parameters parameters(int current_time) const;
+
+		bool does_not_change() const;
+		bool need_update() const;
+
+		/** Contents of frame in strings */
+		std::vector<std::string> debug_strings() const;
+	};
+
+	std::shared_ptr<data> data_;
 };
 
 /** Describes a unit's animation sequence. */

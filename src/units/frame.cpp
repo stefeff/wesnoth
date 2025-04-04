@@ -21,6 +21,8 @@
 #include "log.hpp"
 #include "sound.hpp"
 
+#include <memory>
+
 static lg::log_domain log_engine("engine");
 #define ERR_NG LOG_STREAM(err, log_engine)
 
@@ -239,6 +241,38 @@ frame_builder& frame_builder::drawing_layer(const std::string& drawing_layer)
 }
 
 frame_parsed_parameters::frame_parsed_parameters(const frame_builder& builder, int duration)
+	: data_{ std::make_shared<data>(builder, duration) }
+{}
+
+void frame_parsed_parameters::override(int duration,
+	const std::string& highlight,
+	const std::string& blend_ratio,
+	color_t blend_color,
+	const std::string& offset,
+	const std::string& layer,
+	const std::string& modifiers)
+{
+	if ((duration != data_->duration_)
+		|| !highlight.empty()
+		|| !offset.empty()
+		|| !blend_ratio.empty()
+		|| !layer.empty()
+		|| !modifiers.empty()) {
+		if (data_.use_count() > 1) {
+			data_.reset(new data{*data_});
+		}
+		data_->override(
+			duration,
+			highlight,
+			blend_ratio,
+			blend_color,
+			offset,
+			layer,
+			modifiers);
+	}
+}
+
+frame_parsed_parameters::data::data(const frame_builder& builder, int duration)
 	: duration_(duration ? duration : builder.duration_)
 	, image_(builder.image_,duration_)
 	, image_diagonal_(builder.image_diagonal_,duration_)
@@ -264,8 +298,7 @@ frame_parsed_parameters::frame_parsed_parameters(const frame_builder& builder, i
 	, primary_frame_(builder.primary_frame_)
 	, drawing_layer_(builder.drawing_layer_,duration_)
 {}
-
-bool frame_parsed_parameters::does_not_change() const
+bool frame_parsed_parameters::data::does_not_change() const
 {
 	return
 		image_.does_not_change() &&
@@ -284,12 +317,7 @@ bool frame_parsed_parameters::does_not_change() const
 		drawing_layer_.does_not_change();
 }
 
-bool frame_parsed_parameters::need_update() const
-{
-	return !this->does_not_change();
-}
-
-const frame_parameters frame_parsed_parameters::parameters(int current_time) const
+const frame_parameters frame_parsed_parameters::data::parameters(int current_time) const
 {
 	frame_parameters result;
 	result.duration = duration_;
@@ -319,13 +347,13 @@ const frame_parameters frame_parsed_parameters::parameters(int current_time) con
 	return result;
 }
 
-void frame_parsed_parameters::override(int duration,
-		const std::string& highlight,
-		const std::string& blend_ratio,
-		color_t blend_color,
-		const std::string& offset,
-		const std::string& layer,
-		const std::string& modifiers)
+void frame_parsed_parameters::data::override(int duration,
+	const std::string& highlight,
+	const std::string& blend_ratio,
+	color_t blend_color,
+	const std::string& offset,
+	const std::string& layer,
+	const std::string& modifiers)
 {
 	if(!highlight.empty()) {
 		highlight_ratio_ = progressive_double(highlight,duration);
@@ -371,7 +399,7 @@ void frame_parsed_parameters::override(int duration,
 	}
 }
 
-std::vector<std::string> frame_parsed_parameters::debug_strings() const
+std::vector<std::string> frame_parsed_parameters::data::debug_strings() const
 {
 	std::vector<std::string> v;
 
