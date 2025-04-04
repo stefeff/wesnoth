@@ -151,12 +151,12 @@ public:
 		const std::chrono::milliseconds& override_duration = std::chrono::milliseconds{0});
 
 	void override(const std::chrono::milliseconds& duration,
-		const std::string& highlight = "",
-		const std::string& blend_ratio = "",
+		const std::string& highlight = {},
+		const std::string& blend_ratio = {},
 		color_t blend_color = {0,0,0},
-		const std::string& offset = "",
-		const std::string& layer = "",
-		const std::string& modifiers = "");
+		const std::string& offset = {},
+		const std::string& layer = {},
+		const std::string& modifiers = {});
 
 	/** Getters for the different parameters */
 	frame_parameters parameters(const std::chrono::milliseconds& current_time) const;
@@ -166,41 +166,62 @@ public:
 	bool need_update() const;
 
 	/** Contents of frame in strings */
-	std::vector<std::string> debug_strings() const;
+	std::vector<std::string> debug_strings() const { return data_->debug_strings(); }
 
 private:
 	std::chrono::milliseconds duration_;
 
-	progressive_image image_;
-	progressive_image image_diagonal_;
+	struct data {
+		int duration_;
 
-	std::string image_mod_;
+		progressive_image image_;
+		progressive_image image_diagonal_;
 
-	progressive_string halo_;
-	progressive_int halo_x_;
-	progressive_int halo_y_;
+		std::string image_mod_;
 
-	std::string halo_mod_;
-	std::string sound_;
-	std::string text_;
+		progressive_string halo_;
+		progressive_int halo_x_;
+		progressive_int halo_y_;
 
-	utils::optional<color_t> text_color_;
-	utils::optional<color_t> blend_with_;
+		utils::optional<color_t> text_color_;
+		utils::optional<color_t> blend_with_;
 
-	progressive_double blend_ratio_;
-	progressive_double highlight_ratio_;
-	progressive_double offset_;
-	progressive_double submerge_;
-	progressive_int x_;
-	progressive_int y_;
-	progressive_int directional_x_;
-	progressive_int directional_y_;
+		progressive_double blend_ratio_;
+		progressive_double highlight_ratio_;
+		progressive_double offset_;
+		progressive_double submerge_;
+		progressive_int x_;
+		progressive_int y_;
+		progressive_int directional_x_;
+		progressive_int directional_y_;
 
-	boost::tribool auto_vflip_;
-	boost::tribool auto_hflip_;
-	boost::tribool primary_frame_;
+		boost::tribool auto_vflip_;
+		boost::tribool auto_hflip_;
+		boost::tribool primary_frame_;
 
-	progressive_int drawing_layer_;
+		progressive_int drawing_layer_;
+
+		data(const frame_builder& builder, int override_duration);
+
+		void override(int duration,
+			const std::string& highlight,
+			const std::string& blend_ratio,
+			color_t blend_color,
+			const std::string& offset,
+			const std::string& layer,
+			const std::string& modifiers);
+
+		/** Getters for the different parameters */
+		const frame_parameters parameters(int current_time) const;
+
+		bool does_not_change() const;
+		bool need_update() const;
+
+		/** Contents of frame in strings */
+		std::vector<std::string> debug_strings() const;
+	};
+
+	std::shared_ptr<data> data_;
 };
 
 /** Describes a unit's animation sequence. */

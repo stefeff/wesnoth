@@ -22,6 +22,8 @@
 #include "serialization/chrono.hpp"
 #include "sound.hpp"
 
+#include <memory>
+
 static lg::log_domain log_engine("engine");
 #define ERR_NG LOG_STREAM(err, log_engine)
 
@@ -249,8 +251,7 @@ frame_parsed_parameters::frame_parsed_parameters(const frame_builder& builder, c
 	, primary_frame_(builder.primary_frame_)
 	, drawing_layer_(builder.drawing_layer_,duration_)
 {}
-
-bool frame_parsed_parameters::does_not_change() const
+bool frame_parsed_parameters::data::does_not_change() const
 {
 	return
 		image_.does_not_change() &&
@@ -385,7 +386,7 @@ void frame_parsed_parameters::override(const std::chrono::milliseconds& duration
 	}
 }
 
-std::vector<std::string> frame_parsed_parameters::debug_strings() const
+std::vector<std::string> frame_parsed_parameters::data::debug_strings() const
 {
 	std::vector<std::string> v;
 
