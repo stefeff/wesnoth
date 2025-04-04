@@ -412,8 +412,8 @@ private:
 	/** Length of the text. */
 	mutable std::size_t length_;
 
-	unsigned highlight_start_offset_;
-	unsigned highlight_end_offset_;
+	unsigned highlight_start_offset_{0};
+	unsigned highlight_end_offset_{0};
 	color_t	highlight_color_;
 
 	/** The pixel scale, used to render high-DPI text. */
