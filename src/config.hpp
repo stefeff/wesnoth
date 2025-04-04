@@ -31,6 +31,7 @@
 #include "config_attribute_value.hpp"
 #include "config_strings.hpp"
 #include "exceptions.hpp"
+#include "utils/arena_allocator.hpp"
 #include "utils/const_clone.hpp"
 #include "utils/interned_string.hpp"
 #include "utils/optional_reference.hpp"
@@ -192,7 +193,12 @@ public:
 	static bool valid_attribute(config_key_type name);
 
 	typedef std::vector<std::unique_ptr<config>> child_list;
-	typedef std::unordered_map<config_key_type, child_list> child_map;
+
+	typedef std::map<
+				config_key_type,
+				child_list,
+				std::less<config_key_type>,
+				utils::arena_allocator<std::pair<const config_key_type, child_list>>> child_map;
 
 	struct const_child_iterator;
 
@@ -293,7 +299,12 @@ public:
 	 */
 	using attribute_value = config_attribute_value;
 
-	typedef std::unordered_map<config_key_type, attribute_value> attribute_map;
+	typedef std::unordered_map<
+				config_key_type,
+				attribute_value,
+				std::hash<config_key_type>,
+				std::equal_to<config_key_type>,
+				utils::arena_allocator<std::pair<const config_key_type, attribute_value>>> attribute_map;
 	typedef attribute_map::value_type attribute;
 	struct const_attribute_iterator;
 
@@ -679,6 +690,8 @@ public:
 		any_child(const child_map::key_type *k, config *c): key(*k), cfg(*c) {}
 	};
 
+	typedef std::vector<child_pos, utils::arena_allocator<child_pos>> ordered_children_list;
+
 	struct const_all_children_iterator;
 
 	struct all_children_iterator
@@ -694,7 +707,7 @@ public:
 		typedef std::random_access_iterator_tag iterator_category;
 		typedef arrow_helper pointer;
 		typedef any_child reference;
-		typedef std::vector<child_pos>::iterator Itor;
+		typedef ordered_children_list::iterator Itor;
 		typedef Itor::difference_type difference_type;
 		typedef all_children_iterator this_type;
 		explicit all_children_iterator(const Itor &i): i_(i) {}
@@ -746,7 +759,7 @@ public:
 		typedef std::random_access_iterator_tag iterator_category;
 		typedef const arrow_helper pointer;
 		typedef const any_child reference;
-		typedef std::vector<child_pos>::const_iterator Itor;
+		typedef ordered_children_list::const_iterator Itor;
 		typedef Itor::difference_type difference_type;
 		typedef const_all_children_iterator this_type;
 		explicit const_all_children_iterator(const Itor &i): i_(i) {}
@@ -908,10 +921,16 @@ public:
 	bool validate_wml() const;
 
 private:
+
+	config(const utils::arena_pointer& arena);
+	config(const utils::arena_pointer& arena, const config &cfg);
+
 	/**
 	 * Removes the child at position @a pos of @a l.
 	 */
-	std::vector<child_pos>::iterator remove_child(const child_map::iterator &l, std::size_t pos);
+	ordered_children_list::iterator remove_child(const child_map::iterator &l, std::size_t pos);
+
+	utils::arena_pointer arena_;
 
 	/** All the attributes of this node. */
 	attribute_map values_;
@@ -919,7 +938,7 @@ private:
 	/** A list of all children of this node. */
 	child_map children_;
 
-	std::vector<child_pos> ordered_children;
+	ordered_children_list ordered_children;
 };
 
 
@@ -976,7 +995,11 @@ namespace detail {
 }
 
 template<typename... T>
-inline config::config(config_key_type first, T&&... args)
+config::config(config_key_type first, T&&... args)
+	: arena_{}
+	, values_( arena_ )
+	, children_( arena_ )
+	, ordered_children( arena_ )
 {
 	detail::config_construct_unpacker<config_key_type, T...> unpack;
 	unpack.visit(*this, first, std::forward<T>(args)...);
