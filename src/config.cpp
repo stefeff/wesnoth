@@ -518,7 +518,7 @@ config& config::add_child_at_total(std::string_view key, const config &val, std:
 	config& res = **(l.emplace(l.begin() + index, new config(val)));
 
 	for(auto ord = next; ord != end; ++ord) {
-		//this changes next->index and all later refernces to that tag.
+		//this changes next->index and all later references to that tag.
 		if(ord->pos == pl) {
 			++ord->index;
 		}
