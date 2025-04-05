@@ -8,6 +8,8 @@
 namespace utils
 {
 
+class arena;
+
 class two_power_allocator
 {
 public:
@@ -18,6 +20,15 @@ public:
     std::pair<void *, std::size_t> allocate(std::size_t size);
     void release(void* ptr, std::size_t size);
 
+    arena* acquire_arena();
+    void release_arena(arena* a);
+
+    static two_power_allocator& default_allocator()
+    {
+        static two_power_allocator allocator;
+        return allocator;
+    }
+
 private:
 
     struct header
@@ -26,6 +37,7 @@ private:
     };
 
     std::array<header*, 64> headers_{};
+    arena* unused_{};
 };
 
 class arena
@@ -34,7 +46,6 @@ public:
 
     void* allocate(std::size_t len)
     {
-        assert((memory_ == nullptr) == (head_ == nullptr));
         assert(users_);
         len = (len + sizeof(void*) - 1) & ~(sizeof(void*) - 1);
         if (available_ < len) [[unlikely]] {
@@ -47,16 +58,18 @@ public:
         return result;
     }
 
+    static arena* acquire();
+    void release();
+
 private:
 
     static constexpr std::size_t MIN_BLOCK_SIZE = 0x1000;
     static constexpr std::size_t MAX_BLOCK_SIZE = 0x100000;
 
-    arena();
-    ~arena();
+    arena(two_power_allocator& allocator);
 
-    static two_power_allocator& default_allocator();
     void slow_allocate(std::size_t len);
+    void clear();
 
     struct header {
         std::size_t len;
@@ -68,7 +81,9 @@ private:
     char* memory_;
     std::size_t available_;
     header* head_;
+    arena* next_;
 
+    friend class two_power_allocator;
     friend class arena_pointer;
 };
 
@@ -76,7 +91,7 @@ class arena_pointer
 {
 public:
 
-    explicit arena_pointer() : arena_{ new arena() } { inc(); }
+    explicit arena_pointer() : arena_{ arena::acquire() } { inc(); }
     explicit arena_pointer(arena* a) noexcept : arena_{a} { inc(); }
     arena_pointer(const arena_pointer& rhs) noexcept : arena_{rhs.arena_} { inc(); }
     arena_pointer(arena_pointer&& rhs) noexcept : arena_{rhs.arena_} { rhs.arena_ = nullptr; }
@@ -94,7 +109,7 @@ public:
 private:
 
     void inc() const { if (arena_) ++arena_->users_; }
-    void dec() const { if (arena_ && --arena_->users_ == 0) delete arena_; }
+    void dec() const { if (arena_ && --arena_->users_ == 0) arena_->release(); }
 
     arena* arena_;
 };

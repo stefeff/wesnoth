@@ -30,40 +30,61 @@ std::pair<void *, std::size_t> two_power_allocator::allocate(std::size_t size)
         return { head, to_alloc };
     }
     else {
-        return { new char[to_alloc]{}, to_alloc };
+        return { new char[to_alloc], to_alloc };
     }
 }
 
 void two_power_allocator::release(void* ptr, std::size_t size)
 {
+#if 1
     auto index = __builtin_clzll(size - 1);
+    // memset(ptr, 211, size);
     header* p = reinterpret_cast<header*>(ptr);
     p->next = headers_[index];
     headers_[index] = p;
+#else
+    memset(ptr, 0, size);
+    delete[] reinterpret_cast<char*>(ptr);
+#endif
 }
 
-arena::arena()
-    : allocator_{default_allocator()}
+arena* two_power_allocator::acquire_arena()
+{
+    if (unused_) {
+        arena* result = unused_;
+        unused_ = result->next_;
+        return result;
+    }
+    else {
+        return new arena(*this);
+    }
+}
+
+void two_power_allocator::release_arena(arena* a)
+{
+    a->next_ = unused_;
+    unused_ = a;
+}
+
+arena* arena::acquire()
+{
+    return two_power_allocator::default_allocator().acquire_arena();
+}
+
+void arena::release()
+{
+    clear();
+    allocator_.release_arena(this);
+}
+
+arena::arena(two_power_allocator& allocator)
+    : allocator_{allocator}
     , users_{0}
     , memory_{nullptr}
     , available_{0}
     , head_{nullptr}
+    , next_{nullptr}
 {
-}
-
-arena::~arena()
-{
-    while (head_) {
-        auto next = head_->next;
-        allocator_.release(head_, head_->len);
-        head_ = next;
-    }
-}
-
-two_power_allocator& arena::default_allocator()
-{
-    static two_power_allocator allocator;
-    return allocator;
 }
 
 void arena::slow_allocate(std::size_t len)
@@ -86,6 +107,18 @@ void arena::slow_allocate(std::size_t len)
     memory_ = reinterpret_cast<char*>(block.first) + sizeof(header);
     available_ = block.second - sizeof(header);
     head_ = new_header;
+}
+
+void arena::clear()
+{
+    while (head_) {
+        auto next = head_->next;
+        allocator_.release(head_, head_->len);
+        head_ = next;
+    }
+
+    memory_ = nullptr;
+    available_ = 0;
 }
 
 }
