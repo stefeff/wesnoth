@@ -597,8 +597,14 @@ const std::string& t_string_base::str() const
 	return translated_value_;
 }
 
+const std::shared_ptr<const t_string_base>& t_string::get_empty_string()
+{
+	static const std::shared_ptr<const t_string_base> empty{};
+	return empty;
+}
+
 t_string::t_string()
-	: val_(new base())
+	: val_(get_empty_string())
 {
 }
 

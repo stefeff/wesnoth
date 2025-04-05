@@ -214,6 +214,8 @@ public:
 	void swap(t_string& other) noexcept { val_.swap(other.val_); }
 
 private:
+	static const std::shared_ptr<const t_string_base>& get_empty_string();
+
 	//never null
 	std::shared_ptr<const t_string_base> val_;
 };
