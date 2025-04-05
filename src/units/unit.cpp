@@ -1556,7 +1556,7 @@ bool unit::get_attacks_changed() const
 void unit::write(config& cfg, bool write_all) const
 {
 	config back;
-	auto write_subtag = [&](const std::string& key, const config& child)
+	auto write_subtag = [&](const config_key_type& key, const config& child)
 	{
 		cfg.clear_children(key);
 
@@ -1633,9 +1633,9 @@ void unit::write(config& cfg, bool write_all) const
 		status_flags[state] = true;
 	}
 
-	write_subtag("variables", variables_);
-	write_subtag("filter_recall", filter_recall_);
-	write_subtag("status", status_flags);
+	write_subtag(str_variables, variables_);
+	write_subtag(str_filter_recall, filter_recall_);
+	write_subtag(str_status, status_flags);
 
 	cfg.clear_children(str_events);
 	cfg.append(events_);
@@ -1703,9 +1703,9 @@ void unit::write(config& cfg, bool write_all) const
 
 	cfg[str_cost] = unit_value_;
 
-	write_subtag("modifications", modifications_);
+	write_subtag(str_modifications, modifications_);
 	if(write_all || get_attr_changed(UA_ABILITIES)) {
-		write_subtag("abilities", abilities_);
+		write_subtag(str_abilities, abilities_);
 	}
 	if(write_all || get_attr_changed(UA_ADVANCEMENTS)) {
 		cfg.clear_children(str_advancement);
