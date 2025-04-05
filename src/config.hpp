@@ -193,7 +193,7 @@ public:
 	// Verifies that the string can be used as an attribute name
 	static bool valid_attribute(std::string_view name);
 
-	typedef std::vector<std::unique_ptr<config>> child_list;
+	typedef std::vector<std::unique_ptr<config, utils::nop_delete>> child_list;
 
 	typedef std::map<
 				config_key_type,
@@ -925,6 +925,7 @@ private:
 	ordered_children_list::iterator remove_child(const child_map::iterator &l, std::size_t pos);
 
 	utils::arena_pointer arena_;
+	utils::arena_allocator<config> config_allocator_;
 
 	/** All the attributes of this node. */
 	attribute_map values_;
@@ -961,6 +962,7 @@ namespace detail
 template<typename... Args>
 inline config::config(config_key_type first, Args&&... args)
 	: arena_{}
+	, config_allocator_{arena_}
 	, values_( arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )

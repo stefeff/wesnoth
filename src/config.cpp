@@ -46,6 +46,7 @@ const utils::interned_string config::diff_track_attribute{"__diff_track"};
 
 config::config()
 	: arena_{}
+	, config_allocator_{arena_}
 	, values_( arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )
@@ -54,6 +55,7 @@ config::config()
 
 config::config(const utils::arena_pointer& arena)
 	: arena_{ arena }
+	, config_allocator_{arena_}
 	, values_( arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )
@@ -62,6 +64,7 @@ config::config(const utils::arena_pointer& arena)
 
 config::config(const config& cfg)
 	: arena_{}
+	, config_allocator_{arena_}
 	, values_( cfg.values_, arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )
@@ -71,6 +74,7 @@ config::config(const config& cfg)
 
 config::config(const utils::arena_pointer& arena, const config &cfg)
 	: arena_{ arena }
+	, config_allocator_{arena_}
 	, values_( cfg.values_, arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )
@@ -80,6 +84,7 @@ config::config(const utils::arena_pointer& arena, const config &cfg)
 
 config::config(config_key_type child)
 	: arena_{}
+	, config_allocator_{arena_}
 	, values_( arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )
@@ -105,6 +110,7 @@ config& config::operator=(const config& cfg)
 
 config::config(config&& cfg)
 	: arena_(std::move(cfg.arena_))
+	, config_allocator_{arena_}
 	, values_(std::move(cfg.values_))
 	, children_(std::move(cfg.children_))
 	, ordered_children_(std::move(cfg.ordered_children_))
@@ -444,7 +450,7 @@ config::const_child_itors config::get_deprecated_child_range(std::string_view ol
 config& config::add_child(std::string_view key)
 {
 	child_list& v = children_[key];
-	v.emplace_back(new config(arena_));
+	v.emplace_back(new (config_allocator_.allocate(1)) config(arena_));
 	ordered_children.emplace_back(children_.find(key), v.size() - 1);
 	return *v.back();
 }
@@ -452,7 +458,7 @@ config& config::add_child(std::string_view key)
 config& config::add_child(std::string_view key, const config& val)
 {
 	child_list& v = children_[key];
-	v.emplace_back(new config(arena_, val));
+	v.emplace_back(new (config_allocator_.allocate(1)) config(arena_, val));
 	ordered_children.emplace_back(children_.find(key), v.size() - 1);
 
 	return *v.back();
@@ -461,7 +467,7 @@ config& config::add_child(std::string_view key, const config& val)
 config& config::add_child(std::string_view key, config&& val)
 {
 	child_list& v = children_[key];
-	v.emplace_back(new config(arena_, std::move(val)));
+	v.emplace_back(new (config_allocator_.allocate(1)) config(arena_, std::move(val)));
 	ordered_children.emplace_back(children_.find(key), v.size() - 1);
 
 	return *v.back();
@@ -474,7 +480,7 @@ config& config::add_child_at(std::string_view key, const config& val, std::size_
 		throw error("illegal index to add child at");
 	}
 
-	v.emplace(v.begin() + index, new config(arena_, val));
+	v.emplace(v.begin() + index, new (config_allocator_.allocate(1)) config(arena_, val));
 
 	bool inserted = false;
 
@@ -535,7 +541,7 @@ config& config::add_child_at_total(std::string_view key, const config &val, std:
 	auto pl = next->pos;
 	child_list& l = pl->second;
 	const auto index = next->index;
-	config& res = **(l.emplace(l.begin() + index, new config(val)));
+	config& res = **(l.emplace(l.begin() + index, new (config_allocator_.allocate(1)) config(val)));
 
 	for(auto ord = next; ord != end; ++ord) {
 		//this changes next->index and all later references to that tag.
@@ -642,7 +648,7 @@ void config::remove_children(std::string_view key, const std::function<bool(cons
 		return;
 	}
 
-	const auto predicate = [p](const std::unique_ptr<config>& child)
+	const auto predicate = [p](const std::unique_ptr<config, utils::nop_delete>& child)
 	{
 		return !p || p(*child);
 	};
@@ -768,7 +774,7 @@ optional_config config::find_child(std::string_view key, const std::string& name
 	}
 
 	const child_list::iterator j = utils::ranges::find(i->second, value,
-		[&](const std::unique_ptr<config>& pcfg) -> const auto& { return (*pcfg)[name]; });
+		[&](const std::unique_ptr<config, utils::nop_delete>& pcfg) -> const auto& { return (*pcfg)[name]; });
 
 	if(j != i->second.end()) {
 		return **j;

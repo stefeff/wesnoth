@@ -152,6 +152,12 @@ inline bool operator!=(const arena_allocator<T1>& lhs, const arena_allocator<T2>
     return !operator==(lhs, rhs);
 }
 
+struct nop_delete
+{
+    template <typename T>
+    void operator() (T const &) const noexcept { }
+};
+
 }
 
 namespace std
