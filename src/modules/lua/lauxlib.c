@@ -1024,7 +1024,9 @@ LUALIB_API const char *luaL_gsub (lua_State *L, const char *s,
 
 static void * free_mem_heads[8 * sizeof(size_t)] = {};
 
-void* quick_alloc(size_t size)
+static bool quick_cleanup_registered = false;
+
+static void* quick_alloc(size_t size)
 {
   unsigned index = __builtin_clzll(size);
   if (free_mem_heads[index]) {
@@ -1039,14 +1041,14 @@ void* quick_alloc(size_t size)
   }
 }
 
-void quick_free(void* ptr, size_t size)
+static void quick_free(void* ptr, size_t size)
 {
   unsigned index = __builtin_clzll(size);
   *(void**)ptr = free_mem_heads[index];
   free_mem_heads[index] = ptr;
 }
 
-void* quick_realloc(void* ptr, size_t osize, size_t nsize)
+static void* quick_realloc(void* ptr, size_t osize, size_t nsize)
 {
   if (__builtin_clzll(osize) == __builtin_clzll(nsize)) {
     return ptr;
@@ -1056,6 +1058,18 @@ void* quick_realloc(void* ptr, size_t osize, size_t nsize)
     memcpy(nptr, ptr, osize < nsize ? osize : nsize);
     quick_free(ptr, osize);
     return nptr;
+  }
+}
+
+static void quick_cleanup(void)
+{
+  for (size_t i = 0; i < sizeof(free_mem_heads) / sizeof(free_mem_heads[0]); ++i) {
+    while (free_mem_heads[i]) {
+      void* chunk = free_mem_heads[i];
+      void* next = *(void**)chunk;
+      free_mem_heads[i] = next;
+      free(chunk);
+    }
   }
 }
 
@@ -1094,21 +1108,6 @@ static void l_free (void *ptr, size_t osize) {
     }
     quick_free(ptr, osize);
   }
-}
-
-static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
-  (void)ud; (void)osize;  /* not used */
-  if (nsize == 0) {
-    free(ptr);
-    return NULL;
-  }
-  else
-    return realloc(ptr, nsize);
-}
-
-static void l_free (void *ptr, size_t osize) {
-  (void)osize;  /* not used */
-  free(ptr);
 }
 
 /*
@@ -1183,6 +1182,11 @@ static void warnfon (void *ud, const char *message, int tocont) {
 
 
 LUALIB_API lua_State *luaL_newstate (void) {
+  if (!quick_cleanup_registered) {
+    atexit(quick_cleanup);
+    quick_cleanup_registered = true;
+  }
+
   lua_State *L = lua_newstate(l_alloc, l_free, NULL);
   if (l_likely(L)) {
     lua_atpanic(L, &panic);
