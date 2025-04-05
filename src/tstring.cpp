@@ -591,7 +591,7 @@ const std::string& t_string_base::str() const
 
 const std::shared_ptr<const t_string_base>& t_string::get_empty_string()
 {
-	static const std::shared_ptr<const t_string_base> empty{};
+	static const std::shared_ptr<const t_string_base> empty{new base()};
 	return empty;
 }
 
