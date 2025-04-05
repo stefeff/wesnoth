@@ -206,6 +206,8 @@ static int impl_tstring_tostring(lua_State *L)
  */
 static int impl_vconfig_get(lua_State *L)
 {
+	static const std::vector<std::string> table_config{"tag", "contents"};
+
 	vconfig *v = static_cast<vconfig *>(lua_touserdata(L, 1));
 
 	if (lua_isnumber(L, 2))
@@ -253,7 +255,7 @@ static int impl_vconfig_get(lua_State *L)
 		}
 		for (int j = 1; i != i_end; ++i, ++j)
 		{
-			luaW_push_namedtuple(L, {"tag", "contents"}, "mt_config");
+			luaW_push_namedtuple(L, table_config, "mt_config");
 			lua_pushstring(L, i.get_key().c_str());
 			lua_rawseti(L, -2, 1);
 			luaW_pushvconfig(L, i.get_child());
@@ -657,13 +659,15 @@ bool luaW_iststring(lua_State* L, int index)
 
 void luaW_filltable(lua_State *L, const config& cfg)
 {
+	static const std::vector<std::string> table_config{"tag", "contents"};
+
 	if (!lua_checkstack(L, LUA_MINSTACK))
 		return;
 
 	int k = 1;
 	for (const config::any_child ch : cfg.all_children_range())
 	{
-		luaW_push_namedtuple(L, {"tag", "contents"}, "mt_config");
+		luaW_push_namedtuple(L, table_config, "mt_config");
 		lua_pushstring(L, ch.key.c_str());
 		lua_rawseti(L, -2, 1);
 		lua_newtable(L);
@@ -744,7 +748,9 @@ void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names, c
 
 void luaW_pushlocation(lua_State *L, const map_location& ml)
 {
-	luaW_push_namedtuple(L, {"x", "y"}, "mt_loc");
+	static const std::vector<std::string> table_config{"x", "y"};
+
+	luaW_push_namedtuple(L, table_config, "mt_loc");
 
 	lua_pushinteger(L, ml.wml_x());
 	lua_rawseti(L, -2, 1);
