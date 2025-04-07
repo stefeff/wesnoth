@@ -7,7 +7,7 @@
 namespace utils
 {
 
-template <class T, class Key, class KeyAccess, class Hash>
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
 class hash_container
 {
 public:
@@ -217,6 +217,8 @@ protected:
     };
 
     lookup_result internal_find(const Key& key) const;
+    const entry_t* optimistic_find(const Key& key) const;
+
     entry_t& insert_key(const Key& key);
     void internal_erase(index_t index);
     void grow_data();
@@ -235,13 +237,14 @@ protected:
 
     KeyAccess key_access_;
     Hash hash_;
+    KeyEqual equal_;
 
     friend class iterator;
     friend class const_iterator;
 };
 
-template <class T, class Key, class KeyAccess, class Hash>
-hash_container<T, Key, KeyAccess, Hash>::hash_container(const hash_container& rhs)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+hash_container<T, Key, KeyAccess, Hash, KeyEqual>::hash_container(const hash_container& rhs)
 {
     if (!rhs.empty()) {
         auto index_size = (4 << (32 - __builtin_clzl(rhs.count_ + 1))) - 1;
@@ -251,8 +254,8 @@ hash_container<T, Key, KeyAccess, Hash>::hash_container(const hash_container& rh
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-hash_container<T, Key, KeyAccess, Hash>::hash_container(hash_container&& rhs)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+hash_container<T, Key, KeyAccess, Hash, KeyEqual>::hash_container(hash_container&& rhs)
     : index_{std::move(rhs.index_)}
     , data_{std::move(rhs.data_)}
     , count_{rhs.count_}
@@ -262,8 +265,8 @@ hash_container<T, Key, KeyAccess, Hash>::hash_container(hash_container&& rhs)
     rhs.first_unused_ = NO_INDEX;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-auto hash_container<T, Key, KeyAccess, Hash>::operator=(const hash_container& rhs) -> hash_container&
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::operator=(const hash_container& rhs) -> hash_container&
 {
     if (this != &rhs && (!empty() || !rhs.empty())) {
         clear();
@@ -273,8 +276,8 @@ auto hash_container<T, Key, KeyAccess, Hash>::operator=(const hash_container& rh
     return *this;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-auto hash_container<T, Key, KeyAccess, Hash>::operator=(hash_container&& rhs) -> hash_container&
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::operator=(hash_container&& rhs) -> hash_container&
 {
     deconstruct_all();
 
@@ -293,8 +296,8 @@ auto hash_container<T, Key, KeyAccess, Hash>::operator=(hash_container&& rhs) ->
     return *this;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::swap(hash_container& rhs)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::swap(hash_container& rhs)
 {
     index_.swap(rhs.index_);
     data_.swap(rhs.data_);
@@ -307,8 +310,8 @@ void hash_container<T, Key, KeyAccess, Hash>::swap(hash_container& rhs)
     std::swap(hash_, rhs.hash_);
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-bool hash_container<T, Key, KeyAccess, Hash>::operator==(const hash_container& rhs) const
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+bool hash_container<T, Key, KeyAccess, Hash, KeyEqual>::operator==(const hash_container& rhs) const
 {
     if (count_ != rhs.count_) {
         return false;
@@ -323,8 +326,8 @@ bool hash_container<T, Key, KeyAccess, Hash>::operator==(const hash_container& r
     return true;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-auto hash_container<T, Key, KeyAccess, Hash>::insert(const T& item) -> std::pair<iterator, bool>
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::insert(const T& item) -> std::pair<iterator, bool>
 {
     auto& key = key_access_(item);
     auto pos = internal_find(key);
@@ -359,8 +362,8 @@ auto hash_container<T, Key, KeyAccess, Hash>::insert(const T& item) -> std::pair
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-auto hash_container<T, Key, KeyAccess, Hash>::insert_key(const Key& key) -> entry_t&
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::insert_key(const Key& key) -> entry_t&
 {
     if (first_unused_ == NO_INDEX) {
         grow_data();
@@ -383,9 +386,9 @@ auto hash_container<T, Key, KeyAccess, Hash>::insert_key(const Key& key) -> entr
     return entry;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
 template< class... Args >
-auto hash_container<T, Key, KeyAccess, Hash>::emplace( Args&&... args ) -> std::pair<iterator, bool>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::emplace( Args&&... args ) -> std::pair<iterator, bool>
 {
     if (first_unused_ == NO_INDEX) {
         grow_data();
@@ -418,17 +421,17 @@ auto hash_container<T, Key, KeyAccess, Hash>::emplace( Args&&... args ) -> std::
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
 template<class I>
-void hash_container<T, Key, KeyAccess, Hash>::insert(I first, I last)
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::insert(I first, I last)
 {
     for (; first != last; ++first) {
         insert(*first);
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-auto hash_container<T, Key, KeyAccess, Hash>::erase(iterator pos) -> iterator
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::erase(iterator pos) -> iterator
 {
     assert(pos.container_ == this);
     auto index = pos.index_;
@@ -437,8 +440,8 @@ auto hash_container<T, Key, KeyAccess, Hash>::erase(iterator pos) -> iterator
     return pos;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-std::size_t hash_container<T, Key, KeyAccess, Hash>::erase(const Key& key)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+std::size_t hash_container<T, Key, KeyAccess, Hash, KeyEqual>::erase(const Key& key)
 {
     auto pos = internal_find(key);
     if (pos.found) {
@@ -450,8 +453,8 @@ std::size_t hash_container<T, Key, KeyAccess, Hash>::erase(const Key& key)
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::clear()
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::clear()
 {
     if (count_) {
         for (index_t index = 1; index < data_.size(); ++index) {
@@ -468,8 +471,8 @@ void hash_container<T, Key, KeyAccess, Hash>::clear()
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-auto hash_container<T, Key, KeyAccess, Hash>::internal_find(const Key& key) const -> lookup_result
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::internal_find(const Key& key) const -> lookup_result
 {
     lookup_result result;
     if (index_.size() > 0) {
@@ -479,7 +482,7 @@ auto hash_container<T, Key, KeyAccess, Hash>::internal_find(const Key& key) cons
         while (result.data_index) {
             auto& entry = data_[result.data_index];
             assert(entry.hash_index == result.hash_index);
-            if (key_access_(entry.template as<T>()) == key) {
+            if (equal_(key_access_(entry.template as<T>()), key)) {
                 result.found = true;
                 return result;
             }
@@ -497,8 +500,26 @@ auto hash_container<T, Key, KeyAccess, Hash>::internal_find(const Key& key) cons
     return result;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::internal_erase(index_t index)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+inline auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::optimistic_find(const Key& key) const -> const entry_t*
+{
+    auto hash_index = hash_(key) % index_.size();
+    auto data_index = index_[hash_index];
+
+    while (data_index) {
+        auto& entry = data_[data_index];
+        assert(entry.hash_index == hash_index);
+        if (equal_(key_access_(entry.template as<T>()), key)) {
+            return &entry;
+        }
+        data_index = entry.next;
+    }
+
+    return nullptr;
+}
+
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::internal_erase(index_t index)
 {
     auto& entry = data_[index];
     assert(entry.hash_index != NO_HASH);
@@ -523,15 +544,15 @@ void hash_container<T, Key, KeyAccess, Hash>::internal_erase(index_t index)
     // verify();
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::grow_data()
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::grow_data()
 {
     auto old_size = data_.size();
     grow_data(old_size ? 2 * old_size : 16);
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::grow_data(std::size_t new_size)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::grow_data(std::size_t new_size)
 {
     assert(first_unused_ == NO_INDEX);
 
@@ -570,8 +591,8 @@ void hash_container<T, Key, KeyAccess, Hash>::grow_data(std::size_t new_size)
     // verify();
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::rehash()
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::rehash()
 {
     // verify();
     auto new_size = (4 << (32 - __builtin_clzl(count_ + 1))) - 1;
@@ -588,16 +609,16 @@ void hash_container<T, Key, KeyAccess, Hash>::rehash()
     // verify();
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-inline void hash_container<T, Key, KeyAccess, Hash>::link(index_t index)
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+inline void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::link(index_t index)
 {
     auto& entry = data_[index];
     entry.next = index_[entry.hash_index];
     index_[entry.hash_index] = index;
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::deconstruct_all()
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::deconstruct_all()
 {
     for (index_t index = 1; index < data_.size(); ++index) {
         auto& entry = data_[index];
@@ -608,8 +629,8 @@ void hash_container<T, Key, KeyAccess, Hash>::deconstruct_all()
     }
 }
 
-template <class T, class Key, class KeyAccess, class Hash>
-void hash_container<T, Key, KeyAccess, Hash>::verify()
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::verify()
 {
     std::size_t visited = 0;
     for (index_t hash_index = 0; hash_index < index_.size(); ++hash_index) {
@@ -650,15 +671,15 @@ struct get_first
     const K& operator()(const std::pair<K, V>& p) const { return p.first; }
 };
 
-template <class T, class Hash = std::hash<T> >
-using hash_set = hash_container<T, T, identity<T>, Hash>;
+template <class T, class Hash = std::hash<T>, class KeyEqual = std::equal_to<T>>
+using hash_set = hash_container<T, T, identity<T>, Hash, KeyEqual>;
 
-template <class K, class V, class Hash = std::hash<K> >
-class hash_map : public hash_container<std::pair<K, V>, K, get_first<K,V>, Hash>
+template <class K, class V, class Hash = std::hash<K>, class KeyEqual = std::equal_to<K> >
+class hash_map : public hash_container<std::pair<K, V>, K, get_first<K,V>, Hash, KeyEqual>
 {
 private:
 
-    using Base_ = hash_container<std::pair<K, V>, K, get_first<K,V>, Hash>;
+    using Base_ = hash_container<std::pair<K, V>, K, get_first<K,V>, Hash, KeyEqual>;
 
 public:
 
@@ -670,10 +691,15 @@ public:
     hash_map(std::initializer_list<value_type> init) { this->insert(init.begin(), init.end()); }
 
     V& operator[](const K& key);
+    const V& try_find(const K& key, const V& fallback) const
+    {
+        auto* entry = Base_::optimistic_find(key);
+        return entry ? entry->template as<value_type>().second : fallback;
+    }
 };
 
-template <class K, class V, class Hash>
-V& hash_map<K, V, Hash>::operator[](const K& key)
+template <class K, class V, class Hash, class KeyEqual>
+V& hash_map<K, V, Hash, KeyEqual>::operator[](const K& key)
 {
     auto pos = Base_::internal_find(key);
     auto& entry = pos.found ? Base_::data_[pos.data_index] : Base_::insert_key(key);

@@ -13,18 +13,18 @@ std::string_view interned_string::substr(std::size_t pos, std::size_t count) con
 
 void interned_string::init(const std::string& s)
 {
-    auto& shared = get_shared();
     if (!shared_) {
-        shared_ = &shared;
+        shared_ = &get_shared();
     }
 
-    auto& index = shared.dictionary[s];
-    if (index == 0 && s.size()) {
-        index = shared.storage.size();
-        shared.storage.push_back(s);
+    if (s.size()) {
+        index_ = shared_->dictionary.try_find(s, index_);
+        if (index_ == 0) {
+            index_ = shared_->storage.size();
+            shared_->storage.push_back(s);
+            shared_->dictionary[s] = index_;
+        }
     }
-
-    index_ = index;
 }
 
 }
