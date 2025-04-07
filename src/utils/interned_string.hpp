@@ -131,7 +131,7 @@ private:
             }
             else if (len >= 4) {
                 return is_equal<std::uint32_t>(lhs, rhs)
-                    && is_equal<std::uint32_t>(lhs + len - 8, rhs + len - 8);
+                    && is_equal<std::uint32_t>(lhs + len - 4, rhs + len - 4);
             }
             else if (len == 0) {
                 return true;

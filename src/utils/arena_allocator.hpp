@@ -170,7 +170,7 @@ inline bool operator!=(const arena_allocator<T1>& lhs, const arena_allocator<T2>
 struct nop_delete
 {
     template <typename T>
-    void operator() (T const &) const noexcept { }
+    void operator() (T* v) const noexcept { v->~T(); }
 };
 
 }
