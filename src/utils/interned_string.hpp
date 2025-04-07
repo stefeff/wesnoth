@@ -3,11 +3,14 @@
 #include "tstring.hpp"
 
 #include <cstdint>
+#include <cstring>
 #include <ostream>
 #include <string>
 #include <string_view>
 #include <unordered_map>
 #include <vector>
+
+#include "quick_hash.hpp"
 
 namespace utils {
 
@@ -44,10 +47,107 @@ public:
 
 private:
 
+    struct hash_func
+    {
+        std::size_t operator()(const std::string& s) const {
+            return f(s.data(), s.size());
+        }
+        std::size_t operator()(const std::string_view& s) const {
+            return f(s.data(), s.size());
+        }
+
+    private:
+
+        static std::size_t f(const char* s, std::size_t len) {
+            if (len >= 8) [[likely]] {
+                std::uint64_t first;
+                std::memcpy(&first, s, sizeof(first));
+                std::uint64_t last;
+                std::memcpy(&last, s + len - sizeof(last), sizeof(last));
+                return first ^ (last << 5);
+            }
+            else if (len >= 4) [[likely]] {
+                std::uint32_t first;
+                std::memcpy(&first, s, sizeof(first));
+                std::uint32_t last;
+                std::memcpy(&last, s + len - sizeof(last), sizeof(last));
+                return first | static_cast<std::size_t>(last) << 32;
+            }
+            else if (len == 3) {
+                return s[0] + (s[1] << 8) + (s[2] << 16);
+            }
+            else if (len == 2) {
+                return s[0] + (s[1] << 8);
+            }
+            else if (len == 1) {
+                return s[0];
+            }
+            else {
+                return 0;
+            }
+        }
+    };
+
+    struct equal_func
+    {
+        bool operator()(const std::string& lhs, const std::string& rhs) const {
+            return (lhs.size() == rhs.size()) && f(lhs.data(), rhs.data(), lhs.size());
+        }
+        bool operator()(const std::string_view& lhs, const std::string_view& rhs) const {
+            return (lhs.size() == rhs.size()) && f(lhs.data(), rhs.data(), lhs.size());
+        }
+
+    private:
+
+        template<typename T>
+        static bool is_equal(const char* lhs, const char* rhs) {
+            T l;
+            std::memcpy(&l, lhs, sizeof(l));
+            T r;
+            std::memcpy(&r, rhs, sizeof(r));
+            return l == r;
+        }
+
+        static bool f(const char* lhs, const char* rhs, std::size_t len) {
+            if (len > 8) {
+                if (len <= 16) {
+                    return is_equal<std::uint64_t>(lhs, rhs)
+                        && is_equal<std::uint64_t>(lhs + len - 8, rhs + len - 8);
+                }
+                else {
+                    while (len > 16) {
+                        if (!is_equal<std::uint64_t>(lhs, rhs)) {
+                            return false;
+                        }
+                        else {
+                            lhs += 8;
+                            rhs += 8;
+                            len -= 8;
+                        }
+                    }
+                    return is_equal<std::uint64_t>(lhs, rhs)
+                        && is_equal<std::uint64_t>(lhs + len - 8, rhs + len - 8);
+                }
+            }
+            else if (len >= 4) {
+                return is_equal<std::uint32_t>(lhs, rhs)
+                    && is_equal<std::uint32_t>(lhs + len - 8, rhs + len - 8);
+            }
+            else if (len == 0) {
+                return true;
+            }
+            else {
+                return (lhs[0] == rhs[0])
+                    && (lhs[len-1] == rhs[len-1])
+                    && (lhs[len/2] == rhs[len/2]);
+            }
+        }
+    };
+
     struct shared
     {
         // empty string is always at index 0
-        std::unordered_map<std::string, std::size_t> dictionary = { {"", 0}};
+        utils::hash_map<std::string, std::size_t, hash_func, equal_func> dictionary = { {"", 0}};
         std::vector<std::string> storage = {""};
     };
 
