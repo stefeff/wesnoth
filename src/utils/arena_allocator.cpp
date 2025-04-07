@@ -18,6 +18,12 @@ two_power_allocator::~two_power_allocator()
             bucket = next;
         }
     }
+
+    while (unused_) {
+        auto arena = unused_;
+        unused_ = arena->next_;
+        delete arena;
+    }
 }
 
 std::pair<void *, std::size_t> two_power_allocator::allocate(std::size_t size)
