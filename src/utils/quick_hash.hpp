@@ -28,36 +28,34 @@ public:
         using reference = value_type&;
         using difference_type = std::size_t;
 
-		reference operator*() const { return data_[index_].template as<value_type>(); }
-		pointer operator->() const { return &data_[index_].template as<value_type>(); }
+		reference operator*() const { return container_->data_[index_].template as<value_type>(); }
+		pointer operator->() const { return &container_->data_[index_].template as<value_type>(); }
 
         bool operator==(const iterator& rhs) const {
-            assert(data_ == rhs.data_);
+            assert(container_ == rhs.container_);
             return index_ == rhs.index_;
         }
         bool operator!=(const iterator& rhs) const { return !operator==(rhs); }
         bool operator==(const const_iterator& rhs) const {
-            assert(data_ == rhs.data_);
+            assert(container_ == rhs.container_);
             return index_ == rhs.index_;
         }
         bool operator!=(const const_iterator& rhs) const { return !operator==(rhs); }
 
         iterator& operator++() { forward(); return *this; }
-        iterator operator++(int) { return ++iterator(*this); }
+        iterator operator++(int) { iterator result{*this}; forward(); return result; }
         iterator& operator--() { backward(); return *this; }
-        iterator operator--(int) { return --iterator(*this); }
+        iterator operator--(int) { iterator result{*this}; backward(); return result;  }
 
     private:
 
-        iterator(typename hash_container::entry_t* data,
-                 typename hash_container::index_t index,
-                 typename hash_container::index_t end)
-            : data_{data}, index_{index}, end_{end} {}
+        iterator(hash_container* container, std::size_t index)
+            : container_{container}, index_{index} {}
 
         void forward() {
-            if (index_ != end_) {
-                while (++index_ != end_) {
-                    if (data_[index_].hash_index != hash_container::NO_HASH) {
+            if (index_ < container_->data_.size()) {
+                while (++index_ != container_->data_.size()) {
+                    if (container_->data_[index_].hash_index != hash_container::NO_HASH) {
                         break;
                     }
                 }
@@ -66,15 +64,14 @@ public:
 
         void backward() {
             while (index_ > 0) {
-                if (data_[--index_].hash_index != hash_container::NO_HASH) {
+                if (container_->data_[--index_].hash_index != hash_container::NO_HASH) {
                     break;
                 }
             }
         }
 
-        typename hash_container::entry_t* data_;
-        typename hash_container::index_t index_;
-        typename hash_container::index_t end_;
+        hash_container* container_;
+        std::size_t index_;
 
         friend class hash_container;
         friend class const_iterator;
@@ -90,38 +87,36 @@ public:
         using difference_type = std::size_t;
 
         const_iterator(iterator rhs)
-            : data_{rhs.data_}, index_{rhs.index_}, end_{rhs.end_} {}
+            : container_{rhs.container_}, index_{rhs.index_} {}
 
-		reference operator*() const { return data_[index_].template as<value_type>(); }
-		pointer operator->() const { return &data_[index_].template as<value_type>(); }
+		reference operator*() const { return container_->data_[index_].template as<value_type>(); }
+		pointer operator->() const { return &container_->data_[index_].template as<value_type>(); }
 
         bool operator==(const const_iterator& rhs) const {
-            assert(data_ == rhs.data_);
+            assert(container_ == rhs.container_);
             return index_ == rhs.index_;
         }
         bool operator!=(const const_iterator& rhs) const { return !operator==(rhs); }
         bool operator==(const iterator& rhs) const {
-            assert(data_ == rhs.data_);
+            assert(container_ == rhs.container_);
             return index_ == rhs.index_;
         }
         bool operator!=(const iterator& rhs) const { return !operator==(rhs); }
 
         const_iterator& operator++() { forward(); return *this; }
-        const_iterator operator++(int) { return ++const_iterator(*this); }
+        const_iterator operator++(int) { const_iterator result{*this}; forward(); return result; }
         const_iterator& operator--() { backward(); return *this; }
-        const_iterator operator--(int) { return --const_iterator(*this); }
+        const_iterator operator--(int) { const_iterator result{*this}; backward(); return result; }
 
     private:
 
-        const_iterator(const typename hash_container::entry_t* data,
-                       typename hash_container::index_t index,
-                       typename hash_container::index_t end)
-            : data_{data}, index_{index}, end_{end} {}
+        const_iterator(const hash_container* container, std::size_t index)
+            : container_{container}, index_{index} {}
 
         void forward() {
-            if (index_ != end_) {
-                while (++index_ != end_) {
-                    if (data_[index_].hash_index != hash_container::NO_HASH) {
+            if (index_ < container_->data_.size()) {
+                while (++index_ != container_->data_.size()) {
+                    if (container_->data_[index_].hash_index != hash_container::NO_HASH) {
                         break;
                     }
                 }
@@ -130,15 +125,14 @@ public:
 
         void backward() {
             while (index_ > 0) {
-                if (data_[--index_].hash_index != hash_container::NO_HASH) {
+                if (container_->data_[--index_].hash_index != hash_container::NO_HASH) {
                     break;
                 }
             }
         }
 
-        const typename hash_container::entry_t* data_;
-        typename hash_container::index_t index_;
-        typename hash_container::index_t end_;
+        const hash_container* container_;
+        std::size_t index_;
 
         friend class hash_container;
         friend class iterator;
@@ -162,22 +156,22 @@ public:
     std::size_t size() const { return count_; }
     bool empty() const { return count_ == 0; }
 
-    iterator begin() { return ++iterator{ data_.data(), 0, last_index() }; }
-    const_iterator begin() const { return ++const_iterator{ data_.data(), 0, last_index() }; }
-    const_iterator cbegin() const { return ++const_iterator{ data_.data(), 0, last_index() }; }
-    iterator end() { return { data_.data(), last_index(), last_index() }; }
-    const_iterator end() const { return { data_.data(), last_index(), last_index() }; }
-    const_iterator cend() const { return { data_.data(), last_index(), last_index() }; }
+    iterator begin() { return ++iterator{ this, 0 }; }
+    const_iterator begin() const { return ++const_iterator{ this, 0 }; }
+    const_iterator cbegin() const { return ++const_iterator{ this, 0 }; }
+    iterator end() { return { this, last_index() }; }
+    const_iterator end() const { return { this, last_index() }; }
+    const_iterator cend() const { return { this, last_index() }; }
 
     bool contains(const Key& key) const { return internal_find(key).found; }
     std::size_t count(const Key& key) const { return internal_find(key).found ? 1 : 0; }
     iterator find(const Key& key) {
         auto pos = internal_find(key);
-        return { data_.data(), pos.found ? pos.data_index : last_index(), last_index() };
+        return { this, pos.found ? pos.data_index : last_index() };
     }
     const_iterator find(const Key& key) const {
         auto pos = internal_find(key);
-        return { data_.data(), pos.found ? pos.data_index : last_index(), last_index() };
+        return { this, pos.found ? pos.data_index : last_index() };
     }
 
     std::pair<iterator, bool> insert(const T& item);
@@ -294,6 +288,7 @@ auto hash_container<T, Key, KeyAccess, Hash>::operator=(hash_container&& rhs) ->
 
     rhs.count_ = 0;
     rhs.first_unused_ = NO_INDEX;
+    // verify();
 
     return *this;
 }
@@ -334,7 +329,7 @@ auto hash_container<T, Key, KeyAccess, Hash>::insert(const T& item) -> std::pair
     auto& key = key_access_(item);
     auto pos = internal_find(key);
     if (pos.found) {
-        return { { data_.data(), pos.data_index, last_index() }, false };
+        return { { this, pos.data_index }, false };
     }
     else {
         if (first_unused_ == NO_INDEX) {
@@ -356,10 +351,11 @@ auto hash_container<T, Key, KeyAccess, Hash>::insert(const T& item) -> std::pair
             rehash();
             pos = internal_find(key);
 
-            return { { data_.data(), pos.data_index, last_index() }, true };
+            return { { this, pos.data_index }, true };
         }
 
-        return { { data_.data(), index, last_index() }, true };
+        // verify();
+        return { { this, index }, true };
     }
 }
 
@@ -402,7 +398,7 @@ auto hash_container<T, Key, KeyAccess, Hash>::emplace( Args&&... args ) -> std::
     auto pos = internal_find(key);
     if (pos.found) {
         entry.template as<T>().~T();
-        return { { data_.data(), pos.data_index, last_index() }, false };
+        return { { this, pos.data_index }, false };
     }
     else {
         auto index = first_unused_;
@@ -415,10 +411,10 @@ auto hash_container<T, Key, KeyAccess, Hash>::emplace( Args&&... args ) -> std::
         if (pos.data_index != NO_INDEX && 2 * count_ > index_.size()) {
             rehash();
             pos = internal_find(key);
-            return { { data_.data(), pos.data_index, last_index() }, true };
+            return { { this, pos.data_index }, true };
         }
 
-        return { { data_.data(), index, last_index() }, true };
+        return { { this, index }, true };
     }
 }
 
@@ -434,7 +430,7 @@ void hash_container<T, Key, KeyAccess, Hash>::insert(I first, I last)
 template <class T, class Key, class KeyAccess, class Hash>
 auto hash_container<T, Key, KeyAccess, Hash>::erase(iterator pos) -> iterator
 {
-    assert(pos.data_ == data_.data());
+    assert(pos.container_ == this);
     auto index = pos.index_;
     ++pos;
     internal_erase(index);
@@ -524,6 +520,7 @@ void hash_container<T, Key, KeyAccess, Hash>::internal_erase(index_t index)
     first_unused_ = index;
 
     --count_;
+    // verify();
 }
 
 template <class T, class Key, class KeyAccess, class Hash>
@@ -543,6 +540,7 @@ void hash_container<T, Key, KeyAccess, Hash>::grow_data(std::size_t new_size)
         index_.resize(13);
     }
 
+    // verify();
     auto old_size = data_.size();
     std::vector<entry_t> new_data;
     new_data.resize(new_size);
@@ -569,11 +567,13 @@ void hash_container<T, Key, KeyAccess, Hash>::grow_data(std::size_t new_size)
     }
 
     data_.swap(new_data);
+    // verify();
 }
 
 template <class T, class Key, class KeyAccess, class Hash>
 void hash_container<T, Key, KeyAccess, Hash>::rehash()
 {
+    // verify();
     auto new_size = (4 << (32 - __builtin_clzl(count_ + 1))) - 1;
     index_.clear();
     index_.resize(new_size);
@@ -585,6 +585,7 @@ void hash_container<T, Key, KeyAccess, Hash>::rehash()
             link(index);
         }
     }
+    // verify();
 }
 
 template <class T, class Key, class KeyAccess, class Hash>
@@ -665,8 +666,8 @@ public:
 
     hash_map() { }
     template<class I>
-    hash_map(I first, I last) { insert(first, last); }
-    hash_map(std::initializer_list<value_type> init) { insert(init.begin(), init.end()); }
+    hash_map(I first, I last) { this->insert(first, last); }
+    hash_map(std::initializer_list<value_type> init) { this->insert(init.begin(), init.end()); }
 
     V& operator[](const K& key);
 };
