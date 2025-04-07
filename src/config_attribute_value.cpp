@@ -152,65 +152,105 @@ bool from_string_verify(const std::string& source, To& res)
 	out_str << res;
 	return out_str.str() == source;
 }
+
+struct maybe_special_table
+{
+	maybe_special_table() {
+		for (unsigned u = 0; u < sizeof(valid); ++u) {
+			const char c = static_cast<char>(u);
+			valid[u] = (c == '\0') || (c == 'y') || (c == 'n') || (c == 't') || (c == 'f') ||
+				       (c >= '0' && c <= '9') || (c == '+') || (c == '-') || (c == '.');
+		}
+	}
+	bool operator[](char c) const { return valid[static_cast<unsigned char>(c)]; }
+
+private:
+
+	bool valid[256]{};
+};
+
+struct maybe_number_table
+{
+	maybe_number_table() {
+		for (unsigned u = 0; u < sizeof(valid); ++u) {
+			const char c = static_cast<char>(u);
+			valid[u] = (c >= '0' && c <= '9') || (c == '+') || (c == '-') || (c == '.');
+		}
+	}
+	bool operator[](char c) const { return valid[static_cast<unsigned char>(c)]; }
+
+private:
+
+	bool valid[256]{};
+};
+
+static const maybe_special_table maybe_special_string;
+static const maybe_number_table maybe_number;
+
 } // end anon namespace
 
 config_attribute_value& config_attribute_value::operator=(const std::string& v)
 {
 	// Handle some special strings.
-	if(v.empty()) {
-		value_ = v;
-		return *this;
-	}
+	if (maybe_special_string[v[0]]) {
 
-	if(v == s_yes) {
-		value_ = yes_no(true);
-		return *this;
-	}
-
-	if(v == s_no) {
-		value_ = yes_no(false);
-		return *this;
-	}
-
-	if(v == s_true) {
-		value_ = true_false(true);
-		return *this;
-	}
-
-	if(v == s_false) {
-		value_ = true_false(false);
-		return *this;
-	}
-
-	// Attempt to convert to a number.
-	char* eptr;
-	double d = strtod(v.c_str(), &eptr);
-	if(*eptr == '\0') {
-		// Possibly a number. See what type it should be stored in.
-		// (All conversions will be from the string since the largest integer
-		// type could have more precision than a double.)
-		if(d > 0.0) {
-			// The largest type for positive integers is unsigned long long.
-			unsigned long long ull = 0;
-			if(from_string_verify<unsigned long long>(v, ull)) {
-				return *this = ull;
-			}
-		} else {
-			// The largest (variant) type for negative integers is int.
-			int i = 0;
-			if(from_string_verify<int>(v, i)) {
-				return *this = i;
-			}
+		if(v.empty()) {
+			value_ = v;
+			return *this;
 		}
 
-		// This does not look like an integer, so it should be a double.
-		// However, make sure it can convert back to the same string (in
-		// case this is a string that just looks like a numeric value).
-		std::ostringstream tester;
-		tester << d;
-		if(tester.str() == v) {
-			value_ = d;
+		if(v == s_yes) {
+			value_ = yes_no(true);
 			return *this;
+		}
+
+		if(v == s_no) {
+			value_ = yes_no(false);
+			return *this;
+		}
+
+		if(v == s_true) {
+			value_ = true_false(true);
+			return *this;
+		}
+
+		if(v == s_false) {
+			value_ = true_false(false);
+			return *this;
+		}
+
+		// Attempt to convert to a number.
+		if (maybe_number[v[0]]) {
+			char* eptr;
+			double d = strtod(v.c_str(), &eptr);
+			if(*eptr == '\0') {
+				// Possibly a number. See what type it should be stored in.
+				// (All conversions will be from the string since the largest integer
+				// type could have more precision than a double.)
+				if(d > 0.0) {
+					// The largest type for positive integers is unsigned long long.
+					unsigned long long ull = 0;
+					if(from_string_verify<unsigned long long>(v, ull)) {
+						return *this = ull;
+					}
+				} else {
+					// The largest (variant) type for negative integers is int.
+					int i = 0;
+					if(from_string_verify<int>(v, i)) {
+						return *this = i;
+					}
+				}
+
+				// This does not look like an integer, so it should be a double.
+				// However, make sure it can convert back to the same string (in
+				// case this is a string that just looks like a numeric value).
+				std::ostringstream tester;
+				tester << d;
+				if(tester.str() == v) {
+					value_ = d;
+					return *this;
+				}
+			}
 		}
 	}
 
@@ -221,11 +261,74 @@ config_attribute_value& config_attribute_value::operator=(const std::string& v)
 
 config_attribute_value& config_attribute_value::operator=(const std::string_view& v)
 {
-	// TODO: Currently this acts just like std::string assignment.
-	// Perhaps the underlying variant should take a string_view directly?
-	return operator=(std::string(v));
+	// Handle some special strings.
+	if (maybe_special_string[v[0]]) {
 
+		if(v.empty()) {
+			value_ = std::string{};
+			return *this;
+		}
+
+		if(v == s_yes) {
+			value_ = yes_no(true);
+			return *this;
+		}
+
+		if(v == s_no) {
+			value_ = yes_no(false);
+			return *this;
+		}
+
+		if(v == s_true) {
+			value_ = true_false(true);
+			return *this;
+		}
+
+		if(v == s_false) {
+			value_ = true_false(false);
+			return *this;
+		}
+
+		// Attempt to convert to a number.
+		if (maybe_number[v[0]]) {
+			char* eptr;
+			double d = strtod(v.data(), &eptr);
+			if(*eptr == '\0') {
+				// Possibly a number. See what type it should be stored in.
+				// (All conversions will be from the string since the largest integer
+				// type could have more precision than a double.)
+				if(d > 0.0) {
+					// The largest type for positive integers is unsigned long long.
+					unsigned long long ull = 0;
+					if(from_string_verify<unsigned long long>(std::string{v}, ull)) {
+						return *this = ull;
+					}
+				} else {
+					// The largest (variant) type for negative integers is int.
+					int i = 0;
+					if(from_string_verify<int>(std::string{v}, i)) {
+						return *this = i;
+					}
+				}
+
+				// This does not look like an integer, so it should be a double.
+				// However, make sure it can convert back to the same string (in
+				// case this is a string that just looks like a numeric value).
+				std::ostringstream tester;
+				tester << d;
+				if(tester.str() == v) {
+					value_ = d;
+					return *this;
+				}
+			}
+		}
+	}
+
+	// No conversion possible. Store the string.
+	value_ = std::string(v);
+	return *this;
 }
+
 config_attribute_value& config_attribute_value::operator=(const t_string& v)
 {
 	if(!v.translatable()) {
