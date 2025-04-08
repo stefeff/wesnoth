@@ -40,8 +40,9 @@ static lg::log_domain log_scripting_lua("scripting/lua");
 */
 static int intf_get_image_size(lua_State *L)
 {
-	char const *m = luaL_checkstring(L, 1);
-	image::locator img(m);
+	size_t len;
+	char const *m = luaL_checklstring(L, 1, &len);
+	image::locator img(utils::interned_string{m,len});
 	if(!image::exists(img)) return 0;
 	const point s = get_size(img);
 	lua_pushinteger(L, s.x);
