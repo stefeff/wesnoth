@@ -244,7 +244,7 @@ bool configuration::parse_side_config(side_number side, const config& original_c
 
 
 	LOG_AI_CONFIGURATION << "side "<< side <<": merging AI aspect with the same id";
-	parsed_cfg.merge_children_by_attribute("aspect","id");
+	parsed_cfg.merge_children_by_attribute(str_aspect, str_id);
 
 	LOG_AI_CONFIGURATION << "side "<< side <<": removing duplicate [default] tags from aspects";
 	for (config& aspect_cfg : parsed_cfg.child_range("aspect")) {
@@ -256,7 +256,7 @@ bool configuration::parse_side_config(side_number side, const config& original_c
 			WRN_AI_CONFIGURATION << "side "<< side <<": aspect with id=["<<aspect_cfg[str_id]<<"] lacks default config facet!";
 			continue;
 		}
-		aspect_cfg.merge_children("default");
+		aspect_cfg.merge_children(str_default);
 		config& dflt = aspect_cfg.mandatory_child(str_default);
 		if (dflt.has_child(str_value)) {
 			while (dflt.child_count(str_value) > 1) {
