@@ -149,38 +149,41 @@ static int l_hashfloat (lua_Number n) {
 ** the index of its hash value).
 */
 static Node *mainpositionTV (const Table *t, const TValue *key) {
-  switch (ttypetag(key)) {
-    case LUA_VNUMINT: {
-      lua_Integer i = ivalue(key);
-      return hashint(t, i);
-    }
-    case LUA_VNUMFLT: {
-      lua_Number n = fltvalue(key);
-      return hashmod(t, l_hashfloat(n));
-    }
-    case LUA_VSHRSTR: {
-      TString *ts = tsvalue(key);
-      return hashstr(t, ts);
-    }
-    case LUA_VLNGSTR: {
-      TString *ts = tsvalue(key);
-      return hashpow2(t, luaS_hashlongstr(ts));
-    }
-    case LUA_VFALSE:
-      return hashboolean(t, 0);
-    case LUA_VTRUE:
-      return hashboolean(t, 1);
-    case LUA_VLIGHTUSERDATA: {
-      void *p = pvalue(key);
-      return hashpointer(t, p);
-    }
-    case LUA_VLCF: {
-      lua_CFunction f = fvalue(key);
-      return hashpointer(t, f);
-    }
-    default: {
-      GCObject *o = gcvalue(key);
-      return hashpointer(t, o);
+  size_t type = ttypetag(key);
+  if (l_likely(type == LUA_VSHRSTR)) /* the 90+% case */{
+    TString *ts = tsvalue(key);
+    return hashstr(t, ts);
+  }
+  else {
+    switch (type) {
+      case LUA_VNUMINT: {
+        lua_Integer i = ivalue(key);
+        return hashint(t, i);
+      }
+      case LUA_VNUMFLT: {
+        lua_Number n = fltvalue(key);
+        return hashmod(t, l_hashfloat(n));
+      }
+      case LUA_VLNGSTR: {
+        TString *ts = tsvalue(key);
+        return hashpow2(t, luaS_hashlongstr(ts));
+      }
+      case LUA_VFALSE:
+        return hashboolean(t, 0);
+      case LUA_VTRUE:
+        return hashboolean(t, 1);
+      case LUA_VLIGHTUSERDATA: {
+        void *p = pvalue(key);
+        return hashpointer(t, p);
+      }
+      case LUA_VLCF: {
+        lua_CFunction f = fvalue(key);
+        return hashpointer(t, f);
+      }
+      default: {
+        GCObject *o = gcvalue(key);
+        return hashpointer(t, o);
+      }
     }
   }
 }
