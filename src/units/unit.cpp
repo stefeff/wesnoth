@@ -2464,15 +2464,17 @@ void unit::add_modification(const std::string& mod_type, const config& mod, bool
 			}
 		}
 		const std::string& apply_to = effect[str_apply_to];
-		int times = effect[str_times].to_int(1);
+		const auto& times_val = effect[str_times];
+		int times = times_val.to_int(1);
+		const std::string& times_str = times_val.str();
 		t_string description;
 
 		if(no_add && (apply_to == "type" || apply_to == "variation")) {
 			continue;
 		}
 
-		if(effect[str_times] == "per level") {
-			if(effect[str_apply_to] == "level") {
+		if(times_str == "per level") {
+			if(apply_to== "level") {
 				WRN_UT << "[effect] times=per level is not allowed with apply_to=level, using default value of 1";
 				times = 1;
 			}
@@ -2506,7 +2508,7 @@ void unit::add_modification(const std::string& mod_type, const config& mod, bool
 			}
 		}
 
-		if(effect[str_times] == "per level" && !times) {
+		if(times_str == "per level" && !times) {
 			description = VGETTEXT("$effect_description per level", {{"effect_description", description}});
 		}
 
@@ -2517,7 +2519,7 @@ void unit::add_modification(const std::string& mod_type, const config& mod, bool
 
 	t_string description;
 
-	const t_string& mod_description = mod[str_description];
+	const std::string& mod_description = mod[str_description];
 	if(!mod_description.empty()) {
 		description = mod_description;
 	}
