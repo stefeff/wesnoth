@@ -596,8 +596,12 @@ bool luaW_toscalar(lua_State *L, int index, config::attribute_value& v)
 			v = lua_tonumber(L, -1);
 			break;
 		case LUA_TSTRING:
-			v = lua_tostring(L, -1);
+		{
+			size_t len;
+			const char* s = lua_tolstring(L, -1, &len);
+			v = std::string_view{s, len};
 			break;
+		}
 		case LUA_TUSERDATA:
 		{
 			if (t_string * tptr = static_cast<t_string *>(luaL_testudata(L, -1, tstringKey))) {
@@ -893,8 +897,9 @@ bool luaW_toconfig(lua_State *L, int index, config &cfg)
 		lua_rawgeti(L, index, i);
 		if (!lua_istable(L, -1)) return_misformed();
 		lua_rawgeti(L, -1, 1);
-		char const *m = lua_tostring(L, -1);
-		config_key_type key{m};
+		size_t len;
+		char const *m = lua_tolstring(L, -1, &len);
+		config_key_type key{m, len};
 		if (!m || !config::valid_tag(key)) return_misformed();
 		lua_rawgeti(L, -2, 2);
 		if (!luaW_toconfig(L, -1, cfg.add_child(key)))
@@ -908,8 +913,9 @@ bool luaW_toconfig(lua_State *L, int index, config &cfg)
 		int indextype = lua_type(L, -2);
 		if (indextype == LUA_TNUMBER) continue;
 		if (indextype != LUA_TSTRING) return_misformed();
-		const char* m = lua_tostring(L, -2);
-		config_key_type key{m};
+		size_t len;
+		char const *m = lua_tolstring(L, -2, &len);
+		config_key_type key{m, len};
 		if(!m || !config::valid_attribute(key)) return_misformed();
 		config::attribute_value &v = cfg[key];
 		if (lua_istable(L, -1)) {
