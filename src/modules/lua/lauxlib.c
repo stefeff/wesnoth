@@ -1028,8 +1028,8 @@ static bool quick_cleanup_registered = false;
 
 static void* quick_alloc(size_t size)
 {
-  unsigned index = __builtin_clzll(size);
-  if (free_mem_heads[index]) {
+  unsigned index = __builtin_clzll(size | 64);
+  if (l_likely(free_mem_heads[index])) {
     void* result = free_mem_heads[index];
     void* next = *(void**)result;
     free_mem_heads[index] = next;
@@ -1043,14 +1043,14 @@ static void* quick_alloc(size_t size)
 
 static void quick_free(void* ptr, size_t size)
 {
-  unsigned index = __builtin_clzll(size);
+  unsigned index = __builtin_clzll(size | 64);
   *(void**)ptr = free_mem_heads[index];
   free_mem_heads[index] = ptr;
 }
 
 static void* quick_realloc(void* ptr, size_t osize, size_t nsize)
 {
-  if (__builtin_clzll(osize) == __builtin_clzll(nsize)) {
+  if (l_likely(__builtin_clzll(osize | 64) == __builtin_clzll(nsize | 64))) {
     return ptr;
   }
   else {
@@ -1075,37 +1075,24 @@ static void quick_cleanup(void)
 
 static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
   (void)ud; /* not used */
-  if (nsize == 0) {
+  if (l_likely(nsize)) {
+    if (l_likely(ptr == NULL)) {
+      return quick_alloc(nsize);
+    }
+    else {
+      return quick_realloc(ptr, osize, nsize);
+    }
+  }
+  else {
     if (ptr) {
-      if (osize < 64) {
-        osize = 64;
-      }
       quick_free(ptr, osize);
     }
     return NULL;
-  }
-  else if (ptr) {
-    if (nsize < 64) {
-      nsize = 64;
-    }
-    if (osize < 64) {
-      osize = 64;
-    }
-    return quick_realloc(ptr, osize, nsize);
-  }
-  else {
-    if (nsize < 64) {
-      nsize = 64;
-    }
-    return quick_alloc(nsize);
   }
 }
 
 static void l_free (void *ptr, size_t osize) {
   if (ptr) {
-    if (osize < 64) {
-      osize = 64;
-    }
     quick_free(ptr, osize);
   }
 }
