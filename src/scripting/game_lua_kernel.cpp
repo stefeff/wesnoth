@@ -5406,7 +5406,7 @@ void game_lua_kernel::initialize(const config& level)
 {
 	lua_State *L = mState;
 	assert(level_lua_.empty());
-	level_lua_.append_children(level, "lua");
+	level_lua_.append_children(level, str_lua);
 
 	//Create the races table.
 	cmd_log_ << "Adding races table...\n";

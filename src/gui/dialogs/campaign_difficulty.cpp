@@ -42,7 +42,7 @@ config generate_difficulty_config(const config& source)
 	config result;
 
 	// Populate local config with difficulty children
-	result.append_children(source, "difficulty");
+	result.append_children(source, str_difficulty);
 
 	// Issue deprecation warnings about the old difficulties syntax
 	if(result.empty() && source.has_attribute(str_difficulties)) {
