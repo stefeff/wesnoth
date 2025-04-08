@@ -192,7 +192,7 @@ void config::append_attributes(const config& cfg)
 	}
 }
 
-void config::append_children(const config& cfg, std::string_view key)
+void config::append_children(const config& cfg, const config_key_type& key)
 {
 	for(const config& value : cfg.child_range(key)) {
 		add_child(key, value);
@@ -235,7 +235,7 @@ void config::append(config&& cfg)
 	cfg.clear_attributes();
 }
 
-void config::append_children_by_move(config& cfg, std::string_view key)
+void config::append_children_by_move(config& cfg, const config_key_type& key)
 {
 	// DO note this leaves the tags empty in the source config. Not sure if
 	// that should be changed.
@@ -246,7 +246,7 @@ void config::append_children_by_move(config& cfg, std::string_view key)
 	cfg.clear_children_impl(key);
 }
 
-void config::merge_children(std::string_view key)
+void config::merge_children(const config_key_type& key)
 {
 	if(child_count(key) < 2) {
 		return;
@@ -261,7 +261,7 @@ void config::merge_children(std::string_view key)
 	add_child(key, std::move(merged_children));
 }
 
-void config::merge_children_by_attribute(std::string_view key, std::string_view attribute)
+void config::merge_children_by_attribute(const config_key_type& key, const config_key_type& attribute)
 {
 	if(child_count(key) < 2) {
 		return;
@@ -311,6 +311,38 @@ std::size_t config::child_count(std::string_view key) const
 	}
 
 	return 0;
+}
+
+auto config::children() -> boost::iterator_range<all_children_unordered_iterator>
+{
+	auto outerEnd = children_.end();
+	if (children_.empty()) {
+		all_children_unordered_iterator end { outerEnd, {}, outerEnd };
+		return { end, end };
+	}
+	else {
+		auto outerBegin = children_.begin();
+		auto innerBegin = outerBegin->second.begin();
+		all_children_unordered_iterator first { outerBegin, innerBegin, outerEnd };
+		all_children_unordered_iterator end { outerEnd, innerBegin, outerEnd };
+		return { first, end };
+	}
+}
+
+auto config::children() const -> boost::iterator_range<const_all_children_unordered_iterator>
+{
+	auto outerEnd = children_.end();
+	if (children_.empty()) {
+		const_all_children_unordered_iterator end { outerEnd, {}, outerEnd };
+		return { end, end };
+	}
+	else {
+		auto outerBegin = children_.begin();
+		auto innerBegin = outerBegin->second.begin();
+		const_all_children_unordered_iterator first { outerBegin, innerBegin, outerEnd };
+		const_all_children_unordered_iterator end { outerEnd, innerBegin, outerEnd };
+		return { first, end };
+	}
 }
 
 std::size_t config::all_children_count() const
@@ -565,7 +597,7 @@ void config::clear_children_impl(std::string_view key)
 	children_.erase(i);
 }
 
-void config::splice_children(config& src, std::string_view key)
+void config::splice_children(config& src, const config_key_type& key)
 {
 	child_map::iterator i_src = src.children_.find(key);
 	if(i_src == src.children_.end()) {
@@ -689,7 +721,7 @@ config::attribute_value& config::operator[](std::string_view key)
 	return values_[key];
 }
 
-const config::attribute_value& config::get_old_attribute(std::string_view key, const std::string& old_key, const std::string& in_tag, const std::string& message) const
+const config::attribute_value& config::get_old_attribute(config_key_type key, const config_key_type& old_key, const std::string& in_tag, const std::string& message) const
 {
 	if(has_attribute(old_key)) {
 		const std::string what = formatter() << "[" << in_tag << "]" << old_key << "=";
@@ -728,13 +760,13 @@ void config::merge_attributes(const config& cfg)
 	assert(this != &cfg);
 	for(const auto& [key, value] : cfg.values_) {
 		if(key.substr(0, 7) == "add_to_") {
-			std::string add_to = key.substr(7);
-			values_[add_to] = values_[add_to].to_double() + value.to_double();
+			config_key_type add_to {key.substr(7)};
+			values_[add_to] = values_[add_to].to_double() + v.second.to_double();
 		} else if(key.substr(0, 10) == "concat_to_") {
-			std::string concat_to = key.substr(10);
+			config_key_type concat_to {key.substr(10)};
 			// TODO: Only use t_string if one or both are actually translatable?
 			// That probably requires using a visitor though.
-			values_[concat_to] = values_[concat_to].t_str() + value.t_str();
+			values_[concat_to] = values_[config_key_type{concat_to}].t_str() + v.second.t_str();
 		} else {
 			values_[key] = value;
 		}
@@ -928,7 +960,7 @@ void config::get_diff(const config& c, config& res) const
 		}
 	}
 
-	std::vector<std::string> entities;
+	std::vector<config_key_type> entities;
 
 	for(const auto& child : children_) {
 		entities.push_back(child.first);
@@ -940,7 +972,7 @@ void config::get_diff(const config& c, config& res) const
 		}
 	}
 
-	for(const std::string& entity : entities) {
+	for(const auto& entity : entities) {
 		const child_map::const_iterator itor_a = children_.find(entity);
 		const child_map::const_iterator itor_b = c.children_.find(entity);
 
@@ -1107,9 +1139,9 @@ void config::merge_with(const config& c)
 	merge_attributes(c);
 
 	// Now merge shared tags
-	all_children_iterator::Itor i, i_end = ordered_children_.end();
+	all_children_iterator::Itor i, i_end = ordered_children.end();
 	for(i = ordered_children_.begin(); i != i_end; ++i) {
-		const std::string& tag = i->pos->first;
+		const auto& tag = i->pos->first;
 		const child_map::const_iterator j = c.children_.find(tag);
 
 		if(j != c.children_.end()) {
@@ -1139,7 +1171,7 @@ void config::merge_with(const config& c)
 	// Remove those marked so
 	std::map<std::string, std::size_t> removals;
 	for(const child_pos& pos : to_remove) {
-		const std::string& tag = pos.pos->first;
+		const auto& tag = pos.pos->first;
 		auto& removes = removals[tag];
 		remove_child(tag, pos.index - removes++);
 	}
@@ -1176,7 +1208,7 @@ bool config::matches(const config& filter) const
 	for(const auto& [key, value] : filter.attribute_range()) {
 		auto& str = key.str();
 		if(str.compare(0, 8, "glob_on_") == 0) {
-			const attribute_value* v = get(str.substr(8));
+			const attribute_value* v = get(config_key_type{str.substr(8)});
 			if(!v || !utils::wildcard_string_match(v->str(), value.str())) {
 				result = false;
 				break;
@@ -1284,6 +1316,7 @@ std::string config::hash() const
 
 void config::swap(config& cfg) noexcept
 {
+	arena_.swap(cfg.arena_);
 	values_.swap(cfg.values_);
 	children_.swap(cfg.children_);
 	ordered_children_.swap(cfg.ordered_children_);
