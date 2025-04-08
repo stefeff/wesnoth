@@ -376,7 +376,7 @@ auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::insert_key(const Key& ke
 
     auto index = first_unused_;
     auto& entry = data_[index];
-    new (&entry.data) T(key, typename T::second_type{});
+    new (&entry.data) T(std::piecewise_construct_t{}, std::tuple<const Key&>{key}, std::tuple<>{});
 
     first_unused_ = entry.next;
     ++count_;
