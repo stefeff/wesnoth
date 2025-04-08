@@ -53,7 +53,10 @@ LUAI_FUNC void luaH_resizearray (lua_State *L, Table *t, unsigned int nasize);
 LUAI_FUNC void luaH_free (lua_State *L, Table *t);
 LUAI_FUNC int luaH_next (lua_State *L, Table *t, StkId key);
 LUAI_FUNC lua_Unsigned luaH_getn (Table *t);
-LUAI_FUNC unsigned int luaH_realasize (const Table *t);
+// LUAI_FUNC unsigned int luaH_realasize (const Table *t);
+
+/* Returns the real size of the 'array' array */
+#define luaH_realasize(t) ( (isrealasize(t) || t->alimit < 3) ? t->alimit : (1u << (64 - __builtin_clzll(t->alimit - 1))) )
 
 
 #if defined(LUA_DEBUG)

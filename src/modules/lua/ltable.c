@@ -247,27 +247,34 @@ static int equalkey (const TValue *k1, const Node *n2, int deadok) {
 /*
 ** Returns the real size of the 'array' array
 */
-LUAI_FUNC unsigned int luaH_realasize (const Table *t) {
-  if (limitequalsasize(t))
-    return t->alimit;  /* this is the size */
-  else {
-    unsigned int size = t->alimit;
-    /* compute the smallest power of 2 not smaller than 'size' */
-    size |= (size >> 1);
-    size |= (size >> 2);
-    size |= (size >> 4);
-    size |= (size >> 8);
-#if (UINT_MAX >> 14) > 3  /* unsigned int has more than 16 bits */
-    size |= (size >> 16);
-#if (UINT_MAX >> 30) > 3
-    size |= (size >> 32);  /* unsigned int has more than 32 bits */
-#endif
-#endif
-    size++;
-    lua_assert(ispow2(size) && size/2 < t->alimit && t->alimit < size);
-    return size;
-  }
-}
+
+// LUAI_FUNC unsigned int luaH_realasize (const Table *t) {
+//   unsigned int expected =
+//     (isrealasize(t) || t->alimit < 3) ? t->alimit : (1u << (64 - __builtin_clzll(t->alimit - 1)));
+
+//   if (limitequalsasize(t)) {
+//     assert(t->alimit == expected);
+//     return t->alimit;  /* this is the size */
+//   }
+//   else {
+//     unsigned int size = t->alimit;
+//     /* compute the smallest power of 2 not smaller than 'size' */
+//     size |= (size >> 1);
+//     size |= (size >> 2);
+//     size |= (size >> 4);
+//     size |= (size >> 8);
+// #if (UINT_MAX >> 14) > 3  /* unsigned int has more than 16 bits */
+//     size |= (size >> 16);
+// #if (UINT_MAX >> 30) > 3
+//     size |= (size >> 32);  /* unsigned int has more than 32 bits */
+// #endif
+// #endif
+//     size++;
+//     lua_assert(ispow2(size) && size/2 < t->alimit && t->alimit < size);
+//     assert(size == expected);
+//     return size;
+//   }
+// }
 
 
 /*
