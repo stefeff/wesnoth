@@ -35,6 +35,7 @@
 #include "utils/const_clone.hpp"
 #include "utils/interned_string.hpp"
 #include "utils/optional_reference.hpp"
+#include "utils/quick_hash.hpp"
 
 #include <ctime>
 #include <functional>
@@ -194,6 +195,7 @@ public:
 
 	typedef std::vector<std::unique_ptr<config, utils::nop_delete>> child_list;
 
+	// typedef utils::hash_map<config_key_type, child_list> child_map;
 	typedef std::map<
 				config_key_type,
 				child_list,
@@ -299,6 +301,7 @@ public:
 	 */
 	using attribute_value = config_attribute_value;
 
+	// typedef utils::hash_map<config_key_type, attribute_value> attribute_map;
 	typedef std::unordered_map<
 				config_key_type,
 				attribute_value,
@@ -363,10 +366,128 @@ public:
 	typedef boost::iterator_range<const_attribute_iterator> const_attr_itors;
 	typedef boost::iterator_range<attribute_iterator> attr_itors;
 
+	struct const_all_children_unordered_iterator;
+
+	struct all_children_unordered_iterator
+	{
+		struct value_type
+		{
+			const child_map::key_type& key;
+			config &cfg;
+		};
+
+		class pointer
+		{
+		public:
+			pointer(const child_map::key_type& key, config &cfg): data{key, cfg} {}
+			value_type *operator->() { return &data; }
+		private:
+			value_type data;
+		};
+
+		typedef std::random_access_iterator_tag iterator_category;
+		typedef value_type reference;
+		typedef child_list::iterator InnerItor;
+		typedef child_map::iterator OuterItor;
+		typedef std::size_t difference_type;
+		typedef all_children_unordered_iterator this_type;
+
+		all_children_unordered_iterator(const OuterItor& o, const InnerItor &i, const OuterItor& end)
+			: i_{i}, o_{o}, end_{end} { find_inner(); }
+
+		this_type &operator++() { ++i_; find_inner(); return *this; }
+		this_type operator++(int) { this_type result{*this}; ++*this; return result; }
+
+		reference operator*() const { return { o_->first, *i_->get() }; }
+		pointer operator->() const { return { o_->first, *i_->get() }; }
+
+		bool operator==(const this_type &rhs) const { return o_ == rhs.o_ && ((i_ == rhs.i_) || (o_ == end_)); }
+		bool operator!=(const this_type &rhs) const { return !operator==(rhs); }
+		bool operator==(const const_all_children_unordered_iterator &rhs) const { return i_ == rhs.i_ && o_ == rhs.o_;  }
+		bool operator!=(const const_all_children_unordered_iterator &rhs) const { return !operator==(rhs); }
+
+	private:
+
+		void find_inner()
+		{
+			while(o_ != end_ && i_ == o_->second.end()) {
+				if (o_ != end_) {
+					i_ = o_->second.begin();
+				}
+			}
+		}
+
+		InnerItor i_;
+		OuterItor o_;
+		OuterItor end_;
+
+		friend struct const_all_children_unordered_iterator;
+	};
+
+	struct const_all_children_unordered_iterator
+	{
+		struct value_type
+		{
+			const child_map::key_type& key;
+			const config &cfg;
+		};
+
+		class pointer
+		{
+		public:
+			pointer(const child_map::key_type& key, const config &cfg): data{key, cfg} {}
+			value_type *operator->() { return &data; }
+		private:
+			value_type data;
+		};
+
+		typedef std::random_access_iterator_tag iterator_category;
+		typedef value_type reference;
+		typedef child_list::const_iterator InnerItor;
+		typedef child_map::const_iterator OuterItor;
+		typedef std::size_t difference_type;
+		typedef const_all_children_unordered_iterator this_type;
+
+		const_all_children_unordered_iterator(const OuterItor& o, const InnerItor &i, const OuterItor& end)
+			: i_{i}, o_{o}, end_{end} { find_inner(); }
+
+		this_type &operator++() { ++i_; find_inner(); return *this; }
+		this_type operator++(int) { this_type result{*this}; ++*this; return result; }
+
+		reference operator*() const { return { o_->first, *i_->get() }; }
+		pointer operator->() const { return { o_->first, *i_->get() }; }
+
+		bool operator==(const this_type &rhs) const { return o_ == rhs.o_ && ((i_ == rhs.i_) || (o_ == end_)); }
+		bool operator!=(const this_type &rhs) const { return !operator==(rhs); }
+		bool operator==(const all_children_unordered_iterator &rhs) const { return i_ == rhs.i_ && o_ == rhs.o_;  }
+		bool operator!=(const all_children_unordered_iterator &rhs) const { return !operator==(rhs); }
+
+	private:
+
+		void find_inner()
+		{
+			while(o_ != end_ && i_ == o_->second.end()) {
+				++o_;
+				if (o_ != end_) {
+					i_ = o_->second.begin();
+				}
+			}
+		}
+
+		InnerItor i_;
+		OuterItor o_;
+		OuterItor end_;
+
+		friend struct all_children_unordered_iterator;
+	};
+
+	boost::iterator_range<all_children_unordered_iterator> children();
+	boost::iterator_range<const_all_children_unordered_iterator> children() const;
+	std::size_t all_children_count() const;
+
 	child_itors child_range(config_key_type key);
 	const_child_itors child_range(config_key_type key) const;
 	std::size_t child_count(config_key_type key) const;
-	std::size_t all_children_count() const;
 	/** Count the number of non-blank attributes */
 	std::size_t attribute_count() const;
 
@@ -540,7 +661,7 @@ public:
 	 * @param message An explanation of the deprecation, to be output if @a old_key is present.
 	 * @note The deprecation message will be a level 1 deprecation.
 	*/
-	const attribute_value &get_old_attribute(config_key_type key, const std::string &old_key, const std::string& in_tag, const std::string& message = "") const;
+	const attribute_value &get_old_attribute(config_key_type key, const config_key_type &old_key, const std::string& in_tag, const std::string& message = "") const;
 
 	/**
 	 * Get a deprecated attribute without a direct substitute,
@@ -652,7 +773,7 @@ public:
 	/**
 	 * Moves all the children with tag @a key from @a src to this.
 	 */
-	void splice_children(config &src, const std::string &key);
+	void splice_children(config &src, const config_key_type &key);
 
 	void remove_child(config_key_type key, std::size_t index);
 	/**
@@ -888,10 +1009,10 @@ public:
 	/**
 	 * Adds children from @a cfg.
 	 */
-	void append_children(const config &cfg, const std::string& key);
+	void append_children(const config &cfg, const config_key_type& key);
 
 	/** Moves children with the given name from the given config to this one. */
-	void append_children_by_move(config& cfg, const std::string& key);
+	void append_children_by_move(config& cfg, const config_key_type& key);
 
 	/**
 	 * Adds attributes from @a cfg.
@@ -902,14 +1023,14 @@ public:
 	 * All children with the given key will be merged
 	 * into the first element with that key.
 	 */
-	void merge_children(const std::string& key);
+	void merge_children(const config_key_type& key);
 
 	/**
 	 * All children with the given key and with equal values
 	 * of the specified attribute will be merged into the
 	 * element with that key and that value of the attribute
 	 */
-	void merge_children_by_attribute(const std::string& key, const std::string& attribute);
+	void merge_children_by_attribute(const config_key_type& key, const config_key_type& attribute);
 
 	//this is a cheap O(1) operation
 	void swap(config& cfg);
