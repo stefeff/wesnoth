@@ -217,6 +217,8 @@ protected:
     };
 
     lookup_result internal_find(const Key& key) const;
+    template<typename K2>
+    const entry_t* optimistic_find(const K2& key) const;
     const entry_t* optimistic_find(const Key& key) const;
 
     entry_t& insert_key(const Key& key);
@@ -501,6 +503,24 @@ auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::internal_find(const Key&
 }
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
+template <typename K2>
+inline auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::optimistic_find(const K2& key) const -> const entry_t*
+{
+    auto hash_index = hash_(key) % index_.size();
+    auto data_index = index_[hash_index];
+
+    while (data_index) {
+        auto& entry = data_[data_index];
+        if (equal_(key_access_(entry.template as<T>()), key)) {
+            return &entry;
+        }
+        data_index = entry.next;
+    }
+
+    return nullptr;
+}
+
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
 inline auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::optimistic_find(const Key& key) const -> const entry_t*
 {
     auto hash_index = hash_(key) % index_.size();
@@ -508,7 +528,6 @@ inline auto hash_container<T, Key, KeyAccess, Hash, KeyEqual>::optimistic_find(c
 
     while (data_index) {
         auto& entry = data_[data_index];
-        assert(entry.hash_index == hash_index);
         if (equal_(key_access_(entry.template as<T>()), key)) {
             return &entry;
         }
@@ -691,6 +710,13 @@ public:
     hash_map(std::initializer_list<value_type> init) { this->insert(init.begin(), init.end()); }
 
     V& operator[](const K& key);
+
+    template<typename K2>
+    const V& try_find(const K2& key, const V& fallback) const
+    {
+        auto* entry = Base_::optimistic_find(key);
+        return entry ? entry->template as<value_type>().second : fallback;
+    }
     const V& try_find(const K& key, const V& fallback) const
     {
         auto* entry = Base_::optimistic_find(key);

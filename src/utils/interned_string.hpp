@@ -19,9 +19,11 @@ class interned_string
 public:
 
     interned_string() = default;
-    interned_string(const char* s) { init(s); }
+    interned_string(const char* s) { init(std::string_view{s}); }
+    explicit interned_string(const std::string_view& s) { init(s); }
     interned_string(const std::string& s) { init(s); }
     interned_string(const t_string& s) { init(s.str()); }
+    interned_string(const char* s, std::size_t len) { init(std::string_view{s, len}); }
 
     bool operator==(const interned_string& rhs) const { return index_ == rhs.index_; }
     bool operator!=(const interned_string& rhs) const { return !operator==(rhs); }
@@ -96,6 +98,12 @@ private:
         bool operator()(const std::string_view& lhs, const std::string_view& rhs) const {
             return (lhs.size() == rhs.size()) && f(lhs.data(), rhs.data(), lhs.size());
         }
+        bool operator()(const std::string& lhs, const std::string_view& rhs) const {
+            return (lhs.size() == rhs.size()) && f(lhs.data(), rhs.data(), lhs.size());
+        }
+        bool operator()(const std::string_view& lhs, const std::string& rhs) const {
+            return (lhs.size() == rhs.size()) && f(lhs.data(), rhs.data(), lhs.size());
+        }
 
     private:
 
@@ -157,6 +165,7 @@ private:
     }
 
     void init(const std::string& s);
+    void init(const std::string_view& s);
 
     static shared* shared_;
     std::uint32_t index_{0};

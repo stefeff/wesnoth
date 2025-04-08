@@ -27,4 +27,20 @@ void interned_string::init(const std::string& s)
     }
 }
 
+void interned_string::init(const std::string_view& s)
+{
+    if (!shared_) {
+        shared_ = &get_shared();
+    }
+
+    if (s.size()) {
+        index_ = shared_->dictionary.try_find(s, index_);
+        if (index_ == 0) {
+            index_ = shared_->storage.size();
+            shared_->storage.emplace_back(s.data(), s.size());
+            shared_->dictionary[shared_->storage.back()] = index_;
+        }
+    }
+}
+
 }
