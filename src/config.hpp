@@ -302,13 +302,16 @@ public:
 	 */
 	using attribute_value = config_attribute_value;
 
-	// typedef utils::hash_map<config_key_type, attribute_value> attribute_map;
+	typedef utils::hash_map<config_key_type, attribute_value> attribute_map;
+	// typedef std::unordered_map<
+	// 			config_key_type,
+	// 			attribute_value,
+	// 			std::hash<config_key_type>,
+	// 			std::equal_to<config_key_type>,
+	// 			utils::arena_allocator<std::pair<const config_key_type, attribute_value>>> attribute_map;
 	typedef std::unordered_map<
 				config_key_type,
-				attribute_value,
-				std::hash<config_key_type>,
-				std::equal_to<config_key_type>,
-				utils::arena_allocator<std::pair<const config_key_type, attribute_value>>> attribute_map;
+				attribute_value> attribute_ref_map;
 	typedef attribute_map::value_type attribute;
 	struct const_attribute_iterator;
 
@@ -601,7 +604,25 @@ public:
 	 * Returns a reference to the attribute with the given @a key
 	 * or to a dummy empty attribute if it does not exist.
 	 */
-	const attribute_value& operator[](std::string_view key) const;
+	const attribute_value& operator[](config_key_type key) const;
+
+	/**
+	* Returns a reference to the attribute with the given @a key.
+	* Creates it if it does not exist.
+	*/
+	attribute_value& operator[](const std::string& key)
+	{
+		return operator[](config_key_type(key));
+	}
+
+	/**
+	* Returns a reference to the attribute with the given @a key
+	* or to a dummy empty attribute if it does not exist.
+	*/
+	const attribute_value& operator[](const std::string& key) const
+	{
+		return operator[](config_key_type(key));
+	}
 
 	/**
 	 * Returns a pointer to the attribute with the given @a key
@@ -1050,6 +1071,7 @@ private:
 
 	/** All the attributes of this node. */
 	attribute_map values_;
+	attribute_ref_map values_ref_;
 
 	/** A list of all children of this node. */
 	child_map children_;
@@ -1084,7 +1106,7 @@ template<typename... Args>
 inline config::config(config_key_type first, Args&&... args)
 	: arena_{}
 	, config_allocator_{arena_}
-	, values_( arena_ )
+	, values_()
 	, children_( arena_ )
 	, ordered_children( arena_ )
 {
