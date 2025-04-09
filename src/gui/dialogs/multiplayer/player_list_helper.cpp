@@ -42,13 +42,13 @@ void player_list_helper::update_list(const config::const_child_itors& users)
 		widget_data data;
 		widget_item item;
 
-		const std::string name = user["name"];
+		const std::string name = user[str_name];
 		const bool is_you = name == preferences::login();
 
 		std::string icon;
-		if(user["host"].to_bool()) {
+		if(user[str_host].to_bool()) {
 			icon = "misc/leader-crown.png~CROP(12, 1, 15, 15)";
-		} else if(user["observer"].to_bool()) {
+		} else if(user[str_observer].to_bool()) {
 			icon = "misc/eye.png";
 		} else if(is_you) {
 			icon = "lobby/status-lobby-s.png";

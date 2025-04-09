@@ -50,8 +50,8 @@ mt_rng::mt_rng(const config& cfg) :
 	mt_(random_seed_), //we don't have the seed at construction time, we have to seed after construction in this case. Constructing an mt19937 is somewhat expensive, apparently has about 2kb of private memory.
 	random_calls_(0)
 {
-	config::attribute_value seed = cfg["random_seed"];
-	seed_random(seed.str(), cfg["random_calls"].to_int(0));
+	config::attribute_value seed = cfg[str_random_seed];
+	seed_random(seed.str(), cfg[str_random_calls].to_int(0));
 }
 
 bool mt_rng::operator== (const mt_rng & other) const {

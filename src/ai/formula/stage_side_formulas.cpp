@@ -63,7 +63,7 @@ bool stage_side_formulas::do_play_stage()
 
 void stage_side_formulas::on_create()
 {
-	move_formula_ = fai_.create_optional_formula(cfg_["move"]);
+	move_formula_ = fai_.create_optional_formula(cfg_[str_move]);
 }
 
 config stage_side_formulas::to_config() const

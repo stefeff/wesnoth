@@ -117,7 +117,7 @@ namespace implementation
 {
 
 builder_password_box::builder_password_box(const config& cfg)
-	: builder_styled_widget(cfg), history_(cfg["history"])
+	: builder_styled_widget(cfg), history_(cfg[str_history])
 {
 }
 

@@ -191,11 +191,11 @@ namespace implementation
 
 builder_scroll_label::builder_scroll_label(const config& cfg)
 	: implementation::builder_styled_widget(cfg)
-	, vertical_scrollbar_mode(get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
-	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
-	, wrap_on(cfg["wrap"].to_bool(true))
-	, text_alignment(decode_text_alignment(cfg["text_alignment"]))
-	, link_aware(cfg["link_aware"].to_bool(false))
+	, vertical_scrollbar_mode(get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
+	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
+	, wrap_on(cfg[str_wrap].to_bool(true))
+	, text_alignment(decode_text_alignment(cfg[str_text_alignment]))
+	, link_aware(cfg[str_link_aware].to_bool(false))
 {
 }
 

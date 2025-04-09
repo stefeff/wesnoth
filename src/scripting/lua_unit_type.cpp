@@ -65,7 +65,7 @@ static int impl_unit_type_get(lua_State *L)
 	if (strcmp(m, "traits") == 0) {
 		lua_newtable(L);
 		for (const config& trait : ut.possible_traits()) {
-			const std::string& id = trait["id"];
+			const std::string& id = trait[str_id];
 			lua_pushlstring(L, id.c_str(), id.length());
 			luaW_pushconfig(L, trait);
 			lua_rawset(L, -3);

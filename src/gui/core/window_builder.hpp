@@ -154,8 +154,8 @@ class builder_window
 public:
 	explicit builder_window(const config& cfg)
 		: resolutions()
-		, id_(cfg["id"])
-		, description_(cfg["description"])
+		, id_(cfg[str_id])
+		, description_(cfg[str_description])
 	{
 		read(cfg);
 	}

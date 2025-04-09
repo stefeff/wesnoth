@@ -31,12 +31,12 @@ static lg::log_domain log_mapgen("mapgen");
 config map_generator::create_scenario(std::optional<uint32_t> randomseed)
 {
 	config res;
-	res["map_data"] = create_map(randomseed);
+	res[str_map_data] = create_map(randomseed);
 	return res;
 }
 std::string map_generator::create_map(std::optional<uint32_t> randomseed)
 {
-	return create_scenario(randomseed)["map_data"];
+	return create_scenario(randomseed)[str_map_data];
 }
 /**
 	by default we don't allow user configs.

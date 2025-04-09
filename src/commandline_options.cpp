@@ -667,13 +667,13 @@ std::ostream& operator<<(std::ostream &os, const commandline_options& cmdline_op
 config commandline_options::to_config() const {
 	config ret;
 	if(server) {
-		ret["server"] = *server;
+		ret[str_server] = *server;
 	}
 	if(username) {
-		ret["username"] = *username;
+		ret[str_username] = *username;
 	}
 	if(password) {
-		ret["password"] = *password;
+		ret[str_password] = *password;
 	}
 	return ret;
 }

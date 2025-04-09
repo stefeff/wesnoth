@@ -370,8 +370,8 @@ void unit_preview_pane::set_displayed_type(const unit_type& type)
 			tree_view_node* header_node = nullptr;
 
 			for(const auto& tr : type.possible_traits()) {
-				t_string name = tr[type.genders().front() == unit_race::FEMALE ? "female_name" : "male_name"];
-				if(tr["availability"] != "musthave" || name.empty()) {
+				t_string name = tr[type.genders().front() == unit_race::FEMALE ? str_female_name : str_male_name];
+				if(tr[str_availability] != "musthave" || name.empty()) {
 					continue;
 				}
 
@@ -622,7 +622,7 @@ namespace implementation
 
 builder_unit_preview_pane::builder_unit_preview_pane(const config& cfg)
 	: builder_styled_widget(cfg)
-	, image_mods_(cfg["image_mods"])
+	, image_mods_(cfg[str_image_mods])
 {
 }
 

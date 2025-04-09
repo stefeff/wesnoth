@@ -475,7 +475,7 @@ void controller_base::show_menu(
 
 	std::vector<config> items;
 	for(const config& c : items_arg) {
-		const std::string& id = c["id"];
+		const std::string& id = c[str_id];
 		const hotkey::ui_command cmd = hotkey::ui_command(id);
 
 		if(cmd_exec->can_execute_command(cmd) && (!context_menu || in_context_menu(cmd))) {

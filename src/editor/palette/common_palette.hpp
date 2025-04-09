@@ -29,10 +29,10 @@ namespace editor {
 struct item_group
 {
 	item_group(const config& cfg)
-		: id(cfg["id"])
-		, name(cfg["name"].t_str())
-		, icon(cfg["icon"])
-		, core(cfg["core"].to_bool())
+		: id(cfg[str_id])
+		, name(cfg[str_name].t_str())
+		, icon(cfg[str_icon])
+		, core(cfg[str_core].to_bool())
 	{}
 
 	std::string id;

@@ -30,12 +30,12 @@ static lg::log_domain log_ai_aspect("ai/aspect");
 #define ERR_AI_ASPECT LOG_STREAM(err, log_ai_aspect)
 
 aspect::aspect(readonly_context &context, const config &cfg, const std::string &id):
-	time_of_day_(cfg["time_of_day"]),turns_(cfg["turns"]),
+	time_of_day_(cfg[str_time_of_day]),turns_(cfg[str_turns]),
 	valid_(false), valid_variant_(false), valid_lua_(false), cfg_(cfg),
-	invalidate_on_turn_start_(cfg["invalidate_on_turn_start"].to_bool(true)),
-	invalidate_on_tod_change_(cfg["invalidate_on_tod_change"].to_bool(true)),
-	invalidate_on_gamestate_change_(cfg["invalidate_on_gamestate_change"].to_bool()),
-	engine_(cfg["engine"]), name_(cfg["name"]), id_(id)
+	invalidate_on_turn_start_(cfg[str_invalidate_on_turn_start].to_bool(true)),
+	invalidate_on_tod_change_(cfg[str_invalidate_on_tod_change].to_bool(true)),
+	invalidate_on_gamestate_change_(cfg[str_invalidate_on_gamestate_change].to_bool()),
+	engine_(cfg[str_engine]), name_(cfg[str_name]), id_(id)
 	{
 		DBG_AI_ASPECT << "creating new aspect: engine=["<<engine_<<"], name=["<<name_<<"], id=["<<id_<<"]";
 		init_readonly_context_proxy(context);
@@ -84,12 +84,12 @@ bool aspect::redeploy(const config &cfg, const std::string& /*id*/)
 	valid_variant_ =false;
 	valid_lua_ = false;
 	cfg_ = cfg;
-	invalidate_on_turn_start_ = cfg["invalidate_on_turn_start"].to_bool(true);
-	invalidate_on_tod_change_ = cfg["invalidate_on_tod_change"].to_bool(true);
-	invalidate_on_gamestate_change_ = cfg["invalidate_on_gamestate_change"].to_bool();
-	engine_ = cfg["engine"].str();
-	name_ = cfg["name"].str();
-	id_ = cfg["id"].str();
+	invalidate_on_turn_start_ = cfg[str_invalidate_on_turn_start].to_bool(true);
+	invalidate_on_tod_change_ = cfg[str_invalidate_on_tod_change].to_bool(true);
+	invalidate_on_gamestate_change_ = cfg[str_invalidate_on_gamestate_change].to_bool();
+	engine_ = cfg[str_engine].str();
+	name_ = cfg[str_name].str();
+	id_ = cfg[str_id].str();
 	DBG_AI_ASPECT << "redeploying aspect: engine=["<<engine_<<"], name=["<<name_<<"], id=["<<id_<<"]";
 	if (invalidate_on_turn_start_) {
 		manager.add_turn_started_observer(this);
@@ -106,18 +106,18 @@ bool aspect::redeploy(const config &cfg, const std::string& /*id*/)
 config aspect::to_config() const
 {
 	config cfg;
-	cfg["invalidate_on_turn_start"] = invalidate_on_turn_start_;
-	cfg["invalidate_on_tod_change"] = invalidate_on_tod_change_;
-	cfg["invalidate_on_gamestate_change"] = invalidate_on_gamestate_change_;
+	cfg[str_invalidate_on_turn_start] = invalidate_on_turn_start_;
+	cfg[str_invalidate_on_tod_change] = invalidate_on_tod_change_;
+	cfg[str_invalidate_on_gamestate_change] = invalidate_on_gamestate_change_;
 	if (!time_of_day_.empty()) {
-		cfg["time_of_day"] = time_of_day_;
+		cfg[str_time_of_day] = time_of_day_;
 	}
 	if (!turns_.empty()) {
-		cfg["turns"] = turns_;
+		cfg[str_turns] = turns_;
 	}
-	cfg["engine"] = engine_;
-	cfg["name"] = name_;
-	cfg["id"] = id_;
+	cfg[str_engine] = engine_;
+	cfg[str_name] = name_;
+	cfg[str_id] = id_;
 	return cfg;
 }
 

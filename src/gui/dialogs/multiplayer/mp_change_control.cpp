@@ -84,9 +84,9 @@ void mp_change_control::pre_show(window& window)
 		std::string side_str = VGETTEXT("Side $side", {{"side", std::to_string(side)}});
 		side_str = font::span_color(team::get_side_color(side)) + side_str + "</span>";
 
-		item["id"] = (formatter() << "side_" << side).str();
-		item["label"] = side_str;
-		item["use_markup"] = "true";
+		item[str_id] = (formatter() << "side_" << side).str();
+		item[str_label] = side_str;
+		item[str_use_markup] = "true";
 		data.emplace("side", item);
 
 		sides_list.add_row(data);
@@ -119,9 +119,9 @@ void mp_change_control::pre_show(window& window)
 		widget_data data;
 		widget_item item;
 
-		item["id"] = nick;
-		item["label"] = nick;
-		item["use_markup"] = "true";
+		item[str_id] = nick;
+		item[str_label] = nick;
+		item[str_use_markup] = "true";
 		data.emplace("nick", item);
 
 		nicks_list.add_row(data);

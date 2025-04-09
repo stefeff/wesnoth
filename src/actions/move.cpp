@@ -838,7 +838,7 @@ namespace { // Private helpers for move_unit()
 	{
 		for(const unit_ability &hide : ambusher.get_abilities("hides"))
 		{
-			const std::string & ambush_string = (*hide.ability_cfg)["alert"].str();
+			const std::string & ambush_string = (*hide.ability_cfg)[str_alert].str();
 			if (!ambush_string.empty()) {
 				return ambush_string;
 			}
@@ -1184,10 +1184,10 @@ static std::size_t move_unit_internal(undo_list* undo_stack,
 	bool matches_replay = checkup_instance->local_checkup(cn,co);
 	if(!matches_replay)
 	{
-		replay::process_error("calculated movement destination (x="+ cn["final_hex_x"].str() +  " y=" + cn["final_hex_y"].str() +
-			") didn't match the original destination(x="+ co["final_hex_x"].str() +  " y=" + co["final_hex_y"].str() + ")\n");
+		replay::process_error("calculated movement destination (x="+ cn[str_final_hex_x].str() +  " y=" + cn[str_final_hex_y].str() +
+			") didn't match the original destination(x="+ co[str_final_hex_x].str() +  " y=" + co[str_final_hex_y].str() + ")\n");
 
-		//TODO: move the unit by force to the desired destination with something like mover.reset_final_hex(co["x"], co["y"]);
+		//TODO: move the unit by force to the desired destination with something like mover.reset_final_hex(co[str_x], co[str_y]);
 	}
 
 	// Bookkeeping, etc.

@@ -111,8 +111,8 @@ std::string format_file_list(const std::vector<std::string>& files_original)
 			config info_cfg;
 			get_addon_install_info(base, info_cfg);
 
-			if(!info_cfg.empty() && !info_cfg["title"].empty()) {
-				file = info_cfg["title"].str();
+			if(!info_cfg.empty() && !info_cfg[str_title].empty()) {
+				file = info_cfg[str_title].str();
 				continue;
 			}
 		}

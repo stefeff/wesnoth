@@ -83,7 +83,7 @@ public:
 	/** If true, holding the hotkey will trigger this item repeatedly. */
 	bool hotkey_repeat() const
 	{
-		return default_hotkey_["repeat_on_hold"].to_bool(false);
+		return default_hotkey_[str_repeat_on_hold].to_bool(false);
 	}
 
 	/**

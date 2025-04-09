@@ -403,8 +403,8 @@ text_box_definition::text_box_definition(const config& cfg)
 
 text_box_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, text_x_offset(cfg["text_x_offset"])
-	, text_y_offset(cfg["text_y_offset"])
+	, text_x_offset(cfg[str_text_x_offset])
+	, text_y_offset(cfg[str_text_y_offset])
 {
 	// Note the order should be the same as the enum state_t in text_box.hpp.
 	state.emplace_back(VALIDATE_WML_CHILD(cfg, "state_enabled", missing_mandatory_wml_tag("text_box_definition][resolution", "state_enabled")));
@@ -420,10 +420,10 @@ namespace implementation
 
 builder_text_box::builder_text_box(const config& cfg)
 	: builder_styled_widget(cfg)
-	, history(cfg["history"])
-	, max_input_length(cfg["max_input_length"])
-	, hint_text(cfg["hint_text"].t_str())
-	, hint_image(cfg["hint_image"])
+	, history(cfg[str_history])
+	, max_input_length(cfg[str_max_input_length])
+	, hint_text(cfg[str_hint_text].t_str())
+	, hint_image(cfg[str_hint_image])
 {
 }
 

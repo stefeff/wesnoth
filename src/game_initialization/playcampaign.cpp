@@ -243,13 +243,13 @@ level_result::type campaign_controller::play_game()
 				const config& starting_pos = state_.get_starting_point();
 
 				const bool is_mp = state_.classification().is_normal_mp_game();
-				state_.mp_settings().num_turns = starting_pos["turns"].to_int(-1);
+				state_.mp_settings().num_turns = starting_pos[str_turns].to_int(-1);
 
 				if(state_.mp_settings().saved_game == saved_game_mode::type::midgame) {
 					state_.mp_settings().saved_game = saved_game_mode::type::scenaro_start;
 				}
 
-				state_.mp_settings().use_map_settings = starting_pos["force_lock_settings"].to_bool(!is_mp);
+				state_.mp_settings().use_map_settings = starting_pos[str_force_lock_settings].to_bool(!is_mp);
 
 				ng::connect_engine connect_engine(state_, false, mp_info_);
 

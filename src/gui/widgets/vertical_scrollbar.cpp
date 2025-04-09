@@ -109,10 +109,10 @@ vertical_scrollbar_definition::vertical_scrollbar_definition(
 
 vertical_scrollbar_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, minimum_positioner_length(cfg["minimum_positioner_length"])
-	, maximum_positioner_length(cfg["maximum_positioner_length"])
-	, top_offset(cfg["top_offset"])
-	, bottom_offset(cfg["bottom_offset"])
+	, minimum_positioner_length(cfg[str_minimum_positioner_length])
+	, maximum_positioner_length(cfg[str_maximum_positioner_length])
+	, top_offset(cfg[str_top_offset])
+	, bottom_offset(cfg[str_bottom_offset])
 {
 	VALIDATE(minimum_positioner_length,
 			 missing_mandatory_wml_key("resolution",

@@ -167,9 +167,9 @@ void help_text_area::set_items()
 
 void help_text_area::handle_ref_cfg(const config &cfg)
 {
-	const std::string dst = cfg["dst"];
-	const std::string text = cfg["text"];
-	bool force = cfg["force"].to_bool();
+	const std::string dst = cfg[str_dst];
+	const std::string text = cfg[str_text];
+	bool force = cfg[str_force].to_bool();
 
 	if (dst.empty()) {
 		std::stringstream msg;
@@ -211,10 +211,10 @@ void help_text_area::handle_ref_cfg(const config &cfg)
 
 void help_text_area::handle_img_cfg(const config &cfg)
 {
-	const std::string src = cfg["src"];
-	const std::string align = cfg["align"];
-	bool floating = cfg["float"].to_bool();
-	bool box = cfg["box"].to_bool(true);
+	const std::string src = cfg[str_src];
+	const std::string align = cfg[str_align];
+	bool floating = cfg[str_float].to_bool();
+	bool box = cfg[str_box].to_bool(true);
 	if (src.empty()) {
 		throw parse_error("Img markup must have src attribute.");
 	}
@@ -223,7 +223,7 @@ void help_text_area::handle_img_cfg(const config &cfg)
 
 void help_text_area::handle_bold_cfg(const config &cfg)
 {
-	const std::string text = cfg["text"];
+	const std::string text = cfg[str_text];
 	if (text.empty()) {
 		throw parse_error("Bold markup must have text attribute.");
 	}
@@ -232,7 +232,7 @@ void help_text_area::handle_bold_cfg(const config &cfg)
 
 void help_text_area::handle_italic_cfg(const config &cfg)
 {
-	const std::string text = cfg["text"];
+	const std::string text = cfg[str_text];
 	if (text.empty()) {
 		throw parse_error("Italic markup must have text attribute.");
 	}
@@ -241,7 +241,7 @@ void help_text_area::handle_italic_cfg(const config &cfg)
 
 void help_text_area::handle_header_cfg(const config &cfg)
 {
-	const std::string text = cfg["text"];
+	const std::string text = cfg[str_text];
 	if (text.empty()) {
 		throw parse_error("Header markup must have text attribute.");
 	}
@@ -250,8 +250,8 @@ void help_text_area::handle_header_cfg(const config &cfg)
 
 void help_text_area::handle_jump_cfg(const config &cfg)
 {
-	const std::string amount_str = cfg["amount"];
-	const std::string to_str = cfg["to"];
+	const std::string amount_str = cfg[str_amount];
+	const std::string to_str = cfg[str_to];
 	if (amount_str.empty() && to_str.empty()) {
 		throw parse_error("Jump markup must have either a to or an amount attribute.");
 	}
@@ -288,14 +288,14 @@ void help_text_area::handle_jump_cfg(const config &cfg)
 
 void help_text_area::handle_format_cfg(const config &cfg)
 {
-	const std::string text = cfg["text"];
+	const std::string text = cfg[str_text];
 	if (text.empty()) {
 		throw parse_error("Format markup must have text attribute.");
 	}
-	bool bold = cfg["bold"].to_bool();
-	bool italic = cfg["italic"].to_bool();
-	int font_size = cfg["font_size"].to_int(normal_font_size);
-	color_t color = help::string_to_color(cfg["color"]);
+	bool bold = cfg[str_bold].to_bool();
+	bool italic = cfg[str_italic].to_bool();
+	int font_size = cfg[str_font_size].to_int(normal_font_size);
+	color_t color = help::string_to_color(cfg[str_color]);
 	add_text_item(text, "", false, font_size, bold, italic, color);
 }
 

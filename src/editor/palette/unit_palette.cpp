@@ -40,17 +40,17 @@ void unit_palette::setup(const game_config_view& /*cfg*/)
 		item_map_.emplace(i.second.id(), i.second);
 		group_map_[i.second.race_id()].push_back(i.second.id());
 		// Add the unit to the default group
-		group_map_["all"].push_back(i.second.id());
+		group_map_[str_all].push_back(i.second.id());
 	}
 
 	for(const race_map::value_type &i : unit_types.races()) {
 		if(group_map_[i.second.id()].empty())
 			continue;
 		config cfg;
-		cfg["id"] = i.second.id();
-		cfg["name"] = i.second.plural_name();
-		cfg["icon"] = i.second.get_icon_path_stem();
-		cfg["core"] = true;
+		cfg[str_id] = i.second.id();
+		cfg[str_name] = i.second.plural_name();
+		cfg[str_icon] = i.second.get_icon_path_stem();
+		cfg[str_core] = true;
 		groups_.emplace_back(cfg);
 	}
 

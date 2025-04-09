@@ -124,7 +124,7 @@ namespace implementation
 {
 
 builder_spacer::builder_spacer(const config& cfg)
-	: builder_styled_widget(cfg), width_(cfg["width"]), height_(cfg["height"])
+	: builder_styled_widget(cfg), width_(cfg[str_width]), height_(cfg[str_height])
 {
 }
 

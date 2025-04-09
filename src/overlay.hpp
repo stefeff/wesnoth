@@ -40,15 +40,15 @@ struct overlay
 
 
 	overlay(const config& cfg)
-		: image(cfg["image"])
-		, halo(cfg["halo"])
-		, team_name(cfg["team_name"])
-		, name(cfg["name"].t_str())
-		, id(cfg["id"])
+		: image(cfg[str_image])
+		, halo(cfg[str_halo])
+		, team_name(cfg[str_team_name])
+		, name(cfg[str_name].t_str())
+		, id(cfg[str_id])
 		, halo_handle()
-		, visible_in_fog(cfg["visible_in_fog"].to_bool())
-		, submerge(cfg["submerge"].to_double(0))
-		, z_order(cfg["z_order"].to_double(0))
+		, visible_in_fog(cfg[str_visible_in_fog].to_bool())
+		, submerge(cfg[str_submerge].to_double(0))
+		, z_order(cfg[str_z_order].to_double(0))
 	{
 	}
 

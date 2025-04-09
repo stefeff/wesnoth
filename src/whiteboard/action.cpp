@@ -51,15 +51,15 @@ std::ostream& action::print(std::ostream& s) const
 config action::to_config() const
 {
 	config final_cfg;
-	final_cfg["type"]="action";
-	final_cfg["team_index_"]=static_cast<int>(team_index_);
+	final_cfg[str_type]="action";
+	final_cfg[str_team_index_]=static_cast<int>(team_index_);
 	return final_cfg;
 }
 
 /* static */
 action_ptr action::from_config(const config& cfg, bool hidden)
 {
-	std::string type = cfg["type"];
+	std::string type = cfg[str_type];
 
 	try {
 		if(type == "move")
@@ -105,7 +105,7 @@ action::action(const config& cfg, bool hidden)
 	, hidden_(hidden)
 {
 	// Construct and validate team_index_
-	int team_index_temp = cfg["team_index_"].to_int(-1); //default value: -1
+	int team_index_temp = cfg[str_team_index_].to_int(-1); //default value: -1
 	if(team_index_temp < 0
 			|| team_index_temp >= static_cast<int>(resources::gameboard->teams().size()))
 		throw ctor_err("action: Invalid team_index_");

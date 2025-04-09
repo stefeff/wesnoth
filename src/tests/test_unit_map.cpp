@@ -39,9 +39,9 @@ BOOST_AUTO_TEST_CASE( test_1 ) {
 	config game_config(test_utils::get_test_config());
 
 	config orc_config;
-	orc_config["id"]="Orcish Grunt";
-	orc_config["random_traits"]=false;
-	orc_config["animate"]=false;
+	orc_config[str_id]="Orcish Grunt";
+	orc_config[str_random_traits]=false;
+	orc_config[str_animate]=false;
 	unit_type orc_type(orc_config);
 
 	unit_types.build_unit_type(orc_type, unit_type::FULL);
@@ -108,9 +108,9 @@ BOOST_AUTO_TEST_CASE( track_real_unit_by_underlying_id ) {
 	config game_config(test_utils::get_test_config());
 
 	config orc_config;
-	orc_config["id"]="Orcish Grunt";
-	orc_config["random_traits"] = false;
-	orc_config["animate"]=false;
+	orc_config[str_id]="Orcish Grunt";
+	orc_config[str_random_traits] = false;
+	orc_config[str_animate]=false;
 	unit_type orc_type(orc_config);
 
 	unit_types.build_unit_type(orc_type, unit_type::FULL);
@@ -154,9 +154,9 @@ BOOST_AUTO_TEST_CASE( track_fake_unit_by_underlying_id ) {
 	config game_config(test_utils::get_test_config());
 
 	config orc_config;
-	orc_config["id"]="Orcish Grunt";
-	orc_config["random_traits"] = false;
-	orc_config["animate"]=false;
+	orc_config[str_id]="Orcish Grunt";
+	orc_config[str_random_traits] = false;
+	orc_config[str_animate]=false;
 	unit_type orc_type(orc_config);
 
 	unit_types.build_unit_type(orc_type, unit_type::FULL);
@@ -200,9 +200,9 @@ BOOST_AUTO_TEST_CASE( track_real_unit_by_iterator ) {
 	config game_config(test_utils::get_test_config());
 
 	config orc_config;
-	orc_config["id"]="Orcish Grunt";
-	orc_config["random_traits"] = false;
-	orc_config["animate"]=false;
+	orc_config[str_id]="Orcish Grunt";
+	orc_config[str_random_traits] = false;
+	orc_config[str_animate]=false;
 	unit_type orc_type(orc_config);
 
 	unit_types.build_unit_type(orc_type, unit_type::FULL);
@@ -237,9 +237,9 @@ BOOST_AUTO_TEST_CASE( track_fake_unit_by_iterator ) {
 	config game_config(test_utils::get_test_config());
 
 	config orc_config;
-	orc_config["id"]="Orcish Grunt";
-	orc_config["random_traits"] = false;
-	orc_config["animate"]=false;
+	orc_config[str_id]="Orcish Grunt";
+	orc_config[str_random_traits] = false;
+	orc_config[str_animate]=false;
 	unit_type orc_type(orc_config);
 
 	unit_types.build_unit_type(orc_type, unit_type::FULL);

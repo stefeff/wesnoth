@@ -103,7 +103,7 @@ void manager::write_sourcespecs(config& cfg) const
 		assert(i->second);
 
 		config& child = cfg.add_child(str_sound_source);
-		child["id"] = i->first;
+		child[str_id] = i->first;
 		i->second->write_config(child);
 	}
 }
@@ -210,41 +210,41 @@ int positional_source::calculate_volume(const map_location &loc, const display &
 
 void positional_source::write_config(config& cfg) const
 {
-	cfg["sounds"] = files_;
-	cfg["delay"] = min_delay_;
-	cfg["chance"] = chance_;
-	cfg["check_fogged"] = check_fogged_;
-	cfg["check_shrouded"] = check_shrouded_;
-	cfg["loop"] = loops_;
-	cfg["full_range"] = range_;
-	cfg["fade_range"] = faderange_;
+	cfg[str_sounds] = files_;
+	cfg[str_delay] = min_delay_;
+	cfg[str_chance] = chance_;
+	cfg[str_check_fogged] = check_fogged_;
+	cfg[str_check_shrouded] = check_shrouded_;
+	cfg[str_loop] = loops_;
+	cfg[str_full_range] = range_;
+	cfg[str_fade_range] = faderange_;
 	write_locations(locations_, cfg);
 }
 
 void sourcespec::write(config& cfg) const
 {
-	cfg["id"] = id_;
-	cfg["sounds"] = files_;
-	cfg["delay"] = min_delay_;
-	cfg["chance"] = chance_;
-	cfg["check_fogged"] = check_fogged_;
-	cfg["check_shrouded"] = check_shrouded_;
-	cfg["loop"] = loops_;
-	cfg["full_range"] = range_;
-	cfg["fade_range"] = faderange_;
+	cfg[str_id] = id_;
+	cfg[str_sounds] = files_;
+	cfg[str_delay] = min_delay_;
+	cfg[str_chance] = chance_;
+	cfg[str_check_fogged] = check_fogged_;
+	cfg[str_check_shrouded] = check_shrouded_;
+	cfg[str_loop] = loops_;
+	cfg[str_full_range] = range_;
+	cfg[str_fade_range] = faderange_;
 	write_locations(locations_, cfg);
 }
 
 sourcespec::sourcespec(const config& cfg) :
-	id_(cfg["id"]),
-	files_(cfg["sounds"]),
-	min_delay_(cfg["delay"].to_int(DEFAULT_DELAY)),
-	chance_(cfg["chance"].to_int(DEFAULT_CHANCE)),
-	loops_(cfg["loop"]),
-	range_(cfg["full_range"].to_int(3)),
-	faderange_(cfg["fade_range"].to_int(14)),
-	check_fogged_(cfg["check_fogged"].to_bool(true)),
-	check_shrouded_(cfg["check_shrouded"].to_bool(true)),
+	id_(cfg[str_id]),
+	files_(cfg[str_sounds]),
+	min_delay_(cfg[str_delay].to_int(DEFAULT_DELAY)),
+	chance_(cfg[str_chance].to_int(DEFAULT_CHANCE)),
+	loops_(cfg[str_loop]),
+	range_(cfg[str_full_range].to_int(3)),
+	faderange_(cfg[str_fade_range].to_int(14)),
+	check_fogged_(cfg[str_check_fogged].to_bool(true)),
+	check_shrouded_(cfg[str_check_shrouded].to_bool(true)),
 	locations_()
 {
 	read_locations(cfg, locations_);

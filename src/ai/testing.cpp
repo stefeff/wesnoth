@@ -63,13 +63,13 @@ void ai_testing::log_turn(const char* msg, unsigned int side)
 	DBG_AI_TESTING << msg << "_INCOME "     << side << ": " << _income;
 
 	config c;
-	c["side"] = static_cast<int>(side);
-	c["turn"] = _turn_number;
-	c["event"] = msg;
-	c["units"] = _units;
-	c["units_cost"] = _units_cost;
-	c["gold"] = _gold;
-	c["villages"] = _villages;
+	c[str_side] = static_cast<int>(side);
+	c[str_turn] = _turn_number;
+	c[str_event] = msg;
+	c[str_units] = _units;
+	c[str_units_cost] = _units_cost;
+	c[str_gold] = _gold;
+	c[str_villages] = _villages;
 	resources::recorder->add_log_data("ai_log","turn_info",c);
 }
 

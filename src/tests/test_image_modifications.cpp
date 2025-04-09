@@ -87,9 +87,9 @@ private:
 	{
 		config cfg;
 
-		cfg["id"] = id;
-		cfg["rgb"] = rgb;
-		cfg["name"] = name;
+		cfg[str_id] = id;
+		cfg[str_rgb] = rgb;
+		cfg[str_name] = name;
 
 		return cfg;
 	}
@@ -98,7 +98,7 @@ private:
 	{
 		config cfg;
 
-		cfg["path"] = path;
+		cfg[str_path] = path;
 
 		return cfg;
 	}

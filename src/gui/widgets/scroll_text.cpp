@@ -244,10 +244,10 @@ namespace implementation
 
 builder_scroll_text::builder_scroll_text(const config& cfg)
 	: implementation::builder_styled_widget(cfg)
-	, vertical_scrollbar_mode(get_scrollbar_mode(cfg["vertical_scrollbar_mode"]))
-	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg["horizontal_scrollbar_mode"]))
-	, text_alignment(decode_text_alignment(cfg["text_alignment"]))
-	, editable(cfg["editable"].to_bool(true))
+	, vertical_scrollbar_mode(get_scrollbar_mode(cfg[str_vertical_scrollbar_mode]))
+	, horizontal_scrollbar_mode(get_scrollbar_mode(cfg[str_horizontal_scrollbar_mode]))
+	, text_alignment(decode_text_alignment(cfg[str_text_alignment]))
+	, editable(cfg[str_editable].to_bool(true))
 {
 	// Scrollbar default to auto. AUTO_VISIBLE_FIRST_RUN doesn't work.
 	if (horizontal_scrollbar_mode == scrollbar_container::AUTO_VISIBLE_FIRST_RUN) {

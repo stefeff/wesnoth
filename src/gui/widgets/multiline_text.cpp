@@ -459,8 +459,8 @@ multiline_text_definition::multiline_text_definition(const config& cfg)
 
 multiline_text_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, text_x_offset(cfg["text_x_offset"])
-	, text_y_offset(cfg["text_y_offset"])
+	, text_x_offset(cfg[str_text_x_offset])
+	, text_y_offset(cfg[str_text_y_offset])
 {
 	// Note the order should be the same as the enum state_t in multiline_text.hpp.
 	state.emplace_back(VALIDATE_WML_CHILD(cfg, "state_enabled", missing_mandatory_wml_tag("multiline_text_definition][resolution", "state_enabled")));
@@ -476,12 +476,12 @@ namespace implementation
 
 builder_multiline_text::builder_multiline_text(const config& cfg)
 	: builder_styled_widget(cfg)
-	, history(cfg["history"])
-	, max_input_length(cfg["max_input_length"])
-	, hint_text(cfg["hint_text"].t_str())
-	, hint_image(cfg["hint_image"])
-	, editable(cfg["editable"].to_bool(true))
-	, wrap(cfg["wrap"].to_bool(true))
+	, history(cfg[str_history])
+	, max_input_length(cfg[str_max_input_length])
+	, hint_text(cfg[str_hint_text].t_str())
+	, hint_image(cfg[str_hint_image])
+	, editable(cfg[str_editable].to_bool(true))
+	, wrap(cfg[str_wrap].to_bool(true))
 {
 }
 

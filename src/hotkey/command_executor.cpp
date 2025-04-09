@@ -427,7 +427,7 @@ void command_executor::show_menu(const std::vector<config>& items_arg, int xloc,
 	} // This will kill the dialog.
 	if (res < 0 || std::size_t(res) >= items.size()) return;
 
-	std::string id = items[res]["id"];
+	std::string id = items[res][str_id];
 	const theme::menu* submenu = gui.get_theme().get_menu_item(id);
 	if (submenu) {
 		int y,x;
@@ -499,18 +499,18 @@ void command_executor::get_menu_images(display& disp, std::vector<config>& items
 	for(std::size_t i = 0; i < items.size(); ++i) {
 		config& item = items[i];
 
-		const std::string& item_id = item["id"];
+		const std::string& item_id = item[str_id];
 		const hotkey::HOTKEY_COMMAND hk = hotkey::get_hotkey_command(item_id).command;
 
 		//see if this menu item has an associated image
 		std::string img(get_menu_image(disp, item_id, i));
 		if (img.empty() == false) {
-			item["icon"] = img;
+			item[str_icon] = img;
 		}
 
 		const theme::menu* menu = disp.get_theme().get_menu_item(item_id);
 		if(menu) {
-			item["label"] = menu->title();
+			item[str_label] = menu->title();
 		} else if(hk != hotkey::HOTKEY_NULL) {
 			std::string desc = hotkey::get_hotkey_command(item_id).description;
 			if(hk == HOTKEY_ENDTURN) {
@@ -520,8 +520,8 @@ void command_executor::get_menu_images(display& disp, std::vector<config>& items
 				}
 			}
 
-			item["label"] = desc;
-			item["details"] = hotkey::get_names(item_id);
+			item[str_label] = desc;
+			item[str_details] = hotkey::get_names(item_id);
 		}
 	}
 }
@@ -676,7 +676,7 @@ void command_executor_default::set_button_state()
 		bool enabled = false;
 		for (const auto& command : menu.items()) {
 
-			ui_command command_obj = ui_command(command["id"].str());
+			ui_command command_obj = ui_command(command[str_id].str());
 			bool can_execute = can_execute_command(command_obj);
 			if (can_execute) {
 				enabled = true;

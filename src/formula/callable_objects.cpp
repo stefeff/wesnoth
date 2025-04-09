@@ -113,8 +113,8 @@ variant attack_type_callable::get_value(const std::string& key) const
 		std::vector<variant> res;
 
 		for(const auto special : att_->specials().all_children_range()) {
-			if(!special.cfg["id"].empty()) {
-				res.emplace_back(special.cfg["id"].str());
+			if(!special.cfg[str_id].empty()) {
+				res.emplace_back(special.cfg[str_id].str());
 			}
 		}
 		return variant(res);
@@ -174,8 +174,8 @@ int attack_type_callable::do_compare(const formula_callable* callable) const
 		return self_specials.size() < other_specials.size() ? -1 : 1;
 	}
 	for(std::size_t i = 0; i < self_specials.size(); ++i) {
-		const auto& s = self_specials[i].cfg["id"];
-		const auto& o = other_specials[i].cfg["id"];
+		const auto& s = self_specials[i].cfg[str_id];
+		const auto& o = other_specials[i].cfg[str_id];
 		if(s != o) {
 			return s.str().compare(o.str());
 		}
@@ -416,7 +416,7 @@ variant unit_type_callable::get_value(const std::string& key) const
 	} else if(key == "traits") {
 		std::vector<variant> res;
 		for(const auto& config : u_.possible_traits()) {
-			res.emplace_back(config["id"].str());
+			res.emplace_back(config[str_id].str());
 		}
 
 		return variant(res);
