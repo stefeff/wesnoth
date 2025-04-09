@@ -93,7 +93,6 @@ config::config(config_key_type child)
 
 config::~config()
 {
-	clear();
 }
 
 config& config::operator=(const config& cfg)
