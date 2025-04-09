@@ -319,8 +319,9 @@ bool hash_container<T, Key, KeyAccess, Hash, KeyEqual>::operator==(const hash_co
         return false;
     }
 
-    for (auto& item : *this) {
-        if (!rhs.contains(key_access_(item))) {
+    for (auto& lhs_item : *this) {
+        auto rhs_pos = rhs.internal_find(key_access_(lhs_item));
+        if (!rhs_pos.found || lhs_item != rhs.data_[rhs_pos.data_index].template as<T>()) {
             return false;
         }
     }
