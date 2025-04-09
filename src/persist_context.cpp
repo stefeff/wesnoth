@@ -23,7 +23,7 @@
 config pack_scalar(const std::string &name, const t_string &val)
 {
 	config cfg;
-	cfg[name] = val;
+	cfg[config_key_type{name}] = val;
 	return cfg;
 }
 

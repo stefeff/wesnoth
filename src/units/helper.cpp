@@ -71,7 +71,7 @@ static std::string unit_level_tooltip(const int level, const std::vector<std::st
 				tooltip << "\n\t";
 			std::vector<std::string> descriptions;
 			for(const config& adv : adv_to_mods)
-				descriptions.push_back(adv["description"].str());
+				descriptions.push_back(adv[str_description].str());
 			tooltip << markup::bold(utils::join(descriptions, "\n\t"));
 		}
 	} else {

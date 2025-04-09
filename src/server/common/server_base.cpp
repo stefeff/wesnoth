@@ -630,7 +630,7 @@ template void server_base::async_send_warning<tls_socket_ptr>(const tls_socket_p
 
 void server_base::load_tls_config(const config& cfg)
 {
-	tls_enabled_ = cfg["tls_enabled"].to_bool(false);
+	tls_enabled_ = cfg[str_tls_enabled].to_bool(false);
 	if(!tls_enabled_) return;
 
 	tls_context_.set_options(
@@ -640,9 +640,9 @@ void server_base::load_tls_config(const config& cfg)
 		| boost::asio::ssl::context::single_dh_use
 	);
 
-	tls_context_.use_certificate_chain_file(cfg["tls_fullchain"].str());
-	tls_context_.use_private_key_file(cfg["tls_private_key"].str(), boost::asio::ssl::context::pem);
-	if(!cfg["tls_dh"].str().empty()) tls_context_.use_tmp_dh_file(cfg["tls_dh"].str());
+	tls_context_.use_certificate_chain_file(cfg[str_tls_fullchain].str());
+	tls_context_.use_private_key_file(cfg[str_tls_private_key].str(), boost::asio::ssl::context::pem);
+	if(!cfg[str_tls_dh].str().empty()) tls_context_.use_tmp_dh_file(cfg[str_tls_dh].str());
 }
 
 std::string server_base::hash_password(const std::string& pw, const std::string& salt, const std::string& username)

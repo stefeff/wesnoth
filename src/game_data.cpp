@@ -38,14 +38,14 @@ game_data::game_data(const config& level)
 	, rng_(level)
 	, variables_(level.child_or_empty(str_variables))
 	, phase_(INITIAL)
-	, can_end_turn_(level["can_end_turn"].to_bool(true))
-	, end_turn_forced_(level["end_turn"].to_bool())
-	, cannot_end_turn_reason_(level["cannot_end_turn_reason"].t_str())
-	, next_scenario_(level["next_scenario"])
-	, id_(level["id"])
-	, theme_(level["theme"])
-	, defeat_music_(utils::split(level["defeat_music"]))
-	, victory_music_(utils::split(level["victory_music"]))
+	, can_end_turn_(level[str_can_end_turn].to_bool(true))
+	, end_turn_forced_(level[str_end_turn].to_bool())
+	, cannot_end_turn_reason_(level[str_cannot_end_turn_reason].t_str())
+	, next_scenario_(level[str_next_scenario])
+	, id_(level[str_id])
+	, theme_(level[str_theme])
+	, defeat_music_(utils::split(level[str_defeat_music]))
+	, victory_music_(utils::split(level[str_victory_music]))
 {
 }
 
@@ -130,17 +130,17 @@ void game_data::clear_variable(const std::string& varname)
 void game_data::write_snapshot(config& cfg) const
 {
 	write_phase(cfg, phase_);
-	cfg["next_scenario"] = next_scenario_;
-	cfg["id"] = id_;
-	cfg["theme"] = theme_;
-	cfg["defeat_music"] = utils::join(defeat_music_);
-	cfg["victory_music"] = utils::join(victory_music_);
+	cfg[str_next_scenario] = next_scenario_;
+	cfg[str_id] = id_;
+	cfg[str_theme] = theme_;
+	cfg[str_defeat_music] = utils::join(defeat_music_);
+	cfg[str_victory_music] = utils::join(victory_music_);
 
-	cfg["can_end_turn"] = can_end_turn_;
-	cfg["cannot_end_turn_reason"] = cannot_end_turn_reason_;
+	cfg[str_can_end_turn] = can_end_turn_;
+	cfg[str_cannot_end_turn_reason] = cannot_end_turn_reason_;
 
-	cfg["random_seed"] = rng_.get_random_seed_str();
-	cfg["random_calls"] = rng_.get_random_calls();
+	cfg[str_random_seed] = rng_.get_random_seed_str();
+	cfg[str_random_calls] = rng_.get_random_calls();
 
 	cfg.add_child(str_variables, variables_);
 
@@ -176,10 +176,10 @@ void game_data::activate_scope_variable(std::string var_name) const
 
 game_data::PHASE game_data::read_phase(const config& cfg)
 {
-	if(cfg["playing_team"].empty()) {
+	if(cfg[str_playing_team].empty()) {
 		return game_data::PRELOAD;
 	}
-	if(!cfg["init_side_done"].to_bool()) {
+	if(!cfg[str_init_side_done].to_bool()) {
 		return game_data::TURN_STARTING_WAITING;
 	}
 	if(cfg.has_child(str_end_level_data)) {
@@ -206,5 +206,5 @@ bool game_data::is_after_start() const
 
 void game_data::write_phase(config& cfg, game_data::PHASE phase)
 {
-	cfg["init_side_done"] = !(phase == INITIAL || phase == PRELOAD || phase == PRESTART || phase == TURN_STARTING_WAITING);
+	cfg[str_init_side_done] = !(phase == INITIAL || phase == PRELOAD || phase == PRESTART || phase == TURN_STARTING_WAITING);
 }

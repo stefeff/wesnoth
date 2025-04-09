@@ -255,17 +255,17 @@ bool looks_like_pbl(const std::string& file)
 }
 
 file_tree_checksum::file_tree_checksum(const config& cfg)
-	: nfiles(cfg["nfiles"].to_size_t())
-	, sum_size(cfg["size"].to_size_t())
-	, modified(chrono::parse_timestamp(cfg["modified"]))
+	: nfiles(cfg[str_nfiles].to_size_t())
+	, sum_size(cfg[str_size].to_size_t())
+	, modified(chrono::parse_timestamp(cfg[str_modified]))
 {
 }
 
 void file_tree_checksum::write(config& cfg) const
 {
-	cfg["nfiles"] = nfiles;
-	cfg["size"] = sum_size;
-	cfg["modified"] = chrono::serialize_timestamp(modified);
+	cfg[str_nfiles] = nfiles;
+	cfg[str_size] = sum_size;
+	cfg[str_modified] = chrono::serialize_timestamp(modified);
 }
 
 bool file_tree_checksum::operator==(const file_tree_checksum &rhs) const

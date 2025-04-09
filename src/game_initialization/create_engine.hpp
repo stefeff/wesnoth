@@ -70,27 +70,27 @@ public:
 
 	virtual std::string id() const
 	{
-		return data_["id"];
+		return data_[str_id];
 	}
 
 	virtual std::string name() const
 	{
-		return data_["name"];
+		return data_[str_name];
 	}
 
 	virtual std::string icon() const
 	{
-		return data_["icon"];
+		return data_[str_icon];
 	}
 
 	virtual std::string description() const
 	{
-		return data_["description"];
+		return data_[str_description];
 	}
 
 	virtual bool allow_era_choice() const
 	{
-		return data_["allow_era_choice"].to_bool(true);
+		return data_[str_allow_era_choice].to_bool(true);
 	}
 
 	void set_data(const config& data)

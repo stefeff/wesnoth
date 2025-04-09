@@ -45,7 +45,7 @@ stage::stage( ai_context &context, const config &cfg )
 
 void stage::on_create()
 {
-	LOG_AI_STAGE << "side "<< get_side() << " : "<<" created stage with name=["<<cfg_["name"]<<"]";
+	LOG_AI_STAGE << "side "<< get_side() << " : "<<" created stage with name=["<<cfg_[str_name]<<"]";
 }
 
 stage::~stage()
@@ -65,25 +65,25 @@ int stage::get_recursion_count() const
 config stage::to_config() const
 {
 	config cfg;
-	cfg["engine"] = cfg_["engine"];
-	cfg["name"] = cfg_["name"];
-	cfg["id"] = cfg_["id"];
+	cfg[str_engine] = cfg_[str_engine];
+	cfg[str_name] = cfg_[str_name];
+	cfg[str_id] = cfg_[str_id];
 	return cfg;
 }
 
 std::string stage::get_id() const
 {
-	return cfg_["id"];
+	return cfg_[str_id];
 }
 
 std::string stage::get_engine() const
 {
-	return cfg_["engine"];
+	return cfg_[str_engine];
 }
 
 std::string stage::get_name() const
 {
-	return cfg_["name"];
+	return cfg_[str_name];
 }
 
 // =======================================================================

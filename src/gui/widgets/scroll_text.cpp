@@ -241,9 +241,9 @@ namespace implementation
 
 builder_scroll_text::builder_scroll_text(const config& cfg)
 	: builder_scrollbar_container(cfg)
-	, text_alignment(decode_text_alignment(cfg["text_alignment"]))
-	, editable(cfg["editable"].to_bool(true))
-	, link_aware(cfg["link_aware"].to_bool(false))
+	, text_alignment(decode_text_alignment(cfg[str_text_alignment]))
+	, editable(cfg[str_editable].to_bool(true))
+	, link_aware(cfg[str_link_aware].to_bool(false))
 {
 	// Scrollbar default to auto. AUTO_VISIBLE_FIRST_RUN doesn't work.
 	if (horizontal_scrollbar_mode == scrollbar_container::AUTO_VISIBLE_FIRST_RUN) {

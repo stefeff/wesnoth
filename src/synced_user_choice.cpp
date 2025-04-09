@@ -276,7 +276,7 @@ void user_choice_manager::search_in_replay()
 
 		const config *action = resources::recorder->get_next_action();
 		assert(action); //action cannot be null because resources::recorder->at_end() returned false.
-		if( !action->has_child(tagname_) || !(*action)["dependent"].to_bool())
+		if( !action->has_child(tagname_) || !(*action)[str_dependent].to_bool())
 		{
 			replay::process_error("[" + tagname_ + "] expected but none found\n. found instead:\n" + action->debug());
 			//We save this action for later
@@ -286,8 +286,8 @@ void user_choice_manager::search_in_replay()
 			changed_event_.notify_observers();
 			return;
 		}
-		int from_side = (*action)["from_side"].to_int(0);
-		if((*action)["side_invalid"].to_bool(false) == true)
+		int from_side = (*action)[str_from_side].to_int(0);
+		if((*action)[str_side_invalid].to_bool(false) == true)
 		{
 			//since this 'cheat' can have a quite heavy effect especially in umc content we give an oos error .
 			replay::process_error("MP synchronization: side_invalid in replay data, this could mean someone wants to cheat.\n");

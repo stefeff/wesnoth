@@ -391,7 +391,7 @@ void schema_validator::open_tag(const std::string& name, const config& parent, i
 				if(!addition) {
 					counter& cnt = counter_.top()[name];
 					++cnt.cnt;
-					counter& total_cnt = counter_.top()[""];
+					counter& total_cnt = counter_.top()[{}];
 					++total_cnt.cnt;
 				}
 			}
@@ -496,7 +496,7 @@ void schema_validator::validate(const config& cfg, const std::string& name, int 
 			}
 		}
 
-		int total_cnt = counter_.top()[""].cnt;
+		int total_cnt = counter_.top()[{}].cnt;
 		if(active.get_min_children() > total_cnt) {
 			queue_message(cfg, MISSING_TAG, file, start_line, active.get_min_children(), "*", "", active.get_name());
 		} else if(active_tag().get_max_children() < total_cnt) {
@@ -805,13 +805,13 @@ void schema_self_validator::check_for_duplicates(const std::string& name, std::v
 void schema_self_validator::validate(const config& cfg, const std::string& name, int start_line, const std::string& file)
 {
 	if(type_nesting_ == 1 && name == "type") {
-		defined_types_.insert(cfg["name"]);
+		defined_types_.insert(cfg[str_name]);
 	} else if(name == "tag") {
 		bool first_tag = true, first_key = true;
 		std::vector<std::string> tag_names, key_names;
 		for(const auto [current_key, current_cfg] : cfg.all_children_view()) {
 			if(current_key == "tag" || current_key == "link") {
-				std::string tag_name = current_cfg["name"];
+				std::string tag_name = current_cfg[str_name];
 				if(current_key == "link") {
 					tag_name.erase(0, tag_name.find_last_of('/') + 1);
 				}
@@ -822,7 +822,7 @@ void schema_self_validator::validate(const config& cfg, const std::string& name,
 				}
 				check_for_duplicates(tag_name, tag_names, current_cfg, DUPLICATE_TAG, file, start_line, current_key);
 			} else if(current_key == "key") {
-				std::string key_name = current_cfg["name"];
+				std::string key_name = current_cfg[str_name];
 				if(first_key) {
 					key_names.push_back(key_name);
 					first_key = false;

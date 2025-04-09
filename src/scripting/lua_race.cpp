@@ -57,14 +57,14 @@ static int impl_race_get(lua_State* L)
 		lua_newtable(L);
 		if (race.uses_global_traits()) {
 			for (const config& trait : unit_types.traits()) {
-				const std::string& id = trait["id"];
+				const std::string& id = trait[str_id];
 				lua_pushlstring(L, id.c_str(), id.length());
 				luaW_pushconfig(L, trait);
 				lua_rawset(L, -3);
 			}
 		}
 		for (const config& trait : race.additional_traits()) {
-			const std::string& id = trait["id"];
+			const std::string& id = trait[str_id];
 			lua_pushlstring(L, id.c_str(), id.length());
 			luaW_pushconfig(L, trait);
 			lua_rawset(L, -3);

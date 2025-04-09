@@ -33,9 +33,9 @@ static lg::log_domain log_ai_engine("ai/engine");
 engine::engine( readonly_context &context, const config &cfg )
 	: ai_(context)
 	, ai_context_(nullptr)
-	, engine_(cfg["engine"])
-	, id_(cfg["id"])
-	, name_(cfg["name"])
+	, engine_(cfg[str_engine])
+	, id_(cfg[str_id])
+	, name_(cfg[str_name])
 {
 	LOG_AI_ENGINE << "side "<< ai_.get_side() << " : "<<" created engine with name=["<<name_<<"]";
 }
@@ -129,8 +129,8 @@ ai_context_ptr engine::get_ai_context()
 config engine::to_config() const
 {
 	config cfg;
-	cfg["engine"] = engine_;
-	cfg["name"] = get_name();
+	cfg[str_engine] = engine_;
+	cfg[str_name] = get_name();
 	return cfg;
 }
 

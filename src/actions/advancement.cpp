@@ -75,7 +75,7 @@ namespace
 		bool always_display = false;
 
 		for (const config& advance : u.get_modification_advances()) {
-			if (advance["always_display"].to_bool()) {
+			if (advance[str_always_display].to_bool()) {
 				always_display = true;
 			}
 			previews.push_back(get_amla_unit(u, advance));
@@ -169,7 +169,7 @@ namespace
 		{
 			auto amla_options = u.get_modification_advances();
 			auto pick_iter = std::find_if(amla_options.begin(), amla_options.end(), [&](const config& adv){
-				return adv["id"].str() == id;
+				return adv[str_id].str() == id;
 			});
 			if(pick_iter != amla_options.end()) {
 				return type_options.size() + std::distance(amla_options.begin(), pick_iter);
@@ -238,14 +238,14 @@ namespace
 			}
 			LOG_NG << "unit at position " << loc_ << " chose advancement number " << res;
 			config retv;
-			retv["value"] = res;
+			retv[str_value] = res;
 			return retv;
 
 		}
 		virtual config random_choice(int /*side*/) const
 		{
 			config retv;
-			retv["value"] = 0;
+			retv[str_value] = 0;
 			return retv;
 		}
 		virtual std::string description() const
@@ -296,7 +296,7 @@ void advance_unit_at(const advance_unit_params& params)
 		config selected = mp_sync::get_user_choice("choose",
 			unit_advancement_choice(params.loc_, unit_helper::number_of_possible_advances(*u), u->side(), params.force_dialog_), side_for);
 		//calls actions::advance_unit.
-		bool result = animate_unit_advancement(params.loc_, selected["value"].to_size_t(), params.fire_events_, params.animate_);
+		bool result = animate_unit_advancement(params.loc_, selected[str_value].to_size_t(), params.fire_events_, params.animate_);
 
 		DBG_NG << "animate_unit_advancement result = " << result;
 		u = resources::gameboard->units().find(params.loc_);

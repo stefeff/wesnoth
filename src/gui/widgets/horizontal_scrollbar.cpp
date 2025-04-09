@@ -114,10 +114,10 @@ horizontal_scrollbar_definition::horizontal_scrollbar_definition(
 
 horizontal_scrollbar_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, minimum_positioner_length(cfg["minimum_positioner_length"].to_unsigned())
-	, maximum_positioner_length(cfg["maximum_positioner_length"].to_unsigned())
-	, left_offset(cfg["left_offset"].to_unsigned())
-	, right_offset(cfg["right_offset"].to_unsigned())
+	, minimum_positioner_length(cfg[str_minimum_positioner_length].to_unsigned())
+	, maximum_positioner_length(cfg[str_maximum_positioner_length].to_unsigned())
+	, left_offset(cfg[str_left_offset].to_unsigned())
+	, right_offset(cfg[str_right_offset].to_unsigned())
 {
 	VALIDATE(minimum_positioner_length,
 			 missing_mandatory_wml_key("resolution",

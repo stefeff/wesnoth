@@ -246,17 +246,17 @@ public:
 
 	t_string get_scenario_name() const
 	{
-		return level_["name"].t_str();
+		return level_[str_name].t_str();
 	}
 
 	bool get_disallow_recall() const
 	{
-		return level_["disallow_recall"].to_bool();
+		return level_[str_disallow_recall].to_bool();
 	}
 
 	std::string get_loaded_resources() const
 	{
-		return level_["loaded_resources"].str();
+		return level_[str_loaded_resources].str();
 	}
 
 	std::string theme() const

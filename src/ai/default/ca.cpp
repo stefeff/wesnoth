@@ -284,8 +284,8 @@ double move_leader_to_goals_phase::evaluate()
 		return BAD_SCORE;
 	}
 
-	double max_risk = goal["max_risk"].to_double(1 - get_caution());
-	auto_remove_ = goal["auto_remove"].to_bool();
+	double max_risk = goal[str_max_risk].to_double(1 - get_caution());
+	auto_remove_ = goal[str_auto_remove].to_bool();
 
 	dst_ = map_location(goal, resources::gamedata);
 	if (!dst_.valid()) {
@@ -312,7 +312,7 @@ double move_leader_to_goals_phase::evaluate()
 		return BAD_SCORE;
 	}
 
-	id_ = goal["id"].str();
+	id_ = goal[str_id].str();
 	if (leader->get_location() == dst_) {
 		//goal already reached
 		if (auto_remove_ && !id_.empty()) {
@@ -378,9 +378,9 @@ void move_leader_to_goals_phase::execute()
 void move_leader_to_goals_phase::remove_goal(const std::string &id)
 {
 	config mod_ai;
-	mod_ai["side"] = get_side();
-	mod_ai["path"] = "aspect[leader_goal].facet["+id+"]";
-	mod_ai["action"] = "delete";
+	mod_ai[str_side] = get_side();
+	mod_ai[str_path] = "aspect[leader_goal].facet["+id+"]";
+	mod_ai[str_action] = "delete";
 	manager::get_singleton().modify_active_ai_for_side(get_side(), mod_ai);
 }
 

@@ -416,8 +416,8 @@ void recruitment::execute() {
 			}
 
 			// Update the current job.
-			if (!job->operator[]("total").to_bool(false)) {
-				job->operator[]("number") = job->operator[]("number").to_int(99999) - 1;
+			if (!job->operator[](str_total).to_bool(false)) {
+				job->operator[](str_number) = job->operator[](str_number).to_int(99999) - 1;
 			}
 
 			// Check if something changed in the recruitment list (WML can do that).

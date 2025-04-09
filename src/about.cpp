@@ -39,7 +39,7 @@ std::vector<std::string> images_general;
 
 void gather_images(const config& from, std::vector<std::string>& to)
 {
-	const auto& im = utils::parenthetical_split(from["images"].str(), ',');
+	const auto& im = utils::parenthetical_split(from[str_images].str(), ',');
 	to.insert(to.end(), im.begin(), im.end());
 }
 

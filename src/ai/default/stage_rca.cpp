@@ -159,8 +159,8 @@ void candidate_action_evaluation_loop::remove_completed_cas()
 		std::string path = "stage[" + this->get_id() + "].candidate_action[" + candidate_actions_[tbr[index]]->get_name() + "]";
 
 		config cfg = config();
-		cfg["path"] = path;
-		cfg["action"] = "delete";
+		cfg[str_path] = path;
+		cfg[str_action] = "delete";
 
 		ai::manager::get_singleton().modify_active_ai_for_side(this->get_side(), cfg); // we remove the CA
 	}

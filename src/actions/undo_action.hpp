@@ -90,7 +90,7 @@ namespace actions {
 		/** Writes this into the provided config. */
 		virtual void write(config& cfg) const
 		{
-			cfg["type"] = this->get_type();
+			cfg[str_type] = this->get_type();
 		}
 		virtual const char* get_type() const = 0;
 	};

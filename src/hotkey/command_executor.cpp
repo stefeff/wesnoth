@@ -420,7 +420,7 @@ void command_executor::show_menu(const std::vector<config>& items_arg, const poi
 	}
 
 	const auto do_command = [&](int selected_item) {
-		std::string id = items[selected_item]["id"].str();
+		std::string id = items[selected_item][str_id].str();
 		do_execute_command(hotkey::ui_command(id, selected_item));
 		set_button_state();
 	};
@@ -450,7 +450,7 @@ void command_executor::show_menu(const std::vector<config>& items_arg, const poi
 		return;
 	}
 
-	if(const theme::menu* submenu = display::get_singleton()->get_theme().get_menu_item(items[res]["id"])) {
+	if(const theme::menu* submenu = display::get_singleton()->get_theme().get_menu_item(items[res][str_id])) {
 		show_menu(submenu->items(), selection_pos, submenu->is_context());
 	} else {
 		do_command(res);
@@ -470,7 +470,7 @@ void command_executor::execute_action(const std::vector<std::string>& items_arg)
 
 void command_executor::populate_menu_controls(config& item, int index) const
 {
-	const std::string& command = item["id"];
+	const std::string& command = item[str_id];
 
 	// FIXME: better integrate this with GUI2
 	const std::string default_image = "icons/action/" + command + "_25.png";
@@ -485,26 +485,26 @@ void command_executor::populate_menu_controls(config& item, int index) const
 		switch(state) {
 		case action_state::on:
 		case action_state::selected:
-			item["icon"] = pressed_image + "~CROP(3,3,18,18)";
+			item[str_icon] = pressed_image + "~CROP(3,3,18,18)";
 			return;
 		default:
-			item["icon"] = default_image + "~CROP(3,3,18,18)";
+			item[str_icon] = default_image + "~CROP(3,3,18,18)";
 			return;
 		}
 	}
 
 	switch(state) {
 	case action_state::on:
-		item["checkbox"] = true;
+		item[str_checkbox] = true;
 		break;
 	case action_state::off:
-		item["checkbox"] = false;
+		item[str_checkbox] = false;
 		break;
 	case action_state::selected:
-		item["radio"] = true;
+		item[str_radio] = true;
 		break;
 	case action_state::deselected:
-		item["radio"] = false;
+		item[str_radio] = false;
 		break;
 	case action_state::stateless:
 		// Do nothing
@@ -514,14 +514,14 @@ void command_executor::populate_menu_controls(config& item, int index) const
 
 void command_executor::populate_menu_item_info(config& item, int index) const
 {
-	const std::string& item_id = item["id"];
+	const std::string& item_id = item[str_id];
 	const auto& hk = hotkey::get_hotkey_command(item_id);
 	const theme& theme = display::get_singleton()->get_theme();
 
 	// Submenu
 	if(const theme::menu* menu = theme.get_menu_item(item_id)) {
-		item["icon"] = "icons/arrows/short_arrow_right_25.png~CROP(3,3,18,18)"; // TODO: should not be hardcoded
-		item["label"] = menu->title();
+		item[str_icon] = "icons/arrows/short_arrow_right_25.png~CROP(3,3,18,18)"; // TODO: should not be hardcoded
+		item[str_label] = menu->title();
 		return;
 	}
 
@@ -529,7 +529,7 @@ void command_executor::populate_menu_item_info(config& item, int index) const
 	populate_menu_controls(item, index);
 
 	if(hk.command != hotkey::HOTKEY_NULL) {
-		item["details"] = hotkey::get_names(item_id);
+		item[str_details] = hotkey::get_names(item_id);
 
 		switch(hk.command) {
 		case hotkey::HOTKEY_WML:
@@ -537,13 +537,13 @@ void command_executor::populate_menu_item_info(config& item, int index) const
 
 		case hotkey::HOTKEY_ENDTURN:
 			if(const theme::action* b = theme.get_action_item("button-endturn")) {
-				item["label"] = b->title();
+				item[str_label] = b->title();
 				break;
 			}
 			[[fallthrough]];
 
 		default:
-			item["label"] = hk.description;
+			item[str_label] = hk.description;
 			break;
 		}
 	}
@@ -699,7 +699,7 @@ void command_executor_default::set_button_state()
 		bool enabled = false;
 		for (const auto& command : menu.items()) {
 
-			ui_command command_obj = ui_command(command["id"].str());
+			ui_command command_obj = ui_command(command[str_id].str());
 			bool can_execute = can_execute_command(command_obj);
 			if (can_execute) {
 				enabled = true;

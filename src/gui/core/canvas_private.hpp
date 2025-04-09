@@ -62,10 +62,10 @@ protected:
 	 */
 	explicit rect_bounded_shape(const config& cfg)
 		: shape(cfg)
-		, x_(cfg["x"])
-		, y_(cfg["y"])
-		, w_(cfg["w"])
-		, h_(cfg["h"])
+		, x_(cfg[str_x])
+		, y_(cfg[str_y])
+		, w_(cfg[str_w])
+		, h_(cfg[str_h])
 	{
 	}
 

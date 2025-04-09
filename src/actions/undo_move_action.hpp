@@ -34,10 +34,10 @@ struct move_action : undo_action, shroud_clearing_action
 	move_action(const config & cfg)
 		: undo_action()
 		, shroud_clearing_action(cfg)
-		, starting_moves(cfg["starting_moves"].to_int())
-		, starting_dir(map_location::parse_direction(cfg["starting_direction"]))
-		, goto_hex(cfg.child_or_empty("unit")["goto_x"].to_int(-999),
-			  cfg.child_or_empty("unit")["goto_y"].to_int(-999),
+		, starting_moves(cfg[str_starting_moves].to_int())
+		, starting_dir(map_location::parse_direction(cfg[str_starting_direction]))
+		, goto_hex(cfg.child_or_empty("unit")[str_goto_x].to_int(-999),
+			  cfg.child_or_empty("unit")[str_goto_y].to_int(-999),
 			  wml_loc())
 	{
 	}

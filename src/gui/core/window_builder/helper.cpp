@@ -89,14 +89,14 @@ unsigned read_flags(const config& cfg)
 {
 	unsigned flags = 0;
 
-	const unsigned v_flags = get_v_align(cfg["vertical_alignment"]);
-	const unsigned h_flags = get_h_align(cfg["horizontal_alignment"]);
-	flags |= get_border(utils::split(cfg["border"]));
+	const unsigned v_flags = get_v_align(cfg[str_vertical_alignment]);
+	const unsigned h_flags = get_h_align(cfg[str_horizontal_alignment]);
+	flags |= get_border(utils::split(cfg[str_border]));
 
-	if(cfg["vertical_grow"].to_bool()) {
+	if(cfg[str_vertical_grow].to_bool()) {
 		flags |= grid::VERTICAL_GROW_SEND_TO_CLIENT;
 
-		if(!(cfg["vertical_alignment"]).empty()) {
+		if(!(cfg[str_vertical_alignment]).empty()) {
 			ERR_GUI_P << "vertical_grow and vertical_alignment "
 						 "can't be combined, alignment is ignored.";
 		}
@@ -104,10 +104,10 @@ unsigned read_flags(const config& cfg)
 		flags |= v_flags;
 	}
 
-	if(cfg["horizontal_grow"].to_bool()) {
+	if(cfg[str_horizontal_grow].to_bool()) {
 		flags |= grid::HORIZONTAL_GROW_SEND_TO_CLIENT;
 
-		if(!(cfg["horizontal_alignment"]).empty()) {
+		if(!(cfg[str_horizontal_alignment]).empty()) {
 			ERR_GUI_P << "horizontal_grow and horizontal_alignment "
 						 "can't be combined, alignment is ignored.";
 		}

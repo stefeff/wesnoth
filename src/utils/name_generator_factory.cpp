@@ -54,7 +54,7 @@ void name_generator_factory::add_name_generator_from_config(const config& config
 		config::attribute_value markov_name_list = config[markov_name];
 
 		if(!markov_name_list.blank()) {
-			name_generators_[id].reset(new markov_generator(utils::split(markov_name_list), config["markov_chain_size"].to_int(2), 12));
+			name_generators_[id].reset(new markov_generator(utils::split(markov_name_list), config[str_markov_chain_size].to_int(2), 12));
 		}
 	}
 }

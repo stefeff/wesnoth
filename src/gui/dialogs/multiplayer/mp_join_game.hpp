@@ -38,7 +38,7 @@ public:
 	~mp_join_game();
 
 	bool fetch_game_config();
-	bool started() const { return level_["started"].to_bool(); }
+	bool started() const { return level_[str_started].to_bool(); }
 private:
 	virtual const std::string& window_id() const override;
 

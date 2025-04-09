@@ -145,8 +145,8 @@ public:
 
 	virtual engine_ptr get_new_instance( readonly_context &ai, const std::string& name ){
 		config cfg;
-		cfg["name"] = name;
-		cfg["engine"] = "cpp"; // @Crab: what is the purpose of this line(neph)
+		cfg[str_name] = name;
+		cfg[str_engine] = "cpp"; // @Crab: what is the purpose of this line(neph)
 		return std::make_shared<ENGINE>(ai, cfg);
 	}
 };

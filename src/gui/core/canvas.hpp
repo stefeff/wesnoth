@@ -53,7 +53,7 @@ public:
 	class shape
 	{
 	public:
-		explicit shape(const config& cfg) : immutable_(cfg["immutable"].to_bool(false))
+		explicit shape(const config& cfg) : immutable_(cfg[str_immutable].to_bool(false))
 		{
 		}
 

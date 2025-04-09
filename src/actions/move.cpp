@@ -180,8 +180,8 @@ struct take_village_step : undo_action
 	}
 
 	take_village_step(const config& cfg)
-		: original_village_owner(cfg["village_owner"].to_int())
-		, take_village_timebonus(cfg["village_timebonus"].to_bool())
+		: original_village_owner(cfg[str_village_owner].to_int())
+		, take_village_timebonus(cfg[str_village_timebonus].to_bool())
 		, loc(cfg)
 	{
 	}
@@ -195,8 +195,8 @@ struct take_village_step : undo_action
 	virtual void write(config& cfg) const
 	{
 		undo_action::write(cfg);
-		cfg["village_owner"] = original_village_owner;
-		cfg["village_timebonus"] = take_village_timebonus;
+		cfg[str_village_owner] = original_village_owner;
+		cfg[str_village_timebonus] = take_village_timebonus;
 		loc.write(cfg);
 	}
 
@@ -967,7 +967,7 @@ namespace { // Private helpers for move_unit()
 	{
 		for(const active_ability &hide : ambusher.get_abilities("hides"))
 		{
-			const std::string & ambush_string = hide.ability_cfg()["alert"].str();
+			const std::string & ambush_string = hide.ability_cfg()[str_alert].str();
 			if (!ambush_string.empty()) {
 				return ambush_string;
 			}
@@ -1288,15 +1288,15 @@ namespace { // Private helpers for move_unit()
 			// Create the message to display (depends on whether friends,
 			// enemies, or both were sighted, and on how many of each).
 			utils::string_map symbols;
-			symbols["enemies"] = std::to_string(enemy_count_);
-			symbols["friends"] = std::to_string(friend_count_);
+			symbols[str_enemies] = std::to_string(enemy_count_);
+			symbols[str_friends] = std::to_string(friend_count_);
 			std::string message;
 			color_t msg_color;
 			if ( friend_count_ != 0  &&  enemy_count_ != 0 ) {
 				// TRANSLATORS: This becomes the "friendphrase" in "Units sighted! ($friendphrase, $enemyphrase)"
-				symbols["friendphrase"] = VNGETTEXT("Part of 'Units sighted! (...)' sentence^1 friendly", "$friends friendly", friend_count_, symbols);
+				symbols[str_friendphrase] = VNGETTEXT("Part of 'Units sighted! (...)' sentence^1 friendly", "$friends friendly", friend_count_, symbols);
 				// TRANSLATORS: This becomes the "enemyphrase" in "Units sighted! ($friendphrase, $enemyphrase)"
-				symbols["enemyphrase"] = VNGETTEXT("Part of 'Units sighted! (...)' sentence^1 enemy", "$enemies enemy", enemy_count_, symbols);
+				symbols[str_enemyphrase] = VNGETTEXT("Part of 'Units sighted! (...)' sentence^1 enemy", "$enemies enemy", enemy_count_, symbols);
 				// TRANSLATORS: Both friends and enemies sighted -- neutral message.
 				// This is shown when a move is interrupted because units were revealed from the fog of war.
 				message = VGETTEXT("Units sighted! ($friendphrase, $enemyphrase)", symbols);
@@ -1323,7 +1323,7 @@ namespace { // Private helpers for move_unit()
 			std::string name = hotkey::get_names(hotkey::get_hotkey_command(hotkey::HOTKEY_CONTINUE_MOVE).id);
 			if ( !name.empty() ) {
 				utils::string_map symbols;
-				symbols["hotkey"] = name;
+				symbols[str_hotkey] = name;
 				std::string message = VGETTEXT("(press $hotkey to keep moving)", symbols);
 				disp.announce(message_prefix + message, font::NORMAL_COLOR, announce_options);
 				message_prefix += " \n";
@@ -1351,10 +1351,10 @@ static void move_unit_internal(unit_mover& mover)
 	bool matches_replay = checkup_instance->local_checkup(cn,co);
 	if(!matches_replay)
 	{
-		replay::process_error("calculated movement destination (x="+ cn["final_hex_x"].str() +  " y=" + cn["final_hex_y"].str() +
-			") didn't match the original destination(x="+ co["final_hex_x"].str() +  " y=" + co["final_hex_y"].str() + ")\n");
+		replay::process_error("calculated movement destination (x="+ cn[str_final_hex_x].str() +  " y=" + cn[str_final_hex_y].str() +
+			") didn't match the original destination(x="+ co[str_final_hex_x].str() +  " y=" + co[str_final_hex_y].str() + ")\n");
 
-		//TODO: move the unit by force to the desired destination with something like mover.reset_final_hex(co["x"], co["y"]);
+		//TODO: move the unit by force to the desired destination with something like mover.reset_final_hex(co[str_x], co[str_y]);
 	}
 
 	// Bookkeeping, etc.

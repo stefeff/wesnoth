@@ -195,7 +195,7 @@ map_location::map_location(const config& cfg, const variable_set* variables)
 	: x(-1000)
 	, y(-1000)
 {
-	std::string xs = cfg["x"], ys = cfg["y"];
+	std::string xs = cfg[str_x], ys = cfg[str_y];
 	if (variables)
 	{
 		xs = utils::interpolate_variables_into_string( xs, *variables);
@@ -222,8 +222,8 @@ map_location::map_location(const config& cfg, const variable_set* variables)
 
 void map_location::write(config& cfg) const
 {
-	cfg["x"] = x + 1;
-	cfg["y"] = y + 1;
+	cfg[str_x] = x + 1;
+	cfg[str_y] = y + 1;
 }
 
 static bool is_vertically_higher_than (const map_location& m1, const map_location& m2) {
@@ -436,8 +436,8 @@ std::vector<map_location> map_location::get_ring(int min, int max) const
 void write_location_range(const location_set& locs, config& cfg)
 {
 	if(locs.empty()){
-		cfg["x"] = "";
-		cfg["y"] = "";
+		cfg[str_x] = "";
+		cfg[str_y] = "";
 		return;
 	}
 
@@ -468,14 +468,14 @@ void write_location_range(const location_set& locs, config& cfg)
 	if(last->wml_y() != first->wml_y())
 		y << "-" << (last->wml_y());
 
-	cfg["x"] = x.str();
-	cfg["y"] = y.str();
+	cfg[str_x] = x.str();
+	cfg[str_y] = y.str();
 }
 
 std::vector<map_location> read_locations(const config& cfg)
 {
-	const std::vector<std::string> xvals = utils::split(cfg["x"]);
-	const std::vector<std::string> yvals = utils::split(cfg["y"]);
+	const std::vector<std::string> xvals = utils::split(cfg[str_x]);
+	const std::vector<std::string> yvals = utils::split(cfg[str_y]);
 
 	if (xvals.size() != yvals.size()) {
 		throw std::invalid_argument("Number of x and y coordinates do not match.");
@@ -506,8 +506,8 @@ void write_locations(const std::vector<map_location>& locs, config& cfg)
 		}
 	}
 
-	cfg["x"] = x.str();
-	cfg["y"] = y.str();
+	cfg[str_x] = x.str();
+	cfg[str_y] = y.str();
 }
 
 void get_adjacent_tiles(const map_location& a, utils::span<map_location, 6> res)

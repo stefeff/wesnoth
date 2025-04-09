@@ -444,7 +444,7 @@ variant unit_type_callable::get_value(const std::string& key) const
 	} else if(key == "traits") {
 		std::vector<variant> res;
 		for(const auto& config : u_.possible_traits()) {
-			res.emplace_back(config["id"].str());
+			res.emplace_back(config[str_id].str());
 		}
 
 		return variant(std::move(res));

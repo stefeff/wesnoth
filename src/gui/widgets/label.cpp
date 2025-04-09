@@ -216,7 +216,7 @@ label_definition::label_definition(const config& cfg)
 
 label_definition::resolution::resolution(const config& cfg)
 	: resolution_definition(cfg)
-	, link_color(cfg["link_color"].empty() ? font::YELLOW_COLOR : color_t::from_rgba_string(cfg["link_color"].str()))
+	, link_color(cfg[str_link_color].empty() ? font::YELLOW_COLOR : color_t::from_rgba_string(cfg[str_link_color].str()))
 {
 	// Note the order should be the same as the enum state_t is label.hpp.
 	state.emplace_back(VALIDATE_WML_CHILD(cfg, "state_enabled", missing_mandatory_wml_tag("label_definition][resolution", "state_enabled")));
@@ -230,11 +230,11 @@ namespace implementation
 
 builder_label::builder_label(const config& cfg)
 	: builder_styled_widget(cfg)
-	, wrap(cfg["wrap"].to_bool())
-	, characters_per_line(cfg["characters_per_line"].to_unsigned())
-	, text_alignment(decode_text_alignment(cfg["text_alignment"]))
-	, can_shrink(cfg["can_shrink"].to_bool(false))
-	, link_aware(cfg["link_aware"].to_bool(false))
+	, wrap(cfg[str_wrap].to_bool())
+	, characters_per_line(cfg[str_characters_per_line].to_unsigned())
+	, text_alignment(decode_text_alignment(cfg[str_text_alignment]))
+	, can_shrink(cfg[str_can_shrink].to_bool(false))
+	, link_aware(cfg[str_link_aware].to_bool(false))
 {
 }
 

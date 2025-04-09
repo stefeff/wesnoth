@@ -512,7 +512,7 @@ void styled_widget::signal_handler_show_tooltip(const event::ui_event event,
 		std::string tip = tooltip_;
 		if(!help_message_.empty()) {
 			utils::string_map symbols;
-			symbols["hotkey"] = hotkey::get_names(
+			symbols[str_hotkey] = hotkey::get_names(
 				hotkey::get_hotkey_command(hotkey::GLOBAL__HELPTIP).id);
 
 			tip = tooltip_ + utils::interpolate_variables_into_string(
@@ -577,12 +577,12 @@ namespace implementation
 
 builder_styled_widget::builder_styled_widget(const config& cfg)
 	: builder_widget(cfg)
-	, definition(cfg["definition"])
-	, label_string(cfg["label"].t_str())
-	, tooltip(cfg["tooltip"].t_str())
-	, help(cfg["help"].t_str())
+	, definition(cfg[str_definition])
+	, label_string(cfg[str_label].t_str())
+	, tooltip(cfg[str_tooltip].t_str())
+	, help(cfg[str_help].t_str())
 	, use_tooltip_on_label_overflow(true)
-	, use_markup(cfg["use_markup"].to_bool(false))
+	, use_markup(cfg[str_use_markup].to_bool(false))
 {
 	if(definition.empty()) {
 		definition = "default";

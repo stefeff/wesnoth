@@ -80,7 +80,7 @@ const terrain_type& gamemap::get_terrain_info(const t_translation::terrain_code 
 
 void gamemap::write_terrain(const map_location &loc, config& cfg) const
 {
-	cfg["terrain"] = t_translation::write_terrain_code(get_terrain(loc));
+	cfg[str_terrain] = t_translation::write_terrain_code(get_terrain(loc));
 }
 
 gamemap::gamemap(std::string_view data)

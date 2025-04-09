@@ -187,9 +187,9 @@ namespace implementation
 
 builder_scroll_label::builder_scroll_label(const config& cfg)
 	: builder_scrollbar_container(cfg)
-	, wrap_on(cfg["wrap"].to_bool(true))
-	, text_alignment(decode_text_alignment(cfg["text_alignment"]))
-	, link_aware(cfg["link_aware"].to_bool(false))
+	, wrap_on(cfg[str_wrap].to_bool(true))
+	, text_alignment(decode_text_alignment(cfg[str_text_alignment]))
+	, link_aware(cfg[str_link_aware].to_bool(false))
 {
 }
 

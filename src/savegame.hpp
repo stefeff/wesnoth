@@ -102,7 +102,7 @@ private:
 /** @note This function expects a save_index summary config */
 inline bool is_replay_save(const config& summary)
 {
-	return summary["replay"].to_bool() && !summary["snapshot"].to_bool(true);
+	return summary[str_replay].to_bool() && !summary[str_snapshot].to_bool(true);
 }
 
 utils::optional<load_game_metadata> load_interactive();
@@ -156,7 +156,7 @@ public:
 	/** Build the filename according to the specific savegame's needs. */
 	std::string create_filename() const
 	{
-		return create_filename(gamestate().get_starting_point()["turn_at"].to_int());
+		return create_filename(gamestate().get_starting_point()[str_turn_at].to_int());
 	}
 
 	/** Build the filename for the specified turn. */

@@ -302,8 +302,8 @@ void unit_drawer::redraw_unit(const unit& u) const
 		}
 
 		const auto& type_cfg = u.type().get_cfg();
-		const auto& cfg_offset_x = type_cfg["bar_offset_x"];
-		const auto& cfg_offset_y = type_cfg["bar_offset_y"];
+		const auto& cfg_offset_x = type_cfg[str_bar_offset_x];
+		const auto& cfg_offset_y = type_cfg[str_bar_offset_y];
 		int xoff;
 		int yoff;
 		if(cfg_offset_x.empty() && cfg_offset_y.empty()) {

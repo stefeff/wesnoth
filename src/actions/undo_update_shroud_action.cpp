@@ -27,7 +27,7 @@ namespace actions::undo
 void auto_shroud_action::write(config & cfg) const
 {
 	undo_action::write(cfg);
-	cfg["active"] = active;
+	cfg[str_active] = active;
 }
 
 bool auto_shroud_action::undo(int)

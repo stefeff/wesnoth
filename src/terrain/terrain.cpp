@@ -70,42 +70,42 @@ terrain_type::terrain_type()
 }
 
 terrain_type::terrain_type(const config& cfg)
-	: icon_image_(cfg["icon_image"])
-	, minimap_image_(cfg["symbol_image"])
+	: icon_image_(cfg[str_icon_image])
+	, minimap_image_(cfg[str_symbol_image])
 	, minimap_image_overlay_()
-	, editor_image_(cfg["editor_image"].empty() ? "terrain/" + minimap_image_ + ".png"
-												: "terrain/" + cfg["editor_image"].str() + ".png")
-	, id_(cfg["id"])
-	, name_(cfg["name"].t_str())
-	, editor_name_(cfg["editor_name"].t_str())
-	, description_(cfg["description"].t_str())
-	, help_topic_text_(cfg["help_topic_text"].t_str())
-	, number_(t_translation::read_terrain_code(cfg["string"].str()))
+	, editor_image_(cfg[str_editor_image].empty() ? "terrain/" + minimap_image_ + ".png"
+												: "terrain/" + cfg[str_editor_image].str() + ".png")
+	, id_(cfg[str_id])
+	, name_(cfg[str_name].t_str())
+	, editor_name_(cfg[str_editor_name].t_str())
+	, description_(cfg[str_description].t_str())
+	, help_topic_text_(cfg[str_help_topic_text].t_str())
+	, number_(t_translation::read_terrain_code(cfg[str_string].str()))
 	, mvt_type_()
 	, def_type_()
 	, union_type_()
-	, submerge_(cfg["submerge"].to_double())
-	, height_adjust_(cfg["unit_height_adjust"].to_int())
-	, submerge_set_(!cfg["submerge"].empty())
-	, height_adjust_set_(!cfg["unit_height_adjust"].empty())
-	, light_modification_(cfg["light"].to_int())
-	, max_light_(cfg["max_light"].to_int(light_modification_))
-	, min_light_(cfg["min_light"].to_int(light_modification_))
-	, heals_(cfg["heals"].to_int())
+	, submerge_(cfg[str_submerge].to_double())
+	, height_adjust_(cfg[str_unit_height_adjust].to_int())
+	, submerge_set_(!cfg[str_submerge].empty())
+	, height_adjust_set_(!cfg[str_unit_height_adjust].empty())
+	, light_modification_(cfg[str_light].to_int())
+	, max_light_(cfg[str_max_light].to_int(light_modification_))
+	, min_light_(cfg[str_min_light].to_int(light_modification_))
+	, heals_(cfg[str_heals].to_int())
 	, income_description_()
 	, income_description_ally_()
 	, income_description_enemy_()
 	, income_description_own_()
-	, editor_group_(cfg["editor_group"])
-	, editor_default_base_(t_translation::read_terrain_code(cfg["default_base"].str()))
-	, village_(cfg["gives_income"].to_bool())
-	, castle_(cfg["recruit_onto"].to_bool())
-	, keep_(cfg["recruit_from"].to_bool())
+	, editor_group_(cfg[str_editor_group])
+	, editor_default_base_(t_translation::read_terrain_code(cfg[str_default_base].str()))
+	, village_(cfg[str_gives_income].to_bool())
+	, castle_(cfg[str_recruit_onto].to_bool())
+	, keep_(cfg[str_recruit_from].to_bool())
 	, overlay_(number_.base == t_translation::NO_LAYER)
 	, combined_(false)
-	, hide_help_(cfg["hide_help"].to_bool(false))
-	, hide_in_editor_(cfg["hidden"].to_bool(false))
-	, hide_if_impassable_(cfg["hide_if_impassable"].to_bool(false))
+	, hide_help_(cfg[str_hide_help].to_bool(false))
+	, hide_in_editor_(cfg[str_hidden].to_bool(false))
+	, hide_if_impassable_(cfg[str_hide_if_impassable].to_bool(false))
 {
 /**
  *  @todo reenable these validations. The problem is that all MP
@@ -135,18 +135,18 @@ terrain_type::terrain_type(const config& cfg)
 	mvt_type_.push_back(number_);
 	def_type_.push_back(number_);
 
-	const t_translation::ter_list& alias = t_translation::read_list(cfg["aliasof"].str());
+	const t_translation::ter_list& alias = t_translation::read_list(cfg[str_aliasof].str());
 	if(!alias.empty()) {
 		mvt_type_ = alias;
 		def_type_ = alias;
 	}
 
-	const t_translation::ter_list& mvt_alias = t_translation::read_list(cfg["mvt_alias"].str());
+	const t_translation::ter_list& mvt_alias = t_translation::read_list(cfg[str_mvt_alias].str());
 	if(!mvt_alias.empty()) {
 		mvt_type_ = mvt_alias;
 	}
 
-	const t_translation::ter_list& def_alias = t_translation::read_list(cfg["def_alias"].str());
+	const t_translation::ter_list& def_alias = t_translation::read_list(cfg[str_def_alias].str());
 	if(!def_alias.empty()) {
 		def_type_ = def_alias;
 	}
@@ -164,22 +164,22 @@ terrain_type::terrain_type(const config& cfg)
 
 	//mouse over message are only shown on villages
 	if(village_) {
-		income_description_ = cfg["income_description"].t_str();
+		income_description_ = cfg[str_income_description].t_str();
 		if(income_description_.empty()) {
 			income_description_ = _("Village");
 		}
 
-		income_description_ally_ = cfg["income_description_ally"].t_str();
+		income_description_ally_ = cfg[str_income_description_ally].t_str();
 		if(income_description_ally_.empty()) {
 			income_description_ally_ = _("Allied village");
 		}
 
-		income_description_enemy_ = cfg["income_description_enemy"].t_str();
+		income_description_enemy_ = cfg[str_income_description_enemy].t_str();
 		if(income_description_enemy_.empty()) {
 			income_description_enemy_ = _("Enemy village");
 		}
 
-		income_description_own_ = cfg["income_description_own"].t_str();
+		income_description_own_ = cfg[str_income_description_own].t_str();
 		if(income_description_own_.empty()) {
 			income_description_own_ = _("Owned village");
 		}

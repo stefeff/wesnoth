@@ -116,7 +116,7 @@ using traits_map = std::map<std::string,config>;
 UNIT_TYPE_GETTER("traits", traits_map) {
 	traits_map traits;
 	for (const config& trait : ut.possible_traits()) {
-		traits.emplace(trait["id"], trait);
+		traits.emplace(trait[str_id], trait);
 	}
 	return traits;
 }

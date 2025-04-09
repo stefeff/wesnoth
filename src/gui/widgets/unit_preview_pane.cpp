@@ -388,7 +388,7 @@ void unit_preview_pane::set_display_data(const unit_type& type)
 
 			for(const auto& tr : type.possible_traits()) {
 				t_string name = tr[type.genders().front() == unit_race::FEMALE ? "female_name" : "male_name"].t_str();
-				if(tr["availability"] != "musthave" || name.empty()) {
+				if(tr[str_availability] != "musthave" || name.empty()) {
 					continue;
 				}
 
@@ -616,7 +616,7 @@ namespace implementation
 
 builder_unit_preview_pane::builder_unit_preview_pane(const config& cfg)
 	: builder_styled_widget(cfg)
-	, image_mods(cfg["image_mods"])
+	, image_mods(cfg[str_image_mods])
 {
 }
 
