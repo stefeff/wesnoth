@@ -87,7 +87,7 @@ static lg::log_domain log_engine_enemies("engine/enemies");
  */
 static void copy_persistent(const config& src, config& dst)
 {
-	static const std::set<std::string> attrs {
+	static const std::set<utils::interned_string> attrs {
 		"description",
 		"name",
 		"disallow_recall",
@@ -96,17 +96,17 @@ static void copy_persistent(const config& src, config& dst)
 		"loaded_resources"
 	};
 
-	static const std::set<std::string> tags {
+	static const std::set<utils::interned_string> tags {
 		"terrain_graphics",
 		"modify_unit_type",
 		"lua"
 	};
 
-	for(const std::string& attr : attrs) {
+	for(const utils::interned_string& attr : attrs) {
 		dst[attr] = src[attr];
 	}
 
-	for(const std::string& tag : tags) {
+	for(const utils::interned_string& tag : tags) {
 		dst.append_children(src, tag);
 	}
 }

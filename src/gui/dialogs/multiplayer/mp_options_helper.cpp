@@ -41,7 +41,7 @@ mp_options_helper::mp_options_helper(window& window, ng::create_engine& create_e
 {
 	for(const auto [_, cfg] : prefs::get().options().all_children_view()) {
 		for(const auto& saved_option : cfg.child_range("option")) {
-			options_data_[cfg[str_id]][saved_option[str_id].str()] = saved_option[str_value];
+			options_data_[cfg[str_id]][config_key_type{saved_option[str_id].str()}] = saved_option[str_value];
 		}
 	}
 

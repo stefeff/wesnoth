@@ -33,23 +33,28 @@ static lg::log_domain log_mp_create_depcheck("mp/create/depcheck");
 
 namespace
 {
+
+bool copy_key(config& out, const config& in, config_key_type key)
+{
+	if (in.has_attribute(key)) {
+		out[key] = in[key];
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 // helper function
 void copy_keys(config& out, const config& in, const std::string& type, bool copy_force_key = false)
 {
-	if(in.has_attribute("allow_" + type)) {
-		out["allow_" + type] = in["allow_" + type];
-	} else if(in.has_attribute("disallow_" + type)) {
-		out["disallow_" + type] = in["disallow_" + type];
+	if (copy_key(out, in, config_key_type{"allow_" + type})) {
+		copy_key(out, in, config_key_type{"disallow_" + type});
 	}
 
-	if(in.has_attribute("ignore_incompatible_" + type)) {
-		out["ignore_incompatible_" + type] = in["ignore_incompatible_" + type];
-	}
-
+	copy_key(out, in, config_key_type{"ignore_incompatible_" + type});
 	if(copy_force_key) {
-		if(in.has_attribute("force_" + type)) {
-			out["force_" + type] = in["force_" + type];
-		}
+		copy_key(out, in, config_key_type{"force_" + type});
 	}
 }
 } // anonymous namespace
@@ -235,7 +240,7 @@ bool manager::does_conflict(const elem& elem1, const elem& elem2, bool directonl
 
 	// Whether we should skip the check entirely
 	if(data1.has_attribute("ignore_incompatible_" + elem2.type)) {
-		std::vector<std::string> ignored = utils::split(data1["ignore_incompatible_" + elem2.type]);
+		std::vector<std::string> ignored = utils::split(data1[config_key_type{"ignore_incompatible_" + elem2.type}]);
 
 		if(utils::contains(ignored, elem2.id)) {
 			return false;
@@ -243,7 +248,7 @@ bool manager::does_conflict(const elem& elem1, const elem& elem2, bool directonl
 	}
 
 	if(data2.has_attribute("ignore_incompatible_" + elem1.type)) {
-		std::vector<std::string> ignored = utils::split(data2["ignore_incompatible_" + elem1.type]);
+		std::vector<std::string> ignored = utils::split(data2[config_key_type{"ignore_incompatible_" + elem1.type}]);
 
 		if(utils::contains(ignored, elem1.id)) {
 			return false;
@@ -258,21 +263,21 @@ bool manager::does_conflict(const elem& elem1, const elem& elem2, bool directonl
 
 	// Checking for direct conflicts between elem1 and elem2
 	if(data1.has_attribute("allow_" + elem2.type)) {
-		std::vector<std::string> allowed = utils::split(data1["allow_" + elem2.type]);
+		std::vector<std::string> allowed = utils::split(data1[config_key_type{"allow_" + elem2.type}]);
 
 		result = !utils::contains(allowed, elem2.id) && !does_require(elem1, elem2);
 	} else if(data1.has_attribute("disallow_" + elem2.type)) {
-		std::vector<std::string> disallowed = utils::split(data1["disallow_" + elem2.type]);
+		std::vector<std::string> disallowed = utils::split(data1[config_key_type{"disallow_" + elem2.type}]);
 
 		result = utils::contains(disallowed, elem2.id);
 	}
 
 	if(data2.has_attribute("allow_" + elem1.type)) {
-		std::vector<std::string> allowed = utils::split(data2["allow_" + elem1.type]);
+		std::vector<std::string> allowed = utils::split(data2[config_key_type{"allow_" + elem1.type}]);
 
 		result = result || (!utils::contains(allowed, elem1.id) && !does_require(elem2, elem1));
 	} else if(data2.has_attribute("disallow_" + elem1.type)) {
-		std::vector<std::string> disallowed = utils::split(data2["disallow_" + elem1.type]);
+		std::vector<std::string> disallowed = utils::split(data2[config_key_type{"disallow_" + elem1.type}]);
 
 		result = result || utils::contains(disallowed, elem1.id);
 	}

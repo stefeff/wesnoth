@@ -323,17 +323,22 @@ void parser::parse_variable()
 
 	t_string_base buffer;
 
-	std::vector<std::string>::const_iterator curvar = variables.begin();
+	std::vector<config_key_type> variable_keys;
+	for (auto& v : variables) {
+		variable_keys.push_back(v);
+	}
+
+	auto curvar = variable_keys.begin();
 
 	bool ignore_next_newlines = false, previous_string = false;
 
 	while(true) {
 		tok_.next_token();
-		assert(curvar != variables.end());
+		assert(curvar != variable_keys.end());
 
 		switch(tok_.current_token().type) {
 		case token::COMMA:
-			if((curvar + 1) != variables.end()) {
+			if((curvar + 1) != variable_keys.end()) {
 				if(buffer.translatable()) {
 					cfg[*curvar] = t_string(buffer);
 				} else {
@@ -427,7 +432,7 @@ finish:
 		validator_->validate_key(cfg, *curvar, cfg[*curvar], tok_.get_start_line(), tok_.get_file());
 	}
 
-	while(++curvar != variables.end()) {
+	while(++curvar != variable_keys.end()) {
 		cfg[*curvar] = "";
 	}
 }

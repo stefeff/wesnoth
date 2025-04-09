@@ -35,10 +35,11 @@ static config write_str_int_map(const stats_t::str_int_map& m)
 	config res;
 	for(stats_t::str_int_map::const_iterator i = m.begin(); i != m.end(); ++i) {
 		std::string n = std::to_string(i->second);
-		if(res.has_attribute(n)) {
-			res[n] = res[n].str() + "," + i->first;
+		config_key_type key{n};
+		if(res.has_attribute(key)) {
+			res[key] = res[key].str() + "," + i->first;
 		} else {
-			res[n] = i->first;
+			res[key] = i->first;
 		}
 	}
 
