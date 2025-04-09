@@ -550,7 +550,7 @@ void connect_engine::start_game_commandline(const commandline_options& cmdline_o
 			for(const auto& [side_num, pname, pvalue] : *cmdline_opts.multiplayer_parm) {
 				if(side_num == side[str_side].to_unsigned()) {
 					DBG_MP << "\tsetting side " << side[str_side] << " " << pname << ": " << pvalue;
-					side[pname] = pvalue;
+					side[config_key_type{pname}] = pvalue;
 				}
 			}
 		}

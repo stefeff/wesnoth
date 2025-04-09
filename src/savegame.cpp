@@ -845,7 +845,7 @@ static void convert_old_saves_1_13_1(config& cfg)
 		if(snapshot.has_attribute(str_used_items)) {
 			config used_items;
 			for(const std::string& item : utils::split(snapshot[str_used_items])) {
-				used_items[item] = true;
+				used_items[config_key_type{item}] = true;
 			}
 
 			snapshot.remove_attribute(str_used_items);

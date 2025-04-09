@@ -774,7 +774,7 @@ config formula_ai::to_config() const
 			}
 				if (!str.empty())
 				{
-					ai_vars[i->first] = str;
+					ai_vars[config_key_type{i->first}] = str;
 					str.clear();
 				}
 		}

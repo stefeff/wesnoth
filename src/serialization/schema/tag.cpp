@@ -414,7 +414,7 @@ void wml_tag::add_switch(const config& switch_cfg)
 			}
 			if(!allow_missing && case_cfg[str_trigger_if_missing].to_bool()) {
 				config& missing_filter = filter.add_child(str_or).add_child(str_not);
-				missing_filter["glob_on_" + key] = "*";
+				missing_filter[config_key_type{"glob_on_" + key}] = "*";
 				allow_missing = true;
 			}
 			conditions_.emplace_back(case_cfg, filter);
@@ -430,7 +430,7 @@ void wml_tag::add_switch(const config& switch_cfg)
 			// If a [case] matches the absence of the key, then [else] should not
 			// The previous [not] keys already failed if it had a value matched by another [case]
 			// So just add an [and] tag that matches any other value
-			default_cfg.add_child(str_and)["glob_on_" + key] = "*";
+			default_cfg.add_child(str_and)[config_key_type{"glob_on_" + key}] = "*";
 		}
 		conditions_.emplace_back(switch_cfg.mandatory_child(str_else), default_cfg);
 		const std::string name = formatter() << get_name() << "[else]";

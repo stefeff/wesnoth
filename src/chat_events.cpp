@@ -84,23 +84,24 @@ void chat_handler::change_logging(const std::string& data) {
 
 void chat_handler::send_command(const std::string& cmd, const std::string& args /* = "" */) {
 	config data;
-	if (cmd == "muteall") {
-		data.add_child(cmd);
+	config_key_type key = cmd;
+	if (key == str_muteall) {
+		data.add_child(key);
 	}
-	else if (cmd == "query") {
-		data.add_child(cmd)[str_type] = args;
+	else if (key == str_query) {
+		data.add_child(key)[str_type] = args;
 	}
-	else if (cmd == "ban" || cmd == "unban" || cmd == "kick"
-		|| cmd == "mute" || cmd == "unmute") {
-		data.add_child(cmd)[str_username] = args;
+	else if (key == str_ban || key == str_unban || key == str_kick
+		|| key == str_mute || key == str_unmute) {
+		data.add_child(key)[str_username] = args;
 	}
-	else if (cmd == "ping") {
-		data[cmd] = std::to_string(std::time(nullptr));
+	else if (key == str_ping) {
+		data[key] = std::to_string(std::time(nullptr));
 	}
-	else if (cmd == "report") {
+	else if (key == str_report) {
 		data.add_child(str_query)[str_type] = "report " + args;
 	}
-	else if (cmd == "roll") {
+	else if (key == str_roll) {
 		data.add_child(str_query)[str_type] = "roll " + args;
 	}
 	send_to_server(data);
