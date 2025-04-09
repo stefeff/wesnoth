@@ -459,8 +459,9 @@ template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
 void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::clear()
 {
     if (count_) {
-        for (index_t index = 1; index < data_.size(); ++index) {
-            auto& entry = data_[index];
+        index_t index = 1;
+        for (auto it = data_.begin()+1, end = data_.end(); it != end; ++it, ++index) {
+            auto& entry = *it;
             if (entry.hash_index != NO_HASH) {
                 index_[entry.hash_index] = NO_INDEX;
                 entry.template as<T>().~T();
@@ -639,11 +640,12 @@ inline void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::link(index_t inde
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual>
 void hash_container<T, Key, KeyAccess, Hash, KeyEqual>::deconstruct_all()
 {
-    for (index_t index = 1; index < data_.size(); ++index) {
-        auto& entry = data_[index];
-        if (entry.hash_index != NO_HASH) {
-            auto& entry = data_[index];
-            entry.template as<T>().~T();
+    if (count_) {
+        for (auto it = data_.begin()+1, end = data_.end(); it != end; ++it) {
+            auto& entry = *it;
+            if (entry.hash_index != NO_HASH) [[unlikely]] {
+                entry.template as<T>().~T();
+            }
         }
     }
 }
