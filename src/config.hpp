@@ -302,16 +302,18 @@ public:
 	 */
 	using attribute_value = config_attribute_value;
 
-	typedef utils::hash_map<config_key_type, attribute_value> attribute_map;
+	typedef utils::hash_map<
+				config_key_type,
+				attribute_value,
+				std::hash<config_key_type>,
+				std::equal_to<config_key_type>,
+				utils::arena_allocator<std::pair<const config_key_type, attribute_value>>> attribute_map;
 	// typedef std::unordered_map<
 	// 			config_key_type,
 	// 			attribute_value,
 	// 			std::hash<config_key_type>,
 	// 			std::equal_to<config_key_type>,
 	// 			utils::arena_allocator<std::pair<const config_key_type, attribute_value>>> attribute_map;
-	typedef std::unordered_map<
-				config_key_type,
-				attribute_value> attribute_ref_map;
 	typedef attribute_map::value_type attribute;
 	struct const_attribute_iterator;
 
@@ -1071,7 +1073,6 @@ private:
 
 	/** All the attributes of this node. */
 	attribute_map values_;
-	attribute_ref_map values_ref_;
 
 	/** A list of all children of this node. */
 	child_map children_;
@@ -1106,7 +1107,7 @@ template<typename... Args>
 inline config::config(config_key_type first, Args&&... args)
 	: arena_{}
 	, config_allocator_{arena_}
-	, values_()
+	, values_( arena_ )
 	, children_( arena_ )
 	, ordered_children( arena_ )
 {
