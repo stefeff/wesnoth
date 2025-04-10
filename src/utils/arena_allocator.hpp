@@ -126,6 +126,12 @@ public:
     typedef std::true_type propagate_on_container_move_assignment;
     typedef std::true_type propagate_on_container_swap;
 
+    template< class U >
+    struct rebind
+    {
+        typedef arena_allocator<U> other;
+    };
+
     arena_allocator(const arena_pointer& a) noexcept : arena_{a} {}
     arena_allocator(const arena_allocator& rhs) noexcept : arena_{rhs.arena_} {}
     template<class U>
