@@ -53,9 +53,11 @@ public:
             : container_{container}, index_{index} {}
 
         void forward() {
-            if (index_ < container_->data_.size()) {
-                while (++index_ != container_->data_.size()) {
-                    if (container_->data_[index_].hash_index != hash_container::NO_HASH) {
+            auto current = container_->data_.begin() + index_;
+            auto end = container_->data_.end();
+            if (current != end) {
+                while (++index_, ++current != end) {
+                    if (current->hash_index != hash_container::NO_HASH) {
                         break;
                     }
                 }
@@ -114,9 +116,11 @@ public:
             : container_{container}, index_{index} {}
 
         void forward() {
-            if (index_ < container_->data_.size()) {
-                while (++index_ != container_->data_.size()) {
-                    if (container_->data_[index_].hash_index != hash_container::NO_HASH) {
+            auto current = container_->data_.begin() + index_;
+            auto end = container_->data_.end();
+            if (current != end) {
+                while (++index_, ++current != end) {
+                    if (current->hash_index != hash_container::NO_HASH) {
                         break;
                     }
                 }
@@ -258,28 +262,36 @@ hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::hash_container(con
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
 hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::hash_container(const hash_container& rhs)
-    : index_{allocator_}
-    , data_{allocator_}
+    : index_{rhs.index_, allocator_}
+    , data_{rhs.data_, allocator_}
+    , count_{rhs.count_}
+    , first_unused_{rhs.first_unused_}
 {
-    if (!rhs.empty()) {
-        auto index_size = (4 << (32 - __builtin_clzl(rhs.count_ + 1))) - 1;
-        index_.resize(index_size);
-        grow_data(std::min(rhs.data_.size(), 2 * rhs.size()));
-        insert(rhs.begin(), rhs.end());
+    if (count_) {
+        for (size_t i = 1; i < rhs.data_.size(); ++i) {
+            auto& source = rhs.data_[i];
+            if (source.hash_index != NO_HASH) {
+                new (&data_[i].data) T(source.template as<T>());
+            }
+        }
     }
 }
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
 hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::hash_container(const hash_container& rhs, const Allocator& alloc)
     : allocator_{alloc}
-    , index_{alloc}
-    , data_{alloc}
+    , index_{rhs.index_, allocator_}
+    , data_{rhs.data_, allocator_}
+    , count_{rhs.count_}
+    , first_unused_{rhs.first_unused_}
 {
-    if (!rhs.empty()) {
-        auto index_size = (4 << (32 - __builtin_clzl(rhs.count_ + 1))) - 1;
-        index_.resize(index_size);
-        grow_data(std::min(rhs.data_.size(), 2 * rhs.size()));
-        insert(rhs.begin(), rhs.end());
+    if (count_) {
+        for (size_t i = 1; i < rhs.data_.size(); ++i) {
+            auto& source = rhs.data_[i];
+            if (source.hash_index != NO_HASH) {
+                new (&data_[i].data) T(source.template as<T>());
+            }
+        }
     }
 }
 
@@ -609,7 +621,7 @@ template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class
 void hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::grow_data()
 {
     auto old_size = data_.size();
-    grow_data(old_size ? 2 * old_size : 16);
+    grow_data(old_size ? 2 * old_size : 8);
 }
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
@@ -656,7 +668,7 @@ template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class
 void hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::rehash()
 {
     // verify();
-    auto new_size = (4 << (32 - __builtin_clzl(count_ + 1))) - 1;
+    auto new_size = (2 << (32 - __builtin_clzl(count_ + 1))) - 1;
     index_.clear();
     index_.resize(new_size);
 
