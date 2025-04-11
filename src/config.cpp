@@ -972,7 +972,7 @@ void config::get_diff(const config& c, config& res) const
 				inserts = &res.add_child(str_insert);
 			}
 
-			(*inserts)[v.first] = v.second;
+			inserts->values_.insert(v);
 		}
 	}
 
@@ -1184,7 +1184,7 @@ void config::merge_with(const config& c)
 				// Get a const config so we do not add attributes.
 				const config& merge_child = *j->second[visits++];
 
-				if(merge_child["__remove"].to_bool()) {
+				if(merge_child[str___remove].to_bool()) {
 					to_remove.push_back(*i);
 				} else {
 					(i->pos->second[i->index])->merge_with(merge_child);
