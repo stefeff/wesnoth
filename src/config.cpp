@@ -938,7 +938,7 @@ void config::get_diff(const config& c, config& res) const
 				inserts = &res.add_child(str_insert);
 			}
 
-			(*inserts)[key] = value;
+			inserts->values_.insert(value);
 		}
 	}
 
