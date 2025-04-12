@@ -6212,66 +6212,76 @@ bool game_lua_kernel::run_filter(char const *name, int nArgs)
 std::string game_lua_kernel::apply_effect(const std::string& name, unit& u, const config& cfg, bool need_apply)
 {
 	lua_State *L = mState;
-	int top = lua_gettop(L);
 	std::string descr;
-	// Stack: nothing
-	lua_unit* lu = luaW_pushlocalunit(L, u);
-	// Stack: unit
-	// (Note: The unit needs to be on the stack twice to prevent untimely GC.)
-	luaW_pushconfig(L, cfg);
-	// Stack: unit, cfg
-	if(luaW_getglobal(L, "wesnoth", "effects", name)) {
-		auto ml = map_locker(this);
-		// Stack: unit, cfg, effect
-		if(lua_istable(L, -1)) {
-			// Effect is implemented by a table with __call and __descr
-			if(need_apply) {
-				lua_pushvalue(L, -1);
-				// Stack: unit, cfg, effect, effect
-				lua_pushvalue(L, top + 1);
-				// Stack: unit, cfg, effect, effect, unit
-				lua_pushvalue(L, top + 2);
-				// Stack: unit, cfg, effect, effect, unit, cfg
-				luaW_pcall(L, 2, 0);
-				// Stack: unit, cfg, effect
-			}
-			if(luaL_getmetafield(L, -1, "__descr")) {
-				// Stack: unit, cfg, effect, __descr
-				if(lua_isstring(L, -1)) {
-					// __descr was a static string
-					descr = lua_tostring(L, -1);
-				} else {
-					lua_pushvalue(L, -2);
-					// Stack: unit, cfg, effect, __descr, effect
+
+	if (unit::builtin_effects.count(name)) {
+		if(need_apply) {
+			u.apply_builtin_effect(name, cfg);
+		}
+		descr = u.describe_builtin_effect(name, cfg);
+	}
+	else {
+		int top = lua_gettop(L);
+		// Stack: nothing
+		lua_unit* lu = luaW_pushlocalunit(L, u);
+		// Stack: unit
+		// (Note: The unit needs to be on the stack twice to prevent untimely GC.)
+		luaW_pushconfig(L, cfg);
+		// Stack: unit, cfg
+		if(luaW_getglobal(L, "wesnoth", "effects", name)) {
+			map_locker(this);
+			// Stack: unit, cfg, effect
+			if(lua_istable(L, -1)) {
+				// Effect is implemented by a table with __call and __descr
+				if(need_apply) {
+					lua_pushvalue(L, -1);
+					// Stack: unit, cfg, effect, effect
 					lua_pushvalue(L, top + 1);
-					// Stack: unit, cfg, effect, __descr, effect, unit
+					// Stack: unit, cfg, effect, effect, unit
 					lua_pushvalue(L, top + 2);
-					// Stack: unit, cfg, effect, __descr, effect, unit, cfg
-					luaW_pcall(L, 3, 1);
-					if(lua_isstring(L, -1) && !lua_isnumber(L, -1)) {
+					// Stack: unit, cfg, effect, effect, unit, cfg
+					luaW_pcall(L, 2, 0);
+					// Stack: unit, cfg, effect
+				}
+				if(luaL_getmetafield(L, -1, "__descr")) {
+					// Stack: unit, cfg, effect, __descr
+					if(lua_isstring(L, -1)) {
+						// __descr was a static string
 						descr = lua_tostring(L, -1);
 					} else {
-						ERR_LUA << "Effect __descr metafunction should have returned a string, but instead returned ";
-						if(lua_isnone(L, -1)) {
-							ERR_LUA << "nothing";
+						lua_pushvalue(L, -2);
+						// Stack: unit, cfg, effect, __descr, effect
+						lua_pushvalue(L, top + 1);
+						// Stack: unit, cfg, effect, __descr, effect, unit
+						lua_pushvalue(L, top + 2);
+						// Stack: unit, cfg, effect, __descr, effect, unit, cfg
+						luaW_pcall(L, 3, 1);
+						if(lua_isstring(L, -1) && !lua_isnumber(L, -1)) {
+							descr = lua_tostring(L, -1);
 						} else {
-							ERR_LUA << lua_typename(L, lua_type(L, -1));
+							ERR_LUA << "Effect __descr metafunction should have returned a string, but instead returned ";
+							if(lua_isnone(L, -1)) {
+								ERR_LUA << "nothing";
+							} else {
+								ERR_LUA << lua_typename(L, lua_type(L, -1));
+							}
 						}
 					}
 				}
+			} else if(need_apply) {
+				// Effect is assumed to be a simple function; no description is provided
+				lua_pushvalue(L, top + 1);
+				// Stack: unit, cfg, effect, unit
+				lua_pushvalue(L, top + 2);
+				// Stack: unit, cfg, effect, unit, cfg
+				luaW_pcall(L, 2, 0);
+				// Stack: unit, cfg
 			}
-		} else if(need_apply) {
-			// Effect is assumed to be a simple function; no description is provided
-			lua_pushvalue(L, top + 1);
-			// Stack: unit, cfg, effect, unit
-			lua_pushvalue(L, top + 2);
-			// Stack: unit, cfg, effect, unit, cfg
-			luaW_pcall(L, 2, 0);
-			// Stack: unit, cfg
 		}
+		lua_settop(L, top);
+		lu->clear_ref();
 	}
-	lua_settop(L, top);
-	lu->clear_ref();
+
 	return descr;
 }
 
