@@ -44,9 +44,9 @@ function pickadvance.show_dialog_unsynchronized(advance_info, unit)
 			end
 			local this_row = window.the_list[n]
 			this_row.the_label.label = text
-			local img = advance_type.__cfg.image
+			local img = advance_type.image
 			if img then
-				img = ("%s~TC(%d,%s)"):format(img, unit.side, advance_type.__cfg.flag_rgb or "magenta")
+				img = ("%s~TC(%d,%s)"):format(img, unit.side, advance_type.flag_rgb or "magenta")
 			else
 				img = empty_icon_unit
 			end

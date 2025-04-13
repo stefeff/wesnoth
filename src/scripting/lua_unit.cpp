@@ -315,6 +315,10 @@ static int impl_unit_get(lua_State *L)
 		zoc,
 		facing,
 		portrait,
+		image,
+		flag_rgb,
+		modifications,
+		resistance,
 		__cfg,
 		loc,
 		__goto,
@@ -371,6 +375,10 @@ static int impl_unit_get(lua_State *L)
 		{"zoc", zoc},
 		{"facing", facing},
 		{"portrait", portrait},
+		{"image", image},
+		{"flag_rgb", flag_rgb},
+		{"modifications", modifications},
+		{"resistance", resistance},
 		{"__cfg", __cfg},
 		{"loc", loc},
 		{"goto", __goto},
@@ -539,6 +547,15 @@ static int impl_unit_get(lua_State *L)
 			case_string_attrib(u.big_profile() == u.absolute_image()
 				? u.absolute_image() + u.image_mods() + "~SCALE_SHARP(144,144)"
 				: u.big_profile());
+		case image:
+			case_string_attrib(u.type().image());
+		case flag_rgb:
+			case_string_attrib(u.flag_rgb());
+		case modifications:
+			case_cfg_attrib(u.get_modifications());
+		case resistance:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_cfg_attrib(u.movement_type().get_resistances().write(cfg));
 		case __cfg:
 			case_cfg_attrib(u.write(cfg); u.get_location().write(cfg));
 
