@@ -62,7 +62,6 @@ public:
 	unit(unit_ctor_t);
 	unit() = delete;
 
-private:
 	enum UNIT_ATTRIBUTE
 	{
 		UA_MAX_HP,
@@ -88,16 +87,18 @@ private:
 		UA_COUNT
 	};
 
-	void set_attr_changed(UNIT_ATTRIBUTE attr)
+	bool get_attr_changed(UNIT_ATTRIBUTE attr) const
 	{
-		changed_attributes_[int(attr)] = true;
+		return changed_attributes_[int(attr)];
 	}
 
 	bool get_attacks_changed() const;
 
-	bool get_attr_changed(UNIT_ATTRIBUTE attr) const
+private:
+
+	void set_attr_changed(UNIT_ATTRIBUTE attr)
 	{
-		return changed_attributes_[int(attr)];
+		changed_attributes_[int(attr)] = true;
 	}
 
 	void clear_changed_attributes();
@@ -992,6 +993,15 @@ public:
 		return trait_names_;
 	}
 
+	bool random_traits() const
+	{
+		return random_traits_;
+	}
+	bool get_generate_name() const
+	{
+		return generate_name_;
+	}
+
 	/**
 	 * Gets the descriptions of the currently registered traits.
 	 *
@@ -1232,6 +1242,11 @@ public:
 	 */
 
 public:
+	int movement() const
+	{
+		return movement_;
+	}
+
 	/** The maximum moves this unit has. */
 	int total_movement() const
 	{
