@@ -121,6 +121,8 @@ static lg::log_domain log_config("config");
 static lg::log_domain log_preprocessor("preprocessor");
 #define LOG_PREPROC LOG_STREAM(info, log_preprocessor)
 
+#define REDIRECT_PRINTF 0
+
 // this is needed to allow identical functionality with clean refactoring
 // play_game only returns on an error, all returns within play_game can
 // be replaced with this
