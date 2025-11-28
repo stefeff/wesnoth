@@ -1068,7 +1068,7 @@ surface mask_surface(const surface &surf, const surface &mask, bool* empty_resul
 		size_t count = std::min(nsurf->w*surf->h, nmask->w*nmask->h);
 		size_t i = 0;
 
-#ifdef __SSE2__
+#if defined(__SSE2__) && defined(__SSE4_2__)
 		auto max_result = _mm_setzero_si128();
 		for (; i + 3 < count; i += 4) {
 			auto pixel = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&beg[i]));
