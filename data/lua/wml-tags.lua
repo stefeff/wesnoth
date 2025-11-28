@@ -574,7 +574,7 @@ function wml_actions.add_ai_behavior(cfg)
 	local loop_id = cfg.loop_id or "main_loop"
 	local eval = cfg.evaluation
 	local exec = cfg.execution
-	local id = cfg.bca_id or ("bca-" .. unit.__cfg.underlying_id)
+	local id = cfg.bca_id or ("bca-" .. unit.underlying_id)
 
 	local ux = unit.x -- @note: did I get it right that coordinates in C++ differ by 1 from thos in-game(and in Lua)?
 	local uy = unit.y

@@ -319,6 +319,7 @@ static int impl_unit_get(lua_State *L)
 		flag_rgb,
 		modifications,
 		resistance,
+		underlying_id,
 		__cfg,
 		loc,
 		__goto,
@@ -379,6 +380,7 @@ static int impl_unit_get(lua_State *L)
 		{"flag_rgb", flag_rgb},
 		{"modifications", modifications},
 		{"resistance", resistance},
+		{"underlying_id", underlying_id},
 		{"__cfg", __cfg},
 		{"loc", loc},
 		{"goto", __goto},
@@ -556,6 +558,8 @@ static int impl_unit_get(lua_State *L)
 		case resistance:
 			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
 			case_cfg_attrib(u.movement_type().get_resistances().write(cfg));
+		case underlying_id:
+			case_int_attrib(u.underlying_id());
 		case __cfg:
 			case_cfg_attrib(u.write(cfg); u.get_location().write(cfg));
 
