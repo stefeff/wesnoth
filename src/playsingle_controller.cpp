@@ -51,6 +51,12 @@
 
 #include <thread>
 
+#define ENABLE_VALGRIND_STATS 1
+
+#if ENABLE_VALGRIND_STATS
+#include <valgrind/callgrind.h>
+#endif
+
 static lg::log_domain log_aitesting("ai/testing");
 #define LOG_AIT LOG_STREAM(info, log_aitesting)
 // If necessary, this define can be replaced with `#define LOG_AIT std::cout` to restore previous behavior
@@ -201,6 +207,20 @@ playsingle_controller::ses_result playsingle_controller::skip_empty_sides(int si
 
 void playsingle_controller::play_some()
 {
+#if ENABLE_VALGRIND_STATS
+	auto turn = gamestate().get_tod_man().turn();
+	auto player = gamestate().player_number_;
+
+	if (turn == 3 && player == 5) {
+		CALLGRIND_START_INSTRUMENTATION;
+	}
+
+	if (turn == 4)
+		exit(0);
+
+	const auto start = std::chrono::high_resolution_clock::now();
+#endif
+
 	//TODO: Its still unclear to me when end_turn_requested_ should be reset, i guess the idea is
 	//      in particular that in rare cases when the player looses control at the same time
 	//      as he presses "end turn" and then regains control back, the "end turn" should be discarded?
@@ -228,6 +248,14 @@ void playsingle_controller::play_some()
 		end_turn_requested_ = !get_end_level_data().transient.linger_mode || get_teams().empty() || video::headless();
 		maybe_linger();
 	}
+
+#if ENABLE_VALGRIND_STATS
+	const auto end = std::chrono::high_resolution_clock::now();
+	int taken = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+	printf("Turn %d, player %d: %dms\n", turn, player, taken);
+
+	CALLGRIND_STOP_INSTRUMENTATION;
+#endif
 }
 
 void playsingle_controller::play_side()
