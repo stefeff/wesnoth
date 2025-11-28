@@ -1172,7 +1172,9 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
     vmfetch();
     #if 0
       /* low-level line tracing for debugging Lua */
-      printf("line: %d\n", luaG_getfuncline(cl->p, pcRel(pc, cl->p)));
+      int line = luaG_getfuncline(cl->p, pcRel(pc, cl->p));
+      if (line == 0)
+        printf("line: %d\n", line));
     #endif
     lua_assert(base == ci->func.p + 1);
     lua_assert(base <= L->top.p && L->top.p <= L->stack_last.p);
