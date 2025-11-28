@@ -621,7 +621,7 @@ template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class
 void hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::grow_data()
 {
     auto old_size = data_.size();
-    grow_data(old_size ? 2 * old_size : 8);
+    grow_data(old_size ? 2 * old_size : 2);
 }
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
