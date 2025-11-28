@@ -96,42 +96,75 @@ terrain_filter::terrain_filter_cache::terrain_filter_cache() :
 
 bool terrain_filter::match_internal(const map_location& loc, const unit* ref_unit, const bool ignore_xy) const
 {
-	if (!this->fc_->get_disp_context().map().on_board_with_border(loc)) {
-		return false;
+	location_set temp{loc};
+	match_internal(temp, ref_unit, ignore_xy);
+	return temp.size() > 0;
+}
+
+void terrain_filter::match_internal(location_set& locs, const unit* ref_unit, const bool ignore_xy) const
+{
+	auto& context = fc_->get_disp_context();
+	auto& map = context.map();
+
+	location_set to_remove;
+	for (auto& loc : locs) {
+		if (!map.on_board_with_border(loc)) {
+			to_remove.insert(loc);
+		}
 	}
 
 	std::string lua_function = cfg_.expand_str(str_lua_function);
 	if (!lua_function.empty() && fc_->get_lua_kernel()) {
-		if (!fc_->get_lua_kernel()->run_filter(lua_function.c_str(), loc)) {
-			return false;
+		auto kernel = fc_->get_lua_kernel();
+		auto func = lua_function.c_str();
+		for (auto& loc : locs) {
+			if (!kernel->run_filter(func, loc)) {
+				to_remove.insert(loc);
+			}
 		}
 	}
 
 	//Filter Areas
-	if (cfg_.has_attribute(str_area) &&
-		fc_->get_tod_man().get_area_by_id(cfg_.expand_str(str_area)).count(loc) == 0)
-		return false;
+	if (cfg_.has_attribute(str_area)) {
+		auto& area = fc_->get_tod_man().get_area_by_id(cfg_.expand_str(str_area));
+		for (auto& loc : locs) {
+			if (area.count(loc) == 0) {
+				to_remove.insert(loc);
+			}
+		}
+	}
 
-	if(cfg_.has_attribute(str_gives_income) &&
-		cfg_[str_gives_income].to_bool() != fc_->get_disp_context().map().is_village(loc))
-		return false;
+	if(cfg_.has_attribute(str_gives_income)) {
+		bool gives_income = cfg_[str_gives_income].to_bool();
+		for (auto& loc : locs) {
+			if (gives_income != map.is_village(loc)) {
+				to_remove.insert(loc);
+			}
+		}
+	}
 
-	if(cfg_.has_attribute(str_terrain)) {
+	if (cfg_.has_attribute(str_terrain)) {
 		if(cache_.parsed_terrain == nullptr) {
 			cache_.parsed_terrain.reset(new t_translation::ter_match(std::string_view(cfg_.expand_str(str_terrain))));
 		}
 		if(!cache_.parsed_terrain->is_empty) {
-			const t_translation::terrain_code letter = fc_->get_disp_context().map().get_terrain_info(loc).number();
-			if(!t_translation::terrain_matches(letter, *cache_.parsed_terrain)) {
-				return false;
+			for (auto& loc : locs) {
+				const t_translation::terrain_code letter = map.get_terrain_info(loc).number();
+				if (!t_translation::terrain_matches(letter, *cache_.parsed_terrain)) {
+					to_remove.insert(loc);
+				}
 			}
 		}
 	}
 
 	//Allow filtering on location ranges
 	if (!ignore_xy) {
-		if (!loc.matches_range(cfg_[str_x], cfg_[str_y])) {
-			return false;
+		std::string x = cfg_[str_x];
+		std::string y = cfg_[str_y];
+		for (auto& loc : locs) {
+			if (!loc.matches_range(x, y)) {
+				to_remove.insert(loc);
+			}
 		}
 		//allow filtering by searching a stored variable of locations
 		if (cfg_.has_attribute(str_find_in)) {
@@ -139,46 +172,48 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 				try
 				{
 					variable_access_const vi = gd->get_variable_access_read(cfg_.expand_str(str_find_in));
-
-					bool found = false;
 					for (const config &cfg : vi.as_array()) {
-						if (map_location(cfg, nullptr) == loc) {
-							found = true;
-							break;
-						}
+						to_remove.insert(map_location(cfg, nullptr));
 					}
-					if (!found) return false;
 				}
 				catch (const invalid_variablename_exception&)
 				{
-					return false;
+					locs.clear();
+					return;
 				}
 			}
 		}
 		if (cfg_.has_attribute(str_location_id)) {
 			location_set matching_locs;
 			for(const auto& id : utils::split(cfg_.expand_str(str_location_id))) {
-				map_location test_loc = fc_->get_disp_context().map().special_location(id);
+				map_location test_loc = map.special_location(id);
 				if(test_loc.valid()) {
 					matching_locs.insert(test_loc);
 				}
 			}
-			if (matching_locs.count(loc) == 0) {
-				return false;
+			for (auto& loc : matching_locs) {
+				if (!locs.count(loc)) {
+					to_remove.insert(loc);
+				}
 			}
 		}
 	}
+
 	//Allow filtering on unit
 	if(cfg_.has_child(str_filter)) {
-		const unit_map::const_iterator u = fc_->get_disp_context().units().find(loc);
-		if (!u.valid())
-			return false;
 		if (!cache_.ufilter_) {
 			cache_.ufilter_.reset(new unit_filter(cfg_.child(str_filter).make_safe()));
 			cache_.ufilter_->set_use_flat_tod(flat_);
 		}
-		if (!cache_.ufilter_->matches(*u, loc))
-			return false;
+
+		auto& units = context.units();
+		for (auto& loc : locs) {
+			const unit_map::const_iterator u = units.find(loc);
+			if (!u.valid())
+				to_remove.insert(loc);
+			else if (!cache_.ufilter_->matches(*u, loc))
+				to_remove.insert(loc);
+		}
 	}
 
 	// Allow filtering on visibility to a side
@@ -192,111 +227,120 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 			side_filter ssf(*i, fc_);
 			std::vector<int> sides = ssf.get_teams();
 
-			bool found = false;
-			for (const int side : sides) {
-				const team &viewing_team = fc_->get_disp_context().get_team(side);
-				bool viewer_sees = respect_fog ? !viewing_team.fogged(loc) : !viewing_team.shrouded(loc);
-				if (visible == viewer_sees) {
-					found = true;
-					break;
+			for (auto& loc : locs) {
+				bool found = false;
+				for (const int side : sides) {
+					const team &viewing_team = context.get_team(side);
+					bool viewer_sees = respect_fog ? !viewing_team.fogged(loc) : !viewing_team.shrouded(loc);
+					if (visible == viewer_sees) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					to_remove.insert(loc);
 				}
 			}
-			if (!found) {return false;}
 		}
 	}
 
 	//Allow filtering on adjacent locations
 	if(cfg_.has_child(str_filter_adjacent_location)) {
-		const auto adjacent = get_adjacent_tiles(loc);
 		const vconfig::child_list& adj_cfgs = cfg_.get_children(str_filter_adjacent_location);
 		vconfig::child_list::const_iterator i, i_end, i_begin = adj_cfgs.begin();
-		for (i = i_begin, i_end = adj_cfgs.end(); i != i_end; ++i) {
-			int match_count = 0;
-			vconfig::child_list::difference_type index = i - i_begin;
-			std::vector<map_location::DIRECTION> dirs = (*i).has_attribute(str_adjacent)
-				? map_location::parse_directions((*i)[str_adjacent]) : map_location::default_dirs();
-			std::vector<map_location::DIRECTION>::const_iterator j, j_end = dirs.end();
-			for (j = dirs.begin(); j != j_end; ++j) {
-				const map_location &adj = adjacent[*j];
-				if (fc_->get_disp_context().map().on_board(adj)) {
-					if(cache_.adjacent_matches == nullptr) {
-						while(index >= std::distance(cache_.adjacent_match_cache.begin(), cache_.adjacent_match_cache.end())) {
-							const vconfig& adj_cfg = adj_cfgs[cache_.adjacent_match_cache.size()];
-							std::pair<terrain_filter, std::map<map_location,bool>> amc_pair(
-								terrain_filter(adj_cfg, *this),
-								std::map<map_location,bool>());
-							cache_.adjacent_match_cache.push_back(amc_pair);
-						}
-						terrain_filter &amc_filter = cache_.adjacent_match_cache[index].first;
-						std::map<map_location,bool> &amc = cache_.adjacent_match_cache[index].second;
-						std::map<map_location,bool>::iterator lookup = amc.find(adj);
-						if(lookup == amc.end()) {
-							if(amc_filter(adj)) {
-								amc[adj] = true;
-								++match_count;
-							} else {
-								amc[adj] = false;
+
+		for (auto& loc : locs) {
+			const auto adjacent = get_adjacent_tiles(loc);
+			for (i = i_begin, i_end = adj_cfgs.end(); i != i_end; ++i) {
+				int match_count = 0;
+				vconfig::child_list::difference_type index = i - i_begin;
+				std::vector<map_location::DIRECTION> dirs = (*i).has_attribute(str_adjacent)
+					? map_location::parse_directions((*i)[str_adjacent]) : map_location::default_dirs();
+				std::vector<map_location::DIRECTION>::const_iterator j, j_end = dirs.end();
+				for (j = dirs.begin(); j != j_end; ++j) {
+					const map_location &adj = adjacent[*j];
+					if (fc_->get_disp_context().map().on_board(adj)) {
+						if(cache_.adjacent_matches == nullptr) {
+							while(index >= std::distance(cache_.adjacent_match_cache.begin(), cache_.adjacent_match_cache.end())) {
+								const vconfig& adj_cfg = adj_cfgs[cache_.adjacent_match_cache.size()];
+								std::pair<terrain_filter, std::map<map_location,bool>> amc_pair(
+									terrain_filter(adj_cfg, *this),
+									std::map<map_location,bool>());
+								cache_.adjacent_match_cache.push_back(amc_pair);
 							}
-						} else if(lookup->second) {
-							++match_count;
-						}
-					} else {
-						assert(index < std::distance(cache_.adjacent_matches->begin(), cache_.adjacent_matches->end()));
-						location_set &amc = (*cache_.adjacent_matches)[index];
-						if(amc.find(adj) != amc.end()) {
-							++match_count;
+							terrain_filter &amc_filter = cache_.adjacent_match_cache[index].first;
+							std::map<map_location,bool> &amc = cache_.adjacent_match_cache[index].second;
+							std::map<map_location,bool>::iterator lookup = amc.find(adj);
+							if(lookup == amc.end()) {
+								if(amc_filter(adj)) {
+									amc[adj] = true;
+									++match_count;
+								} else {
+									amc[adj] = false;
+								}
+							} else if(lookup->second) {
+								++match_count;
+							}
+						} else {
+							assert(index < std::distance(cache_.adjacent_matches->begin(), cache_.adjacent_matches->end()));
+							location_set &amc = (*cache_.adjacent_matches)[index];
+							if(amc.find(adj) != amc.end()) {
+								++match_count;
+							}
 						}
 					}
 				}
-			}
-			static std::vector<std::pair<int,int>> default_counts = utils::parse_ranges_unsigned("1-6");
-			const std::vector<std::pair<int,int>>& counts = (*i).has_attribute(str_count)
-				? utils::parse_ranges_unsigned((*i)[str_count]) : default_counts;
-			if(!in_ranges(match_count, counts)) {
-				return false;
+				static std::vector<std::pair<int,int>> default_counts = utils::parse_ranges_unsigned("1-6");
+				const std::vector<std::pair<int,int>>& counts = (*i).has_attribute(str_count)
+					? utils::parse_ranges_unsigned((*i)[str_count]) : default_counts;
+				if(!in_ranges(match_count, counts)) {
+					to_remove.insert(loc);
+				}
 			}
 		}
 	}
 
 	std::string tod_type = cfg_.expand_str(str_time_of_day);
 	std::string tod_id = cfg_.expand_str(str_time_of_day_id);
-	if(!tod_type.empty() || !tod_id.empty()) {
+	if(!tod_type.empty()) {
+
+		const std::vector<std::string>& vals = utils::split(tod_type);
+		bool any_chaotic = std::find(vals.begin(),vals.end(), unit_alignments::chaotic) == vals.end();
+		bool any_lawful = std::find(vals.begin(),vals.end(), unit_alignments::lawful) == vals.end();
+		bool any_neutral_and_liminal = std::find(vals.begin(),vals.end(), unit_alignments::neutral) == vals.end()
+							    	&& std::find(vals.begin(),vals.end(), unit_alignments::liminal) == vals.end();
+
+		const std::vector<std::string>& id_vals = utils::split(tod_id);
+		bool any_id_comma = std::find(tod_id.begin(),tod_id.end(),',') != tod_id.end();
+
 		// creating a time_of_day is expensive, only do it if we will use it
 		time_of_day tod;
+		auto& tod_man = fc_->get_tod_man();
+		auto& units = context.units();
 
-		if(flat_) {
-			tod = fc_->get_tod_man().get_time_of_day(loc);
-		} else {
-			tod = fc_->get_tod_man().get_illuminated_time_of_day(fc_->get_disp_context().units(), fc_->get_disp_context().map(),loc);
-		}
-
-		if(!tod_type.empty()) {
-			const std::vector<std::string>& vals = utils::split(tod_type);
-			if(tod.lawful_bonus<0) {
-				if(std::find(vals.begin(),vals.end(), unit_alignments::chaotic) == vals.end()) {
-					return false;
-				}
-			} else if(tod.lawful_bonus>0) {
-				if(std::find(vals.begin(),vals.end(), unit_alignments::lawful) == vals.end()) {
-					return false;
-				}
-			} else if(std::find(vals.begin(),vals.end(), unit_alignments::neutral) == vals.end() &&
-				std::find(vals.begin(),vals.end(), unit_alignments::liminal) == vals.end()) {
-				return false;
+		for (auto& loc : locs) {
+			if(flat_) {
+				tod = tod_man.get_time_of_day(loc);
+			} else {
+				tod = tod_man.get_illuminated_time_of_day(units, map, loc);
 			}
-		}
 
-		if(!tod_id.empty()) {
-			if(tod_id != tod.id) {
-				if(std::find(tod_id.begin(),tod_id.end(),',') != tod_id.end() &&
-					std::search(tod_id.begin(),tod_id.end(),
-					tod.id.begin(),tod.id.end()) != tod_id.end()) {
-					const std::vector<std::string>& vals = utils::split(tod_id);
-					if(std::find(vals.begin(),vals.end(),tod.id) == vals.end()) {
-						return false;
+			if (   (any_chaotic && tod.lawful_bonus<0)
+				|| (any_lawful && tod.lawful_bonus>0)
+				|| (any_neutral_and_liminal && tod.lawful_bonus==0)) {
+				to_remove.insert(loc);
+			}
+			else {
+				if(tod_id != tod.id) {
+					if( any_id_comma
+						&& std::search(tod_id.begin(),tod_id.end(),
+						tod.id.begin(),tod.id.end()) != tod_id.end()) {
+						if(std::find(id_vals.begin(),id_vals.end(),tod.id) == id_vals.end()) {
+							to_remove.insert(loc);
+						}
+					} else {
+						to_remove.insert(loc);
 					}
-				} else {
-					return false;
 				}
 			}
 		}
@@ -309,53 +353,71 @@ bool terrain_filter::match_internal(const map_location& loc, const unit* ref_uni
 		if(has_owner_side) {
 			WRN_NG << "duplicate side information in a SLF, ignoring inline owner_side=";
 		}
-		if(!fc_->get_disp_context().map().is_village(loc))
-			return false;
+
 		side_filter ssf(filter_owner, fc_);
-		const std::vector<int>& sides = ssf.get_teams();
-		bool found = false;
-		if(sides.empty() && fc_->get_disp_context().village_owner(loc) == 0)
-			found = true;
-		for(const int side : sides) {
-			if(fc_->get_disp_context().get_team(side).owns_village(loc)) {
-				found = true;
-				break;
+		std::vector<const team*> teams;
+		for(const int side : ssf.get_teams()) {
+			teams.push_back(&context.get_team(side));
+		}
+
+		for (auto& loc : locs) {
+			if(!map.is_village(loc)) {
+				to_remove.insert(loc);
+			}
+			else {
+				if(teams.empty() && context.village_owner(loc) == 0) {
+					continue;
+				}
+
+				bool found = false;
+				for(auto team : teams) {
+					if(team->owns_village(loc)) {
+						found = true;
+						break;
+					}
+				}
+				if(!found)
+					to_remove.insert(loc);
 			}
 		}
-		if(!found)
-			return false;
 	}
 	else if(has_owner_side) {
 		const int side_num = cfg_[str_owner_side].to_int(0);
-		if(fc_->get_disp_context().village_owner(loc) != side_num) {
-			return false;
+		for (auto& loc : locs) {
+			if(context.village_owner(loc) != side_num) {
+				to_remove.insert(loc);
+			}
 		}
 	}
 
 	if(cfg_.has_attribute(str_formula)) {
-		try {
-			const wfl::terrain_callable main(fc_->get_disp_context(), loc);
-			wfl::map_formula_callable callable(main.fake_ptr());
-			if(ref_unit) {
-				auto ref = std::make_shared<wfl::unit_callable>(*ref_unit);
-				callable.add("teleport_unit", wfl::variant(ref));
-				// It's not destroyed upon scope exit because the variant holds a reference
+		wfl::gamestate_function_symbol_table symbols;
+		const wfl::formula form(cfg_.expand_str(str_formula), &symbols);
+
+		for (auto& loc : locs) {
+			try {
+				const wfl::terrain_callable main(context, loc);
+				wfl::map_formula_callable callable(main.fake_ptr());
+				if(ref_unit) {
+					auto ref = std::make_shared<wfl::unit_callable>(*ref_unit);
+					callable.add("teleport_unit", wfl::variant(ref));
+					// It's not destroyed upon scope exit because the variant holds a reference
+				}
+				if(!form.evaluate(callable).as_bool()) {
+					to_remove.insert(loc);
+				}
+			} catch(const wfl::formula_error& e) {
+				lg::log_to_chat() << "Formula error in location filter: " << e.type << " at " << e.filename << ':' << e.line << ")\n";
+				ERR_WML << "Formula error in location filter: " << e.type << " at " << e.filename << ':' << e.line << ")";
+				// Formulae with syntax errors match nothing
+				to_remove.insert(loc);
 			}
-			wfl::gamestate_function_symbol_table symbols;
-			const wfl::formula form(cfg_.expand_str(str_formula), &symbols);
-			if(!form.evaluate(callable).as_bool()) {
-				return false;
-			}
-			return true;
-		} catch(const wfl::formula_error& e) {
-			lg::log_to_chat() << "Formula error in location filter: " << e.type << " at " << e.filename << ':' << e.line << ")\n";
-			ERR_WML << "Formula error in location filter: " << e.type << " at " << e.filename << ':' << e.line << ")";
-			// Formulae with syntax errors match nothing
-			return false;
 		}
 	}
 
-	return true;
+	for (auto& loc : to_remove) {
+		locs.erase(loc);
+	}
 }
 
 class filter_with_unit : public xy_pred {
@@ -587,14 +649,8 @@ void terrain_filter::get_locs_impl(location_set& locs, const unit* ref_unit, boo
 			}
 		}
 	}
-	auto loc_itor = match_set.begin();
-	while(loc_itor != match_set.end()) {
-		if(match_internal(*loc_itor, ref_unit, true)) {
-			++loc_itor;
-		} else {
-			loc_itor = match_set.erase(loc_itor);
-		}
-	}
+
+	match_internal(match_set, ref_unit, true);
 
 	int ors_left = std::count_if(cfg_.ordered_begin(), cfg_.ordered_end(), [](const auto& val) { return val.first == "or"; });
 

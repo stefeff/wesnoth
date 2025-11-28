@@ -83,6 +83,7 @@ private:
 	bool match_impl(const map_location& loc, const unit* ref_unit) const;
 	void get_locs_impl(location_set& locs, const unit* ref_unit, bool with_border) const;
 	bool match_internal(const map_location& loc, const unit* ref_unit, const bool ignore_xy) const;
+	void match_internal(location_set& locs, const unit* ref_unit, const bool ignore_xy) const;
 
 	const vconfig cfg_; //config contains WML for a Standard Location Filter
 	const filter_context * fc_;
