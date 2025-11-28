@@ -129,6 +129,8 @@ static lg::log_domain log_config("config");
 static lg::log_domain log_preprocessor("preprocessor");
 #define LOG_PREPROC LOG_STREAM(info, log_preprocessor)
 
+#define REDIRECT_PRINTF 0
+
 // this is needed to allow identical functionality with clean refactoring
 // play_game only returns on an error, all returns within play_game can
 // be replaced with this
@@ -1109,6 +1111,7 @@ int main(int argc, char** argv)
 
 	// setup logging to file
 	// else handle redirecting the output and potentially attaching a console on windows
+#if REDIRECT_PRINTF
 	if(write_to_log_file) {
 		lg::set_log_to_file();
 	} else {
@@ -1118,6 +1121,7 @@ int main(int argc, char** argv)
 		}
 #endif
 	}
+#endif
 
 	SDL_SetHint(SDL_HINT_NO_SIGNAL_HANDLERS, "1");
 	// Is there a reason not to just use SDL_INIT_EVERYTHING?
