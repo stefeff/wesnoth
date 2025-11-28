@@ -1971,7 +1971,7 @@ int game_lua_kernel::intf_find_reach(lua_State *L)
 		++arg;
 	}
 
-	int viewing_side = u->side();
+	int viewing_side = std::max(u->side(), 1);
 	bool ignore_units = false, see_all = false, ignore_teleport = false;
 	int additional_turns = 0;
 
