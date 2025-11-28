@@ -28,6 +28,7 @@
 #include "units/unit.hpp"
 #include "units/map.hpp"
 #include "units/animation_component.hpp"
+#include "units/types.hpp"
 #include "game_version.hpp"
 #include "deprecation.hpp"
 
@@ -38,6 +39,7 @@ static lg::log_domain log_scripting_lua("scripting/lua");
 #define ERR_LUA LOG_STREAM(err, log_scripting_lua)
 
 static const char getunitKey[] = "unit";
+static const char uconfigKey[] = "unit config";
 static const char ustatusKey[] = "unit status";
 static const char unitvarKey[] = "unit variables";
 
@@ -217,6 +219,11 @@ lua_unit* luaW_pushlocalunit(lua_State *L, unit& u)
 	return res;
 }
 
+void lua_unit_config::setmetatable(lua_State *L)
+{
+	luaL_setmetatable(L, uconfigKey);
+}
+
 /**
  * Destroys a unit object before it is collected (__gc metamethod).
  */
@@ -319,6 +326,7 @@ static int impl_unit_get(lua_State *L)
 		flag_rgb,
 		modifications,
 		resistance,
+		abilities_cfg,
 		underlying_id,
 		__cfg,
 		loc,
@@ -380,6 +388,7 @@ static int impl_unit_get(lua_State *L)
 		{"flag_rgb", flag_rgb},
 		{"modifications", modifications},
 		{"resistance", resistance},
+		{"abilities_cfg", abilities_cfg},
 		{"underlying_id", underlying_id},
 		{"__cfg", __cfg},
 		{"loc", loc},
@@ -554,10 +563,12 @@ static int impl_unit_get(lua_State *L)
 		case flag_rgb:
 			case_string_attrib(u.flag_rgb());
 		case modifications:
-			case_cfg_attrib(u.get_modifications());
+			case_cfg_attrib(cfg = u.get_modifications());
 		case resistance:
 			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
 			case_cfg_attrib(u.movement_type().get_resistances().write(cfg));
+		case abilities_cfg:
+			case_cfg_attrib(cfg = u.abilities());
 		case underlying_id:
 			case_int_attrib(u.underlying_id());
 		case __cfg:
@@ -864,6 +875,351 @@ static int impl_unit_variables_set(lua_State *L)
 	return 0;
 }
 
+/**
+ * Gets some data on a unit (__index metamethod).
+ * - Arg 1: full userdata containing the unit id.
+ * - Arg 2: string containing the name of the property.
+ * - Ret 1: something containing the attribute.
+ */
+static int impl_unit_config_get(lua_State *L)
+{
+	enum attribute_name {
+		movement_costs,
+		vision_costs,
+		jamming_costs,
+		defense,
+		resistance,
+		flying,
+    	small_profile,
+		profile,
+		description,
+		halo,
+		ellipse,
+		usage,
+		hitpoints,
+		max_hitpoints,
+		image_icon,
+		image,
+		random_traits,
+		generate_name,
+		experience,
+		max_experience,
+		recall_cost,
+		side,
+		type,
+		gender,
+		variation,
+		role,
+		recruit,
+		overlays,
+		name,
+		id,
+		underlying_id,
+		extra_recruit,
+		facing,
+		goto_x,
+		goto_y,
+		moves,
+		max_moves,
+		vision,
+		jamming,
+		resting,
+		advances_to,
+		race,
+		language_name,
+		undead_variation,
+		level,
+		alignment,
+		flag_rgb,
+		unrenamable,
+		attacks_left,
+		max_attacks,
+		zoc,
+		hidden,
+		cost,
+	};
+	static const std::unordered_map<std::string, attribute_name> attributes {
+		{"movement_costs", movement_costs},
+		{"vision_costs", vision_costs},
+		{"jamming_costs", jamming_costs},
+		{"defense", defense},
+		{"resistance", resistance},
+		{"flying", flying},
+    	{"small_profile", small_profile},
+		{"profile", profile},
+		{"description", description},
+		{"halo", halo},
+		{"ellipse", ellipse},
+		{"usage", usage},
+		{"hitpoints", hitpoints},
+		{"max_hitpoints", max_hitpoints},
+		{"image_icon", image_icon},
+		{"image", image},
+		{"random_traits", random_traits},
+		{"generate_name", generate_name},
+		{"experience", experience},
+		{"max_experience", max_experience},
+		{"recall_cost", recall_cost},
+		{"side", side},
+		{"type", type},
+		{"gender", gender},
+		{"variation", variation},
+		{"role", role},
+		{"recruit", recruit},
+		{"overlays", overlays},
+		{"name", name},
+		{"id", id},
+		{"underlying_id", underlying_id},
+		{"extra_recruit", extra_recruit},
+		{"facing", facing},
+		{"goto_x", goto_x},
+		{"goto_y", goto_y},
+		{"moves", moves},
+		{"max_moves", max_moves},
+		{"vision", vision},
+		{"jamming", jamming},
+		{"resting", resting},
+		{"advances_to", advances_to},
+		{"race", race},
+		{"language_name", language_name},
+		{"undead_variation", undead_variation},
+		{"level", level},
+		{"alignment", alignment},
+		{"flag_rgb", flag_rgb},
+		{"unrenamable", unrenamable},
+		{"attacks_left", attacks_left},
+		{"max_attacks", max_attacks},
+		{"zoc", zoc},
+		{"hidden", hidden},
+		{"cost", cost},
+	};
+
+	lua_unit *lu = static_cast<lua_unit *>(lua_touserdata(L, 1));
+	size_t len;
+	const char* s = luaL_checklstring(L, 2, &len);
+	std::string m{s, len};
+	const unit* pu = lu->get();
+
+	auto it = attributes.find(m);
+	if(!pu) {
+		return luaL_argerror(L, 1, "unknown unit");
+	}
+
+	if (it == attributes.end()) {
+		return luaL_argerror(L, 1, "unknown attribute");
+	}
+
+#define case_int_attrib(accessor) \
+	lua_pushinteger(L, (accessor)); \
+	break;
+#define case_string_attrib(accessor) { \
+	const std::string& str = (accessor); \
+	lua_pushlstring(L, str.c_str(), str.length()); \
+	break; }
+#define case_tstring_attrib(accessor) \
+	luaW_pushtstring(L, (accessor)); \
+	break;
+#define case_bool_attrib(accessor) \
+	lua_pushboolean(L, (accessor)); \
+	break;
+#define case_cfg_attrib(accessor) {\
+	config cfg; \
+	{accessor;} \
+	luaW_pushconfig(L, cfg); \
+	break; }
+#define case_vector_string_attrib(accessor) {\
+	const std::vector<std::string>& vector = (accessor); \
+	lua_createtable(L, vector.size(), 0); \
+	int i = 1; \
+	for (const std::string& s : vector) { \
+		lua_pushlstring(L, s.c_str(), s.length()); \
+		lua_rawseti(L, -2, i); \
+		++i; \
+	} \
+	break; }
+
+	const unit& u = *pu;
+	switch (it->second) {
+		case movement_costs:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_cfg_attrib(u.movement_type().get_movement().write(cfg));
+		case vision_costs:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_cfg_attrib(u.movement_type().get_vision().write(cfg));
+		case jamming_costs:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_cfg_attrib(u.movement_type().get_jamming().write(cfg));
+		case defense:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_cfg_attrib(u.movement_type().get_defense().write(cfg));
+		case resistance:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_cfg_attrib(u.movement_type().get_resistances().write(cfg));
+		case flying:
+			if (!u.get_attr_changed(unit::UA_MOVEMENT_TYPE)) return 0;
+			case_bool_attrib(u.movement_type().is_flying());
+    	case small_profile:
+			if (!u.get_attr_changed(unit::UA_SMALL_PROFILE)) return 0;
+			case_string_attrib(u.small_profile());
+		case profile:
+			if (!u.get_attr_changed(unit::UA_PROFILE)) return 0;
+			case_string_attrib(u.big_profile());
+		case description:
+			if (u.unit_description() == u.type().unit_description()) return 0;
+			case_string_attrib(u.unit_description());
+		case halo:
+			case_string_attrib(u.image_halo());
+		case ellipse:
+			case_string_attrib(u.image_ellipse());
+		case usage:
+			case_string_attrib(u.usage());
+		case hitpoints:
+			case_int_attrib(u.hitpoints());
+		case max_hitpoints:
+			case_int_attrib(u.max_hitpoints());
+		case image_icon:
+			case_string_attrib(u.type().icon());
+		case image:
+			case_string_attrib(u.type().image());
+		case random_traits:
+			case_bool_attrib(u.random_traits());
+		case generate_name:
+			case_bool_attrib(u.get_generate_name());
+		case experience:
+			case_int_attrib(u.experience());
+		case max_experience:
+			case_int_attrib(u.max_experience());
+		case recall_cost:
+			case_int_attrib(u.recall_cost());
+		case side:
+			case_int_attrib(u.side());
+		case type:
+			case_string_attrib(u.type_id());
+		case gender:
+			case_string_attrib(gender_string(u.gender()));
+		case variation:
+			case_string_attrib(u.variation());
+		case role:
+			case_string_attrib(u.get_role());
+		case recruit:
+			if (!u.can_recruit()) return 0;
+			case_bool_attrib(true);
+		case overlays:
+			case_string_attrib("");
+		case name:
+			case_string_attrib(u.name());
+		case id:
+			case_string_attrib(u.id());
+		case underlying_id:
+			case_int_attrib(u.underlying_id());
+		case extra_recruit:
+			case_string_attrib(utils::join(u.recruits()));
+		case facing:
+			case_string_attrib(map_location::write_direction(u.facing()));
+		case goto_x:
+			case_int_attrib(u.get_goto().wml_x());
+		case goto_y:
+			case_int_attrib(u.get_goto().wml_y());
+		case moves:
+			case_int_attrib(u.movement());
+		case max_moves:
+			case_int_attrib(u.total_movement());
+		case vision:
+			case_int_attrib(u.vision());
+		case jamming:
+			case_int_attrib(u.jamming());
+		case resting:
+			case_bool_attrib(u.resting());
+		case advances_to:
+			case_string_attrib(utils::join(u.advances_to()));
+		case race:
+			case_string_attrib(u.race()->id());
+		case language_name:
+			case_string_attrib(u.type_name());
+		case undead_variation:
+			case_string_attrib(u.undead_variation());
+		case level:
+			case_int_attrib(u.level());
+		case alignment:
+			case_string_attrib(unit_alignments::get_string(u.alignment()));
+		case flag_rgb:
+			case_string_attrib(u.flag_rgb());
+		case unrenamable:
+			case_bool_attrib(u.unrenamable());
+		case attacks_left:
+			case_int_attrib(u.attacks_left());
+		case max_attacks:
+			case_int_attrib(u.max_attacks());
+		case zoc:
+			case_bool_attrib(u.get_emit_zoc());
+		case hidden:
+			case_bool_attrib(u.get_hidden());
+		case cost:
+			case_int_attrib(u.cost());
+	}
+/*
+		config back;
+		auto write_subtag = [&](const config_key_type& key, const config& child)
+		{
+			cfg.clear_children(key);
+
+			if(!child.empty()) {
+				cfg.add_child(key, child);
+			} else {
+				back.add_child(key, child);
+			}
+		};
+
+		for(const t_string& note : special_notes_) {
+			cfg.add_child(str_special_note)[str_note] = note;
+		}
+
+		write_upkeep(cfg[str_upkeep]);
+
+		if(type_id() != type().parent_id()) {
+			cfg[str_parent_type] = type().parent_id();
+		}
+
+		// Support for unit formulas in [ai] and unit-specific variables in [ai] [vars]
+		formula_man_->write(cfg);
+
+
+		config status_flags;
+		for(const std::string& state : u.get_states()) {
+			status_flags[state] = true;
+		}
+
+		write_subtag(str_variables, variables_);
+		write_subtag(str_filter_recall, filter_recall_);
+		write_subtag(str_status, status_flags);
+
+		cfg.clear_children(str_events);
+		cfg.append(events_);
+
+		// Overlays are exported as the modifications that add them, not as an overlays= value,
+		// however removing the key breaks the Gui Debug Tools.
+		// \todo does anything depend on the key's value, other than the re-import code in unit::init?
+
+		cfg.clear_children(str_attack);
+		for(attack_ptr i : attacks_) {
+			i->write(cfg.add_child(str_attack));
+		}
+
+		write_subtag(str_modifications, modifications_);
+		write_subtag(str_abilities, abilities_);
+
+		cfg.clear_children(str_advancement);
+		for(const config& advancement : advancements_) {
+			if(!advancement.empty()) {
+				cfg.add_child(str_advancement, advancement);
+			}
+		}
+		cfg.append(back);
+*/
+
+	return 1;
+}
+
 namespace lua_units {
 	std::string register_metatables(lua_State* L)
 	{
@@ -884,6 +1240,15 @@ namespace lua_units {
 		lua_pushcfunction(L, impl_unit_set);
 		lua_setfield(L, -2, "__newindex");
 		lua_pushstring(L, "unit");
+		lua_setfield(L, -2, "__metatable");
+
+		// Create the unit config metatable.
+		cmd_out << "Adding unit configuration metatable...\n";
+
+		luaL_newmetatable(L, uconfigKey);
+		lua_pushcfunction(L, impl_unit_config_get);
+		lua_setfield(L, -2, "__index");
+		lua_pushstring(L, "unit config");
 		lua_setfield(L, -2, "__metatable");
 
 		// Create the unit status metatable.
