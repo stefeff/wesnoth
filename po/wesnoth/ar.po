@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Battle for Wesnoth 1.4.2+dev\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-02-05 12:06-0600\n"
-"PO-Revision-Date: 2024-10-31 12:08+0100\n"
+"POT-Creation-Date: 2025-05-20 17:25-0500\n"
+"PO-Revision-Date: 2025-03-20 19:08+0100\n"
 "Last-Translator: Mejri Ziad <nouveau.dep@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ar\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. [multiplayer_side]: id=Custom
 #: data/_main.cfg:22
@@ -62,7 +62,7 @@ msgstr "ملفات نصية عريضة"
 #. [advanced_preference]: type=boolean
 #: data/advanced_preferences.cfg:26
 msgid "Whether to show icons in the add-ons list on the add-ons manager"
-msgstr ""
+msgstr "ما إذا كان يجب إظهار الأيقونات في قائمة الإضافات في إدارة الإضافات"
 
 #. [advanced_preference]: type=boolean
 #: data/advanced_preferences.cfg:27
@@ -70,6 +70,8 @@ msgid ""
 "Disabling saves bandwidth by not sending icons for the add-ons list in the "
 "add-ons manager"
 msgstr ""
+"يؤدي تعطيله إلى توفير النطاق الترددي من خلال عدم إرسال أيقونات لقائمة "
+"الإضافات في إدارة الإضافات"
 
 #. [advanced_preference]: type=boolean
 #: data/advanced_preferences.cfg:34
@@ -460,203 +462,203 @@ msgid "Esperanto Translation"
 msgstr "الترجمة إلى الاسبرانتو"
 
 #. [about]
-#: data/core/about_i18n.cfg:519
+#: data/core/about_i18n.cfg:529
 msgid "Estonian Translation"
 msgstr "الترجمة الاستونية"
 
 #. [about]
-#: data/core/about_i18n.cfg:529
+#: data/core/about_i18n.cfg:539
 msgid "Filipino Translation"
 msgstr "الترجمة الفلبينية"
 
 #. [about]
-#: data/core/about_i18n.cfg:539
+#: data/core/about_i18n.cfg:549
 msgid "Finnish Translation"
 msgstr "الترجمة الفنلندية"
 
 #. [about]
-#: data/core/about_i18n.cfg:604
+#: data/core/about_i18n.cfg:614
 msgid "French Translation"
 msgstr "الترجمة الفرنسية"
 
 #. [about]
-#: data/core/about_i18n.cfg:772
+#: data/core/about_i18n.cfg:782
 msgid "Friulian Translation"
 msgstr "الترجمة الى الفريوليان"
 
 #. [about]
-#: data/core/about_i18n.cfg:776
+#: data/core/about_i18n.cfg:786
 msgid "Galician Translation"
 msgstr "الترجمة الغالية"
 
 #. [about]
-#: data/core/about_i18n.cfg:812
+#: data/core/about_i18n.cfg:822
 msgid "German Translation"
 msgstr "الترجمة الجرمانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:937
+#: data/core/about_i18n.cfg:947
 msgid "Greek Translation"
 msgstr "الترجمة اليونانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:980
+#: data/core/about_i18n.cfg:990
 msgid "Hebrew Translation"
 msgstr "الترجمة العبرية"
 
 #. [about]
-#: data/core/about_i18n.cfg:993
+#: data/core/about_i18n.cfg:1003
 msgid "Hungarian Translation"
 msgstr "الترجمة الهنغارية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1054
+#: data/core/about_i18n.cfg:1064
 msgid "Icelandic Translation"
 msgstr "الترجمة الايسلندية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1064
+#: data/core/about_i18n.cfg:1074
 msgid "Indonesian Translation"
 msgstr "الترجمة الاندونيسية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1092
+#: data/core/about_i18n.cfg:1102
 msgid "Irish Translation"
 msgstr "الترجمة الايرلندية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1099
+#: data/core/about_i18n.cfg:1109
 msgid "Italian Translation"
 msgstr "الترجمة الايطالية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1146
+#: data/core/about_i18n.cfg:1156
 msgid "Japanese Translation"
 msgstr "الترجمة اليابانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1239
+#: data/core/about_i18n.cfg:1249
 msgid "Korean Translation"
 msgstr "الترجمة الكورية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1247
+#: data/core/about_i18n.cfg:1257
 msgid "Latin Translation"
 msgstr "الترجمة اللاتينية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1273
+#: data/core/about_i18n.cfg:1283
 msgid "Latvian Translation"
 msgstr "الترجمة اللاتفية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1288
+#: data/core/about_i18n.cfg:1298
 msgid "Lithuanian Translation"
 msgstr "الترجمة الليتوانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1313
+#: data/core/about_i18n.cfg:1323
 msgid "Macedonian Translation"
 msgstr "الترجمة المقدونية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1320
+#: data/core/about_i18n.cfg:1330
 msgid "Marathi Translation"
 msgstr "الترجمة إلى الماراثي"
 
 #. [about]
-#: data/core/about_i18n.cfg:1329
+#: data/core/about_i18n.cfg:1339
 msgid "Norwegian Translation"
 msgstr "الترجمة النرويجية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1358
+#: data/core/about_i18n.cfg:1368
 msgid "Old English Translation"
 msgstr "الترجمة البريطانية القديمة"
 
 #. [about]
-#: data/core/about_i18n.cfg:1376
+#: data/core/about_i18n.cfg:1386
 msgid "Polish Translation"
 msgstr "الترجمة البولونية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1451
+#: data/core/about_i18n.cfg:1461
 msgid "Portuguese Translation"
 msgstr "الترجمة البرتغالية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1465
+#: data/core/about_i18n.cfg:1475
 msgid "Portuguese (Brazil) Translation"
 msgstr "الترجمة البرتغالية البرازيلية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1523
+#: data/core/about_i18n.cfg:1533
 msgid "Romanian Translation"
 msgstr "الترجمة الرومانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1531
+#: data/core/about_i18n.cfg:1541
 msgid "Russian Translation"
 msgstr "الترجمة الروسية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1638
+#: data/core/about_i18n.cfg:1648
 msgid "Scottish Gaelic Translation"
 msgstr "الترجمة الاسكتلاندية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1647
+#: data/core/about_i18n.cfg:1657
 msgid "Serbian Translation"
 msgstr "الترجمة الصربية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1666
+#: data/core/about_i18n.cfg:1676
 msgid "Slovak Translation"
 msgstr "الترجمة السلوفاكية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1701
+#: data/core/about_i18n.cfg:1711
 msgid "Slovenian Translation"
 msgstr "الترجمة السلوفينية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1717
+#: data/core/about_i18n.cfg:1727
 msgid "Spanish Translation"
 msgstr "الترجمة الاسبانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1807
+#: data/core/about_i18n.cfg:1817
 msgid "Swedish Translation"
 msgstr "الترجمة السويدية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1852
+#: data/core/about_i18n.cfg:1862
 msgid "Turkish Translation"
 msgstr "الترجمة التركية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1877
+#: data/core/about_i18n.cfg:1887
 msgid "Ukrainian Translation"
 msgstr "الترجمة الاوكرانية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1911
+#: data/core/about_i18n.cfg:1921
 msgid "Valencian (southern Catalan) Translation"
 msgstr "الترجمة الفالنسية الكاتالونية الجنوبية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1924
+#: data/core/about_i18n.cfg:1934
 msgid "Vietnamese Translation"
 msgstr "الترجمة الفيتنامية"
 
 #. [about]
-#: data/core/about_i18n.cfg:1943
+#: data/core/about_i18n.cfg:1953
 msgid "Welsh Translation"
 msgstr "الترجمة الويلزية"
 
 #. [about]
 #. Real Acadèmia de Cultura Valenciana
-#: data/core/about_i18n.cfg:1952
+#: data/core/about_i18n.cfg:1962
 msgid "RACV’s Translation"
 msgstr "الترجمة إلى راكف"
 
@@ -4208,8 +4210,8 @@ msgstr "غير قابل للشفاء"
 
 #. #-#-#-#-#  wesnoth.wml.pot (PACKAGE VERSION)  #-#-#-#-#
 #. [lua]: wesnoth.wml_actions.message
-#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3491
-#: src/scripting/game_lua_kernel.cpp:3526
+#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3487
+#: src/scripting/game_lua_kernel.cpp:3522
 msgid "input"
 msgstr "مدخل"
 
@@ -6434,7 +6436,7 @@ msgstr[3] "يرجى الإبلاغ عن هذا إلى المؤلف أو المش
 msgstr[4] "يرجى الإبلاغ عن هذا إلى المؤلف أو المشرف على هذه الإضافات."
 msgstr[5] "يرجى الإبلاغ عن هذا إلى المؤلف أو المشرف على هذه الإضافات."
 
-#: src/game_events/pump.cpp:392 src/game_launcher.cpp:960
+#: src/game_events/pump.cpp:392 src/game_launcher.cpp:966
 msgid "Error: "
 msgstr "خطأ: "
 
@@ -6763,20 +6765,20 @@ msgstr "لقد قمت بمحاولات كثيرة لتسجيل الدخول."
 msgid "Password hashing failed."
 msgstr "فشل تجزئة كلمة المرور."
 
-#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:913
+#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:919
 msgid "The game could not be loaded: "
 msgstr "تعذر تحميل اللعبة: "
 
-#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:915
+#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:921
 msgid "Error while playing the game: "
 msgstr "خطأ أثناء تشغيل اللعبة: "
 
-#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:952
+#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:958
 msgid "The game map could not be loaded: "
 msgstr "تعذر تحميل خريطة اللعبة: "
 
-#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:917
-#: src/game_launcher.cpp:1038
+#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:923
+#: src/game_launcher.cpp:1044
 msgid "Map generator error: "
 msgstr "خطأ في مولد الخريطة: "
 
@@ -6801,29 +6803,29 @@ msgstr "سيناريو غير معروف: '$scenario|'"
 msgid "No campaigns are available."
 msgstr "لا توجد حملات متاحة."
 
-#: src/game_launcher.cpp:719 src/game_launcher.cpp:738 src/replay.cpp:666
+#: src/game_launcher.cpp:725 src/game_launcher.cpp:744 src/replay.cpp:666
 msgid "The file you have tried to load is corrupt"
 msgstr "الملف الذي حاولت تحميله تالف"
 
-#: src/game_launcher.cpp:721 src/game_launcher.cpp:740
+#: src/game_launcher.cpp:727 src/game_launcher.cpp:746
 #: src/hotkey/hotkey_handler_sp.cpp:334 src/savegame.cpp:153
 #: src/savegame.cpp:314
 msgid "The file you have tried to load is corrupt: '"
 msgstr "الملف الذي حاولت تحميله تالف:'"
 
-#: src/game_launcher.cpp:730
+#: src/game_launcher.cpp:736
 msgid "File I/O Error while reading the game"
 msgstr "خطأ في إدخال/إخراج الملف أثناء قراءة اللعبة"
 
-#: src/game_launcher.cpp:732
+#: src/game_launcher.cpp:738
 msgid "File I/O Error while reading the game: '"
 msgstr "خطأ في إدخال/إخراج الملف أثناء قراءة اللعبة:'"
 
-#: src/game_launcher.cpp:911
+#: src/game_launcher.cpp:917
 msgid "Error while starting server: "
 msgstr "خطأ أثناء بدء تشغيل الخادم: "
 
-#: src/game_launcher.cpp:933
+#: src/game_launcher.cpp:939
 msgid "Connection failed: "
 msgstr "فشل الاتصال: "
 
@@ -6980,7 +6982,7 @@ msgid "Other aspects: "
 msgstr "خواص أخرى: "
 
 #: src/gui/dialogs/unit_attack.cpp:190 src/gui/dialogs/unit_attack.cpp:203
-#: src/reports.cpp:822 src/reports.cpp:1086 src/reports.cpp:1098
+#: src/reports.cpp:823 src/reports.cpp:1087 src/reports.cpp:1099
 msgid "Weapon: "
 msgstr "السلاح: "
 
@@ -6990,12 +6992,12 @@ msgid "Type: "
 msgstr "الصنف: "
 
 #: src/gui/dialogs/unit_attack.cpp:192 src/gui/dialogs/unit_attack.cpp:205
-#: src/reports.cpp:823 src/reports.cpp:1087
+#: src/reports.cpp:824 src/reports.cpp:1088
 msgid "Damage: "
 msgstr "الضرر: "
 
 #: src/gui/dialogs/unit_attack.cpp:193 src/gui/dialogs/unit_attack.cpp:206
-#: src/reports.cpp:844
+#: src/reports.cpp:845
 msgid "Attacks: "
 msgstr "عدد الهجمات: "
 
@@ -7087,7 +7089,7 @@ msgstr "لا يوجد وصف متوفر."
 msgid "race^Miscellaneous"
 msgstr "عرق غير مصنف"
 
-#: src/help/help_impl.cpp:1130 src/reports.cpp:393
+#: src/help/help_impl.cpp:1130 src/reports.cpp:394
 msgid "Alignment: "
 msgstr "التوجه: "
 
@@ -8150,7 +8152,7 @@ msgstr "المغادرة"
 msgid "Do you really want to quit?"
 msgstr "هل ترغب حقا في المغادرة؟"
 
-#: src/reports.cpp:174 src/savegame.cpp:429
+#: src/reports.cpp:175 src/savegame.cpp:429
 msgid "Name: "
 msgstr "الاسم: "
 
@@ -8158,31 +8160,31 @@ msgstr "الاسم: "
 msgid "Special Notes:"
 msgstr "ملاحظات خاصة:"
 
-#: src/reports.cpp:221
+#: src/reports.cpp:222
 msgid "Race: "
 msgstr "العرق: "
 
-#: src/reports.cpp:240
+#: src/reports.cpp:241
 msgid "Side: <b>$side_name</b> ($color_name)"
 msgstr "الجانب: <b>$side_name</b> ($color_name)"
 
-#: src/reports.cpp:318
+#: src/reports.cpp:319
 msgid "Trait: "
 msgstr "الصفات الشخصية: "
 
-#: src/reports.cpp:341
+#: src/reports.cpp:342
 msgid "invisible: "
 msgstr "غير مرئي: "
 
-#: src/reports.cpp:342
+#: src/reports.cpp:343
 msgid "This unit is invisible. It cannot be seen or attacked by enemy units."
 msgstr "هذه الوحدة غير مرئية. لا يمكن رؤيتها أو مهاجمتها من وحدة معادية."
 
-#: src/reports.cpp:345
+#: src/reports.cpp:346
 msgid "slowed: "
 msgstr "تم ابطائه: "
 
-#: src/reports.cpp:346
+#: src/reports.cpp:347
 msgid ""
 "This unit has been slowed. It will only deal half its normal damage when "
 "attacking and its movement cost is doubled."
@@ -8190,11 +8192,11 @@ msgstr ""
 "هذه الوحدة تم ابطائها. هجماتها لها نصف المفعول وتنقلها يحتاج ضعف نقاط الحركة "
 "المعتادة."
 
-#: src/reports.cpp:349
+#: src/reports.cpp:350
 msgid "poisoned: "
 msgstr "تم تسميمها: "
 
-#: src/reports.cpp:350
+#: src/reports.cpp:351
 msgid ""
 "This unit is poisoned. It will lose 8 HP every turn until it can seek a cure "
 "to the poison in a village or from a friendly unit with the ‘cures’ "
@@ -8207,19 +8209,19 @@ msgstr ""
 "قدرة علاج السم أو بالبقاء في مدينة لمدة دور. السم لن يقتل الوحدة ولن تنزل "
 "نقاط حياتها إلى ما تحت نقطة واحدة."
 
-#: src/reports.cpp:353
+#: src/reports.cpp:354
 msgid "petrified: "
 msgstr "تم تجميدها: "
 
-#: src/reports.cpp:354
+#: src/reports.cpp:355
 msgid "This unit has been petrified. It may not move or attack."
 msgstr "هذه الوحدة تم تجميدها ولا يمكنها بالتالي التحرك أو الهجوم."
 
-#: src/reports.cpp:357
+#: src/reports.cpp:358
 msgid "unhealable: "
 msgstr "غير قابل للشفاء "
 
-#: src/reports.cpp:358
+#: src/reports.cpp:359
 msgid ""
 "This unit is unhealable. It cannot be healed by healers or villages and "
 "doesn’t benefit from resting."
@@ -8227,135 +8229,135 @@ msgstr ""
 "هذه الوحدة غير قابلة للشفاء. لا يمكن شفاءها بواسطة المعالجين أو القرى ولا "
 "تستفيد من الراحة."
 
-#: src/reports.cpp:361
+#: src/reports.cpp:362
 msgid "invulnerable: "
 msgstr "غير قابل للاصابة: "
 
-#: src/reports.cpp:362
+#: src/reports.cpp:363
 msgid "This unit is invulnerable. It cannot be harmed by any attack."
 msgstr "هذه الوحدة منيعة. لا يمكن رؤيتها أو مهاجمتها من وحدة معادية."
 
-#: src/reports.cpp:440
+#: src/reports.cpp:441
 msgid "Ability: "
 msgstr "القدرات: "
 
-#: src/reports.cpp:442 src/reports.cpp:997
+#: src/reports.cpp:443 src/reports.cpp:998
 msgid " (inactive)"
 msgstr " (غير مفعل)"
 
-#: src/reports.cpp:510
+#: src/reports.cpp:511
 msgid "Resistances: "
 msgstr "المقاومة: "
 
-#: src/reports.cpp:512
+#: src/reports.cpp:513
 msgid "(Att / Def)"
 msgstr "(الهجوم/الدفاع)"
 
-#: src/reports.cpp:543
+#: src/reports.cpp:544
 msgid "Experience Modifier: "
 msgstr "تغيير الخبرة اللازمة: "
 
-#: src/reports.cpp:593
+#: src/reports.cpp:594
 msgid "Terrain: "
 msgstr "الارضية: "
 
-#: src/reports.cpp:610
+#: src/reports.cpp:611
 msgid "maximum^max."
 msgstr "الأقصى."
 
-#: src/reports.cpp:610
+#: src/reports.cpp:611
 msgid "minimum^min."
 msgstr "الأدنى."
 
-#: src/reports.cpp:615
+#: src/reports.cpp:616
 msgid "Defense: "
 msgstr "الدفاع: "
 
-#: src/reports.cpp:650 src/reports.cpp:651
+#: src/reports.cpp:651 src/reports.cpp:652
 msgid "vision:"
 msgstr "الرؤية:"
 
-#: src/reports.cpp:655 src/reports.cpp:656
+#: src/reports.cpp:656 src/reports.cpp:657
 msgid "jamming:"
 msgstr "القفز:"
 
-#: src/reports.cpp:685
+#: src/reports.cpp:686
 msgid "Movement Costs:"
 msgstr "تكلفة الحركة:"
 
-#: src/reports.cpp:827
+#: src/reports.cpp:828
 msgid "Base damage: "
 msgstr "الضرر القاعدي: "
 
-#: src/reports.cpp:829 src/reports.cpp:863 src/reports.cpp:873
+#: src/reports.cpp:830 src/reports.cpp:864 src/reports.cpp:874
 msgid "With specials: "
 msgstr "مع خاصية: "
 
-#: src/reports.cpp:832
+#: src/reports.cpp:833
 msgid "Time of day: "
 msgstr "وقت اليوم: "
 
-#: src/reports.cpp:836
+#: src/reports.cpp:837
 msgid "Leadership: "
 msgstr "القيادة: "
 
-#: src/reports.cpp:840
+#: src/reports.cpp:841
 msgid "Slowed: "
 msgstr "تم ابطائه: "
 
-#: src/reports.cpp:848
+#: src/reports.cpp:849
 msgid "Max swarm bonus: "
 msgstr "الحد الاقصى للعزم: "
 
-#: src/reports.cpp:849 src/reports.cpp:868
+#: src/reports.cpp:850 src/reports.cpp:869
 msgid "Swarm: "
 msgstr "العزم: "
 
-#: src/reports.cpp:850 src/reports.cpp:861 src/reports.cpp:872
+#: src/reports.cpp:851 src/reports.cpp:862 src/reports.cpp:873
 msgid "Base attacks: "
 msgstr "عدد الهجمات القاعدي: "
 
-#: src/reports.cpp:856
+#: src/reports.cpp:857
 msgid "Specials: "
 msgstr "الخاصية: "
 
-#: src/reports.cpp:866
+#: src/reports.cpp:867
 msgid "Subject to swarm: "
 msgstr "موضوع العزم: "
 
-#: src/reports.cpp:900
+#: src/reports.cpp:901
 msgid "Weapon range: "
 msgstr "مجال السلاح: "
 
-#: src/reports.cpp:901
+#: src/reports.cpp:902
 msgid "Damage type: "
 msgstr "نوع الضرر: "
 
-#: src/reports.cpp:902
+#: src/reports.cpp:903
 msgid "Damage versus: "
 msgstr "ضرر ضد: "
 
-#: src/reports.cpp:964
+#: src/reports.cpp:965
 msgid "Accuracy:"
 msgstr "الدقة:"
 
-#: src/reports.cpp:969
+#: src/reports.cpp:970
 msgid "Parry:"
 msgstr "التحدي:"
 
-#: src/reports.cpp:995
+#: src/reports.cpp:996
 msgid "Weapon special: "
 msgstr "خاصية السلاح: "
 
-#: src/reports.cpp:1070
+#: src/reports.cpp:1071
 msgid "weapon^None"
 msgstr "لا سلاح"
 
-#: src/reports.cpp:1099
+#: src/reports.cpp:1100
 msgid "Total damage"
 msgstr "الضرر الجملي"
 
-#: src/reports.cpp:1163
+#: src/reports.cpp:1164
 msgid "Attack"
 msgid_plural "Attacks"
 msgstr[0] "هجمة"
@@ -8366,74 +8368,74 @@ msgstr[4] "هجوما"
 msgstr[5] "هجمة"
 
 #. TRANSLATORS: This string is shown in the sidebar beneath the word "Attacks" when a unit can attack multiple times per turn
-#: src/reports.cpp:1171
+#: src/reports.cpp:1172
 msgid "Remaining: $left/$max"
 msgstr "المتبقي: $left/$max"
 
-#: src/reports.cpp:1175
+#: src/reports.cpp:1176
 msgid "This unit can attack multiple times per turn."
 msgstr "هذه الوحدة يمكنها الهجوم عدة مرات في الدور الواحد."
 
-#: src/reports.cpp:1267
+#: src/reports.cpp:1268
 msgid "Time of day schedule:"
 msgstr "جدول توقيت اليوم:"
 
-#: src/reports.cpp:1316
+#: src/reports.cpp:1317
 msgid "Time of day:"
 msgstr "توقيت اليوم:"
 
-#: src/reports.cpp:1317 src/reports.cpp:1371
+#: src/reports.cpp:1318 src/reports.cpp:1372
 msgid "Lawful units: "
 msgstr "الوحدات النهارية: "
 
-#: src/reports.cpp:1319 src/reports.cpp:1373
+#: src/reports.cpp:1320 src/reports.cpp:1374
 msgid "Neutral units: "
 msgstr "الوحدات المحايدة "
 
-#: src/reports.cpp:1320 src/reports.cpp:1374
+#: src/reports.cpp:1321 src/reports.cpp:1375
 msgid "Chaotic units: "
 msgstr "الوحدات الليلية "
 
-#: src/reports.cpp:1322 src/reports.cpp:1376
+#: src/reports.cpp:1323 src/reports.cpp:1377
 msgid "Liminal units: "
 msgstr "الوحدات الفجرية "
 
-#: src/reports.cpp:1435
+#: src/reports.cpp:1436
 msgid "Turn Number"
 msgstr "رقم الدور"
 
-#: src/reports.cpp:1437
+#: src/reports.cpp:1438
 msgid ""
 "When the game exceeds the number of turns indicated by the second number, it "
 "will end."
 msgstr "عند تجاوز عدد الأدوار الاقصى المحدد تنتهي اللعبة."
 
-#: src/reports.cpp:1462
+#: src/reports.cpp:1463
 msgid "Gold"
 msgstr "الذهب"
 
-#: src/reports.cpp:1462
+#: src/reports.cpp:1463
 msgid ""
 "The amount of gold currently available to recruit and maintain your army."
 msgstr "كمية الذهب المتوفرة لتجنيد وصيانة الوحدات."
 
-#: src/reports.cpp:1481
+#: src/reports.cpp:1482
 msgid "The fraction of known villages that your side has captured."
 msgstr "عدد المدن التي يسيطر عليها طرفك."
 
-#: src/reports.cpp:1481
+#: src/reports.cpp:1482
 msgid "Villages"
 msgstr "المدن"
 
-#: src/reports.cpp:1486
+#: src/reports.cpp:1487
 msgid "The total number of units on your side."
 msgstr "عدد الوحدات في طرفك."
 
-#: src/reports.cpp:1486
+#: src/reports.cpp:1487
 msgid "Units"
 msgstr "الوحدات"
 
-#: src/reports.cpp:1496
+#: src/reports.cpp:1497
 msgid ""
 "The expenses incurred at the end of every turn to maintain your army. The "
 "first number is the amount of gold that will be deducted. It is equal to the "
@@ -8446,15 +8448,15 @@ msgstr ""
 "هو التكلفة الإجمالية للصيانة، بما في ذلك تلك التي تغطيها القرى - وبعبارة "
 "أخرى، كمية الذهب التي سيتم خصمها إذا فقدت جميع القرى."
 
-#: src/reports.cpp:1496
+#: src/reports.cpp:1497
 msgid "Upkeep"
 msgstr "الصيانة"
 
-#: src/reports.cpp:1533
+#: src/reports.cpp:1534
 msgid "Net Income"
 msgstr "المدخول الخام"
 
-#: src/reports.cpp:1533
+#: src/reports.cpp:1534
 msgid ""
 "The net amount of gold you gain or lose each turn, taking into account "
 "income from controlled villages and payment of upkeep."
@@ -8462,23 +8464,23 @@ msgstr ""
 "صافي مبلغ الذهب الذي تكسبه أو تخسره في كل دور، مع الأخذ في الاعتبار الدخل من "
 "القرى الخاضعة للسيطرة ودفع الصيانة."
 
-#: src/reports.cpp:1733
+#: src/reports.cpp:1734
 msgid "Observers:"
 msgstr "المراقبون:"
 
-#: src/reports.cpp:1753
+#: src/reports.cpp:1754
 msgid "Clock"
 msgstr "الساعة"
 
-#: src/reports.cpp:1764
+#: src/reports.cpp:1765
 msgid "Battery"
 msgstr "البطارية"
 
-#: src/reports.cpp:1795
+#: src/reports.cpp:1796
 msgid "Countdown until your turn automatically ends."
 msgstr "ميقات يحدد الزمن قبل نهاية دورك آليا."
 
-#: src/reports.cpp:1795
+#: src/reports.cpp:1796
 msgid "Turn Countdown"
 msgstr "ميقات الدور"
 
@@ -8851,7 +8853,7 @@ msgid "Used by opponent: "
 msgstr "يستخدمه الخصم: "
 
 #. TRANSLATORS: Current value for WML code increase_damage, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:536
+#: src/units/attack_type.cpp:537
 msgid "<span color=\"$color\">$number_or_percent</span> damage"
 msgid_plural "<span color=\"$color\">$number_or_percent</span> damage"
 msgstr[0] "<span color=\"$color\">$number_or_percent</span> ضرر"
@@ -8861,7 +8863,7 @@ msgstr[3] "<span color=\"$color\">$number_or_percent</span> أضرار"
 msgstr[4] "<span color=\"$color\">$number_or_percent</span> أضرار"
 msgstr[5] "<span color=\"$color\">$number_or_percent</span> أضرار"
 
-#: src/units/attack_type.cpp:545
+#: src/units/attack_type.cpp:546
 msgid "$number damage"
 msgid_plural "$number damage"
 msgstr[0] "$number ضرر"
@@ -8872,7 +8874,7 @@ msgstr[4] "$number أضرار"
 msgstr[5] "$number أضرار"
 
 #. TRANSLATORS: Current value for WML code increase_attacks, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:554
+#: src/units/attack_type.cpp:555
 msgid "<span color=\"$color\">$number_or_percent</span> strike"
 msgid_plural "<span color=\"$color\">$number_or_percent</span> strikes"
 msgstr[0] "<span color=\"$color\">$number_or_percent</span> إصابة"
@@ -8883,7 +8885,7 @@ msgstr[4] "<span color=\"$color\">$number_or_percent</span> إصابات"
 msgstr[5] "<span color=\"$color\">$number_or_percent</span> إصابات"
 
 #. TRANSLATORS: Current value for WML code set_attacks, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:563
+#: src/units/attack_type.cpp:564
 msgid "$number strike"
 msgid_plural "$number strikes"
 msgstr[0] "$number إصابة"
@@ -8894,27 +8896,27 @@ msgstr[4] "$number إصابات"
 msgstr[5] "$number إصابات"
 
 #. TRANSLATORS: Current value for WML code set_accuracy, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:572
+#: src/units/attack_type.cpp:573
 msgid "$number| accuracy"
 msgstr "$number| الدقة"
 
 #. TRANSLATORS: Current value for WML code increase_accuracy, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:579
+#: src/units/attack_type.cpp:580
 msgid "<span color=\"$color\">$number_or_percent|%</span> accuracy"
 msgstr "<span color=\"$color\">$number_or_percent|%</span> الدقة"
 
 #. TRANSLATORS: Current value for WML code set_parry, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:586
+#: src/units/attack_type.cpp:587
 msgid "$number parry"
 msgstr "$number تحدي"
 
 #. TRANSLATORS: Current value for WML code increase_parry, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:593
+#: src/units/attack_type.cpp:594
 msgid "<span color=\"$color\">$number_or_percent</span> parry"
 msgstr "<span color=\"$color\">$number_or_percent</span> تحدي"
 
 #. TRANSLATORS: Current value for WML code set_movement_used, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:600
+#: src/units/attack_type.cpp:601
 msgid "$number movement point"
 msgid_plural "$number movement points"
 msgstr[0] "$number نقطة حركة"
@@ -8925,7 +8927,7 @@ msgstr[4] "$number نقاط حركة"
 msgstr[5] "$number نقاط حركة"
 
 #. TRANSLATORS: Current value for WML code increase_movement_used, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:609
+#: src/units/attack_type.cpp:610
 msgid "<span color=\"$color\">$number_or_percent</span> movement point"
 msgid_plural "<span color=\"$color\">$number_or_percent</span> movement points"
 msgstr[0] "<span color=\"$color\">$number_or_percent</span> نقطة حركة"
@@ -8936,7 +8938,7 @@ msgstr[4] "<span color=\"$color\">$number_or_percent</span> نقاط حركة"
 msgstr[5] "<span color=\"$color\">$number_or_percent</span> نقاط حركة"
 
 #. TRANSLATORS: Current value for WML code set_attacks_used, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:618
+#: src/units/attack_type.cpp:619
 msgid "$number attack used"
 msgid_plural "$number attacks used"
 msgstr[0] "$number هجوم مستخدم"
@@ -8947,7 +8949,7 @@ msgstr[4] "$number هجوم مستخدم"
 msgstr[5] "$number هجوم مستخدم"
 
 #. TRANSLATORS: Current value for WML code increase_attacks_used, documented in https://wiki.wesnoth.org/EffectWML
-#: src/units/attack_type.cpp:627
+#: src/units/attack_type.cpp:628
 msgid "<span color=\"$color\">$number_or_percent</span> attack used"
 msgid_plural "<span color=\"$color\">$number_or_percent</span> attacks used"
 msgstr[0] "<span color=\"$color\">$number_or_percent</span> هجوم مستخدم"
