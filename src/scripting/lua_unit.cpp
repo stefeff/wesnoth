@@ -29,6 +29,7 @@
 #include "units/map.hpp"
 #include "units/animation_component.hpp"
 #include "utils/optional_fwd.hpp"
+#include "units/types.hpp"
 #include "game_version.hpp"
 #include "deprecation.hpp"
 #include <vector>
@@ -38,6 +39,7 @@ static lg::log_domain log_scripting_lua("scripting/lua");
 #define ERR_LUA LOG_STREAM(err, log_scripting_lua)
 
 static const char getunitKey[] = "unit";
+static const char uconfigKey[] = "unit config";
 static const char ustatusKey[] = "unit status";
 static const char unitvarKey[] = "unit variables";
 
@@ -215,6 +217,11 @@ lua_unit* luaW_pushlocalunit(lua_State *L, unit& u)
 	lua_unit* res = new(L) lua_unit(u);
 	lua_unit::setmetatable(L);
 	return res;
+}
+
+void lua_unit_config::setmetatable(lua_State *L)
+{
+	luaL_setmetatable(L, uconfigKey);
 }
 
 /**
@@ -961,6 +968,15 @@ namespace lua_units {
 		lua_pushcfunction(L, impl_unit_dir);
 		lua_setfield(L, -2, "__dir");
 		lua_pushstring(L, "unit");
+		lua_setfield(L, -2, "__metatable");
+
+		// Create the unit config metatable.
+		cmd_out << "Adding unit configuration metatable...\n";
+
+		luaL_newmetatable(L, uconfigKey);
+		lua_pushcfunction(L, impl_unit_config_get);
+		lua_setfield(L, -2, "__index");
+		lua_pushstring(L, "unit config");
 		lua_setfield(L, -2, "__metatable");
 
 		// Create the unit status metatable.

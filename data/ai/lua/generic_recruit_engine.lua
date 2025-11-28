@@ -56,7 +56,7 @@ return {
                 random_gender = false
             }
             -- Find the best regeneration ability and use it to estimate hp regained by regeneration
-            local abilities = wml.get_child(unit.__cfg, "abilities")
+            local abilities = unit.abilities_cfg
             local regen_amount = 0
             if abilities then
                 for regen in wml.child_range(abilities, "regenerate") do

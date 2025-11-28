@@ -104,7 +104,7 @@ function ca_fast_attack_utils.single_unit_info(unit_proxy)
     }
 
     -- Include the ability type, such as: hides, heals, regenerate, skirmisher (set up as 'hides = true')
-    local abilities = wml.get_child(unit_proxy.__cfg, "abilities")
+    local abilities = unit_proxy.abilities_cfg
     if abilities then
         for _,ability in ipairs(abilities) do
             if ability[1] == 'regenerate' then

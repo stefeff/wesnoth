@@ -61,7 +61,7 @@ function retreat_functions.retreat_injured_units(units, avoid_map)
         then
             if u:ability('regenerate') then
                 -- Find the best regeneration ability and use it to estimate hp regained by regeneration
-                local abilities = wml.get_child(u.__cfg, "abilities")
+                local abilities = u.abilities_cfg
                 local regen_amount = 0
                 if abilities then
                     for regenerates in wml.child_range(abilities, "regenerate") do
@@ -112,7 +112,7 @@ function retreat_functions.get_healing_locations(possible_healers)
         if u.moves == 0 or u.side ~= wesnoth.current.side then
             local heal_amount = 0
             local cure = 0
-            local abilities = wml.get_child(u.__cfg, "abilities") or {}
+            local abilities = u.abilities_cfg or {}
             for ability in wml.child_range(abilities, "heals") do
                 heal_amount = (tonumber(ability.value) or 0)
                 if ability.poison == "slowed" then

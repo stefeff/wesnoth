@@ -122,3 +122,29 @@ inline lua_unit* luaW_pushunit(lua_State *L, Args... args) {
 namespace lua_units {
 	std::string register_metatables(lua_State *L);
 }
+
+class lua_unit_config
+{
+	unit_ptr ptr;
+	lua_unit_config(const lua_unit_config&) = delete;
+	lua_unit_config& operator=(const lua_unit_config&) = delete;
+
+	friend lua_unit_config* luaW_pushlocalunitcfg(lua_State *L, unit& u);
+	static void setmetatable(lua_State *L);
+public:
+	lua_unit_config(const lua_unit& u): ptr{u.get_shared()} {}
+	~lua_unit_config() {};
+
+	const unit& get() const {return *ptr;}
+
+	const unit* operator->() const {return &get();}
+	const unit& operator*() const {return get();}
+};
+
+template<typename... Args>
+inline lua_unit_config* luaW_pushlocalunitcfg(lua_State *L, Args... args) {
+	lua_unit_config* luc = new(L) lua_unit_config(args...);
+	lua_unit_config::setmetatable(L);
+	return luc;
+}
+
