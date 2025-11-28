@@ -57,11 +57,17 @@
 #include "wesnothd_connection_error.hpp"
 #include "wml_exception.hpp" // for wml_exception
 
-#include <algorithm> // for copy, max, min, stable_sort
 #ifdef _WIN32
-#include <boost/process/windows.hpp>
+#  include <boost/process/windows.hpp>
 #endif
-#include <boost/process.hpp>
+#if BOOST_VERSION >= 108800 // v2 is now default
+#  define BOOST_PROCESS_VERSION 1
+#  include <boost/process/v1/child.hpp>
+#else
+#  include <boost/process.hpp>
+#endif
+
+#include <algorithm> // for copy, max, min, stable_sort
 #include <cstdlib>   // for system
 #include <new>
 #include <utility> // for pair
@@ -183,7 +189,7 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 	if(cmdline_opts_.fps)
 		preferences::set_show_fps(true);
 	if(cmdline_opts_.fullscreen)
-		start_in_fullscreen_ = true;
+		preferences::_set_fullscreen(true);
 	if(cmdline_opts_.load)
 		load_data_ = savegame::load_game_metadata{
 			savegame::save_index_class::default_saves_dir(), *cmdline_opts_.load};
@@ -254,7 +260,7 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 		test_scenarios_ = cmdline_opts_.unit_test;
 	}
 	if(cmdline_opts_.windowed)
-		start_in_fullscreen_ = false;
+		preferences::_set_fullscreen(false);
 	if(cmdline_opts_.with_replay && load_data_)
 		load_data_->show_replay = true;
 	if(cmdline_opts_.translation_percent)

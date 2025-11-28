@@ -5,16 +5,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# RatArmy, 2024
+# RatArmy, 2025
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-10-28 12:38-0500\n"
+"POT-Creation-Date: 2025-05-20 17:25-0500\n"
 "PO-Revision-Date: 2023-12-03 03:44+0000\n"
-"Last-Translator: RatArmy, 2024\n"
+"Last-Translator: RatArmy, 2025\n"
 "Language-Team: Japanese (https://app.transifex.com/wesnoth-jp/teams/60513/"
 "ja/)\n"
 "Language: ja\n"
@@ -950,18 +950,6 @@ msgstr "アイテムツール（舞台装置ツール）"
 
 #. [topic]: id=editor_tool_scenery
 #: data/core/editor/help.cfg:243
-#, fuzzy
-#| msgid ""
-#| "The Item Tool allows placing decorations such as windmills, bookcases and "
-#| "monoliths. Multiple items can be placed on the same hex.\n"
-#| "\n"
-#| "<bold>text='Note:'</bold> the tool doesn’t support deleting items once "
-#| "placed, nor does it support undo. Mistakes can currently only be fixed by "
-#| "editing the generated WML file.\n"
-#| "\n"
-#| "This tool is only available in Scenario Mode; the decorations are not "
-#| "part of the terrain and are implemented in the scenario using WML’s "
-#| "<italic>text='[item]'</italic> tag."
 msgid ""
 "The Item Tool allows placing decorations such as windmills, bookcases and "
 "monoliths. Multiple items can be placed on the same hex.\n"
@@ -978,9 +966,10 @@ msgstr ""
 "アイテムツールは風車、本棚やモノリスなどの装飾を設置します。複数のアイテムを"
 "同じヘクスに設置することも可能です。\n"
 "\n"
-"<bold>text='メモ：'</bold>このツールでは設置したアイテムの削除はサポートされ"
-"ておらず、アンドゥすることもできません。ミスを修正するには、生成された WML "
-"ファイルを直接編集してください。\n"
+"• 左クリックしたヘクスに装飾を設置します。\n"
+"• 右クリックで装飾を削除します。\n"
+"\n"
+"<bold>text='メモ：'</bold>このツールではアンドゥはサポートされていません。\n"
 "\n"
 "このツールはシナリオモードでのみ利用可能です。装飾は地形の一部ではなく、 WML "
 "の <italic>text='[item]'</italic> タグによってシナリオに実装されます。"
@@ -2252,8 +2241,8 @@ msgstr "ゲームの遊び方"
 #. [section]: id=traits_section
 #. [topic]: id=..traits_section
 #: data/core/help.cfg:29 data/core/help.cfg:531
-#: src/help/help_topic_generators.cpp:478
-#: src/help/help_topic_generators.cpp:501
+#: src/help/help_topic_generators.cpp:482
+#: src/help/help_topic_generators.cpp:505
 msgid "Traits"
 msgstr "特性"
 
@@ -8145,15 +8134,15 @@ msgstr "スタン"
 msgid "stunned"
 msgstr "スタン"
 
-#: src/help/help.cpp:211
+#: src/help/help.cpp:183
 msgid "Close"
 msgstr "閉じる"
 
-#: src/help/help.cpp:215
+#: src/help/help.cpp:187
 msgid "Help"
 msgstr "ヘルプ"
 
-#: src/help/help.cpp:267 src/help/help.cpp:271
+#: src/help/help.cpp:239 src/help/help.cpp:243
 msgid "Parse error when parsing help text:"
 msgstr "ヘルプテキストをパース中にエラーが発生しました："
 
@@ -8208,7 +8197,7 @@ msgstr ""
 "ている別の主塔からこのヘクス上にユニットを雇用することはできません。"
 
 #: src/help/help_topic_generators.cpp:184
-#: src/help/help_topic_generators.cpp:604
+#: src/help/help_topic_generators.cpp:608
 msgid "Special Notes:"
 msgstr "特記事項："
 
@@ -8228,151 +8217,151 @@ msgstr "回避特性："
 msgid "Level"
 msgstr "レベル"
 
-#: src/help/help_topic_generators.cpp:361
+#: src/help/help_topic_generators.cpp:365
 msgid "Advances from: "
 msgstr "レベルアップ元："
 
-#: src/help/help_topic_generators.cpp:363
+#: src/help/help_topic_generators.cpp:367
 msgid "Advances to: "
 msgstr "レベルアップ先："
 
-#: src/help/help_topic_generators.cpp:392
+#: src/help/help_topic_generators.cpp:396
 msgid "Base unit: "
 msgstr "ベースユニット："
 
-#: src/help/help_topic_generators.cpp:397
+#: src/help/help_topic_generators.cpp:401
 msgid "Base units: "
 msgstr "ベースユニット："
 
-#: src/help/help_topic_generators.cpp:415
+#: src/help/help_topic_generators.cpp:419
 msgid "Variations: "
 msgstr "バリエーション："
 
-#: src/help/help_topic_generators.cpp:439
+#: src/help/help_topic_generators.cpp:443
 msgid "race^Miscellaneous"
 msgstr "その他"
 
-#: src/help/help_topic_generators.cpp:441
+#: src/help/help_topic_generators.cpp:445
 msgid "Race: "
 msgstr "種族："
 
-#: src/help/help_topic_generators.cpp:511
+#: src/help/help_topic_generators.cpp:515
 msgid "Abilities: "
 msgstr "能力："
 
-#: src/help/help_topic_generators.cpp:537
+#: src/help/help_topic_generators.cpp:541
 msgid "Ability Upgrades: "
 msgstr "能力のアップグレード："
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  If the translation
 #. uses spaces, use non-breaking spaces as appropriate for the target language to prevent
 #. unpleasant line breaks (issue #3256).
-#: src/help/help_topic_generators.cpp:567
+#: src/help/help_topic_generators.cpp:571
 msgid "HP:"
 msgstr "HP："
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  If the translation
 #. uses spaces, use non-breaking spaces as appropriate for the target language to prevent
 #. unpleasant line breaks (issue #3256).
-#: src/help/help_topic_generators.cpp:571
+#: src/help/help_topic_generators.cpp:575
 msgid "Moves:"
 msgstr "移動力："
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  If the translation
 #. uses spaces, use non-breaking spaces as appropriate for the target language to prevent
 #. unpleasant line breaks (issue #3256).
-#: src/help/help_topic_generators.cpp:576
+#: src/help/help_topic_generators.cpp:580
 msgid "Vision:"
 msgstr "視界："
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  If the translation
 #. uses spaces, use non-breaking spaces as appropriate for the target language to prevent
 #. unpleasant line breaks (issue #3256).
-#: src/help/help_topic_generators.cpp:582
+#: src/help/help_topic_generators.cpp:586
 msgid "Jamming:"
 msgstr "ジャミング："
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  If the translation
 #. uses spaces, use non-breaking spaces as appropriate for the target language to prevent
 #. unpleasant line breaks (issue #3256).
-#: src/help/help_topic_generators.cpp:587
+#: src/help/help_topic_generators.cpp:591
 msgid "Cost:"
 msgstr "コスト: "
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  If the translation
 #. uses spaces, use non-breaking spaces as appropriate for the target language to prevent
 #. unpleasant line breaks (issue #3256).
-#: src/help/help_topic_generators.cpp:591
+#: src/help/help_topic_generators.cpp:595
 msgid "Alignment:"
 msgstr "アラインメント："
 
 #. TRANSLATORS: This string is used in the help page of a single unit.  It uses
 #. non-breaking spaces to prevent unpleasant line breaks (issue #3256).  In the
 #. translation use non-breaking spaces as appropriate for the target language.
-#: src/help/help_topic_generators.cpp:598
+#: src/help/help_topic_generators.cpp:602
 msgid "Required XP:"
 msgstr "必要 XP："
 
-#: src/help/help_topic_generators.cpp:616
+#: src/help/help_topic_generators.cpp:620
 msgid "unit help^Attacks"
 msgstr "攻撃"
 
-#: src/help/help_topic_generators.cpp:623
+#: src/help/help_topic_generators.cpp:627
 msgid "unit help^Name"
 msgstr "名前"
 
-#: src/help/help_topic_generators.cpp:624
+#: src/help/help_topic_generators.cpp:628
 msgid "Strikes"
 msgstr "攻撃回数"
 
-#: src/help/help_topic_generators.cpp:625
+#: src/help/help_topic_generators.cpp:629
 msgid "Range"
 msgstr "射程"
 
-#: src/help/help_topic_generators.cpp:626
+#: src/help/help_topic_generators.cpp:630
 msgid "Type"
 msgstr "種類"
 
-#: src/help/help_topic_generators.cpp:627
+#: src/help/help_topic_generators.cpp:631
 msgid "Special"
 msgstr "特殊"
 
-#: src/help/help_topic_generators.cpp:702
+#: src/help/help_topic_generators.cpp:706
 msgid "Resistances"
 msgstr "耐性"
 
-#: src/help/help_topic_generators.cpp:706
+#: src/help/help_topic_generators.cpp:710
 msgid "Attack Type"
 msgstr "ダメージ型"
 
-#: src/help/help_topic_generators.cpp:707
+#: src/help/help_topic_generators.cpp:711
 msgid "Resistance"
 msgstr "耐性"
 
-#: src/help/help_topic_generators.cpp:737
+#: src/help/help_topic_generators.cpp:741
 msgid "Terrain Modifiers"
 msgstr "地形効果"
 
-#: src/help/help_topic_generators.cpp:741
+#: src/help/help_topic_generators.cpp:745
 msgid "Terrain"
 msgstr "地形"
 
-#: src/help/help_topic_generators.cpp:742
+#: src/help/help_topic_generators.cpp:746
 msgid "Defense"
 msgstr "回避"
 
-#: src/help/help_topic_generators.cpp:743
+#: src/help/help_topic_generators.cpp:747
 msgid "Movement Cost"
 msgstr "移動コスト"
 
-#: src/help/help_topic_generators.cpp:747
+#: src/help/help_topic_generators.cpp:751
 msgid "Defense Cap"
 msgstr "上限回避率"
 
-#: src/help/help_topic_generators.cpp:752
+#: src/help/help_topic_generators.cpp:756
 msgid "Vision Cost"
 msgstr "視界コスト"
 
-#: src/help/help_topic_generators.cpp:756
+#: src/help/help_topic_generators.cpp:760
 msgid "Jamming Cost"
 msgstr "ジャミングコスト"

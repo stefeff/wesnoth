@@ -237,7 +237,8 @@ bool side_filter::match_internal(const team &t) const
 	if (cfg_.has_attribute(str_formula)) {
 		try {
 			const wfl::team_callable callable(t);
-			const wfl::formula form(cfg_.expand_str(str_formula), new wfl::gamestate_function_symbol_table);
+			wfl::gamestate_function_symbol_table symbols;
+			const wfl::formula form(cfg_.expand_str(str_formula), &symbols);
 			if(!form.evaluate(callable).as_bool()) {
 				return false;
 			}
