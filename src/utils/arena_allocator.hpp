@@ -5,6 +5,8 @@
 #include <memory>
 #include <utility>
 
+#define ENABLE_ALLOCATOR_STATS 0
+
 namespace utils
 {
 
@@ -38,6 +40,11 @@ private:
 
     std::array<header*, 64> headers_{};
     arena* unused_{};
+
+#if ENABLE_ALLOCATOR_STATS
+    std::size_t life_arenas_{};
+    std::size_t allocated_bytes_{};
+#endif
 };
 
 class arena

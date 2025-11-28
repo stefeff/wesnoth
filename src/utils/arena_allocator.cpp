@@ -2,6 +2,10 @@
 
 #include <cstring>
 
+#if ENABLE_ALLOCATOR_STATS
+#include <stdio.h>
+#endif
+
 namespace utils
 {
 
@@ -30,6 +34,11 @@ std::pair<void *, std::size_t> two_power_allocator::allocate(std::size_t size)
 {
     auto index = __builtin_clzll(size - 1);
     std::size_t to_alloc = 1ull << (64 - index);
+
+#if ENABLE_ALLOCATOR_STATS
+    allocated_bytes_ += to_alloc;
+#endif
+
     auto head = headers_[index];
     if (head) {
         headers_[index] = head->next;
@@ -42,32 +51,44 @@ std::pair<void *, std::size_t> two_power_allocator::allocate(std::size_t size)
 
 void two_power_allocator::release(void* ptr, std::size_t size)
 {
-#if 1
+#if ENABLE_ALLOCATOR_STATS
+    allocated_bytes_ -= size;
+#endif
     auto index = __builtin_clzll(size - 1);
     // memset(ptr, 211, size);
     header* p = reinterpret_cast<header*>(ptr);
     p->next = headers_[index];
     headers_[index] = p;
-#else
-    memset(ptr, 0, size);
-    delete[] reinterpret_cast<char*>(ptr);
-#endif
 }
 
 arena* two_power_allocator::acquire_arena()
 {
-    if (unused_) {
-        arena* result = unused_;
+#if ENABLE_ALLOCATOR_STATS
+    ++life_arenas_;
+#endif
+
+    arena* result = unused_;
+    if (result) {
         unused_ = result->next_;
-        return result;
     }
     else {
-        return new arena(*this);
+        result = new arena(*this);
     }
+
+#if ENABLE_ALLOCATOR_STATS
+    printf("allocated arena %p, arenas: %ld, allocated: %ld\n", result, life_arenas_, allocated_bytes_);
+#endif
+
+    return result;
 }
 
 void two_power_allocator::release_arena(arena* a)
 {
+#if ENABLE_ALLOCATOR_STATS
+    --life_arenas_;
+    printf("release arena %p, arenas: %ld, allocated: %ld\n", a, life_arenas_, allocated_bytes_);
+#endif
+
     a->next_ = unused_;
     unused_ = a;
 }
