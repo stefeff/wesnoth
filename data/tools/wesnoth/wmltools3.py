@@ -628,42 +628,136 @@ class States(enum.Enum):
     MACRO_OPTIONAL_ARGUMENT = enum.auto()
     MACRO_BODY = enum.auto()
 
+prefix_infix_suffix_parse = re.compile(r"(^[A-Za-z0-9\-\+\\/_]+)\.\*([A-Za-z0-9\-\+\\/_]+)\.\*([A-Za-z0-9\-\+\\/\._]+)$")
+prefix_suffix_parse = re.compile(r"^([A-Za-z0-9\-\+\\/_]+)\.\*([A-Za-z0-9\-\+\\/\._]+)$")
+infix_suffix_parse = re.compile(r"^\.\*([A-Za-z0-9\-\+\\/_]+)\.\*([A-Za-z0-9\-\+\\/\._]+)$")
+suffix_parse = re.compile(r"^\.\*([A-Za-z0-9\-\+\\/\._]+)$")
+dash_suffix_parse = re.compile(r"^(\.\*-)+\.\*([A-Za-z0-9\-\+\\/\._]+)$")
+
+def constructRegexMatch(pattern : str):
+
+    class Fallback:
+
+        def __init__(self, pattern : str):
+            pattern = os.sep + pattern + "$"
+            pattern = pattern.replace("+", r"\+")
+            if os.sep == "\\":
+                pattern = pattern.replace("\\", "\\\\")
+            try:
+                self.pattern = re.compile(pattern)
+            except sre_constants.error:
+                print("wmlscope: confused by %s" % pattern, file=sys.stderr)
+
+        def match(self, s : str) -> bool:
+            return self.pattern.search(s)
+
+    class PrefixInfixSuffix:
+
+        def __init__(self, prefix : str, infix : str, suffix : str):
+            self.prefix = os.sep + prefix
+            self.prefix_len = len(self.prefix)
+            self.infix = infix
+            self.infix_len = len(infix)
+            self.suffix = suffix
+
+        def match(self, s : str) -> bool:
+            pos = s.find(self.prefix)
+            if pos >= 0:
+                pos = s.find(self.infix, pos + self.prefix_len)
+                if pos >= 0:
+                    return s[pos + self.infix_len:].endswith(self.suffix)
+
+            return False
+
+    class PrefixSuffix:
+
+        def __init__(self, prefix : str, suffix : str):
+            self.prefix = os.sep + prefix
+            self.prefix_len = len(self.prefix)
+            self.suffix = suffix
+
+        def match(self, s : str) -> bool:
+            pos = s.find(self.prefix)
+            if pos >= 0:
+                return s[pos + self.prefix_len:].endswith(self.suffix)
+
+            return False
+
+    class InfixSuffix:
+
+        def __init__(self, infix : str, suffix : str):
+            self.infix = infix
+            self.infix_len = len(self.infix)
+            self.suffix = suffix
+
+        def match(self, s : str) -> bool:
+            pos = s.find(self.infix)
+            if pos >= 0:
+                return s[pos + self.infix_len:].endswith(self.suffix)
+
+            return False
+
+    class DashSuffix:
+
+        def __init__(self, dashes : int, suffix : str):
+            self.dashes = dashes
+            self.suffix = suffix
+            self.suffix_len = len(suffix)
+
+        def match(self, s : str) -> bool:
+            return s.endswith(self.suffix) and s[:-self.suffix_len].count('-') >= self.dashes
+
+    class Suffix:
+
+        def __init__(self, suffix : str):
+            self.suffix = suffix
+
+        def match(self, s : str) -> bool:
+            return s.endswith(self.suffix)
+
+    pattern = pattern.replace(".*.*", ".*")
+    pattern = pattern.replace(".*.*", ".*")
+    prefix_infix_suffix_match = prefix_infix_suffix_parse.match(pattern)
+    if prefix_infix_suffix_match:
+        return PrefixInfixSuffix(prefix_infix_suffix_match.group(1),
+                                 prefix_infix_suffix_match.group(2),
+                                 prefix_infix_suffix_match.group(3))
+    prefix_suffix_match = prefix_suffix_parse.match(pattern)
+    if prefix_suffix_match:
+        return PrefixSuffix(prefix_suffix_match.group(1),
+                            prefix_suffix_match.group(2))
+    infix_suffix_match = infix_suffix_parse.match(pattern)
+    if infix_suffix_match:
+        return InfixSuffix(infix_suffix_match.group(1),
+                           infix_suffix_match.group(2))
+    suffix_match = suffix_parse.match(pattern)
+    if suffix_match:
+        return Suffix(suffix_match.group(1))
+    dash_suffix_match = dash_suffix_parse.match(pattern)
+    if dash_suffix_match:
+        return DashSuffix(pattern.count("-.*"),
+                          dash_suffix_match.group(2))
+    return Fallback(pattern)
+
 class CrossRef:
     macro_reference = re.compile(r"\{([A-Z_][A-Za-z0-9_:]*)(?!\.)\b")
     file_reference = re.compile(r"([A-Za-z0-9{}.][A-Za-z0-9_/+{}.@\-\[\],~\*]*?\.(" + "|".join(resource_extensions) + r"))((~[A-Z]+\(.*\))*)(:([0-9]+|\[[0-9,*~]*\]))?")
     tag_parse = re.compile(r"\s*([a-z_]+)\s*=(.*)")
-    safe_prefix_parse = re.compile(r"^[A-Za-z0-9\-/]*")
-    safe_infix_parse = re.compile(r"[A-Za-z0-9\-/]*")
     def postfix_files_range(self, postfix):
         postfix = postfix[::-1]
         next_postfix = postfix[:-1]
         next_postfix += chr(ord(postfix[-1]) + 1)
-        first = bisect.bisect_left(self.fileref_reservsed, (postfix, "", None))
-        last = bisect.bisect_left(self.fileref_reservsed, (next_postfix, "", None))
-        return self.fileref_reservsed[first:last]
+        first = bisect.bisect_left(self.fileref_reversed, (postfix, "", None))
+        last = bisect.bisect_left(self.fileref_reversed, (next_postfix, "", None))
+        return self.fileref_reversed[first:last]
 
     def mark_matching_resources(self, pattern, fn, n):
         "Mark all definitions matching a specified pattern with a reference."
-        pattern = pattern.replace(".*.*", ".*")
+        matcher = constructRegexMatch(pattern)
         ending = pattern[pattern.rfind('*')+1:]
-        prefix = self.safe_infix_parse.match(pattern).group(0)
-        infix_match = self.safe_infix_parse.match(pattern[pattern.find('*')+1:])
-        infix = infix_match.group(0) if infix_match else ""
-        pattern = os.sep + pattern + "$"
-
-        pattern = pattern.replace("+", r"\+")
-        if os.sep == "\\":
-            pattern = pattern.replace("\\", "\\\\")
-        try:
-            pattern = re.compile(pattern)
-        except sre_constants.error:
-            print("wmlscope: confused by %s" % pattern, file=sys.stderr)
-            return
-
         for _, trial, defn in self.postfix_files_range(ending):
-            if prefix in trial and infix in trial:
-                if pattern.search(trial) and self.visible_from(defn, fn, n):
-                    defn.append(fn, n)
+            if matcher.match(trial) and self.visible_from(defn, fn, n):
+                defn.append(fn, n)
     def visible_from(self, defn, fn, n):
         "Is specified definition visible from the specified file and line?"
         if defn.undef is not None:
@@ -911,7 +1005,7 @@ class CrossRef:
         self.warnlevel = warnlevel
         self.xref = {}
         self.fileref = {}
-        self.fileref_reservsed = []
+        self.fileref_reversed = []
         self.noxref = False
         self.properties = {}
         self.exports = set()
@@ -937,7 +1031,7 @@ class CrossRef:
                     for line in dfp:
                         self.xref[line.strip()] = True
         # Index fileref by tail
-        self.fileref_reservsed = sorted([ (name[::-1], name, self.fileref[name]) for name in self.fileref ])
+        self.fileref_reversed = sorted([ (name[::-1], name, self.fileref[name]) for name in self.fileref ])
         # Next, decorate definitions with all references from the filelist.
         self.unresolved = []
         self.missing = []
