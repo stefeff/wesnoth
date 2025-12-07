@@ -808,7 +808,7 @@ class CrossRef:
                     if self.warnlevel > 1:
                         print(repr(line)[1:-1])
                     stripped_line = line.strip()
-                    startswith_hash = stripped_line[0] != "#"
+                    startswith_hash = stripped_line and stripped_line[0] == "#"
                     if startswith_hash and stripped_line.startswith("#textdomain"):
                         continue
                     has_wmlscope = "wmlscope: " in line
@@ -931,7 +931,7 @@ class CrossRef:
                         if stripped_line.startswith("#arg"):
                             state = States.MACRO_OPTIONAL_ARGUMENT
                             here._raw_optional_args.append([stripped_line.split()[1],""])
-                        elif startswith_hash:
+                        elif not startswith_hash:
                             state = States.MACRO_BODY
                     elif state == States.MACRO_OPTIONAL_ARGUMENT and not "#endarg" in line:
                         here._raw_optional_args[-1][1] += line
