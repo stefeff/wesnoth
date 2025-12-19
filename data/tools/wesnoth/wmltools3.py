@@ -673,15 +673,13 @@ def constructRegexMatch(pattern : str):
             self.prefix = os.sep + prefix
             self.prefix_len = len(self.prefix)
             self.infix = infix
-            self.infix_len = len(infix)
-            self.suffix = suffix
+            self.tot_len = len(infix) + len(suffix)
 
         def match(self, s : str) -> bool:
             pos = s.find(self.prefix)
             if pos >= 0:
                 pos = s.find(self.infix, pos + self.prefix_len)
-                if pos >= 0:
-                    return s[pos + self.infix_len:].endswith(self.suffix)
+                return pos >= 0 and pos + self.tot_len <= len(s)
 
             return False
 
@@ -689,47 +687,38 @@ def constructRegexMatch(pattern : str):
 
         def __init__(self, prefix : str, suffix : str):
             self.prefix = os.sep + prefix
-            self.prefix_len = len(self.prefix)
-            self.suffix = suffix
+            self.tot_len = len(self.prefix) + len(suffix)
 
         def match(self, s : str) -> bool:
             pos = s.find(self.prefix)
-            if pos >= 0:
-                return s[pos + self.prefix_len:].endswith(self.suffix)
-
-            return False
+            return pos >= 0 and pos + self.tot_len <= len(s)
 
     class InfixSuffix:
 
         def __init__(self, infix : str, suffix : str):
             self.infix = infix
-            self.infix_len = len(self.infix)
-            self.suffix = suffix
+            self.tot_len = len(infix) + len(suffix)
 
         def match(self, s : str) -> bool:
             pos = s.find(self.infix)
-            if pos >= 0:
-                return s[pos + self.infix_len:].endswith(self.suffix)
-
-            return False
+            return pos >= 0 and pos + self.tot_len <= len(s)
 
     class DashSuffix:
 
         def __init__(self, dashes : int, suffix : str):
             self.dashes = dashes
-            self.suffix = suffix
             self.suffix_len = len(suffix)
 
         def match(self, s : str) -> bool:
-            return s.endswith(self.suffix) and s[:-self.suffix_len].count('-') >= self.dashes
+            return s[:-self.suffix_len].count('-') >= self.dashes
 
     class Suffix:
 
-        def __init__(self, suffix : str):
-            self.suffix = suffix
+        def __init__(self):
+            pass
 
         def match(self, s : str) -> bool:
-            return s.endswith(self.suffix)
+            return True
 
     pattern = pattern.replace(".*.*", ".*")
     pattern = pattern.replace(".*.*", ".*")
@@ -748,7 +737,7 @@ def constructRegexMatch(pattern : str):
                            infix_suffix_match.group(2))
     suffix_match = suffix_parse.match(pattern)
     if suffix_match:
-        return Suffix(suffix_match.group(1))
+        return Suffix()
     dash_suffix_match = dash_suffix_parse.match(pattern)
     if dash_suffix_match:
         return DashSuffix(pattern.count("-.*"),
