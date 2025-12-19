@@ -1076,7 +1076,7 @@ class CrossRef:
                             if ignoreflag or not line:
                                 continue
                             # Find references to macros
-                            for match in re.finditer(CrossRef.macro_reference, line):
+                            for match in CrossRef.macro_reference.finditer(line):
                                 name = match.group(1)
                                 candidates = []
                                 if self.warnlevel >=2:
@@ -1110,7 +1110,7 @@ class CrossRef:
                             if "<img>" in line:
                                 continue
                             # Find references to resource files
-                            for match in re.finditer(CrossRef.file_reference, line):
+                            for match in CrossRef.file_reference.finditer(line):
                                 for pattern in split_filenames(match):
                                     for name in expand_square_braces(pattern):
                                         # Catches maps that look like macro names.
@@ -1217,6 +1217,8 @@ class TranslationError(Exception):
             self.textdomain, self.isocode)
 
 class Translation(dict):
+    msg_parse = re.compile(r'(msgid|msgstr)((\s*".*?")+)')
+
     "Parses a po file to create a translation dictionary."
     def __init__(self, textdomain, isocode, topdir=""):
         self.textdomain = textdomain
@@ -1238,7 +1240,7 @@ class Translation(dict):
             expect = False
             fuzzy = "#, fuzzy\n"
             gettext = f.read().decode("utf8")
-            matches = re.compile(r'(msgid|msgstr)((\s*".*?")+)').finditer(gettext)
+            matches = self.msg_parse.finditer(gettext)
             msgid = ""
             for match in matches:
                 text = "".join(re.compile('"(.*?)"').findall(match.group(2)))
