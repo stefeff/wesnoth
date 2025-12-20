@@ -294,6 +294,9 @@ def isresource(filename):
     (root, ext) = os.path.splitext(filename)
     return ext and ext[1:] in resource_extensions
 
+macroref_parse = re.compile(r"^([A-Z0-9_]+?)=")
+macroname_parse = re.compile(r"^([A-Z0-9_]+?)")
+
 def parse_macroref(start, line):
     def handle_argument(buffer):
         nonlocal args
@@ -310,7 +313,7 @@ def parse_macroref(start, line):
         # argument names are usually made of uppercase letters, numbers and underscores
         # if they're optional, they're followed by an equal sign
         # stop matching on the first one, because the argument value might contain one too
-        if re.match(r"^([A-Z0-9_]+?)=", arg):
+        if macroref_parse.match(arg):
             opt_arg, arg = arg.split("=", 1)
         if opt_arg:
             optional_args[opt_arg] = arg
@@ -407,7 +410,7 @@ def parse_macroref(start, line):
             if quit:
                 added_arg = handle_argument(buffer)
                 break
-        elif line[i] == EQUALS and re.match(r"^([A-Z0-9_]+?)", line[i-1]):
+        elif line[i] == EQUALS and macroname_parse.match(line[i-1]):
             open_token(EQUALS)
             buffer.append(line[i])
         elif line[i].isspace():
@@ -802,6 +805,7 @@ class CrossRef:
                             props[prop] = value
                             if props.get("export") == "yes":
                                 self.exports.add(namespace)
+                            continue
                         m = re.search("# *wmlscope: prune (.*)", line)
                         if m:
                             name = m.group(1)
