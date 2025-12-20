@@ -3,7 +3,6 @@ CMakeFiles/**
 **/*.a
 **/*.mo
 **/*.cmake
-.gitignore
 .ninja_deps
 .ninja_log
 build.ninja
