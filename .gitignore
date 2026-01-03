@@ -1,0 +1,5 @@
+build/
+**.mo
+src/CMakeFiles/
+CMakeFiles/
+**.cmake
