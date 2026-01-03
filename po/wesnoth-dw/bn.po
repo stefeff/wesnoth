@@ -1,68 +1,84 @@
+# #-#-#-#-#  wesnoth-dw  #-#-#-#-#
+# Bengali translation of Wesnoth.
+# Copyright (C) 2025 Wesnoth development team
+# Subhraman Sarkar <suvrax@gmail.com>, 2025.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: bn\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-02-19 21:05 UTC\n"
-"PO-Revision-Date: 2024-02-19 12:43 UTC\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
+"PO-Revision-Date: 2025-08-08 13:22+0530\n"
+"Last-Translator: Subhraman Sarkar <suvrax@gmail.com>\n"
+"Language-Team: Bengali < >\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:13
 msgid "Dead Water"
-msgstr ""
+msgstr "মৃত জল"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:14
 msgid "DW"
-msgstr ""
+msgstr "DW"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:18
 msgid "Citizen"
-msgstr ""
+msgstr "নাগরিক"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:18
 msgid "Easy"
-msgstr ""
+msgstr "সহজ"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:19
 msgid "Fighter"
-msgstr ""
+msgstr "লড়াকু"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:19
 msgid "Normal"
-msgstr ""
+msgstr "সাধারণ"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:20
 msgid "Challenging"
-msgstr ""
+msgstr "ঝুঁকিপূর্ণ"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:20
 msgid "Warrior"
-msgstr ""
+msgstr "যোদ্ধা"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:21
 msgid "Difficult"
-msgstr ""
+msgstr "কঠিন"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:21
 msgid "Triton"
-msgstr ""
+msgstr "ট্রাইটন"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:23
+#, fuzzy
+#| msgid ""
+#| "You are Kai Krellis, son and heir of the last merman king but only a "
+#| "child. A necromancer is turning your subjects into undead slaves! Lead "
+#| "your people on a mission to convince a powerful mer-sorceress to help you "
+#| "repel the invasion. The oceans near the Far North are perilous, so you "
+#| "will need cunning and bravery to survive. But first you need to gain the "
+#| "respect of your troops!\n"
+#| "\n"
 msgid ""
 "You are Kai Krellis, son and heir of the last merman king but only a child. "
 "A necromancer is turning your subjects into undead slaves! Lead your people "
@@ -72,16 +88,23 @@ msgid ""
 "your troops!\n"
 "\n"
 msgstr ""
+"আপনি কাই ক্রেলিস, শেষ মারম্যান রাজার পুত্র এবং উত্তরাধিকারী তবে কেবল একটি শিশু। "
+"একজন মৃত্যু-জাদুবিদ আপনার প্রজাদের মৃত ক্রীতদাসে পরিণত করছে! আক্রমণ প্রতিহত করতে "
+"আপনাকে সহায়তা করার জন্য একটি শক্তিশালী মের-জাদুকরীকে বোঝানোর অভিযানে আপনার "
+"লোকদের নেতৃত্ব দিন । সুদূর উত্তরের নিকটবর্তী মহাসাগরগুলি বিপজ্জনক, তাই বেঁচে থাকার "
+"জন্য আপনার ধূর্ততা এবং সাহসিকতার প্রয়োজন হবে। কিন্তু তার আগে আপনাকে আপনার নিজের "
+"সৈন্যদের সম্মান অর্জন করতে হবে!\n"
+"\n"
 
 #. [campaign]: id=Dead_Water
 #: data/campaigns/Dead_Water/_main.cfg:25
 msgid "(Intermediate level, 10 scenarios.)"
-msgstr ""
+msgstr "(মধ্যম পর্যায়, 10টি ঘটনাক্রম ।)"
 
 #. [about]
 #: data/campaigns/Dead_Water/_main.cfg:31
 msgid "Campaign design and programming"
-msgstr ""
+msgstr "অভিযান পরিকল্পনা এবং প্রোগ্রামিং"
 
 #. [about]
 #: data/campaigns/Dead_Water/_main.cfg:37
@@ -91,7 +114,7 @@ msgstr ""
 #. [about]
 #: data/campaigns/Dead_Water/_main.cfg:43
 msgid "Artwork"
-msgstr ""
+msgstr "শিল্পকর্ম"
 
 #. [scenario]: id=01_Invasion
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:36
@@ -164,7 +187,7 @@ msgstr ""
 #. [side]: type=Dark Sorcerer, id=Mal-Kevek
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:83
 msgid "Undead Forces"
-msgstr ""
+msgstr "না-মৃত সেনারা"
 
 #. [side]: type=Dark Sorcerer, id=Mal-Kevek
 #. [side]: type=Lich, id=Mal-Kevek
@@ -172,7 +195,7 @@ msgstr ""
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:126
 #: data/campaigns/Dead_Water/scenarios/12_Revenge.cfg:39
 msgid "Mal-Kevek"
-msgstr ""
+msgstr "মাল-কেভাক"
 
 #. [objective]: condition=win
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:202
@@ -180,32 +203,32 @@ msgstr ""
 #: data/campaigns/Dead_Water/scenarios/06_Uncharted_Islands.cfg:115
 #: data/campaigns/Dead_Water/scenarios/07_Bilheld.cfg:107
 msgid "Defeat enemy leader"
-msgstr ""
+msgstr "শত্রু নেতাকে পরাজিত করুন"
 
 #. [unit]: type=Mermaid Priestess, id=Cylanna
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:228
 msgid "Cylanna"
-msgstr ""
+msgstr "সাইলানা"
 
 #. [message]: speaker=Kai Krellis
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:265
 msgid "Is something wrong, priestess?"
-msgstr ""
+msgstr "অস্বাভাবিক কিছু, যাজিকা?"
 
 #. [message]: speaker=Cylanna
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:270
 msgid "Maybe. I smell death and decay."
-msgstr ""
+msgstr "হয়তো । আমি মৃত্যু এবং ক্ষয়ের গন্ধ পাচ্ছি ।"
 
 #. [unit]: type=Merman Netcaster, id=Gwabbo
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:302
 msgid "Gwabbo"
-msgstr ""
+msgstr "গোয়াব্বো"
 
 #. [message]: speaker=Gwabbo
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:319
 msgid "Back, you fiend! You have not won...I will return to finish this."
-msgstr ""
+msgstr "পিছিয়ে যা, শয়তান! তুই জিতিস নি...আমি এটা শেষ করতে ফিরে আসবো ।"
 
 #. [message]: speaker=Gwabbo
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:330
@@ -214,11 +237,13 @@ msgid ""
 "without mercy. I managed to fight my way clear, and have come to seek your "
 "aid."
 msgstr ""
+"কাই! আমরা আক্রান্ত! অশুভ জীবেরা আমাদের গ্রামে প্রবেশ করে নির্দয়ে হত্যা করেছে । আমি "
+"কোনোভাবে পালিয়ে এসেছি, আর আপনার সাহায্য প্রার্থনা করতে এসেছি ।"
 
 #. [message]: speaker=Kai Krellis
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:335
 msgid "What manner of creatures were they?"
-msgstr ""
+msgstr "ওগুলো কেমন জীব ছিল?"
 
 #. [message]: speaker=Gwabbo
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:340
@@ -295,7 +320,7 @@ msgstr ""
 #. [message]: speaker=Kai Krellis
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:620
 msgid "Hey, I did it!"
-msgstr ""
+msgstr "আহা, করতে পেরেছি!"
 
 #. [message]: speaker=Gwabbo
 #: data/campaigns/Dead_Water/scenarios/01_Invasion.cfg:624
@@ -305,7 +330,7 @@ msgstr ""
 #. [scenario]: id=02_Flight
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:27
 msgid "Flight"
-msgstr ""
+msgstr "পলায়ন"
 
 #. [part]
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:36
@@ -353,12 +378,12 @@ msgstr ""
 #: data/campaigns/Dead_Water/scenarios/04_Slavers.cfg:70
 #: data/campaigns/Dead_Water/scenarios/12_Revenge.cfg:271
 msgid "Defeat all enemy leaders"
-msgstr ""
+msgstr "সব শত্রু নেতাদের পরাজিত করুন"
 
 #. [objective]: condition=win
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:92
 msgid "Have a unit pick up the ring of power."
-msgstr ""
+msgstr "একটি ইউনিটকে শক্তির আংটিটি তুলে নিতে বলুন ।"
 
 #. [side]: type=Lich, id=Mal-Kevek
 #. [side]: type=Necromancer, id=Mel Daveth
@@ -372,13 +397,13 @@ msgstr ""
 #: data/campaigns/Dead_Water/scenarios/12_Revenge.cfg:90
 #: data/campaigns/Dead_Water/scenarios/12_Revenge.cfg:105
 msgid "Mal-Ravanal’s Forces"
-msgstr ""
+msgstr "মাল-রাভানালের সেনারা"
 
 #. [side]: type=Necromancer, id=Mel Daveth
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:150
 #: data/campaigns/Dead_Water/scenarios/12_Revenge.cfg:55
 msgid "Mel Daveth"
-msgstr ""
+msgstr "মেল ডাভেথ"
 
 #. [message]: speaker=Mal-Kevek
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:279
@@ -390,18 +415,18 @@ msgstr ""
 #. [message]: speaker=Mel Daveth
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:284
 msgid "Leave some of them for me."
-msgstr ""
+msgstr "আমার জন্য কতগুলোকে ছেড়ে নাও ।"
 
 #. [message]: speaker=Dead Knight
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:290
 #: data/campaigns/Dead_Water/scenarios/12_Revenge.cfg:492
 msgid "Uhhh."
-msgstr ""
+msgstr "উহহ্ ।"
 
 #. [message]: speaker=Mel Daveth
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:295
 msgid "And him."
-msgstr ""
+msgstr "এবং ওকেও ।"
 
 #. [message]: speaker=Kai Krellis
 #: data/campaigns/Dead_Water/scenarios/02_Flight.cfg:300

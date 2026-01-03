@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wescamp-i 18n\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-05-20 17:25-0500\n"
-"PO-Revision-Date: 2024-05-12 17:40+0200\n"
+"POT-Creation-Date: 2025-12-21 21:26-0600\n"
+"PO-Revision-Date: 2025-06-23 20:08+0300\n"
 "Last-Translator: Jaakko Saarikko <jaakko.saarikko@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\"\"Language-Team: Finnish <http://wiki.wesnoth.org/FinnishTranslation>\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.6\n"
 
 #. [multiplayer_side]: id=Custom
 #: data/_main.cfg:22
@@ -427,248 +427,248 @@ msgid "Catalan Translation"
 msgstr "Katalaaninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:159
+#: data/core/about_i18n.cfg:163
 msgid "Chinese Translation"
 msgstr "Kiinankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:257
+#: data/core/about_i18n.cfg:261
 msgid "Chinese (Taiwan) Translation"
 msgstr "Taiwaninkiinankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:270
+#: data/core/about_i18n.cfg:274
 msgid "Croatian Translation"
 msgstr "Kroatiankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:280
+#: data/core/about_i18n.cfg:284
 msgid "Czech Translation"
 msgstr "Tšekinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:352
+#: data/core/about_i18n.cfg:356
 msgid "Danish Translation"
 msgstr "Tanskankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:383
+#: data/core/about_i18n.cfg:387
 msgid "Dutch Translation"
 msgstr "Hollanninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:457
+#: data/core/about_i18n.cfg:461
 msgid "English (GB) Translation"
 msgstr "Brittienglanninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:482
+#: data/core/about_i18n.cfg:486
 msgid "English (Shaw) Translation"
 msgstr "Englanninkielinen(Shaw) käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:500
+#: data/core/about_i18n.cfg:504
 msgid "Esperanto Translation"
 msgstr "Esperantonkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:529
+#: data/core/about_i18n.cfg:533
 msgid "Estonian Translation"
 msgstr "Vironkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:539
+#: data/core/about_i18n.cfg:543
 msgid "Filipino Translation"
 msgstr "Filipinonkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:549
+#: data/core/about_i18n.cfg:553
 msgid "Finnish Translation"
 msgstr "Suomenkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:614
+#: data/core/about_i18n.cfg:618
 msgid "French Translation"
 msgstr "Ranskankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:782
+#: data/core/about_i18n.cfg:786
 msgid "Friulian Translation"
 msgstr "Friulinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:786
+#: data/core/about_i18n.cfg:790
 msgid "Galician Translation"
 msgstr "Galegonkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:822
+#: data/core/about_i18n.cfg:826
 msgid "German Translation"
 msgstr "Saksankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:947
+#: data/core/about_i18n.cfg:951
 msgid "Greek Translation"
 msgstr "Kreikankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:990
+#: data/core/about_i18n.cfg:994
 msgid "Hebrew Translation"
 msgstr "Hepreankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1003
+#: data/core/about_i18n.cfg:1007
 msgid "Hungarian Translation"
 msgstr "Unkarinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1064
+#: data/core/about_i18n.cfg:1068
 msgid "Icelandic Translation"
 msgstr "Islanninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1074
+#: data/core/about_i18n.cfg:1078
 msgid "Indonesian Translation"
 msgstr "Indonesiankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1102
+#: data/core/about_i18n.cfg:1106
 msgid "Irish Translation"
 msgstr "Irlanninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1109
+#: data/core/about_i18n.cfg:1113
 msgid "Italian Translation"
 msgstr "Italiankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1156
+#: data/core/about_i18n.cfg:1160
 msgid "Japanese Translation"
 msgstr "Japaninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1249
+#: data/core/about_i18n.cfg:1253
 msgid "Korean Translation"
 msgstr "Koreankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1257
+#: data/core/about_i18n.cfg:1261
 msgid "Latin Translation"
 msgstr "Latinankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1283
+#: data/core/about_i18n.cfg:1287
 msgid "Latvian Translation"
 msgstr "Latviankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1298
+#: data/core/about_i18n.cfg:1302
 msgid "Lithuanian Translation"
 msgstr "Liettuankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1323
+#: data/core/about_i18n.cfg:1327
 msgid "Macedonian Translation"
 msgstr "Makedoniankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1330
+#: data/core/about_i18n.cfg:1334
 msgid "Marathi Translation"
 msgstr "Marathinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1339
+#: data/core/about_i18n.cfg:1343
 msgid "Norwegian Translation"
 msgstr "Norjankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1368
+#: data/core/about_i18n.cfg:1372
 msgid "Old English Translation"
 msgstr "Vanhan englanninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1386
+#: data/core/about_i18n.cfg:1390
 msgid "Polish Translation"
 msgstr "Puolankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1461
+#: data/core/about_i18n.cfg:1465
 msgid "Portuguese Translation"
 msgstr "Portugalinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1475
+#: data/core/about_i18n.cfg:1479
 msgid "Portuguese (Brazil) Translation"
 msgstr "Brasilianportugalinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1533
+#: data/core/about_i18n.cfg:1537
 msgid "Romanian Translation"
 msgstr "Romaniankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1541
+#: data/core/about_i18n.cfg:1545
 msgid "Russian Translation"
 msgstr "Venäjänkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1648
+#: data/core/about_i18n.cfg:1652
 msgid "Scottish Gaelic Translation"
 msgstr "Skotlantilaisen gaelinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1657
+#: data/core/about_i18n.cfg:1661
 msgid "Serbian Translation"
 msgstr "Serbiankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1676
+#: data/core/about_i18n.cfg:1680
 msgid "Slovak Translation"
 msgstr "Slovakiankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1711
+#: data/core/about_i18n.cfg:1715
 msgid "Slovenian Translation"
 msgstr "Sloveniankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1727
+#: data/core/about_i18n.cfg:1731
 msgid "Spanish Translation"
 msgstr "Espanjankielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1817
+#: data/core/about_i18n.cfg:1825
 msgid "Swedish Translation"
 msgstr "Ruotsinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1862
+#: data/core/about_i18n.cfg:1870
 msgid "Turkish Translation"
 msgstr "Turkinkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1887
+#: data/core/about_i18n.cfg:1895
 msgid "Ukrainian Translation"
 msgstr "Ukrainankielen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1921
+#: data/core/about_i18n.cfg:1929
 msgid "Valencian (southern Catalan) Translation"
 msgstr "Valenciankatalaaninkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1934
+#: data/core/about_i18n.cfg:1942
 msgid "Vietnamese Translation"
 msgstr "Vietnaminkielinen käännös"
 
 #. [about]
-#: data/core/about_i18n.cfg:1953
+#: data/core/about_i18n.cfg:1961
 msgid "Welsh Translation"
 msgstr "Kymrinkielinen käännös"
 
 #. [about]
 #. Real Acadèmia de Cultura Valenciana
-#: data/core/about_i18n.cfg:1962
+#: data/core/about_i18n.cfg:1970
 msgid "RACV’s Translation"
 msgstr "RACV:n käännös"
 
@@ -4367,8 +4367,8 @@ msgstr "parantumaton"
 
 #. #-#-#-#-#  wesnoth.wml.pot (PACKAGE VERSION)  #-#-#-#-#
 #. [lua]: wesnoth.wml_actions.message
-#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3487
-#: src/scripting/game_lua_kernel.cpp:3522
+#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3491
+#: src/scripting/game_lua_kernel.cpp:3526
 msgid "input"
 msgstr "syöte"
 
@@ -4857,6 +4857,13 @@ msgstr "<i>― Haldric II, Taktisen analyysin käsikirja: osa 1 (42 WV)</i>"
 
 #. [tip]
 #: data/tips.cfg:64
+#, fuzzy
+#| msgid ""
+#| "If you are playing with <b>Shroud</b> or <b>Fog of War</b> active, you "
+#| "won’t know what you’re facing. In this case, long-range scouting units "
+#| "are worth their cost. Try to choose scouts that can easily move across "
+#| "the surrounding terrain, because usually units can only see as far as "
+#| "they can move in one turn."
 msgid ""
 "If you are playing with <b>Shroud</b> or <b>Fog of War</b> active, you won’t "
 "know what you’re facing. In this case, long-range scouting units are worth "
@@ -4866,11 +4873,18 @@ msgstr ""
 "Jos pelaat <i>sumu</i> tai <i>huntu</i> aktiivisina, et näe, mitä olet "
 "kohtaamassa. Tällaisessa tapauksessa pitkän matkan tiedustelijayksiköt ovat "
 "arvonsa väärtejä. Yritä valita tiedustelijat, jotka voivat helposti liikkua "
-"ympäröivässä maastossa, koska yksiköt näkevät juuri niin pitkälle kuin "
-"voivat liikkua yhdessä vuorossa."
+"ympäröivässä maastossa, koska yleensä yksiköt näkevät juuri niin pitkälle "
+"kuin voivat liikkua yhdessä vuorossa."
 
 #. [tip]
 #: data/tips.cfg:68
+#, fuzzy
+#| msgid ""
+#| "There are six types of attack: <i>pierce</i>, <i>blade</i>, <i>impact</"
+#| "i>, <i>fire</i>, <i>cold</i> and <i>arcane</i>. Different units have "
+#| "weaknesses against different types of attacks. Right-click on a unit and "
+#| "select <b>Unit Type Description</b> to see which attacks it is resistant "
+#| "to, and which will affect it the most."
 msgid ""
 "There are six types of attack: <i>pierce</i>, <i>blade</i>, <i>impact</i>, "
 "<i>fire</i>, <i>cold</i> and <i>arcane</i>. Different units have weaknesses "
@@ -4882,7 +4896,7 @@ msgstr ""
 "i>, <i>tuli</i>, <i>kylmä</i> ja <i>salatiede</i>. Eri yksiköillä on "
 "heikkouksia eri hyökkäystyypeille. Tarkasta yksikön vastustusarvot eri "
 "hyökkäystyypeille klikkaamalla yksikköä hiiren oikealla napilla ja "
-"valitsemalla <i>Yksikön kuvaus</i>."
+"valitsemalla <i>Yksikkö tyypin kuvaus</i>."
 
 #. [tip]
 #: data/tips.cfg:72
@@ -5231,6 +5245,14 @@ msgstr ""
 
 #. [tip]
 #: data/tips.cfg:188
+#, fuzzy
+#| msgid ""
+#| "Once a unit reaches maximum level, further advancement provides a minor "
+#| "bonus called an “AMLA” — “After Maximum Level Advancement.” Some "
+#| "campaigns let you choose between several AMLA options, but the only "
+#| "default AMLA is a +3 bonus to maximum hitpoints. AMLAs are usually weaker "
+#| "than the normal benefits of advancing a level, so it is generally wiser "
+#| "to advance your lower-level units instead."
 msgid ""
 "Instead of leveling up, high-level units gain an <i>After Maximum Level "
 "Advancement</i> (AMLA) bonus, which usually increases the unit’s maximum "
@@ -5238,11 +5260,12 @@ msgid ""
 "benefits of advancing a level, so it is generally wiser to advance your "
 "lower-level units instead."
 msgstr ""
-"Tasonnousun asemasta korkean tason yksiköillä on <i>enimmäistason jälkeinen "
-"yleneminen</i> (EJY), mikä yleensä lisää yksikön elämäpisteiden "
-"enimmäismäärää kolmella ja parantaa yksikön kokonaan. Tämä on paljon "
-"vähemmän kuin tavanomaisen ylenemisen hyödyt, joten usein on järkevämpää "
-"saada alempitasoisia yksiköitä ylenemään."
+"Kun yksikkö saavuttaa enimmäistason, sen mahdolliset myöhemmät ylenemiset "
+"antavat vain pienen edun, jota kutsutaan nimellä ”EJY”, eli enimmäistason "
+"jälkeinen yleneminen. Joissain kampanjoissa pelaaja voi valita useista EJY-"
+"vaihtoehdoista, mutta oletuksena ainoa EJY-etu on +3 elämäpisteen lisäys "
+"enimmäismäärään. EJY:t ovat yleensä heikompia kuin tavalliset tasonnousun "
+"hyödyt, joten useimmiten on viisaampaa kehittää alempitasoisia yksiköitä."
 
 #. [tip]
 #: data/tips.cfg:192
@@ -6067,6 +6090,10 @@ msgid "The add-on publish information contains an invalid UTF-8 sequence."
 msgstr "Lisäosan julkaisutiedot sisältää virheellisen UTF-8-sarjan."
 
 #: src/addon/validation.cpp:503
+#, fuzzy
+#| msgid ""
+#| "The add-on's forum_auth attribute does not match what was previously "
+#| "uploaded."
 msgid ""
 "The add-on's forum_auth attribute does not match what was previously "
 "uploaded."
@@ -6170,6 +6197,9 @@ msgstr[1] ""
 "vähimmäisaloituskullalla."
 
 #: src/carryover_show_gold.cpp:136
+#, fuzzy
+#| msgid ""
+#| "You will start the next scenario with the defined minimum starting gold."
 msgid ""
 "You will start the next scenario with the defined minimum starting gold."
 msgid_plural ""
@@ -6496,6 +6526,8 @@ msgid "Falling back to the default core."
 msgstr "Palataan takaisin oletusytimeen."
 
 #: src/game_config_manager.cpp:304
+#, fuzzy
+#| msgid "Can’t locate the default core."
 msgid "Can't locate the default core."
 msgstr "Ei löydetä perusydintä."
 
@@ -6555,7 +6587,7 @@ msgid_plural ""
 msgstr[0] "Ole hyvä ja raportoi tästä lisäosan tekijälle tai ylläpitäjälle."
 msgstr[1] "Ole hyvä ja raportoi tästä lisäosan tekijöille tai ylläpitäjille."
 
-#: src/game_events/pump.cpp:392 src/game_launcher.cpp:966
+#: src/game_events/pump.cpp:392 src/game_launcher.cpp:971
 msgid "Error: "
 msgstr "Virhe: "
 
@@ -6634,6 +6666,8 @@ msgid "OK"
 msgstr "OK"
 
 #: src/game_initialization/depcheck.cpp:516
+#, fuzzy
+#| msgid "Scenario can’t be activated. Some dependencies are missing: "
 msgid "Scenario can't be activated. Some dependencies are missing: "
 msgstr "Skenaariota ei voi aktivoida. Joitakin riippuvuuksia puuttuu: "
 
@@ -6643,6 +6677,8 @@ msgid "No compatible eras found."
 msgstr "Yhteensopivia aikakausia ei löytynyt."
 
 #: src/game_initialization/depcheck.cpp:585
+#, fuzzy
+#| msgid "Era can’t be activated. Some dependencies are missing: "
 msgid "Era can't be activated. Some dependencies are missing: "
 msgstr "Aikakautta ei voida aktivoida. Joitakin riippuvuuksia puuttuu: "
 
@@ -6734,6 +6770,10 @@ msgid "time limit^none"
 msgstr "rajaton"
 
 #: src/game_initialization/lobby_data.cpp:447
+#, fuzzy
+#| msgid ""
+#| "The host's version of <i>$addon</i> is incompatible. They have version "
+#| "<b>$host_ver</b> while you have version <b>$local_ver</b>."
 msgid ""
 "The host's version of <i>$addon</i> is incompatible. They have version "
 "<b>$host_ver</b> while you have version <b>$local_ver</b>."
@@ -6754,6 +6794,8 @@ msgid "Defeat enemy leader(s)"
 msgstr "Kukista vihollisjohtaja(t)"
 
 #: src/game_initialization/mp_game_utils.cpp:103
+#, fuzzy
+#| msgid "Cannot find era ‘$era’"
 msgid "Cannot find era '$era'"
 msgstr "Aikakautta '$era' ei löydy"
 
@@ -6762,6 +6804,10 @@ msgid "Invalid address specified for multiplayer server"
 msgstr "Virheellinen osoite asetettu moninpelipalvelimelle"
 
 #: src/game_initialization/multiplayer.cpp:272
+#, fuzzy
+#| msgid ""
+#| "The server accepts versions '$required_version', but you are using "
+#| "version '$your_version'"
 msgid ""
 "The server accepts versions '$required_version', but you are using version "
 "'$your_version'"
@@ -6888,20 +6934,20 @@ msgstr "Liian monta kirjautumisyritystä."
 msgid "Password hashing failed."
 msgstr "Salasanan tiivistys epäonnistui."
 
-#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:919
+#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:924
 msgid "The game could not be loaded: "
 msgstr "Peliä ei voitu ladata: "
 
-#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:921
+#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:926
 msgid "Error while playing the game: "
 msgstr "Virhe pelatessa: "
 
-#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:958
+#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:963
 msgid "The game map could not be loaded: "
 msgstr "Karttaa ei voitu ladata: "
 
-#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:923
-#: src/game_launcher.cpp:1044
+#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:928
+#: src/game_launcher.cpp:1049
 msgid "Map generator error: "
 msgstr "Kartanluontivirhe: "
 
@@ -6919,44 +6965,52 @@ msgid "This scenario has ended. Do you want to continue the campaign?"
 msgstr "Skenaario on loppunut. Haluatko jatkaa kampanjaa?"
 
 #: src/game_initialization/playcampaign.cpp:287
+#, fuzzy
+#| msgid "Unknown scenario: $scenario_id"
 msgid "Unknown scenario: '$scenario|'"
-msgstr "Tuntematon skenaario: '$scenario|'"
+msgstr "Tuntematon skenaario: $scenario_id"
 
 #: src/game_initialization/singleplayer.cpp:44
 msgid "No campaigns are available."
 msgstr "Yhtään kampanjaa ei ole saatavilla."
 
-#: src/game_launcher.cpp:725 src/game_launcher.cpp:744 src/replay.cpp:666
+#: src/game_launcher.cpp:730 src/game_launcher.cpp:749 src/replay.cpp:666
 msgid "The file you have tried to load is corrupt"
 msgstr "Tiedosto, jonka yritit avata, on vioittunut"
 
-#: src/game_launcher.cpp:727 src/game_launcher.cpp:746
+#: src/game_launcher.cpp:732 src/game_launcher.cpp:751
 #: src/hotkey/hotkey_handler_sp.cpp:334 src/savegame.cpp:153
 #: src/savegame.cpp:314
 msgid "The file you have tried to load is corrupt: '"
 msgstr "Tiedosto, jonka yritit ladata, on vioittunut: '"
 
-#: src/game_launcher.cpp:736
+#: src/game_launcher.cpp:741
 msgid "File I/O Error while reading the game"
 msgstr "Peliä luettaessa tiedoston I/O-virhe"
 
-#: src/game_launcher.cpp:738
+#: src/game_launcher.cpp:743
 msgid "File I/O Error while reading the game: '"
 msgstr "Pelitiedoston lukuvirhe: '"
 
-#: src/game_launcher.cpp:917
+#: src/game_launcher.cpp:922
 msgid "Error while starting server: "
 msgstr "Virhe käynnistäessä palvelinta: "
 
-#: src/game_launcher.cpp:939
+#: src/game_launcher.cpp:944
 msgid "Connection failed: "
 msgstr "Yhteys epäonnistui: "
 
 #: src/generators/default_map_generator_job.cpp:707
+#, fuzzy
+#| msgid "Random maps with an odd width aren't supported."
 msgid "Random maps with an odd width aren't supported."
 msgstr "Satunnaiskartat oudoilla leveyksillä eivät ole tuettuja."
 
 #: src/generators/default_map_generator_job.cpp:970
+#, fuzzy
+#| msgid ""
+#| "No valid castle location found. Too many or too few mountain hexes? "
+#| "(please check the 'max hill size' parameter)"
 msgid ""
 "No valid castle location found. Too many or too few mountain hexes? (please "
 "check the 'max hill size' parameter)"
@@ -7161,8 +7215,10 @@ msgid "Schedule"
 msgstr "Aikataulu"
 
 #: src/help/help_impl.cpp:530
+#, fuzzy
+#| msgid "<header>text='Units with this ability'</header>"
 msgid "<header>text='Units with this special attack'</header>"
-msgstr "<header>text='Yksiköt tällä erikoishyökkäyksellä'</header>"
+msgstr "<header>text='Yksiköt tällä erikoistaidolla'</header>"
 
 #: src/help/help_impl.cpp:594
 msgid "<header>text='Units with this ability'</header>"
@@ -7207,6 +7263,10 @@ msgstr "Suuntautuminen: "
 #. TRANSLATORS: this is expected to say "[Dunefolk are] a group of units, all of whom are Humans",
 #. or "[Quenoth Elves are] a group of units, all of whom are Elves".
 #: src/help/help_impl.cpp:1149
+#, fuzzy
+#| msgid ""
+#| "This is a group of units, all of whom are <ref>dst='$topic_id' "
+#| "text='$help_taxonomy'</ref>."
 msgid ""
 "This is a group of units, all of whom are <ref>dst='$topic_id' "
 "text='$help_taxonomy'</ref>."
@@ -7215,12 +7275,16 @@ msgstr ""
 "text='$help_taxonomy'</ref>."
 
 #: src/help/help_impl.cpp:1154
+#, fuzzy
+#| msgid "<header>text='Units of this group'</header>"
 msgid "<header>text='Subgroups of units within this group'</header>"
-msgstr "<header>text='Yksiköiden alaryhmiä tämän ryhmän sisällä'</header>"
+msgstr "<header>text='Tämän ryhmän yksiköitä'</header>"
 
 #: src/help/help_impl.cpp:1156
+#, fuzzy
+#| msgid "<header>text='Units of this race'</header>"
 msgid "<header>text='Groups of units within this race'</header>"
-msgstr "<header>text='Yksiköiden ryhmiä tämän rodun sisällä'</header>"
+msgstr "<header>text='Tämän lajin yksiköitä'</header>"
 
 #: src/help/help_impl.cpp:1165
 msgid "<header>text='Units of this group'</header>"
@@ -7331,6 +7395,10 @@ msgid "This command is currently unavailable."
 msgstr "Tämä komento ei ole nyt käytettävissä."
 
 #: src/map_command_handler.hpp:225
+#, fuzzy
+#| msgid ""
+#| "Unknown command '$command', did you mean '$command_proposal'? try "
+#| "$help_command for a list of available commands."
 msgid ""
 "Unknown command '$command', did you mean '$command_proposal'? try "
 "$help_command for a list of available commands."
@@ -7339,6 +7407,10 @@ msgstr ""
 "haluat listan mahdollisista komennoista."
 
 #: src/map_command_handler.hpp:229
+#, fuzzy
+#| msgid ""
+#| "Unknown command '$command', try $help_command for a list of available "
+#| "commands."
 msgid ""
 "Unknown command '$command', try $help_command for a list of available "
 "commands."
@@ -7488,6 +7560,8 @@ msgstr ""
 "(Sinulla täytyy olla henkiinjääneitä veteraaneja edellisestä skenaariosta.)"
 
 #: src/menu_events.cpp:401
+#, fuzzy
+#| msgid "You currently can't recall at the highlighted location."
 msgid "You currently can't recall at the highlighted location."
 msgstr "Et voi juuri nyt kutsua korostettuun sijaintiin."
 
@@ -7636,6 +7710,10 @@ msgid "Display and log fps (Frames Per Second)."
 msgstr "Näytä ja kirjaa ruudunpäivitystä."
 
 #: src/menu_events.cpp:1250
+#, fuzzy
+#| msgid ""
+#| "Similar to the 'fps' command, but also forces everything to redraw "
+#| "instead of only things that have changed."
 msgid ""
 "Similar to the 'fps' command, but also forces everything to redraw instead "
 "of only things that have changed."
@@ -7668,6 +7746,8 @@ msgid "<id>"
 msgstr "<tunniste>"
 
 #: src/menu_events.cpp:1261
+#, fuzzy
+#| msgid "Advance to the next scenario, or scenario identified by 'id'"
 msgid "Advance to the next scenario, or scenario identified by 'id'"
 msgstr "Jatka seuraavaan skenaarioon tai skenaarioon, jonka tunnus on 'id'"
 
@@ -7769,8 +7849,10 @@ msgid "Discover all units in help."
 msgstr "Paljasta kaikki yksiköt ohjeessa."
 
 #: src/menu_events.cpp:1297
+#, fuzzy
+#| msgid "Discover all units in help."
 msgid "'Undiscover' all units in help."
-msgstr "'Piilota' kaikki yksiköt ohjeessa."
+msgstr "Paljasta kaikki yksiköt ohjeessa."
 
 #: src/menu_events.cpp:1298
 msgid "<unit type id>"
@@ -7829,14 +7911,22 @@ msgid "Could not find label or unit containing the string ‘$search’."
 msgstr "Tekstiä '$search' sisältävää yksikköä tai karttamerkintää ei löytynyt."
 
 #: src/menu_events.cpp:1478
+#, fuzzy
+#| msgid "Can't droid invalid side: '$side'."
 msgid "Can't droid invalid side: '$side'."
-msgstr "Ei voida automatisoida epäkelpoa puolta: '$side'."
+msgstr "Ei voida automatisoida epäkelpoa puolta: '$side'"
 
 #: src/menu_events.cpp:1481
+#, fuzzy
+#| msgid "Can't droid networked side: '$side'."
 msgid "Can't droid networked side: '$side'."
 msgstr "Ei voida automatisoida verkkopelaajan puolta: '$side'."
 
 #: src/menu_events.cpp:1493 src/menu_events.cpp:1509 src/menu_events.cpp:1541
+#, fuzzy
+#| msgid ""
+#| "It is not allowed to change a side from AI to human control when it's not "
+#| "your turn."
 msgid ""
 "It is not allowed to change a side from AI to human control when it's not "
 "your turn."
@@ -7844,22 +7934,34 @@ msgstr ""
 "Ei ole sallittua vaihtaa osapuoli tekoälystä ihmiseen, kun ei ole vuorosi."
 
 #: src/menu_events.cpp:1503 src/menu_events.cpp:1559
+#, fuzzy
+#| msgid "Side '$side' controller is now controlled by: AI."
 msgid "Side '$side' controller is now controlled by: AI."
 msgstr "Puolta '$side' kontrolloi nyt: Tekoäly."
 
 #: src/menu_events.cpp:1505
+#, fuzzy
+#| msgid "Side '$side' is already droided."
 msgid "Side '$side' is already droided."
 msgstr "Osapuoli '$side' on jo valmiiksi asetettu droidiksi."
 
 #: src/menu_events.cpp:1519 src/menu_events.cpp:1551
+#, fuzzy
+#| msgid "Side '$side' controller is now controlled by: human."
 msgid "Side '$side' controller is now controlled by: human."
 msgstr "Puolta '$side' kontrolloi nyt: ihminen."
 
 #: src/menu_events.cpp:1521
+#, fuzzy
+#| msgid "Side '$side' is already not droided."
 msgid "Side '$side' is already not droided."
 msgstr "Osapuoli '$side' on jo valmiiksi asetettu ei-droidiksi."
 
 #: src/menu_events.cpp:1525
+#, fuzzy
+#| msgid ""
+#| "It is not allowed to change a side from human to AI control when it's not "
+#| "your turn."
 msgid ""
 "It is not allowed to change a side from human to AI control when it's not "
 "your turn."
@@ -7867,14 +7969,22 @@ msgstr ""
 "Ei ole sallittua vaihtaa osapuolta ihmisestä tekoälyyn, kun ei ole vuorosi."
 
 #: src/menu_events.cpp:1535
+#, fuzzy
+#| msgid "Side '$side' controller is now fully controlled by: AI."
 msgid "Side '$side' controller is now fully controlled by: AI."
 msgstr "Osapuolta '$side' kontrolloi nyt täysin: Tekoäly."
 
 #: src/menu_events.cpp:1537
+#, fuzzy
+#| msgid "Side '$side' is already fully AI controlled."
 msgid "Side '$side' is already fully AI controlled."
 msgstr "Osapuoli '$side' on jo kokonaan tekoälyn ohjaamana."
 
 #: src/menu_events.cpp:1562
+#, fuzzy
+#| msgid ""
+#| "Invalid action provided for side '$side'. Valid actions are: on, off, "
+#| "full."
 msgid ""
 "Invalid action provided for side '$side'. Valid actions are: on, off, full."
 msgstr ""
@@ -7882,31 +7992,44 @@ msgstr ""
 "ovat: on, off, full."
 
 #: src/menu_events.cpp:1604
+#, fuzzy
+#| msgid "Can't idle invalid side: '$side'."
 msgid "Can't idle invalid side: '$side'."
 msgstr "Ei voida asettaa epäkelpoa puolta joutotilaan: '$side'."
 
 #: src/menu_events.cpp:1609
+#, fuzzy
+#| msgid "Can't idle networked side: '$side'."
 msgid "Can't idle networked side: '$side'."
 msgstr "Ei voida asettaa verkkopelaajan puolta joutotilaan: '$side'."
 
 #: src/menu_events.cpp:1614
+#, fuzzy
+#| msgid "Can't droid invalid side: '$side'."
 msgid "Can't idle local ai side: '$side'."
-msgstr ""
-"Ei voida asettaa paikallista tekoälyn ohjaamaa puolta joutotilaan: '$side'."
+msgstr "Ei voida automatisoida epäkelpoa puolta: '$side'"
 
 #: src/menu_events.cpp:1675
+#, fuzzy
+#| msgid "Can't change control of invalid side: '$side'."
 msgid "Can't change control of invalid side: '$side'."
 msgstr "Ei voida vaihtaa epäkelvon puolen ohjausta: '$side'."
 
 #: src/menu_events.cpp:1685
+#, fuzzy
+#| msgid "Can't change control of out-of-bounds side: '$side'."
 msgid "Can't change control of out-of-bounds side: '$side'."
 msgstr "Ei voida vaihtaa piilossa olevan puolen ohjausta: '$side'."
 
 #: src/menu_events.cpp:1702
+#, fuzzy
+#| msgid "Can't query control of invalid side: '$side'."
 msgid "Can't query control of invalid side: '$side'."
 msgstr "Ei voida tiedustella epäkelvon puolen ohjauksesta: '$side'."
 
 #: src/menu_events.cpp:1709
+#, fuzzy
+#| msgid "Can't query control of out-of-bounds side: '$side'."
 msgid "Can't query control of out-of-bounds side: '$side'."
 msgstr ""
 "Ei voida tiedustella piilossa olevan joukkueen puolen ohjauksesta: '$side'."
@@ -7954,10 +8077,17 @@ msgid "Variable not found"
 msgstr "Muuttujaa ei löytynyt"
 
 #: src/menu_events.cpp:1985
+#, fuzzy
+#| msgid ""
+#| "Debug command 'unit: $unit' failed: no unit selected or hovered over."
 msgid "Debug command 'unit: $unit' failed: no unit selected or hovered over."
 msgstr "Virheenetsintäkomento 'unit: $unit' epäonnistui: yksikkö ei valittu."
 
 #: src/menu_events.cpp:2003
+#, fuzzy
+#| msgid ""
+#| "Invalid alignment: '$alignment', needs to be one of lawful, neutral, "
+#| "chaotic, or liminal."
 msgid ""
 "Invalid alignment: '$alignment', needs to be one of lawful, neutral, "
 "chaotic, or liminal."
@@ -8192,6 +8322,11 @@ msgid "Game Error"
 msgstr "Virhe pelissä"
 
 #: src/playsingle_controller.cpp:193
+#, fuzzy
+#| msgid ""
+#| "This multiplayer game uses an alternative random mode, if you don't know "
+#| "what this message means, then most likely someone is cheating or someone "
+#| "reloaded a corrupt game."
 msgid ""
 "This multiplayer game uses an alternative random mode, if you don't know "
 "what this message means, then most likely someone is cheating or someone "
@@ -8682,6 +8817,9 @@ msgid "Overwrite?"
 msgstr "Korvaa?"
 
 #: src/savegame.cpp:437
+#, fuzzy
+#| msgid ""
+#| "Save names should not end on '.gz' or '.bz2'. Please remove the extension."
 msgid ""
 "Save names should not end on '.gz' or '.bz2'. Please remove the extension."
 msgstr ""
@@ -8791,6 +8929,8 @@ msgid "at $pos"
 msgstr "sijainnissa $pos"
 
 #: src/serialization/parser.cpp:484
+#, fuzzy
+#| msgid "Value: '$value' Previous: '$previous_value'"
 msgid "Value: '$value' Previous: '$previous_value'"
 msgstr "Arvo: '$value' Edellinen: '$previous_value'"
 
@@ -9189,6 +9329,271 @@ msgstr "Piilota pelaajan $player suunnitelmat"
 msgid "Whiteboard Options"
 msgstr "Valkotaulun asetukset"
 
+#~ msgid "Customize Reach Map (Unit Movement UI)"
+#~ msgstr "Mukauta kantamakarttaa (yksikön liikealue)"
+
+#~ msgid "deflect"
+#~ msgstr "torju"
+
+#, fuzzy
+#~| msgid ""
+#~| "Marksman:\n"
+#~| "When used offensively, this attack always has at least a 60% chance to "
+#~| "hit."
+#~ msgid ""
+#~ "When used defensively, this attack reduces the opponent’s chance to hit "
+#~ "by 10%."
+#~ msgstr ""
+#~ "Tarkk’ampuja:\n"
+#~ "Hyökättäessä tällä hyökkäyksellä on vähintään 60% mahdollisuus osua."
+
+#~ msgid ""
+#~ "This unit’s defensive techniques reduce the chance of a successful enemy "
+#~ "attack."
+#~ msgstr ""
+#~ "Tämän yksikön puolustustaidot vähentävät vihollisen hyökkäysten "
+#~ "onnistumismahdollisuutta."
+
+#~ msgid "absorb"
+#~ msgstr "vaimennus"
+
+#~ msgid ""
+#~ "This attack puts the unit in good defensive position, and it absorbs some "
+#~ "of the damage dealt by an enemy strike."
+#~ msgstr ""
+#~ "Tämä hyökkäys asettaa yksikön hyvään puolustusasemaan ja se vaimentaa "
+#~ "osan vihollisen aiheuttamasta vahingosta."
+
+#~ msgid ""
+#~ "This unit can block enemy strikes, so that it takes reduced damage when "
+#~ "hit."
+#~ msgstr ""
+#~ "Tämä yksikkö voi torjua vihollisen iskuja, jolloin se kärsii vähemmän "
+#~ "vahinkoa osuessaan."
+
+#, fuzzy
+#~| msgid ""
+#~| "\n"
+#~| "main={starting_consonnant}{vowel}{consonnant}{vowel}{ending_consonnant}|"
+#~| "{starting_consonnant}{vowel}{consonnant}{ending_vowel}|{starting_vowel}"
+#~| "{consonnant}{vowel}{ending_consonnant}|{starting_consonnant}{vowel}"
+#~| "{ending_consonnant}|{starting_vowel}{consonnant}{ending_vowel}\n"
+#~| "starting_consonnant=B|Br|D|Dr|G|Gr|Gh|H|Kh|M|N|P|Pr|R|S|Sh|T|V\n"
+#~| "starting_vowel=A|I|O|U\n"
+#~| "consonnant=b|br|d|dr|g|gr|gh|kh|m|n|p|pr|r|s|sh|t|v|gz|zg|rb|br|dr|vr|"
+#~| "khr|gd|shn\n"
+#~| "vowel=a|i|o|u\n"
+#~| "ending_consonnant=b|g|r|sh|k\n"
+#~| "ending_vowel=o|u\n"
+#~ msgid ""
+#~ "\n"
+#~ "main={prefix} {starting_consonnant}{vowel}{consonnant}{vowel}"
+#~ "{ending_consonnant}|{prefix} {starting_vowel}{consonnant}{ending_vowel}|"
+#~ "{starting_vowel}{consonnant}{vowel}{ending_consonnant}|{prefix} "
+#~ "{starting_consonnant}{vowel}{ending_consonnant}|{starting_vowel}"
+#~ "{consonnant}{vowel}{consonnant}{ending_vowel}\n"
+#~ "prefix=Blessed|Golden|Fearless|Mighty|Lucky|Old|The|The|Valiant\n"
+#~ "starting_consonnant=B|C|Cr|D|F|G|H|Kh|L|M|N|P|R|S|T|Th|V\n"
+#~ "starting_vowel=A|E|I|O|U\n"
+#~ "consonnant=b|br|ch|d|dr|g|gr|gh|kh|m|n|p|pr|r|s|sh|t|v|ol|z|vr|khr|shn\n"
+#~ "vowel=a|ae|é|i|o|u\n"
+#~ "ending_consonnant=yan|oic|ell|yll|tar|sh\n"
+#~ "ending_vowel=a|ae|o|u\n"
+#~ msgstr ""
+#~ "\n"
+#~ "main={starting_consonnant}{vowel}{consonnant}{vowel}{ending_consonnant}|"
+#~ "{starting_consonnant}{vowel}{consonnant}{ending_vowel}|{starting_vowel}"
+#~ "{consonnant}{vowel}{ending_consonnant}|{starting_consonnant}{vowel}"
+#~ "{ending_consonnant}|{starting_vowel}{consonnant}{ending_vowel}\n"
+#~ "starting_consonnant=B|Br|D|Dr|G|Gr|Gh|H|Kh|M|N|P|Pr|R|S|Sh|T|V\n"
+#~ "starting_vowel=A|I|O|U\n"
+#~ "consonnant=b|br|d|dr|g|gr|gh|kh|m|n|p|pr|r|s|sh|t|v|gz|zg|rb|br|dr|vr|khr|"
+#~ "gd|shn\n"
+#~ "vowel=a|i|o|u\n"
+#~ "ending_consonnant=b|g|r|sh|k\n"
+#~ "ending_vowel=o|u\n"
+
+#~ msgid "Yellow"
+#~ msgstr "Keltainen"
+
+#~ msgid "Pink"
+#~ msgstr "Pinkki"
+
+#~ msgid "Dawn"
+#~ msgstr "aamu"
+
+#~ msgid "Morning"
+#~ msgstr "Aamu"
+
+#~ msgid "Afternoon"
+#~ msgstr "iltapäivä"
+
+#~ msgid "Dusk"
+#~ msgstr "ilta"
+
+#~ msgid "First Watch"
+#~ msgstr "iltayö"
+
+#~ msgid "Midnight"
+#~ msgstr "Keskiyö"
+
+#~ msgid "Second Watch"
+#~ msgstr "aamuyö"
+
+#, fuzzy
+#~| msgid "Max HP bonus +3, Max XP +20%"
+#~ msgid "Max HP bonus +3, Max XP +20%"
+#~ msgstr "Enimmäis-EP-bonus +3, enimmäis-KP  +20%"
+
+#~ msgid "Ok, continue with the game"
+#~ msgstr "Okei, jatka peliä"
+
+#~ msgid "Don’t show this message again"
+#~ msgstr "Älä näytä tätä viestiä uudelleen"
+
+#~ msgid "<i>― Great Mage Delfador, 520YW</i>"
+#~ msgstr "<i>― Suurvelho Delfador, 520 WV</i>"
+
+#~ msgid "Requesting add-on counts by type..."
+#~ msgstr "Pyydetään lisäosien määrät tyypeittäin…"
+
+#~ msgid "Requesting forum_auth usage..."
+#~ msgstr "Pyydetään forum_auth-käyttötietoja…"
+
+#~ msgid "Requesting list of admins..."
+#~ msgstr "Pyydetään ylläpitäjäluetteloa…"
+
+#~ msgid "Getting list of hidden add-ons..."
+#~ msgstr "Haetaan piilotettujen lisäosien luetteloa…"
+
+#~ msgid "Hiding add-on..."
+#~ msgstr "Piilotetaan lisäosa näkyvistä…"
+
+#~ msgid "Unhiding add-on..."
+#~ msgstr "Palautetaan lisäosa näkyviin…"
+
+#, fuzzy
+#~| msgid "Sending add-on <i>$addon_title</i>..."
+#~ msgid ""
+#~ "The file size for the icon for the add-on <i>$addon_title</i> is too "
+#~ "large."
+#~ msgstr "Lähetetään lisäosaa <i>$addon_title</i>..."
+
+#, fuzzy
+#~| msgid "Your IP address is banned on this server’s forums for $duration|."
+#~ msgid "Your IP address is banned on this server for $duration|."
+#~ msgstr ""
+#~ "Sinun IP-osoitteesi on asetettu kieltoon tämän palvelimen foorumissa noin "
+#~ "$duration]."
+
+#, fuzzy
+#~| msgid "Your IP address is banned on this server’s forums."
+#~ msgid "Your IP address is banned on this server."
+#~ msgstr ""
+#~ "Sinun IP-osoitteesi on asetettu kieltoon tämän palvelimen foorumissa."
+
+#, fuzzy
+#~| msgid "Unknown scenario: '$scenario|'"
+#~ msgid "Unknown scenario: ‘$scenario|’"
+#~ msgstr "Tuntematon skenaario: '$scenario|'"
+
+#, fuzzy
+#~| msgid "<header>text='Units with this special attack'</header>"
+#~ msgid "Units with this special attack"
+#~ msgstr "<header>text='Yksiköt tällä erikoishyökkäyksellä'</header>"
+
+#, fuzzy
+#~| msgid "Units having this ability:"
+#~ msgid "Units with this ability"
+#~ msgstr "Yksiköt tällä kyvyllä:"
+
+#, fuzzy
+#~| msgid "<header>text='Subgroups of units within this group'</header>"
+#~ msgid "Subgroups of units within this group"
+#~ msgstr "<header>text='Yksiköiden alaryhmiä tämän ryhmän sisällä'</header>"
+
+#, fuzzy
+#~| msgid "<header>text='Groups of units within this race'</header>"
+#~ msgid "Groups of units within this race"
+#~ msgstr "<header>text='Yksiköiden ryhmiä tämän rodun sisällä'</header>"
+
+#, fuzzy
+#~| msgid "Units of this race:"
+#~ msgid "Units of this group"
+#~ msgstr "Yksiköt tällä rodulla:"
+
+#, fuzzy
+#~ msgid "Units of this race"
+#~ msgstr "Yksiköt tällä rodulla"
+
+#, fuzzy
+#~| msgid "'Undiscover' all units in help."
+#~ msgid "‘Undiscover’ all units in help."
+#~ msgstr "'Piilota' kaikki yksiköt ohjeessa."
+
+#, fuzzy
+#~| msgid "Can't droid invalid side: '$side'."
+#~ msgid "Can’t droid invalid side: ‘$side’."
+#~ msgstr "Ei voida automatisoida epäkelpoa puolta: '$side'."
+
+#, fuzzy
+#~| msgid "Side '$side' is already fully AI controlled."
+#~ msgid "Side ‘$side’ is not a human or AI player."
+#~ msgstr "Osapuoli '$side' on jo kokonaan tekoälyn ohjaamana."
+
+#, fuzzy
+#~| msgid "Can't idle local ai side: '$side'."
+#~ msgid "Can’t idle local ai side: ‘$side’."
+#~ msgstr ""
+#~ "Ei voida asettaa paikallista tekoälyn ohjaamaa puolta joutotilaan: "
+#~ "'$side'."
+
+#, fuzzy
+#~| msgid "prompt^Command:"
+#~ msgid "prompt^Formula:"
+#~ msgstr "Komento:"
+
+#, fuzzy
+#~| msgid "$number damage"
+#~| msgid_plural "$number damage"
+#~ msgid "$number min range"
+#~ msgstr "$number vahinko"
+
+#, fuzzy
+#~| msgid "<span color=\"$color\">$number_or_percent</span> damage"
+#~| msgid_plural "<span color=\"$color\">$number_or_percent</span> damage"
+#~ msgid "<span color=\"$color\">$number_or_percent</span> min range"
+#~ msgstr "<span color=\"$color\">$number_or_percent</span> vahinko"
+
+#, fuzzy
+#~| msgid "$number damage"
+#~| msgid_plural "$number damage"
+#~ msgid "$number max range"
+#~ msgstr "$number vahinko"
+
+#, fuzzy
+#~| msgid "<span color=\"$color\">$number_or_percent</span> damage"
+#~| msgid_plural "<span color=\"$color\">$number_or_percent</span> damage"
+#~ msgid "<span color=\"$color\">$number_or_percent</span> max range"
+#~ msgstr "<span color=\"$color\">$number_or_percent</span> vahinko"
+
+#, fuzzy
+#~| msgid "This unit has no usable weapons."
+#~ msgid "This unit cannot be dismissed."
+#~ msgstr "Tällä yksiköllä ei ole käyttökelpoista asetta."
+
+#, fuzzy
+#~| msgid "This unit is invulnerable. It cannot be harmed by any attack."
+#~ msgid "This unit is a leader and cannot be dismissed."
+#~ msgstr ""
+#~ "Tämä yksikkö on haavoittumaton. Sitä ei voi vahingoittaa millään "
+#~ "hyökkäyksellä."
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "description"
+#~ msgstr "Kuvaus"
+
 #~ msgid "Availability: "
 #~ msgstr "Saatavuus: "
 
@@ -9431,11 +9836,6 @@ msgstr "Valkotaulun asetukset"
 #~ "lähitaistelussa, myös puolustautuessaan."
 
 #, fuzzy
-#~| msgid "Max HP bonus +3, Max XP +20%"
-#~ msgid "Max HP bonus +6%"
-#~ msgstr "Enimmäis-EP-bonus +3, enimmäis-KP  +20%"
-
-#, fuzzy
 #~| msgid "XP to advance"
 #~ msgid "$value| XP to advance"
 #~ msgstr "KP:tä ylenemiseen"
@@ -9447,13 +9847,6 @@ msgstr "Valkotaulun asetukset"
 
 #~ msgid "Use experimental PRNG combat"
 #~ msgstr "Käytä kokeellista PRNG-taistelua"
-
-#, fuzzy
-#~| msgid "Sending add-on <i>$addon_title</i>..."
-#~ msgid ""
-#~ "Requesting the older version composition for the add-on <i>$addon_title</"
-#~ "i>..."
-#~ msgstr "Lähetetään lisäosaa <i>$addon_title</i>..."
 
 #~ msgid "Battle for Wesnoth"
 #~ msgstr "Taistelu Wesnothista"
@@ -9800,11 +10193,6 @@ msgstr "Valkotaulun asetukset"
 #~ msgid "none"
 #~ msgstr "Ei mitään"
 
-#, fuzzy
-#~| msgid "Can't droid invalid side: '$side'."
-#~ msgid "Can't droid a local ai side: '$side'."
-#~ msgstr "Ei voida automatisoida epäkelpoa puolta: '$side'"
-
 #~ msgid "Advances to:"
 #~ msgstr "Ylenee yksiköksi:"
 
@@ -9849,9 +10237,6 @@ msgstr "Valkotaulun asetukset"
 
 #~ msgid "Unknown era: $era_id"
 #~ msgstr "Tuntematon aikakausi: $era_id"
-
-#~ msgid "Unknown scenario: $scenario_id"
-#~ msgstr "Tuntematon skenaario: $scenario_id"
 
 #, fuzzy
 #~| msgid "Campaign: $campaign_name"
@@ -9993,9 +10378,6 @@ msgstr "Valkotaulun asetukset"
 #~| msgid "There are no add-ons available for download from this server."
 #~ msgid "There are no add-ons matching the specified criteria on this server."
 #~ msgstr "Tällä palvelimella ei ole yhtään lisäosaa."
-
-#~ msgid "Description"
-#~ msgstr "Kuvaus"
 
 #, fuzzy
 #~| msgid "Update all"
@@ -11680,12 +12062,6 @@ msgstr "Valkotaulun asetukset"
 #~ msgid "The server responded with an error: \"$error|\""
 #~ msgstr "Palvelin vastasi virheellä: \"$error|\""
 
-#~ msgid "Sending add-on"
-#~ msgstr "Lähetetään lisäosaa"
-
-#~ msgid "Requesting the addon to be deleted"
-#~ msgstr "Pyydetään lisäosan poistamista."
-
 #~ msgid "Downloading..."
 #~ msgstr "Ladataan..."
 
@@ -11755,9 +12131,6 @@ msgstr "Valkotaulun asetukset"
 #~ msgstr ""
 #~ "Palvelin ajaa itseään taustaprosessina kunnes kaikki käyttäjät ovat "
 #~ "poistuneet."
-
-#~ msgid "Don’t show again"
-#~ msgstr "Älä näytä uudelleen"
 
 #~ msgid "A map without a header is not supported"
 #~ msgstr "Kartat ilman otsakkeita eivät ole tuettuja."
@@ -13637,21 +14010,6 @@ msgstr "Valkotaulun asetukset"
 #~ "tilannepaneelista. Normaalilla vuorokausisyklillä aamupäivä ja iltapäivä "
 #~ "ovat päivää, iltayö ja aamuyö yötä:\n"
 
-#~ msgid "Dawn"
-#~ msgstr "aamu"
-
-#~ msgid "Afternoon"
-#~ msgstr "iltapäivä"
-
-#~ msgid "Dusk"
-#~ msgstr "ilta"
-
-#~ msgid "First Watch"
-#~ msgstr "iltayö"
-
-#~ msgid "Second Watch"
-#~ msgstr "aamuyö"
-
 #~ msgid ""
 #~ "Keep in mind that some scenarios take place underground, where it is "
 #~ "perpetually night!"
@@ -15239,14 +15597,6 @@ msgstr "Valkotaulun asetukset"
 #~ msgid "marksman"
 #~ msgstr "tarkk’ampuja"
 
-#~ msgid ""
-#~ "Marksman:\n"
-#~ "When used offensively, this attack always has at least a 60% chance to "
-#~ "hit."
-#~ msgstr ""
-#~ "Tarkk’ampuja:\n"
-#~ "Hyökättäessä tällä hyökkäyksellä on vähintään 60% mahdollisuus osua."
-
 #~ msgid "swarm"
 #~ msgstr "parvi"
 
@@ -15825,9 +16175,6 @@ msgstr "Valkotaulun asetukset"
 #~ msgid "View the credits"
 #~ msgstr "Näytä pelin tekijät"
 
-#~ msgid "Quit the game"
-#~ msgstr "Poistu pelistä"
-
 #~ msgid "Show Battle for Wesnoth help"
 #~ msgstr "Näytä Wesnothin ohje"
 
@@ -16181,12 +16528,6 @@ msgstr "Valkotaulun asetukset"
 #~ msgstr ""
 #~ "Isännöi peliä käyttämällä sisäänrakennettua serveriä. Ei kovin hyvin "
 #~ "ylläpidetty, järkevämpää olisi käyttää erillistä serveriä, ‘wesnothd’tä."
-
-#~ msgid "Units having this ability:"
-#~ msgstr "Yksiköt tällä kyvyllä:"
-
-#~ msgid "Units of this race:"
-#~ msgstr "Yksiköt tällä rodulla:"
 
 #~ msgid ""
 #~ "Kraag,Gillan,Gisharri,Karigan,Gron ih,Krenli,Kegrid,Mah Toa,Grish,Garushi,"

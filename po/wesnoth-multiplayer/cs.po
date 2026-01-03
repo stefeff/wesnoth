@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Battle for Wesnoth\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
-"PO-Revision-Date: 2025-05-08 21:42+0200\n"
+"POT-Creation-Date: 2025-12-08 15:31 UTC\n"
+"PO-Revision-Date: 2025-07-08 22:14+0200\n"
 "Last-Translator: Michal Žejdl <lachim@emer.cz>\n"
 "Language-Team: Czech https://wiki.wesnoth.org/CzechTranslation\n"
 "Language: cs\n"
@@ -300,7 +300,7 @@ msgstr ""
 #: data/multiplayer/factions/knalgans-aoh.cfg:4
 #: data/multiplayer/factions/knalgans-default.cfg:4
 msgid "Knalgan Alliance"
-msgstr "Knalganská aliance"
+msgstr "Knalžská aliance"
 
 #. [multiplayer_side]: id=Knalgan Alliance, type=random
 #: data/multiplayer/factions/knalgans-aoh.cfg:13
@@ -315,7 +315,7 @@ msgid ""
 "tough and defensive dwarves who are only good on certain terrain and humans "
 "who can cover ground that dwarves are not good at fighting in."
 msgstr ""
-"<bold>text='Knalgská aliance'</bold> je spojenectví <ref>text='trpaslíků' "
+"<bold>text='Knalžská aliance'</bold> je spojenectví <ref>text='trpaslíků' "
 "dst='..race_dwarf'</ref> a <ref>text='lidských' dst='..race_human'</ref> "
 "psanců. Trpaslíci jsou starobylá rasa, která většinu času tráví pod zemí. "
 "Jejich bojovníci jsou sice nízcí, zato houževnatí. Psanci jsou tvořeni "
@@ -1256,7 +1256,7 @@ msgstr "Lidé"
 #. [objective]: condition=lose
 #: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:114
 #: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:135
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:274
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:278
 msgid "Death of your leader"
 msgstr "Tvůj vůdce zemře"
 
@@ -2295,7 +2295,7 @@ msgstr ""
 #. [side]
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:21
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:54
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:73
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:70
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:20
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:42
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:64
@@ -2309,7 +2309,7 @@ msgstr "Tým 1"
 #. [side]
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:32
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:43
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:84
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:81
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:31
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:53
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:75
@@ -2714,19 +2714,19 @@ msgid "In this mixed landscape, five armies battle for supremacy."
 msgstr "V této různorodé krajině svede 5 armád boj o nadvládu."
 
 #. [multiplayer]: id=multiplayer_The_Wilderlands
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:57
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:54
 msgid "5p — The Wilderlands"
 msgstr "5hr – Divočina"
 
 #. [multiplayer]: id=multiplayer_The_Wilderlands
 #. [multiplayer]: id=multiplayer_Crusaders_Field
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:58
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:55
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:7
 msgid " Recommended setting of 1 gold per village."
 msgstr " Doporučeným nastavením je 1 zlatý na vesnici."
 
 #. [multiplayer]: id=multiplayer_The_Wilderlands
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:58
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:55
 msgid ""
 "A vast region of wild, untamed wilderness, its terrain dotted with forests, "
 "caves, rivers, and the ruins of ancient fortresses."
@@ -2735,42 +2735,42 @@ msgstr ""
 "jeskyní, řek a ruin starobylého opevnění."
 
 #. [side]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:95
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:92
 msgid "teamname^Team 3"
 msgstr "Tým 3"
 
 #. [side]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:106
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:103
 msgid "teamname^Team 4"
 msgstr "Tým 4"
 
 #. [side]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:128
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:125
 msgid "teamname^Monsters"
 msgstr "Příšery"
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:245
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:249
 msgid "Defeat all enemy leaders"
 msgstr "Poraz všechny vůdce nepřátel"
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:264
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:268
 msgid "Defeat all monsters"
 msgstr "Poraz všechny příšery"
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:282
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:286
 msgid "Defeat the enemy leaders"
 msgstr "Poraz vůdce nepřátel"
 
 #. [objective]: condition=lose
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:287
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:291
 msgid "Death of all your units"
 msgstr "Všechny tvé jednotky zemřou"
 
 #. [note]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:292
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:296
 msgid "You cannot recruit units."
 msgstr "Nemůžeš verbovat jednotky."
 

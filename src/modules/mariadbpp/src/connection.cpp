@@ -95,9 +95,11 @@ bool connection::connect() {
     }
 
     if (!m_account->ssl_key().empty()) {
-        if (mysql_ssl_set(m_mysql, m_account->ssl_key().c_str(), m_account->ssl_certificate().c_str(),
-                          m_account->ssl_ca().c_str(), m_account->ssl_ca_path().c_str(),
-                          m_account->ssl_cipher().c_str()))
+        if (mysql_option_safe(m_mysql, MYSQL_OPT_SSL_KEY, m_account->ssl_key().c_str()) ||
+                mysql_option_safe(m_mysql, MYSQL_OPT_SSL_CERT, m_account->ssl_certificate().c_str()) ||
+                mysql_option_safe(m_mysql, MYSQL_OPT_SSL_CA, m_account->ssl_ca().c_str()) ||
+                mysql_option_safe(m_mysql, MYSQL_OPT_SSL_CAPATH, m_account->ssl_ca_path().c_str()) ||
+                mysql_option_safe(m_mysql, MYSQL_OPT_SSL_CIPHER, m_account->ssl_cipher().c_str()))
             MARIADB_CONN_ERROR(m_mysql);
     }
 
@@ -105,12 +107,12 @@ bool connection::connect() {
     // set connect options
     //
     for (auto &pair : m_account->connect_options()) {
-        if (0 != mysql_options(m_mysql, pair.first, pair.second->value()))
+        if (0 != mysql_option_safe(m_mysql, pair.first, static_cast<const char *>(pair.second->value())))
             MARIADB_CONN_CLOSE_ERROR(m_mysql);
     }
 
-    if (!mysql_real_connect(m_mysql, m_account->host_name().c_str(), m_account->user_name().c_str(),
-                            m_account->password().c_str(), nullptr, m_account->port(),
+    if (!mysql_real_connect(m_mysql, m_account->unix_socket().empty() ? m_account->host_name().c_str() : nullptr,
+                            m_account->user_name().c_str(), m_account->password().c_str(), nullptr, m_account->port(),
                             m_account->unix_socket().empty() ? nullptr : m_account->unix_socket().c_str(),
                             CLIENT_MULTI_STATEMENTS))
         MARIADB_CONN_ERROR(m_mysql);

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: wesnoth-1.18\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
 "POT-Creation-Date: 2024-10-28 17:38 UTC\n"
-"PO-Revision-Date: 2025-03-24 15:28+0800\n"
+"PO-Revision-Date: 2025-10-31 14:09+0800\n"
 "Last-Translator: vimacs <vimacs.hacks@gmail.com>\n"
 "Language-Team: Wesnoth Simplified Chinese Team\n"
 "Language: zh_CN\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
 #. [editor_group]: id=eastern_invasion
 #. [campaign]: id=Eastern_Invasion
@@ -5040,7 +5040,7 @@ msgstr "哦？他们准备好了吗？"
 #: data/campaigns/Eastern_Invasion/scenarios/09_Castle_in_the_Ice.cfg:993
 #: data/campaigns/Eastern_Invasion/scenarios/11_Captured.cfg:372
 msgid "Ga’all"
-msgstr "啊哦"
+msgstr "盖尔"
 
 #. [event]: race=drake
 #. [event]
@@ -5059,10 +5059,10 @@ msgid ""
 "To our Flight, your only usefulness remains...\n"
 "As tribute to the orcs."
 msgstr ""
-"啊哦，你们的狩猎失败了。\n"
-"维拉什，你的爪子已经老去。\n"
-"对我们飞行队伍而言，你唯一的作用只剩下...\n"
-"作为对兽人的贡品。"
+"盖尔，汝之狩猎，已然失败。\n"
+"维拉什，汝之爪牙，已显苍老。\n"
+"于我翼群，汝之用处，仅余一事…\n"
+"献予兽人，以为供奉。"
 
 #. [message]: speaker=Verash
 #. "Aspirant" is a drake military rank
@@ -5071,7 +5071,7 @@ msgid ""
 "Aspirant Mortic,\n"
 "As you command."
 msgstr ""
-"有为者莫提克，\n"
+"竞位者莫提克，\n"
 "遵命。"
 
 #. [message]: speaker=Ogho
@@ -5095,10 +5095,10 @@ msgid ""
 "Taller than a Dwarf.\n"
 "Tell me of your kin."
 msgstr ""
-"一个未知的生物靠近了。\n"
-"比兽人苍白。\n"
-"比矮人高。\n"
-"告诉我你的种族。"
+"未知生灵迫近。\n"
+"肤色浅于兽人。\n"
+"身形高过矮人。\n"
+"告吾汝族。"
 
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/09_Castle_in_the_Ice.cfg:1052
@@ -5117,11 +5117,11 @@ msgid ""
 "We have already paid the orcs, dearly.\n"
 "No further tribute can be paid."
 msgstr ""
-"德拉-纳克警告过我们。\n"
-"你们这些西-北人讲的是和平。\n"
-"然而你们却在我们的逃亡中挥舞着长矛。\n"
-"我们已经付了高价给兽人。\n"
-"没有更多的致敬了。"
+"德拉-纳克警告过吾等。\n"
+"韦-诺之民，汝言和平。\n"
+"然尔等仍向吾翼群亮出长矛。\n"
+"吾等已为兽人付出沉重代价。\n"
+"再无贡品可付。"
 
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/09_Castle_in_the_Ice.cfg:1064
@@ -5131,7 +5131,7 @@ msgstr "不，等一下，我们只是想——"
 #. [message]: speaker=$found_unit.id
 #: data/campaigns/Eastern_Invasion/scenarios/09_Castle_in_the_Ice.cfg:1068
 msgid "Our Hunt must continue."
-msgstr "我们的狩猎必须继续。"
+msgstr "吾等狩猎未可中断。"
 
 #. [message]: speaker=Mortic
 #. letting us know that they're just a small and relatively weak Drake Flight but it sets us up to meet some strong ones later
@@ -5146,13 +5146,13 @@ msgid ""
 "Yet our flame still persists.\n"
 "I shall not fall here."
 msgstr ""
-"我是有为者。\n"
-"然而在这些北陆，即使是猎物也露出獠牙，\n"
-"并威胁要征服我们。\n"
-"我们已经与更强大的飞行队伍抗争，\n"
-"玷污了我们的荣誉。\n"
-"但我们的火焰仍持续燃烧。\n"
-"我绝不会在这里倒下。"
+"吾乃竞位者。\n"
+"然于北陆，猎物亦露其爪牙，\n"
+"欲将吾等尽数歼灭。\n"
+"吾等曾与更强之翼群鏖战，\n"
+"虽折损吾族荣光。\n"
+"然吾等心中之焰，未曾熄灭。\n"
+"吾终不殒于此地。"
 
 #. [message]: speaker=Grug
 #. Grug to Gweddry
@@ -6428,7 +6428,7 @@ msgstr "蝙蝠"
 #: data/campaigns/Eastern_Invasion/scenarios/11_Captured.cfg:129
 #: data/campaigns/Eastern_Invasion/scenarios/12_Evacuation.cfg:70
 msgid "Varrak-Klar"
-msgstr "乏拉克-卡拉"
+msgstr "瓦拉克-克拉尔"
 
 #. [side]: type=Orcish Slurbow, id=Rakkha
 #. In S11, an orc with so much gold for recruitment that the player can't beat them, acts as a turn limit.
@@ -6707,9 +6707,9 @@ msgid ""
 "Mortic is Aspirant.\n"
 "I serve his will."
 msgstr ""
-"我遵循我们的飞行之道。\n"
-"莫提克是有为者。\n"
-"我服从他的意志。"
+"吾循翼群之律法。\n"
+"莫提克为竞位者。\n"
+"吾从其命。"
 
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/11_Captured.cfg:1146
@@ -7289,9 +7289,9 @@ msgid ""
 "Daytime is our Domain.\n"
 "We should press the attack."
 msgstr ""
-"太阳了我的族人。\n"
-"白天是我们领域。\n"
-"我们应该发起进攻。"
+"日光壮吾族。\n"
+"白昼，乃吾之疆域。\n"
+"吾辈当再攻。"
 
 #. [message]: race=orc
 #. The messages in this event give the player a chance to react to the retreat.
@@ -7401,9 +7401,9 @@ msgid ""
 "His armies weakened,\n"
 "His prey fled."
 msgstr ""
-"德拉-纳克死了。\n"
-"他的军队弱了。\n"
-"他的猎物跑了。"
+"德拉-纳克殒命，\n"
+"其军力凋零，\n"
+"猎物远遁。"
 
 #. [message]: speaker=Mortic
 #. to his fellow drakes, and any surviving orcs
@@ -7413,9 +7413,9 @@ msgid ""
 "His armies weakened,\n"
 "His prey fled."
 msgstr ""
-"德拉-纳克虚了。\n"
-"他的军队弱了。\n"
-"他的猎物跑了。"
+"德拉-纳克已衰弱，\n"
+"其军力凋零，\n"
+"猎物远遁。"
 
 #. [message]: speaker=Mortic
 #. to his fellow drakes, and any surviving orcs
@@ -7426,10 +7426,10 @@ msgid ""
 "Now we reclaim our Aerie,\n"
 "And the strength of our Flight."
 msgstr ""
-"我们的荣耀的久遭玷污。\n"
-"不再应该如此。\n"
-"现在我们收回巢穴，\n"
-"和我们飞行队伍的力量。"
+"吾辈荣光蒙尘久矣。\n"
+"今日雪耻，正其时也。\n"
+"今吾等夺回巢穴，\n"
+"亦夺回翼群之威。"
 
 #. [message]: speaker=$found_unit.id
 #. Speaker is an orc, and Mortic is flying towards them. "What? Hey!" *gets killed by Mortic*
@@ -7444,9 +7444,9 @@ msgid ""
 "The orcs our prey!\n"
 "Flight of Mortic, we fight!"
 msgstr ""
-"狩猎开始！\n"
-"兽人是咱们的猎物！\n"
-"莫提克的飞行队伍，我们战斗！"
+"猎令已下！\n"
+"兽人为猎！\n"
+"莫提克翼群，吾等战之！"
 
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/12_Evacuation.cfg:861
@@ -7462,9 +7462,9 @@ msgid ""
 "Second and third Wings,\n"
 "Capture the west bank."
 msgstr ""
-"太阳升起。\n"
-"第二、第三翼，\n"
-"占领西岸。"
+"日升。\n"
+"翼队二、三，\n"
+"夺取西岸。"
 
 #. [message]
 #. spoken by the leader of either orc side. Lots of drakes appear immediately after this.
@@ -7518,7 +7518,7 @@ msgstr "呱啦！愚蠢的人类……"
 #. Aspirant is a drake military rank
 #: data/campaigns/Eastern_Invasion/scenarios/12_Evacuation.cfg:985
 msgid "I am Aspirant no more."
-msgstr "我不再是有为者。"
+msgstr "吾非竞位者矣。"
 
 #. [message]: speaker=Rakkha
 #: data/campaigns/Eastern_Invasion/scenarios/12_Evacuation.cfg:998
@@ -7652,24 +7652,21 @@ msgid ""
 "back to its mistress."
 msgstr "唉，我的任务失败了！亡灵侦察兵已经回去向女主人报告了。"
 
-# Translated by ollama with model glm4.
 #. [message]: speaker=Mal-Yrna
 #. speaking to a bat
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:603
-#, fuzzy
 msgid ""
 "Minion, what’s this? Soldiers of Wesnoth approach from the north? That area "
 "should have been cleansed over a month ago."
-msgstr "小兵，这是什么？韦诺士兵从北方逼近？那个区域应该在一个月前就被清除了。"
+msgstr ""
+"小兵，这是什么？韦诺士兵从北方逼近？那个区域应该在一个月前就被清理干净了。"
 
-# Translated by ollama with model glm4.
 #. [message]: speaker=Mal-Yrna
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:607
-#, fuzzy
 msgid ""
 "No matter. Bring in the next batch of prisoners. I have need of them a "
 "little sooner than expected."
-msgstr "无论怎样，把下一批囚犯带来。我比预期的需要他们更早一些。"
+msgstr "无论怎样，把下一批囚犯带来。我比预期的更早一些需要他们。"
 
 #. [message]: speaker=Vovan
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:615
@@ -7726,13 +7723,11 @@ msgid ""
 "near Soradoc!"
 msgstr "等等——我记得你了！你是去年秋天在索拉多克附近逃走的那些人之一！"
 
-# Translated by ollama with model glm4.
 #. [message]: speaker=Mal-Yrna
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:673
-#, fuzzy
 msgid ""
 "This time I’ve traded my bats for ghouls. There’s no way you’ll escape now!"
-msgstr "这次我用蝙蝠换了亡灵。你现在逃不掉了！"
+msgstr "这次我把蝙蝠换成食尸鬼。你现在逃不掉了！"
 
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:797
@@ -7808,12 +7803,10 @@ msgstr "乌兹什"
 msgid "Hibro"
 msgstr "希布罗"
 
-# Translated by ollama with model qwen2.5:3b.
 #. [message]: speaker=Hibro
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:996
-#, fuzzy
 msgid "I’ll take you all on! As soon as I get out of these chains..."
-msgstr "我全都要跟你去！一旦我从这些束缚中解脱出来……"
+msgstr "我会把你们全部干掉！只要我摆脱了这些锁链……"
 
 #. [message]: speaker=Gaoler_Orcs
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:1000
@@ -7983,26 +7976,25 @@ msgstr "够了！我的蝙蝠要享用你的血液！"
 msgid "Why won’t you just die?!"
 msgstr "你怎么不去死？！"
 
-# Translated by ollama with model qwen2.5.
 #. [message]: speaker=Gweddry
 #. victory event, and the rest of the player's units catch up
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:1549
-#, fuzzy
 msgid ""
 "Hail, Terraent! We feared the worst when you did not return, yet here I find "
 "you alive and well!"
 msgstr ""
-" hail, 特拉恩特！你没有回来，我们生怕你遇到什么不测，没想到你现在却好好的！"
+"嗨，特拉恩特！你没有回来的时候，我们生怕你遇到什么不测，没想到你现在还好好"
+"的！"
 
-# Translated by ollama with model qwen2.5.
 #. [message]: speaker=Gweddry
 #. victory event, and the rest of the player's units catch up
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:1557
-#, fuzzy
 msgid ""
 "Hail, Owaec! We feared the worst when you did not return, yet here I find "
 "you alive and well!"
-msgstr " hail 欧瓦埃克！你没有回来，我们担心你遭遇了不测，没想到你现在好好的！"
+msgstr ""
+"嗨，欧瓦埃克！你没有回来的时候，我们生怕你遇到什么不测，没想到你现在还好好"
+"的！"
 
 #. [message]: speaker=Terraent
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:1570
@@ -8029,28 +8021,23 @@ msgstr ""
 msgid "You’re too late! Wesnoth is... already..."
 msgstr "你来晚了！韦诺…已经……"
 
-# Translated by ollama with model qwen2.5.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:1635
-#, fuzzy
 msgid ""
 "Hail, Terraent! We feared the worst when you did not return, yet here I find "
 "you alive and well! But who is this you are fighting?"
 msgstr ""
-" Hale, 特拉恩特！你没有回来时我们最怕你遇到什么危险，可如今却发现你还好好的活"
-"着！那你现在在和谁战斗？"
+"嗨，特拉恩特！你没有回来的时候，我们生怕你遇到什么不测，没想到你现在还好好"
+"的！但是现在和你战斗的是谁？"
 
-# Translated by ollama with model qwen2.5.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/13_Spoils_of_War.cfg:1642
-#, fuzzy
 msgid ""
 "Hail, Owaec! We feared the worst when you did not return, yet here I find "
 "you alive and well! But who is this you are fighting?"
 msgstr ""
-"哈喽，欧瓦埃克！你没有回来时我们最怕你遇到了不测，没想到你竟好好的活着！可是"
-"你 why 你在和谁战斗？（注：最后一句\"可是你 why 你在和谁战斗？\"中的 \"why\" "
-"在原文中应该是疑问词，但为了保持与前面翻译的一致性，保留了英文形式。）"
+"嗨，欧瓦埃克！你没有回来的时候，我们生怕你遇到什么不测，没想到你现在还好好"
+"的！但是现在和你战斗的是谁？"
 
 #. [message]: speaker=Mal-Yrna
 #. she dispatches a messenger bat after this, leading to Dacyn saying all is lost
@@ -8299,13 +8286,11 @@ msgstr ""
 "终于我们到达了骏马平原，我的人民的美丽家园！在这里，我们终于可以与战友们重"
 "聚，彻底地消灭亡灵。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #. Shouted to the landscape, expecting to find living comrades. What will answer is walking corpses and ghosts.
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:850
-#, fuzzy
 msgid "Hail, Clansmen! Come and greet one of your own!"
-msgstr "喂，同胞们！来见见你们的一员吧！"
+msgstr "嗨，氏族成员们！来见见你们的一员吧！"
 
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:854
@@ -8344,33 +8329,29 @@ msgstr ""
 msgid "My home... my people... how could this happen..."
 msgstr "我的家……我的人民……这是怎么发生的……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:896
-#, fuzzy
 msgid ""
 "YOU! MAGE!!! Had you not insisted we travel north, we might have arrived in "
 "time to save these people! My friends, my family, dead from your neglect. "
 "And all for what? Some necromancer’s trinket more likely to curse us than "
 "save us?"
 msgstr ""
-"你！法师！！如果不是你坚持要往北走，我们或许能及时赶到拯救这些人。我的朋友，"
-"我的家人，都因为你疏忽而死。这一切都是为了什么？一个只会给咱们带来诅咒的死灵"
-"法师的小玩意儿吗？"
+"你！法师！！！如果不是你坚持要我们北上，我们或许能及时赶到拯救这些人！我的朋"
+"友，我的家人，都因为你的疏忽而死。这一切都是为了什么？一个更可能会诅咒而不是"
+"拯救我们的死灵法师的小玩意儿吗？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:900
-#, fuzzy
 msgid ""
 "We trusted you. I trusted you! Instead, you sent us away from the war like "
 "cowards, led our men to slaughter at the hand of orcs and drakes, and "
 "deprived Wesnoth of her eastern guard when she needed it most sorely. And "
 "now my homeland has paid the price for your misdeeds!!"
 msgstr ""
-"我们信任你。我信任你！然而，你却像懦夫一样把我们从战场上遣散，让我们的士兵惨"
-"遭兽人和龙人的屠杀，并在最需要的时候剥夺了韦诺东部的守卫力量。而现在，我的祖"
-"国为你的错误付出了代价！！"
+"我们信任你。我信任你！然而，你却像懦夫一样把我们从战场上带走，让我们的人惨遭"
+"兽人和龙人的屠杀，并在最需要的时候剥夺了韦诺东部的守卫力量。而现在，我的家乡"
+"为你的错误付出了代价！！"
 
 #. [message]: speaker=Owaec
 #. Dacyn is bleeding and about to take damage from an unknown source
@@ -8446,29 +8427,24 @@ msgstr "（喘息）我恢复控制了！"
 msgid "What happened? I did not know this Amulet could act of its own accord."
 msgstr "发生了什么？我不知道这个护身符能自行发挥作用。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1086
-#, fuzzy
 msgid ""
 "Neither did I. I should have sensed it, but the darkness is nearly "
 "overwhelming. Even with my inner light, the best I can do is cancel out this "
 "dark energy. Such is the price of power..."
 msgstr ""
-"我也没有察觉。本应感知到的，但黑暗几乎令人窒息。即使有内心之光，也只能抵消这"
-"股黑暗力量。这就是强大力量的代价……"
+"我也不知道。我应该感知到的，但黑暗几乎令人窒息。即使用我的内心之光，也只能抵"
+"消这股黑暗力量。这就是力量的代价……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #. loses his halo and advances to an L4 Twilight Mage (liminal, heals +4, does not illuminate, melee attack gains "drain")
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1091
-#, fuzzy
 msgid ""
 "... but it is a necessary price to pay. I will not let up until Mal-Ravanal "
 "is defeated, whatever the cost may be."
 msgstr ""
-"......但这是一笔必要的代价。我不会松懈，不论付出什么代价，都要击败玛尔-拉瓦纳"
-"尔。"
+"…但这是必须付出的代价。我不会松懈，不论付出什么代价，都要击败玛尔-拉瓦纳尔。"
 
 #. [message]: speaker=Owaec
 #. Owaec is near his father's castle, and there's a dead (not undead) skeleton on the keep
@@ -8484,22 +8460,18 @@ msgid ""
 "scattered, my homeland defiled."
 msgstr "今天真是个倒霉的日子。我的家人被杀，族人四散，故乡遭污。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1185
-#, fuzzy
 msgid ""
 "But I will not despair! This damning destruction will not be the lasting "
 "legacy of the Clans!! These undead will pay for the death they have "
 "brought!!!"
 msgstr ""
-"但我不會灰心！氏族留下的將不會是這場毀滅性的災難！！這些亡靈必須為他們帶來的"
-"死亡付出代價！！！"
+"但我不会绝望！这场毁灭性的破坏不会成为氏族的永恒遗产！！这些亡灵将为他们带来"
+"的死亡付出代价！！！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1222
-#, fuzzy
 msgid ""
 "Owaec, do not be so hasty. Much of the horde that conquered this place now "
 "marches on Weldyn, but even what little lingers is surely more than a match "
@@ -8508,16 +8480,14 @@ msgstr ""
 "欧瓦埃克，不要这么急躁。占领这个地方的大军中，有许多现在已经向维尔帝进发了，"
 "但即使剩下的一小部分也足以对付我们这支疲惫的队伍。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1226
-#, fuzzy
 msgid ""
 "I agree, yet all is strangely quiet. Perhaps the remaining undead lie "
 "dormant? If we take time to capture villages and rebuild our forces, we may "
 "yet be able to reclaim this place."
 msgstr ""
-"我同意，但一切奇怪地安静。也许剩下的亡灵处于休眠状态？如果我们花时间占领村庄"
+"我同意，但一切出奇地安静。也许剩下的亡灵处于休眠状态？如果我们花时间占领村庄"
 "并重建我们的力量，或许我们还能夺回这个地方。"
 
 #. [objective]: condition=win
@@ -8632,11 +8602,9 @@ msgstr "第三个也是最后一个藏匿处，里面是有东西的！干净的
 msgid "Excellent! The gold from these caches will be very helpful."
 msgstr "优秀！这些藏匿处里的金币会很有用。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Grug
 #. this is probably grug's first time fighting squishy undead (though there were a few in S10)
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1495
-#, fuzzy
 msgid "Squishy fun to squash! Squash squish squash!"
 msgstr "捏烂的乐趣！捏烂捏烂再捏烂！"
 
@@ -8653,11 +8621,9 @@ msgstr "这个人看来已经死去大约一个月了。奇怪的是他的尸体
 msgid "There is a journal here, still intact despite the swamp."
 msgstr "这里有一本日记，尽管在沼泽地带，仍然完好无损。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=unit
 #. Reading from a dead horseman's journal. This is a warning to the player that there's a Skeletal Dragon in the scenario.
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1535
-#, fuzzy
 msgid ""
 "<i>... we thought the enemy had erred, that the battle could yet be won. "
 "Taking advantage of the gap, our swiftest riders drove toward the exposed "
@@ -8669,18 +8635,16 @@ msgid ""
 "claw and wing. Then it fell upon us from behind, and the enemy closed their "
 "ranks, and we were encircled by death.</i>"
 msgstr ""
-"……我们曾以为敌人犯了错误，认为战斗仍有获胜的希望。利用这一空隙，我们的最快骑"
-"兵向敌人的骨骼阵型核心发起了冲击。然而，在他们对死灵法师阵营造成破坏的同时，"
-"从水中传来一阵巨大的震动，仿佛伊尔迪亚女神自己也因病态的期待而颤抖。\n"
+"<i>……我们曾以为敌人犯了错误，认为战斗仍有获胜的希望。利用这一间隙，我们最快的"
+"骑兵向敌人骨骼阵型的核心发起了冲击。然而，在他们对死灵法师阵营造成破坏的同"
+"时，从水中传来一阵巨大的震动，仿佛伊迪亚自己也因病态的期待而颤抖。\n"
 "\n"
 "片刻之间，我瞥见了一个庞大的骨骸形体，一团由牙齿、爪子和翅膀组成的蹒跚生物。"
-"然后它从后方向我们扑来，敌人迅速合拢了阵型，我们将被死亡包围。"
+"然后它从后方向我们扑来，敌人迅速合拢了阵型，我们被死亡包围了。</i>"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=unit
 #. Reading more from the dead horseman's journal, whose corpse prompted the "odd that his body didn't become undead" comment.
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1542
-#, fuzzy
 msgid ""
 "<i>I fled, coward that I am, riding breakneck through the night before my "
 "injuries overcame my strength. And so it comes that I have earned no "
@@ -8690,11 +8654,11 @@ msgid ""
 "I offer one final prayer to the Light, that at least my family may be spared "
 "and that my soul may be kept from undeath...</i>"
 msgstr ""
-"我逃离了，作为一个懦夫，在受伤之前拼命地骑着马穿过夜晚。因此，我没有在战场上"
-"获得光荣的死亡，而是被腐烂和毒药带来的疲惫和高烧所困。\n"
+"<i>我逃离了，作为一个懦夫，在伤势压制我的力量之前拼命地骑着马穿过夜晚。因此，"
+"我没有在战场上获得光荣的死亡，而是被腐烂和毒药带来的疲惫和高烧所困。\n"
 "\n"
 "我向光明献上最后的祈祷，希望至少我的家人能够免受苦难，并且我的灵魂不会变成亡"
-"灵……"
+"灵……</i>"
 
 #. [message]: speaker=Sir Seoraery
 #. no-one sends a messenger, he's talking about memories from before he died
@@ -8738,10 +8702,8 @@ msgstr "…我宁愿……死去……也不愿向你屈服……死灵法师。
 msgid "... Lich, you do not belong here... leave, or I shall... rend you..."
 msgstr "……巫妖，你不属于这里……离开，否则我将……撕碎你……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1741
-#, fuzzy
 msgid ""
 "Is that... an undead dragon? Dear Light! Raising such a powerful thrall must "
 "have been no small feat, even for a necromancer such as Mal-Ravanal."
@@ -8749,16 +8711,12 @@ msgstr ""
 "那是……一只亡灵巨龙吗？天啊！即使是玛尔-拉瓦纳尔这样的死灵法师，也很难驾驭如此"
 "强大的奴役生物。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1745
-#, fuzzy
 msgid ""
 "Even a living dragon is nothing but flesh. This feeble imitation lacks even "
 "that. Smash it to pieces."
-msgstr ""
-"即使是活着的龙也不过是血肉之躯，这个脆弱的仿制品甚至连这也没有。将它砸得粉"
-"碎。"
+msgstr "即使是活着的龙也不过是血肉之躯，这个脆弱的仿品甚至连这也没有。砸碎它。"
 
 #. [message]: speaker=unit
 #. undead dragon, again talking to a memory rather than anyone currently on the map
@@ -8775,45 +8733,38 @@ msgid ""
 msgstr ""
 "…欧瓦埃克……你为什么与我为敌？加入我们吧……和你的父亲并肩作战……保卫平原……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #. speaking to one of the undead leaders, in an [event]name=attack
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1846
-#, fuzzy
 msgid ""
 "Abomination!! Clansmen though you once were, I have no choice but to grind "
 "you into dust now."
-msgstr "怪物！！虽然你们曾是氏族的一员，我现在别无选择，只能将你们碾碎。"
+msgstr "怪物！！虽然你们曾是氏族的一员，我现在别无选择，只能将你们碾为尘土。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #. speaking to Khrakrahs in an [event]name=attack, although the anger seems misdirected
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1863
-#, fuzzy
 msgid ""
 "You! You are the cause of this destruction!! Vengeance for my fallen people!"
 msgstr "你！这一切破坏都是因为你！！为我死去的族人报仇！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Terraent
 #. speaking to one of the undead leaders (horseman, not dragon) in an [event]name=attack
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1880
-#, fuzzy
 msgid ""
 "All things deserve redemption, but I fear the undead will never find it. May "
 "this place be cleansed in holy fire!"
-msgstr "一切皆值得救赎，但我担心亡灵永远不会得到它。愿此地被圣火净化！"
+msgstr "一切皆值得救赎，但我担心亡灵永远不会找到它。愿此地在圣火中净化！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Terraent
 #. speaking to Khrakrahs in an [event]name=attack
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1897
-#, fuzzy
 msgid ""
 "I have faced worse terrors than you, lizard! Through piety and the holy "
 "Light, this place will be sanctified once more."
 msgstr ""
-"我面对过的恐怖远不止你这个蜥蜴！凭借虔诚和圣洁的光辉，这个地方将再次被净化。"
+"我已经面对过比你更恐怖的造物，蜥蜴！凭借虔诚和圣洁的光辉，这个地方将再次被净"
+"化。"
 
 #. [message]: speaker=second_unit
 #. speaker is an undead horseman, who's fighting Gaennell. Unclear whether this is to a memory, or because Gaennell is a Shadow Mage
@@ -8837,7 +8788,6 @@ msgstr "不知道你该叫我什么了，但肯定不会比你更像祸害。"
 msgid "... Shek’kahan, your fire grows weak... you are hardly... a rival."
 msgstr "…沙克•卡悍，你的火焰变弱了……你几乎算不上……一个对手。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=second_unit
 #. speaker is Khrakrahs when attacked by a dwarf, but remembering one he met in 40 YW.
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:1955
@@ -8878,19 +8828,15 @@ msgstr ""
 "达辛，我一直在想。这个法器对你的影响太大了。也许你应该休息一下，花点时间恢复"
 "体力？我可以把护身符拿一会儿，或者我们可以把它存起来。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2035
-#, fuzzy
 msgid ""
 "Hmm... I suppose there would be no harm in locking it up somewhere safe."
 msgstr "嗯……我想把它锁在一个安全的地方应该不会有危害。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]
 #. voices from the amulet talking to Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2041
-#, fuzzy
 msgid ""
 "<span size='small' font-style='italic'>You have a great weapon... and you "
 "would simply lock it away?</span>"
@@ -8898,11 +8844,9 @@ msgstr ""
 "<span size='small' font-style='italic'>你有一件强大的武器……却只是将其锁起来？"
 "</span>"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]
 #. voices from the amulet talking to Dacyn, speaking of Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2047
-#, fuzzy
 msgid ""
 "<span size='small' font-style='italic'>His intent is good, but his spirit is "
 "weak... he would be corrupted...</span>"
@@ -8910,11 +8854,9 @@ msgstr ""
 "<span size='small' font-style='italic'>他的意图是好的，但意志薄弱……会堕落的……"
 "</span>"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]
 #. voices from the amulet talking to Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2053
-#, fuzzy
 msgid ""
 "<span size='small' font-style='italic'>Only you can be trusted with this "
 "responsibility.</span>"
@@ -8932,21 +8874,17 @@ msgstr "但另一方面……这是一个危险的物品。我担心只有我能
 msgid "Well, you’re the magic expert."
 msgstr "好吧，你是魔法专家。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2075
-#, fuzzy
 msgid ""
 "We must finish here and hurry on from this dead place! If the Horse Clans "
 "have fallen so completely, I fear for Weldyn and the rest of Wesnoth."
 msgstr ""
-"我们必须在这里结束，赶紧离开这个死寂的地方！如果马氏族已经彻底失败，我担心维"
-"尔帝和韦诺的其他地方也会陷入危险。"
+"我们必须在这里结束，赶紧离开这个死寂的地方！如果马背氏族已经失败得这么彻底，"
+"我担心维尔帝和韦诺的其他地方也会陷入危险。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2079
-#, fuzzy
 msgid ""
 "Why are we here at all? We should be advancing towards Weldyn, not humoring "
 "Owaec’s lust for vengeance. The Plains are already drowned."
@@ -8963,11 +8901,9 @@ msgid ""
 msgstr ""
 "够了。我们已经浪费了太多时间在这里；放弃你那愚蠢的复仇计划，继续上路吧。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #. time over, talking to Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2093
-#, fuzzy
 msgid ""
 "Your search for foul magic has caused enough harm already, and now you would "
 "leave my countrymen’s bodies defiled by undeath? I will slay everything that "
@@ -8975,20 +8911,18 @@ msgid ""
 "next!"
 msgstr ""
 "你对邪术的追求已经造成了足够的危害，现在你还想让我的同胞们变成被诅咒的亡灵"
-"吗？我会在这个沼泽中杀死一切移动的东西，而当我完成这一切后，或许我下一刻就会"
-"用锤子找到并消灭你！"
+"吗？我会杀死一切在这个沼泽中移动的东西，而当我完成这一切后，或许接下来我的锤"
+"子就会找到你！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2097
-#, fuzzy
 msgid ""
 "You fools are welcome to linger here clearing this swamp, but I intend to "
 "travel on alone and defeat Mal-Ravanal. Go as you wish on your own. I have a "
 "task to complete."
 msgstr ""
 "你们这些傻瓜可以留下来清理这个沼泽，但我打算独自上路去击败玛尔-拉瓦纳尔。随你"
-"们怎么选择吧。我有自己的任务要完成。"
+"们怎么选。我有自己的任务要完成。"
 
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2135
@@ -9025,11 +8959,9 @@ msgstr ""
 "我也必须承认，我低估了这枚护身符的力量。即便现在，有些声音仍在我脑海中徘徊不"
 "已……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #. to Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2164
-#, fuzzy
 msgid ""
 "Make no mistake, I still do not approve of your plan! It will lead you only "
 "to ruin and death! Yet, at least now I believe that your intentions are good "
@@ -9038,10 +8970,8 @@ msgstr ""
 "切勿误会，我仍然不赞同你的计划！这只会将你引向毁灭和死亡！然而，至少我现在相"
 "信你的动机是好的，尽管你的手段值得怀疑。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/14_The_Drowned_Plains.cfg:2168
-#, fuzzy
 msgid ""
 "I’m glad we have prevailed here, but I fear greatly for Wesnoth if the Clans "
 "have been defeated so thoroughly so quickly. It has scant been a year since "
@@ -9049,24 +8979,22 @@ msgid ""
 "must press toward Weldyn at once."
 msgstr ""
 "我们在这里取得胜利让我感到高兴，但我担心如果氏族如此迅速而彻底地被击败，韦诺"
-"将会面临更大的危险。自从他们的入侵开始至今还不到一年的时间。欧瓦埃克、达辛，"
-"如果你俩已经准备好出发，我们必须立即前往维尔帝。"
+"将会面临更大的危险。自从他们的入侵开始至今已经将近一年。欧瓦埃克、达辛，如果"
+"你俩已经准备好出发，我们必须立即前往维尔帝。"
 
 #. [scenario]: id=15_Return_to_Wesnoth
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:4
 msgid "Return to Wesnoth"
 msgstr "重返韦诺"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [part]
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:17
-#, fuzzy
 msgid ""
 "Leaving the rotting Horse Plains far behind, Gweddry, Owaec, and Dacyn "
 "marched hurriedly towards Weldyn, capital of Wesnoth. They dreaded what they "
 "might find there..."
 msgstr ""
-"告别腐烂的马草原，格威德利、欧瓦埃克和达辛匆忙前往维尔帝，即韦诺的首都。他们"
+"告别腐烂的骏马平原，格威德利、欧瓦埃克和达辛匆忙前往维尔帝，韦诺的首都。他们"
 "担心在那里可能会发现什么……"
 
 #. [side]: type=General, id=Halrad
@@ -9109,10 +9037,8 @@ msgid ""
 "Light."
 msgstr "看啊，伟大的城市维尔帝！它的城墙依旧矗立，感谢光明。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:526
-#, fuzzy
 msgid ""
 "But look, the undead are laying siege and have built fortifications "
 "completely surrounding the city! The defenders must be grievously "
@@ -9121,41 +9047,33 @@ msgstr ""
 "但是你看，亡灵正在围城，并且已经建造了完全包围城市的防御工事！守军肯定处于严"
 "重劣势。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:577
-#, fuzzy
 msgid ""
 "Even this undead force appears to be (cough) but a small fraction of Mal-"
 "Ravanal’s greater host. (cough)(cough) I must meet with the king. Weldyn "
 "will fall if we do not act."
 msgstr ""
-"就连这支亡灵部队似乎也只是玛尔-拉瓦纳尔大军的一小部分。（咳嗽）（咳嗽）我必须"
-"见国王。如果我们不采取行动，维尔帝将会陷落。"
+"就连这支亡灵部队似乎也只是（咳）玛尔-拉瓦纳尔大军的一小部分。（咳）（咳）我必"
+"须见国王。如果我们不采取行动，维尔帝将会陷落。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:628
-#, fuzzy
 msgid "Then we must break through to the city at once! Come on men, follow me!"
-msgstr "我们必须立刻冲破前往城市的防线！跟我来，大家跟紧！"
+msgstr "那我们必须立刻突围到城里！上吧，兄弟们，跟我来！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [time]: id=indoors
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:721
 #: data/campaigns/Eastern_Invasion/scenarios/16_Eleventh_Hour.cfg:902
 #: data/campaigns/Eastern_Invasion/scenarios/17a_The_Duel.cfg:12
-#, fuzzy
 msgid "Indoors"
 msgstr "室内"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit]: id=Aeraeka, type=Arch Mage, gender=female
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:755
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:101
-#, fuzzy
 msgid "Aeraeka"
-msgstr "阿艾瑞卡"
+msgstr "艾瑞卡"
 
 #. [unit]: id=Halric, type=General
 #. [side]: type=General, id=Halric
@@ -9164,27 +9082,21 @@ msgstr "阿艾瑞卡"
 msgid "Halric"
 msgstr "哈尔里克"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:777
-#, fuzzy
 msgid "Denogyc"
 msgstr "德诺吉克"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Aeraeka
 #. the council discusses the northern alliance
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:815
-#, fuzzy
 msgid ""
 "Well try again! It is absolutely imperative that we get a response from the "
 "Northerners."
-msgstr "我们必须再次尝试！绝对有必要得到北方人的回应。"
+msgstr "要么再试一次！绝对有必要得到北方联盟的回应。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Halric
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:819
-#, fuzzy
 msgid ""
 "If help was coming, we would have heard about it by now. They’re either "
 "unwilling or unable to march. What we need to consider is-"
@@ -9192,10 +9104,8 @@ msgstr ""
 "如果援军要来，我们现在应该已经听说了。他们要么不愿意来，要么无法前来。我们需"
 "要考虑的是——"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:823
-#, fuzzy
 msgid "Mefel"
 msgstr "梅费尔"
 
@@ -9205,27 +9115,23 @@ msgstr "梅费尔"
 msgid "Urgent report from the south, Sire! I’m afraid it can’t wait."
 msgstr "来自南方的紧急报告，陛下！恐怕不能耽搁了。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #. Denogyc is a male Lancer.
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:839
-#, fuzzy
 msgid ""
 "Denogyc, you’re excused. Get some rest. Minister Mefel, what news of Kerlath?"
-msgstr "丹诺吉克，你先下去休息吧。梅费尔大臣，有关凯拉思的消息怎么样了？"
+msgstr "德诺吉克，你先下去休息吧。梅费尔辅佐官，克拉斯有什么消息吗？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Mefel
 #. Kerlath Province is the area around Westin
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:851
-#, fuzzy
 msgid ""
 "The siege around Westin has been broken, but Kerlath’s forces are badly "
 "depleted. I’m afraid we won’t be able to mount a counter-offensive in time "
 "to support you, especially with Mal-Xlana still holding Fort Tahn."
 msgstr ""
-"对西廷的围攻已经被打破，但凯拉思的部队严重受损。恐怕我们无法及时组织反击来支"
-"援你了，尤其是玛尔-克萨纳仍然控制着塔恩堡。"
+"对韦斯廷的围攻已经被打破，但克拉斯的部队严重受损。恐怕我们无法及时组织反击来"
+"支援你了，尤其是玛尔-克萨纳仍然控制着塔恩要塞。"
 
 #. [message]: speaker=Aeraeka
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:872
@@ -9264,10 +9170,8 @@ msgstr ""
 "我的故事和外貌无关紧要。重要的是我知道如何击败这些入侵者。唯一通往胜利的道路"
 "是斩首行动。玛尔-拉瓦纳尔，你们曾经知道的法师莱文，必须被摧毁。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Aeraeka
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:910
-#, fuzzy
 msgid ""
 "You think we haven’t tried?! Our best mages struck down that infernal lich "
 "at great cost to their number, but within seconds, Mal-Ravanal had already "
@@ -9278,24 +9182,20 @@ msgstr ""
 "几秒钟内，玛尔-拉瓦纳尔就已经占据了新的身体，并反过来对我们的人进行了报复。我"
 "自己差点就没命逃出来！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:914
-#, fuzzy
 msgid ""
 "And that is why my companions and I have spent the past year traveling far "
 "to the northeast, seeking (cough) a potent magical amulet that I now "
 "possess. If we can destroy the skeletal body, I wield the power to banish "
 "the lich’s long-tortured soul. This destruction will be permanent."
 msgstr ""
-"这就是为什么我和我的同伴们在过去的一年里长途跋涉来到东北方向，寻找（咳嗽）我"
-"现在拥有的一个强大的魔法护符。如果我们能够摧毁那具骸骨，我就能施展力量将巫妖"
-"长期备受折磨的灵魂永远驱逐。这种毁灭将是永久性的。"
+"这就是为什么我和我的同伴们在过去的一年里长途跋涉去往东北方向，寻找（咳）我现"
+"在拥有的一个强大的魔法护身符。如果我们能够摧毁那具骷髅身躯，我就能施展力量将"
+"巫妖长期备受折磨的灵魂永远驱逐。这将是永久的毁灭。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:918
-#, fuzzy
 msgid ""
 "Your Majesty, I have seen this amulet used before. While I cannot attest to "
 "its reliability, it is certainly powerful enough to do what Dacyn claims."
@@ -9303,10 +9203,8 @@ msgstr ""
 "陛下，我之前见过这个护身符被使用过。虽然我不能证明它的可靠性，但它确实足够强"
 "大，可以做到达辛所说的那样。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Halric
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:922
-#, fuzzy
 msgid ""
 "Even assuming this magical voodoo works, how do you mean to destroy Mal-"
 "Ravanal’s body? The one chance we had was out of the lich’s own arrogance, "
@@ -9316,7 +9214,7 @@ msgid ""
 msgstr ""
 "就算这魔法咒术有效，你要如何摧毁玛尔-拉瓦纳尔的身体？我们唯一的机会是因为巫妖"
 "的自大才出现的，即便在更好的条件下，那也让我们损失了四位精英法师。现在我们与"
-"丹通断绝联系，连守卫城墙的人手都不够，更不用说出击对抗亡灵了。"
+"丹·冬克断绝了联系，连守卫城墙的人手都不够，更不用说出击对抗亡灵了。"
 
 #. [message]: speaker=Aeraeka
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:926
@@ -9330,10 +9228,8 @@ msgstr ""
 "的战士们都回来攻击我们。一望无际的骷髅海，哀嚎的幽灵，阴间的蝙蝠，召唤它们的"
 "死灵法师……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:930
-#, fuzzy
 msgid ""
 "I pay no heed to the odds! I say we strike at Mal-Ravanal with all the might "
 "of Wesnoth. If we assault in force, we can punch through the enemy lines, "
@@ -9342,16 +9238,14 @@ msgid ""
 "I will not let the devastation at the plains be the final legacy of the "
 "Clans. We must attack and win back our glory!"
 msgstr ""
-"我根本不理会胜算如何！我说我们应该集结韦诺的全部力量，对玛尔-拉瓦纳尔发起攻"
-"击。如果我们全力进攻，就能突破敌人的防线，在战场的混乱中孤立玛尔-拉瓦纳尔，并"
-"将其消灭！\n"
+"我不管胜算如何！我说我们应该集结韦诺的全部力量，对玛尔-拉瓦纳尔发起攻击。如果"
+"我们全力进攻，就能突破敌人的防线，在战场的混乱中孤立玛尔-拉瓦纳尔，并将这个巫"
+"妖消灭！\n"
 "\n"
-"我不允许平原上的浩劫成为氏族最后的遗产。我们必须发动攻击并夺回我们的荣耀！"
+"我不允许平原上的浩劫成为氏族最后的遗产。我们必须进攻并夺回我们的荣耀！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:940
-#, fuzzy
 msgid ""
 "I have a (cough) superior suggestion. Mal-Ravanal’s armies are vast and "
 "unconquerable. Yet the lich alone is not. As a human, Ravan was "
@@ -9360,10 +9254,10 @@ msgid ""
 "Ravanal to a duel, I believe they would choose to face me. That would be our "
 "opportunity."
 msgstr ""
-"我有一个（咳嗽）更好的建议。玛尔-拉瓦纳尔的军队庞大且不可战胜，但巫妖本人并非"
-"如此。作为人类时，莱文就过于自信到了傲慢的地步，现在成为巫妖后这一点应该更加"
-"明显。（咳嗽咳嗽）如果我要向玛尔-拉瓦纳尔发起决斗挑战，我相信他们会接受我的挑"
-"战。那将是我们的机会。"
+"我有一个（咳）更好的建议。玛尔-拉瓦纳尔的军队庞大且不可战胜，但巫妖本人并非如"
+"此。作为人类时，莱文就过于自信到了傲慢的地步，现在成为巫妖后这一点应该更加明"
+"显。（咳）（咳）如果我要向玛尔-拉瓦纳尔发起决斗，我相信他们会接受我的挑战。那"
+"将是我们的机会。"
 
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:944
@@ -9401,24 +9295,20 @@ msgstr ""
 msgid "Halrod"
 msgstr "哈尔罗德"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit]: id=Escort, type=Swordsman
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:974
-#, fuzzy
 msgid "Escort"
-msgstr "护送"
+msgstr "护卫"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Halrod
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:990
-#, fuzzy
 msgid ""
 "Sire, we’re under attack! Undead have breached the perimeter earthworks and "
 "are massing around the outer villages. I think they mean to storm the moat "
 "at nightfall."
 msgstr ""
-"阁下，我们正遭受攻击！亡灵突破了外围工事，并在外部村庄集结。我认为他们在夜幕"
-"降临时意欲强攻护城河。"
+"阁下，我们正遭受攻击！亡灵突破了外围工事，并在外部村庄集结。我认为他们要在夜"
+"幕降临时强攻护城河。"
 
 #. [message]: speaker=Halric
 #: data/campaigns/Eastern_Invasion/scenarios/15_Return_to_Wesnoth.cfg:994
@@ -9461,29 +9351,25 @@ msgstr "玛尔-安娜拉"
 msgid "Mal-Saerav"
 msgstr "玛尔-萨拉夫"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Mal-Skraat
 #: data/campaigns/Eastern_Invasion/scenarios/16_Eleventh_Hour.cfg:863
-#, fuzzy
 msgid ""
 "Gweddry, do you recognize me? Do you remember in the Estmarks, when you "
 "mercilessly cut down my defenseless sister? You escaped me once before, but "
 "now I will have my revenge!"
 msgstr ""
-"格威德利，你还记得我吗？还记得在东界丘陵，你无情地杀死了我无助的妹妹吗？上次"
+"格威德利，你还记得我吗？还记得在东界，你无情地杀死了我手无寸铁的姐姐吗？上次"
 "你逃脱了，但现在我要报仇！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Mal-Kallat
 #: data/campaigns/Eastern_Invasion/scenarios/16_Eleventh_Hour.cfg:867
-#, fuzzy
 msgid ""
 "Gweddry, do you recognize me? Do you remember in the Estmarks, when you "
 "mercilessly cut down my defenseless brother? I will kill you for what you "
 "have done."
 msgstr ""
-"格威德利，你还记得我吗？还记得在东界丘陵，你无情地斩杀了我的无辜兄弟吗？我会"
-"为他报仇的。"
+"格威德利，你还记得我吗？还记得在东界，你无情地杀死了我手无寸铁的弟弟吗？我会"
+"为你所做之事而干掉你。"
 
 #. [message]: speaker=sibling_corpse
 #. Mal-Skraat or Mal-Kallat is still alive, this is their dead brother/sister reanimated as a Soulless
@@ -9493,9 +9379,8 @@ msgstr "复…仇…"
 
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/16_Eleventh_Hour.cfg:957
-#, fuzzy
 msgid "Garard’s Hold"
-msgstr "加拉德货舱"
+msgstr "加拉德要塞"
 
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/16_Eleventh_Hour.cfg:958
@@ -9725,7 +9610,6 @@ msgid ""
 "I’m nearly blind in this fog, but I think the undead have been reinforced!"
 msgstr "在这雾中我几乎看不见，但我觉得亡灵部队得到了增援！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #: data/campaigns/Eastern_Invasion/scenarios/16_Eleventh_Hour.cfg:1503
 msgid ""
@@ -10151,11 +10035,9 @@ msgstr "这是一个不明智的决定，但是我会尽我所能地帮助我们
 msgid "The Duel"
 msgstr "决斗"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [part]
 #. a human messenger
 #: data/campaigns/Eastern_Invasion/scenarios/17a_The_Duel.cfg:25
-#, fuzzy
 msgid ""
 "As the messenger passed out of the city gates, silence settled over the "
 "valley of the Weldyn. Children buried their fathers, mothers entombed their "
@@ -10163,19 +10045,17 @@ msgid ""
 "knuckles. The only sound was the incessant drum-march of skeletal feet, ever-"
 "growing outside the walls."
 msgstr ""
-"当信使穿过城门后，维尔帝山谷陷入了沉默。孩子们埋葬他们的父亲，母亲将她们的儿"
-"子安葬；士兵们站着睡去，苍白的指尖依旧紧握着长枪。唯一的声响是骨骼脚步永不停"
-"歇的鼓点，在城墙之外愈发响亮。"
+"当信使穿过城门，维尔帝山谷陷入了沉默。孩子们埋葬他们的父亲，母亲将她们的儿子"
+"安葬；士兵们站着睡去，苍白的指尖依旧紧握着长枪。唯一的声响是骨瘦如柴的脚产生"
+"的永不停歇的行进声，在城墙之外愈发响亮。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [part]
 #: data/campaigns/Eastern_Invasion/scenarios/17a_The_Duel.cfg:29
-#, fuzzy
 msgid ""
 "Finally, the gates creaked open once again. Eyes looked on, eager, anxious, "
 "terrified, as the messenger rode toward the castle..."
 msgstr ""
-"最后，大门再次发出吱嘎声缓缓打开。人们怀着期待、焦虑和恐惧的目光注视着使者朝"
+"最后，大门再次吱嘎吱嘎地缓缓打开。人们怀着期待、焦虑和恐惧的目光注视着使者朝"
 "城堡方向骑行而来……"
 
 #. [part]
@@ -10243,12 +10123,10 @@ msgid ""
 msgstr ""
 "规则里可没有说不能复活已经存在于此的战士。如果你行的话，也可以随便复活一些。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Mal-Ravanal
 #: data/campaigns/Eastern_Invasion/scenarios/17a_The_Duel.cfg:306
-#, fuzzy
 msgid "Tsk, tsk, I begin to tire of this."
-msgstr "唉，唉，我开始对此感到厌倦了。"
+msgstr "啧啧，我开始对此感到厌倦了。"
 
 #. [message]: speaker=$found_unit.id
 #: data/campaigns/Eastern_Invasion/scenarios/17a_The_Duel.cfg:311
@@ -10260,11 +10138,9 @@ msgstr "每次都有更多的援军到来！"
 msgid "All-In"
 msgstr "全体上场"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [part]
 #. the river has the same name as the city
 #: data/campaigns/Eastern_Invasion/scenarios/17b_All-In.cfg:28
-#, fuzzy
 msgid ""
 "The morning sun shone bright upon the valley of the Weldyn, glinting off "
 "swords and lances innumerable, arrayed in tight formation inside the city "
@@ -10273,22 +10149,18 @@ msgstr ""
 "清晨的阳光照耀在维尔帝山谷上，无数的剑与长枪在城墙上排列得整整齐齐，在晨光中"
 "闪烁生辉。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [part]
 #: data/campaigns/Eastern_Invasion/scenarios/17b_All-In.cfg:32
-#, fuzzy
 msgid ""
 "From the ranks of Wesnoth’s finest arose a cry, soft at first but then "
 "mounting in volume, a cry of desperate hope, a cry of fiery purpose and icy "
 "will."
 msgstr ""
-"从韦诺最优秀的队伍中发出了一声呐喊，起初微弱，但很快声音越来越大，那是绝望中"
-"的希望之呼喊，是炽热决心与冷酷意志的呼唤。"
+"一声呐喊从韦诺最优秀的队伍中发出，起初微弱，但很快声音越来越大，那是绝望中的"
+"希望之呼喊，是炽热决心与冷酷意志的呼唤。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [part]
 #: data/campaigns/Eastern_Invasion/scenarios/17b_All-In.cfg:37
-#, fuzzy
 msgid ""
 "The horns sounded, the gates swung open, and from inside the city spilled "
 "forth Weldyn’s last gasp."
@@ -10693,19 +10565,17 @@ msgstr ""
 "该当如此。但首先，你们得知道，你们为王室，为王国立下了汗马功劳。我们将要嘉奖"
 "你们。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #. All three heroes are dead.
 #. The "we" could be the royal pronoun (first person singular), but "we" as in "everyone in the Kingdom" fits too.
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:259
-#, fuzzy
 msgid ""
 "I had a mind to share this victory with those who made it possible, yet so "
 "many of them now lie dead. Lieutenant Gweddry, Lord Owaec, Advisor Dacyn, we "
 "thank you for your sacrifice."
 msgstr ""
-"我本想与那些促成这场胜利的人分享这份荣誉，然而他们中的许多人如今已长眠。副官"
-"格威德利、欧瓦埃克大人、达辛顾问，感谢你们的牺牲。"
+"我本想与那些对这场胜利作出贡献的人分享这份荣誉，然而他们中的许多人如今已长"
+"眠。格威德利尉官、欧瓦埃克领主、达辛顾问，感谢你们的牺牲。"
 
 #. [message]: speaker=Konrad
 #. the player chose to give Grug the plague staff
@@ -10850,41 +10720,35 @@ msgstr ""
 "棍子，让它被摧毁，你应该放弃练习所有的魔法，否则将被判处死刑，并且你因此被驱"
 "逐回沙漠。请感谢我们的慈悲。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:437
-#, fuzzy
 msgid ""
 "Bah, I save you barbarians from an invasion, and this is the thanks I get! "
 "What happened to being paid thrice what I’m owed? So much for northerner "
 "generosity!"
 msgstr ""
-"咳，我救你们这些野蛮人免受入侵，这就是我的报酬吗！当初说好付给我三倍的酬劳"
-"呢？北方人的慷慨也就这样了！"
+"呵呵，我把你们这些野蛮人从入侵中解救出来，这就是我得到的感谢吗！当初说好付给"
+"我三倍的酬劳呢？北方人的慷慨也就这样了！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:446
-#, fuzzy
 msgid ""
 "Hahid al-Ali, We know of your far-off people, but great distance has caused "
 "little contact between us. May it be thus no longer. If you accept, We would "
 "appoint you as ambassador between our two realms."
 msgstr ""
-"哈希德·阿利，我们知晓贵远之地的人民，但遥远的距离导致了双方极少的接触。望此情"
-"状不再延续。若阁下愿意接受，吾等愿任命您为我两界之间的大使。"
+"哈希德·阿里，我们知晓贵远之地的人民，但遥远的距离导致了双方极少的接触。望此情"
+"状不再延续。若阁下愿意接受，吾等愿任命您为你我两界之间的大使。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:450
-#, fuzzy
 msgid ""
 "Me, ambassador to the barbarian kingdoms, what a thought! I am honored, and "
 "would be even more honored to learn that the job comes with... excellent pay "
 "I hope?"
 msgstr ""
-"我，一个前往蛮族王国的大使，真是个令人惊讶的想法！我感到荣幸，而且如果能得知"
-"这份工作待遇优厚的话，我会更加荣幸？"
+"我，驻蛮族王国的大使，真是个好主意！我感到荣幸，而且如果能得知这份工作……待遇"
+"优厚的话，我会更加荣幸？"
 
 #. [message]: speaker=Konrad
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:470
@@ -11003,11 +10867,9 @@ msgstr ""
 "平身，欧瓦埃克爵士，马背氏族的至高领主！你的族人遭受了极大的打击，但我们相"
 "信，没有人比你更能让他们恢复完整。从这里出发，安心地恢复。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #. Owaec is dead too
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:613
-#, fuzzy
 msgid ""
 "But alas, what of the Clansmen? Their horses have been scattered, their "
 "Lords were broken, and now the last prince has fallen defending the walls of "
@@ -11015,17 +10877,15 @@ msgid ""
 "glory."
 msgstr ""
 "但可叹的是，那些氏族战士们呢？他们的战马已经被打散，他们的领主已经败落，现在"
-"最后一位王子也在维尔帝的城墙保卫战中陨落了。我担心这些游牧氏族再也无法恢复往"
-"日的辉煌了。"
+"最后一位王子也在维尔帝的城墙保卫战中陨落了。我担心马背氏族再也无法恢复往日的"
+"辉煌了。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:631
-#, fuzzy
 msgid ""
 "And now what of the humble Gweddry; still but a lieutenant. It seems you are "
 "long-overdue for a promotion."
-msgstr "而现在，平凡的格威德利仍然只是一个中队长；看来你已经很久没有晋升了。"
+msgstr "而现在，平凡的格威德利，仍然只是一个尉官；看来你已经很久没有晋升了。"
 
 #. [message]: speaker=Gweddry
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:635
@@ -11048,28 +10908,24 @@ msgstr ""
 "平身，格威德利，东界伯爵。这片你所染血的土地，会经由你的手重获绿色。愿你永远"
 "繁荣昌盛。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:653
-#, fuzzy
 msgid ""
 "And what of Gweddry... He had survived long, sacrificed much, only to meet "
 "his end here at the last. I wish he could have lived to see the peace he has "
 "wrought."
 msgstr ""
-"关于格威德利……他活了很久，付出了许多代价，最终却在这里走到了生命的尽头。我希"
-"望他能看到自己带来的和平。"
+"而至于格威德利……他活了很久，付出了许多代价，最终却在这里走到了生命的尽头。我"
+"真希望他能活着看到他带来的和平。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Konrad
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:665
-#, fuzzy
 msgid ""
 "Wesnoth is bowed, but thanks to the efforts of many heroes we stand yet "
 "unbroken. And now, at long last, the time has come to rebuild."
 msgstr ""
-"韦诺虽已屈膝，但多亏许多英雄的努力，我们仍屹立不倒。现在，终于到了重建的时候"
-"了。"
+"韦诺虽已屈膝，但多亏许多英雄的努力，我们仍屹立不倒。而现在，终于，重建的时候"
+"到了。"
 
 #. [message]: speaker=Konrad
 #: data/campaigns/Eastern_Invasion/scenarios/18_Epilogue.cfg:670
@@ -11095,17 +10951,13 @@ msgstr ""
 "恭喜！通过在场景11“被俘”放过德拉-纳克，在场景12“逃脱”放过莫提克，并完成困难的"
 "场景17b“全体上场”，你解锁了这个奖励场景！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [side]: type=Drake Arbiter, id=Goag
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:103
-#, fuzzy
 msgid "Goag"
 msgstr "戈格"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [side]: type=Drake Warrior, id=Gra'ritos
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:130
-#, fuzzy
 msgid "Gra’ritos"
 msgstr "格拉里托斯"
 
@@ -11119,31 +10971,23 @@ msgstr "幸存者"
 msgid "Tribute"
 msgstr "贡品"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [side]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:232
-#, fuzzy
 msgid "Prison Guards"
 msgstr "狱卒"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [side]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:234
-#, fuzzy
 msgid "Tobo"
 msgstr "托博"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [side]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:235
-#, fuzzy
 msgid "Unik"
-msgstr "独角兽"
+msgstr "尤尼克"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [side]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:236
-#, fuzzy
 msgid "Shubru"
 msgstr "舒布鲁"
 
@@ -11152,66 +10996,53 @@ msgstr "舒布鲁"
 msgid "Grugnuk"
 msgstr "格拉格纳克"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:539
-#, fuzzy
 msgid "Filthy..."
 msgstr "污秽的…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:544
-#, fuzzy
 msgid "Stinking..."
-msgstr "臭气熏天……"
+msgstr "臭气熏天的…"
 
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:549
 msgid "TRAITORS!!!"
 msgstr "叛徒！！！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:554
-#, fuzzy
 msgid ""
 "Drakes, human, dwarves... vermin, all of them! I offered them a chance at "
 "peace, at purpose! A chance to be part of something greater than themselves "
 "— my great golden Empire!!! And this is the thanks I get?"
 msgstr ""
-"龙人、人类、矮人……全是渣滓！我给他们带来了和平的机会，给了他们意义！让他们有"
-"机会成为比自己更伟大的事物的一部分——我的伟大黄金帝国！！！这就是他们的报答？"
+"龙人、人类、矮人…渣滓，全是渣滓！我给他们带来了和平的机会，给了他们意义！让他"
+"们有机会成为比自己更伟大的事物的一部分——我的伟大黄金帝国！！！而这就是我得到"
+"的报答？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: type=Orcish Slayer
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:560
-#, fuzzy
 msgid ""
 "Chief, more wyrms are attacking the east tunnels! There’s too many of them! "
 "What do we do?"
-msgstr "首领，有更多的飞龙正在攻击东部隧道！它们的数量太多了！我们该怎么办？"
+msgstr "酋长，有更多的飞龙正在攻击东部隧道！它们的数量太多了！我们该怎么办？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:564
-#, fuzzy
 msgid ""
 "I’m not going to let everything I’ve worked for fall apart so easily! These "
 "vermin are WEAK! We are STRONG!"
-msgstr "我不会让一切努力付诸东流！这些鼠辈是弱小的！我们才是强大的！"
+msgstr "我不会让一切努力付诸东流！这些鼠辈是弱小的！我们是强大的！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: type=Orcish Slayer
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:568
-#, fuzzy
 msgid "Okay, but that’s not really a battle pla-"
-msgstr "好了，但这真的不是一个战场——"
+msgstr "好了，但这真的不是一个战场—"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:572
-#, fuzzy
 msgid ""
 "Capture their warriors and sell them for gold. Break their leaders and bend "
 "their followers to my will. I’ll slay anyone who resists and build a new "
@@ -11235,36 +11066,24 @@ msgstr "德拉-纳克酋长死亡"
 msgid "You are fighting in your home and therefore pay no upkeep."
 msgstr "你在家作战，因此无需支付维护费用。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [note]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:589
-#, fuzzy
 msgid ""
 "Reduce enemies to 0 hp to capture them and gain gold. The prisons have "
 "limited space."
-msgstr "将敌人生命值降至0以俘获他们并获得金币。监狱的空间有限。"
+msgstr "将敌人的生命值降至0以俘获他们并获得金币。监狱的空间是有限的。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [note]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:592
-#, fuzzy
 msgid "Surviving enemies will (mostly) join you when you defeat their leader."
-msgstr ""
-"当你击败他们的领袖时， surviving 的敌人将会（大多情况下）加入你。 \n"
-"\n"
-"注：此处的 \"surviving\" 直译为“幸存”，但考虑到语境，可以简化处理，直接翻译剩"
-"余部分以确保句子通顺。因此更自然的表达是：\n"
-"\n"
-"击败他们的领袖后，剩余的敌人大多数会加入你。"
+msgstr "击败敌方的首领后，他们剩余的敌人（大多数）会加入你的部队。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=unit
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:621
-#, fuzzy
 msgid ""
 "I’ve emptied the last of our treasury! Only 31 pieces, but better than "
 "nothing."
-msgstr "我已经用完了我们国库里的最后一笔钱！只有31个单位，但总比没有的好。"
+msgstr "我已经用完了我们金库里的最后一笔钱！只有31块，但总比没有的好。"
 
 #. [then]
 #. said by Dra-Nak as an insult to Mortic in the latter's last-breath event
@@ -11272,103 +11091,83 @@ msgstr "我已经用完了我们国库里的最后一笔钱！只有31个单位�
 msgid "Some ‘leader’."
 msgstr "某个“首领”。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #. said by Dra-Nak as an insult to Goag in the latter's last-breath event
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:643
-#, fuzzy
 msgid "That’ll teach him. Where was that loyalty when he used to obey me?"
-msgstr "这教训了他。当初他听从我的命令时，这种忠诚去哪儿了？"
+msgstr "那会教训他。他以前跟我的时候，那份忠诚哪儿去了？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #. said by Dra-Nak as an insult to Gra’ritos in the latter's last-breath event
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:650
-#, fuzzy
 msgid "What happened to dying slow? So much for him."
-msgstr "慢慢等死呢？现在轮到他了。"
+msgstr "慢慢等死又怎么了？对他来说都结束了。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:656
-#, fuzzy
 msgid "They really thought they could get away? Haw..."
-msgstr "他们真以为能逃得掉吗？呵……"
+msgstr "他们真以为能逃得掉吗？呵…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:680
-#, fuzzy
 msgid ""
 "He called himself your leader, but now you see him for the weakling he "
 "really was. You can either join him or fight alongside me and pray I show "
 "you mercy."
 msgstr ""
-"他自称为你的领袖，但现在你看到的是一个真正的弱者。你可以选择加入他，或者站在"
+"他自称为你的首领，但现在你看到的是一个真正的弱者。你可以选择加入他，或者站在"
 "我身边与他作战，并祈求我会对你仁慈。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:686
-#, fuzzy
 msgid ""
 "As for the rest of you — pledge yourselves to me, or die a slow painful "
 "death!"
 msgstr "至于你们其余的人——要么向我效忠，要么慢慢地痛苦地死掉！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:692
-#, fuzzy
 msgid "You might as well give it up! Resistance is pointless."
 msgstr "你还是放弃吧！抵抗是没有意义的。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:698
-#, fuzzy
 msgid ""
 "Nobody escapes me. Join me and I’ll treat you fairly, resist me and you’ll "
 "die painfully."
 msgstr ""
 "没有人能从我手中逃脱。加入我，我会公正地对待你；抵抗我，你会痛苦地死去。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:709
-#, fuzzy
 msgid ""
 "Mortic was strong.\n"
 "Alone I am weak.\n"
 "I will serve you."
 msgstr ""
-"摩特里克很强。\n"
-"我独自一人时很弱。\n"
-"我会为你效劳。"
+"莫提克曾强盛。\n"
+"孤吾身，乃孱弱。\n"
+"吾将侍奉汝。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:717
-#, fuzzy
 msgid ""
 "I crave not death.\n"
 "I will myself to you."
 msgstr ""
-"我厌恶死亡。\n"
-"我自愿归顺于你。"
+"吾不渴求死亡。\n"
+"此身意志，尽归于尔。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:724
-#, fuzzy
 msgid ""
 "These orcs enrage me,\n"
 "But I possess no strength to resist.\n"
 "I will serve you."
 msgstr ""
-"这些兽人令我愤怒，\n"
-"但我无力反抗。\n"
-"我愿意为你效劳。"
+"吾见此兽人，怒火中燃，\n"
+"然吾力有不逮。\n"
+"吾将效忠于汝。"
 
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:732
@@ -11382,9 +11181,9 @@ msgid ""
 "Mortic fought and died.\n"
 "I shall fight as well."
 msgstr ""
-"我再也不会服从兽人。\n"
-"莫提克战斗至死。\n"
-"我也将奋战到底。"
+"吾永不再服从兽人。\n"
+"莫提克战死矣。\n"
+"吾亦将战。"
 
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:780
@@ -11393,20 +11192,18 @@ msgid ""
 "but never to prey.\n"
 "I fight until death."
 msgstr ""
-"我始终忠诚，\n"
-"但从不效忠于猎物。\n"
-"我会战斗至死。"
+"吾恒守忠诚。\n"
+"然绝不施于猎物。\n"
+"吾将奋战至死。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:788
-#, fuzzy
 msgid ""
 "I grieve.\n"
 "May the end come swiftly."
 msgstr ""
-"我悲痛。\n"
-"愿终结快点到来。"
+"吾心哀恸。\n"
+"愿此终焉，速速降临。"
 
 #. [then]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:795
@@ -11425,11 +11222,10 @@ msgid ""
 "Battle may yet bring victory.\n"
 "There is no choice."
 msgstr ""
-"投降必死无疑。\n"
-"战斗或许能赢。\n"
-"那么别无选择。"
+"降者，必死无疑。\n"
+"战者，或有生机。\n"
+"别无他选。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:833
 msgid "Die it is then!"
@@ -11443,14 +11239,12 @@ msgid ""
 "Battle brings death.\n"
 "All is death..."
 msgstr ""
-"投降带来死亡。\n"
-"战斗带来死亡。\n"
-"一切都是死亡……"
+"投降，唯有死。\n"
+"战斗，亦唯有死。\n"
+"万物，皆归死寂…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:873
-#, fuzzy
 msgid ""
 "The reaper’s knocking at your door, wyrm! Give up now and maybe I’ll kill "
 "you quickly."
@@ -11463,9 +11257,9 @@ msgid ""
 "So the Aspirant ordered, so I will fight,\n"
 "Until the end."
 msgstr ""
-"莫提克命令我战斗。\n"
-"所以有为者下令，所以我将战斗，\n"
-"直到终结。"
+"莫提克命吾战。\n"
+"竞位者之令，吾当战，\n"
+"至死方休。"
 
 #. [message]: speaker=Gra'ritos
 #. to Dra-Nak
@@ -11475,121 +11269,95 @@ msgid ""
 "I am Hunter.\n"
 "I will not fall easily."
 msgstr ""
-"你是猎物。\n"
-"我是猎人。\n"
-"我不会轻易倒下。"
+"汝乃猎物。\n"
+"吾乃猎手。\n"
+"吾非轻易倒下之人。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:919
-#, fuzzy
 msgid "Good, I’ll enjoy making it slow."
-msgstr "好的，我会慢慢来的。"
+msgstr "好的，我会享受慢慢来的。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #. as the west bridge is broken, the Wesnothians who were left behind are trying to get though the orc's caves and out the east side
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:953
-#, fuzzy
 msgid ""
 "Haw, back so soon? Too bad your ‘friends’ abandoned you on MY side of the "
 "river. But it’s your lucky day, I’m a fair orc. Surrender now and I might be "
 "merciful."
 msgstr ""
-"哈，这么快又回来了？真可惜你的‘朋友’在泰河的我的那一边抛弃了你。但今天是你运"
-"气好的一天，我是公平的兽人。现在投降我可能会对你仁慈。"
+"嚯，这么快又回来了？真可惜你的“朋友”在我的那一侧河边抛弃了你。但今天是你运气"
+"好的一天，我是公平的兽人。现在投降我可能会对你仁慈。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: role=leader
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:957
-#, fuzzy
 msgid "We’ll never give in to you! For Wesnoth!!"
 msgstr "我们绝不会向你屈服！为了韦诺！！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: role=leader
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:969
-#, fuzzy
 msgid "This foolish plan was my idea... I’m so, so sorry everyone..."
-msgstr "这个愚蠢的计划是我提出的……我真的很抱歉大家……"
+msgstr "这个愚蠢的计划是我提出的…我真的，真的，很抱歉…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: role=leader
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:985
-#, fuzzy
 msgid "Keep pushing forward! Stick to the south tunnels! We can do this!"
 msgstr "继续前进！坚持走南边的隧道！我们可以做到的！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #. the necromancers are apparently paying gold immediately when each prisoner is captured
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1010
-#, fuzzy
 msgid ""
 "That’s right, bleed them down and lock them up! I need gold to win this "
 "fight!"
-msgstr "没错，让他们流血到无力反抗为止！我需要金币来赢得这场战斗！"
+msgstr "没错，给他们放血，把他们关起来！我需要金币来赢得这场战斗！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Unik
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1020
-#, fuzzy
 msgid ""
 "Chief, I only have space for so many prisoners. As cells get crowded, "
 "prisoners will start to get sick and we won’t get paid as much."
 msgstr ""
-"头目，我只能容纳这么多俘虏。随着牢房变得拥挤，俘虏们会开始生病，我们的报酬也"
+"酋长，我只能容纳这么多俘虏。随着牢房变得拥挤，俘虏们会开始生病，我们的报酬也"
 "会减少。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Unik
 #. the hole where the escape in S11 started
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1028
-#, fuzzy
 msgid ""
 "Things are starting to get really crowded over here Chief. Shame the fourth "
 "cell has a hole in the back..."
-msgstr "这里越来越拥挤了，首领。可惜第四格的后面有个洞……"
+msgstr "这里越来越拥挤了，酋长。可惜第四格的后面有个洞…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Unik
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1035
-#, fuzzy
 msgid ""
 "That’s it boss, the prisoners are packed as tight as they’ll go! Hope you "
 "got enough gold to finish off the drakes."
 msgstr "好了老大，俘虏已经塞得满满的了！希望你有足够的金币来搞定那些龙人。"
 
-# Translated by ollama with model glm4.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1205
-#, fuzzy
 msgid "Get away from my jail cells! Filthy traitors, there goes my income..."
-msgstr "离开我的牢房！可恶的叛徒，我收入没了……"
+msgstr "离我的牢房远点！肮脏的叛徒，我收入没了…"
 
-# Translated by ollama with model glm4.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1209
-#, fuzzy
 msgid ""
 "Fine then, I’m done taking prisoners. From here on out, you either submit or "
 "die!"
 msgstr "好的，我现在不再抓俘虏了。从现在起，你只能屈服或死亡！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: role=leader
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1336
-#, fuzzy
 msgid ""
 "Come on, don’t give up! Owaec’s destroyed the bridge so we’ll have to fight "
 "our way back through the orcish tunnels."
 msgstr ""
 "加油，不要放弃！欧瓦埃克炸毁了桥，所以我们必须战斗着穿过兽人的隧道回去。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: role=leader
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1352
-#, fuzzy
 msgid ""
 "I know this looks grim, but we have to try. It’s our only chance. If we can "
 "just get through to the eastern exit, we might be able to escape!"
@@ -11597,12 +11365,10 @@ msgstr ""
 "我知道这看起来很严峻，但我们必须尝试。这是我们的唯一机会。如果我们能够到达东"
 "部出口，我们就有可能逃脱！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1414
-#, fuzzy
 msgid "Thank the Light, I’ve made it! Please please please don’t chase me..."
-msgstr "感谢光明，我做到了！请不要追我……"
+msgstr "感谢光明，我做到了！请，请，请不要追我…"
 
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1417
@@ -11614,26 +11380,22 @@ msgstr "是的，是的！带我离开这里。"
 msgid "Ha ha, you’ll never catch me now!"
 msgstr "哈哈，你没法抓住我了！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1423
-#, fuzzy
 msgid "Whew, that was a close one!"
-msgstr "呼，真是惊险！"
+msgstr "哇，那真是近！"
 
 #. [event]
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1427
 msgid "I’ve escaped!"
 msgstr "我逃走了！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1483
-#, fuzzy
 msgid ""
 "Well done, grunts. No more revolts, no more rebellion, and lots of "
 "prisoners..."
-msgstr "干得不错，小兵们。再也没有叛乱了，再也没有反抗了，还有很多俘虏……"
+msgstr "干得不错，咕噜兵。再无叛乱，再无反抗，还有很多俘虏…"
 
 #. [message]: speaker=Chief Dra-Nak
 #. all the prisoners
@@ -11641,52 +11403,42 @@ msgstr "干得不错，小兵们。再也没有叛乱了，再也没有反抗了
 msgid "Now kill them all."
 msgstr "现在杀光他们。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Unik
 #. already paid them for the prisoners
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1604
-#, fuzzy
 msgid "But Chief, the necromancers already paid us! We can’t just-"
-msgstr "但头领，死灵法师已经付给我们报酬了！我们不能就这样-"
+msgstr "但酋长，死灵法师已经付给我们报酬了！我们不能就这样—"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #. all the necromancers
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1609
-#, fuzzy
 msgid "Then I’ll kill them all too! I’m done working with others!"
-msgstr "然后我也会把他们全部杀死！我再也不和别人合作了！"
+msgstr "然后我把他们也全都杀掉！我再也不和别人合作了！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1625
-#, fuzzy
 msgid ""
 "I tried being merciful. I tried working toward peace. I tried building an "
 "empire where all races could be a part of something great, and all I asked "
 "in return was simple tribute."
 msgstr ""
-"我尝试过仁慈。我尝试过追求和平。我尝试过建立一个所有种族都能参与的伟大帝国，"
-"而我所要求的不过是简单的贡品而已。"
+"我尝试过仁慈。我尝试过追求和平。我尝试过建立一个所有种族都能成为伟大事业的一"
+"部分的帝国，而我所要求的不过是简单的贡品而已。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1629
-#, fuzzy
 msgid ""
 "Mercy no more. I’ll build a new empire on the smoking rubble of the old, an "
 "empire for orcs and orcs alone, an empire to unite all the scattered tribes "
 "under one banner!"
 msgstr ""
-"慈悲不再。我将在旧帝国的灰烬之上建立一个新的帝国，一个只属于兽人的帝国，一个"
-"将所有分散的部落团结在一面旗帜之下的帝国！"
+"慈悲不再。我将在旧帝国的灰烬之上建立一个新的帝国，一个属于且只属于兽人的帝"
+"国，一个将所有分散的部落团结在一面旗帜之下的帝国！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Chief Dra-Nak
 #: data/campaigns/Eastern_Invasion/scenarios/99_Empire.cfg:1633
-#, fuzzy
 msgid "And when I’m ready, we will march across the world and make it ours."
-msgstr "等到我准备好了，我们就将横扫世界，让它成为我们的天下。"
+msgstr "等到我准备好了，我们就横扫世界，让它成为我们的天下。"
 
 #. [message]: speaker=Chief Dra-Nak
 #. the chief's last breath
@@ -11694,36 +11446,30 @@ msgstr "等到我准备好了，我们就将横扫世界，让它成为我们的
 msgid "FILTHY... Rotten... ...traitors... ..."
 msgstr "污秽的……腐烂的……叛徒……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [terrain_type]: id=urbanjungle{ID}
 #: data/campaigns/Eastern_Invasion/terrain.cfg:15
 #: data/campaigns/Eastern_Invasion/terrain.cfg:16
 #: data/campaigns/Eastern_Invasion/terrain.cfg:17
-#, fuzzy
 msgid "Urban"
-msgstr "城市"
+msgstr "城市丛林"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [terrain_type]: id=urbanjungle{ID}
 #: data/campaigns/Eastern_Invasion/terrain.cfg:18
-#, fuzzy
 msgid ""
 "Densely packed structures are less suitable for garrison than traditional "
 "villages, providing no income or healing. They are difficult to navigate "
 "quickly, but offer significant protection."
 msgstr ""
-"密集的建筑群不适合作为驻军地点，不会提供收入或治疗。它们难以快速通行，但提供"
-"了显著的保护。"
+"和传统的村庄相比，密集的建筑群不适合作为驻防地点，不会提供收入或治疗。它们难"
+"以快速通行，但提供了显著的保护。"
 
 #. [unit_type]: id=Ant Queen, race=monster
 #: data/campaigns/Eastern_Invasion/units/Ant_Queen.cfg:4
 msgid "Ant Queen"
 msgstr "蚁后"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Ant Queen, race=monster
 #: data/campaigns/Eastern_Invasion/units/Ant_Queen.cfg:19
-#, fuzzy
 msgid ""
 "At the heart of each giant ant burrow lies a queen. Much like their "
 "miniature cousins, a well-fed giant ant queen will continually lay eggs, "
@@ -11733,31 +11479,23 @@ msgstr ""
 "每巢巨蚁的心脏处都有一只蚁后。就像它们的小型表亲一样，一只喂养良好的巨蚁蚁后"
 "会不断产卵，确保蚁群永远不缺少采集物资的工蚁或防御敌人的兵蚁。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]
 #: data/campaigns/Eastern_Invasion/units/Ant_Queen.cfg:25
-#, fuzzy
 msgid "royalty"
 msgstr "王室成员"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]
 #: data/campaigns/Eastern_Invasion/units/Ant_Queen.cfg:26
-#, fuzzy
 msgid "If the ant queen is killed, all of her subjects die."
-msgstr "若蚁后被杀死，所有臣属于她的蚂蚁都会死亡。"
+msgstr "如果蚁后被杀，她的所有臣民都会死。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Egg Sac, race=monster
 #: data/campaigns/Eastern_Invasion/units/Egg_Sac.cfg:4
-#, fuzzy
 msgid "Egg Sac"
 msgstr "卵囊"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Egg Sac, race=monster
 #: data/campaigns/Eastern_Invasion/units/Egg_Sac.cfg:17
-#, fuzzy
 msgid ""
 "Each of these enormous egg sacs contains up to a dozen ant larvae, "
 "sheltering and nourishing them while they develop into worker drones. When "
@@ -11768,72 +11506,58 @@ msgstr ""
 "庇护和营养。当巢穴受到威胁时，蚁后可以释放信息素，促使每个卵囊迅速发育成一只"
 "大型战士蚂蚁。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]
 #: data/campaigns/Eastern_Invasion/units/Egg_Sac.cfg:22
-#, fuzzy
 msgid "hatch"
 msgstr "孵化"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]
 #: data/campaigns/Eastern_Invasion/units/Egg_Sac.cfg:23
-#, fuzzy
 msgid ""
 "If an enemy unit is adjacent to this egg sac when it begins its turn, it "
 "will hatch."
-msgstr "如果敌人单位在它的回合开始时与这个卵囊相邻，卵囊将会孵化。"
+msgstr "如果在它的回合开始时，一个敌方单位与这个卵囊相邻，卵囊将会孵化。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Gate, race=mechanical
 #: data/campaigns/Eastern_Invasion/units/Gate.cfg:5
-#, fuzzy
 msgid "Gate"
 msgstr "大门"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Gate, race=mechanical
 #: data/campaigns/Eastern_Invasion/units/Gate.cfg:9
-#, fuzzy
 msgid "An old gate, poorly maintained but of sturdy construction."
-msgstr "一座年久失修但结构坚固的老门。"
+msgstr "一座年久失修但结构坚固的旧门。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Banneret, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Banneret.cfg:4
-#, fuzzy
 msgid "Banneret"
-msgstr "旗将"
+msgstr "方旗骑士"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Banneret, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Banneret.cfg:19
-#, fuzzy
 msgid ""
 "The few lancers who survive for long enough invariably find themselves "
 "commanding companies of their own. Still clad in minimal armor, they ride "
 "with even greater speed, charging into battle and leading from the forefront "
 "of any conflict."
 msgstr ""
-"那些能够存活下来已久的枪骑兵最终都会指挥自己的小队。他们依然身着轻甲，却骑得"
-"更快，在战场上冲锋陷阵，并且在任何冲突中都从最前线领导战斗。"
+"少数存活足够久的长枪轻骑兵最终都会指挥自己的小队。他们依然身着轻甲，却骑得更"
+"快，在战场上冲锋陷阵，并且在任何冲突中都从最前线领导战斗。"
 
 #. [unit_type]: id=Fallen Mage, race=human, gender=male
 #: data/campaigns/Eastern_Invasion/units/Human_Dacyn_Fallen_Mage.cfg:10
 msgid "Fallen Mage"
 msgstr "堕落法师"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Fallen Mage, race=human, gender=male
 #: data/campaigns/Eastern_Invasion/units/Human_Dacyn_Fallen_Mage.cfg:25
-#, fuzzy
 msgid ""
 "There are dark powers in this world which humankind was not meant to "
 "understand. Even the greatest and wisest can be bound in service of such a "
 "darkness."
 msgstr ""
 "这个世界存在着人类不应理解的黑暗力量。即使是最伟大、最智慧的人也可能被束缚在"
-"服务于这样的黑暗之中。"
+"这样的黑暗之中。"
 
 #. [dummy]
 #: data/campaigns/Eastern_Invasion/units/Human_Dacyn_Fallen_Mage.cfg:63
@@ -11850,30 +11574,24 @@ msgstr "免疫毒素、吸血和瘟疫。"
 msgid "Twilight Mage"
 msgstr "暮光法师"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Twilight Mage, race=human, gender=male
 #: data/campaigns/Eastern_Invasion/units/Human_Dacyn_Twilight_Mage.cfg:19
-#, fuzzy
 msgid ""
 "Even the most devout of white magi can have their light tainted by the power "
 "of darkness. Though not extinguished, their faltering inner light can become "
 "muted."
 msgstr ""
-"即使最虔诚的白魔法师也可能被黑暗的力量玷污。虽然他们的内心光明并未熄灭，但却"
-"变得黯淡下来。"
+"即使最虔诚的白袍法师，他们的光芒也可能被黑暗的力量玷污。虽然他们的内心光明并"
+"未熄灭，但却变得黯淡下来。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Frontier Lieutenant, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Frontier_Lieutenant.cfg:4
-#, fuzzy
 msgid "Frontier Lieutenant"
-msgstr "边防中尉"
+msgstr "前线尉官"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Frontier Lieutenant, race=human
 #. same as regular Lieutenant's description
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Frontier_Lieutenant.cfg:19
-#, fuzzy
 msgid ""
 "Lieutenants are some of the more respected commanding officers among humans "
 "and are often seen leading smaller-scale incursions and managing the "
@@ -11882,23 +11600,19 @@ msgid ""
 "more than made up for by their superior knowledge and training in military "
 "strategy."
 msgstr ""
-"副将是人类中较为受尊重的指挥官之一，常常带领小规模入侵行动并管理战场。他们既"
-"擅长剑术也精通十字弓，但在这两方面都不算出类拔萃，并且相对于其他种族的战lord"
-"来说，他们的耐久性略逊一筹——然而，他们在军事战略的知识和训练方面的优势足以弥"
-"补这一点。"
+"尉官是人类之中受到较多尊重的指挥官。经常能够看到他们指挥小规模的入侵行动并纵"
+"观战场。他们接受过剑术和十字弩的训练，但两方面都不杰出，同时他们相比其他种族"
+"的军阀而言，也多多少少缺失一点耐伤能力——但他们的学识更加丰富，军事战略的训练"
+"更加深入，要弥补这一缺陷是远远足够了。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Frontier Sergeant, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Frontier_Sergeant.cfg:4
-#, fuzzy
 msgid "Frontier Sergeant"
-msgstr "边境军士"
+msgstr "前线军士"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Frontier Sergeant, race=human
 #. same as regular Sergeant's description
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Frontier_Sergeant.cfg:19
-#, fuzzy
 msgid ""
 "Sergeants are low-ranking officers of human armies. Though academically "
 "trained, they need some experience in the field before their leadership is "
@@ -11906,21 +11620,18 @@ msgid ""
 "combat means they can more effectively rouse civilians and peasants in "
 "trying situations."
 msgstr ""
-"军士是人类军队中的低级军官。虽然他们接受了学术训练，但还需要一些实战经验才能"
-"使他们的领导能力得到认可和稳固。不过，由于他们在战斗方面的勤奋态度和基本理"
-"解，他们可以更有效地在困难情况下激励平民和农民。"
+"军士是人类军队中的低阶军官。虽然受过军事院校的教育，但在他们的领导能力变得可"
+"靠并被承认之前，军士们还需要一些实战经验。虽然如此，他们尽心的态度和对于战斗"
+"的基本直觉还是意味着，在糟糕的状况下他们可以很有效地鼓舞城市平民和农民起来战"
+"斗。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Veteran Commander, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Veteran_Commander.cfg:4
-#, fuzzy
 msgid "Veteran Commander"
 msgstr "老兵指挥官"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Veteran Commander, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Veteran_Commander.cfg:30
-#, fuzzy
 msgid ""
 "Despite his lack of formal rank, Gweddry radiates more leadership and "
 "experience than many commanders twice his age. His cunning and tactical "
@@ -11929,20 +11640,16 @@ msgid ""
 "emerge victorious."
 msgstr ""
 "尽管格威德利没有正式的军衔，但他散发出的领导力和经验远远超过了许多两倍于他年"
-"龄的指挥官。他的机智和战术技巧在无数战斗中得到了磨练，使他能够引导即使是新兵"
-"也能在看似不可能的情况下采取战略行动并取得胜利。"
+"龄的指挥官。他的机智和战术技巧在无数战斗中得到了磨练，即使是最新的新兵他也能"
+"够指挥，在看似不可能的情况下采取战略行动并取得胜利。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Veteran Lieutenant, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Veteran_Lieutenant.cfg:4
-#, fuzzy
 msgid "Veteran Lieutenant"
-msgstr "资深中队长"
+msgstr "资深尉官"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Veteran Lieutenant, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Gweddry_Veteran_Lieutenant.cfg:29
-#, fuzzy
 msgid ""
 "Once inexperienced, Gweddry is now a veteran of many battles. His cunning "
 "and tactical skill enable him to direct even the freshest of recruits to "
@@ -11950,19 +11657,17 @@ msgid ""
 "crossbow is not to be underestimated either, nor is the speed with which he "
 "can move despite his heavy armor."
 msgstr ""
-"曾经经验不足的格威德利如今已成为身经百战的老将。他的机智和战术才能使他能够指"
-"挥即使是新兵也能进行战略性打击并取得胜利。他对长剑和十字弓的使用技巧也不容小"
-"觑，即便穿着沉重的铠甲，他也能够迅速移动。"
+"曾经经验不足的格威德利如今已成为身经百战的老将。他的机智和战术才能，即使是最"
+"新的新兵他也能够指挥，来进行战略性打击并取得胜利。他对长剑和十字弓的使用技巧"
+"也不容小觑，即便穿着沉重的铠甲，他也能够迅速移动。"
 
 #. [unit_type]: id=King of Wesnoth, race=human, gender=male
 #: data/campaigns/Eastern_Invasion/units/Human_Konrad_King_of_Wesnoth.cfg:4
 msgid "King of Wesnoth"
 msgstr "韦诺国王"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=King of Wesnoth, race=human, gender=male
 #: data/campaigns/Eastern_Invasion/units/Human_Konrad_King_of_Wesnoth.cfg:22
-#, fuzzy
 msgid ""
 "Kings are trained rigorously in the combat arts, sometimes out of necessity, "
 "more often out of tradition from when their priors made their wealth in war. "
@@ -11971,7 +11676,7 @@ msgid ""
 "maneuver across the battlefield much faster than their gilded plate would "
 "suggest."
 msgstr ""
-"君主们接受了严格的战斗技艺训练，有时出于必要，更多时候则是沿袭了他们先祖通过"
+"国王们接受了严格的战斗技艺训练，有时出于必要，更多时候则是沿袭了他们前辈通过"
 "战争积累财富的传统。他们的盔甲由巧匠精心打造，甚至令许多矮人的铁匠都为之嫉"
 "妒。这些君主已经适应了沉重的盔甲，并且能够在战场上比外表所显示的更加迅速地移"
 "动。"
@@ -11986,17 +11691,15 @@ msgstr "圣火权杖"
 msgid "Clan Captain"
 msgstr "氏族队长"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Mounted Warrior  # use the old id so we don't break old saves, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Owaec_Clan_Captain.cfg:26
-#, fuzzy
 msgid ""
 "The leaders-to-be of the Horse Clans, each of these proud nobles is skilled "
 "in combat and adheres to a strict code of honor. Even the most tenacious of "
 "opponents will quake at the sight of a horse charge spearheaded by one of "
 "these fearless riders."
 msgstr ""
-"即将成为领袖的马氏族长，这些骄傲的贵族们个个精通战斗技艺，并且恪守严格的荣誉"
+"即将成为马背氏族的领袖，这些骄傲的贵族们个个精通战斗技艺，并且恪守严格的荣誉"
 "准则。即使是意志最坚定的对手，在看到这些无畏骑手带领冲锋时也会颤抖不已。"
 
 #. [attack]: type=impact
@@ -12021,24 +11724,20 @@ msgstr ""
 "平原上的翘楚，马背领主是家族的首脑，无论是敌是友，人们都敬仰他。这些领主以身"
 "作则，带领骑兵冲锋陷阵，称霸战场。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Mounted Fighter  # use the old id so we don't break old saves, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Owaec_Princeling.cfg:4
-#, fuzzy
 msgid "Princeling"
 msgstr "小王子"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Mounted Fighter  # use the old id so we don't break old saves, race=human
 #: data/campaigns/Eastern_Invasion/units/Human_Owaec_Princeling.cfg:26
-#, fuzzy
 msgid ""
 "From early age, the nobles of the plains train vigorously in both combat and "
 "governance, preparing to someday become captains of the Clans. Though young "
 "and brash, these fighters have the potential to become great warriors one "
 "day."
 msgstr ""
-"从小起，平原的贵族们就在战斗和治理方面刻苦训练，为有朝一日成为氏族的队长做准"
+"从小，平原的贵族们就在战斗和治理方面刻苦训练，为有朝一日成为氏族的队长做准"
 "备。尽管年少气盛，这些战士有一天有可能成为伟大的战士。"
 
 #. [unit_type]: id=Shadow Lord, race=human, gender=female
@@ -12047,10 +11746,8 @@ msgstr ""
 msgid "female^Shadow Lord"
 msgstr "暗影领主"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Shadow Lord, race=human, gender=female
 #: data/campaigns/Eastern_Invasion/units/Human_Shadow_Lord.cfg:24
-#, fuzzy
 msgid ""
 "Few humans fathom the secrets of light and dark magic and retain their "
 "sanity. Those that can master that balance become Shadow Lords, fully "
@@ -12058,9 +11755,9 @@ msgid ""
 "needing physical weapons, they are fearsome to both their enemies and those "
 "they fight alongside."
 msgstr ""
-"少數人類能夠洞悉光明與黑暗魔法的奧秘並保持理智。能夠掌握這種平衡的人成為暗影"
-"領主，他們既不在光明的世界也不在黑暗的世界中完全存在。不再需要物理武器，他們"
-"對敵人和盟友都是一種恐懼的存在。"
+"很少人类能参透光明与黑暗魔法的奥秘而不失理智。那些可以掌握那种平衡的成为暗影"
+"领主，既不完全属于光明世界，亦不完全属于黑暗世界。她们不再需要实体武器，令敌"
+"人和并肩作战的人都恐惧。"
 
 #. [attack]: type=arcane
 #. Translation for this weapon can be taken from liberty textdomain
@@ -12082,10 +11779,8 @@ msgstr "冲击波"
 msgid "female^Shadow Mage"
 msgstr "暗影法师"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Shadow Mage, race=human, gender=female
 #: data/campaigns/Eastern_Invasion/units/Human_Shadow_Mage.cfg:23
-#, fuzzy
 msgid ""
 "Obsessive study over the forces of light and dark have turned the shadow "
 "mages into feared fighters. Cloaked in mist, they have been known to vanish "
@@ -12093,26 +11788,22 @@ msgid ""
 "their bodies exhausted and enfeebled, they instead channel their energies "
 "into devastatingly accurate melee attacks."
 msgstr ""
-"沉迷于光明与黑暗力量的研究，影法师们变成了令人畏惧的战士。他们身披迷雾，在夜"
-"色中消失得比任何鬼魂都要迅速。尽管他们的狂热研究使身体疲惫虚弱，但他们却将能"
-"量倾注于极具破坏力的近战攻击之中。"
+"沉迷于光明与黑暗力量的研究，暗影法师们变成了令人畏惧的战士。他们身披迷雾，在"
+"夜色中消失得比任何鬼魂都要迅速。尽管他们的狂热研究使身体疲惫虚弱，但他们却将"
+"能量倾注于精准致命的近战攻击之中。"
 
 #. [attack]: type=fire
 #: data/campaigns/Eastern_Invasion/units/Human_Terraent_Paladin.cfg:48
 msgid "blessed lance"
 msgstr "圣枪"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Townsfolk, race=human, gender=male,female
 #: data/campaigns/Eastern_Invasion/units/Human_Townsfolk.cfg:4
-#, fuzzy
 msgid "Townsfolk"
-msgstr "平民村落居民"
+msgstr "市民"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Townsfolk, race=human, gender=male,female
 #: data/campaigns/Eastern_Invasion/units/Human_Townsfolk.cfg:18
-#, fuzzy
 msgid ""
 "Townsfolk are city-dwellers who try to make their fortune in a non-violent "
 "manner, be they traders, craftsmen, or servants of a noble house. They "
@@ -12127,10 +11818,8 @@ msgstr ""
 msgid "Naga Centurion"
 msgstr "娜迦百夫长"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Naga Centurion, race=naga, gender=male,female
 #: data/campaigns/Eastern_Invasion/units/Naga_Centurion.cfg:20
-#, fuzzy
 msgid ""
 "The leaders of the naga have mastered the serpentine arts of their kind, "
 "striking faster than a lightning bolt and dancing away more gracefully than "
@@ -12138,21 +11827,17 @@ msgid ""
 "these Naga are honored by their clutch and bestowed the rare title of "
 "Centurion."
 msgstr ""
-"纳加族的领袖们精通他们种族中的蛇形技艺，他们的攻击比闪电还要迅速，并且能够像"
-"森林小溪般优雅地闪避。这些纳加既是剑术的大师也是领导者的典范，因此被同族尊崇"
-"并授予了稀有的百夫长称号。"
+"娜迦首领们精通他们种族中的蛇形技艺，他们的攻击比闪电还要迅速，并且能够像森林"
+"小溪般优雅地闪避。这些娜迦既是剑术的大师也是领导者的典范，因此被同族尊崇并授"
+"予了稀有的百夫长称号。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [attack]: type=blade
 #: data/campaigns/Eastern_Invasion/units/Naga_Centurion.cfg:32
-#, fuzzy
 msgid "blade"
-msgstr "刀剑"
+msgstr "刃器"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [attack]: type=blade
 #: data/campaigns/Eastern_Invasion/units/Naga_Centurion.cfg:41
-#, fuzzy
 msgid "speed strike"
 msgstr "迅击"
 
@@ -12166,84 +11851,69 @@ msgstr "娜迦百夫长"
 msgid "Ancient Ogre"
 msgstr "上古食人魔"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Ancient Ogre, race=ogre
 #: data/campaigns/Eastern_Invasion/units/Ogre_Ancient.cfg:30
-#, fuzzy
 msgid ""
 "Ancient ogres possess legendary strength and stand taller than even many "
 "woses. They usually live among their own kind in the wilderness, but can be "
 "highly loyal to those few they trust."
 msgstr ""
-"古代食人魔拥有传说中的力量，身高甚至超过了大多数沃斯（巨人力怪）。他们通常生"
-"活在荒野中与自己的同类为伍，但会对那些少数信任的人表现出高度的忠诚。"
+"上古食人魔拥有传奇的力量，身高甚至超过了大多数树人。他们通常生活在荒野中与自"
+"己的同类为伍，但会对那些少数信任的人表现出高度的忠诚。"
 
 #. [unit_type]: id=Great Ogre, race=ogre
 #: data/campaigns/Eastern_Invasion/units/Ogre_Great.cfg:4
 msgid "Great Ogre"
 msgstr "大食人魔"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Great Ogre, race=ogre
 #: data/campaigns/Eastern_Invasion/units/Ogre_Great.cfg:27
-#, fuzzy
 msgid ""
 "Great Ogres are giant creatures that usually live alone in the wilderness. "
 "While they can be easily outrun or outsmarted, their strength is not to be "
 "underestimated."
 msgstr ""
-"巨大的食人魔是通常独自生活在荒野中的巨兽。虽然它们可以被轻易地逃避或智取，但"
+"大食人魔是通常独自生活在荒野中的巨形生物。虽然它们可以被轻易地追上或智取，但"
 "它们的力量不容小觑。"
 
 #. [unit_type]: id=Barrow Wight, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Horse_Barrow_Wight.cfg:4
-#, fuzzy
 msgid "Barrow Wight"
-msgstr "枯骨骑士"
+msgstr "古墓尸妖"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Barrow Wight, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Horse_Barrow_Wight.cfg:18
-#, fuzzy
 msgid ""
 "Perpetually haunted by the fading memory of its former life, a Barrow Wight "
 "wanders aimlessly in a delirium of darkness and despair. Their chill essence "
 "is shrouded behind cloak and bone, shielding them from most magic."
 msgstr ""
-"永无休止地被其过往生活的逐渐消逝的记忆所困扰，一个丘陵幽灵在黑暗与绝望的谵妄"
-"中漫无目的地游荡。他们冰冷的本质被斗篷和骸骨遮掩着，使其免受大多数魔法的影"
-"响。"
+"永受前世逐渐消逝的记忆所扰，古墓尸妖在黑暗与绝望的谵妄中漂泊无定。其冰冷本"
+"质，掩于斗篷与骨骸之间，可御多数魔法。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Pyre Wight, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Horse_Pyre_Wight.cfg:4
-#, fuzzy
 msgid "Pyre Wight"
-msgstr "火堆幽灵"
+msgstr "柴堆尸妖"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Pyre Wight, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Horse_Pyre_Wight.cfg:18
-#, fuzzy
 msgid ""
 "Risen from a funeral’s ashes and newly bathed in fire, a Pyre Wight’s soul "
 "burns with a desire for vengeance. They single-mindedly seek out those who "
 "wronged them in their past life, but undeath has robbed their memories of "
 "friend and foe."
 msgstr ""
-"从葬礼的灰烬中重生，并被火焰重新洗礼，火堆游魂的灵魂燃烧着复仇的渴望。他们一"
-"心一意地寻找过去生活中曾伤害过自己的人，但不死状态已经剥夺了他们对敌友的记"
-"忆。"
+"从丧葬的余烬中唤醒，复浴烈火，柴堆尸妖的灵魂燃起复仇之欲。他们一心寻觅前世之"
+"仇敌，然死亡已夺其对友敌之记忆。"
 
 #. [unit_type]: id=Dread Lich, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Ravanal_Dread_Lich.cfg:17
 msgid "Dread Lich"
 msgstr "恐惧巫妖"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Dread Lich, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Ravanal_Dread_Lich.cfg:31
-#, fuzzy
 msgid ""
 "Named thusly for the abject terror they awaken in their enemies, a so-called "
 "Dread Lich is an artisan of necromantic power, a consummate master of the "
@@ -12257,25 +11927,21 @@ msgid ""
 "that the rise of an Dread Lich has not led to the shadows ruling the world "
 "for the rest of time."
 msgstr ""
-"因此得名，因其能在敌人中引发极度的恐惧，所谓的“恐怖巫妖”是死灵法术技艺的匠"
-"人，是他们所掌握的黑暗魔法的大师。\n"
+"因其唤醒敌人极度恐惧而如此命名，所谓的恐惧巫妖是死灵魔法的大师，是他们所掌握"
+"的黑暗魔法的精通者。\n"
 "\n"
-"此类巫妖总是指挥着近乎无穷无尽的复活战士和亡灵怪物大军，其对暗黑法术的掌握能"
-"让最著名的人类或精灵法师也感到畏惧。这样的人物通常标志着一段黑暗而血腥的历史"
-"时期，在那些危难时刻，只有通过最为英勇的英雄们不懈的努力，恐怖巫妖的崛起才没"
-"有导致世界永远被阴霾笼罩。"
+"他们总是指挥着几乎无尽的复活战士和亡灵怪物大军，这种等级的巫妖拥有能令人类和"
+"精灵种族中最有名望的魔法大师感到恐惧的黑暗巫术精通力。这样的形象通常标志着历"
+"史中黑暗血腥的篇章，并在那些危机时期，只有通过最英勇英雄的不懈努力，恐惧巫妖"
+"的崛起才没有导致阴影统治世界于其后的时代。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]: id=reanimation
 #: data/campaigns/Eastern_Invasion/units/Undead_Ravanal_Dread_Lich.cfg:74
-#, fuzzy
 msgid "reanimation"
 msgstr "复生术"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]: id=reanimation
 #: data/campaigns/Eastern_Invasion/units/Undead_Ravanal_Dread_Lich.cfg:75
-#, fuzzy
 msgid ""
 "This unit can reanimate its defeated allies and enemies.\n"
 "\n"
@@ -12283,29 +11949,27 @@ msgid ""
 "weaker undead version of itself. Enemies killed by Mal-Ravanal will rise "
 "again as ghosts."
 msgstr ""
-"此单位可以复活其击败的盟友和敌人。\n"
+"此单位可以复活其被击败的盟友和敌人。\n"
 "\n"
 "每当玛尔-拉瓦纳尔的手下死亡时，该单位将会被复活为一个更弱的亡灵版本。玛尔-拉"
-"瓦纳尔杀死的敌军将再次以幽灵的形式出现。"
+"瓦纳尔杀死的敌人会再次以鬼魂的形式出现。"
 
 #. [unit_type]: id=Skeletal Corpse, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Skeletal_Corpse.cfg:5
 msgid "Skeletal Corpse"
 msgstr "骷髅僵尸"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [unit_type]: id=Skeletal Corpse, race=undead
 #. [unit_type]: id=Skeletal Soulless, race=undead
 #: data/campaigns/Eastern_Invasion/units/Undead_Skeletal_Corpse.cfg:14
 #: data/campaigns/Eastern_Invasion/units/Undead_Skeletal_Soulless.cfg:16
-#, fuzzy
 msgid ""
 "When a skeletal warrior is defeated, their animating energies are sometimes "
 "not wholly destroyed. A particularly skilled lich can recapture what remains "
 "of their servants’ necromantic energy, reanimating a new — albeit weaker — "
 "minion."
 msgstr ""
-"当一名骷髅战士被击败时，维持其活动的能量有时并未完全被摧毁。一个特别熟练的巫"
+"当一具骷髅战士被击败时，维持其活动的能量有时并未完全被摧毁。一个特别熟练的巫"
 "妖可以重新捕获其仆从剩余的死灵能量，复活一个新的——尽管较弱的——部下。"
 
 #. [unit_type]: id=Skeletal Soulless, race=undead
@@ -12318,45 +11982,38 @@ msgstr "骷髅无魂怪"
 msgid "greater drains"
 msgstr "增强吸血"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [drains]: id=greater drains
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:7
-#, fuzzy
 msgid ""
 "This unit drains health from living units, healing itself for the full "
 "amount of damage it deals."
-msgstr "此单位会吸取活体单位的体力，使其自身完全恢复所造成的伤害。"
+msgstr "此单位会吸取活体单位的体力，使其自身恢复它所造成伤害相当的生命值。"
 
 #. [message]: speaker=Mal-Ravanal
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:54
 msgid "Your soul is mine!!"
 msgstr "你的灵魂属于我！！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Mal-Ravanal
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:133
-#, fuzzy
 msgid ""
 "Funny thing about the undead. If you know what you’re doing, they’re really "
 "very easy to put back together."
 msgstr ""
-"关于亡灵有趣的一点是，如果你知道怎么做，其实把它们重新组装起来是非常简单的。"
+"关于亡灵有趣的一点是，如果你知道你在做什么，把它们重新组装起来其实是非常简单"
+"的。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [attacks]: id=swift
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:141
-#, fuzzy
 msgid "swift"
-msgstr "迅速的"
+msgstr "速攻"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [attacks]: id=swift
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:142
-#, fuzzy
 msgid ""
 "This attack is exceptionally swift. When this attack is used on offense, the "
 "opponent will be unable to retaliate."
-msgstr "此攻击极其迅捷。当用于进攻时，对手将无法反击。"
+msgstr "此攻击极其迅速。当用于进攻时，对手将无法反击。"
 
 #. [attacks]: id=shock
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:152
@@ -12400,17 +12057,13 @@ msgstr ""
 msgid "This unit gains increased damage for each adjacent ally and/or enemy."
 msgstr "每多一个相邻的盟友和/或敌人，该单位输出的伤害就会增加。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [illuminates]: id=darkens
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:243
-#, fuzzy
 msgid "darkens"
-msgstr "变暗"
+msgstr "暗化"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [illuminates]: id=darkens
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:244
-#, fuzzy
 msgid ""
 "This unit darkens the surrounding area, making chaotic units fight better, "
 "and lawful units fight worse.\n"
@@ -12437,40 +12090,31 @@ msgstr ""
 "该单位会混淆周围的区域，使混沌单位的战斗力大幅提高，而守序单位的战斗力大幅下"
 "降。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [skirmisher]: id=nightskirmish
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:267
-#, fuzzy
 msgid "nightskirmish"
-msgstr "夜战"
+msgstr "夜间游击"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [skirmisher]: id=nightskirmish
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:268
-#, fuzzy
 msgid "female^nightskirmish"
-msgstr "女夜战战士职业"
+msgstr "夜间游击"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [skirmisher]: id=nightskirmish
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:269
-#, fuzzy
 msgid ""
 "This unit is skilled in moving past enemies quickly and ignores all enemy "
 "Zones of Control, but only at night."
-msgstr "该单位擅长迅速绕过敌人行动，且无视所有敌方的控制区域，但仅限夜间。"
+msgstr ""
+"该单位擅长迅速绕过敌人行动，且无视所有敌方的控制区域，但只在夜间具有此能力。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]: id=terror
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:283
-#, fuzzy
 msgid "terror"
-msgstr "恐怖"
+msgstr "恐惧光环"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [dummy]: id=terror
 #: data/campaigns/Eastern_Invasion/utils/abilities.cfg:284
-#, fuzzy
 msgid ""
 "This unit can frighten enemies in a 2 hex radius, making them fight worse. "
 "Units with the fearless trait are unaffected.\n"
@@ -12626,40 +12270,33 @@ msgstr ""
 msgid "How did I get dragged into this mess..."
 msgstr "我怎么会卷入这个烂摊子里的……"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:171
-#, fuzzy
 msgid ""
 "Alas, my long, storied, and exceedingly profitable career has at last come "
 "to an end, so far from home! I only... wish I could have died on the soft "
 "sands... instead of among these primitive barbarians..."
 msgstr ""
-"遗憾的是，我漫长而富有传奇色彩且极其有利可图的职业生涯终于结束了，而且是在远"
-"离家乡的地方！我只……希望我能死在柔软的沙子上……而不是在这群原始野蛮人之中……"
+"唉，我漫长，富有传奇色彩，且极其有利可图的职业生涯终于结束了，在远离家乡的地"
+"方！我只…希望我能死在柔软的沙子上…而不是在这群原始野蛮人之中…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Grug
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:175
-#, fuzzy
 msgid "Bar... ber... bears? Die why?"
-msgstr "熊...为什么要死？"
+msgstr "熊…熊…熊？为什么要死？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dolburras
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:179
-#, fuzzy
 msgid ""
 "Aye, ‘tis a sad place for one o’ us foreigners to fall. We’ll miss ye, "
 "that’s for sure."
-msgstr "唉，对于我们这些外国人来说，这是一个不幸的地方。我们肯定会想念你的。"
+msgstr ""
+"唉，一个俺们这样的外族人倒下了，真是一个伤心的地方。俺们肯定会想念你的。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:193
-#, fuzzy
 msgid "Oh, I knew drinking all those elixirs was a bad idea..."
-msgstr "哦，我知道喝那些精灵水是个糟糕的主意……"
+msgstr "哦，我知道喝光那些药水是个糟糕的主意……"
 
 #. [message]: speaker=Terraent
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:207
@@ -12720,25 +12357,23 @@ msgstr "唉，我死了！没有国王，国家就完了。"
 
 #. [message]: speaker=narrator
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:327
-#, fuzzy
 msgid ""
 "It was perhaps as well for the men of Gweddry’s troop that they did not live "
 "to witness the fullness of the grim tide of undead sweeping westward into "
 "Wesnoth, laying waste to all in its path."
 msgstr ""
-"对格威德利麾下的部队来说，没能活着见到亡灵的狂潮向西涌入韦诺，也许是一件幸"
-"事。狂潮所到之处，寸草不留。"
+"格威德利麾下的众人没能活着看到那亡灵大军席卷西进韦诺，将途中一切化为焦土的恐"
+"怖全貌，倒也是一件幸事。"
 
 #. [message]: speaker=narrator
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:337
-#, fuzzy
 msgid ""
 "Wesnoth never learned the fate of Gweddry’s band, but they would soon learn "
 "the full measure of the power of Mal-Ravanal in a war that would end only in "
 "misery and death."
 msgstr ""
-"韦诺从未知晓格威德利部队的最终命运，然而很快，他们便将遭受来自兽人与亡灵掠袭"
-"者的狂怒与恶意的侵袭，那将是一场只能以苦难与死亡作结的战争。"
+"韦诺从未得知格威德利部队的命运，但他们很快将在一场以痛苦和死亡告终的战争中，"
+"领略玛尔-拉瓦纳尔力量的全部威力。"
 
 #. [message]: speaker=narrator
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:347
@@ -12752,14 +12387,13 @@ msgstr ""
 
 #. [message]: speaker=narrator
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:357
-#, fuzzy
 msgid ""
 "With the staunchest defenders of Wesnoth bested on their home ground, the "
 "once-great kingdom was plunged into final darkness under the hand of Mal-"
 "Ravanal."
 msgstr ""
-"韦诺最坚定的守卫者在自己的国土之上败阵，曾经辉煌的王国亦最终堕入黑暗，陷于复"
-"仇者玛尔-拉瓦纳尔之手。"
+"韦诺最坚定的防御者在本土被击败，那个曾经伟大的王国在玛尔-拉瓦纳尔的操控之下，"
+"终陷于黑暗。"
 
 #. [message]: speaker=Mal-Mana
 #: data/campaigns/Eastern_Invasion/utils/deaths.cfg:372
@@ -12788,16 +12422,13 @@ msgstr "你……浪费了……你的努力……"
 msgid "A-ha, what’s this? The white mage resorts to wielding black magic?"
 msgstr "啊-哈，这是什么？这个白袍法师施展黑魔法？"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Mal-Ravanal
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:45
-#, fuzzy
 msgid ""
 "Ah, the feeling of my flesh burned away by your nauseating radiance... this "
 "takes me back to when I still thought of you as my friend."
 msgstr ""
-"啊，我的肉身被你令人作呕的光芒烧毁的感觉……这让我回想起了我还是把你当作朋友的"
-"时候。"
+"啊，我的肉身被你令人作呕的光芒烧毁的感觉…这让我回想起我还把你当作朋友的时候。"
 
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:49
@@ -12836,71 +12467,57 @@ msgstr "玛尔-拉瓦纳尔，终于我要面对你了。我会为你给我族�
 msgid "Aye, I love the sound o’ bones crunching beneath me hammer!"
 msgstr "啊，我喜欢听骨头在我锤子下碎裂的声音！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dolburras
 #. in regular English, "So you are the big one, aren't you? Well, the bigger they are"
 #. there is a colloquial expression, "the bigger they are, the harder they fall"
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:158
-#, fuzzy
 msgid "Ooch, so you be the big ’un, aren’t ye? Well, the bigger they are..."
-msgstr "哦，原来你是首领啊？哼，越是大的目标……"
+msgstr "哦，原来你是那个大的？哼，它们越是大…"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Addogin
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:177
-#, fuzzy
 msgid ""
 "Never thought I’d be seeing this in my lifetime. The whole blasted "
 "apocalypse came early, didn’t it."
 msgstr "没想到有生之年会见到这个。整个该死的末日提前到来了，不是吗。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Addogin
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:193
-#, fuzzy
 msgid "Aww hell. If I live through this, I’m never pickin’ up a sword again."
-msgstr "哎呀天哪。要是我能从这场战斗中活下来，我以后再也不碰剑了。"
+msgstr "哎呀天哪。要是俺能从这场战斗中活下来，俺以后再也不拿剑了。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:212
-#, fuzzy
 msgid ""
 "How in the sands did I get caught up in all this mess? I’m an herbalist, not "
 "a warrior!"
-msgstr "我在沙场上怎么会卷入这一切麻烦？我是个草药师，又不是战士！"
+msgstr "我怎么会卷入这一切麻烦的？我是个草药师，而不是战士！"
 
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:228
 msgid "No, no no, no, what am I even doing here!"
 msgstr "不，不不，不，我在这里干什么！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Terraent
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:247
-#, fuzzy
 msgid ""
 "Ashes to ashes, dust to dust. The undead have no place in this bright world!"
-msgstr "灰飞烟灭，尘归尘土归土。这个世界没有亡灵的容身之地！"
+msgstr "尘归尘，土归土。这个光明的世界没有亡灵的容身之地！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Terraent
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:263
-#, fuzzy
 msgid ""
 "Foul lich, no longer shall you toy with me for your amusement! No longer "
 "shall I watch your armies slaughter the innocent! No longer shall your evil "
 "darken this world!"
 msgstr ""
-"污秽的巫妖，你再也不能拿我寻欢作乐了！我再也不愿看你军队屠杀无辜者！你的邪恶"
+"污秽的巫妖，你再也不能拿我寻欢作乐了！我再也不愿看你的军队屠杀无辜！你的邪恶"
 "不会再使这个世界蒙上阴影！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Gaennell
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:282
-#, fuzzy
 msgid "I remember when I used to raise creatures like you..."
-msgstr "我记得我曾经养育过像你这样的生物……"
+msgstr "我还记得我常常唤起像你这样的生物的时候…"
 
 #. [message]: speaker=Gaennell
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:298
@@ -12929,16 +12546,14 @@ msgstr ""
 "你不是人类的救世主！不过是一堆枯骨，一个顽固得不肯倒下的死法师。韦诺不会再容"
 "忍你了！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:372
-#, fuzzy
 msgid ""
 "<i>*gulp*</i> Well, it’s now or never. I’d better not think too hard about "
 "the fortune in elixirs that I’m about to drink away."
 msgstr ""
-"<i>*吞咽*</i> 好吧，现在不喝更待何时。还是不要去想我即将喝下的那些药水究竟价"
-"值多少了。"
+"<i>*吞咽*</i>好吧，现在不喝更待何时。还是不要去想我即将喝下的那些药水究竟价值"
+"多少了。"
 
 #. [message]: speaker=Hahid al-Ali
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:380
@@ -13066,32 +12681,28 @@ msgstr "称为达辛的法师正在死去！是时候让你重生了！"
 msgid "-I... -I am no lich! I am no harbinger of darkness, unlike Ravan!"
 msgstr "—我…—我不是巫妖！我不是黑暗的先驱，不像莱文！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=spirit2
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:783
-#, fuzzy
 msgid ""
 "The wielder of the red stone shall become intertwined with the darkness "
 "between worlds, whether they will it or not. You sought this Amulet of your "
 "own will, O Magnificent Dacyn!"
 msgstr ""
-"执掌红石者将不可避免地与世界的黑暗交织在一起，无论其意愿如何。啊，伟大的达"
-"辛，您是出于自己的意志寻求这枚护身符的！"
+"执掌红石者将不可避免地与世界之间的黑暗交织在一起，无论其意愿如何。您是出于自"
+"己的意志寻求这枚护身符的，啊，伟大的达辛！"
 
 #. [message]: speaker=Dacyn
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:787
 msgid "I... I needed this power! I had to safeguard Irdya!"
 msgstr "我……我需要这股力量！我必须保卫伊迪亚！"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=spirit
 #: data/campaigns/Eastern_Invasion/utils/final_battle/final_battle.cfg:791
-#, fuzzy
 msgid ""
 "And now you can, for all eternity! Leave your mortal coil behind. Live on as "
 "an undying spirit of mighty power, and do unto this world as you will!"
 msgstr ""
-"而现在你可以永生不死了！抛开你的肉身。以一个强大无比的不死灵魂存活，并随心所"
+"而现在你可以，为了永生！抛开你的肉身。以一个强大无比的不死灵魂存活，并随心所"
 "欲地对待这个世界吧！"
 
 #. [message]: speaker=Dacyn
@@ -13252,9 +12863,7 @@ msgstr "哨兵"
 msgid "Shield of the Sentinel"
 msgstr "哨兵之盾"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:227
-#, fuzzy
 msgid ""
 "Deep within this shield’s towering bulk, enchanted machinery whirrs faintly. "
 "Whenever an adjacent ally is hit by an attack, <i><b>this shield’s bearer is "
@@ -13283,21 +12892,15 @@ msgstr ""
 "食用这种味道有趣的肉<i><b>使你的生命值翻倍</b></i>，并赋予你<i><b>对寒冷的免"
 "疫</b></i>。"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:605
-#, fuzzy
 msgid "ant ambrosia"
 msgstr "蚁蜜"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:606
-#, fuzzy
 msgid "Ant Ambrosia"
-msgstr "蚂蚁王浆"
+msgstr "蚁蜜"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:607
-#, fuzzy
 msgid ""
 "This goopy honey-like substance makes you feel very sleepy... perhaps eating "
 "too much would be unwise.\n"
@@ -13305,10 +12908,10 @@ msgid ""
 "<i><b><span color='#FF0000'>-1</span> damage, <span color='#FF0000'>-1</"
 "span> movement, <span color='#00FF00'>+10</span> hitpoints</b></i>."
 msgstr ""
-"这种黏糊糊像蜂蜜的物质让你感到非常困倦……或许吃太多并不是明智的选择。\n"
+"这种黏糊糊像蜂蜜的物质让你感到非常困倦…或许吃太多并不是明智的选择。\n"
 "\n"
-"<i><b><span color='#FF0000'>-1</span> 伤害, <span color='#FF0000'>-1</span> "
-"移动, <span color='#00FF00'>+10</span> 生命值</b></i>."
+"<i><b><span color='#FF0000'>-1</span> 伤害，<span color='#FF0000'>-1</span> "
+"移动，<span color='#00FF00'>+10</span> 生命值</b></i>。"
 
 #. [effect]: type=arcane
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:639
@@ -13407,39 +13010,33 @@ msgstr "瘟疫法杖"
 msgid "Drop Plague Staff"
 msgstr "放下瘟疫法杖"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Dacyn
 #. If the player accepts the plague staff, the unit that picks it up can recruit walking corpses of animals (but not humans),
 #. randomly getting a falcon, spider, wolf or sand scorpion corpse. Here “crown” means “top of head”, or “top of cephalothorax”.
 #. Dacyn says this the first time a corpse is recruited, and this event could happen in almost any scenario from S07b onwards.
 #. Even before picking up the amulet, he’s showing a level of interest that might get a student expelled from the Academy on Alduin
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:913
-#, fuzzy
 msgid ""
 "Fascinating. The necromantic magic concentrates in the subject’s crown, "
 "replacing its bestial soul. Unnatural, yet effective."
 msgstr ""
-"令人着迷。死灵法术集中在主体的头部，取代了其野兽般的灵魂。不自然，却有效。"
+"有意思。死灵法术集中在主体的头部，取代了其野兽般的灵魂。不自然，却有效。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [message]: speaker=Owaec
 #. First time a corpse is recruited by the wielder of the plague staff.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:918
-#, fuzzy
 msgid "A disgusting abomination! I lament living in such times..."
-msgstr "一个令人作呕的怪物！我哀叹生活在这个时代……"
+msgstr "令人作呕的怪物！我哀叹生活在这个时代……"
 
 #. [object]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:976
 msgid "Gwza-Alswdan"
 msgstr "瓜扎-奥苏丹"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [item_dialog]: description={ITEM_DESC}
 #. [item_dialog_musttake]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1014
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1168
-#, fuzzy
 msgid ""
 "<span size='small'><i>  (Elixirs only last for 1 scenario.)</i></span>\n"
 "<span size='small'><i>  Picking up an item consumes your moves and attack.</"
@@ -13454,51 +13051,41 @@ msgstr ""
 msgid "Elixir of Water Breathing"
 msgstr "水下呼吸药水"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1040
-#, fuzzy
 msgid ""
 "This shimmering blue vial grants its drinker normal movement and defense in "
 "swamp and shallow water."
 msgstr "这个闪烁着蓝色光芒的药瓶能让饮使用者在沼泽和浅水中正常移动和防御。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [floating_text]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1060
-#, fuzzy
 msgid "<span color='#00FFFF' size='x-small'>water breathing</span>"
-msgstr "<span color='#00FFFF' size='x-small'>水中呼吸</span>"
+msgstr "<span color='#00FFFF' size='x-small'>水下呼吸</span>"
 
 #. [trait]: id=TRAIT_waterbreathing
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1072
 msgid "waterbreathing"
 msgstr "水下呼吸"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=TRAIT_waterbreathing
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1073
-#, fuzzy
 msgid ""
 "An elixir of waterbreathing has given this unit normal movement and defense "
 "in swamp and shallow water."
-msgstr "一瓶水下呼吸药剂让该单位在沼泽和浅水中拥有正常的移动和防御能力。"
+msgstr "水下呼吸药水让该单位在沼泽和浅水中拥有正常的移动和防御能力。"
 
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1106
 msgid "Elixir of Elements"
 msgstr "元素药水"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1107
-#, fuzzy
 msgid ""
 "This bubbling yellow vial grants immunity to both fire and cold. It also "
 "makes you sweat profusely."
-msgstr "这个沸腾的黄色药瓶能让你免疫火焰和寒冷，但它也会让你大汗淋漓。"
+msgstr "这个沸腾的黄色药瓶能让你免疫火焰和冰寒。也会让你大汗淋漓。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [floating_text]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1127
-#, fuzzy
 msgid "<span color='#E8B923' size='x-small'>elemental resist</span>"
 msgstr "<span color='#E8B923' size='x-small'>元素抗性</span>"
 
@@ -13507,118 +13094,90 @@ msgstr "<span color='#E8B923' size='x-small'>元素抗性</span>"
 msgid "elements"
 msgstr "元素"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=TRAIT_elements
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1142
-#, fuzzy
 msgid ""
 "An elixir of elements has given this unit immunity to both fire and cold."
-msgstr "一种元素酏剂赋予了这个单位免疫火焰和寒冷。"
+msgstr "元素药水赋予了这个单位对火焰和冰寒的免疫。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [item_dialog_musttake]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1165
-#, fuzzy
 msgid "Elixir of Haste"
-msgstr "疾行神水"
+msgstr "疾行药水"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [item_dialog_musttake]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1167
-#, fuzzy
 msgid ""
 "This saccharine green liquid grants +1 movement and +10% defense on all "
 "terrain. You may have difficulty standing still."
 msgstr ""
 "这种甜腻的绿色液体赋予你在所有地形上移动+1和防御+10%的效果。你可能会发现很难"
-"保持静止。"
+"站稳。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [floating_text]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1190
-#, fuzzy
 msgid "<span color='#0BDA51' size='x-small'>haste</span>"
-msgstr "<span color='#0BDA51' size='x-small'>急速</span>"
+msgstr "<span color='#0BDA51' size='x-small'>疾行</span>"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=TRAIT_haste
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1202
-#, fuzzy
 msgid "haste"
-msgstr "急速生效"
+msgstr "疾行"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=TRAIT_haste
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1203
-#, fuzzy
 msgid ""
 "An elixir of haste has given this unit +1 movement and +10% defense on all "
 "terrain."
-msgstr "一瓶敏捷药水使该单位在所有地形上移动+1格且防御力提升10%。"
+msgstr "疾行药水使该单位在所有地形上移动+1且防御力提升10%。"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1241
-#, fuzzy
 msgid "Elixir of Fury"
-msgstr "狂怒精华"
+msgstr "狂怒药水"
 
-# Translated by ollama with model qwen2.5:14b.
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1242
-#, fuzzy
 msgid ""
 "The red liquid in this vial sloshes violently, as though trying to escape. "
 "Drinking it grants <b><i>unlimited melee attacks</i></b> and the "
 "<b><i>berserk</i></b> melee special."
 msgstr ""
-"这个药瓶里的红色液体剧烈晃动，仿佛想要逃脱。喝下它将赋予你<b><i>无限近战攻击"
-"次数</i></b>以及<b><i>狂战士</i></b>近战特技。"
+"这个药瓶里的红色液体剧烈地晃动，仿佛想要逃脱。喝下它将赋予你<b><i>无限的近战"
+"攻击次数</i></b>以及<b><i>狂暴</i></b>近战特攻。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [floating_text]
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1262
-#, fuzzy
 msgid "<span color='#FF0000' size='x-small'>berserker fury</span>"
-msgstr "<span color='#FF0000' size='x-small'>狂战士怒火</span>"
+msgstr "<span color='#FF0000' size='x-small'>狂战士之怒</span>"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=TRAIT_fury
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1274
-#, fuzzy
 msgid "fury"
 msgstr "狂怒"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=TRAIT_fury
 #: data/campaigns/Eastern_Invasion/utils/items.cfg:1275
-#, fuzzy
 msgid ""
 "An elixir of fury has given this unit <b><i>unlimited melee attacks</i></b> "
 "and the <b><i>berserk</i></b> melee special."
 msgstr ""
-"一瓶狂怒药剂赋予了这个单位<b><i>无限的近战攻击</i></b>和<b><i>狂战士</i></b>"
-"近战特殊能力。"
+"狂怒药水赋予了这个单位<b><i>无限的近战攻击次数</i></b>以及<b><i>狂暴</i></b>"
+"近战特攻。"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=audacious
 #: data/campaigns/Eastern_Invasion/utils/traits.cfg:8
-#, fuzzy
 msgid "audacious"
-msgstr "大胆的"
+msgstr "大胆"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=audacious
 #: data/campaigns/Eastern_Invasion/utils/traits.cfg:9
-#, fuzzy
 msgid "Fights normally during unfavorable times of day/night"
-msgstr "通常在不利的白天或夜晚时段作战"
+msgstr "在不利的日夜时段正常作战"
 
-# Translated by ollama with model qwen2.5:14b.
 #. [trait]: id=audacious
 #: data/campaigns/Eastern_Invasion/utils/traits.cfg:10
-#, fuzzy
 msgid ""
 "Aversion to light and dark holds no sway over these audacious individuals."
-msgstr "这些大胆的个体不受光明与黑暗的厌恶的影响。"
+msgstr "这些大胆的个体不受对光明与黑暗的厌恶的影响。"
 
 #. [trait]: id=deserter
 #: data/campaigns/Eastern_Invasion/utils/traits.cfg:20
@@ -13708,1792 +13267,9 @@ msgid ""
 "from their time in captivity, but have also learned much of the strengths "
 "and weaknesses of their former captors."
 msgstr ""
-"<span color='#00FF00'>+1</span> 伤害并且从亡灵、死灵法师和蝙蝠受到 <span "
-"color='#00FF00'>-1</span> 伤害。\n"
+"对亡灵、死灵法师和蝙蝠的伤害 <span color='#00FF00'>+1</span> 并且受到来自它们"
+"的伤害 <span color='#00FF00'>-1</span>.\n"
 "\n"
 "克服了重重困难，这个单位经受了玛尔-拉瓦纳尔的监狱的恐怖和折磨，并活着讲述了这"
 "个故事。幸存者承受着被囚禁的沉重负担，但也了解了以前囚禁他们的人的强项和弱"
 "点。"
-
-#, fuzzy
-#~ msgid "trample"
-#~ msgstr "践踏"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Skeleton Rider"
-#~ msgstr "骸骨骑士"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Once great warriors thundering across the plains, these mounted riders "
-#~ "atop their skeletal horses were raised from the grave by unholy magic to "
-#~ "spread fear and destruction."
-#~ msgstr ""
-#~ "昔日横扫平原的英勇战士，如今骑在骨骼战马上，被不洁魔法从坟墓中唤醒，只为传"
-#~ "播恐惧与破坏。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Normal"
-#~ msgstr "普通"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Spearman"
-#~ msgstr "枪兵"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Challenging"
-#~ msgstr "艰巨的挑战"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Swordsman"
-#~ msgstr "剑士"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Difficult"
-#~ msgstr "困难"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Campaign Epilogue and Continuity"
-#~ msgstr "战役终章与连续性"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "The Outpost"
-#~ msgstr "前哨站"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "To the northern outpost he sent Owaec, a clan noble. To the southern "
-#~ "outpost, he sent Gweddry, who would be accompanied by Dacyn the mage. Our "
-#~ "story begins there."
-#~ msgstr ""
-#~ "他派欧瓦埃克，一位氏族贵族，前往北方哨所。南方哨所则由格威德利带领，他会与"
-#~ "法师达辛一同行动。我们的故事就从这里开始。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Mal-Uldhar"
-#~ msgstr "玛尔-乌尔达赫"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Defend the outpost"
-#~ msgstr "保卫前哨站"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Look. To the east. Undead approach!"
-#~ msgstr "看。向东望去。亡灵正朝这边前进！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Ah, interesting..."
-#~ msgstr "啊，有趣……"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Apologies, Dark Archon. They will die. And then?"
-#~ msgstr "抱歉，暗御神。他们会被杀死。然后呢？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Slaughter the villagers and march onwards. You have wasted enough time "
-#~ "here already."
-#~ msgstr "屠杀村民，继续前进。你已经在这里浪费了太多时间。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "What?! We must hold the outpost! And where did Dacyn go?!"
-#~ msgstr "什么！我们必须守住前哨站！达辛去哪儿了！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Gweddry? Good! You are still alive. Quickly, we must leave this place!"
-#~ msgstr "格威德利？太好了！你还活着。快点，我们必须离开这个地方！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Where did you go?! And where did you come from?"
-#~ msgstr "你去哪儿了？！又是从哪儿来的？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "This outpost is already lost. We must defeat this evil if Wesnoth is to "
-#~ "survive. Now, come on, we do not have much time to spare!"
-#~ msgstr ""
-#~ "这个前哨已经失陷。我们必须击败这股邪恶势力，否则韦诺特将无法生存下去。来"
-#~ "吧，我们没有太多时间可以浪费！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Move Gweddry to the trapdoor"
-#~ msgstr "将格威德利移动到陷阱门旁边"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Hurry! We cannot defeat this evil today! We must escape!"
-#~ msgstr "快点！今天我们无法击败这个邪恶势力！我们必须逃走！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Follow me, men! Through the trapdoor!"
-#~ msgstr "跟我来，士兵们！从那个暗门下去！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Get moving quickly."
-#~ msgstr "迅速行动。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "This is an old escape route for the outpost. Unfortunately these caves "
-#~ "are currently inhabited by trolls, who are blocking our path through the "
-#~ "tunnel."
-#~ msgstr ""
-#~ "这是一条通往前哨站的古老逃生路线。不幸的是，这些洞穴目前被巨魔占据，它们堵"
-#~ "住了我们通过隧道的道路。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "I will explain later. For now, suffice to say they are much too powerful "
-#~ "for us; our only hope is to head north."
-#~ msgstr ""
-#~ "我稍后会解释。目前来说，只能说他们太过强大，我们唯一的希望是向北前进。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Aye, we’ll help ye, for we have nae love for the trolls. Anyone attacked "
-#~ "by them deserves some help, I think."
-#~ msgstr ""
-#~ "嗯，我们会帮你的，因为我们不喜欢巨魔。我认为任何被他们袭击的人都应该得到一"
-#~ "些帮助。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Thank you. Now, I invite you to join us. Undead have followed us into "
-#~ "these caves, and they will kill you if you stay behind."
-#~ msgstr ""
-#~ "感谢您的到来。现在请您加入我们，亡灵已经追进了这些洞穴，如果您留在后面它们"
-#~ "会杀了您。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Thank you. Now, I invite you to join us. Undead are in these lands, and "
-#~ "they will find these caves."
-#~ msgstr ""
-#~ "感谢您的到来。现在请您加入我们，这些土地上有亡灵存在，它们将会发现这些洞"
-#~ "穴。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "We have reached the end of the tunnel. I see daylight above us!"
-#~ msgstr "我们已经到达隧道的尽头了。我看见上方有光！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Defeat either enemy dark sorcerer"
-#~ msgstr "击败任一敌方黑暗死灵法师"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "We have escaped from those dark tunnels! But where are we now?"
-#~ msgstr "我们从那些黑暗的隧道中逃了出来！但现在我们在哪儿？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We are in the middle of the eastern mountains, in a mountain pass leading "
-#~ "east and west. We need to head north, but we cannot go through the "
-#~ "mountains... we must go east, or west, and hope we can get around them."
-#~ msgstr ""
-#~ "我们身处东部山脉的中央，位于一条东西向的山口之中。我们需要往北走，但无法穿"
-#~ "越山脉……我们必须向东或西前进，并希望可以绕过它们。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Hahaha! We have you surrounded!"
-#~ msgstr "哈哈哈哈！我们已经把你团团围住了！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Why don’t we see if the new recruit can handle them. After all, there are "
-#~ "only two!"
-#~ msgstr "不如我们看看新招募的士兵能不能对付他们。毕竟只有两个人而已。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "That would be your problem, then."
-#~ msgstr "那就会成为你的问题了。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "These undead are toying with us! This adept is weak — we should attack at "
-#~ "once and take his fort."
-#~ msgstr ""
-#~ "这些亡灵在戏弄我们！这个死灵法师很弱——我们应该立刻发动攻击，夺取他的要塞。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Indeed, I see no better option. Then, we must kill either of the dark "
-#~ "sorcerers. I would prefer to attack the western one, so we can return to "
-#~ "Wesnoth."
-#~ msgstr ""
-#~ "确实，我看不到更好的选择。那么，我们必须杀死其中一位黑暗死灵法师。我更倾向"
-#~ "于攻击西部的那位，这样我们就能返回韦诺了。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "No! You have defeated me, and can re-enter Wesnoth!"
-#~ msgstr "不！你已经击败了我，可以重新进入韦诺了！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "But Gweddry and Dacyn were to find no respite within the borders of "
-#~ "Wesnoth. They marched out of the foothills of the Estmarks into an "
-#~ "unknown forest..."
-#~ msgstr ""
-#~ "但格威德利和达辛在韦诺境内并未找到任何喘息的机会。他们从东界丘陵的山脚下走"
-#~ "进了一片未知的森林……"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Allies"
-#~ msgstr "盟友"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Volas"
-#~ msgstr "沃拉斯"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Orcs"
-#~ msgstr "兽人"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Gruga-Har"
-#~ msgstr "格拉格哈尔"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Defeat enemy leader"
-#~ msgstr "击败敌方领袖"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Death of Volas"
-#~ msgstr "沃拉斯之死"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Would it be possible for us to rest in your lands for a while? We have "
-#~ "been pursued by fell undead, although they did not dare follow us into "
-#~ "the forest... yet."
-#~ msgstr ""
-#~ "我们可以暂时在您的土地上休整一番吗？我们被邪恶的亡灵追击，虽然他们还没有胆"
-#~ "敢跟着我们进入森林……至少目前是这样。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Certainly."
-#~ msgstr ""
-#~ "当然。以下是翻译内容：\n"
-#~ "Wesnoth 韦诺\n"
-#~ "Weldyn 维尔帝\n"
-#~ "Great River 泰河\n"
-#~ "Soradoc 索拉多克\n"
-#~ "undead 亡灵\n"
-#~ "ogre 食人魔\n"
-#~ "orc 兽人\n"
-#~ "lich 巫妖\n"
-#~ "necromancer 死灵法师\n"
-#~ "drake 龙人\n"
-#~ "Aspirant 有为者\n"
-#~ "scenerio 场景\n"
-#~ "Mal- 玛尔-\n"
-#~ "Mal-Ravanal 玛尔-拉瓦纳尔\n"
-#~ "Ravan 莱文\n"
-#~ "Gweddry 格威德利\n"
-#~ "Owaec 欧瓦埃克\n"
-#~ "Dacyn 达辛\n"
-#~ "Terraent 特拉恩特\n"
-#~ "Yannic 雅尼克\n"
-#~ "Grug 格拉格\n"
-#~ "clan 氏族\n"
-#~ "Estmark hills 东界丘陵"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Good. Now, you should be warned: this undead warlord is very powerful. If "
-#~ "you choose to fight, even if you are victorious, few will survive. I "
-#~ "invite you to join us, and head north."
-#~ msgstr ""
-#~ "好的。现在你要注意了：这个亡灵战lord非常强大。如果你选择战斗，即便胜利，存"
-#~ "活者也将寥寥无几。我邀请你加入我们，向北进发。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "I thank you for your offer. But I will not leave my homeland. These "
-#~ "undead cannot be as powerful as you say; I will fight them."
-#~ msgstr ""
-#~ "我感谢你的提议。但我不会离开我的故乡。这些亡灵不可能像你说的那样强大；我会"
-#~ "与他们一战。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "This is not a wise choice, but it is yours to make. If you will not join "
-#~ "us, will you at least help us reach the northern outpost? We wish to warn "
-#~ "our comrades there."
-#~ msgstr ""
-#~ "这不是一个明智的选择，但这是你的决定。如果你不愿意加入我们，至少能帮助我们"
-#~ "到达北方哨所吗？我们希望警告那里的同伴们。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "I will aid you. Although, I too, think that yours is the foolish choice. "
-#~ "You should stay, and fight."
-#~ msgstr "我将帮助你。尽管我认为你的选择也是愚蠢的。你应该留下来战斗。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "After we rest for a short while, we will leave. We have little time to "
-#~ "spare."
-#~ msgstr "休息片刻后，我们就离开。我们没有太多时间可以浪费。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Intruders!"
-#~ msgstr "入侵者！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "What? Orcs! Where did they come from?"
-#~ msgstr "什么？兽人！他们是从哪儿来的？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "I know not. But they have made camp on the northern path. You will have "
-#~ "to fight them to move on."
-#~ msgstr ""
-#~ "我不知道。但他们已经在北方的小路上安营扎寨了。你必须击败他们才能继续前进。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Bring forth the assassins, we may be able to poison them!"
-#~ msgstr "派出刺客，我们或许能够毒害他们！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Your Warlordship, I am the only assassin left! Do you want me to go "
-#~ "poison their leader?"
-#~ msgstr "元帅，我是唯一剩下的刺客了！你想让我去毒死他们的首领吗？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Perfect! Go, into the forest!"
-#~ msgstr "好了！前进，进入森林！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "They have sent an assassin into the forest. We will have to be careful, "
-#~ "and make sure he does not come out and attack us unexpectedly."
-#~ msgstr ""
-#~ "他们派了一名刺客进入了森林。我们必须小心，确保他不会出来突然袭击我们。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Hahaha! Nafga will kill the elves!"
-#~ msgstr "哈哈哈哈哈！纳夫加会杀死精灵们！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "My assassin is dead! The elves must pay, not for his death, but for "
-#~ "stopping him in his mission!"
-#~ msgstr ""
-#~ "我的刺客死了！精灵必须为此付出代价，不是因为他死亡，而是因为他们阻止了他执"
-#~ "行任务！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "We have defeated the orcs! Now you can rest before your journey."
-#~ msgstr "我们击败了兽人！现在你可以休息一下，然后再启程。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We have not the time. This battle has wasted too much of it already. We "
-#~ "must leave now."
-#~ msgstr "我们没有时间了，这场战斗已经浪费了太多时间，我们现在必须离开。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Very well. I will send guides to lead you north to your allies."
-#~ msgstr "很好。我会派遣向导带领你前往北方，与你的盟友会合。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "The Undead Border Patrol"
-#~ msgstr "亡灵边境巡逻队"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Mal-Telnarad"
-#~ msgstr "玛尔-特尔纳达克"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Defeat either enemy leader"
-#~ msgstr "击败任意一名敌方领袖"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Now that we are free of the mountain range the path northwards is clear. "
-#~ "Let us go north and try to reach Owaec at the outpost."
-#~ msgstr ""
-#~ "如今我们已经离开了山脉，向北前进的道路畅通无阻。让我们往北走，尝试到达欧瓦"
-#~ "埃克所在的前哨站。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Wait. I am not sure that is the best option. If we go east now, we may be "
-#~ "able to find the lich who attacked us and destroy him. He must be nearby."
-#~ msgstr ""
-#~ "等一下。我不确定这是最好的选择。如果我们现在向东前进，或许能找到袭击我们的"
-#~ "巫妖并消灭他。他一定就在附近。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "This is no ordinary Lich you hunt. Even if you manage to find him, how "
-#~ "will you prevent him from simply teleporting away? We should head north; "
-#~ "there is much I must learn before we confront this menace."
-#~ msgstr ""
-#~ "这并非普通的巫妖，即使你能找到他，又如何阻止他瞬移逃离？我们应该往北走，在"
-#~ "面对这个威胁之前，我还有很多需要了解的。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "They run from me! Still, it will not help them, the border patrol will "
-#~ "destroy them. I may even be promoted!"
-#~ msgstr ""
-#~ "他们都在逃命！不过这无济于事，边境巡逻队会将他们消灭的。我甚至有可能因此得"
-#~ "到晋升！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We have defeated this patrol, but we can still turn back! Do you insist "
-#~ "on traveling east, or shall we defeat this dark sorcerer?"
-#~ msgstr ""
-#~ "我们已经击退了这队巡逻兵，但我们仍然可以选择撤退！你们是要继续向东前进，还"
-#~ "是要把这个黑暗死灵法师击败？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "I wish to destroy the evil before it can spread. East we go!"
-#~ msgstr "我愿在邪恶蔓延之前将其摧毁。向东方前进！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "I cannot say this is a good decision, but I will follow you."
-#~ msgstr "我说这不是一个好决定，但我愿意跟随你。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Noo!! I can’t be promoted if they run away!"
-#~ msgstr "不行！！如果他们逃跑的话我可就不能晋升了！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "You are right. It is foolish to go onward — we will turn back."
-#~ msgstr "你说得对。继续前进是愚蠢的——我们应该回头。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Good! If I defeat them, I can become a lich!"
-#~ msgstr "太好了！如果我击败他们，我就能够成为巫妖了！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We failed to defeat either enemy! Now more undead will come and we will "
-#~ "be overwhelmed!"
-#~ msgstr "我们未能击败任何一个敌人！现在更多的亡灵将会到来，我们会陷入困境！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We cannot spend any more time attempting to defeat Mal-Skraat. Like it or "
-#~ "not, we must go further into these undead lands."
-#~ msgstr ""
-#~ "我们不能再浪费时间试图击败玛尔-斯克拉特了。无论喜不喜欢，我们必须深入这些"
-#~ "亡灵领地。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Noo!! He will reach Mal-Ravanal’s capital, and I shall be punished for "
-#~ "letting him escape!"
-#~ msgstr ""
-#~ "哦不！！他会到达玛尔-拉瓦纳尔的首都，而我将会因为让他逃脱而受到惩罚！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Mal-Galkar"
-#~ msgstr "玛尔-加卡尔"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Yes, but look! The undead forces are closing in behind us. As I said "
-#~ "before we cannot kill Mal-Ravanal. It was foolish to come this far; we "
-#~ "must turn back!"
-#~ msgstr ""
-#~ "是的，但是你看！亡灵部队正在我们的后面逼近。正如我之前所说，我们无法杀死玛"
-#~ "尔-拉瓦纳尔。来得太远了，我们必须撤退！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Perhaps. To retreat, we must kill one of these dark sorcerers that follow "
-#~ "us. But, perhaps we can kill this Mal-Ravanal. I might wish to try."
-#~ msgstr ""
-#~ "或许。要想撤退，我们必须杀死跟随我们的这些黑暗死灵法师中的一个。但是，也许"
-#~ "我们可以杀了这个玛尔-拉瓦纳尔。我可能想尝试一下。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "These humans have dared foolishly to come this far into my land. Crush "
-#~ "them!"
-#~ msgstr "这些人类愚蠢地胆敢来到我的领地深处。将他们碾碎！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Thank you for destroying that skeleton warrior! Every time you kill one "
-#~ "of the Revenants, one of us knights is let free!"
-#~ msgstr ""
-#~ "感谢你摧毁了那个骷髅战士！每次你杀死一个复仇者，就会有一个我们的骑士获得自"
-#~ "由！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Why? Are you the undead’s prisoners?"
-#~ msgstr "为什么？你是亡灵的囚犯吗？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Yes. My allies and I were questing when we were ambushed by undead. The "
-#~ "guard is playing a sick game — whenever one of their warriors dies, one "
-#~ "of us is let free, but whenever you lose a fighter, they kill one of us."
-#~ msgstr ""
-#~ "是的。我和我的盟友们在执行任务时被亡灵袭击了。守卫在玩一个邪恶的游戏——每当"
-#~ "他们的战士死亡时，就会释放我们中的一人，但每当你失去一名战士时，他们便会杀"
-#~ "死我们中的一员。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Wait! I recognize that magic! Dacyn, have you come to surrender to me? Or "
-#~ "perhaps you wish to finish the duel we started so long ago?"
-#~ msgstr ""
-#~ "等一下！我认得那魔法！达辛，你是来向我投降的吗？还是说你想要结束我们很久以"
-#~ "前开始的那个决斗？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "If I have one regret, it is that mercy slowed my hand thirty three years "
-#~ "ago. Stop this madness and I will release you from your torment."
-#~ msgstr ""
-#~ "如果有的话，我的遗憾就是在三十三年前，仁慈延误了我的手。停止这一切疯狂吧，"
-#~ "我会让你解脱痛苦的。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Torment?! You have no idea... but you soon will. Kill them all and bring "
-#~ "Dacyn to me!"
-#~ msgstr "折磨？！你不知道……但很快就会知道了。把他们都杀了，把达辛带给我！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "You know this lich?"
-#~ msgstr "你知道这个巫妖吗？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Ah, so you’ve decided to fight me."
-#~ msgstr "啊，所以你决定要和我战斗了。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "I will atone for my failure thirty three years ago."
-#~ msgstr "我将为三十年前的失败赎罪。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Enough! You cannot possibly defeat me!"
-#~ msgstr "够了！你不可能打败我！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Is he... dead?"
-#~ msgstr "他……死了吗？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Merely departed. He will return once he has recovered; we would best be "
-#~ "away from here by then."
-#~ msgstr "已然离去。他恢复后便会回来；我们最好在他回来之前离开这里。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Lanar-Skal"
-#~ msgstr "兰纳尔-斯卡爾"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Defeat the undead leader"
-#~ msgstr "击败亡灵领袖"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Greetings, Owaec! We have been forced from our positions by undead "
-#~ "invaders. They follow us even now."
-#~ msgstr ""
-#~ "问候你啊，欧瓦埃克！我们被迫离开了我们的位置，亡灵入侵者正在紧追不舍。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Indeed, they do. And do not think you will be able to defeat them. They "
-#~ "are too powerful. We are heading for the Northlands, where I hope to find "
-#~ "a means to stop this invasion. Will you join us?"
-#~ msgstr ""
-#~ "确实如此。不要以为你能击败他们，他们太强大了。我们正前往北方之地，在那里我"
-#~ "希望能找到阻止这次入侵的方法。你会加入我们吗？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "I cannot. My orders were to protect these villages. If I leave, the "
-#~ "villagers will be at the mercy of a gang of bandits. I cannot find a way "
-#~ "to defeat them; the outlaws hide in the villages whenever I send in my "
-#~ "troops."
-#~ msgstr ""
-#~ "我不能离开。我的任务是保护这些村庄。如果我离开了，村民们就会成为一伙强盗的"
-#~ "俎上鱼肉。我没有办法击败他们；每当我派兵进入村子时，那些亡命之徒就躲藏起"
-#~ "来。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Hoping to protect these villages is foolish; all who stay here will die. "
-#~ "However, if we can drive these bandits out, will you organize the "
-#~ "villagers to flee to the west? There they may survive for a time. But "
-#~ "soon nowhere in Wesnoth will be safe."
-#~ msgstr ""
-#~ "妄图保护这些村庄是愚蠢的；所有留在这里的人最终都会死去。然而，如果我们能将"
-#~ "这些匪徒驱逐出去，你能否组织村民向西撤离？在那里他们或许可以暂时存活下来。"
-#~ "但很快在整个韦诺特里都将不再有安全之地。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Go, go far from here! But me and my kind will chase you, and kill you!"
-#~ msgstr "快走，走得远远的！但我和我的族人会追上你，并杀了你！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "It seems the undead have caught up with us! We will have to kill them too "
-#~ "if we want the villagers to be safe. Well, I will begin casting the spell."
-#~ msgstr ""
-#~ "看来亡灵已经追上我们了！如果我们想要村民安全，我们就必须杀死他们。好吧，我"
-#~ "将开始施放法术。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "So, you have found my hiding place. Very well, I guess I will have to "
-#~ "kill you!"
-#~ msgstr "所以，你找到了我的藏身之处。好吧，看来我只好杀了你了！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "You have defeated me! I can terrorize the villagers no more..."
-#~ msgstr "你击败了我！我再也不能恐吓村民了……"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "We still need to defeat these undead for the villagers to be safe."
-#~ msgstr "我们仍然需要击败这些亡灵才能保证村民的安全。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "There are still these outlaws to take care of — we must continue fighting "
-#~ "here."
-#~ msgstr "这里还有这些盗匪需要处理——我们必须继续在这里战斗。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Good! Now, we must move onward, north. Tell the villagers to pack their "
-#~ "belongings and head west."
-#~ msgstr "好的！现在，我们必须向北前进。告诉村民打包好他们的物品并向西行进。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Two Paths"
-#~ msgstr "两条道路"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Evil"
-#~ msgstr "邪恶"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Wak-Rano"
-#~ msgstr "瓦克-拉诺"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "It looks like the road splits here. Which way shall we go?"
-#~ msgstr "这里看来路分岔了。我们要走哪一条路？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We’re in the land of the Clans now; I know it well. The road north leads "
-#~ "directly to the Great River; across it lies the orcs’ home country in the "
-#~ "Northlands. The westward road will keep us inside the realm of Wesnoth, "
-#~ "for a time, before we reach another river crossing north of Glyn’s "
-#~ "Forest. If we travel west we will not have to fight orcs immediately."
-#~ msgstr ""
-#~ "我们现在处于氏族的土地上；我对此地非常熟悉。向北的道路直接通向泰河；过了泰"
-#~ "河就是北方兽人居住的故土。向西的道路会让我们暂时留在韦诺境内，直到我们到达"
-#~ "格lyn森林以北的另一条河流渡口。如果我们选择向西行进，则不会立即与兽人交"
-#~ "战。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We should probably go north to the orcish lands as quickly as possible. "
-#~ "The longer we tarry in Wesnoth, the more undead we will have to face."
-#~ msgstr ""
-#~ "我们最好尽快前往兽人的领地。我们在韦诺停留的时间越长，将来要面对的亡灵就越"
-#~ "多。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "The orcs are more powerful than you suspect. I doubt the few undead in "
-#~ "Wesnoth can rival the might of the orcish homeland."
-#~ msgstr ""
-#~ "兽人的实力比你想象的更为强大。我认为韦诺的少量亡灵无法与兽人故乡的力量相匹"
-#~ "敌。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Either way we will have to fight. Look, the orcs and undead block our "
-#~ "path ahead!"
-#~ msgstr "不论如何，我们都要战斗了。你看，兽人和亡灵挡住了我们的去路！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Well, orc, we can either continue this fight, or we can crush the humans "
-#~ "and battle later. How shall it be?"
-#~ msgstr ""
-#~ "好吧，兽人，我们可以继续这场战斗，或者我们可以先打败人类，之后再战。你觉得"
-#~ "怎样？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Hmm... I know. We will make a pact to destroy these men, and continue our "
-#~ "fight later. "
-#~ msgstr "嗯……我懂了。我们将缔结盟约摧毁这些人类，稍后继续我们的战斗。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Perhaps he will die, and I will win our battle without fighting."
-#~ msgstr "或许他会死去，而我就能不战而胜了。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "This foolish orc will surely perish."
-#~ msgstr "这个愚蠢的兽人必定会灭亡。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Very well, we are allies, for now. "
-#~ msgstr "很好，我们现在是盟友。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Arrgh! I have failed to defend the northern homeland!"
-#~ msgstr "啊！我没能保卫北方的故乡！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "I was supposed to kill you all! I have failed."
-#~ msgstr "我本该杀死你们所有人的！我失败了。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Garnad"
-#~ msgstr "加纳德"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Draka-Kura"
-#~ msgstr "德拉卡库拉"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Move Gweddry, Owaec, and Dacyn across the river"
-#~ msgstr "将格威德利、欧瓦埃克和达辛带过河去"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We have come to the Great River. Should we cross here, or try to find a "
-#~ "ford?"
-#~ msgstr "我们来到了泰河。我们应该在这里过河，还是试着找一个浅滩渡过去？"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We must cross here. The undead are chasing us, and their hordes are much "
-#~ "too great for us to defeat. We’ve haven’t faced even a small part of "
-#~ "their force yet. We need to cross the river before the bulk of their army "
-#~ "arrives!"
-#~ msgstr ""
-#~ "我们必须在这里过河。亡灵在追击我们，他们的数量太过庞大，我们无法战胜他们。"
-#~ "到现在为止，我们甚至还没有遇到他们主力部队中的一小部分。我们必须在敌人的大"
-#~ "军到达之前渡过河流！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Across this river lie the Northlands. If we can get there, we may be able "
-#~ "to get some ogres to help us — but the orcs will definitely attack us "
-#~ "before that happens."
-#~ msgstr ""
-#~ "越过这条河就是北方之地。如果我们能够到达那里，或许可以争取到一些食人魔的帮"
-#~ "助——但在那之前兽人一定会攻击我们。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Grug say we no help you! We finish must battle orc with!"
-#~ msgstr "格拉格说我们不会帮你！我们必须先和兽人战斗到底！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Was that comprehensible to anyone? Silence, foolish ogre. I will deal "
-#~ "with you later. Right now there are men trying to cross this river."
-#~ msgstr ""
-#~ "这话别人能听懂吗？沉默，愚蠢的食人魔。我会稍后处理你。现在有人正试图横渡这"
-#~ "条河。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Orc foolish! Die you now!"
-#~ msgstr "兽人愚蠢！你现在就死吧！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "We have you now, mortals!"
-#~ msgstr "现在轮到你们了，凡人们！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "They’re closing in on us! We must get moving quickly."
-#~ msgstr "他们正在逼近！我们必须迅速行动。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Mal-Hakralan"
-#~ msgstr "玛尔-哈克拉兰"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "I see, this is where the scared dogs ran to. Don’t think you can get away "
-#~ "<b>this</b> easily."
-#~ msgstr ""
-#~ "我明白了，这就是那些吓得逃窜的狗跑来的地方。别以为能这么轻易地逃脱。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "The undead reinforcements have arrived! We must cross the river "
-#~ "immediately!"
-#~ msgstr "亡灵援军已到达！我们必须立刻渡河！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Hurry up. We must get across before these undead slaughter us!"
-#~ msgstr "快点。我们必须在这些亡灵杀死我们之前过河！"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "Good! We have crossed. Now let’s see if we can get the ogres to join us. "
-#~ "They have been convinced to work for the Crown in the past; maybe it can "
-#~ "be done again."
-#~ msgstr ""
-#~ "好的！我们已经渡过了。现在让我们看看是否能让食人魔加入我们。他们过去曾被说"
-#~ "服为王冠工作；也许这次也能再次实现。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Grug say join you will he. Gork and Drog too."
-#~ msgstr "格拉格说他会加入你，戈克和德罗也会。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Gork"
-#~ msgstr "戈克"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid "Drog"
-#~ msgstr ""
-#~ "恶龙氏族成员简称或称呼，可译为“德拉格”或保留原名“德罗格”。此处采用音译："
-#~ "“德罗格”"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "These fens look impassable. I don’t think we will be able to continue on "
-#~ "this road; it is time to turn northwards, away from these undead."
-#~ msgstr ""
-#~ "这些沼泽看起来无法通行。我认为我们无法继续走这条路了；是时候向北转离这些亡"
-#~ "灵了。"
-
-# Translated by ollama with model qwen2.5:14b.
-#, fuzzy
-#~ msgid ""
-#~ "We must cross this river, then. We must make haste, already we have "
-#~ "wasted too much time. Undead have positioned themselves in the middle of "
-#~ "the ford."
-#~ msgstr ""
-#~ "我们必须渡过这条河了。我们必须加快速度，我们已经浪费了太多时间。亡灵已经在"
-#~ "渡口中央布好了阵。"
-
-#~ msgid ""
-#~ "Across this river lie the Northlands. Ogres live there, as do orcs. We "
-#~ "should proceed with caution. The undead are dangerous, but the orcs may "
-#~ "be more dangerous still."
-#~ msgstr ""
-#~ "过了此河便是北陆。食人魔住在那儿，兽人也是。我们必须小心谨慎。亡灵很危险，"
-#~ "但是兽人可能更危险。"
-
-#~ msgid ""
-#~ "I will leave your bodies to rot in the river, then I will raise you up to "
-#~ "serve in my Master’s undead hordes!"
-#~ msgstr "我会让你的尸身烂在河里，而后让你复活，在吾主的亡灵大军之中效命！"
-
-#~ msgid "<i>HISS!</i>"
-#~ msgstr "<i>嘶！</i>"
-
-#~ msgid "The sea creatures are gone!"
-#~ msgstr "海中生物离开了！"
-
-#~ msgid ""
-#~ "We have no time to lose! Let’s get moving quickly before the rest of "
-#~ "their army catches up with us."
-#~ msgstr ""
-#~ "没有时间可以浪费了！在他们的其余部队追上来之前，我们得赶快行动起来。"
-
-#~ msgid ""
-#~ "Looks like they are fleeing. I think they will surrender easily if we can "
-#~ "surround them."
-#~ msgstr "看起来它们正在逃跑。我觉得要是我们能包围它们，它们很容易便会投降。"
-
-#~ msgid "All right, we have to capture them one by one."
-#~ msgstr "好吧，我们得一个个地捕获它们。"
-
-#~ msgid "Help!"
-#~ msgstr "救命！"
-
-#~ msgid "We failed to capture any of them!"
-#~ msgstr "我们一只食人魔都没抓到！"
-
-#~ msgid "We only captured one ogre."
-#~ msgstr "我们只抓到了一只食人魔。"
-
-#~ msgid "Elandin"
-#~ msgstr "艾兰丁"
-
-#~ msgid ""
-#~ "Hail, dwarves! Will you help us get by these foul orcs? We are headed "
-#~ "farther north."
-#~ msgstr ""
-#~ "向你们致意，矮人们！能请你们帮助我们打击这些肮脏的兽人么？我们要继续往北"
-#~ "去。"
-
-#~ msgid "You human! Call us foul, will you?!"
-#~ msgstr "你们人类！说我们肮脏，是吗？！"
-
-#~ msgid "Why should we help you? You’re not a dwarf!"
-#~ msgstr "我们为什么要帮助你们？你们又不是矮人！"
-
-#~ msgid ""
-#~ "Your people helped us in the past, in the tunnels in the south. Will you "
-#~ "not help us now?"
-#~ msgstr "你们以前帮助过我们，在南边的坑道里。你们现在不帮忙吗？"
-
-#~ msgid "Impossible! I canna’ believe any of my kin would ha’ helped a human!"
-#~ msgstr "不可能！我不相信我们的任何一个族人会帮助人类！"
-
-#~ msgid "Indeed. Why should any of us help those not of our people?"
-#~ msgstr "确实。为什么我们要帮助不是同胞的人？"
-
-#~ msgid "Will you but let us pass, so that we may fight the orcs on our own?"
-#~ msgstr "那你们至少可以让我们通过吧？这样我们就能自己对付兽人了。"
-
-#~ msgid "I am afraid that is... impossible."
-#~ msgstr "恐怕那是……不可能的。"
-
-#~ msgid "Orcs, kill’em all! Humans, elves or dwarves, it don’t matter!"
-#~ msgstr "兽人，杀光他们！人类，精灵，矮人，都一样！"
-
-#~ msgid ""
-#~ "These orcs will die. But so will you, human. You have trespassed on "
-#~ "elvish land."
-#~ msgstr "这些兽人必须受死。但你们也是，人类。你们侵犯了精灵的领地。"
-
-#~ msgid "Oh, elvish land is it now? Die, ye elf-dog! And you too, human!"
-#~ msgstr ""
-#~ "噢，现在这儿是精灵的领地了？死吧，你这狗精灵！还有你们也得死，人类！"
-
-#~ msgid ""
-#~ "These people won’t listen to reason, they are all blinded by their "
-#~ "beliefs in their own supposed superiority. We probably will have to fight "
-#~ "them, although we can let them fight each other first."
-#~ msgstr ""
-#~ "这些人不听任何解释，他们都被自己假想的优越感蒙蔽了。我们可能不得不和他们作"
-#~ "战，虽然也可以任由他们自己先打起来。"
-
-#~ msgid ""
-#~ "True. As much as I dislike killing anything but orcs and undead, it seems "
-#~ "we will have to kill these elves, and these dwarves, before they do the "
-#~ "same to us."
-#~ msgstr ""
-#~ "确实。除了兽人和亡灵之外，我可不想杀任何人，但看来我们不得不杀掉这些精灵，"
-#~ "还有这些矮人，在他们杀掉我们之前。"
-
-#~ msgid "I die? Orcs rule all!"
-#~ msgstr "我要死了？兽人统御一切！"
-
-#~ msgid "It seems these humans are more powerful than I thought. Ugh."
-#~ msgstr "看上去这些人类比我想象的要强大。啊。"
-
-#~ msgid "Cursed dwarves! Perhaps we should have allied with the humans..."
-#~ msgstr "该死的矮人！我们也许该和人类结盟的……"
-
-#~ msgid "Foul orcs! Perhaps we should have allied with the humans..."
-#~ msgstr "肮脏的兽人！我们也许该和人类结盟的……"
-
-#~ msgid "Cursed elves! Perhaps we should have allied wi’ the humans..."
-#~ msgstr "该死的精灵！我们也许该和人类结盟的……"
-
-#~ msgid "Let us forge onward toward Lake Vrug."
-#~ msgstr "让我们向弗鲁格湖前进。"
-
-#~ msgid "Lake Vrug"
-#~ msgstr "弗鲁格湖"
-
-#~ msgid "Darg"
-#~ msgstr "达格"
-
-#~ msgid "Kraagak"
-#~ msgstr "克拉伽克"
-
-#~ msgid ""
-#~ "The trail stops soon. We have almost reached Lake Vrug. There is a small "
-#~ "island off the coast ahead that was once home to a great school of magic. "
-#~ "I pray that the library is still intact."
-#~ msgstr ""
-#~ "足迹很快就没了。我们快到弗鲁格湖了。前方湖岸之外有一个小岛，岛上曾经有一所"
-#~ "伟大的魔法学院。但愿图书馆仍然完好无损。"
-
-#~ msgid "But what happened to the people who lived there?"
-#~ msgstr "但是那里的居民怎么了？"
-
-#~ msgid ""
-#~ "Few enough remained before the trolls and gryphons took up residence in "
-#~ "the mountains. But now the school is deserted, and has been for decades."
-#~ msgstr ""
-#~ "在巨魔和狮鹫在山里住下来之前，就没剩下多少人了。但如今学院已经废弃了，废弃"
-#~ "了几十年了。"
-
-#~ msgid ""
-#~ "Very well, we will take care of the trolls and gryphons. Search the "
-#~ "library and may you find us an answer. Onward!"
-#~ msgstr ""
-#~ "好吧，我们来对付巨魔和狮鹫。去图书馆搜查吧，愿你为我们找到答案。前进！"
-
-#~ msgid "The stronghold"
-#~ msgstr "要塞"
-
-#~ msgid ""
-#~ "The island ahead is mountainous; it would be wise to select troops that "
-#~ "do well on such terrain."
-#~ msgstr "前方的岛上皆是山脉。选择在那样的地形上来去自如的部队才是睿智的。"
-
-#~ msgid "This must be the academy Dacyn mentioned."
-#~ msgstr "这一定是达辛提到的学院。"
-
-#~ msgid ""
-#~ "It still looks quite defensible. We should be able to hold there while "
-#~ "Dacyn is working."
-#~ msgstr "看起来这儿还是挺利于防守的。达辛搜查时我们应该可以守住这里。"
-
-#~ msgid ""
-#~ "Very well. Let us rally there after the trolls and gryphons are defeated."
-#~ msgstr "很好。击败巨魔和狮鹫之后我们就在这里会合吧。"
-
-#~ msgid "You find 100 gold in the fortress!"
-#~ msgstr "你在要塞里找到了100金币！"
-
-#~ msgid "Excellent; I’ll start my research."
-#~ msgstr "太好了。我马上开始研究。"
-
-#~ msgid "Alright, now we should be safe while Dacyn is researching."
-#~ msgstr "好吧，现在我们都安全了，而达辛正在进行研究。"
-
-#~ msgid "I have found an answer! We must return to Wesnoth immediately! ..."
-#~ msgstr "我找到了答案！我们必须马上回到韦诺！……"
-
-#~ msgid "Groog"
-#~ msgstr "戈鲁格"
-
-#~ msgid "Be not going too fast. You gonna come wid us."
-#~ msgstr "憋记着走。尼门根卧来。"
-
-#~ msgid ""
-#~ "After reaching what they believed was safety, Gweddry and his men had "
-#~ "been captured by northern orcs."
-#~ msgstr "到达本以为安全的地方之后，格威德利和他的部下却被北方的兽人俘获了。"
-
-#~ msgid "There’s strange noises coming from those pits. I don’t like this."
-#~ msgstr "这些坑里传出了奇怪的声音。我可不喜欢这个。"
-
-#~ msgid ""
-#~ "There’s a pile of orcish gear and trash here. The stench is wretched."
-#~ msgstr "这儿有一堆兽人装备和垃圾。恶臭味真糟糕。"
-
-#~ msgid "After a while..."
-#~ msgstr "过了一会儿……"
-
-#~ msgid "Ha-ha! These humans will make excellent slaves in my mines!"
-#~ msgstr "哈，哈！这些人类在我的矿里可以是些好奴隶呢！"
-
-#~ msgid "Eh?"
-#~ msgstr "呃？"
-
-#~ msgid "Hey! Who are you? Get her!"
-#~ msgstr "嘿！你是谁？抓住她！"
-
-#~ msgid "At last!"
-#~ msgstr "终于！"
-
-#~ msgid "What? Who’s there? Get them!"
-#~ msgstr "什么？谁在那儿？抓住他们！"
-
-#~ msgid ""
-#~ "The eastern entrance is teeming with orcs. We have to find another way to "
-#~ "exit to the west!"
-#~ msgstr "东面的入口挤满了兽人。我们得在西面找到另一个出口！"
-
-#~ msgid ""
-#~ "We have to get our gold back first! It must have been taken to their "
-#~ "treasury."
-#~ msgstr "我们得先找回金币！它们一定已经被移到藏宝库去了。"
-
-#~ msgid ""
-#~ "They have reinforcements pouring in from the eastern entrance! We have to "
-#~ "get out of here quickly!"
-#~ msgstr "从东面入口涌进来了一大批增援！我们得快点离开这里！"
-
-#~ msgid "All the gold the orcs took is in this chest!"
-#~ msgstr "兽人拿走的金子都在这个藏宝箱里！"
-
-#~ msgid "You’ve regained $stored_player_gold gold!"
-#~ msgstr "你重新获得了$stored_player_gold|金币！"
-
-#~ msgid "Unhk"
-#~ msgstr "昂克"
-
-#~ msgid "Ran-Lar"
-#~ msgstr "兰-拉"
-
-#~ msgid "Engineer"
-#~ msgstr "工程师"
-
-#~ msgid ""
-#~ "We have to get out of the Northlands as quickly as possible! Run for your "
-#~ "— what the...?! Who are you?"
-#~ msgstr "我们得离开北陆，越快越好！ 快逃命——什……？！你是谁？"
-
-#~ msgid ""
-#~ "I’m an enginea’. I s’pect you’ll have a need of me services. I bet you’re "
-#~ "gonna want me to blow up that bridge ov’r theah."
-#~ msgstr "俺是工程师。俺觉得你们要俺帮忙。俺打赌你们想让俺炸飞那边那桥。"
-
-#~ msgid "Why would we want to do that?!"
-#~ msgstr "我们为什么会想那样做？！"
-
-#~ msgid ""
-#~ "Well, I see those orcs are chasin’ you, and if I blow up the bridge, they "
-#~ "can’t get across. It’ll help you to escape."
-#~ msgstr ""
-#~ "啊，俺看到兽人在追你们，如果俺把桥炸了，他们就过不来。这样你们就能逃跑啦。"
-
-#~ msgid "I see... I think it is a good idea to hire him. How much?"
-#~ msgstr "我明白了……我觉得雇佣他会是个好主意。多少钱？"
-
-#~ msgid ""
-#~ "I ain’t charging gold — I wants protecshun! Everywhere I go, I see orcs, "
-#~ "undead. ’T’ain’t safe ’round ’ere!"
-#~ msgstr "俺不要金币 ── 俺要保护！俺去哪儿都会遇到兽人和亡灵。哪儿都不安全！"
-
-#~ msgid ""
-#~ "Very well, we’ll protect you from the undead. But we can’t help you until "
-#~ "we get off this island. Now let’s go!"
-#~ msgstr ""
-#~ "那好，我们会保护你不受到亡灵的攻击。但我们离开这座岛之前没办法帮你。现在出"
-#~ "发吧！"
-
-#~ msgid ""
-#~ "Deal. I c’n blow’er up once I get to that signpost ov’r dere. That’s "
-#~ "where my eq’pment is. But ev’ryone not ov’r theah on that side when it "
-#~ "blows w’ll be killed by the orcs fa’ sure!"
-#~ msgstr ""
-#~ "一言为定。俺到路标那儿的时候就可以炸桥了。俺的装备都在那旮哒呢。不过炸桥的"
-#~ "时候在桥那边的人肯定都会被兽人杀掉的！"
-
-#~ msgid "So, d’ya want me to blow up der bridge yet, Cap’n?"
-#~ msgstr "那现在想叫俺炸桥嘛，老大？"
-
-#~ msgid "Yes, blow it up."
-#~ msgstr "是的，炸掉它。"
-
-#~ msgid "All right! Blast’n time!"
-#~ msgstr "好的！爆破时间！"
-
-#~ msgid "<big><i>BOOM!!</i></big>"
-#~ msgstr "<big><b>轰隆！！</b></big>"
-
-#~ msgid ""
-#~ "Good, we have escaped from the orcs. Now we must return to save Wesnoth."
-#~ msgstr "好，我们从兽人手里逃出来了。现在我们必须回去拯救韦诺。"
-
-#~ msgid "No, wait until later."
-#~ msgstr "不，等一会儿。"
-
-#~ msgid "Neh? A’right then, we’ll wait fa’ later, eh?"
-#~ msgstr "不？好吧，咱再等会儿，呃？"
-
-#~ msgid ""
-#~ "Well, we didn’t have to blow up the bridge after all. Now we must return "
-#~ "to save Wesnoth."
-#~ msgstr "呵，说到底我们没必要炸桥。现在我们必须回去拯救韦诺。"
-
-#~ msgid "How do you propose to do that?"
-#~ msgstr "那你打算怎么做呢？"
-
-#~ msgid ""
-#~ "We head south. My research revealed that the dragon Khrakrahs is in "
-#~ "possession of a Null Stone; with it I will be able to block Mal-Ravanal’s "
-#~ "teleportation. Once we have retrieved the stone, we must travel to "
-#~ "Weldyn. Our experience fighting the undead will prove invaluable in the "
-#~ "defense of our homeland. Also, I have advice to give the King: I know Mal-"
-#~ "Ravanal’s weakness."
-#~ msgstr ""
-#~ "我们往南走。经过研究我发现巨龙卡拉卡莱兹拥有一块虚无之石。使用它我就可以阻"
-#~ "止玛尔-拉瓦纳尔的传送魔法。一旦取回虚无之石，我们必须前往维尔帝。在守卫家"
-#~ "园之时，我们与亡灵作战的经验将是无价之宝。此外，我有一忠告上禀吾王：我知道"
-#~ "玛尔-拉瓦纳尔的弱点何在。"
-
-#~ msgid ""
-#~ "Very well, we will head south. Let us hope we reach Weldyn before Mal-"
-#~ "Ravanal."
-#~ msgstr "很好，我们往南走。但愿我们在玛尔-拉瓦纳尔之前到达维尔帝。"
-
-#~ msgid ""
-#~ "I’ll be followin’ yah from now on. Hope yah can get to Weld’n an’ all so "
-#~ "I c’n stop runnin’..."
-#~ msgstr "现在起俺就跟着你们啦。但愿你们可以到维尔帝这样俺就不用到处逃啦……"
-
-#~ msgid "Null Stone"
-#~ msgstr "虚无之石"
-
-#~ msgid ""
-#~ "What?! Swamps?! Those undead have destroyed the grasslands of my House, "
-#~ "and they shall pay for it!"
-#~ msgstr "什么？！沼泽？！那些亡灵破坏了我家族的草原，它们会为此付出代价的！"
-
-#~ msgid ""
-#~ "The lich-lord must have flooded the valley. The undead like the swamp. It "
-#~ "is death, decay, everything that they are themselves. I can sense them "
-#~ "lurking in the swamps, waiting to ambush us."
-#~ msgstr ""
-#~ "巫妖领主肯定淹没了峡谷。亡灵喜欢沼泽。死亡、腐败，一切正如它们自己。我能感"
-#~ "觉到它们正潜伏在沼泽之中，伺机偷袭我们。"
-
-#~ msgid "I s’ppose we’ll hav’ to wade across it anyway... ugh."
-#~ msgstr "俺觉得俺们一定得过去了……呃。"
-
-#~ msgid "Findshhhh... slayhhhh... killhhhh..."
-#~ msgstr "找到……撕开……杀掉……"
-
-#~ msgid ""
-#~ "That was the dragon Khrakrahs. He was a powerful beast indeed in the time "
-#~ "of Haldric, living in the Northern Mountains. But he radiates a dark "
-#~ "power these days, and I know not why he has taken up residence this far "
-#~ "south. We must find him, and pray that he still has the Null Stone."
-#~ msgstr ""
-#~ "那是巨龙卡拉卡莱兹。在哈德里克的时代，他确实是住在北方山脉的强大怪兽。但如"
-#~ "今，他身上散发着黑暗之力，而我也并不知晓为何他会在如此遥远的南方栖息下来。"
-#~ "我们必须找到他，但愿他还持有着虚无之石。"
-
-#~ msgid ""
-#~ "Ah! It appears that the mighty Khrakrahs is no longer among the living. "
-#~ "But this undead abomination does not appear weak to my arcane powers... "
-#~ "he must still have the Null Stone!"
-#~ msgstr ""
-#~ "啊！看起来强大的卡拉卡莱兹已经不复生存了。但这亡灵怪物在我的奥术之下并不孱"
-#~ "弱……他一定还拥有虚无之石！"
-
-#~ msgid "The Null Stone! With it we may finally defeat Mal-Ravanal!"
-#~ msgstr "虚无之石！有了它，我们终于可以击败玛尔-拉瓦纳尔了！"
-
-#~ msgid "Approaching Weldyn"
-#~ msgstr "逼近维尔帝"
-
-#~ msgid "Move Gweddry to Weldyn castle"
-#~ msgstr "将格威德利移动到维尔帝城堡里"
-
-#~ msgid ""
-#~ "We have finally reached Weldyn, but it seems the undead have it "
-#~ "surrounded. We must break through to reach the King!"
-#~ msgstr ""
-#~ "我们终于到达了维尔帝，但似乎亡灵们把它包围了。我们必须杀出一条血路到国王那"
-#~ "儿去！"
-
-#~ msgid ""
-#~ "It would be best not to waste time defeating these undead, they are but a "
-#~ "small fraction of the host we face. We should go straight to the city and "
-#~ "prepare our defenses."
-#~ msgstr ""
-#~ "最好别浪费时间去对付这些亡灵，它们不过只是我们所面对的亡灵群之中的一小部分"
-#~ "而已。我们应该径直前往城市，准备防御。"
-
-#~ msgid ""
-#~ "My liege, we have vital information about the leader of these undead."
-#~ msgstr "陛下，有关于亡灵首领的至关重要的信息，我们要禀告于您。"
-
-#~ msgid "Weldyn has been captured, and Wesnoth is no more..."
-#~ msgstr "维尔帝被占领了，韦诺已不复存在……"
-
-#~ msgid "The Council"
-#~ msgstr "议会"
-
-#~ msgid ""
-#~ "Before we begin our council, I must tell you all the history of this lich "
-#~ "we face. He was at first a mage of the realm, like me, and his fall began "
-#~ "during the reign of Haldric VII..."
-#~ msgstr ""
-#~ "在开始会议之前，我必须把我们所面对的巫妖的过去告诉你们。起初，他是王国的一"
-#~ "名法师，和我一样，而他的堕落，始于哈德里克七世统治时期……"
-
-#~ msgid ""
-#~ "The greatest seer in the land, Galdren, foresaw that some day, some day "
-#~ "soon, a great evil would spread over the land. The King, naturally, was "
-#~ "worried. The seer told him that the only way to stop the evil was to "
-#~ "appoint a mage, versed well in combat with the spirits of darkness, to be "
-#~ "the king’s advisor."
-#~ msgstr ""
-#~ "王国最伟大的先知，迦德伦，预言某天，即将到来的某天，邪恶将在这片土地之上蔓"
-#~ "延。国王自然很担心。先知告诉他，阻止邪恶的唯一方法，是挑选一名通晓与黑暗灵"
-#~ "魂作战之法的法师作为国王的顾问。"
-
-#~ msgid ""
-#~ "Ravan took this quietly enough, we all thought, but now I think that this "
-#~ "was when he began his fall. He went deep into conversation with the "
-#~ "spirits of darkness, hoping to discover their weaknesses. But it was they "
-#~ "who found his."
-#~ msgstr ""
-#~ "我们曾经以为，莱文默默地接受了这个结果。但如今想来，那就是他堕落的开端。他"
-#~ "和黑暗灵魂的交流愈加深入，希望能找到他们的弱点。但他们却找到了他的弱点。"
-
-#~ msgid ""
-#~ "One day, Ravan returned to the castle where I was living. He demanded to "
-#~ "see me and the guards let him in, for then he was still a well-respected "
-#~ "mage. When I greeted him, he named himself Mal-Ravanal and challenged me "
-#~ "to a duel."
-#~ msgstr ""
-#~ "某天，莱文回到了我所居住的城堡。他要求见我，而守卫也让他进了来，只因那时他"
-#~ "仍然是一位备受尊敬的法师。当我向他问好时，他自称玛尔-拉瓦纳尔，并要求和我"
-#~ "决斗。"
-
-#~ msgid ""
-#~ "His attack was swift and his power great, but through unwavering faith "
-#~ "and no small skill I emerged victorious. As he lay there mortally wounded "
-#~ "I prepared to excise the darkness in his soul."
-#~ msgstr ""
-#~ "他的攻击迅捷，威力强大，但依靠毫不动摇的信念和不可小视的技艺，我胜利了。他"
-#~ "倒伏于地，身受致命之伤，我便准备将他灵魂之中的黑暗驱逐出去。"
-
-#~ msgid ""
-#~ "But I hesitated too long... He simply vanished, teleported away. The mage "
-#~ "Ravan died that day; yet death is a mere inconvenience to those most "
-#~ "skilled in the arts of necromancy..."
-#~ msgstr ""
-#~ "但我迟疑太久……他就那样消失了，传送走了。那天，法师莱文死了。但对于死灵魔法"
-#~ "的熟练者而言，死亡只是一点小小的不便罢了……"
-
-#~ msgid "Kaldor"
-#~ msgstr "卡尔多"
-
-#~ msgid "This is the lich we are facing: Mal-Ravanal."
-#~ msgstr "这就是我们面对的巫妖：玛尔·拉瓦纳尔。"
-
-#~ msgid ""
-#~ "We must fight, obviously. Surely the might of Wesnoth can triumph over a "
-#~ "mere lich!"
-#~ msgstr "很明显，我们必须战斗。韦诺的伟力当然可以碾碎一个小小的巫妖！"
-
-#~ msgid ""
-#~ "We barely escaped the Southern Outpost with our lives; Mal-Ravanal’s army "
-#~ "cannot be defeated by even the might of all Wesnoth."
-#~ msgstr ""
-#~ "我们差点就没能活着从南疆哨所逃出来。即使集结全韦诺之力，也是无法击败玛尔-"
-#~ "拉瓦纳尔的军队的。"
-
-#~ msgid ""
-#~ "That simply makes you cowards. True warriors would have stayed and fought "
-#~ "to the death!"
-#~ msgstr "这只能证明你是胆小鬼。真正的勇士不会退缩，只会力战到死！"
-
-#~ msgid ""
-#~ "A meaningless sacrifice and a few more corpses marching upon Weldyn. We "
-#~ "realized our only path to victory is to destroy the head of these "
-#~ "necromancers, the lich Mal-Ravanal. With this Null Stone I can counteract "
-#~ "his teleportation and finally put his tortured soul to rest."
-#~ msgstr ""
-#~ "那是无谓的牺牲，不过让更多的尸体向着维尔帝行进而已。我们认识到，唯有摧毁死"
-#~ "灵法师的头领，巫妖玛尔-拉瓦纳尔，才是唯一的胜利之途。使用这块虚空之石，我"
-#~ "可以阻碍他的传送法术，也终于可以让他饱受摧残的灵魂安息。"
-
-#~ msgid "But if we cannot defeat the army, how may we strike at the leader?!"
-#~ msgstr "但如果我们无法击败这军队，我们该如何攻击首领？！"
-
-#~ msgid ""
-#~ "I recommend a full assault. Our mounted units are more maneuverable; if "
-#~ "we attack in force we may be able to punch through the enemy lines and "
-#~ "isolate Mal-Ravanal in the chaos of battle."
-#~ msgstr ""
-#~ "我建议全军突击。我们的骑兵部队机动性更强。如果全力攻击，我们也许能突破敌军"
-#~ "防线，乘乱吧玛尔-拉瓦纳尔孤立包围。"
-
-#~ msgid ""
-#~ "I suggest that we appeal to his arrogance: I believe Mal-Ravanal would be "
-#~ "<i>compelled</i> to face me if I were to challenge him to a duel."
-#~ msgstr ""
-#~ "我建议我们利用他的自大：我相信，要是我提出决斗，玛尔-拉瓦纳尔会<b>不由自主"
-#~ "地</b>同意的。"
-
-#~ msgid ""
-#~ "We cannot trust that he would honor the terms of the challenge! You would "
-#~ "likely find yourself facing his entire army!"
-#~ msgstr ""
-#~ "我们可不能相信他会在意挑战的规则！你很可能会发现自己得对付他的整支大军！"
-
-#~ msgid ""
-#~ "Two risky plans. But if these undead are as strong as you say then we are "
-#~ "pressed for options. Gweddry, you are most familiar with this situation. "
-#~ "I will leave this choice in your hands."
-#~ msgstr ""
-#~ "两个危险性十足的计划。但若是亡灵军队真如你等所言一般强大，那我们没有多少选"
-#~ "择。格威德利，你对这境况最为熟悉。我把选择权留给你。"
-
-#~ msgid "Sire, the undead armies are attacking!"
-#~ msgstr "陛下，亡灵军队正在进攻！"
-
-#~ msgid "Well, that will have to be the end of our council. Let us fight!"
-#~ msgstr "好吧，我们的会议必须结束了。让我们战斗吧！"
-
-#~ msgid "Weldyn under Attack"
-#~ msgstr "维尔帝遇袭"
-
-#~ msgid "Mal-Grekulak"
-#~ msgstr "玛尔-格雷库拉克"
-
-#~ msgid "Very well. But this... Mal-Ravanal, that you spoke of, is he here?"
-#~ msgstr "很好。但是这个……你所说的玛尔-拉瓦纳尔，他在这里吗？"
-
-#~ msgid ""
-#~ "I sense his dark magic prolonging the night, but I do not feel his "
-#~ "presence."
-#~ msgstr "我感觉到他的黑魔法正在延长黑夜，但我感觉不到他的存在。"
-
-#~ msgid ""
-#~ "In any case, the undead are attacking now. Let us show them the might of "
-#~ "Wesnoth!"
-#~ msgstr "无论如何，亡灵开始进攻了。让它们见识见识韦诺的勇力！"
-
-#~ msgid "I have died, and with me gone the kingdom is lost."
-#~ msgstr "我要死了，而王国也因此不复存在。"
-
-#~ msgid "Look, the sun has finally risen, and the undead are retreating."
-#~ msgstr "看，太阳终于升起来了，亡灵正在撤退。"
-
-#~ msgid "Even this infernal darkness cannot dim the spirits of our men!"
-#~ msgstr "哪怕是这地狱一般的黑暗也无法让我们的灵魂暗淡！"
-
-#~ msgid ""
-#~ "This long night is over, and Wesnoth still stands. Yet I do not know how "
-#~ "many more such nights we can endure."
-#~ msgstr "长夜已逝，韦诺仍存。但我并不知我们还能撑过多少个这样的夜晚。"
-
-#~ msgid "Gweddry, have you made a decision regarding our course of action?"
-#~ msgstr "格威德利，我们下一步的行动，你做好决定了吗？"
-
-#~ msgid "try to isolate Mal-Ravanal in battle."
-#~ msgstr "尝试把玛尔-拉瓦纳尔分割包围。"
-
-#~ msgid "Defeat Mal-Ravanal while Dacyn is nearby"
-#~ msgstr "当达辛在玛尔-拉瓦纳尔旁边时击败他"
-
-#~ msgid ""
-#~ "I have waited a long time for this day to come. I shall have my revenge, "
-#~ "Dacyn!"
-#~ msgstr "我等待这一天的到来已经很长时间了。我必将复仇，达辛！"
-
-#~ msgid "Indeed, it is time to end this."
-#~ msgstr "确实。是结束这一切的时候了。"
-
-#~ msgid ""
-#~ "When we attack Mal-Ravanal I will need to be nearby with the Null Stone "
-#~ "to prevent his teleportation. We cannot afford to let him escape."
-#~ msgstr ""
-#~ "我们攻击玛尔-拉瓦纳尔时，我必须在虚无之石旁，这样才能阻止他的传送魔法。要"
-#~ "是他逃跑了，后果我们无法承受。"
-
-#~ msgid "No! This cannot be the way it was meant to end!"
-#~ msgstr "不！结局不应该是这样的！"
-
-#~ msgid "Weldyn Besieged"
-#~ msgstr "维尔帝受困"
-
-#~ msgid "Death of Konrad"
-#~ msgstr "科纳德死亡"
-
-#~ msgid "Letting any enemy unit onto your keep"
-#~ msgstr "让任何敌方单位占领你的主楼"
-
-#~ msgid ""
-#~ "I can sense Mal-Ravanal is here somewhere... When we attack him I will "
-#~ "need to be nearby with the Null Stone to prevent his teleportation. We "
-#~ "cannot afford to let him escape."
-#~ msgstr ""
-#~ "我感觉到玛尔-拉瓦纳尔就在这里某处……我们攻击他时，我必须在虚无之石旁，这样"
-#~ "才能阻止他的传送魔法。要是他逃跑了，后果是我们无法承受的。"
-
-#~ msgid "But how? We don’t know which one of them he is."
-#~ msgstr "但该怎么做？我们不知道那些巫妖里哪一个才是他。"
-
-#~ msgid ""
-#~ "They are channeling some dark magic to hide themselves. We have to kill "
-#~ "some of them to break the spell."
-#~ msgstr ""
-#~ "他们正在施展某种黑暗魔法以隐藏自己的身形。我们得杀掉他们之中的几人才能阻断"
-#~ "魔咒。"
-
-#~ msgid "I shall destroy you personally!"
-#~ msgstr "我会亲自摧毁你！"
-
-#~ msgid ""
-#~ "They killed the royal family... now, even if we save Weldyn, Wesnoth has "
-#~ "fallen."
-#~ msgstr "他们杀掉了王族……现在，即使我们拯救了维尔帝，韦诺也已沦陷。"
-
-#~ msgid "The Kingdom of Wesnoth dies with me!"
-#~ msgstr "我死了，韦诺王国也完了！"
-
-#~ msgid ""
-#~ "It is a great victory we have won here today, vanquishing the arch-lich "
-#~ "Mal-Ravanal."
-#~ msgstr "今天我们赢得了伟大的胜利，我们战胜了大巫妖玛尔-拉瓦纳尔。"
-
-#~ msgid ""
-#~ "We will be years... perhaps decades... recovering from the ill he has "
-#~ "wrought."
-#~ msgstr "要从他造成的破坏之中恢复，我们得用好几年……也许是好几十年。"
-
-#~ msgid ""
-#~ "Even now we should be sending our cavalry to restore order throughout the "
-#~ "land."
-#~ msgstr "哪怕是现在我们也应该派骑兵到全国各地恢复秩序。"
-
-#~ msgid ""
-#~ "Dacyn. I would have you remain by Our side, here; as you counseled these "
-#~ "two in war, so shall you counsel Us in peace and the rebuilding of the "
-#~ "Kingdom."
-#~ msgstr ""
-#~ "达辛，我需要你留在我们身边，就在这里。正如你在战争之中作为他们两人的顾问一"
-#~ "样，在和平时期和王国重建时，也愿你能够作为我们的顾问。"
-
-#~ msgid "I am honored, your highness."
-#~ msgstr "不胜荣幸，陛下。"
-
-#~ msgid ""
-#~ "Engineer, much of Estmark region stands in ruins. The crown has need of "
-#~ "your skills to clear the wreckage and organize the reconstruction."
-#~ msgstr ""
-#~ "工程师，东界的大部分都成了废墟。为了废墟清理和组织重建，王室需要你的才干。"
-
-#~ msgid "I’ll be glad ta help yah. It’ll be fun to work in peace again."
-#~ msgstr "乐意效劳。能够再次在和平之下工作会很有趣的。"
-
-#~ msgid "Now as for you..."
-#~ msgstr "而你……"
-
-#~ msgid "Sire, we but did our duty."
-#~ msgstr "陛下，微臣只是尽职而已。"
-
-#~ msgid "Quite. Now do not interrupt while I am doing mine... Kneel, Owaec."
-#~ msgstr "的确。现在不要打断我的……单膝下跪，欧瓦埃克。"
-
-#~ msgid "Kneel, Gweddry."
-#~ msgstr "单膝下跪，格威德利。"
-
-#~ msgid ""
-#~ "And so began the Silver Age of Wesnoth, that time known to historians as "
-#~ "the Reconstruction..."
-#~ msgstr "韦诺的白银时代由此开始。史学家们将此称为大重建……"
-
-#~ msgid ""
-#~ "Once great warriors across the plains, these mounted riders atop their "
-#~ "skeletal horses were raised from the ground by unholy magic to spread "
-#~ "fear and destruction."
-#~ msgstr ""
-#~ "这些骑兵曾是纵横草原的伟大武士，而现在他们被不洁的魔法从地底唤醒，骑着骷髅"
-#~ "战马，将恐惧与毁灭扩散出去。"
-
-#~ msgid "Mounted Fighter"
-#~ msgstr "骠骑战士"
-
-#~ msgid ""
-#~ "The nobles of the men of the plains are trained with the rest of the "
-#~ "horsemen to become great warriors. However, they are also trained in "
-#~ "commanding their comrades, and they are the ones that become captains of "
-#~ "the armies of the Clans."
-#~ msgstr ""
-#~ "这些平原上的贵族与其它骑手一起训练，成为伟大的武士。然而，他们也要接受成为"
-#~ "指挥官的训练，他们是将要成为氏族军队队长的人。"
-
-#~ msgid "Mounted Warrior"
-#~ msgstr "骠骑勇士"
-
-#~ msgid ""
-#~ "Leaders of the plains, Mounted Warriors are skilled with the use of the "
-#~ "sword and the morning star. Riding horses, they are able to move around "
-#~ "the battlefield with great speed, and can provide much needed assistance "
-#~ "to different fronts."
-#~ msgstr ""
-#~ "平原上的领导者，骠骑勇士训练有素，他们熟练地使用剑和晨星之锤，飞速骑行于战"
-#~ "场中，向前线提供十分必要的援助。"
-
-#~ msgid "Wha’? Yah fail’d to give me protecshun..."
-#~ msgstr "什么？你们没保护好俺……"
-
-#~ msgid "Your evil will darken the earth no longer!"
-#~ msgstr "你的恶行再也不会让这片土地陷入黑暗了！"
-
-#~ msgid "I shall avenge the death of my comrades!"
-#~ msgstr "我要为同志们的死复仇！"
-
-#~ msgid "Grug again dead make!"
-#~ msgstr "格拉格又杀掉啦！"
-
-#~ msgid "Taste the steel of the Horse Clans!"
-#~ msgstr "尝尝马上氏族铁骑的勇力吧！"
-
-#~ msgid ""
-#~ "You are more powerful than I expected, but you cannot possibly defeat me."
-#~ msgstr "你比我预想的更强大，但你不可能击败我。"
-
-#~ msgid "No. Your reign of terror ends today."
-#~ msgstr "不。你的恐怖统治到今天为止了。"
-
-#~ msgid "What?!... I... cannot... lose..."
-#~ msgstr "什么？！……我……不可能……输的……"
-
-#~ msgid ""
-#~ "I wasn’t able to prevent his escape from here. Now Wesnoth is doomed..."
-#~ msgstr "我没能阻止他逃跑。韦诺完了……"
-
-#~ msgid ""
-#~ "Wearing this amulet will cause every blow you deal to inflict <i>arcane</"
-#~ "i> damage!"
-#~ msgstr "装备这个护身符将使得你的每次攻击都造成<b>奥术</b>伤害！"
-
-#~ msgid "holy amulet^Take it"
-#~ msgstr "取走"
-
-#~ msgid "holy amulet^Leave it"
-#~ msgstr "留下"
-
-#~ msgid "I am not suited to using this item! Let another take it."
-#~ msgstr "我不适合用这个装备！给其他人试试。"

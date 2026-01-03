@@ -14,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.5.5+dev\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
+"POT-Creation-Date: 2025-12-08 15:31 UTC\n"
 "PO-Revision-Date: 2021-01-23 15:27+0100\n"
-"Last-Translator: Miquel-Àngel Burgos i Fradeja <miquel.angel.burgos@gmail."
-"com>\n"
+"Last-Translator: Miquel-Àngel Burgos i Fradeja "
+"<miquel.angel.burgos@gmail.com>\n"
 "Language-Team: Catalan <wesnoth-ca@lists.ettin.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -326,22 +326,22 @@ msgstr "Aliança de Knalga"
 #: data/multiplayer/factions/knalgans-default.cfg:13
 msgid ""
 "The <bold>text='Knalgan Alliance'</bold> is a faction of <ref>text='Dwarves' "
-"dst='..race_dwarf'</ref> and their outlaw <ref>text='Human' dst='.."
-"race_human'</ref> allies. Dwarves are an old race who live underground and "
-"have tough, but short, warriors. The outlaws are humans who are not socially "
-"acceptable among others of their race, but have become allies of the dwarves "
-"due to common enemies. This leads to a combination of tough and defensive "
-"dwarves who are only good on certain terrain and humans who can cover ground "
-"that dwarves are not good at fighting in."
+"dst='..race_dwarf'</ref> and their outlaw <ref>text='Human' "
+"dst='..race_human'</ref> allies. Dwarves are an old race who live "
+"underground and have tough, but short, warriors. The outlaws are humans who "
+"are not socially acceptable among others of their race, but have become "
+"allies of the dwarves due to common enemies. This leads to a combination of "
+"tough and defensive dwarves who are only good on certain terrain and humans "
+"who can cover ground that dwarves are not good at fighting in."
 msgstr ""
 "L'<bold>text='aliança de Knalga'</bold> és una facció de <ref>text='nans' "
-"dst='..race_dwarf'</ref> i llur aliats <ref>text='humans' dst='.."
-"race_human'</ref> proscrits. Els nans són una vella raça que viu sota terra "
-"i tenen guerrers forts però baixos. Els proscrits són humans que no són "
-"socialment acceptables entre altres de llur raça, però que s'han aliat amb "
-"els nans perquè hi tenen enemics comuns. Això porta a una combinació de nans "
-"forts i defensius que només són bons en un cert terreny i humans que poden "
-"cobrir un territori en el qual els nans no són bons lluitadors."
+"dst='..race_dwarf'</ref> i llur aliats <ref>text='humans' "
+"dst='..race_human'</ref> proscrits. Els nans són una vella raça que viu sota "
+"terra i tenen guerrers forts però baixos. Els proscrits són humans que no "
+"són socialment acceptables entre altres de llur raça, però que s'han aliat "
+"amb els nans perquè hi tenen enemics comuns. Això porta a una combinació de "
+"nans forts i defensius que només són bons en un cert terreny i humans que "
+"poden cobrir un territori en el qual els nans no són bons lluitadors."
 
 #. [multiplayer_side]: id=Loyalists, type=random
 #: data/multiplayer/factions/loyalists-aoh.cfg:4
@@ -353,9 +353,9 @@ msgstr "Lleialistes"
 #: data/multiplayer/factions/loyalists-aoh.cfg:14
 #: data/multiplayer/factions/loyalists-default.cfg:14
 msgid ""
-"The <bold>text='Loyalists'</bold> are a faction of <ref>text='Humans' dst='.."
-"race_human'</ref> who are loyal to the throne of Wesnoth. Humans are a "
-"versatile race who specialize in many different areas. Similarly, the "
+"The <bold>text='Loyalists'</bold> are a faction of <ref>text='Humans' "
+"dst='..race_human'</ref> who are loyal to the throne of Wesnoth. Humans are "
+"a versatile race who specialize in many different areas. Similarly, the "
 "Loyalist faction is a very versatile melee-oriented faction with important "
 "ranged support from bowmen and mages."
 msgstr ""
@@ -375,8 +375,8 @@ msgstr "Septentrionals"
 #: data/multiplayer/factions/northerners-aoh.cfg:16
 #: data/multiplayer/factions/northerners-default.cfg:15
 msgid ""
-"The <bold>text='Northerners'</bold> are a faction of <ref>text='Orcs' dst='.."
-"race_orc'</ref> and their allies who live in the north of the Great "
+"The <bold>text='Northerners'</bold> are a faction of <ref>text='Orcs' "
+"dst='..race_orc'</ref> and their allies who live in the north of the Great "
 "Continent, thus their name. Northerners consist of the warrior orcs race, "
 "the enslaved <ref>text='goblins' dst='..race_goblin'</ref>, "
 "<ref>text='trolls' dst='..race_troll'</ref> who are tricked into combat by "
@@ -403,28 +403,29 @@ msgstr "Rebels"
 #: data/multiplayer/factions/rebels-aoh.cfg:14
 #: data/multiplayer/factions/rebels-default.cfg:14
 msgid ""
-"The <bold>text='Rebels'</bold> are a faction of <ref>text='Elves' dst='.."
-"race_elf'</ref> and their various forest-dwelling allies. They get their "
-"human name, Rebels, from the time of Heir to the Throne, when they started "
-"the rebellion against the evil Queen Asheviere. Elves are a magical race "
-"that are masters of the bow and are capable of living many years longer than "
-"humans. In harmony with nature, the elves find allies with the "
+"The <bold>text='Rebels'</bold> are a faction of <ref>text='Elves' "
+"dst='..race_elf'</ref> and their various forest-dwelling allies. They get "
+"their human name, Rebels, from the time of Heir to the Throne, when they "
+"started the rebellion against the evil Queen Asheviere. Elves are a magical "
+"race that are masters of the bow and are capable of living many years longer "
+"than humans. In harmony with nature, the elves find allies with the "
 "<ref>text='human' dst='..race_human'</ref> mages, certain "
 "<ref>text='merfolk' dst='..race_merman'</ref>, and tree creatures called "
 "<ref>text='Woses' dst='..race_wose'</ref>. Rebels are best played taking "
 "advantage of their high forest defense, mastery of ranged attacks, and the "
 "elves’ neutral alignment."
 msgstr ""
-"Els <bold>text='rebels'</bold> són una facció d'<ref>text='elfs' dst='.."
-"race_elf'</ref> i llurs diversos aliats dels boscos. Reben el nom humà de "
-"rebels des de l'època d'Hereu al tron, quan iniciaren la rebel·lió contra la "
-"malvada Reina Asheviere. Els elfs són una raça màgica, mestres de l'arc i "
-"capaços de viure molts més anys que els humans. En harmonia amb la natura, "
-"els elfs tenen aliats entre els mags <ref>text='humans' dst='..race_human'</"
-"ref>, certs <ref>text='srènids' dst='..race_merman'</ref> i unes criatures "
-"arbòries anomenades <ref>text='woses' dst='..race_wose'</ref>. Els rebels "
-"juguen més bé quan aprofiten llur elevada defensa forestal, la mestria dels "
-"atacs a distància i l'alineació neutral dels elfs."
+"Els <bold>text='rebels'</bold> són una facció d'<ref>text='elfs' "
+"dst='..race_elf'</ref> i llurs diversos aliats dels boscos. Reben el nom "
+"humà de rebels des de l'època d'Hereu al tron, quan iniciaren la rebel·lió "
+"contra la malvada Reina Asheviere. Els elfs són una raça màgica, mestres de "
+"l'arc i capaços de viure molts més anys que els humans. En harmonia amb la "
+"natura, els elfs tenen aliats entre els mags <ref>text='humans' "
+"dst='..race_human'</ref>, certs <ref>text='srènids' dst='..race_merman'</"
+"ref> i unes criatures arbòries anomenades <ref>text='woses' "
+"dst='..race_wose'</ref>. Els rebels juguen més bé quan aprofiten llur "
+"elevada defensa forestal, la mestria dels atacs a distància i l'alineació "
+"neutral dels elfs."
 
 #. [multiplayer_side]: id=Undead, type=random
 #: data/multiplayer/factions/undead-aoh.cfg:4
@@ -436,14 +437,15 @@ msgstr "No morts"
 #: data/multiplayer/factions/undead-aoh.cfg:14
 #: data/multiplayer/factions/undead-default.cfg:14
 msgid ""
-"The <bold>text='Undead'</bold> are a faction of <ref>text='undead' dst='.."
-"race_undead'</ref> creatures and <ref>text='human' dst='..race_human'</ref> "
-"practitioners of dark arts that usually accompany them. Often, these “Dark "
-"Adepts” are the units that do the most damage for the faction, but they have "
-"a major vulnerability — their practicing of this forbidden, evil magic has "
-"consumed all their energy and so they have no melee attack at all. The "
-"Undead are a very aggressive faction and the most powerful "
-"<ref>text='Default Era' dst='..era_era_default'</ref> faction at nighttime."
+"The <bold>text='Undead'</bold> are a faction of <ref>text='undead' "
+"dst='..race_undead'</ref> creatures and <ref>text='human' "
+"dst='..race_human'</ref> practitioners of dark arts that usually accompany "
+"them. Often, these “Dark Adepts” are the units that do the most damage for "
+"the faction, but they have a major vulnerability — their practicing of this "
+"forbidden, evil magic has consumed all their energy and so they have no "
+"melee attack at all. The Undead are a very aggressive faction and the most "
+"powerful <ref>text='Default Era' dst='..era_era_default'</ref> faction at "
+"nighttime."
 msgstr ""
 "Els <bold>text='no morts'</bold> són una facció de criatures <ref>text='no "
 "mortes' dst='..race_undead'</ref> i practicants de les arts fosques "
@@ -1279,7 +1281,7 @@ msgstr "teamname^Humans"
 #. [objective]: condition=lose
 #: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:114
 #: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:135
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:274
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:278
 msgid "Death of your leader"
 msgstr "Mort del vostre líder"
 
@@ -1401,8 +1403,8 @@ msgstr ""
 #. [message]: speaker=second_unit
 #: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:229
 msgid ""
-"Cheers of your enemy are the last thing you hear as you slip into death..."
-"their joy fills your last moments with pure hate."
+"Cheers of your enemy are the last thing you hear as you slip into "
+"death...their joy fills your last moments with pure hate."
 msgstr ""
 "L'ovació del vostre enemic és l'última cosa que sentiu mentre caieu dins la "
 "mort... llur alegria omple els vostres últims moments amb pur odi."
@@ -1990,8 +1992,8 @@ msgid ""
 "Flooded by the seas and battered by the winter elements, only ruins, water "
 "and ice now remain in the shadow of this once mighty empire."
 msgstr ""
-"Inundat pel mar i maltractat per l'hivern, només resten ruïnes, aigua i gel."
-"a l'ombra del que fou una vegada un poderós imperi."
+"Inundat pel mar i maltractat per l'hivern, només resten ruïnes, aigua i "
+"gel.a l'ombra del que fou una vegada un poderós imperi."
 
 #. [side]
 #: data/multiplayer/scenarios/2p_Sullas_Ruins.cfg:98
@@ -2407,7 +2409,7 @@ msgstr ""
 #. [side]
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:21
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:54
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:73
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:70
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:20
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:42
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:64
@@ -2421,7 +2423,7 @@ msgstr "teamname^Equip 1"
 #. [side]
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:32
 #: data/multiplayer/scenarios/4p_Blue_Water_Province.cfg:43
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:84
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:81
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:31
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:53
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:75
@@ -2826,19 +2828,19 @@ msgstr ""
 "supremacia."
 
 #. [multiplayer]: id=multiplayer_The_Wilderlands
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:57
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:54
 msgid "5p — The Wilderlands"
 msgstr "5j — Les Terres Salvatges"
 
 #. [multiplayer]: id=multiplayer_The_Wilderlands
 #. [multiplayer]: id=multiplayer_Crusaders_Field
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:58
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:55
 #: data/multiplayer/scenarios/6p_Crusaders_Field.cfg:7
 msgid " Recommended setting of 1 gold per village."
 msgstr " Es recomana assignar 1 moneda d'or per llogaret."
 
 #. [multiplayer]: id=multiplayer_The_Wilderlands
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:58
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:55
 msgid ""
 "A vast region of wild, untamed wilderness, its terrain dotted with forests, "
 "caves, rivers, and the ruins of ancient fortresses."
@@ -2847,42 +2849,42 @@ msgstr ""
 "coves, rius, i les ruïnes d'antigues fortaleses."
 
 #. [side]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:95
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:92
 msgid "teamname^Team 3"
 msgstr "teamname^Equip 3"
 
 #. [side]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:106
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:103
 msgid "teamname^Team 4"
 msgstr "teamname^Equip 4"
 
 #. [side]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:128
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:125
 msgid "teamname^Monsters"
 msgstr "teamname^Monstres"
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:245
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:249
 msgid "Defeat all enemy leaders"
 msgstr "Derroteu tots els líders enemics"
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:264
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:268
 msgid "Defeat all monsters"
 msgstr "Derroteu tots els monstres"
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:282
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:286
 msgid "Defeat the enemy leaders"
 msgstr "Derroteu els líders enemics"
 
 #. [objective]: condition=lose
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:287
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:291
 msgid "Death of all your units"
 msgstr "Mort de totes les vostres unitats"
 
 #. [note]
-#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:292
+#: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:296
 msgid "You cannot recruit units."
 msgstr "No podeu reclutar unitats."
 
