@@ -19,11 +19,11 @@
 # Toranks <toranksmervat@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wesnoth 1.14\n"
+"Project-Id-Version: Wesnoth 1.18\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-05-20 17:25-0500\n"
-"PO-Revision-Date: 2023-06-03 22:48+0200\n"
-"Last-Translator: Toranks <toranksmervat@gmail.com>\n"
+"POT-Creation-Date: 2025-12-21 21:26-0600\n"
+"PO-Revision-Date: 2025-10-20 13:46-0300\n"
+"Last-Translator: Sebastián Lecchini <sebas38760@gmail.com>\n"
 "Language-Team: Wesnoth Spanish translation\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -76,6 +76,8 @@ msgstr "Grandes archivos de texto sin formato"
 #: data/advanced_preferences.cfg:26
 msgid "Whether to show icons in the add-ons list on the add-ons manager"
 msgstr ""
+"Si se deben mostrar iconos en la lista de complementos del administrador de "
+"complementos"
 
 #. [advanced_preference]: type=boolean
 #: data/advanced_preferences.cfg:27
@@ -83,6 +85,8 @@ msgid ""
 "Disabling saves bandwidth by not sending icons for the add-ons list in the "
 "add-ons manager"
 msgstr ""
+"Desactivarlo ahorra ancho de banda al no enviar los iconos para la lista de "
+"complementos en el administrador de complementos"
 
 #. [advanced_preference]: type=boolean
 #: data/advanced_preferences.cfg:34
@@ -424,10 +428,8 @@ msgstr "Traducción al vasco"
 
 #. [about]
 #: data/core/about_i18n.cfg:65
-#, fuzzy
-#| msgid "Bulgarian Translation"
 msgid "Bengali Translation"
-msgstr "Traducción al búlgaro"
+msgstr "Traducción al bengalí"
 
 #. [about]
 #: data/core/about_i18n.cfg:77
@@ -440,250 +442,248 @@ msgid "Catalan Translation"
 msgstr "Traducción al catalán"
 
 #. [about]
-#: data/core/about_i18n.cfg:159
+#: data/core/about_i18n.cfg:163
 msgid "Chinese Translation"
 msgstr "Traducción al chino"
 
 #. [about]
-#: data/core/about_i18n.cfg:257
+#: data/core/about_i18n.cfg:261
 msgid "Chinese (Taiwan) Translation"
 msgstr "Traducción al chino (Taiwan)"
 
 #. [about]
-#: data/core/about_i18n.cfg:270
+#: data/core/about_i18n.cfg:274
 msgid "Croatian Translation"
 msgstr "Traducción al croata"
 
 #. [about]
-#: data/core/about_i18n.cfg:280
+#: data/core/about_i18n.cfg:284
 msgid "Czech Translation"
 msgstr "Traducción al checo"
 
 #. [about]
-#: data/core/about_i18n.cfg:352
+#: data/core/about_i18n.cfg:356
 msgid "Danish Translation"
 msgstr "Traducción al danés"
 
 #. [about]
-#: data/core/about_i18n.cfg:383
+#: data/core/about_i18n.cfg:387
 msgid "Dutch Translation"
 msgstr "Traducción al holandés"
 
 #. [about]
-#: data/core/about_i18n.cfg:457
+#: data/core/about_i18n.cfg:461
 msgid "English (GB) Translation"
 msgstr "Traducción al inglés (GB)"
 
 #. [about]
-#: data/core/about_i18n.cfg:482
+#: data/core/about_i18n.cfg:486
 msgid "English (Shaw) Translation"
 msgstr "Traducción al inglés (Shaw)"
 
 #. [about]
-#: data/core/about_i18n.cfg:500
+#: data/core/about_i18n.cfg:504
 msgid "Esperanto Translation"
 msgstr "Traducción al esperanto"
 
 #. [about]
-#: data/core/about_i18n.cfg:529
+#: data/core/about_i18n.cfg:533
 msgid "Estonian Translation"
 msgstr "Traducción al estonio"
 
 #. [about]
-#: data/core/about_i18n.cfg:539
+#: data/core/about_i18n.cfg:543
 msgid "Filipino Translation"
 msgstr "Traducción al filipino"
 
 #. [about]
-#: data/core/about_i18n.cfg:549
+#: data/core/about_i18n.cfg:553
 msgid "Finnish Translation"
 msgstr "Traducción al finlandés"
 
 #. [about]
-#: data/core/about_i18n.cfg:614
+#: data/core/about_i18n.cfg:618
 msgid "French Translation"
 msgstr "Traducción al francés"
 
 #. [about]
-#: data/core/about_i18n.cfg:782
+#: data/core/about_i18n.cfg:786
 msgid "Friulian Translation"
 msgstr "Traducción al friulano"
 
 #. [about]
-#: data/core/about_i18n.cfg:786
+#: data/core/about_i18n.cfg:790
 msgid "Galician Translation"
 msgstr "Traducción al gallego"
 
 #. [about]
-#: data/core/about_i18n.cfg:822
+#: data/core/about_i18n.cfg:826
 msgid "German Translation"
 msgstr "Traducción al alemán"
 
 #. [about]
-#: data/core/about_i18n.cfg:947
+#: data/core/about_i18n.cfg:951
 msgid "Greek Translation"
 msgstr "Traducción al griego"
 
 #. [about]
-#: data/core/about_i18n.cfg:990
+#: data/core/about_i18n.cfg:994
 msgid "Hebrew Translation"
 msgstr "Traducción al hebreo"
 
 #. [about]
-#: data/core/about_i18n.cfg:1003
+#: data/core/about_i18n.cfg:1007
 msgid "Hungarian Translation"
 msgstr "Traducción al húngaro"
 
 #. [about]
-#: data/core/about_i18n.cfg:1064
+#: data/core/about_i18n.cfg:1068
 msgid "Icelandic Translation"
 msgstr "Traducción al islandés"
 
 #. [about]
-#: data/core/about_i18n.cfg:1074
+#: data/core/about_i18n.cfg:1078
 msgid "Indonesian Translation"
 msgstr "Traducción al indonesio"
 
 #. [about]
-#: data/core/about_i18n.cfg:1102
+#: data/core/about_i18n.cfg:1106
 msgid "Irish Translation"
 msgstr "Traducción al irlandés"
 
 #. [about]
-#: data/core/about_i18n.cfg:1109
+#: data/core/about_i18n.cfg:1113
 msgid "Italian Translation"
 msgstr "Traducción al italiano"
 
 #. [about]
-#: data/core/about_i18n.cfg:1156
+#: data/core/about_i18n.cfg:1160
 msgid "Japanese Translation"
 msgstr "Traducción al japonés"
 
 #. [about]
-#: data/core/about_i18n.cfg:1249
+#: data/core/about_i18n.cfg:1253
 msgid "Korean Translation"
 msgstr "Traducción al coreano"
 
 #. [about]
-#: data/core/about_i18n.cfg:1257
+#: data/core/about_i18n.cfg:1261
 msgid "Latin Translation"
 msgstr "Traducción al latín"
 
 #. [about]
-#: data/core/about_i18n.cfg:1283
+#: data/core/about_i18n.cfg:1287
 msgid "Latvian Translation"
 msgstr "Traducción al letón"
 
 #. [about]
-#: data/core/about_i18n.cfg:1298
+#: data/core/about_i18n.cfg:1302
 msgid "Lithuanian Translation"
 msgstr "Traducción al lituano"
 
 #. [about]
-#: data/core/about_i18n.cfg:1323
+#: data/core/about_i18n.cfg:1327
 msgid "Macedonian Translation"
 msgstr "Traducción al macedonio"
 
 #. [about]
-#: data/core/about_i18n.cfg:1330
+#: data/core/about_i18n.cfg:1334
 msgid "Marathi Translation"
 msgstr "Traducción al maratí"
 
 #. [about]
-#: data/core/about_i18n.cfg:1339
+#: data/core/about_i18n.cfg:1343
 msgid "Norwegian Translation"
 msgstr "Traducción al noruego"
 
 #. [about]
-#: data/core/about_i18n.cfg:1368
+#: data/core/about_i18n.cfg:1372
 msgid "Old English Translation"
 msgstr "Traducción al anglosajón"
 
 #. [about]
-#: data/core/about_i18n.cfg:1386
+#: data/core/about_i18n.cfg:1390
 msgid "Polish Translation"
 msgstr "Traducción al polaco"
 
 #. [about]
-#: data/core/about_i18n.cfg:1461
+#: data/core/about_i18n.cfg:1465
 msgid "Portuguese Translation"
 msgstr "Traducción al portugués"
 
 #. [about]
-#: data/core/about_i18n.cfg:1475
+#: data/core/about_i18n.cfg:1479
 msgid "Portuguese (Brazil) Translation"
 msgstr "Traducción al portugués (Brasil)"
 
 #. [about]
-#: data/core/about_i18n.cfg:1533
+#: data/core/about_i18n.cfg:1537
 msgid "Romanian Translation"
 msgstr "Traducción al rumano"
 
 #. [about]
-#: data/core/about_i18n.cfg:1541
+#: data/core/about_i18n.cfg:1545
 msgid "Russian Translation"
 msgstr "Traducción al ruso"
 
 #. [about]
-#: data/core/about_i18n.cfg:1648
+#: data/core/about_i18n.cfg:1652
 msgid "Scottish Gaelic Translation"
 msgstr "Traducción al gaélico escocés"
 
 #. [about]
-#: data/core/about_i18n.cfg:1657
+#: data/core/about_i18n.cfg:1661
 msgid "Serbian Translation"
 msgstr "Traducción al serbio"
 
 #. [about]
-#: data/core/about_i18n.cfg:1676
+#: data/core/about_i18n.cfg:1680
 msgid "Slovak Translation"
 msgstr "Traducción al eslovaco"
 
 #. [about]
-#: data/core/about_i18n.cfg:1711
+#: data/core/about_i18n.cfg:1715
 msgid "Slovenian Translation"
 msgstr "Traducción al esloveno"
 
 #. [about]
-#: data/core/about_i18n.cfg:1727
+#: data/core/about_i18n.cfg:1731
 msgid "Spanish Translation"
 msgstr "Traducción al español"
 
 #. [about]
-#: data/core/about_i18n.cfg:1817
+#: data/core/about_i18n.cfg:1825
 msgid "Swedish Translation"
 msgstr "Traducción al sueco"
 
 #. [about]
-#: data/core/about_i18n.cfg:1862
+#: data/core/about_i18n.cfg:1870
 msgid "Turkish Translation"
 msgstr "Traducción al turco"
 
 #. [about]
-#: data/core/about_i18n.cfg:1887
+#: data/core/about_i18n.cfg:1895
 msgid "Ukrainian Translation"
 msgstr "Traducción al ucraniano"
 
 #. [about]
-#: data/core/about_i18n.cfg:1921
+#: data/core/about_i18n.cfg:1929
 msgid "Valencian (southern Catalan) Translation"
 msgstr "Traducción al valenciano (catalán del sur)"
 
 #. [about]
-#: data/core/about_i18n.cfg:1934
+#: data/core/about_i18n.cfg:1942
 msgid "Vietnamese Translation"
 msgstr "Traducción al vietnamita"
 
 #. [about]
-#: data/core/about_i18n.cfg:1953
-#, fuzzy
-#| msgid "Polish Translation"
+#: data/core/about_i18n.cfg:1961
 msgid "Welsh Translation"
-msgstr "Traducción al polaco"
+msgstr "Traducción al galés"
 
 #. [about]
 #. Real Acadèmia de Cultura Valenciana
-#: data/core/about_i18n.cfg:1962
+#: data/core/about_i18n.cfg:1970
 msgid "RACV’s Translation"
 msgstr "Traducción al idioma de la RACV"
 
@@ -2745,84 +2745,6 @@ msgstr ""
 "centre_v=na|lla|na|ry|li|ni|ri|rae|bry\n"
 
 #: data/core/macros/names.cfg:144
-#, fuzzy
-#| msgid ""
-#| "Aban,Abbas,Abbud,Abdul-ʿAdl,Abdul-Ahad,Abdul-Alim,Abdul-Aliyy,Abdul-Azim,"
-#| "Abdul-Aziz,Abdul-Badi,Abdul-Baʿith,Abdul-Baqi,Abdul-Bari,Abdul-Barr,Abdul-"
-#| "Basir,Abdul-Basit,Abdul-Fattah,Abdul-Ghaffar,Abdul-Ghafur,Abdul-Ghani,"
-#| "Abdul-Hadi,Abdul-Hafiz,Abdul-Hakam,Abdul-Hakim,Abdul-Halim,Abdul-Hamid,"
-#| "Abdul-Haqq,Abdul-Hasib,Abdul-Hayy,Abdul-Jabbar,Abdul-Jalil,Abdul-Karim,"
-#| "Abdul-Khabir,Abdul-Khaliq,Abdul-Latif,Abdul-Malik,Abdul-Majid,Abdul-Matin,"
-#| "Abdul-Mubdiʾ,Abdul-Mughni,Abdul-Muhaimin,Abdul-Muhsi,Abdul-Muhyi,Abdul-"
-#| "Muʿid,Abdul-Muʿizz,Abdul-Mujib,Abdul-Mumin,Abdul-Muqaddim,Abdul-Muqtadir,"
-#| "Abdul-Musawwir,Abdul-Mutaʿal,Abdul-Nafi,Abdul-Nasser,Abdul-Nasir,Abdul-"
-#| "Nur,Abdul-Qadir,Abdul-Qahhar,Abdul-Qawi,Abdul-Qayyum,Abdul-Quddus,Abdul-"
-#| "Rafi,Abdul-Rahim,Abdul-Rahman,Abdul-Rashid,Abdul-Raʿuf,Abdul-Razzaq,Abdul-"
-#| "Shakur,Abdul-Tawwab,Abdul-Wadud,Abdul-Wahhab,Abdul-Wahid,Abdul-Wajid,"
-#| "Abdul-Wakil,Abdul-Wali,Abdul-Waliy,Abdul-Warith,Abdul-Zahir,Abdullah,"
-#| "ʿAbid,ʿAbidin,Abu Bakr,Aby al-Khayr,Adil,Adham,Adib,ʿAdli,ʿAdnan,ʿAfif,"
-#| "Ahmad,ʿAjib,ʿAkif,Akil,Akram,Alaʾ,Alaʾ al-Din,Alʿ Abbas,Aladdin,al-Bara,"
-#| "al-Hakam,al-Harith,Alhasan,Alhusain,Ali,Alim,Almahdi,al-Safi,Altaf,Altair,"
-#| "al-Tayyib,al-Tijani,al-Tufail,Amid,ʿAmid,Amin,Amir,ʿAmir,Amjad,ʿAmmar,"
-#| "ʿAmro,Anas,Anis,ʿAntarah,Anwar,ʿAqil,Arfan,Arif,ʿArif,Asad,Asʿad,Asadel,"
-#| "Ashraf,Asif,ʿAsim,Aswad,Ataʿ,Ataʿ Allah,Ataʿ al-Rahman,Athil,Athir,ʿAtif,"
-#| "ʿAwad,ʿAwf,Aws,Awwab,Ayham,Ayman,Ayser,Ayyub,Aza,ʿAzab,Azhar,Azim,ʿAziz,"
-#| "ʿAzzam,Badi,Badi al-Zaman,Badr,Badr al-Din,Badri,Bahaʿ,Bahiyy al-Din,"
-#| "Bahij,Bahir,Bakr,Bakri,Baligh,Bandar,Barakah,Barir,Bashshar,Basil,Basim,"
-#| "Bassam,Bayezid,Bayhas,Bilal,Bishr,Boulos,Budail,Burhan,Bushr,Butrus,Dabir,"
-#| "Dani,Darwish,Daʿud,Dhakir,Dhakiy,Dhakwan,Dhul Fiqar,Dirar,Diya,Diya al-"
-#| "Din,Duqaq,Fadi,Fadil,Fadl,Fadl Allah,Fahd,Fahad,Fahmi,Faisal,Faʿiz,Fakhir,"
-#| "Fakhr al-Din,Fakhri,Fakih,Falah,Falih,Faraj,Farhan,Farid,Fariq,Fariq,"
-#| "Faris,Faruq,Fath,Fathi,Fatih,Fatin,Fawwaz,Fawzan,Fawzi,Fayyad,Ferran,Fida,"
-#| "Fikri,Firas,Fuʿad,Fudail,Gamal,Ghayth,Ghali,Ghalib,Ghanim,Ghassan,Ghawth,"
-#| "Ghazwan,Ghiyath,Habbab,Habib,Haddad,Hadi,Hafiz,Hakem,Hakim,Halim,Hamal,"
-#| "Hamas,Hamdan,Hamdi,Hamid,Hamim,Hamzah,Hana,Hanaʾi,Hanbal,Hani,Hanif,"
-#| "Hannad,Haris,Harith,Harun,Hashim,Hassan,Hatim,Haydar,Haytham,Hayyan,Hazim,"
-#| "Hilal,Hilmi,Hisham,Hud,Hudad,Hudhafah,Hudhayfah,Humam,Hussein,Husam,Husam "
-#| "al-Din,Ibrahim,ʿId,Idris,Ihsan,Ihtisham,ʿIkrimah,Ilias,ʿImad,Imad al-Din,"
-#| "Imran,Imtiyaz,Inʿam,Iqbal,ʿIrfan,ʿIsa,ʿIsam,Ishaq,Ismaʿil,Iyad,Iyas,Izz "
-#| "al-Din,Jabbar,Jabr,Jabir,Jad Allah,Jaʿfar,Jal,Jalal,Jalal al-Din,Jalil,"
-#| "Jamal,Jamal al-Din,Jamil,Jarir,Jasim,Jaul,Jaun,Jawad,Jawdah,Jawhar,Jibran,"
-#| "Jibril,Jubair,Jul,Jumah,Junayd,Juwain,Kadar,Kadin,Kadir,Kahil,Kaliq,Kamal,"
-#| "Kamil,Karam,Kardal,Karif,Karim,Kasib,Kasim,Katib,Kazim,Khalaf,Khaldun,"
-#| "Khalid,Khalil,Khalil al-Allah,Khalis,Khatib,Khair al-Din,Khairi,Khoury,"
-#| "Khulus,Khuzaymah,Kutaiba,Labib,Lablab,Latif,Layth,LuʿayLubayd,Luqman,Lut,"
-#| "Lutfi,Maʿd,Madani,Mahbub,Mahdi,Mahfuz,Mahir,Mahjub,Mahmud,Mahrus,Maimun,"
-#| "Majd,Majdy,Majd al-Din,Majid,Makin,Malik,Mamduh,Maʿmun,Maʿin,Mandhur,"
-#| "Mansur,Marghub,Marid,Maʿruf,Marwan,Marzuq,Mashʿal,Mashhur,Masrur,Masʿud,"
-#| "Masun,Maysarah,Mazhar,Mazin,Mehmed,Mihran,Mihyar,Mikaʾil,Miqdad,Misbah,"
-#| "Mishʿal,Miyaz,Muʾadh,Muʾawiyah,Muʾayyad,Mubarak,Mubin,Mudar,Muddaththir,"
-#| "Mufid,Muflih,Muhab,Muhayr,Muhammad,Muhanna,Muhannad,Muhib,Muhibb,Muhsin,"
-#| "Muhtadi,Muhyi al-Din,Muʿin,Muʿizz,Mujab,Mujahid,Mukarram,Mukhlis,Mukhtar,"
-#| "Mulham,Mulhim,Muʿmmar,Muʿmin,Mumtaz,Munahid,Mundhir,Munib,Munif,Munir,"
-#| "Muʿnis,Munjid,Munsif,Muntasir,Murad,Murid,Murshid,Murtada,Musa,Musʿab,"
-#| "Musaʿid,Mushtaq,Muslih,Muslim,Mutafa,Mutaʾ,Muʿtasim,Mutawalli,Muʿtazz,"
-#| "Muthanna,Muti,Muwaffaq,Muyassar,Muzaffar,Mussammil,Nabhan,Nabighah,Nabih,"
-#| "Nabil,Nadhir,Nadim,Nadir,Nafiʾ,Nahid,Naʾil,Naʾim,Naji,Najib,Najid,Najjar,"
-#| "Najm al-Din,Naʿaman,Namir,Nashʿah,Nashʿat,Nashwan,Nasib,Nasih,Nasim,Nasir,"
-#| "Nasir al-Din,Nasr,Nasri,Nasuh,Nawaf,Nawfal,Nayif,Nazih,Nazim,Nazmi,Nibras,"
-#| "Nidal,Nijad,Nimr,Nizar,Nuʿaym,Nuh,Nuhayd,Numair,Nuʿman,Nur al-Din,Nuri,"
-#| "Nusrah,Nusrat,Omar,Orhan,Osman,Qasim,Qays,Qudamah,Qusay,Qatadah,Qutaybah,"
-#| "Qutb,Qutuz,Rabah,Rabi,Radi,Rafi,Rafid,Rafiq,Raghib,Rahman,Raʿid,Raʿif,"
-#| "Rais,Rajaa,Rajab,Raji,Rajih,Rakin,Rami,Ramih,Ramiz,Ramzi,Rani,Rashad,"
-#| "Rashid,Rasil,Rasin,Rasmi,Rasul,Ratib,Raʿuf,Rayhan,Rayyan,Razin,Ridha,"
-#| "Ridwan,Rihab,Riyad,Rizq,Ruhi,Rushd,Rushdi,Ruwayd,Saad,Saʿadah,Sab,Sabih,"
-#| "Sabir,Sabri,Saʿd,Saʿd al-Din,Sadad,Sadid,Sadiq,Saʿdun,Saʿid,Safi,Safiy,"
-#| "Safiy al-Din,Safuh,Safwah,Safwat,Safwan,Sahib,Sahir,Sahl,Saʾib,Saif,Saif "
-#| "al-Din,Sajid,Sajjad,Sakhr,Salah,Salah al-Din,Salamah,Salih,Salim,Salman,"
-#| "Sami,Samih,Samir,Samman,Saqr,Sariyah,Sati,Saud,Sayyid,Shaʿban,Shadi,"
-#| "Shadin,Shafi,Shafiq,Shahid,Shahin,Shahir,Shakib,Shakir,Shams al-Din,"
-#| "Shamal,Shamil,Shamim,Sharaf,Sharif,Shawqi,Shihab,Shihab al-Din,Shihad,"
-#| "Shuʿayb,Shukri,Shumayl,Siddiq,Sinan,Siraj,Siraj al-Din,Sofian,Subhi,"
-#| "Sufyan,Suhayb,Suhayl,Suhaym,Sulaiman,Sumrah,Suraqah,Suʿud,Tahir,Tahsin,"
-#| "Taym Allah,Taj,Taj al-Din,Talal,Talib,Tamim,Tamir,Tamam,Tammam,Taqiy,"
-#| "Tarif,Tariq,Taslim,Tawfiq,Tawhid,Taymullah,Taysir,Tayyib,Thabit,Thamir,"
-#| "Thaqib,Thawab,Thawban,ʿUbaidah,Ubaid,Ubayy,ʿUdayl,ʿUday,ʿUmar,Umarah,"
-#| "Umair,ʾaUrwah,Usaym,Usama,ʿUtbah,Uthal,Uthman,Waddah,Wadi,Wadid,Wafiq,"
-#| "Wahab,Wahhab,Wahid,Waʾil,Wajdi,Wajid,Wajih,Wakil,Walid,Walif,Waliy Allah,"
-#| "Waliy al-Din,Waqar,Waqqas,Ward,Wasif,Wasil,Wasim,Wazir,Yahya,Yaman,Yaʿqub,"
-#| "Yasar,Yasin,Yasir,Yazan,Yazid,Yunus,Yushua,Yusri,Yusuf,Zafar,Zafir,Zahid,"
-#| "Zahir,Zayd,Zaim,Zayn,Zarif,Zakarriya,Zaki,Zakwan,Ziyad,Zubayr,Zuhayr"
 msgid ""
 "Aban,Abbas,Abbud,Abdul-ʿAdl,Abdul-Ahad,Abdul-Alim,Abdul-Aliyy,Abdul-Azim,"
 "Abdul-Aziz,Abdul-Badi,Abdul-Baʿith,Abdul-Baqi,Abdul-Bari,Abdul-Barr,Abdul-"
@@ -2918,74 +2840,61 @@ msgstr ""
 "ʿArif,Asad,Asʿad,Asadel,Ashraf,Asif,ʿAsim,Aswad,Ataʿ,Ataʿ Allah,Ataʿ al-"
 "Rahman,Athil,Athir,ʿAtif,ʿAwad,ʿAwf,Aws,Awwab,Ayham,Ayman,Ayser,Ayyub,Aza,"
 "ʿAzab,Azhar,Azim,ʿAziz,ʿAzzam,Badi,Badi al-Zaman,Badr,Badr al-Din,Badri,"
-"Bahaʿ,Bahiyy al-Din,Bahij,Bahir,Bakr,Bakri,Baligh,Bandar,Barakah,Barir,"
-"Bashshar,Basil,Basim,Bassam,Bayezid,Bayhas,Bilal,Bishr,Boulos,Budail,Burhan,"
-"Bushr,Butrus,Dabir,Dani,Darwish,Daʿud,Dhakir,Dhakiy,Dhakwan,Dhul Fiqar,Dirar,"
-"Diya,Diya al-Din,Duqaq,Fadi,Fadil,Fadl,Fadl Allah,Fahd,Fahad,Fahmi,Faisal,"
-"Faʿiz,Fakhir,Fakhr al-Din,Fakhri,Fakih,Falah,Falih,Faraj,Farhan,Farid,Fariq,"
-"Fariq,Faris,Faruq,Fath,Fathi,Fatih,Fatin,Fawwaz,Fawzan,Fawzi,Fayyad,Ferran,"
-"Fida,Fikri,Firas,Fuʿad,Fudail,Gamal,Ghayth,Ghali,Ghalib,Ghanim,Ghassan,"
-"Ghawth,Ghazwan,Ghiyath,Habbab,Habib,Haddad,Hadi,Hafiz,Hakem,Hakim,Halim,"
-"Hamal,Hamas,Hamdan,Hamdi,Hamid,Hamim,Hamzah,Hana,Hanaʾi,Hanbal,Hani,Hanif,"
-"Hannad,Haris,Harith,Harun,Hashim,Hassan,Hatim,Haydar,Haytham,Hayyan,Hazim,"
-"Hilal,Hilmi,Hisham,Hud,Hudad,Hudhafah,Hudhayfah,Humam,Hussein,Husam,Husam al-"
-"Din,Ibrahim,ʿId,Idris,Ihsan,Ihtisham,ʿIkrimah,Ilias,ʿImad,Imad al-Din,Imran,"
-"Imtiyaz,Inʿam,Iqbal,ʿIrfan,ʿIsa,ʿIsam,Ishaq,Ismaʿil,Iyad,Iyas,Izz al-Din,"
-"Jabbar,Jabr,Jabir,Jad Allah,Jaʿfar,Jal,Jalal,Jalal al-Din,Jalil,Jamal,Jamal "
-"al-Din,Jamil,Jarir,Jasim,Jaul,Jaun,Jawad,Jawdah,Jawhar,Jibran,Jibril,Jubair,"
-"Jul,Jumah,Junayd,Juwain,Kadar,Kadin,Kadir,Kahil,Kaliq,Kamal,Kamil,Karam,"
-"Kardal,Karif,Karim,Kasib,Kasim,Katib,Kazim,Khalaf,Khaldun,Khalid,Khalil,"
-"Khalil al-Allah,Khalis,Khatib,Khair al-Din,Khairi,Khoury,Khulus,Khuzaymah,"
-"Kutaiba,Labib,Lablab,Latif,Layth,LuʿayLubayd,Luqman,Lut,Lutfi,Maʿd,Madani,"
-"Mahbub,Mahdi,Mahfuz,Mahir,Mahjub,Mahmud,Mahrus,Maimun,Majd,Majdy,Majd al-Din,"
-"Majid,Makin,Malik,Mamduh,Maʿmun,Maʿin,Mandhur,Mansur,Marghub,Marid,Maʿruf,"
-"Marwan,Marzuq,Mashʿal,Mashhur,Masrur,Masʿud,Masun,Maysarah,Mazhar,Mazin,"
-"Mehmed,Mihran,Mihyar,Mikaʾil,Miqdad,Misbah,Mishʿal,Miyaz,Muʾadh,Muʾawiyah,"
-"Muʾayyad,Mubarak,Mubin,Mudar,Muddaththir,Mufid,Muflih,Muhab,Muhayr,Muhammad,"
-"Muhanna,Muhannad,Muhib,Muhibb,Muhsin,Muhtadi,Muhyi al-Din,Muʿin,Muʿizz,Mujab,"
-"Mujahid,Mukarram,Mukhlis,Mukhtar,Mulham,Mulhim,Muʿmmar,Muʿmin,Mumtaz,Munahid,"
-"Mundhir,Munib,Munif,Munir,Muʿnis,Munjid,Munsif,Muntasir,Murad,Murid,Murshid,"
-"Murtada,Musa,Musʿab,Musaʿid,Mushtaq,Muslih,Muslim,Mutafa,Mutaʾ,Muʿtasim,"
-"Mutawalli,Muʿtazz,Muthanna,Muti,Muwaffaq,Muyassar,Muzaffar,Mussammil,Nabhan,"
-"Nabighah,Nabih,Nabil,Nadhir,Nadim,Nadir,Nafiʾ,Nahid,Naʾil,Naʾim,Naji,Najib,"
-"Najid,Najjar,Najm al-Din,Naʿaman,Namir,Nashʿah,Nashʿat,Nashwan,Nasib,Nasih,"
-"Nasim,Nasir,Nasir al-Din,Nasr,Nasri,Nasuh,Nawaf,Nawfal,Nayif,Nazih,Nazim,"
-"Nazmi,Nibras,Nidal,Nijad,Nimr,Nizar,Nuʿaym,Nuh,Nuhayd,Numair,Nuʿman,Nur al-"
-"Din,Nuri,Nusrah,Nusrat,Omar,Orhan,Osman,Qasim,Qays,Qudamah,Qusay,Qatadah,"
-"Qutaybah,Qutb,Qutuz,Rabah,Rabi,Radi,Rafi,Rafid,Rafiq,Raghib,Rahman,Raʿid,"
-"Raʿif,Rais,Rajaa,Rajab,Raji,Rajih,Rakin,Rami,Ramih,Ramiz,Ramzi,Rani,Rashad,"
-"Rashid,Rasil,Rasin,Rasmi,Rasul,Ratib,Raʿuf,Rayhan,Rayyan,Razin,Ridha,Ridwan,"
-"Rihab,Riyad,Rizq,Ruhi,Rushd,Rushdi,Ruwayd,Saad,Saʿadah,Sab,Sabih,Sabir,Sabri,"
-"Saʿd,Saʿd al-Din,Sadad,Sadid,Sadiq,Saʿdun,Saʿid,Safi,Safiy,Safiy al-Din,"
-"Safuh,Safwah,Safwat,Safwan,Sahib,Sahir,Sahl,Saʾib,Saif,Saif al-Din,Sajid,"
-"Sajjad,Sakhr,Salah,Salah al-Din,Salamah,Salih,Salim,Salman,Sami,Samih,Samir,"
-"Samman,Saqr,Sariyah,Sati,Saud,Sayyid,Shaʿban,Shadi,Shadin,Shafi,Shafiq,"
-"Shahid,Shahin,Shahir,Shakib,Shakir,Shams al-Din,Shamal,Shamil,Shamim,Sharaf,"
-"Sharif,Shawqi,Shihab,Shihab al-Din,Shihad,Shuʿayb,Shukri,Shumayl,Siddiq,"
-"Sinan,Siraj,Siraj al-Din,Sofian,Subhi,Sufyan,Suhayb,Suhayl,Suhaym,Sulaiman,"
-"Sumrah,Suraqah,Suʿud,Tahir,Tahsin,Taym Allah,Taj,Taj al-Din,Talal,Talib,"
-"Tamim,Tamir,Tamam,Tammam,Taqiy,Tarif,Tariq,Taslim,Tawfiq,Tawhid,Taymullah,"
-"Taysir,Tayyib,Thabit,Thamir,Thaqib,Thawab,Thawban,ʿUbaidah,Ubaid,Ubayy,"
-"ʿUdayl,ʿUday,ʿUmar,Umarah,Umair,ʾaUrwah,Usaym,Usama,ʿUtbah,Uthal,Uthman,"
-"Waddah,Wadi,Wadid,Wafiq,Wahab,Wahhab,Wahid,Waʾil,Wajdi,Wajid,Wajih,Wakil,"
-"Walid,Walif,Waliy Allah,Waliy al-Din,Waqar,Waqqas,Ward,Wasif,Wasil,Wasim,"
-"Wazir,Yahya,Yaman,Yaʿqub,Yasar,Yasin,Yasir,Yazan,Yazid,Yunus,Yushua,Yusri,"
-"Yusuf,Zafar,Zafir,Zahid,Zahir,Zayd,Zaim,Zayn,Zarif,Zakarriya,Zaki,Zakwan,"
-"Ziyad,Zubayr,Zuhayr"
+"Bahaʿ,Bahiyy al-Din,Bahij,Bahir,Bakr,Baligh,Bandar,Barakah,Barir,Bashshar,"
+"Basil,Basim,Bassam,Bayezid,Bayhas,Bilal,Bishr,Boulos,Budail,Burhan,Bushr,"
+"Butrus,Dabir,Dani,Darwish,Daʿud,Dhakir,Dhakiy,Dhakwan,Dhul Fiqar,Dirar,Diya,"
+"Diya al-Din,Duqaq,Fadi,Fadil,Fadl,Fadl Allah,Fahd,Fahad,Fahmi,Faisal,Faʿiz,"
+"Fakhir,Fakhr al-Din,Fakhri,Fakih,Falah,Falih,Faraj,Farhan,Farid,Fariq,Fariq,"
+"Faris,Faruq,Fath,Fathi,Fatih,Fatin,Fawwaz,Fawzan,Fawzi,Fayyad,Ferran,Fida,"
+"Fikri,Firas,Fuʿad,Fudail,Gamal,Ghayth,Ghali,Ghalib,Ghanim,Ghassan,Ghawth,"
+"Ghazwan,Ghiyath,Habbab,Habib,Haddad,Hadi,Hafiz,Hakem,Hakim,Halim,Hamal,Hamas,"
+"Hamdan,Hamdi,Hamid,Hamim,Hamzah,Hana,Hanaʾi,Hanbal,Hani,Hanif,Hannad,Haris,"
+"Harith,Harun,Hashim,Hassan,Hatim,Haydar,Haytham,Hayyan,Hazim,Hilal,Hilmi,"
+"Hisham,Hud,Hudad,Hudhafah,Hudhayfah,Humam,Hussein,Husam,Husam al-Din,Ibrahim,"
+"ʿId,Idris,Ihsan,Ihtisham,ʿIkrimah,Ilias,ʿImad,Imad al-Din,Imran,Imtiyaz,"
+"Inʿam,Iqbal,ʿIrfan,ʿIsa,ʿIsam,Ishaq,Ismaʿil,Iyad,Iyas,Izz al-Din,Jabbar,Jabr,"
+"Jabir,Jad Allah,Jaʿfar,Jal,Jalal,Jalal al-Din,Jalil,Jamal,Jamal al-Din,Jamil,"
+"Jarir,Jasim,Jaul,Jaun,Jawad,Jawdah,Jawhar,Jibran,Jibril,Jubair,Jul,Jumah,"
+"Junayd,Juwain,Kadar,Kadin,Kadir,Kahil,Kaliq,Kamal,Kamil,Karam,Kardal,Karif,"
+"Karim,Kasib,Kasim,Katib,Kazim,Khalaf,Khaldun,Khalid,Khalil,Khalil al-Allah,"
+"Khalis,Khatib,Khair al-Din,Khairi,Khoury,Khulus,Khuzaymah,Kutaiba,Labib,"
+"Lablab,Latif,Layth,LuʿayLubayd,Luqman,Lut,Lutfi,Maʿd,Madani,Mahbub,Mahdi,"
+"Mahfuz,Mahir,Mahjub,Mahmud,Mahrus,Maimun,Majd,Majdy,Majd al-Din,Majid,Makin,"
+"Malik,Mamduh,Maʿmun,Maʿin,Mandhur,Mansur,Marghub,Marid,Maʿruf,Marwan,Marzuq,"
+"Mashʿal,Mashhur,Masrur,Masʿud,Masun,Maysarah,Mazhar,Mazin,Mehmed,Mihran,"
+"Mihyar,Mikaʾil,Miqdad,Misbah,Mishʿal,Miyaz,Muʾadh,Muʾawiyah,Muʾayyad,Mubarak,"
+"Mubin,Mudar,Muddaththir,Mufid,Muflih,Muhab,Muhayr,Muhammad,Muhanna,Muhannad,"
+"Muhib,Muhibb,Muhsin,Muhtadi,Muhyi al-Din,Muʿin,Muʿizz,Mujab,Mujahid,Mukarram,"
+"Mukhlis,Mukhtar,Mulham,Mulhim,Muʿmmar,Muʿmin,Mumtaz,Munahid,Mundhir,Munib,"
+"Munif,Munir,Muʿnis,Munjid,Munsif,Muntasir,Murad,Murid,Murshid,Murtada,Musa,"
+"Musʿab,Musaʿid,Mushtaq,Muslih,Muslim,Mutafa,Mutaʾ,Muʿtasim,Mutawalli,Muʿtazz,"
+"Muthanna,Muti,Muwaffaq,Muyassar,Muzaffar,Mussammil,Nabhan,Nabighah,Nabih,"
+"Nabil,Nadhir,Nadim,Nadir,Nafiʾ,Nahid,Naʾil,Naʾim,Naji,Najib,Najid,Najjar,"
+"Najm al-Din,Naʿaman,Namir,Nashʿah,Nashʿat,Nashwan,Nasib,Nasih,Nasim,Nasir,"
+"Nasir al-Din,Nasr,Nasri,Nasuh,Nawaf,Nawfal,Nayif,Nazih,Nazim,Nazmi,Nibras,"
+"Nidal,Nijad,Nimr,Nizar,Nuʿaym,Nuh,Nuhayd,Numair,Nuʿman,Nur al-Din,Nuri,"
+"Nusrah,Nusrat,Omar,Orhan,Osman,Qasim,Qays,Qudamah,Qusay,Qatadah,Qutaybah,"
+"Qutb,Qutuz,Rabah,Rabi,Radi,Rafi,Rafid,Rafiq,Raghib,Rahman,Raʿid,Raʿif,Rais,"
+"Rajaa,Rajab,Raji,Rajih,Rakin,Rami,Ramih,Ramiz,Ramzi,Rani,Rashad,Rashid,Rasil,"
+"Rasin,Rasmi,Rasul,Ratib,Raʿuf,Rayhan,Rayyan,Razin,Ridha,Ridwan,Rihab,Riyad,"
+"Rizq,Ruhi,Rushd,Rushdi,Ruwayd,Saad,Saʿadah,Sab,Sabih,Sabir,Sabri,Saʿd,Saʿd "
+"al-Din,Sadad,Sadid,Sadiq,Saʿdun,Saʿid,Safi,Safiy,Safiy al-Din,Safuh,Safwah,"
+"Safwat,Safwan,Sahib,Sahir,Sahl,Saʾib,Saif,Saif al-Din,Sajid,Sajjad,Sakhr,"
+"Salah,Salah al-Din,Salamah,Salih,Salim,Salman,Sami,Samih,Samir,Samman,Saqr,"
+"Sariyah,Sati,Saud,Sayyid,Shaʿban,Shadi,Shadin,Shafi,Shafiq,Shahid,Shahin,"
+"Shahir,Shakib,Shakir,Shams al-Din,Shamal,Shamil,Shamim,Sharaf,Sharif,Shawqi,"
+"Shihab,Shihab al-Din,Shihad,Shuʿayb,Shukri,Shumayl,Siddiq,Sinan,Siraj,Siraj "
+"al-Din,Sofian,Subhi,Sufyan,Suhayb,Suhayl,Suhaym,Sulaiman,Sumrah,Suraqah,"
+"Suʿud,Tahir,Tahsin,Taym Allah,Taj,Taj al-Din,Talal,Talib,Tamim,Tamir,Tamam,"
+"Tammam,Taqiy,Tarif,Tariq,Taslim,Tawfiq,Tawhid,Taymullah,Taysir,Tayyib,Thabit,"
+"Thamir,Thaqib,Thawab,Thawban,ʿUbaidah,Ubaid,Ubayy,ʿUdayl,ʿUday,ʿUmar,Umarah,"
+"Umair,ʾaUrwah,Usaym,Usama,ʿUtbah,Uthal,Uthman,Waddah,Wadi,Wadid,Wafiq,Wahab,"
+"Wahhab,Wahid,Waʾil,Wajdi,Wajid,Wajih,Wakil,Walid,Walif,Waliy Allah,Waliy al-"
+"Din,Waqar,Waqqas,Ward,Wasif,Wasil,Wasim,Wazir,Yahya,Yaman,Yaʿqub,Yasar,Yasin,"
+"Yasir,Yazan,Yazid,Yunus,Yushua,Yusri,Yusuf,Zafar,Zafir,Zahid,Zahir,Zayd,Zaim,"
+"Zayn,Zarif,Zakarriya,Zaki,Zakwan,Ziyad,Zubayr,Zuhayr"
 
 #: data/core/macros/names.cfg:145
-#, fuzzy
-#| msgid ""
-#| "Abiha,Afaf,A'isha,Ajda,Aliya,Amira,Ashraqat,Atikah,Azra,Boutheina,Bushra,"
-#| "Chaima,Cynthia,Dalal,Dalia,Eliana,Esma,Farida,Fatima,Feyrouz,Habiba,Hafsa,"
-#| "Hajra,Halima,Hamida,Hanifa,Havva,Hayat,Hessa,Ibtisam,Ibtissam,Inaam,"
-#| "Jamila,Jawahir,Jena,Jumana,Kareena,Karima,Katya,Khadija,Khairunnisa,"
-#| "Khawla,Khawlah,Lama,Lamia,Latifa,Layal,Layan,Leila,Lina,Lulwa,Madiha,Maha,"
-#| "Mahmuna,Mai,Malika,Marwa,Maryam,Maya,Maysoon,Melissa,Nadia,Nafisa,Nahla,"
-#| "Naila,Najat,Nasim,Nasrin,Nejla,Nezha,Niusha,Qistina,Rahima,Rana,Rashida,"
-#| "Reem,Ruqayya,Saadia,Sabiha,Safiya,Sahar,Saida,Sajida,Sakhra,Salma,Samira,"
-#| "Sarah,Shahd,Shatha,Sherine,Shumaila,Sumaya,Taslima,Umm,Yara,Yasmin,Zahra,"
-#| "Zakiya,Zaynab"
 msgid ""
 "Abiha,Afaf,A'isha,Ajda,Aliya,Amira,Ashraqat,Atikah,Azra,Boutheina,Bushra,"
 "Chaima,Dalia,Esma,Farida,Fatima,Feyrouz,Habiba,Hafsa,Hajra,Halima,Hamida,"
@@ -2998,14 +2907,14 @@ msgid ""
 "Yasmin,Zahra,Zakiya,Zaynab"
 msgstr ""
 "Abiha,Afaf,A'isha,Ajda,Aliya,Amira,Ashraqat,Atikah,Azra,Boutheina,Bushra,"
-"Chaima,Cynthia,Dalal,Dalia,Eliana,Esma,Farida,Fatima,Feyrouz,Habiba,Hafsa,"
-"Hajra,Halima,Hamida,Hanifa,Havva,Hayat,Hessa,Ibtisam,Ibtissam,Inaam,Jamila,"
-"Jawahir,Jena,Jumana,Kareena,Karima,Katya,Khadija,Khairunnisa,Khawla,Khawlah,"
-"Lama,Lamia,Latifa,Layal,Layan,Leila,Lina,Lulwa,Madiha,Maha,Mahmuna,Mai,"
-"Malika,Marwa,Maryam,Maya,Maysoon,Melissa,Nadia,Nafisa,Nahla,Naila,Najat,"
-"Nasim,Nasrin,Nejla,Nezha,Niusha,Qistina,Rahima,Rana,Rashida,Reem,Ruqayya,"
-"Saadia,Sabiha,Safiya,Sahar,Saida,Sajida,Sakhra,Salma,Samira,Sarah,Shahd,"
-"Shatha,Sherine,Shumaila,Sumaya,Taslima,Umm,Yara,Yasmin,Zahra,Zakiya,Zaynab"
+"Chaima,Dalia,Esma,Farida,Fatima,Feyrouz,Habiba,Hafsa,Hajra,Halima,Hamida,"
+"Hanifa,Havva,Hayat,Hessa,Ibtisam,Ibtissam,Inaam,Jamila,Jawahir,Jena,Jumana,"
+"Kareena,Karima,Katya,Khadija,Khairunnisa,Khawla,Khawlah,Lama,Latifa,Layal,"
+"Layan,Leila,Lina,Lulwa,Madiha,Maha,Mahmuna,Mai,Malika,Marwa,Maryam,Maya,"
+"Maysoon,Nadia,Nafisa,Nahla,Naila,Najat,Nasim,Nasrin,Nejla,Nezha,Niusha,"
+"Rahima,Rana,Rashida,Reem,Ruqayya,Saadia,Sabiha,Safiya,Sahar,Saida,Sajida,"
+"Sakhra,Salma,Samira,Sarah,Shahd,Shatha,Shumaila,Sumaya,Taslima,Umm,Yara,"
+"Yasmin,Zahra,Zakiya,Zaynab"
 
 #. Generator for male dunefolk human names; see <https://wiki.wesnoth.org/Context-free_grammar> for syntax
 #: data/core/macros/names.cfg:147
@@ -3096,18 +3005,6 @@ msgstr ""
 "kib\n"
 
 #: data/core/macros/names.cfg:179
-#, fuzzy
-#| msgid ""
-#| "Amprixta,Anexir,Anitraz,Arix,Axiz,Bzz’Kza,Chamil,Cleezi,Clezz,Fazzis,"
-#| "Fizztrax,Flixta,Flizzil,Frikes,Frizzle,Hasz,Heffez,Hertrazzir,Hesz,Hezzir,"
-#| "Hezzis,Hix,Inexis,Irix,Jezzix,Jizz,Kaliez,Kepzs,Kernix,Kersezz,Kertrasz,"
-#| "Kerx,Kerxenix,Kezz,Klexaz,Klezyx,Krarax,Krenarex,Krex,Krinex,Krisess,"
-#| "Laizix,Lazki,Lixeez,Merax,Mexiss,Moxanzz,Naxisz,Nix,Pekzs,Plaxis,Plesix,"
-#| "Presch,Sailik,Salanix,Salik,Sandix,Saprazz,Satras,Skalix,Skandix,Skazix,"
-#| "Skeely,Skeezix,Sklizle,Skrez,Slizilx,Sprizz,Ssexur,Ssizer,Ssorix,Sszasz,"
-#| "Sterizz,Talerez,Tarex,Tarnix,Tezzaz,Tirasch,Tirax,Tirix,Trezz,Venezz,"
-#| "Vriss,Waks,Xaffrasz,Xartrez,Xasz,Xaztex,Xerxix,Xirasz,Xirr,Xirtras,"
-#| "Xirtrez,Xirz,Zandler,Zedrix,Zilrix,Zizzasz,Zslap,Zzalkz,Zzupde"
 msgid ""
 "Amprixta,Anexir,Anitraz,Arix,Axiz,Bzz’Kza,Chamil,Cleezi,Clezz,Fazzis,"
 "Fizztrax,Flixta,Flizzil,Frikes,Frizzle,Hasz,Heffez,Hertrazzir,Hesz,Hezzir,"
@@ -3122,14 +3019,14 @@ msgid ""
 msgstr ""
 "Amprixta,Anexir,Anitraz,Arix,Axiz,Bzz’Kza,Chamil,Cleezi,Clezz,Fazzis,"
 "Fizztrax,Flixta,Flizzil,Frikes,Frizzle,Hasz,Heffez,Hertrazzir,Hesz,Hezzir,"
-"Hezzis,Hix,Inexis,Irix,Jezzix,Jizz,Kaliez,Kepzs,Kernix,Kersezz,Kertrasz,Kerx,"
+"Hezzis,Hix,Inexis,Irix,Jezzix,Kaliez,Kepzs,Kernix,Kersezz,Kertrasz,Kerx,"
 "Kerxenix,Kezz,Klexaz,Klezyx,Krarax,Krenarex,Krex,Krinex,Krisess,Laizix,Lazki,"
 "Lixeez,Merax,Mexiss,Moxanzz,Naxisz,Nix,Pekzs,Plaxis,Plesix,Presch,Sailik,"
 "Salanix,Salik,Sandix,Saprazz,Satras,Skalix,Skandix,Skazix,Skeely,Skeezix,"
-"Sklizle,Skrez,Slizilx,Sprizz,Ssexur,Ssizer,Ssorix,Sszasz,Sterizz,Talerez,"
-"Tarex,Tarnix,Tezzaz,Tirasch,Tirax,Tirix,Trezz,Venezz,Vriss,Waks,Xaffrasz,"
-"Xartrez,Xasz,Xaztex,Xerxix,Xirasz,Xirr,Xirtras,Xirtrez,Xirz,Zandler,Zedrix,"
-"Zilrix,Zizzasz,Zslap,Zzalkz,Zzupde"
+"Sklizle,Skrez,Slizilx,Sprizz,Ssizer,Ssorix,Sszasz,Sterizz,Talerez,Tarex,"
+"Tarnix,Tezzaz,Tirasch,Tirax,Tirix,Trezz,Venezz,Vriss,Waks,Xaffrasz,Xartrez,"
+"Xasz,Xaztex,Xerxix,Xirasz,Xirr,Xirtras,Xirtrez,Xirz,Zandler,Zedrix,Zilrix,"
+"Zizzasz,Zslap,Zzalkz,Zzupde"
 
 #. Generator for saurian names; see <https://wiki.wesnoth.org/Context-free_grammar> for syntax
 #: data/core/macros/names.cfg:181
@@ -4421,8 +4318,8 @@ msgstr "incurable"
 
 #. #-#-#-#-#  wesnoth.wml.pot (PACKAGE VERSION)  #-#-#-#-#
 #. [lua]: wesnoth.wml_actions.message
-#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3487
-#: src/scripting/game_lua_kernel.cpp:3522
+#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3491
+#: src/scripting/game_lua_kernel.cpp:3526
 msgid "input"
 msgstr "entrada"
 
@@ -4456,12 +4353,6 @@ msgstr "Planifica promoción de unidad"
 
 #. [modification]: id=plan_unit_advance, type=mp
 #: data/modifications.cfg:7
-#, fuzzy
-#| msgid ""
-#| "When playing a multiplayer game, you do not control what a unit advances "
-#| "to if it advances on another player's turn. With this modification you "
-#| "can set what your units advance to beforehand, either for a specific unit "
-#| "or for all units of the same type."
 msgid ""
 "When playing a multiplayer game, you do not control what a unit advances to "
 "if it advances on another player’s turn. With this modification you can set "
@@ -4663,10 +4554,8 @@ msgstr "Cargar turno..."
 
 #. [menu]: id=menu-quickreplay
 #: data/themes/default.cfg:108
-#, fuzzy
-#| msgid "play turn"
 msgid "Replay Turn..."
-msgstr "jugar turno"
+msgstr "Repetir turno..."
 
 #. [menu]: id=actions-menu
 #: data/themes/default.cfg:116
@@ -6685,7 +6574,7 @@ msgstr[1] ""
 "Por favor, informe sobre esto a los correspondientes autores o mantenedores "
 "de estos complementos."
 
-#: src/game_events/pump.cpp:392 src/game_launcher.cpp:966
+#: src/game_events/pump.cpp:392 src/game_launcher.cpp:971
 msgid "Error: "
 msgstr "Error: "
 
@@ -7030,20 +6919,20 @@ msgstr "Ha realizado demasiados intentos de acceso."
 msgid "Password hashing failed."
 msgstr "Error de hash de contraseña."
 
-#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:919
+#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:924
 msgid "The game could not be loaded: "
 msgstr "La partida no se ha podido cargar: "
 
-#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:921
+#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:926
 msgid "Error while playing the game: "
 msgstr "Error durante el juego: "
 
-#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:958
+#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:963
 msgid "The game map could not be loaded: "
 msgstr "El mapa del juego no se ha podido cargar: "
 
-#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:923
-#: src/game_launcher.cpp:1044
+#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:928
+#: src/game_launcher.cpp:1049
 msgid "Map generator error: "
 msgstr "Error en el generador del mapa: "
 
@@ -7068,29 +6957,29 @@ msgstr "Escenario desconocido: «$scenario|»"
 msgid "No campaigns are available."
 msgstr "No hay campañas disponibles."
 
-#: src/game_launcher.cpp:725 src/game_launcher.cpp:744 src/replay.cpp:666
+#: src/game_launcher.cpp:730 src/game_launcher.cpp:749 src/replay.cpp:666
 msgid "The file you have tried to load is corrupt"
 msgstr "El archivo que ha intentado cargar está corrupto"
 
-#: src/game_launcher.cpp:727 src/game_launcher.cpp:746
+#: src/game_launcher.cpp:732 src/game_launcher.cpp:751
 #: src/hotkey/hotkey_handler_sp.cpp:334 src/savegame.cpp:153
 #: src/savegame.cpp:314
 msgid "The file you have tried to load is corrupt: '"
 msgstr "El archivo que ha intentado cargar está corrupto: «"
 
-#: src/game_launcher.cpp:736
+#: src/game_launcher.cpp:741
 msgid "File I/O Error while reading the game"
 msgstr "Error de E/S en el archivo mientras se intentaba cargar la partida"
 
-#: src/game_launcher.cpp:738
+#: src/game_launcher.cpp:743
 msgid "File I/O Error while reading the game: '"
 msgstr "Error de E/S en el archivo mientras se intentaba cargar la partida: «"
 
-#: src/game_launcher.cpp:917
+#: src/game_launcher.cpp:922
 msgid "Error while starting server: "
 msgstr "Error al iniciar el servidor: "
 
-#: src/game_launcher.cpp:939
+#: src/game_launcher.cpp:944
 msgid "Connection failed: "
 msgstr "Conexión fallida: "
 
@@ -7130,24 +7019,20 @@ msgstr[1] ""
 "de continuar?"
 
 #: src/gui/dialogs/editor/choose_addon.cpp:77
-#, fuzzy
-#| msgid "Create a unit."
 msgid "Create a new add-on"
-msgstr "Crear una unidad."
+msgstr "Crear un nuevo complemento"
 
 #: src/gui/dialogs/editor/choose_addon.cpp:77
-#, fuzzy
-#| msgid "Manage Add-ons"
 msgid "New Add-on"
-msgstr "Gestionar complementos"
+msgstr "Nuevo complemento"
 
 #: src/gui/dialogs/editor/choose_addon.cpp:84
 msgid "Mainline"
-msgstr ""
+msgstr "Oficial"
 
 #: src/gui/dialogs/editor/choose_addon.cpp:84
 msgid "Mainline multiplayer scenarios"
-msgstr ""
+msgstr "Escenarios multijugador oficiales"
 
 #: src/gui/dialogs/game_stats.hpp:42
 msgid "No visible sides found."
@@ -7175,16 +7060,12 @@ msgid "Scenario"
 msgstr "Escenario"
 
 #: src/gui/dialogs/multiplayer/match_history.cpp:71
-#, fuzzy
-#| msgid "Era:"
 msgid "Era"
-msgstr "Era:"
+msgstr "Era"
 
 #: src/gui/dialogs/multiplayer/match_history.cpp:72
-#, fuzzy
-#| msgid "Modifications:"
 msgid "Modification"
-msgstr "Modificaciones:"
+msgstr "Modificación"
 
 #: src/gui/dialogs/multiplayer/match_history.cpp:152
 msgid "Era: "
@@ -7421,16 +7302,12 @@ msgid "Back to Turn "
 msgstr "Volver al turno "
 
 #: src/hotkey/hotkey_handler.cpp:457
-#, fuzzy
-#| msgid "Ready to start!"
 msgid "Replay from Start"
-msgstr "¡Listo para comenzar!"
+msgstr "Repetir desde el inicio"
 
 #: src/hotkey/hotkey_handler.cpp:457
-#, fuzzy
-#| msgid "play turn"
 msgid "Replay from Turn "
-msgstr "jugar turno"
+msgstr "Repetir desde el turno "
 
 #: src/hotkey/hotkey_handler_sp.cpp:151
 msgid "(press $hotkey to deactivate)"
@@ -8160,11 +8037,8 @@ msgstr ""
 "o reincorporaciones planeadas."
 
 #: src/mouse_events.cpp:1314
-#, fuzzy
-#| msgid "Attack"
-#| msgid_plural "Attacks"
 msgid "No Attacks"
-msgstr "Ataque"
+msgstr "Sin ataques"
 
 #: src/mouse_events.cpp:1314
 msgid "This unit has no usable weapons."
@@ -8254,7 +8128,7 @@ msgstr "hora local"
 
 #: src/play_controller.cpp:565
 msgid "Trying to create a corrupt file, please report this bug"
-msgstr ""
+msgstr "Se intentó crear un archivo dañado. Por favor, informa de este error."
 
 #: src/play_controller.cpp:1050
 msgid ""
@@ -9374,6 +9248,223 @@ msgstr "Ocultar planes de $player"
 msgid "Whiteboard Options"
 msgstr "Opciones del modo pizarra"
 
+#, fuzzy
+#~ msgid "Provinces"
+#~ msgstr "Preferencias"
+
+#, fuzzy
+#~ msgid "Thermal"
+#~ msgstr "Normal"
+
+#, fuzzy
+#~ msgid "Enemies"
+#~ msgstr "Aldea enemiga"
+
+#~ msgid "damage"
+#~ msgstr "daño"
+
+#~ msgid "moves"
+#~ msgstr "movimientos"
+
+#~ msgid "strike"
+#~ msgstr "golpe"
+
+#, fuzzy
+#~ msgid "female^steadfast"
+#~ msgstr "ralentizada"
+
+#, fuzzy
+#~ msgid "initiative"
+#~ msgstr " (inactivo)"
+
+#, fuzzy
+#~ msgid "Max HP bonus +6%"
+#~ msgstr "Bono máximo por enjambre: "
+
+#, fuzzy
+#~ msgid "$value| XP to advance"
+#~ msgstr "PX para subir de nivel"
+
+#, fuzzy
+#~ msgid "+moves defense"
+#~ msgstr "Ser más defensivo"
+
+#~ msgid "<span color=\"$color\">$number_or_percent movement</span> point"
+#~ msgid_plural ""
+#~ "<span color=\"$color\">$number_or_percent movement</span> points"
+#~ msgstr[0] ""
+#~ "<span color=\"$color\">$number_or_percent movement</span> punto de "
+#~ "movimiento"
+#~ msgstr[1] ""
+#~ "<span color=\"$color\">$number_or_percent movement</span> puntos de "
+#~ "movimiento"
+
+#~ msgid ""
+#~ "The following add-on could not be downloaded or installed successfully:"
+#~ msgid_plural ""
+#~ "The following add-ons could not be downloaded or installed successfully:"
+#~ msgstr[0] ""
+#~ "El siguiente complemento no pudo ser descargado o instalado correctamente:"
+#~ msgstr[1] ""
+#~ "Los siguientes complementos no pudieron ser descargados o instalados "
+#~ "correctamente:"
+
+#~ msgid "multiplayer_starting_gold^Gold"
+#~ msgid_plural "multiplayer_starting_gold^Gold"
+#~ msgstr[0] "Oro"
+#~ msgstr[1] "Oro"
+
+#, fuzzy
+#~ msgid "Clear Weather"
+#~ msgstr "Limpiar mensajes"
+
+#~ msgid "unit^Gold"
+#~ msgid_plural "Gold"
+#~ msgstr[0] "Oro"
+#~ msgstr[1] "Oro"
+
+#, fuzzy
+#~ msgid " vision"
+#~ msgstr "visión: "
+
+#, fuzzy
+#~ msgid " jamming"
+#~ msgstr "Advertencia: "
+
+#, fuzzy
+#~ msgid "Battle for Wesnoth"
+#~ msgstr "La batalla por Wesnoth"
+
+#, fuzzy
+#~ msgid "Compress savegames using bzip2"
+#~ msgstr "Comprimir partidas guardadas"
+
+#, fuzzy
+#~ msgid "Multiplayer_AI^Default AI (RCA)"
+#~ msgstr "IA RCA"
+
+#, fuzzy
+#~ msgid "Multiplayer_AI^Experimental AI"
+#~ msgstr "IA RCA"
+
+#, fuzzy
+#~ msgid "Enemy unit weight  (default: 100)"
+#~ msgstr "¡Unidad enemiga divisada!"
+
+#, fuzzy
+#~ msgid "Move Konrad here"
+#~ msgstr "Mover el líder aquí"
+
+#, fuzzy
+#~ msgid "Whelps"
+#~ msgstr "ayuda"
+
+#, fuzzy
+#~ msgid "End scenario"
+#~ msgstr "Finalizar escenario"
+
+#, fuzzy
+#~ msgid "Take the pass"
+#~ msgstr "Guardar el mapa como"
+
+#, fuzzy
+#~ msgid "Defeat Rowck"
+#~ msgstr "Derrota"
+
+#, fuzzy
+#~ msgid "Station 1"
+#~ msgstr "Facción"
+
+#, fuzzy
+#~ msgid "Station 2"
+#~ msgstr "Facción"
+
+#, fuzzy
+#~ msgid "Defeat all enemy units"
+#~ msgstr "Derrotar a los líderes enemigos"
+
+#~ msgid "Notes"
+#~ msgstr "Notas"
+
+#, fuzzy
+#~ msgid "Defeat all lurkers"
+#~ msgstr "Cancelar todas las órdenes"
+
+#, fuzzy
+#~ msgid "Messenger"
+#~ msgstr "Mensaje:"
+
+#, fuzzy
+#~ msgid "AI moves Messenger here"
+#~ msgstr "Mover el líder aquí"
+
+#, fuzzy
+#~ msgid "Move Rossauba here"
+#~ msgstr "Mover el líder aquí"
+
+#, fuzzy
+#~ msgid "Recruiting"
+#~ msgstr "Reclutar"
+
+#~ msgid "Swarm"
+#~ msgstr "Enjambre"
+
+#, fuzzy
+#~ msgid "AI Location:"
+#~ msgstr "Ubicación inválida"
+
+#~ msgid "invisible"
+#~ msgstr "invisible"
+
+#, fuzzy
+#~ msgid "female^invisible"
+#~ msgstr "ralentizada"
+
+#, fuzzy
+#~ msgid "I triggered a moveto event."
+#~ msgstr "Desencadena un evento del juego."
+
+#, fuzzy
+#~ msgid "Choose a Map to Open"
+#~ msgstr "Escoger arma:"
+
+#, fuzzy
+#~ msgid "Choose a Mask to Apply"
+#~ msgstr "Escoja partida a cargar"
+
+#, fuzzy
+#~ msgid "Choose Target Map"
+#~ msgstr "Escoger arma:"
+
+#, fuzzy
+#~ msgid "The file already exists. Do you want to overwrite it?"
+#~ msgstr "El mapa ya existe. ¿Desea sobreescribirlo?"
+
+#, fuzzy
+#~ msgid "No random map generators found."
+#~ msgstr "Ninguna información de era."
+
+#, fuzzy
+#~ msgid "Map creation failed."
+#~ msgstr "¡La instalación ha fallado!"
+
+#~ msgid ""
+#~ "An outdated local add-on has publishing information attached. It will not "
+#~ "be offered for updating."
+#~ msgid_plural ""
+#~ "Some outdated local add-ons have publishing information attached. They "
+#~ "will not be offered for updating."
+#~ msgstr[0] ""
+#~ "Un complemento local, antiguo, posee información de publicación. No será "
+#~ "ofrecido para ser actualizado."
+#~ msgstr[1] ""
+#~ "Algunos complementos locales, antiguos, poseen información de "
+#~ "publicación. No serán ofrecido para ser actualizados."
+
+#, fuzzy
+#~ msgid "Toggle Terrain Transition Update"
+#~ msgstr "Activar o desactivar la actualización en la transición de terreno"
+
 #~ msgid "Availability: "
 #~ msgstr "Disponibilidad: "
 
@@ -9701,25 +9792,9 @@ msgstr "Opciones del modo pizarra"
 #~ "Esta partida guardada es de otra versión del juego ($version_number|). "
 #~ "¿Quiere intentar cargarla igualmente?"
 
-#, fuzzy
-#~ msgid "Provinces"
-#~ msgstr "Preferencias"
-
-#, fuzzy
-#~ msgid "Thermal"
-#~ msgstr "Normal"
-
-#, fuzzy
-#~ msgid "Enemies"
-#~ msgstr "Aldea enemiga"
-
 # e/y
 #~ msgid " and "
 #~ msgstr " y "
-
-#, fuzzy
-#~ msgid "damage"
-#~ msgstr "Daño"
 
 #~ msgid "XP to advance"
 #~ msgstr "PX para subir de nivel"
@@ -9727,40 +9802,12 @@ msgstr "Opciones del modo pizarra"
 #~ msgid "gold"
 #~ msgstr "oro"
 
-#, fuzzy
-#~ msgid "moves"
-#~ msgstr "movimiento"
-
 #~ msgid "gender^Random"
 #~ msgstr "Aleatorio"
 
 # Se le añaden ':' para separarlo de la cadena anterior. Si esta cadena se usa en más de un sitio, sería conveniente revisarla.
 #~ msgid " resistance vs "
 #~ msgstr " resistencia a ataques "
-
-#, fuzzy
-#~ msgid "strike"
-#~ msgstr "Golpes"
-
-#, fuzzy
-#~ msgid "female^steadfast"
-#~ msgstr "ralentizada"
-
-#, fuzzy
-#~ msgid "initiative"
-#~ msgstr " (inactivo)"
-
-#, fuzzy
-#~ msgid "Max HP bonus +6%"
-#~ msgstr "Bono máximo por enjambre: "
-
-#, fuzzy
-#~ msgid "$value| XP to advance"
-#~ msgstr "PX para subir de nivel"
-
-#, fuzzy
-#~ msgid "+moves defense"
-#~ msgstr "Ser más defensivo"
 
 #~ msgid "Use experimental PRNG combat"
 #~ msgstr "Usa combate con PRNG experimental"
@@ -10146,16 +10193,6 @@ msgstr "Opciones del modo pizarra"
 #~ msgid "None"
 #~ msgstr "Ninguno"
 
-#~ msgid "<span color=\"$color\">$number_or_percent movement</span> point"
-#~ msgid_plural ""
-#~ "<span color=\"$color\">$number_or_percent movement</span> points"
-#~ msgstr[0] ""
-#~ "<span color=\"$color\">$number_or_percent movement</span> punto de "
-#~ "movimiento"
-#~ msgstr[1] ""
-#~ "<span color=\"$color\">$number_or_percent movement</span> puntos de "
-#~ "movimiento"
-
 #~ msgid "Ping timeout"
 #~ msgstr "Tiempo de expiración de ping"
 
@@ -10426,16 +10463,6 @@ msgstr "Opciones del modo pizarra"
 
 #~ msgid "Update Failed"
 #~ msgstr "La actualización ha fallado"
-
-#~ msgid ""
-#~ "The following add-on could not be downloaded or installed successfully:"
-#~ msgid_plural ""
-#~ "The following add-ons could not be downloaded or installed successfully:"
-#~ msgstr[0] ""
-#~ "El siguiente complemento no pudo ser descargado o instalado correctamente:"
-#~ msgstr[1] ""
-#~ "Los siguientes complementos no pudieron ser descargados o instalados "
-#~ "correctamente:"
 
 #~ msgid "Female ♀"
 #~ msgstr "Femenino ♀"
@@ -10779,11 +10806,6 @@ msgstr "Opciones del modo pizarra"
 
 #~ msgid "(empty)"
 #~ msgstr "(vacío)"
-
-#~ msgid "multiplayer_starting_gold^Gold"
-#~ msgid_plural "multiplayer_starting_gold^Gold"
-#~ msgstr[0] "Oro"
-#~ msgstr[1] "Oro"
 
 #~ msgid "Statistics"
 #~ msgstr "Estadísticas"
@@ -11209,10 +11231,6 @@ msgstr "Opciones del modo pizarra"
 #~ msgstr ""
 #~ "DejaVu Sans,Andagii,Droid Sans Japanese,Droid Sans Fallback,Junicode"
 
-#, fuzzy
-#~ msgid "Clear Weather"
-#~ msgstr "Limpiar mensajes"
-
 #~ msgid "Initializing user interface"
 #~ msgstr "Iniciando interfaz de usuario"
 
@@ -11258,11 +11276,6 @@ msgstr "Opciones del modo pizarra"
 #~ msgid "Starting game"
 #~ msgstr "Empezando la partida"
 
-#~ msgid "unit^Gold"
-#~ msgid_plural "Gold"
-#~ msgstr[0] "Oro"
-#~ msgstr[1] "Oro"
-
 #~ msgid "Manage persistence data"
 #~ msgstr "Maneja datos persistentes"
 
@@ -11272,23 +11285,11 @@ msgstr "Opciones del modo pizarra"
 #~ msgid " move"
 #~ msgstr " movimiento"
 
-#, fuzzy
-#~ msgid " vision"
-#~ msgstr "visión: "
-
-#, fuzzy
-#~ msgid " jamming"
-#~ msgstr "Advertencia: "
-
 #~ msgid "Show your ignores and friends list."
 #~ msgstr "Muestra su lista de jugadores amigos e ignorados."
 
 #~ msgid "There are no players on your friends or ignore list."
 #~ msgstr "No hay jugadores en sus listas de amigos o jugadores ignorados."
-
-#, fuzzy
-#~ msgid "Battle for Wesnoth"
-#~ msgstr "La batalla por Wesnoth"
 
 #~ msgid "save_compression_short^gzip"
 #~ msgstr "gzip"
@@ -11659,10 +11660,6 @@ msgstr "Opciones del modo pizarra"
 #~ msgid "Show Helptip"
 #~ msgstr "Mostrar sugerencias"
 
-#, fuzzy
-#~ msgid "Compress savegames using bzip2"
-#~ msgstr "Comprimir partidas guardadas"
-
 #~ msgid "?"
 #~ msgstr "?"
 
@@ -11684,121 +11681,9 @@ msgstr "Opciones del modo pizarra"
 #~ msgid "KB"
 #~ msgstr "KB"
 
-#, fuzzy
-#~ msgid "Multiplayer_AI^Default AI (RCA)"
-#~ msgstr "IA RCA"
-
-#, fuzzy
-#~ msgid "Multiplayer_AI^Experimental AI"
-#~ msgstr "IA RCA"
-
-#, fuzzy
-#~ msgid "Enemy unit weight  (default: 100)"
-#~ msgstr "¡Unidad enemiga divisada!"
-
-#, fuzzy
-#~ msgid "Move Konrad here"
-#~ msgstr "Mover el líder aquí"
-
-#, fuzzy
-#~ msgid "Whelps"
-#~ msgstr "ayuda"
-
-#, fuzzy
-#~ msgid "End scenario"
-#~ msgstr "Finalizar escenario"
-
-#, fuzzy
-#~ msgid "Take the pass"
-#~ msgstr "Guardar el mapa como"
-
-#, fuzzy
-#~ msgid "Defeat Rowck"
-#~ msgstr "Derrota"
-
-#, fuzzy
-#~ msgid "Station 1"
-#~ msgstr "Facción"
-
-#, fuzzy
-#~ msgid "Station 2"
-#~ msgstr "Facción"
-
-#, fuzzy
-#~ msgid "Defeat all enemy units"
-#~ msgstr "Derrotar a los líderes enemigos"
-
-#, fuzzy
-#~ msgid "Notes"
-#~ msgstr "Notas:"
-
-#, fuzzy
-#~ msgid "Defeat all lurkers"
-#~ msgstr "Cancelar todas las órdenes"
-
-#, fuzzy
-#~ msgid "Messenger"
-#~ msgstr "Mensaje:"
-
-#, fuzzy
-#~ msgid "AI moves Messenger here"
-#~ msgstr "Mover el líder aquí"
-
-#, fuzzy
-#~ msgid "Move Rossauba here"
-#~ msgstr "Mover el líder aquí"
-
-#, fuzzy
-#~ msgid "Recruiting"
-#~ msgstr "Reclutar"
-
-#, fuzzy
-#~ msgid "Swarm"
-#~ msgstr "Enjambre:"
-
-#, fuzzy
-#~ msgid "AI Location:"
-#~ msgstr "Ubicación inválida"
-
 #~ msgid "Unknown unit type '$type|' while generating traits"
 #~ msgstr ""
 #~ "Tipo de unidad desconocida «$type|» mientras se generaba los alineamientos"
-
-#, fuzzy
-#~ msgid "invisible"
-#~ msgstr "invisible: "
-
-#, fuzzy
-#~ msgid "female^invisible"
-#~ msgstr "ralentizada"
-
-#, fuzzy
-#~ msgid "I triggered a moveto event."
-#~ msgstr "Desencadena un evento del juego."
-
-#, fuzzy
-#~ msgid "Choose a Map to Open"
-#~ msgstr "Escoger arma:"
-
-#, fuzzy
-#~ msgid "Choose a Mask to Apply"
-#~ msgstr "Escoja partida a cargar"
-
-#, fuzzy
-#~ msgid "Choose Target Map"
-#~ msgstr "Escoger arma:"
-
-#, fuzzy
-#~ msgid "The file already exists. Do you want to overwrite it?"
-#~ msgstr "El mapa ya existe. ¿Desea sobreescribirlo?"
-
-#, fuzzy
-#~ msgid "No random map generators found."
-#~ msgstr "Ninguna información de era."
-
-#, fuzzy
-#~ msgid "Map creation failed."
-#~ msgstr "¡La instalación ha fallado!"
 
 #~ msgid "The server responded with an error: \"$error|\""
 #~ msgstr "El servidor devolvió un error: \"$error|\""
@@ -11821,19 +11706,6 @@ msgstr "Opciones del modo pizarra"
 #~ msgstr ""
 #~ "Mientras el complemento se instalaba, se encontró que faltaba un archivo "
 #~ "de dependencia. Trate de actualizar dicho complemento."
-
-#~ msgid ""
-#~ "An outdated local add-on has publishing information attached. It will not "
-#~ "be offered for updating."
-#~ msgid_plural ""
-#~ "Some outdated local add-ons have publishing information attached. They "
-#~ "will not be offered for updating."
-#~ msgstr[0] ""
-#~ "Un complemento local, antiguo, posee información de publicación. No será "
-#~ "ofrecido para ser actualizado."
-#~ msgstr[1] ""
-#~ "Algunos complementos locales, antiguos, poseen información de "
-#~ "publicación. No serán ofrecido para ser actualizados."
 
 #~ msgid "Installation of some dependency failed"
 #~ msgstr "La instalación de algunos archivos de dependencia ha fallado."
@@ -12140,10 +12012,6 @@ msgstr "Opciones del modo pizarra"
 
 #~ msgid "Apply a Mask"
 #~ msgstr "Aplicar una máscara"
-
-#, fuzzy
-#~ msgid "Toggle Terrain Transition Update"
-#~ msgstr "Activar o desactivar la actualización en la transición de terreno"
 
 #~ msgid "Auto-update Terrain Transitions"
 #~ msgstr "Actualizar automáticamente transiciones de terreno"

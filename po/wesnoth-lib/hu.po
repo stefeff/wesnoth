@@ -9,13 +9,13 @@
 # Széll András <szell.andris@gmail.com>, 2018.
 # Krutki Tamás <krtamas@0x64.org>, 2018.
 # Pazurik L. Ádám <pazurik.laszlo.adam@gmail.com>, 2018.
-# Berda Jenő <big4billy@gmail.com>, 2024.
+# Berda Jenő <big4billy@gmail.com>, 2024-2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: hu-lib_1.5\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-05-20 17:25-0500\n"
-"PO-Revision-Date: 2025-01-31 00:06+0100\n"
+"POT-Creation-Date: 2025-12-08 09:30-0600\n"
+"PO-Revision-Date: 2025-10-26 02:05+0200\n"
 "Last-Translator: Berda Jenő <big4billy@gmail.com>\n"
 "Language-Team: Hungarian <>\n"
 "Language: hu\n"
@@ -5418,8 +5418,10 @@ msgstr "Párbeszédablak be"
 
 #. [toggle_button]: id=show_turn_dialog
 #: data/gui/window/preferences/01_general.cfg:115
+#, fuzzy
+#| msgid "Display a prompt at the beginning of your turn"
 msgid "Display a dialog at the beginning of your turn"
-msgstr "Egy párbeszédablakot dob fel, amikor a te köröd következik"
+msgstr "A köröd elején egy párbeszédablak jelenik meg"
 
 #. [toggle_button]: id=whiteboard_on_start
 #: data/gui/window/preferences/01_general.cfg:128
@@ -6505,7 +6507,7 @@ msgstr ""
 #. other's resources rather than duplicating them. For example,
 #. Swedish (sv) and Danish (da) are such, so Swedish translator could
 #. translate this message as "sv,da", while Danish as "da,sv".
-#: src/filesystem.cpp:1773
+#: src/filesystem.cpp:1779
 msgid "language code for localized resources^en_US"
 msgstr "hu"
 
@@ -7153,8 +7155,10 @@ msgid "Choose an icon"
 msgstr "Válassz egy ikont"
 
 #: src/gui/dialogs/editor/generator_settings.cpp:71
+#, fuzzy
+#| msgid "$count/1000 tiles"
 msgid "/1000 tiles"
-msgstr "/1000 terület"
+msgstr "$count/1000 mező"
 
 #: src/gui/dialogs/editor/generator_settings.cpp:74
 msgid "Coastal"
@@ -7852,8 +7856,10 @@ msgid "Rename Unit"
 msgstr "Egység átnevezése"
 
 #: src/gui/dialogs/unit_recall.cpp:363
+#, fuzzy
+#| msgid "This unit requires no upkeep."
 msgid "This unit is loyal and requires no upkeep."
-msgstr "Ez az egység hűséges, így nincs fenntartási költsége."
+msgstr "Ennek az egységnek nincs fenntartási költsége."
 
 #: src/gui/dialogs/unit_recall.cpp:364 src/gui/dialogs/unit_recall.cpp:369
 #: src/gui/dialogs/unit_recall.cpp:374
@@ -8181,8 +8187,10 @@ msgid "Select/Move/Attack"
 msgstr "Kiválasztás/mozgás/támadás"
 
 #: src/hotkey/hotkey_command.cpp:84
+#, fuzzy
+#| msgid "Touch Hex"
 msgid "Touch"
-msgstr "Érintés"
+msgstr "Mező megfogása"
 
 #: src/hotkey/hotkey_command.cpp:85
 msgid "Animate Map"
@@ -8989,20 +8997,20 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~ msgid "Gravel"
 #~ msgstr "Föveny"
 
-#~ msgid "Hide"
-#~ msgstr "Elrejt"
+#~ msgid "Tip of the Day"
+#~ msgstr "Napi tipp"
 
-#~ msgid "Hide tip of the day"
-#~ msgstr "Napi tipp elrejtése"
-
-#~ msgid "Visit the in-game help"
-#~ msgstr "Játékon belüli súgó megtekintése"
+#~ msgid "Show tip of the day"
+#~ msgstr "Napi tipp megjelenítése"
 
 #~ msgid "About"
 #~ msgstr "Rólunk"
 
 #~ msgid "General information about Battle for Wesnoth"
 #~ msgstr "Általános információk a Harc Wesnothért játékról"
+
+#~ msgid "Visit the in-game help"
+#~ msgstr "Játékon belüli súgó megtekintése"
 
 #~ msgid "page^<b><span font_family='DejaVu Sans'>✔</span> Copied</b>"
 #~ msgstr "<b><span font_family='DejaVu Sans'>✔</span> átmásolva</b>"
@@ -9024,6 +9032,19 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 
 #~ msgid "List hidden add-ons (admin)"
 #~ msgstr "Rejtett bővítmények listázása (admin)"
+
+#~ msgid ""
+#~ "In addition to the mainline campaigns, Wesnoth also has an ever-growing "
+#~ "list of add-on content created by other players available via the Add-ons "
+#~ "server, included but not limited to more single and multiplayer "
+#~ "campaigns, multiplayer maps, additional media and various other content! "
+#~ "Be sure to give it a try!"
+#~ msgstr ""
+#~ "A fő kampányok mellett a játéknak egyre bővülő listája van a más "
+#~ "játékosok által készített kiegészítő tartalmakról is, amelyek elérhetők "
+#~ "az Add-ons szerveren keresztül, beleértve, de nem kizárólagosan több egy- "
+#~ "és többjátékos kampányt, többjátékos térképeket, kiegészítő eszközöket és "
+#~ "különféle egyéb tartalmakat! Mindenképpen próbáld ki!"
 
 #~ msgid "Filter by campaign completion status"
 #~ msgstr "Hadjárat befejezettség szerinti szűrés"
@@ -9276,6 +9297,24 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~ msgid "Show Topics"
 #~ msgstr "Témakörök megjelenítése"
 
+#~ msgid "Search help topic names"
+#~ msgstr "Súgótémakörök nevének keresése"
+
+#~ msgid "Presets"
+#~ msgstr "Előbeállítások"
+
+#~ msgid "Delete this preset"
+#~ msgstr "Előbeállítás törlése"
+
+#~ msgid "Join Queue"
+#~ msgstr "Csatlakozás a várólistához"
+
+#~ msgid "Leave Queue"
+#~ msgstr "Várólistából kilépés"
+
+#~ msgid "Save Preset"
+#~ msgstr "Előbeállítás mentése"
+
 #~ msgid "Faction:"
 #~ msgstr "Szövetség:"
 
@@ -9293,6 +9332,9 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~ "Hálózati játék\n"
 #~ "hosztolása"
 
+#~ msgid "Turn prompt"
+#~ msgstr "Kör párbeszédablak"
+
 #~ msgid "UI theme:"
 #~ msgstr "Felhasználó felület téma:"
 
@@ -9306,14 +9348,38 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~ msgid "Apply"
 #~ msgstr "Alkalmaz"
 
-#~ msgid "Show tip of the day"
-#~ msgstr "Napi tipp megjelenítése"
-
 #~ msgid "Show gameplay tips on the main menu"
 #~ msgstr "Játéktippek megjelenítése a főmenüben"
 
+#~ msgid "Reach Map Options"
+#~ msgstr "Térkép beállítások elérése"
+
+#~ msgid "Highlight Color"
+#~ msgstr "Kiemelés színe"
+
+#~ msgid "Enemy Highlight Color"
+#~ msgstr "Ellenség kiemelés színe"
+
+#~ msgid "Border Opacity:"
+#~ msgstr "Szegély áttetszősége:"
+
+#~ msgid "Tint Opacity:"
+#~ msgstr "Szín áttetszősége:"
+
+#~ msgid "★"
+#~ msgstr "★"
+
+#~ msgid "Mark/unmark the selected unit as favorite"
+#~ msgstr "Kiválasztott egység kedvencnek jelölése/törlése"
+
 #~ msgid "page^<span font_family='DejaVu Sans'>✔</span> Copied"
 #~ msgstr "oldal^<span font_family='DejaVu Sans'>✔</span> átmásolva"
+
+#~ msgid "$title ($count/$total)"
+#~ msgstr "$title ($count/$total)"
+
+#~ msgid "Completed $count/$total"
+#~ msgstr "Teljesítve: $count/$total"
 
 #~ msgid "Password not provided"
 #~ msgstr "Jelszó nem meghatározott"
@@ -9326,19 +9392,6 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 
 #~ msgid "More campaigns..."
 #~ msgstr "Még több hadjárat..."
-
-#~ msgid ""
-#~ "In addition to the mainline campaigns, Wesnoth also has an ever-growing "
-#~ "list of add-on content created by other players available via the Add-ons "
-#~ "server, included but not limited to more single and multiplayer "
-#~ "campaigns, multiplayer maps, additional media and various other content! "
-#~ "Be sure to give it a try!"
-#~ msgstr ""
-#~ "A fő kampányok mellett a játéknak egyre bővülő listája van a más "
-#~ "játékosok által készített kiegészítő tartalmakról is, amelyek elérhetők "
-#~ "az Add-ons szerveren keresztül, beleértve, de nem kizárólagosan több egy- "
-#~ "és többjátékos kampányt, többjátékos térképeket, kiegészítő eszközöket és "
-#~ "különféle egyéb tartalmakat! Mindenképpen próbáld ki!"
 
 #~ msgid "Choose File"
 #~ msgstr "Válassz fájlt"
@@ -9377,6 +9430,87 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~ msgid "Unit type saved."
 #~ msgstr "Egységtípus mentve."
 
+#~ msgid "enter filename"
+#~ msgstr "add meg a fájlnevet"
+
+#~ msgid "invalid extension (use $extensions)"
+#~ msgstr "érvénytelen kiterjesztés (használja ezeket: $extensions)"
+
+#~ msgid "filename contains whitespace"
+#~ msgstr "a fájl neve szóközt tartalmaz"
+
+#~ msgid "Opening files is not supported, contact your packager"
+#~ msgstr ""
+#~ "Fájlok megnyitása nem támogatott, vedd fel a kapcsolatot a csomagod "
+#~ "készítőjével"
+
+#~ msgid "No Other Version Found"
+#~ msgstr "Nem található más verzió"
+
+#~ msgid ""
+#~ "This would import settings from a previous version of Wesnoth, but no "
+#~ "other version was found on this device"
+#~ msgstr ""
+#~ "A funkció importálja a Wesnoth előző verziójának beállításait, azonban "
+#~ "nem található másik verzió az eszközön"
+
+#~ msgid "Hotkey(s): $bindings"
+#~ msgstr "Gyorsbillentyű(k): $bindings"
+
+#~ msgid "Invalid Color"
+#~ msgstr "Érvénytelen szín"
+
+#~ msgid "NEW"
+#~ msgstr "ÚJ"
+
+#~ msgid ""
+#~ "Opening links is not supported, contact your packager. Link URL has been "
+#~ "copied to the clipboard."
+#~ msgstr ""
+#~ "Linkek megnyitása nem támogatott, vedd fel a kapcsolatot a csomagod "
+#~ "készítőjével. A hivatkozás URL-je a vágólapra lett másolva."
+
+#~ msgid "No grid defined for tab container control"
+#~ msgstr "Nincs rács definiálva a laptároló vezérlőhöz"
+
+#~ msgid "Remaining: $left/$max"
+#~ msgstr "Hátravan: $left/$max"
+
+#~ msgid "This unit can attack multiple times per turn."
+#~ msgstr "Ez az egység körönként többször támadhat."
+
+#~ msgid "uses $num attack"
+#~ msgid_plural "uses $num attacks"
+#~ msgstr[0] "$num támadást használ"
+#~ msgstr[1] "$num támadást használ"
+
+#~ msgid "Load Turn..."
+#~ msgstr "Kör betöltése..."
+
+#~ msgid "Teleport Unit (Debug!)"
+#~ msgstr "Egység teleportálása (hibakeresés!)"
+
+#~ msgid "New Unit Type"
+#~ msgstr "Új egységtípus"
+
+#~ msgid "Load Map/Scenario"
+#~ msgstr "Térkép/Küldetés betöltése"
+
+#~ msgid "Convert To Scenario"
+#~ msgstr "Konvertálás küldetéssé"
+
+#~ msgid "Select active Add-on"
+#~ msgstr "Aktív kiegészítő kiválasztása"
+
+#~ msgid "Open Add-on folder"
+#~ msgstr "Kiegészítők mappájának megnyitása"
+
+#~ msgid "Start Game (MP)"
+#~ msgstr "Játék indítása (MP)"
+
+#~ msgid "In section ‘[$section|]’ the mandatory subtag ‘[$tag|]’ is missing."
+#~ msgstr "A kötelező ‘$tag|’ alcímke nincs beállítva itt: ‘[$section|]’."
+
 #~ msgid "<span color='#00dcff' size='small'>please enter a filename</span>"
 #~ msgstr ""
 #~ "<span color='#00dcff' size='small'>kérem, adjon meg egy fájlnevet</span>"
@@ -9396,63 +9530,14 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~ "<span color='red'><span face='DejaVuSans'>✘</span> <span size='small'>A "
 #~ "szóköz nem engedélyezett a fájlnévben</span></span>"
 
-#~ msgid "Opening files is not supported, contact your packager"
-#~ msgstr ""
-#~ "Fájlok megnyitása nem támogatott, vedd fel a kapcsolatot a csomagod "
-#~ "készítőjével"
-
-#~ msgid "No Other Version Found"
-#~ msgstr "Nem található más verzió"
-
-#~ msgid ""
-#~ "This would import settings from a previous version of Wesnoth, but no "
-#~ "other version was found on this device"
-#~ msgstr ""
-#~ "A funkció importálja a Wesnoth előző verziójának beállításait, azonban "
-#~ "nem található másik verzió az eszközön"
-
-#~ msgid "Invalid Color"
-#~ msgstr "Érvénytelen szín"
-
-#~ msgid "NEW"
-#~ msgstr "ÚJ"
-
-#~ msgid ""
-#~ "Opening links is not supported, contact your packager. Link URL has been "
-#~ "copied to the clipboard."
-#~ msgstr ""
-#~ "Linkek megnyitása nem támogatott, vedd fel a kapcsolatot a csomagod "
-#~ "készítőjével. A hivatkozás URL-je a vágólapra lett másolva."
-
 #~ msgid "corrupted original file"
 #~ msgstr "hibás eredeti fájl"
 
-#~ msgid "No grid defined for tab container control"
-#~ msgstr "Nincs rács definiálva a laptároló vezérlőhöz"
+#~ msgid "Hide"
+#~ msgstr "Elrejt"
 
-#~ msgid "Load Turn..."
-#~ msgstr "Kör betöltése..."
-
-#~ msgid "Teleport Unit (Debug!)"
-#~ msgstr "Egység teleportálása (hibakeresés!)"
-
-#~ msgid "New Unit Type"
-#~ msgstr "Új egységtípus"
-
-#~ msgid "Load Map/Scenario"
-#~ msgstr "Térkép/Küldetés betöltése"
-
-#~ msgid "Select active Add-on"
-#~ msgstr "Aktív kiegészítő kiválasztása"
-
-#~ msgid "Open Add-on folder"
-#~ msgstr "Kiegészítők mappájának megnyitása"
-
-#~ msgid "Start Game (MP)"
-#~ msgstr "Játék indítása (MP)"
-
-#~ msgid "In section ‘[$section|]’ the mandatory subtag ‘[$tag|]’ is missing."
-#~ msgstr "A kötelező ‘$tag|’ alcímke nincs beállítva itt: ‘[$section|]’."
+#~ msgid "Hide tip of the day"
+#~ msgstr "Napi tipp elrejtése"
 
 #~ msgid "page^✔ Copied"
 #~ msgstr "✔ másolva"
@@ -10195,9 +10280,6 @@ msgstr "A kötelező ‘$key|’ kulcs nincs beállítva itt: ‘[$section|]’.
 #~| msgid "Refresh Image Cache"
 #~ msgid "Purge Cache"
 #~ msgstr "Képek átmeneti tárolójának frissítése"
-
-#~ msgid "Hotkey Settings"
-#~ msgstr "Gyorsbillentyűk beállításai"
 
 #~ msgid "Reset all bindings to the default values"
 #~ msgstr ""

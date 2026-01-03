@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bn\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-05-20 17:25-0500\n"
-"PO-Revision-Date: 2025-04-11 09:51+0530\n"
+"POT-Creation-Date: 2025-12-21 21:26-0600\n"
+"PO-Revision-Date: 2025-07-20 16:54+0530\n"
 "Last-Translator: Subhraman Sarkar <suvrax@gmail.com>\n"
 "Language-Team: Bengali < >\n"
 "Language: bn\n"
@@ -425,248 +425,248 @@ msgid "Catalan Translation"
 msgstr "কাতালান অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:159
+#: data/core/about_i18n.cfg:163
 msgid "Chinese Translation"
 msgstr "চিনা অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:257
+#: data/core/about_i18n.cfg:261
 msgid "Chinese (Taiwan) Translation"
 msgstr "চিনা (তাইওয়ান) অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:270
+#: data/core/about_i18n.cfg:274
 msgid "Croatian Translation"
 msgstr "ক্রোয়েশীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:280
+#: data/core/about_i18n.cfg:284
 msgid "Czech Translation"
 msgstr "চেক অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:352
+#: data/core/about_i18n.cfg:356
 msgid "Danish Translation"
 msgstr "ড্যানিশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:383
+#: data/core/about_i18n.cfg:387
 msgid "Dutch Translation"
 msgstr "ডাচ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:457
+#: data/core/about_i18n.cfg:461
 msgid "English (GB) Translation"
 msgstr "ইংরেজী (GB) অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:482
+#: data/core/about_i18n.cfg:486
 msgid "English (Shaw) Translation"
 msgstr "ইংরেজী (Shaw) অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:500
+#: data/core/about_i18n.cfg:504
 msgid "Esperanto Translation"
 msgstr "এসপেরান্তো অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:529
+#: data/core/about_i18n.cfg:533
 msgid "Estonian Translation"
 msgstr "এস্তোনীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:539
+#: data/core/about_i18n.cfg:543
 msgid "Filipino Translation"
 msgstr "ফিলিপিনো অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:549
+#: data/core/about_i18n.cfg:553
 msgid "Finnish Translation"
 msgstr "ফিনিশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:614
+#: data/core/about_i18n.cfg:618
 msgid "French Translation"
 msgstr "ফরাসী অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:782
+#: data/core/about_i18n.cfg:786
 msgid "Friulian Translation"
 msgstr "ফ্রিউলিয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:786
+#: data/core/about_i18n.cfg:790
 msgid "Galician Translation"
 msgstr "গ্যালিশিয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:822
+#: data/core/about_i18n.cfg:826
 msgid "German Translation"
 msgstr "জার্মান অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:947
+#: data/core/about_i18n.cfg:951
 msgid "Greek Translation"
 msgstr "গ্রিক অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:990
+#: data/core/about_i18n.cfg:994
 msgid "Hebrew Translation"
 msgstr "হিব্রু অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1003
+#: data/core/about_i18n.cfg:1007
 msgid "Hungarian Translation"
 msgstr "হাঙ্গেরীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1064
+#: data/core/about_i18n.cfg:1068
 msgid "Icelandic Translation"
 msgstr "আইসল্যান্ডীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1074
+#: data/core/about_i18n.cfg:1078
 msgid "Indonesian Translation"
 msgstr "ইন্দোনেশীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1102
+#: data/core/about_i18n.cfg:1106
 msgid "Irish Translation"
 msgstr "আইরিশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1109
+#: data/core/about_i18n.cfg:1113
 msgid "Italian Translation"
 msgstr "ইতালীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1156
+#: data/core/about_i18n.cfg:1160
 msgid "Japanese Translation"
 msgstr "জাপানী অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1249
+#: data/core/about_i18n.cfg:1253
 msgid "Korean Translation"
 msgstr "কোরিয়ান অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1257
+#: data/core/about_i18n.cfg:1261
 msgid "Latin Translation"
 msgstr "লাতিন অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1283
+#: data/core/about_i18n.cfg:1287
 msgid "Latvian Translation"
 msgstr "লাটভিয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1298
+#: data/core/about_i18n.cfg:1302
 msgid "Lithuanian Translation"
 msgstr "লিথুয়ানীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1323
+#: data/core/about_i18n.cfg:1327
 msgid "Macedonian Translation"
 msgstr "ম্যাসেডোনীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1330
+#: data/core/about_i18n.cfg:1334
 msgid "Marathi Translation"
 msgstr "মারাঠী অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1339
+#: data/core/about_i18n.cfg:1343
 msgid "Norwegian Translation"
 msgstr "নরওয়েজিয়ান অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1368
+#: data/core/about_i18n.cfg:1372
 msgid "Old English Translation"
 msgstr "প্রাচীন ইংরেজী অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1386
+#: data/core/about_i18n.cfg:1390
 msgid "Polish Translation"
 msgstr "পোলিশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1461
+#: data/core/about_i18n.cfg:1465
 msgid "Portuguese Translation"
 msgstr "পর্তুগিজ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1475
+#: data/core/about_i18n.cfg:1479
 msgid "Portuguese (Brazil) Translation"
 msgstr "পর্তুগিজ (ব্রাজিল) অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1533
+#: data/core/about_i18n.cfg:1537
 msgid "Romanian Translation"
 msgstr "রোমানীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1541
+#: data/core/about_i18n.cfg:1545
 msgid "Russian Translation"
 msgstr "রুশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1648
+#: data/core/about_i18n.cfg:1652
 msgid "Scottish Gaelic Translation"
 msgstr "স্কটিশ গ্যালিক অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1657
+#: data/core/about_i18n.cfg:1661
 msgid "Serbian Translation"
 msgstr "সার্বিয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1676
+#: data/core/about_i18n.cfg:1680
 msgid "Slovak Translation"
 msgstr "স্লোভাক অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1711
+#: data/core/about_i18n.cfg:1715
 msgid "Slovenian Translation"
 msgstr "স্লোভেনীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1727
+#: data/core/about_i18n.cfg:1731
 msgid "Spanish Translation"
 msgstr "স্পানিশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1817
+#: data/core/about_i18n.cfg:1825
 msgid "Swedish Translation"
 msgstr "সুইডিশ অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1862
+#: data/core/about_i18n.cfg:1870
 msgid "Turkish Translation"
 msgstr "তুর্কি অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1887
+#: data/core/about_i18n.cfg:1895
 msgid "Ukrainian Translation"
 msgstr "ইউক্রেনীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1921
+#: data/core/about_i18n.cfg:1929
 msgid "Valencian (southern Catalan) Translation"
 msgstr "ভ্যালেন্সিয় (দক্ষিণ কাতালান) অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1934
+#: data/core/about_i18n.cfg:1942
 msgid "Vietnamese Translation"
 msgstr "ভিয়েতনামীয় অনুবাদ"
 
 #. [about]
-#: data/core/about_i18n.cfg:1953
+#: data/core/about_i18n.cfg:1961
 msgid "Welsh Translation"
 msgstr "ওয়েল্শ অনুবাদ"
 
 #. [about]
 #. Real Acadèmia de Cultura Valenciana
-#: data/core/about_i18n.cfg:1962
+#: data/core/about_i18n.cfg:1970
 msgid "RACV’s Translation"
 msgstr "RACV-র অনুবাদ"
 
@@ -2676,6 +2676,11 @@ msgid ""
 "Ker|Kil|King|Kor|Kru|Kur|Mar|Mer|Nal|Trak|Urk\n"
 "suffix=ark|ort|alk|arm|kuk|kak|ukk|nak|ta|k|rok|rar|kon|gak|nik\n"
 msgstr ""
+"\n"
+"main={prefix}{suffix}\n"
+"prefix=আক|আর|বার|ব্লোক|বোর|বুল|কর্ক|ডেল|গার|নু|গ্রা|গ্রু|গু|কাল|কার|কে|কেল|কের|কিল|"
+"কিঙ|কোর|ক্রু|কুর|মার|মের|নাল|ট্রাক|উর্ক\n"
+"suffix=ark|ort|alk|arm|kuk|kak|ukk|nak|ta|k|rok|rar|kon|gak|nik\n"
 
 #: data/core/macros/names.cfg:236
 msgid ""
@@ -2800,6 +2805,11 @@ msgid ""
 "middle=a|e|o|u|i\n"
 "suffix=l|m|rn|x|w|ld|ck|k|rk\n"
 msgstr ""
+"\n"
+"main={prefix}{middle}{suffix}\n"
+"prefix=ব|ক|ড|এ|ফ|ফ্র|ওয়াট|গ|হ|ক|ন|ও|র|স|ট|ওয়|য়|রো\n"
+"middle=া|ে|ো|ু|ি\n"
+"suffix=ল|ম|র্ন|ক্স|ও|ল্ড|ক|ক|র্ক\n"
 
 #. [objective]: condition=lose
 #: data/core/macros/objective-utils.cfg:7
@@ -3661,8 +3671,8 @@ msgstr "সুস্থ করার অযোগ্য"
 
 #. #-#-#-#-#  wesnoth.wml.pot (PACKAGE VERSION)  #-#-#-#-#
 #. [lua]: wesnoth.wml_actions.message
-#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3487
-#: src/scripting/game_lua_kernel.cpp:3522
+#: data/lua/wml/message.lua:433 src/scripting/game_lua_kernel.cpp:3491
+#: src/scripting/game_lua_kernel.cpp:3526
 msgid "input"
 msgstr "ইনপুট"
 
@@ -4521,6 +4531,13 @@ msgstr ""
 
 #. [tip]
 #: data/tips.cfg:188
+#, fuzzy
+#| msgid ""
+#| "Instead of leveling up, high-level units gain an <i>After Maximum Level "
+#| "Advancement</i> (AMLA) bonus, which usually increases the unit’s maximum "
+#| "hitpoints by three and fully heals it. This is much less than the normal "
+#| "benefits of advancing a level, so it is generally wiser to advance your "
+#| "lower-level units instead."
 msgid ""
 "Instead of leveling up, high-level units gain an <i>After Maximum Level "
 "Advancement</i> (AMLA) bonus, which usually increases the unit’s maximum "
@@ -4528,6 +4545,11 @@ msgid ""
 "benefits of advancing a level, so it is generally wiser to advance your "
 "lower-level units instead."
 msgstr ""
+"পরবর্তী পর্যায়ে উন্নীত হওয়ার পরিবর্ত, উচ্চ-পর্যায়ের ইউনিটেরা সাধারণত একটি "
+"<i>সর্বোচ্চ পর্যায় পরবর্তী উন্নয়ণ</i> (এএমএলএ) অতিরিক্ত পেয়ে থাকে, যেটি সাধারণ "
+"ইউনিটটির সর্বোচ্চ জীবন সংখ্যা তিন বৃদ্ধি করে এবং সেটিকে সম্পূর্ণ সুস্থ করে । এটি "
+"সাধারণ উন্নয়ণের থেকে কম সুবিধাযুক্ত, তাই সাধারণত কম পর্যায়ের ইউনিটগুলিকে উন্নীত "
+"করাই শ্রেয় ।"
 
 #. [tip]
 #: data/tips.cfg:192
@@ -4553,6 +4575,9 @@ msgid ""
 "the <b>Delay Shroud Updates</b> option when you need to move units while "
 "retaining the ability to undo, or use the new Whiteboard planning tool."
 msgstr ""
+"একটি কুয়াশা বা ছায়া-আছন্ন ষড়ভুজকে পরিস্কার করে সেই চলন আপনি ফিরিয়ে নিতে পারবেন "
+"না । ফিরিয়ে নেওয়ার সুযোগ রাখার জন্য হয় <b>ছায়ার আপডেট বিলম্বিত করুন</b> ব্যবহার "
+"করুন, বা নতুন হোয়াইটবোর্ড প্ল্যানিং টুলটি ব্যবহার করুন ।"
 
 #. [tip]
 #: data/tips.cfg:201
@@ -4584,6 +4609,12 @@ msgid ""
 "to escape; slow enemies are almost immobilized, and your own units suffer "
 "less retaliation damage, so it’s quicker to heal them."
 msgstr ""
+"নিজের সুদূরপ্রসারী প্রভাবগুলির কারণে <i>ধীর করে</i> দক্ষতাটি অত্যন্ত শক্তিশালী । শত্রু "
+"না-মৃতরা তাদের <i>শোষণ</i> দক্ষতার থেকে অর্ধেক সুবিধা পায়, <i>চার্জ</i> বা "
+"<i>পশ্চাৎ-আঘাতের</i> অতিরিক্ত ক্ষতি বাতিল হয়ে পড়ে, এবং <i>ক্ষিপ্ত আক্রমণ</i> "
+"দক্ষতাটি দূর্বল হয়ে পড়ে । দ্রুত শত্রুদের পালাবার জন্য কষ্ট করতে হয়; শ্লথ শত্রুরা প্রায় "
+"সম্পূর্ণরূপে চলার শক্তি হারিয়ে ফেলে, এবং আপনার নিজের ইউনিটগুলি কম ক্ষতির সম্মুখীন হয়, "
+"তাই তাদের সুস্থ করা সহজ হয়ে পড়ে ।"
 
 #. [tip]
 #: data/tips.cfg:213
@@ -4593,6 +4624,10 @@ msgid ""
 "This gives you another try whenever your first devastating attack misses — "
 "as inevitably happens from time to time."
 msgstr ""
+"অল্প সংখ্যক শক্তিশালী আক্রমণ সহ ইউনিটগুলি — যেমন তমস শিক্ষানবিস, অশ্বারোহী, বলিষ্ঠ "
+"ওর্ক বা বামন বজ্রযোদ্ধা —  জোড়ায় বা তিনটিতে পরিচালনা করার চেষ্টা করুন । আপনার "
+"প্রথম বিধ্বংসী আক্রমণটি না লাগলে তখন এটি আপনাকে আরও একটি সুযোগ দেয় — মাঝে মধ্যেই "
+"যা হতে পারে ।"
 
 #. [tip]
 #: data/tips.cfg:217
@@ -4610,6 +4645,9 @@ msgid ""
 "little experience it has. Sometimes it’s worth paying a premium to know "
 "exactly what traits a new arrival will have."
 msgstr ""
+"আপনার নিয়োগের তালিকা থেকে কোনও ইউনিট বরখাস্ত করার আগে দু'বার চিন্তা করুন, তার "
+"অভিজ্ঞতা যতই কম হোক না কেন। কখনও কখনও কোনও নতুন আগতের ঠিক কী কী বৈশিষ্ট্য থাকবে "
+"তা পূর্বে জানার জন্য অতিরিক্ত মূল্য প্রদান করাও ঠিক ।"
 
 #. [tip]
 #: data/tips.cfg:225
@@ -4618,6 +4656,9 @@ msgid ""
 "turns’ movement away from the fighting. Then it can recover in peace (at 10 "
 "hitpoints per turn) without tying up front-line villages."
 msgstr ""
+"যখন একটি শক্ত ইউনিট প্রচন্ড আহত হয়, তখন সেটিকে  লড়াই থেকে বেশ কয়েকটি দানের "
+"দূরত্বে একটি গ্রামে নিরাময়ের জন্য প্রেরণ করুন । তাহলে এটি সামনের গ্রামগুলিকে আটকে না "
+"রেখে শান্তিতে (প্রতি দানে 10 টি জীবন সংখ্যা) সুস্থ হবে পারবে ।"
 
 #. [tip]
 #: data/tips.cfg:226 data/tips.cfg:238
@@ -4700,6 +4741,9 @@ msgid ""
 "<i>Cures</i>, or <i>Nightstalk</i>. Obtaining those units early can make a "
 "big difference in a campaign."
 msgstr ""
+"কিছু উচ্চপর্যায়ের ইউনিটদের <i>নেতৃত্ব</i>, <i>সুস্থ করে</i>, বা <i>নিশাচর</i>-এর "
+"মতো কার্যকরী দক্ষতা থাকতে পারে । অভিযানের প্রথমদিকেই এই ধরণের ইউনিটগুলি পেয়ে "
+"গেলে যথেষ্ট সুবিধা হতে পারে ।"
 
 #. [tip]
 #: data/tips.cfg:254
@@ -4744,6 +4788,9 @@ msgid ""
 "quicker. The <i>acceleration factor</i> can be set, and turned on by "
 "default, in the <i>Preferences</i> menu’s <i>General</i> tab."
 msgstr ""
+"<b>সিফট</b> টিপে রাখলে অ্যানিমেশন এবং লড়াই দ্রুততর হবে । <i>দ্রুততার গুণিতক</i> "
+"সাধারণত সক্রিয় করা থাকে, এবং তার মান <i>প্রেফারেন্সেস</i> মেনুর <i>সাধারণ</i> "
+"ট্যাবে ঠিক করা সম্ভব ।"
 
 #. [tip]
 #. Translate "Change difficulty" and "Load Game" as in wesnoth-lib textdomain
@@ -4753,6 +4800,9 @@ msgid ""
 "Select the <i>Change difficulty</i> option at the bottom of the <i>Load "
 "Game</i> screen when loading start-of-scenario save files."
 msgstr ""
+"আপনি কী জানেন আপনি একটি অভিযানের মাঝেও জটিলতা পরিবর্তন করতে পারেন? ঘটনাক্রম "
+"শুরুর সঞ্চিত ফাইল খোলার সময় <i>খেলা খুলুন</i> ডায়লগের নীচে থাকা <i>জটিলতা পাল্টান</"
+"i> অপশনটির ব্যবহার করুন ।"
 
 #. [tip]
 #: data/tips.cfg:275
@@ -4906,6 +4956,8 @@ msgid ""
 "The add-on <i>$addon_title</i> has a file or directory containing invalid "
 "characters and cannot be published."
 msgstr ""
+"অ্যাড-অন <i>$addon_title</i>-এ অবৈধ অক্ষরযুক্ত ফাইল বা ডিরেক্টরি-নাম রয়েছে এবং "
+"এটি প্রকাশ করা সম্ভব নয় ।"
 
 #: src/addon/client.cpp:197
 msgid ""
@@ -4916,6 +4968,12 @@ msgid ""
 "\n"
 "&quot; * / : &lt; &gt; ? \\ | ~"
 msgstr ""
+"অ্যাড-অন <i>$addon_title</i> -এর ফাইল নাম বা ডিরেক্টরি নাম অবৈধ এবং প্রকাশ করা "
+"যাবে না । ফাইল বা ডিরেক্টরি নামে '..' থাকা যাবে না বা তা '.' দিয়ে শেষ হওয়া "
+"চলবে না বা 255 অক্ষরের থেকে বেশী বড় হওয়া যাবে না । তাছাড়া এটিতে পরবর্তী "
+"অক্ষরগুলি থাকা চলবে না:\n"
+"\n"
+"&quot; * / : &lt; &gt; ? \\ | ~"
 
 #: src/addon/client.cpp:208
 msgid ""
@@ -4975,6 +5033,8 @@ msgid ""
 "The add-on <i>$addon_title</i> has file or directory names with case "
 "conflicts. This may cause problems."
 msgstr ""
+"অ্যাড-অন <i>$addon_title</i>-তে অসমঞ্জস বড়-হাতের বা ছোটো-হাতের হরফযুক্ত ফাইল বা "
+"ডিরেক্টরি নাম রয়েছে । এতে সমস্যা সৃষ্টি হতে পারে ।"
 
 #: src/addon/client.cpp:430 src/gui/dialogs/multiplayer/match_history.cpp:250
 msgid "The server responded with an error:"
@@ -5795,7 +5855,7 @@ msgid_plural ""
 msgstr[0] "অনুগ্রহ করে এই অ্যাড-অনের লেখক বা মেইনটেনারকে জানান ।"
 msgstr[1] "অনুগ্রহ করে এই অ্যাড-অনের লেখকদের বা মেইনটেনারদের জানান ।"
 
-#: src/game_events/pump.cpp:392 src/game_launcher.cpp:966
+#: src/game_events/pump.cpp:392 src/game_launcher.cpp:971
 msgid "Error: "
 msgstr "ত্রুটি:"
 
@@ -6136,20 +6196,20 @@ msgstr "আপনি অনেক বেশিবার লগইন করা�
 msgid "Password hashing failed."
 msgstr "পাসওয়ার্ড হ্যাশিং করা যায়নি ।"
 
-#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:919
+#: src/game_initialization/playcampaign.cpp:157 src/game_launcher.cpp:924
 msgid "The game could not be loaded: "
 msgstr "খেলাটি খোলা যাচ্ছে না:"
 
-#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:921
+#: src/game_initialization/playcampaign.cpp:163 src/game_launcher.cpp:926
 msgid "Error while playing the game: "
 msgstr "খেলা খেলতে গিয়ে ত্রুটি:"
 
-#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:958
+#: src/game_initialization/playcampaign.cpp:166 src/game_launcher.cpp:963
 msgid "The game map could not be loaded: "
 msgstr "খেলার মানচিত্র খোলা যাচ্ছে না:"
 
-#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:923
-#: src/game_launcher.cpp:1044
+#: src/game_initialization/playcampaign.cpp:169 src/game_launcher.cpp:928
+#: src/game_launcher.cpp:1049
 msgid "Map generator error: "
 msgstr "মানচিত্র সৃষ্টিকারকে ত্রুটি:"
 
@@ -6176,29 +6236,29 @@ msgstr "অজানা ঘটনাক্রম: ‘$scenario|’"
 msgid "No campaigns are available."
 msgstr "কোনো অভিযান নেই ।"
 
-#: src/game_launcher.cpp:725 src/game_launcher.cpp:744 src/replay.cpp:666
+#: src/game_launcher.cpp:730 src/game_launcher.cpp:749 src/replay.cpp:666
 msgid "The file you have tried to load is corrupt"
 msgstr "আপনি যে ফাইলটি খোলার চেষ্টা করেছেন তা ত্রুটিযুক্ত"
 
-#: src/game_launcher.cpp:727 src/game_launcher.cpp:746
+#: src/game_launcher.cpp:732 src/game_launcher.cpp:751
 #: src/hotkey/hotkey_handler_sp.cpp:334 src/savegame.cpp:153
 #: src/savegame.cpp:314
 msgid "The file you have tried to load is corrupt: '"
 msgstr "আপনি যে ফাইলটি খোলার চেষ্টা করেছেন তা ত্রুটিযুক্ত: '"
 
-#: src/game_launcher.cpp:736
+#: src/game_launcher.cpp:741
 msgid "File I/O Error while reading the game"
 msgstr "খেলাটি পড়ার সময় ফাইল আই/ও ত্রুটি"
 
-#: src/game_launcher.cpp:738
+#: src/game_launcher.cpp:743
 msgid "File I/O Error while reading the game: '"
 msgstr "খেলাটি পড়ার সময় ফাইল আই/ও ত্রুটি: '"
 
-#: src/game_launcher.cpp:917
+#: src/game_launcher.cpp:922
 msgid "Error while starting server: "
 msgstr "সার্ভার শুর করতে গিয়ে ত্রুটি:"
 
-#: src/game_launcher.cpp:939
+#: src/game_launcher.cpp:944
 msgid "Connection failed: "
 msgstr "সংযোগ করা যাচ্ছে না:"
 
@@ -6416,12 +6476,16 @@ msgid "Schedule"
 msgstr "সময়সূচী"
 
 #: src/help/help_impl.cpp:530
+#, fuzzy
+#| msgid "Units with this special attack"
 msgid "<header>text='Units with this special attack'</header>"
-msgstr "<header>text='এই বিশেষ আক্রমণযুক্ত ইউনিটগুলি'</header>"
+msgstr "এই বিশেষ আক্রমণযুক্ত ইউনিটগুলি"
 
 #: src/help/help_impl.cpp:594
+#, fuzzy
+#| msgid "Units with this ability"
 msgid "<header>text='Units with this ability'</header>"
-msgstr "<header>text='এই দক্ষতাবিশিষ্ট ইউনিটগুলি'</header>"
+msgstr "এই দক্ষতাবিশিষ্ট ইউনিটগুলি"
 
 #: src/help/help_impl.cpp:624
 msgid "Era:"
@@ -6462,28 +6526,40 @@ msgstr "স্বভাব: "
 #. TRANSLATORS: this is expected to say "[Dunefolk are] a group of units, all of whom are Humans",
 #. or "[Quenoth Elves are] a group of units, all of whom are Elves".
 #: src/help/help_impl.cpp:1149
+#, fuzzy
+#| msgid ""
+#| "This is a group of units, all of whom are <ref "
+#| "dst='$topic_id'>$help_taxonomy</ref>."
 msgid ""
 "This is a group of units, all of whom are <ref>dst='$topic_id' "
 "text='$help_taxonomy'</ref>."
 msgstr ""
-"এটি ইউনিটদের একটি গোষ্ঠী যাদের সকলে <ref>dst='$topic_id' "
-"text='$help_taxonomy'</ref> ।"
+"এটি ইউনিটদের একটি গোষ্ঠী যাদের সকলে <ref dst='$topic_id'>$help_taxonomy</ref> "
+"।"
 
 #: src/help/help_impl.cpp:1154
+#, fuzzy
+#| msgid "Subgroups of units within this group"
 msgid "<header>text='Subgroups of units within this group'</header>"
-msgstr "<header>text='এই গোষ্ঠীর মধ্যে থাকা ইউনিটদের উপগোষ্ঠীগুলি'</header>"
+msgstr "এই গোষ্ঠীর মধ্যে থাকা ইউনিটদের উপগোষ্ঠীগুলি"
 
 #: src/help/help_impl.cpp:1156
+#, fuzzy
+#| msgid "Groups of units within this race"
 msgid "<header>text='Groups of units within this race'</header>"
-msgstr "<header>text='এই জাতির মধ্যে থাকা ইউনিটদের গোষ্ঠীগুলি'</header>"
+msgstr "এই জাতির মধ্যে থাকা ইউনিটদের গোষ্ঠীগুলি"
 
 #: src/help/help_impl.cpp:1165
+#, fuzzy
+#| msgid "Units of this group"
 msgid "<header>text='Units of this group'</header>"
-msgstr "<header>text='এই গোষ্ঠীর ইউনিটগুলি'</header>"
+msgstr "এই গোষ্ঠীর ইউনিটগুলি"
 
 #: src/help/help_impl.cpp:1167
+#, fuzzy
+#| msgid "Units of this race"
 msgid "<header>text='Units of this race'</header>"
-msgstr "<header>text='এই জাতির ইউনিটগুলি'</header>"
+msgstr "এই জাতির ইউনিটগুলি"
 
 #: src/help/help_impl.cpp:1488
 msgid "corrupted original file"
@@ -7758,7 +7834,7 @@ msgstr "প্রত্যাঘাত:"
 
 #: src/reports.cpp:996
 msgid "Weapon special: "
-msgstr "অস্ত্রের বিশেষত্ব"
+msgstr "অস্ত্রের বিশেষত্ব: "
 
 #: src/reports.cpp:1071
 msgid "weapon^None"
@@ -8639,6 +8715,9 @@ msgstr "হোয়াইটবোর্ড অপশনগুলি"
 #~ msgid "The add-on’s icon’s file size is too large."
 #~ msgstr "অ্যাড-অনের আইকনের ফাইল সাইজ খুব বড়ো ।"
 
+#~ msgid "Measure roundtrip packet time between client and server."
+#~ msgstr "ক্লায়েন্ট এবং সার্ভারের মধ্যে রাউন্ডট্রিপ প্যাকেট সময় পরিমাপ করুন ।"
+
 #~ msgid "timespan^$num year"
 #~ msgid_plural "timespan^$num years"
 #~ msgstr[0] "$num বছর"
@@ -8709,3 +8788,8 @@ msgstr "হোয়াইটবোর্ড অপশনগুলি"
 
 #~ msgid "This unit is a leader and cannot be dismissed."
 #~ msgstr "এই ইউনিটটি একটি দলের নেতা এবং একে বরখাস্ত করা যাবে না ।"
+
+#, fuzzy
+#~| msgid "No description available."
+#~ msgid "description"
+#~ msgstr "কোনো বর্ণনা নেই ।"
