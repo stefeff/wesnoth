@@ -1477,18 +1477,14 @@ bool display::draw_all_panels(const rect& region)
 	bool drew = false;
 	const rect game_canvas = video::game_canvas();
 
-	for(const auto& panel : theme_.panels()) {
-		if(region.overlaps(panel.location(game_canvas))) {
-			draw_panel(panel);
-			drew = true;
-		}
+	for(const auto& panel : theme_.panels(region, game_canvas)) {
+		draw_panel(panel);
+		drew = true;
 	}
 
-	for(const auto& label : theme_.labels()) {
-		if(region.overlaps(label.location(game_canvas))) {
-			draw_label(label);
-			drew = true;
-		}
+	for(const auto& label : theme_.labels(region, game_canvas)) {
+		draw_label(label);
+		drew = true;
 	}
 
 	return drew;

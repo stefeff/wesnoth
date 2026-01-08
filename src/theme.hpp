@@ -40,6 +40,224 @@ struct theme_info
 	t_string description;
 };
 
+template<class Object>
+class area_lookup
+{
+private:
+
+	struct entry
+	{
+		const rect* area;
+		const Object* value;
+		int start;
+
+		bool operator<(const entry& rhs) const {
+			return start < rhs.start;
+		}
+		bool operator<(int rhs) const {
+			return start < rhs;
+		}
+	};
+
+	friend inline bool operator<(int lhs, const entry& rhs) {
+		return lhs < rhs.start;
+	}
+
+public:
+
+	area_lookup(const std::vector<Object>& objects)
+		: objects_{ objects }
+		, valid_{ false }
+	{}
+
+	void invalidate() { valid_ = false; }
+
+	class result_iterator
+	{
+	public:
+		const Object& operator*() const {
+			return *current_;
+		}
+		result_iterator& operator++() {
+			advance();
+			return *this;
+		}
+		bool operator==(const result_iterator& rhs) const {
+			return current_ == rhs.current_;
+		}
+		bool operator!=(const result_iterator& rhs) const {
+			return !operator==(rhs);
+		}
+
+	private:
+
+		friend class area_lookup::result_range;
+		using iterator = typename std::vector<entry>::const_iterator;
+
+		result_iterator(const rect& region)
+			: region_{ region }
+			, current_{ nullptr }
+		{}
+		result_iterator(
+			  const rect& region
+			, iterator current_x
+			, iterator last_x
+			, iterator current_y
+			, iterator last_y
+			, iterator current_large
+			, iterator last_large)
+			: region_{ region }
+			, current_{ nullptr }
+			, current_x_{ current_x }
+			, last_x_{ last_x }
+			, current_y_{ current_y }
+			, last_y_{ last_y }
+			, current_large_{ current_large }
+			, last_large_{ last_large }
+		{
+			advance();
+		}
+
+		bool is_match(const entry& e) const {
+			return region_.overlaps(*e.area);
+		}
+
+		bool advance(iterator& first, iterator& last) {
+			if (first != last) {
+				if (first->value != current_ && is_match(*first)) {
+					current_ = first->value;
+					return true;
+				}
+
+				while (++first != last) {
+					if (is_match(*first)) {
+						current_ = first->value;
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		void advance() {
+			if (   advance(current_x_, last_x_)
+			    || advance(current_y_, last_y_)
+			    || advance(current_large_, last_large_)) {
+				return;
+			}
+
+			current_ = nullptr;
+		}
+
+		const rect& region_;
+		const Object* current_;
+
+		iterator current_x_;
+		iterator last_x_;
+		iterator current_y_;
+		iterator last_y_;
+		iterator current_large_;
+		iterator last_large_;
+	};
+
+	class result_range
+	{
+	public:
+
+		result_iterator begin() {
+			return { region_, current_x_, last_x_, current_y_, last_y_, current_large_, last_large_ };
+		}
+
+		result_iterator end() {
+			return { region_ };
+		}
+
+	private:
+
+		friend class area_lookup;
+		using iterator = typename std::vector<entry>::const_iterator;
+
+		result_range(
+			  const rect& region
+			, iterator current_x
+			, iterator last_x
+			, iterator current_y
+			, iterator last_y
+			, iterator current_large
+			, iterator last_large)
+			: region_{ region }
+			, current_x_{ current_x }
+			, last_x_{ last_x }
+			, current_y_{ current_y }
+			, last_y_{ last_y }
+			, current_large_{ current_large }
+			, last_large_{ last_large }
+		{
+		}
+
+		rect region_;
+
+		iterator current_x_;
+		iterator last_x_;
+		iterator current_y_;
+		iterator last_y_;
+		iterator current_large_;
+		iterator last_large_;
+	};
+
+	result_range find(const rect& region, const rect& game_canvas) const {
+		fill(game_canvas);
+
+		return {
+			region,
+			std::lower_bound(small_by_x_.begin(), small_by_x_.end(), region.x - 72),
+			std::upper_bound(small_by_x_.begin(), small_by_x_.end(), region.x + region.w),
+			std::lower_bound(small_by_y_.begin(), small_by_y_.end(), region.y - 72),
+			std::upper_bound(small_by_y_.begin(), small_by_y_.end(), region.y + region.h),
+			large_.begin(), large_.end()
+		};
+	}
+
+private:
+
+	void fill(const rect& game_canvas) const {
+		if (!valid_ || game_canvas != game_canvas_) {
+			small_by_x_.clear();
+			small_by_y_.clear();
+			large_.clear();
+
+			for (auto& object : objects_) {
+				auto& area = object.location(game_canvas);
+				if (area.w <= SMALL_THRESHOLD) {
+					small_by_x_.push_back({ &area, &object, area.x });
+				}
+				else if (area.h <= SMALL_THRESHOLD) {
+					small_by_y_.push_back({ &area, &object, area.y });
+				}
+				else {
+					large_.push_back({ &area, &object, 0 });
+				}
+			}
+
+			std::sort(small_by_x_.begin(), small_by_x_.end());
+			std::sort(small_by_y_.begin(), small_by_y_.end());
+
+			valid_ = true;
+			game_canvas_ = game_canvas;
+		}
+	}
+
+	const std::vector<Object>& objects_;
+	mutable rect game_canvas_;
+	mutable bool valid_;
+
+	constexpr static int SMALL_THRESHOLD = 72;
+	mutable std::vector<entry> small_by_x_;
+	mutable std::vector<entry> small_by_y_;
+	mutable std::vector<entry> large_;
+};
+
 class theme
 {
 
@@ -50,7 +268,7 @@ class theme
 		object(std::size_t sw, std::size_t sh, const config& cfg);
 		virtual ~object() { }
 
-		rect& location(const SDL_Rect& screen) const
+		const rect& location(const SDL_Rect& screen) const
 		{
 			if (screen != last_screen_) [[unlikely]] {
 				update_location(screen);
@@ -247,8 +465,12 @@ public:
 	bool set_resolution(const SDL_Rect& screen);
 	void modify(const config &cfg);
 
-	const std::vector<panel>& panels() const { return panels_; }
-	const std::vector<label>& labels() const { return labels_; }
+	auto panels(const rect& region, const rect& game_canvas) const {
+		return panels_lookup_.find(region, game_canvas);
+	}
+	auto labels(const rect& region, const rect& game_canvas) const {
+		return labels_lookup_.find(region, game_canvas);
+	}
 	const std::vector<menu>& menus() const { return menus_; }
 	const std::vector<slider>& sliders() const { return sliders_; }
 	const std::vector<action>& actions() const { return actions_; }
@@ -292,7 +514,9 @@ private:
 	std::string cur_theme;
 	config cfg_;
 	std::vector<panel> panels_;
+	area_lookup<panel> panels_lookup_;
 	std::vector<label> labels_;
+	area_lookup<label> labels_lookup_;
 	std::vector<menu> menus_;
 	std::vector<action> actions_;
 	std::vector<slider> sliders_;

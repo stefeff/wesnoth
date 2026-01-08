@@ -576,7 +576,9 @@ theme::theme(const config& cfg, const SDL_Rect& screen)
 	, cur_theme()
 	, cfg_()
 	, panels_()
+	, panels_lookup_{ panels_ }
 	, labels_()
+	, labels_lookup_{ labels_ }
 	, menus_()
 	, actions_()
 	, context_()
@@ -594,7 +596,38 @@ theme::theme(const config& cfg, const SDL_Rect& screen)
 	set_resolution(screen);
 }
 
-theme& theme::operator=(theme&& other) = default;
+theme& theme::operator=(theme&& other)
+{
+	theme_reset_event_ = std::move(other.theme_reset_event_);
+
+	cur_theme = std::move(other.cur_theme);
+	cfg_ = std::move(other.cfg_);
+	panels_ = std::move(other.panels_);
+	panels_lookup_.invalidate();
+	labels_ = std::move(other.labels_);
+	labels_lookup_.invalidate();
+	menus_ = std::move(other.menus_);
+	actions_ = std::move(other.actions_);
+	sliders_ = std::move(other.sliders_);
+
+	context_ = std::move(other.context_);
+	action_context_ = std::move(other.action_context_);
+
+	status_ = std::move(other.status_);
+
+	main_map_ = std::move(other.main_map_);
+	mini_map_ = std::move(other.mini_map_);
+	unit_image_ = std::move(other.unit_image_);
+	palette_ = std::move(other.palette_);
+
+	border_ = std::move(other.border_);
+
+	screen_dimensions_ = std::move(other.screen_dimensions_);
+	cur_spec_width_ = std::move(other.cur_spec_width_);
+	cur_spec_height_ = std::move(other.cur_spec_height_);
+
+	return *this;
+}
 
 bool theme::set_resolution(const SDL_Rect& screen)
 {
@@ -646,7 +679,9 @@ bool theme::set_resolution(const SDL_Rect& screen)
 	}
 
 	panels_.clear();
+	panels_lookup_.invalidate();
 	labels_.clear();
+	labels_lookup_.invalidate();
 	status_.clear();
 	menus_.clear();
 	actions_.clear();
@@ -671,6 +706,9 @@ bool theme::set_resolution(const SDL_Rect& screen)
 
 void theme::add_object(std::size_t sw, std::size_t sh, const config& cfg)
 {
+	panels_lookup_.invalidate();
+	labels_lookup_.invalidate();
+
 	if(const auto c = cfg.optional_child(str_main_map)) {
 		main_map_ = object(sw, sh, c.value());
 	}
@@ -763,12 +801,14 @@ void theme::remove_object(const std::string& id)
 
 	for(auto p = panels_.begin(); p != panels_.end(); ++p) {
 		if(p->get_id() == id) {
+			panels_lookup_.invalidate();
 			panels_.erase(p);
 			return;
 		}
 	}
 	for(auto l = labels_.begin(); l != labels_.end(); ++l) {
 		if(l->get_id() == id) {
+			labels_lookup_.invalidate();
 			labels_.erase(l);
 			return;
 		}
