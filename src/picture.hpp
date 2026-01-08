@@ -238,7 +238,7 @@ enum TYPE
 	NUM_TYPES // Equal to the number of types specified above
 };
 
-enum class scale_quality { nearest, linear };
+enum class scale_quality { nearest, linear, _count };
 
 /**
  * Returns an image surface suitable for software manipulation.
