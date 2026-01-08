@@ -1026,22 +1026,6 @@ static void * free_mem_heads[8 * sizeof(size_t)] = {};
 
 static bool quick_cleanup_registered = false;
 
-static void* quick_alloc(size_t size)
-{
-  unsigned index = __builtin_clzll(size | 63);
-  if (l_likely(free_mem_heads[index])) {
-    void* result = free_mem_heads[index];
-    void* next = *(void**)result;
-    free_mem_heads[index] = next;
-    return result;
-  }
-  else {
-    size_t to_alloc = ((size_t)1) << (64 - index);
-    printf("%ld -> [%d] = %ld\n", size, index, to_alloc);
-    return malloc(to_alloc);
-  }
-}
-
 static unsigned long alloc_calls = 0;
 static unsigned long realloc_calls = 0;
 static unsigned long noop_realloc = 0;
@@ -1051,6 +1035,38 @@ static unsigned long alloc_bytes = 0;
 static unsigned long realloc_bytes = 0;
 static unsigned long noop_realloc_bytes = 0;
 static unsigned long free_bytes = 0;
+
+static unsigned long alloc_prior = 0;
+static unsigned long alloc_count = 0;
+
+static void* quick_alloc(size_t size)
+{
+  ++alloc_calls;
+  alloc_bytes += size;
+
+  unsigned index = __builtin_clzll(size | 63);
+  if (l_likely(free_mem_heads[index])) {
+    void* result = free_mem_heads[index];
+    void* next = *(void**)result;
+    free_mem_heads[index] = next;
+    return result;
+  }
+  else {
+    size_t to_alloc = ((size_t)1) << (64 - index);
+    if (alloc_prior != to_alloc) {
+      if (alloc_count) {
+        // printf("%ldx [%d] = %ld\n", alloc_count, index, alloc_prior);
+      }
+
+      alloc_prior = to_alloc;
+      alloc_count = 1;
+    }
+    else {
+      ++alloc_count;
+    }
+    return malloc(to_alloc);
+  }
+}
 
 static void quick_free(void* ptr, size_t size)
 {
@@ -1064,7 +1080,7 @@ static void quick_free(void* ptr, size_t size)
 static void* quick_realloc(void* ptr, size_t osize, size_t nsize)
 {
   realloc_calls++;
-  realloc_bytes += osize;
+  realloc_bytes += nsize - osize;
   if (l_likely(__builtin_clzll(osize| 63) == __builtin_clzll(nsize | 63))) {
     ++noop_realloc;
     noop_realloc_bytes += osize;
@@ -1078,33 +1094,67 @@ static void* quick_realloc(void* ptr, size_t osize, size_t nsize)
   }
 }
 
+static char* format_number_recursive(char* buffer, unsigned long n)
+{
+  if (n > 999) {
+    buffer = format_number_recursive(buffer, n / 1000);
+    sprintf(buffer, ",%03d", (int)(n % 1000));
+    return buffer + 4;
+  }
+  else {
+    return buffer + sprintf(buffer, "%d", (int)n);
+  }
+}
+
+static char* format_number(char* buffer, unsigned long n)
+{
+  format_number_recursive(buffer, n);
+  return buffer;
+}
+
 static void quick_cleanup(void)
 {
-  printf("resize: %10ld %ld %ld\n", realloc_calls, noop_realloc, noop_realloc * 100 / realloc_calls);
-  printf("alloc:  %10ld\n", alloc_calls);
-  printf("free:   %10ld\n", free_calls);
-  printf("resize: %15ldB %ld %ldB\n", realloc_bytes, noop_realloc_bytes, noop_realloc_bytes * 100 / realloc_bytes);
-  printf("alloc:  %15ldB\n", alloc_bytes);
-  printf("free:   %15ldB\n", free_bytes);
+  printf("%ldx [??] = %ld\n", alloc_count, alloc_prior);
+
+  char num_buffer1[25];
+  char num_buffer2[25];
+  printf("resize: %15sx %15sx nops = %ld%%\n",
+         format_number(num_buffer1, realloc_calls),
+         format_number(num_buffer2, noop_realloc),
+         noop_realloc * 100 / realloc_calls);
+  printf("alloc:  %15sx\n", format_number(num_buffer1, alloc_calls));
+  printf("free:   %15sx\n", format_number(num_buffer1, free_calls));
+  printf("resize: %15sB %15sB nops = %ld%%\n",
+         format_number(num_buffer1, realloc_bytes),
+         format_number(num_buffer2, noop_realloc_bytes),
+         noop_realloc_bytes * 100 / realloc_bytes);
+  printf("alloc:  %15sB\n", format_number(num_buffer1, alloc_bytes));
+  printf("free:   %15sB\n", format_number(num_buffer1, free_bytes));
+
   int chunks = 0;
+  unsigned long total_alloc = 0;
   for (size_t i = 0; i < sizeof(free_mem_heads) / sizeof(free_mem_heads[0]); ++i) {
+    size_t chunk_size = ((size_t)1) << (64 - i);
+    size_t count = 0;
     while (free_mem_heads[i]) {
       void* chunk = free_mem_heads[i];
       void* next = *(void**)chunk;
       free_mem_heads[i] = next;
       free(chunk);
-      ++chunks;
+      ++count;
     }
+    chunks += count;
+    total_alloc += chunk_size * count;
   }
-  printf("chunks: %d\n", chunks);
+
+  printf("chunks: %s\n", format_number(num_buffer1, chunks));
+  printf("total:  %sB\n", format_number(num_buffer1, total_alloc));
 }
 
 static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
   (void)ud; /* not used */
   if (l_likely(nsize)) {
     if (l_likely(ptr == NULL)) {
-      ++alloc_calls;
-      alloc_bytes += nsize;
       return quick_alloc(nsize);
     }
     else {
