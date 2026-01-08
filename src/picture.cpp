@@ -170,7 +170,7 @@ std::array<surface_cache, NUM_TYPES> surfaces_;
  * Texture caches.
  * Note that the latter two are temporary and should be removed once we have OGL and shader support.
  */
-using texture_cache_map = std::map<image::scale_quality, image::texture_cache>;
+using texture_cache_map = std::array<image::texture_cache, static_cast<size_t>(image::scale_quality::_count)>;
 
 texture_cache_map textures_;
 texture_cache_map textures_hexed_;
@@ -231,6 +231,14 @@ parsed_data_URI::parsed_data_URI(std::string_view data_URI)
 
 } // end anon namespace
 
+void flush_caches(texture_cache_map& caches)
+{
+	std::for_each(caches.begin(), caches.end(),
+				  [](auto& cache) {
+					  cache.flush();
+				  });
+}
+
 void flush_cache()
 {
 	for(surface_cache& cache : surfaces_) {
@@ -242,9 +250,9 @@ void flush_cache()
 	texture_lightmaps_.clear();
 	in_hex_info_.flush();
 	is_empty_hex_.flush();
-	textures_.clear();
-	textures_hexed_.clear();
-	texture_tod_colored_.clear();
+	flush_caches(textures_);
+	flush_caches(textures_hexed_);
+	flush_caches(texture_tod_colored_);
 	image_existence_map.clear();
 	precached_dirs.clear();
 }
@@ -631,7 +639,7 @@ void set_color_adjustment(int r, int g, int b)
 		surfaces_[TOD_COLORED].flush();
 		lit_surfaces_.flush();
 		lit_textures_.flush();
-		texture_tod_colored_.clear();
+		flush_caches(texture_tod_colored_);
 	}
 }
 
@@ -997,13 +1005,13 @@ texture get_texture(const image::locator& i_locator, scale_quality quality, TYPE
 
 	switch(type) {
 	case HEXED:
-		cache = &textures_hexed_[quality];
+		cache = &textures_hexed_[static_cast<size_t>(quality)];
 		break;
 	case TOD_COLORED:
-		cache = &texture_tod_colored_[quality];
+		cache = &texture_tod_colored_[static_cast<size_t>(quality)];
 		break;
 	default:
-		cache = &textures_[quality];
+		cache = &textures_[static_cast<size_t>(quality)];
 	}
 
 	//
