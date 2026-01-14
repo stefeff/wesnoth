@@ -169,16 +169,10 @@ public:
     const_iterator end() const { return { this, last_index() }; }
     const_iterator cend() const { return { this, last_index() }; }
 
-    bool contains(const Key& key) const { return internal_find(key).found; }
-    std::size_t count(const Key& key) const { return internal_find(key).found ? 1 : 0; }
-    iterator find(const Key& key) {
-        auto pos = internal_find(key);
-        return { this, pos.found ? pos.data_index : last_index() };
-    }
-    const_iterator find(const Key& key) const {
-        auto pos = internal_find(key);
-        return { this, pos.found ? pos.data_index : last_index() };
-    }
+    bool contains(const Key& key) const { return internal_find(key) != last_index(); }
+    std::size_t count(const Key& key) const { return internal_find(key) != last_index() ? 1 : 0; }
+    iterator find(const Key& key) { return { this, internal_find(key) }; }
+    const_iterator find(const Key& key) const { return { this, internal_find(key) }; }
 
     std::pair<iterator, bool> insert(const T& item);
     template< class... Args >
@@ -215,14 +209,8 @@ protected:
         index_t hash_index;
     };
 
-    struct lookup_result
-    {
-        index_t hash_index;
-        index_t data_index;
-        bool found;
-    };
-
-    lookup_result internal_find(const Key& key) const;
+    index_t internal_find(const Key& key) const;
+    index_t internal_find(index_t hash_index, const Key& key) const;
     template<typename K2>
     const entry_t* optimistic_find(const K2& key) const;
     const entry_t* optimistic_find(const Key& key) const;
@@ -373,7 +361,7 @@ bool hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::operator==(co
 
     for (auto& lhs_item : *this) {
         auto rhs_pos = rhs.internal_find(key_access_(lhs_item));
-        if (!rhs_pos.found || lhs_item != rhs.data_[rhs_pos.data_index].template as<T>()) {
+        if (rhs_pos == last_index() || lhs_item != rhs.data_[rhs_pos].template as<T>()) {
             return false;
         }
     }
@@ -384,17 +372,17 @@ bool hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::operator==(co
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
 auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::insert(const T& item) -> std::pair<iterator, bool>
 {
+    if (first_unused_ == NO_INDEX) {
+        grow_data();
+    }
+
     auto& key = key_access_(item);
-    auto pos = internal_find(key);
-    if (pos.found) {
-        return { { this, pos.data_index }, false };
+    auto hash_index = hash_(key) % index_.size();
+    auto pos = internal_find(hash_index, key);
+    if (pos != last_index()) {
+        return { { this, pos }, false };
     }
     else {
-        if (first_unused_ == NO_INDEX) {
-            grow_data();
-            pos.hash_index = hash_(key) % index_.size();;
-        }
-
         auto index = first_unused_;
         auto& entry = data_[index];
         new (&entry.data) T(item);
@@ -402,7 +390,7 @@ auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::insert(const 
         first_unused_ = entry.next;
         ++count_;
 
-        entry.hash_index = pos.hash_index;
+        entry.hash_index = hash_index;
         link(index);
 
         // verify();
@@ -443,24 +431,19 @@ auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::emplace( Args
     new (&entry.data) T(std::forward<Args>(args)...);
 
     auto& key = key_access_(entry.template as<T>());
-    auto pos = internal_find(key);
-    if (pos.found) {
+    entry.hash_index = hash_(key) % index_.size();
+
+    auto pos = internal_find(entry.hash_index, key);
+    if (pos != last_index()) {
         entry.template as<T>().~T();
-        return { { this, pos.data_index }, false };
+        return { { this, pos }, false };
     }
     else {
         auto index = first_unused_;
         first_unused_ = entry.next;
         ++count_;
 
-        entry.hash_index = pos.hash_index;
         link(index);
-
-        if (pos.data_index != NO_INDEX && 2 * count_ > index_.size()) {
-            rehash();
-            pos = internal_find(key);
-            return { { this, pos.data_index }, true };
-        }
 
         return { { this, index }, true };
     }
@@ -489,8 +472,8 @@ template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class
 std::size_t hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::erase(const Key& key)
 {
     auto pos = internal_find(key);
-    if (pos.found) {
-        internal_erase(pos.data_index);
+    if (pos != last_index()) {
+        internal_erase(pos);
         return 1;
     }
     else {
@@ -518,32 +501,33 @@ void hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::clear()
 }
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
-auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::internal_find(const Key& key) const -> lookup_result
+auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::internal_find(const Key& key) const -> index_t
 {
-    lookup_result result;
     if (index_.size() > 0) {
-        result.hash_index = hash_(key) % index_.size();
-        result.data_index = index_[result.hash_index];
+        auto hash_index = hash_(key) % index_.size();
+        return internal_find(hash_index, key);
+    }
 
-        while (result.data_index) {
-            auto& entry = data_[result.data_index];
-            assert(entry.hash_index == result.hash_index);
-            if (equal_(key_access_(entry.template as<T>()), key)) {
-                result.found = true;
-                return result;
-            }
-            else {
-                result.data_index = entry.next;
-            }
+    return last_index();
+}
+
+template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
+inline auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::internal_find(index_t hash_index, const Key& key) const -> index_t
+{
+    index_t result = index_[hash_index];
+
+    while (result) [[likely]] {
+        auto& entry = data_[result];
+        // assert(entry.hash_index == result.hash_index);
+        if (equal_(key_access_(entry.template as<T>()), key)) [[likely]] {
+            return result;
+        }
+        else {
+            result = entry.next;
         }
     }
-    else {
-        result.hash_index = NO_INDEX;
-        result.data_index = NO_INDEX;
-    }
 
-    result.found = false;
-    return result;
+    return last_index();
 }
 
 template <class T, class Key, class KeyAccess, class Hash, class KeyEqual, class Allocator>
@@ -786,7 +770,7 @@ template <class K, class V, class Hash, class KeyEqual, class Allocator>
 V& hash_map<K, V, Hash, KeyEqual, Allocator>::operator[](const K& key)
 {
     auto pos = Base_::internal_find(key);
-    auto& entry = pos.found ? Base_::data_[pos.data_index] : Base_::insert_key(key);
+    auto& entry = pos != Base_::last_index() ? Base_::data_[pos] : Base_::insert_key(key);
     return entry.template as<value_type>().second;
 }
 
