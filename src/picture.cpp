@@ -58,22 +58,7 @@ struct std::hash<image::locator::value>
 {
 	std::size_t operator()(const image::locator::value& val) const
 	{
-		std::size_t hash = std::hash<unsigned>{}(val.type);
-
-		if(val.type == image::locator::FILE || val.type == image::locator::SUB_FILE) {
-			boost::hash_combine(hash, std::hash<utils::interned_string>{}(val.filename));
-		}
-
-		if(val.type == image::locator::SUB_FILE) {
-			std::uint64_t positions = static_cast<std::uint64_t >(val.loc.x)
-									^ (static_cast<std::uint64_t >(val.loc.y) << 16)
-									^ (static_cast<std::uint64_t >(val.center_x) << 32)
-									^ (static_cast<std::uint64_t >(val.center_y) << 48);
-			boost::hash_combine(hash, positions);
-			boost::hash_combine(hash, std::hash<utils::interned_string>{}(val.modifications));
-		}
-
-		return hash;
+		return val.hash_value;
 	}
 };
 
@@ -268,6 +253,7 @@ locator locator::clone(const std::string& mods) const
 	if(!mods.empty()) {
 		res.val_.modifications = utils::interned_string{res.val_.modifications + mods};
 		res.val_.type = SUB_FILE;
+		res.val_.update_precalc();
 	}
 
 	return res;
@@ -309,6 +295,8 @@ locator::value::value(const utils::interned_string& fn)
 		modifications = temp.substr(markup_field, temp.size() - markup_field);
 		filename = temp.substr(0, markup_field);
 	}
+
+	update_precalc();
 }
 
 locator::value::value(const utils::interned_string& filename, const utils::interned_string& modifications)
@@ -316,6 +304,7 @@ locator::value::value(const utils::interned_string& filename, const utils::inter
 	, filename(filename)
 	, modifications(modifications)
 {
+	update_precalc();
 }
 
 locator::value::value(
@@ -331,6 +320,7 @@ locator::value::value(
 	, center_x(center_x)
 	, center_y(center_y)
 {
+	update_precalc();
 }
 
 bool locator::value::operator==(const value& a) const
@@ -359,6 +349,26 @@ bool locator::value::operator<(const value& a) const
 	}
 
 	return false;
+}
+
+void locator::value::update_precalc()
+{
+	std::size_t hash = std::hash<unsigned>{}(type);
+
+	if(type == image::locator::FILE || type == image::locator::SUB_FILE) {
+		boost::hash_combine(hash, std::hash<utils::interned_string>{}(filename));
+	}
+
+	if(type == image::locator::SUB_FILE) {
+		std::uint64_t positions = static_cast<std::uint64_t >(loc.x)
+								^ (static_cast<std::uint64_t >(loc.y) << 16)
+								^ (static_cast<std::uint64_t >(center_x) << 32)
+								^ (static_cast<std::uint64_t >(center_y) << 48);
+		boost::hash_combine(hash, positions);
+		boost::hash_combine(hash, std::hash<utils::interned_string>{}(modifications));
+	}
+
+	hash_value = hash;
 }
 
 // Load overlay image and compose it with the original surface.
