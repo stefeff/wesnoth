@@ -78,6 +78,8 @@ surface getMinimap(int w, int h, const gamemap &map, const team *vw, const std::
 	cache_map *fog_cache = &mini_fogged_terrain_cache;
 	cache_map *highlight_cache = &mini_highlighted_terrain_cache;
 
+	const bool blindfolded = display::get_singleton() != nullptr && display::get_singleton()->is_blindfolded();
+
 	for(int y = 0; y <= map.total_height(); ++y)
 		for(int x = 0; x <= map.total_width(); ++x) {
 
@@ -85,7 +87,7 @@ surface getMinimap(int w, int h, const gamemap &map, const team *vw, const std::
 			if(!map.on_board_with_border(loc))
 				continue;
 
-			const bool shrouded = (display::get_singleton() != nullptr && display::get_singleton()->is_blindfolded()) || (vw != nullptr && vw->shrouded(loc));
+			const bool shrouded = blindfolded || (vw != nullptr && vw->shrouded(loc));
 			// shrouded hex are not considered fogged (no need to fog a black image)
 			const bool fogged = (vw != nullptr && !shrouded && vw->fogged(loc));
 
@@ -109,8 +111,6 @@ surface getMinimap(int w, int h, const gamemap &map, const team *vw, const std::
 			if (preferences_minimap_draw_terrain) {
 
 				if (preferences_minimap_terrain_coding) {
-
-					surface surf(nullptr);
 
 					bool need_fogging = false;
 					bool need_highlighting = false;
@@ -159,29 +159,27 @@ surface getMinimap(int w, int h, const gamemap &map, const team *vw, const std::
 							}
 						}
 
-						surf = scale_surface_sharp(tile, scale, scale);
+						surface surf = scale_surface_sharp(tile, scale, scale);
 
 						i = normal_cache->emplace(terrain, surf).first;
 					}
 
 					if (i != cache->end())
 					{
-						surf = i->second;
-
 						if (need_fogging) {
+							surface surf = i->second;
 							surf = adjust_surface_color(surf, -50, -50, -50);
-							fog_cache->emplace(terrain, surf);
+							i = fog_cache->emplace(terrain, surf).first;
 						}
 
 						if (need_highlighting) {
+							surface surf = i->second;
 							surf = adjust_surface_color(surf, 50, 50, 50);
-							highlight_cache->emplace(terrain, surf);
+							i = highlight_cache->emplace(terrain, surf).first;
 						}
+
+						sdl_blit(i->second, nullptr, minimap, &maprect);
 					}
-
-					if(surf != nullptr)
-						sdl_blit(surf, nullptr, minimap, &maprect);
-
 				} else {
 
 					// Despite its name, game_config::team_rgb_range isn't just team colors,
