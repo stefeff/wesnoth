@@ -405,13 +405,6 @@ auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::insert(const 
         entry.hash_index = pos.hash_index;
         link(index);
 
-        if (entry.next != NO_INDEX && 2 * count_ > index_.size()) {
-            rehash();
-            pos = internal_find(key);
-
-            return { { this, pos.data_index }, true };
-        }
-
         // verify();
         return { { this, index }, true };
     }
@@ -422,9 +415,6 @@ auto hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::insert_key(co
 {
     if (first_unused_ == NO_INDEX) {
         grow_data();
-    }
-    if (2 * count_ > index_.size()) {
-        rehash();
     }
 
     auto index = first_unused_;
@@ -632,6 +622,9 @@ void hash_container<T, Key, KeyAccess, Hash, KeyEqual, Allocator>::grow_data(std
     // piggy-back: an empty container does not have an index:
     if (index_.empty()) {
         index_.resize(13);
+    }
+    else if (2 * count_ > index_.size()) {
+        rehash();
     }
 
     // verify();
