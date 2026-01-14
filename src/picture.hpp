@@ -103,6 +103,8 @@ private:
 		bool operator==(const value& a) const;
 		bool operator<(const value& a) const;
 
+		void update_precalc();
+
 		locator::type type = NONE;
 		bool is_data_uri = false;
 		std::uint8_t padding[3]{};
@@ -111,6 +113,7 @@ private:
 		map_location loc{};
 		int center_x = 0;
 		int center_y = 0;
+		std::size_t hash_value;
 	};
 
 	value val_;
