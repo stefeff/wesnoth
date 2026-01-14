@@ -246,6 +246,7 @@ terrain_builder::terrain_builder(const config& level, const gamemap* m, const st
 	, tile_map_(m ? map().w() : 0, m ? map().h() : 0)
 	, terrain_by_type_()
 	, draw_border_(draw_border)
+	, off_map_name_("terrain/" + offmap_image)
 {
 	image::precache_file_existence("terrain/");
 
@@ -1213,4 +1214,9 @@ terrain_builder::tile* terrain_builder::get_tile(const map_location& loc)
 	if(tile_map_.on_map(loc))
 		return &(tile_map_[loc]);
 	return nullptr;
+}
+
+bool terrain_builder::is_off_map(const image::locator& image) const
+{
+	return image.get_filename() == off_map_name_ || image.no_tod_shift();
 }

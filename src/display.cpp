@@ -1200,8 +1200,6 @@ void display::get_terrain_images(const map_location& loc, const std::string& tim
 		: terrain_builder::BACKGROUND;
 
 	if(const terrain_builder::imagelist* const terrains = builder_->get_terrain_at(loc, timeid, builder_terrain_type)) {
-		// Cache the offmap name. Since it is themeable it can change, so don't make it static.
-		const utils::interned_string off_map_name = "terrain/" + theme_.border().tile_image;
 		terrain_image_vector_.reserve(terrains->size());
 
 		for(const auto& terrain : *terrains) {
@@ -1211,17 +1209,9 @@ void display::get_terrain_images(const map_location& loc, const std::string& tim
 			// We need to test for the tile to be rendered and
 			// not the location, since the transitions are rendered
 			// over the offmap-terrain and these need a ToD coloring.
-			texture tex;
-			const bool off_map = (image.get_filename() == off_map_name
-				|| image.get_modifications().str().find("NO_TOD_SHIFT()") != std::string::npos);
-
-			if(off_map) {
-				tex = image::get_texture(image, image::HEXED);
-			} else if(lighting.empty()) {
-				tex = image::get_texture(image, image::HEXED);
-			} else {
-				tex = image::get_lighted_texture(image, lighting);
-			}
+			texture tex = (lighting.empty() || builder_->is_off_map(image))
+						? image::get_texture_hexed(image)
+						: image::get_lighted_texture(image, lighting);
 
 			if(tex) {
 				terrain_image_vector_.push_back(std::move(tex));
