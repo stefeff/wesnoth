@@ -80,6 +80,7 @@ public:
 
 	const utils::interned_string& get_filename() const { return val_.filename; }
 	bool is_data_uri() const { return val_.is_data_uri; }
+	bool no_tod_shift() const { return val_.no_tod_shift; }
 	const map_location& get_loc() const { return val_.loc ; }
 	int get_center_x() const { return val_.center_x; }
 	int get_center_y() const { return val_.center_y; }
@@ -107,7 +108,8 @@ private:
 
 		locator::type type = NONE;
 		bool is_data_uri = false;
-		std::uint8_t padding[3]{};
+		bool no_tod_shift = false;
+		std::uint8_t padding[2]{};
 		utils::interned_string filename{};
 		utils::interned_string modifications{};
 		map_location loc{};
@@ -228,6 +230,8 @@ surface get_surface(const locator& i_locator, TYPE type = UNSCALED,
  */
 texture get_texture(const locator& i_locator, TYPE type = UNSCALED,
 	bool skip_cache = false);
+
+texture get_texture_hexed(const locator& i_locator);
 
 texture get_texture(const image::locator& i_locator, scale_quality quality,
 	TYPE type = UNSCALED, bool skip_cache = false);

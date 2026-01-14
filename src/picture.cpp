@@ -363,6 +363,8 @@ void locator::value::update_precalc()
 	}
 
 	hash_value = hash;
+
+	no_tod_shift = modifications.str().find("NO_TOD_SHIFT()") != std::string::npos;
 }
 
 // Load overlay image and compose it with the original surface.
@@ -994,6 +996,24 @@ save_result save_image(const surface& surf, const std::string& filename)
 texture get_texture(const image::locator& i_locator, TYPE type, bool skip_cache)
 {
 	return get_texture(i_locator, scale_quality::nearest, type, skip_cache);
+}
+
+texture get_texture_hexed(const image::locator& i_locator)
+{
+	if(!i_locator.is_void()) {
+		// check if the image is already hex-cut by the location system
+		auto& map = i_locator.get_loc().valid()
+				  ? textures_
+				  : textures_hexed_;
+
+		auto& cache = map[static_cast<size_t>(scale_quality::nearest)];
+
+		if(auto cached_item = i_locator.copy_from_cache(cache)) {
+			return *cached_item;
+		}
+	}
+
+	return get_texture(i_locator, scale_quality::nearest, HEXED, false);
 }
 
 /** Returns a texture for the corresponding image. */

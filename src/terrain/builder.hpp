@@ -345,6 +345,8 @@ public:
 
 	tile* get_tile(const map_location& loc);
 
+	bool is_off_map(const image::locator& image) const;
+
 private:
 	/** The tile width used when using basex and basey. This is not,
 	 * necessarily, the tile width in pixels, this is totally
@@ -797,6 +799,8 @@ private:
 
 	/** Whether the map border should be drawn. */
 	bool draw_border_;
+
+	utils::interned_string off_map_name_;
 
 	/** Parsed terrain rules. Cached between instances */
 	static inline building_ruleset building_rules_{};
