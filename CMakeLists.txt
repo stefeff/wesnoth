@@ -481,6 +481,17 @@ if(NOT MSVC)
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ggdb -fno-omit-frame-pointer ${EXTRA_FLAGS_CONFIG}" CACHE STRING "Flags for profiling with perf" FORCE)
 		set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ggdb -fno-omit-frame-pointer ${EXTRA_FLAGS_CONFIG}" CACHE STRING "Flags for profiling with perf" FORCE)
 	endif()
+
+# #
+# Integrate ccache for max speed.
+# #
+	find_program(CCACHE_FOUND ccache)
+	if(CCACHE_FOUND)
+	    message("CCACHE found and enabled.")
+		set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+		set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+	endif(CCACHE_FOUND)
+
 # #
 # End setting profiler build options
 # #
