@@ -78,29 +78,36 @@ struct node {
 		, in(bad_search_counter)
 	{
 	}
-	node(double s, const map_location &c, const map_location &p, const map_location &dst, bool i, const teleport_map* teleports, double srch_arg, double dsth):
-		g(s), h(heuristic(c, dst)), t(g + h), srch(srch_arg), curr(c), prev(p), in(search_counter + i)
+	node(double s, const map_location &c, const map_location &p, const map_location &dst, const teleport_map* teleports, double srch_arg, double dsth):
+		g(s), h(heuristic(c, dst)), t(g + h), srch(srch_arg), curr(c), prev(p), in(search_counter + 1)
 	{
-		if (teleports && !teleports->empty()) {
-			if(srch < 0) {
-				srch = 1.0;
-
-				for(const auto& it : teleports->get_sources()) {
-					const double tmp_srch = heuristic(c, it);
-					if (tmp_srch < srch) { srch = tmp_srch; }
-				}
-			}
-
-			double new_h = srch + dsth + 1.0;
-			if (new_h < h) {
-				h = new_h;
-				t = g + h;
-			}
+		if (teleports) [[unlikely]] {
+			process_teleports(dst, teleports, dsth);
 		}
 	}
 
 	bool operator<(const node& o) const {
 		return t < o.t;
+	}
+
+private:
+
+	void process_teleports(const map_location &dst, const teleport_map* teleports, double dsth)
+	{
+		if(srch < 0) {
+			srch = 1.0;
+
+			for(const auto& it : teleports->get_sources()) {
+				const double tmp_srch = heuristic(c, it);
+				if (tmp_srch < srch) { srch = tmp_srch; }
+			}
+		}
+
+		double new_h = srch + dsth + 1.0;
+		if (new_h < h) {
+			h = new_h;
+			t = g + h;
+		}
 	}
 };
 

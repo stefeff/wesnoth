@@ -218,7 +218,14 @@ std::array<map_location, 6> get_adjacent_tiles(const map_location& center);
  * (i.e. the minimum number of hexes that have to be traversed
  * to get from one hex to the other).
  */
-std::size_t distance_between(const map_location& a, const map_location& b);
+inline unsigned distance_between(const map_location& a, const map_location& b)
+{
+	const unsigned hdistance = std::abs(a.x - b.x);
+	const unsigned vdistance = std::abs(a.y - b.y);
+
+	return hdistance + vdistance - std::min(vdistance,hdistance/2+hdistance%2);
+}
+
 
 /**
  * Write a set of locations into a config using ranges,
