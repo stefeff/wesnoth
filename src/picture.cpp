@@ -50,6 +50,8 @@ using cache_map = boost::unordered_map<Key, Value>;
 #include <array>
 #include <set>
 
+#include <valgrind/callgrind.h>
+
 static lg::log_domain log_image("image");
 #define ERR_IMG LOG_STREAM(err, log_image)
 #define WRN_IMG LOG_STREAM(warn, log_image)
@@ -1053,6 +1055,8 @@ texture get_texture(const image::locator& i_locator, scale_quality quality, TYPE
 		DBG_IMG << "texture cache [" << type << "] miss: " << i_locator;
 	}
 
+	CALLGRIND_TOGGLE_COLLECT;
+
 	//
 	// No texture was cached. In that case, create a new one. The explicit cases require special
 	// handling with surfaces in order to generate the desired effect. This shouldn't be the case
@@ -1074,6 +1078,8 @@ texture get_texture(const image::locator& i_locator, scale_quality quality, TYPE
 	} else {
 		cache->add_to_cache(i_locator, res);
 	}
+
+	CALLGRIND_TOGGLE_COLLECT;
 
 	return res;
 }
