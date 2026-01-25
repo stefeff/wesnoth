@@ -80,38 +80,44 @@ struct node {
 		, in(bad_search_counter)
 	{
 	}
-	node(double s, const map_location &c, const map_location &p, const map_location &dst, bool i, const teleport_map* teleports):
-		g(s), h(heuristic(c, dst)), t(g + h), curr(c), prev(p), in(search_counter + i)
+	node(double s, const map_location &c, const map_location &p, const map_location &dst, const teleport_map* teleports):
+		g(s), h(heuristic(c, dst)), t(g + h), curr(c), prev(p), in(search_counter + 1)
 	{
-		if (teleports && !teleports->empty()) {
-
-			double new_srch = 1.0;
-			auto sources = teleports->get_sources();
-
-			location_set::const_iterator it = sources.begin();
-			for(; it != sources.end(); ++it) {
-				const double tmp_srch = heuristic(c, *it);
-				if (tmp_srch < new_srch) { new_srch = tmp_srch; }
-			}
-
-			double new_dsth = 1.0;
-			auto targets = teleports->get_targets();
-
-			for(it = targets.begin(); it != targets.end(); ++it) {
-				const double tmp_dsth = heuristic(*it, dst);
-				if (tmp_dsth < new_dsth) { new_dsth = tmp_dsth; }
-			}
-
-			double new_h = new_srch + new_dsth + 1.0;
-			if (new_h < h) {
-				h = new_h;
-				t = g + h;
-			}
+		if (teleports) [[unlikely]] {
+			process_teleports(dst, teleports);
 		}
 	}
 
 	bool operator<(const node& o) const {
 		return t < o.t;
+	}
+
+private:
+
+	void process_teleports(const map_location &dst, const teleport_map* teleports)
+	{
+		double new_srch = 1.0;
+		auto sources = teleports->get_sources();
+
+		location_set::const_iterator it = sources.begin();
+		for(; it != sources.end(); ++it) {
+			const double tmp_srch = heuristic(curr, *it);
+			if (tmp_srch < new_srch) { new_srch = tmp_srch; }
+		}
+
+		double new_dsth = 1.0;
+		auto targets = teleports->get_targets();
+
+		for(it = targets.begin(); it != targets.end(); ++it) {
+			const double tmp_dsth = heuristic(*it, dst);
+			if (tmp_dsth < new_dsth) { new_dsth = tmp_dsth; }
+		}
+
+		double new_h = new_srch + new_dsth + 1.0;
+		if (new_h < h) {
+			h = new_h;
+			t = g + h;
+		}
 	}
 };
 

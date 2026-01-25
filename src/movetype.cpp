@@ -142,7 +142,7 @@ private:
 	          const terrain_info * fallback, unsigned recurse_count) const;
 
 private:
-	typedef std::map<t_translation::terrain_code, int> cache_t;
+	typedef utils::hash_map<t_translation::terrain_code, int> cache_t;
 
 	/** Config describing the terrain values. */
 	config cfg_;
@@ -298,11 +298,10 @@ int movetype::terrain_info::data::calc_value(
 			tdata->underlying_mvt_terrain(terrain) :
 			tdata->underlying_def_terrain(terrain);
 
+	int result = params_.default_value;
 	if (terrain_type::is_indivisible(terrain, underlying))
 	{
 		// This is not an alias; get the value directly.
-		int result = params_.default_value;
-
 		const std::string & id = tdata->get_terrain_info(terrain).id();
 		if (const config::attribute_value *val = cfg_.get(id)) {
 			// Read the value from our config.
@@ -330,14 +329,11 @@ int movetype::terrain_info::data::calc_value(
 			       << "; resetting to " << params_.max_value << ".";
 			result = params_.max_value;
 		}
-
-		return result;
 	}
 	else
 	{
 		// This is an alias; select the best of all underlying terrains.
 		bool prefer_high = params_.high_is_good;
-		int result = params_.default_value;
 		if ( underlying.front() == t_translation::MINUS )
 			// Use the other value as the initial value.
 			result =  result == params_.max_value ? params_.min_value :
@@ -364,9 +360,10 @@ int movetype::terrain_info::data::calc_value(
 					result = num;
 			}
 		}
-
-		return result;
 	}
+
+	cache_.emplace(terrain, result);
+	return result;
 }
 
 
@@ -376,19 +373,16 @@ int movetype::terrain_info::data::calc_value(
  * @param[in]  fallback       Consulted if we are missing data.
  * @param[in]  recurse_count  Detects (probable) infinite recursion.
  */
-int movetype::terrain_info::data::value(
+inline int movetype::terrain_info::data::value(
 	const t_translation::terrain_code & terrain,
 	const terrain_info * fallback,
 	unsigned recurse_count) const
 {
 	// Check the cache.
-	std::pair<cache_t::iterator, bool> cache_it =
-		cache_.emplace(terrain, -127); // Bogus value that should never be seen.
-	if ( cache_it.second )
-		// The cache did not have an entry for this terrain, so calculate the value.
-		cache_it.first->second = calc_value(terrain, fallback, recurse_count);
-
-	return cache_it.first->second;
+	auto cache_it = cache_.find(terrain);
+	return cache_it == cache_.end()
+		? calc_value(terrain, fallback, recurse_count)
+		: cache_it->second;
 }
 
 
@@ -628,7 +622,7 @@ std::unique_ptr<movetype::terrain_costs> movetype::terrain_info::make_standalone
 	return t;
 }
 
-const movetype::terrain_info::data & movetype::terrain_info::get_data() const
+inline const movetype::terrain_info::data & movetype::terrain_info::get_data() const
 {
 	assert(unique_data_ || shared_data_);
 	assert(! (unique_data_ && shared_data_));
