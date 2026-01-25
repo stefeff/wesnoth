@@ -42,6 +42,8 @@
 #include <array>
 #include <set>
 
+#include <valgrind/callgrind.h>
+
 static lg::log_domain log_image("image");
 #define ERR_IMG LOG_STREAM(err, log_image)
 #define WRN_IMG LOG_STREAM(warn, log_image)
@@ -890,6 +892,9 @@ bool is_in_hex(const locator& i_locator)
 bool is_empty_hex(const locator& i_locator)
 {
 	if(!i_locator.in_cache(is_empty_hex_)) {
+
+		CALLGRIND_TOGGLE_COLLECT;
+
 		const surface surf = get_surface(i_locator, HEXED);
 		// emptiness of terrain image is checked during hex cut
 		// so, maybe in cache now, let's recheck
@@ -901,6 +906,8 @@ bool is_empty_hex(const locator& i_locator)
 			mask_surface(surf, get_hexmask(), &is_empty);
 			i_locator.add_to_cache(is_empty_hex_, is_empty);
 		}
+
+		CALLGRIND_TOGGLE_COLLECT;
 	}
 
 	return i_locator.locate_in_cache(is_empty_hex_);
@@ -1070,6 +1077,8 @@ texture get_texture(const image::locator& i_locator, scale_quality quality, TYPE
 		return *cached_item;
 	}
 
+	CALLGRIND_TOGGLE_COLLECT;
+
 	DBG_IMG << "texture cache [" << type << "] miss: " << i_locator;
 
 	//
@@ -1093,6 +1102,8 @@ texture get_texture(const image::locator& i_locator, scale_quality quality, TYPE
 	} else {
 		i_locator.add_to_cache(*cache, res);
 	}
+
+	CALLGRIND_TOGGLE_COLLECT;
 
 	return res;
 }
