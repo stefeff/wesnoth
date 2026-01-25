@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2014 - 2024
+	Copyright (C) 2014 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -21,7 +21,6 @@
 #include "display_context.hpp"
 #include "team.hpp"
 #include "units/attack_type.hpp"
-#include "units/formula_manager.hpp"
 #include "units/unit.hpp"
 #include "units/types.hpp"
 #include "log.hpp"
@@ -87,12 +86,16 @@ variant attack_type_callable::get_value(const std::string& key) const
 		return variant(att_->id());
 	} else if(key == "description") {
 		return variant(att_->name());
-	} else if(key == "type") {
+	} else if(key == "base_type") {
 		return variant(att_->type());
+	} else if(key == "type") {
+		return variant(att_->effective_damage_type().first);
 	} else if(key == "icon") {
 		return variant(att_->icon());
 	} else if(key == "range") {
 		return variant(att_->range());
+	} else if(key == "alignment") {
+		return variant(att_->alignment_str());
 	} else if(key == "damage") {
 		return variant(att_->damage());
 	} else if(key == "number_of_attacks" || key == "number" || key == "num_attacks" || key == "attacks") {
@@ -109,15 +112,19 @@ variant attack_type_callable::get_value(const std::string& key) const
 		return variant(att_->movement_used());
 	} else if(key == "attacks_used") {
 		return variant(att_->attacks_used());
+	} else if(key == "min_range") {
+		return variant(att_->min_range());
+	} else if(key == "max_range") {
+		return variant(att_->max_range());
 	} else if(key == "specials" || key == "special") {
 		std::vector<variant> res;
 
-		for(const auto special : att_->specials().all_children_range()) {
-			if(!special.cfg["id"].empty()) {
-				res.emplace_back(special.cfg["id"].str());
+		for(const auto& p_ab : att_->specials()) {
+			if(!p_ab->id().empty()) {
+				res.emplace_back(p_ab->id());
 			}
 		}
-		return variant(res);
+		return variant(std::move(res));
 	}
 
 	return variant();
@@ -127,9 +134,11 @@ void attack_type_callable::get_inputs(formula_input_vector& inputs) const
 {
 	add_input(inputs, "name");
 	add_input(inputs, "type");
+	add_input(inputs, "base_type");
 	add_input(inputs, "description");
 	add_input(inputs, "icon");
 	add_input(inputs, "range");
+	add_input(inputs, "alignment");
 	add_input(inputs, "damage");
 	add_input(inputs, "number");
 	add_input(inputs, "accuracy");
@@ -138,6 +147,8 @@ void attack_type_callable::get_inputs(formula_input_vector& inputs) const
 	add_input(inputs, "attacks_used");
 	add_input(inputs, "attack_weight");
 	add_input(inputs, "defense_weight");
+	add_input(inputs, "min_range");
+	add_input(inputs, "max_range");
 	add_input(inputs, "specials");
 }
 
@@ -168,16 +179,20 @@ int attack_type_callable::do_compare(const formula_callable* callable) const
 		return att_->range().compare(att_callable->att_->range());
 	}
 
-	const auto self_specials = att_->specials().all_children_range();
-	const auto other_specials = att_callable->att_->specials().all_children_range();
+	if(att_->alignment_str() != att_callable->att_->alignment_str()) {
+		return att_->alignment_str().compare(att_callable->att_->alignment_str());
+	}
+
+	const auto& self_specials = att_->specials();
+	const auto& other_specials = att_callable->att_->specials();
 	if(self_specials.size() != other_specials.size()) {
 		return self_specials.size() < other_specials.size() ? -1 : 1;
 	}
 	for(std::size_t i = 0; i < self_specials.size(); ++i) {
-		const auto& s = self_specials[i].cfg["id"];
-		const auto& o = other_specials[i].cfg["id"];
+		const auto& s = self_specials[i]->id();
+		const auto& o = other_specials[i]->id();
 		if(s != o) {
-			return s.str().compare(o.str());
+			return s.compare(o);
 		}
 	}
 
@@ -191,6 +206,7 @@ unit_callable::unit_callable(const unit& u) : loc_(u.get_location()), u_(u)
 
 variant unit_callable::get_value(const std::string& key) const
 {
+
 	if(key == "x") {
 		if(loc_ == map_location::null_location()) {
 			return variant();
@@ -232,9 +248,9 @@ variant unit_callable::get_value(const std::string& key) const
 			res.emplace_back(std::make_shared<attack_type_callable>(att));
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	} else if(key == "abilities") {
-		return formula_callable::convert_vector(u_.get_ability_list());
+		return formula_callable::convert_vector(u_.get_ability_id_list());
 	} else if(key == "hitpoints") {
 		return variant(u_.hitpoints());
 	} else if(key == "max_hitpoints") {
@@ -256,15 +272,22 @@ variant unit_callable::get_value(const std::string& key) const
 		return variant(u_.max_attacks());
 	} else if(key == "traits") {
 		return formula_callable::convert_vector(u_.get_traits_list());
+	} else if(key == "advancements_taken") {
+		return formula_callable::convert_vector(u_.get_advancements_list());
+	} else if(key == "objects") {
+		return formula_callable::convert_vector(u_.get_objects_list());
+	} else if(key == "traits_count") {
+		return variant(u_.traits_count());
+	} else if(key == "advancements_taken_count") {
+		return variant(u_.advancements_count());
+	} else if(key == "objects_count") {
+		return variant(u_.objects_count());
 	} else if(key == "extra_recruit") {
-		return formula_callable::convert_vector(u_.recruits());
+		return formula_callable::convert_set(u_.recruits());
 	} else if(key == "advances_to") {
 		return formula_callable::convert_vector(u_.advances_to());
 	} else if(key == "states" || key == "status") {
 		return formula_callable::convert_set(u_.get_states());
-	} else if(key == "side") {
-		deprecated_message("unit.side", DEP_LEVEL::FOR_REMOVAL, version_info("1.17"), "This returns 0 for side 1 etc and should not be used. Use side_number instead.");
-		return variant(u_.side()-1);
 	} else if(key == "side_number") {
 		return variant(u_.side());
 	} else if(key == "cost") {
@@ -312,23 +335,21 @@ variant unit_callable::get_value(const std::string& key) const
 			needs_flip = true;
 		}
 		std::map<variant, variant> res;
-		for(const auto& p : cfg.attribute_range()) {
-			int val = p.second;
+		for(const auto& [key, value] : cfg.attribute_range()) {
+			int val = value.to_int();
 			if(needs_flip) {
 				val = 100 - val;
 			}
-			res.emplace(variant(p.first), variant(val));
+			res.emplace(variant(key), variant(val));
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	} else if(key == "flying") {
 		return variant(u_.is_flying());
-	} else if(key == "vars") {
-		if(u_.formula_manager().formula_vars()) {
-			return variant(u_.formula_manager().formula_vars());
-		}
-
-		return variant();
+	} else if(key == "fearless") {
+		return variant(u_.is_fearless());
+	} else if(key == "healthy") {
+		return variant(u_.is_healthy());
 	} else if(key == "wml_vars") {
 		return variant(std::make_shared<config_callable>(u_.variables()));
 	} else if(key == "n"      || key == "s"       || key == "ne"      || key == "se"      || key == "nw" || key == "sw" ||
@@ -353,6 +374,11 @@ void unit_callable::get_inputs(formula_input_vector& inputs) const
 	add_input(inputs, "canrecruit");
 	add_input(inputs, "undead");
 	add_input(inputs, "traits");
+	add_input(inputs, "advancements_taken");
+	add_input(inputs, "objects");
+	add_input(inputs, "traits_count");
+	add_input(inputs, "advancements_taken_count");
+	add_input(inputs, "objects_count");
 	add_input(inputs, "attacks");
 	add_input(inputs, "abilities");
 	add_input(inputs, "hitpoints");
@@ -387,6 +413,8 @@ void unit_callable::get_inputs(formula_input_vector& inputs) const
 	add_input(inputs, "jamming_cost");
 	add_input(inputs, "defense");
 	add_input(inputs, "flying");
+	add_input(inputs, "fearless");
+	add_input(inputs, "healthy");
 	add_input(inputs, "vars");
 	add_input(inputs, "wml_vars");
 }
@@ -412,21 +440,21 @@ variant unit_type_callable::get_value(const std::string& key) const
 	} else if(key == "race") {
 		return variant(u_.race_id());
 	} else if(key == "abilities") {
-		return formula_callable::convert_vector(u_.get_ability_list());
+		return formula_callable::convert_vector(u_.get_ability_id_list());
 	} else if(key == "traits") {
 		std::vector<variant> res;
 		for(const auto& config : u_.possible_traits()) {
 			res.emplace_back(config["id"].str());
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	} else if(key == "attacks") {
 		std::vector<variant> res;
 		for(const attack_type& att : u_.attacks()) {
 			res.emplace_back(std::make_shared<attack_type_callable>(att));
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	} else if(key == "hitpoints" || key == "max_hitpoints") {
 		return variant(u_.hitpoints());
 	} else if(key == "experience" || key == "max_experience") {
@@ -514,36 +542,36 @@ variant config_callable::get_value(const std::string& key) const
 			result.emplace_back(std::make_shared<config_callable>(child));
 		}
 
-		return variant(result);
+		return variant(std::move(result));
 	} else if(key == "__all_children") {
 		std::vector<variant> result;
-		for(const auto child : cfg_.all_children_range()) {
-			const variant cfg_child(std::make_shared<config_callable>(child.cfg));
-			const variant kv(std::make_shared<key_value_pair>(variant(child.key), cfg_child));
+		for(const auto [child_key, child_cfg] : cfg_.all_children_view()) {
+			const variant cfg_child(std::make_shared<config_callable>(child_cfg));
+			const variant kv(std::make_shared<key_value_pair>(variant(child_key), cfg_child));
 			result.push_back(kv);
 		}
 
-		return variant(result);
+		return variant(std::move(result));
 	} else if(key == "__children") {
 		std::map<std::string, std::vector<variant>> build;
-		for(const auto child : cfg_.all_children_range()) {
-			const variant cfg_child(std::make_shared<config_callable>(child.cfg));
-			build[child.key].push_back(cfg_child);
+		for(const auto [child_key, child_cfg] : cfg_.all_children_view()) {
+			const variant cfg_child(std::make_shared<config_callable>(child_cfg));
+			build[child_key].push_back(cfg_child);
 		}
 
-		std::map<variant,variant> result;
+		std::map<variant, variant> result;
 		for(auto& p : build) {
 			result[variant(p.first)] = variant(p.second);
 		}
 
-		return variant(result);
+		return variant(std::move(result));
 	} else if(key == "__attributes") {
-		std::map<variant,variant> result;
-		for(const auto& val : cfg_.attribute_range()) {
-			result[variant(val.first)] = val.second.apply_visitor(fai_variant_visitor());
+		std::map<variant, variant> result;
+		for(const auto& [key, value] : cfg_.attribute_range()) {
+			result[variant(key)] = value.apply_visitor(fai_variant_visitor());
 		}
 
-		return variant(result);
+		return variant(std::move(result));
 	}
 
 	return variant();
@@ -555,9 +583,9 @@ void config_callable::get_inputs(formula_input_vector& inputs) const
 	add_input(inputs, "__children");
 	add_input(inputs, "__attributes");
 
-	for(const auto& val : cfg_.attribute_range()) {
-		if(val.first.find_first_not_of(formula::id_chars) != std::string::npos) {
-			add_input(inputs, val.first);
+	for(const auto& [key, _] : cfg_.attribute_range()) {
+		if(key.find_first_not_of(formula::id_chars) != std::string::npos) {
+			add_input(inputs, key);
 		}
 	}
 }
@@ -609,9 +637,6 @@ variant terrain_callable::get_value(const std::string& key) const
 		return variant(t_.is_keep());
 	} else if(key == "healing") {
 		return variant(t_.gives_healing());
-	} else if(key == "owner") {
-		deprecated_message("terrain.owner", DEP_LEVEL::FOR_REMOVAL, version_info("1.17"), "This returns 0 for side 1 etc and should not be used. Use owner_side instead.");
-		return variant(owner_ - 1);
 	} else if(key == "owner_side") {
 		return variant(owner_);
 	}
@@ -672,7 +697,7 @@ variant gamemap_callable::get_value(const std::string& key) const
 			}
 		}
 
-		return variant(vars);
+		return variant(std::move(vars));
 	} else if(key == "gamemap") {
 		int w = get_gamemap().w();
 		int h = get_gamemap().h();
@@ -685,7 +710,7 @@ variant gamemap_callable::get_value(const std::string& key) const
 			}
 		}
 
-		return variant(vars);
+		return variant(std::move(vars));
 	} else if(key == "w") {
 		return variant(get_gamemap().w());
 	} else if(key == "h") {
@@ -788,13 +813,13 @@ variant team_callable::get_value(const std::string& key) const
 		for(const auto& recruit : team_.recruits()) {
 			result.emplace_back(recruit);
 		}
-		return variant(result);
+		return variant(std::move(result));
 	} else if(key == "recall") {
 		std::vector<variant> result;
 		for(const auto& u : team_.recall_list()) {
-			result.push_back(std::make_shared<unit_callable>(*u));
+			result.emplace_back(std::make_shared<unit_callable>(*u));
 		}
-		return variant(result);
+		return variant(std::move(result));
 	} else if(key == "wml_vars") {
 		return variant(std::make_shared<config_callable>(team_.variables()));
 	}
@@ -926,13 +951,13 @@ variant gamestate_callable::get_value(const std::string &key) const
 		for(const auto& team : resources::gameboard->teams()) {
 			vars.emplace_back(std::make_shared<team_callable>(team));
 		}
-		return variant(vars);
+		return variant(std::move(vars));
 	} else if(key == "units") {
 		std::vector<variant> vars;
 		for(const auto& unit : resources::gameboard->units()) {
 			vars.emplace_back(std::make_shared<unit_callable>(unit));
 		}
-		return variant(vars);
+		return variant(std::move(vars));
 	} else if(key == "map") {
 		return variant(std::make_shared<gamemap_callable>(*resources::gameboard));
 	}
@@ -983,6 +1008,29 @@ variant event_callable::get_value(const std::string &key) const
 			second_weapon = std::make_shared<attack_type>(event_info.data.mandatory_child("second"));
 			return variant(std::make_shared<attack_type_callable>(*second_weapon));
 		}
+	}
+
+	return variant();
+}
+
+void color_callable::get_inputs(formula_input_vector& inputs) const
+{
+	add_input(inputs, "red");
+	add_input(inputs, "green");
+	add_input(inputs, "blue");
+	add_input(inputs, "alpha");
+}
+
+variant color_callable::get_value(const std::string& key) const
+{
+	if(key == "red") {
+		return variant(clr_.r);
+	} else if(key == "green") {
+		return variant(clr_.g);
+	} else if(key == "blue") {
+		return variant(clr_.b);
+	} else if(key == "alpha") {
+		return variant(clr_.a);
 	}
 
 	return variant();

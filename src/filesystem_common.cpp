@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2017 - 2024
+	Copyright (C) 2017 - 2025
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
 	This program is free software; you can redistribute it and/or modify
@@ -11,15 +11,16 @@
 
 	See the COPYING file for more details.
 */
-#include <fstream>
 
 #include "filesystem.hpp"
 #include "wesconfig.h"
 
 #include "config.hpp"
 #include "log.hpp"
+#include "serialization/chrono.hpp"
 #include "serialization/string_utils.hpp"
 #include "serialization/unicode.hpp"
+#include "utils/general.hpp"
 
 #include <boost/algorithm/string.hpp>
 
@@ -103,34 +104,66 @@ bool is_legal_user_file_name(const std::string& name, bool allow_whitespace)
 
 void blacklist_pattern_list::remove_blacklisted_files_and_dirs(std::vector<std::string>& files, std::vector<std::string>& directories) const
 {
-	files.erase(
-		std::remove_if(files.begin(), files.end(), [this](const std::string& name) { return match_file(name); }),
-		files.end());
-	directories.erase(
-		std::remove_if(directories.begin(), directories.end(), [this](const std::string& name) { return match_dir(name); }),
-		directories.end());
+	utils::erase_if(files, [this](const std::string& name) { return match_file(name); });
+	utils::erase_if(directories, [this](const std::string& name) { return match_dir(name); });
 }
 
 bool blacklist_pattern_list::match_file(const std::string& name) const
 {
 	return std::any_of(file_patterns_.begin(), file_patterns_.end(),
-					   std::bind(&utils::wildcard_string_match, std::ref(name), std::placeholders::_1));
+		[&name](const std::string& pattern) { return utils::wildcard_string_match(name, pattern); });
 }
 
 bool blacklist_pattern_list::match_dir(const std::string& name) const
 {
 	return std::any_of(directory_patterns_.begin(), directory_patterns_.end(),
-					   std::bind(&utils::wildcard_string_match, std::ref(name), std::placeholders::_1));
+		[&name](const std::string& pattern) { return utils::wildcard_string_match(name, pattern); });
 }
 
-std::string get_prefs_file()
+std::string autodetect_game_data_dir(std::string exe_dir)
 {
-	return get_user_config_dir() + "/preferences";
+	std::string auto_dir;
+
+	// scons leaves the resulting binaries at the root of the source
+	// tree by default.
+	if(filesystem::file_exists(exe_dir + "/data/_main.cfg")) {
+		auto_dir = std::move(exe_dir);
+	}
+	// cmake encourages creating a subdir at the root of the source
+	// tree for the build, and the resulting binaries are found in it.
+	else if(filesystem::file_exists(exe_dir + "/../data/_main.cfg")) {
+		auto_dir = filesystem::normalize_path(exe_dir + "/..");
+	}
+	// Allow using the current working directory as the game data dir
+	else if(filesystem::file_exists(filesystem::get_cwd() + "/data/_main.cfg")) {
+		auto_dir = filesystem::get_cwd();
+	}
+#ifdef _WIN32
+	// In Windows builds made using Visual Studio and its CMake
+	// integration, the EXE is placed a few levels below the game data
+	// dir (e.g. .\out\build\x64-Debug).
+	else if(filesystem::file_exists(exe_dir + "/../../build") && filesystem::file_exists(exe_dir + "/../../../out")
+		&& filesystem::file_exists(exe_dir + "/../../../data/_main.cfg")) {
+		auto_dir = filesystem::normalize_path(exe_dir + "/../../..");
+	}
+#endif
+
+	return auto_dir;
+}
+
+std::string get_synced_prefs_file()
+{
+	return get_sync_dir() + "/preferences";
+}
+
+std::string get_unsynced_prefs_file()
+{
+	return get_user_data_dir() + "/preferences";
 }
 
 std::string get_credentials_file()
 {
-	return get_user_config_dir() + "/credentials-aes";
+	return get_user_data_dir() + "/credentials-aes";
 }
 
 std::string get_default_prefs_file()
@@ -147,9 +180,19 @@ std::string get_save_index_file()
 	return get_user_data_dir() + "/save_index";
 }
 
+std::string get_lua_history_file()
+{
+	return get_sync_dir() + "/lua_command_history";
+}
+
+std::string get_sync_dir()
+{
+	return get_user_data_dir() + "/sync";
+}
+
 std::string get_saves_dir()
 {
-	const std::string dir_path = get_user_data_dir() + "/saves";
+	const std::string dir_path = get_sync_dir() + "/saves";
 	return get_dir(dir_path);
 }
 
@@ -167,20 +210,20 @@ std::string get_addons_dir()
 
 std::string get_wml_persist_dir()
 {
-	const std::string dir_path = get_user_data_dir() + "/persist";
+	const std::string dir_path = get_sync_dir() + "/persist";
 	return get_dir(dir_path);
 }
 
 std::string get_legacy_editor_dir()
 {
-	const std::string dir_path = get_user_data_dir() + "/editor";
+	const std::string dir_path = get_sync_dir() + "/editor";
 	return get_dir(dir_path);
 }
 
 std::string get_current_editor_dir(const std::string& addon_id)
 {
 	if(addon_id == "mainline") {
-		return get_dir(game_config::path) + "/data/multiplayer";
+		return game_config::path + "/data/multiplayer";
 	} else {
 		return get_addons_dir() + "/" + addon_id;
 	}
@@ -188,26 +231,15 @@ std::string get_current_editor_dir(const std::string& addon_id)
 
 std::string get_core_images_dir()
 {
-	return get_dir(game_config::path + "/data/core/images");
+	return game_config::path + "/data/core/images";
 }
 
 std::string get_intl_dir()
 {
-#ifdef _WIN32
+#if HAS_RELATIVE_LOCALEDIR
 	return game_config::path + "/" LOCALEDIR;
 #else
-
-#ifdef USE_INTERNAL_DATA
-	return get_cwd() + "/" LOCALEDIR;
-#endif
-
-#if HAS_RELATIVE_LOCALEDIR
-	std::string res = game_config::path + "/" LOCALEDIR;
-#else
-	std::string res = LOCALEDIR;
-#endif
-
-	return res;
+	return LOCALEDIR;
 #endif
 }
 
@@ -222,14 +254,10 @@ bool looks_like_pbl(const std::string& file)
 	return utils::wildcard_string_match(utf8::lowercase(file), "*.pbl");
 }
 
-file_tree_checksum::file_tree_checksum()
-	: nfiles(0), sum_size(0), modified(0)
-{}
-
-file_tree_checksum::file_tree_checksum(const config& cfg) :
-	nfiles	(cfg["nfiles"].to_size_t()),
-	sum_size(cfg["size"].to_size_t()),
-	modified(cfg["modified"].to_time_t())
+file_tree_checksum::file_tree_checksum(const config& cfg)
+	: nfiles(cfg["nfiles"].to_size_t())
+	, sum_size(cfg["size"].to_size_t())
+	, modified(chrono::parse_timestamp(cfg["modified"]))
 {
 }
 
@@ -237,7 +265,7 @@ void file_tree_checksum::write(config& cfg) const
 {
 	cfg["nfiles"] = nfiles;
 	cfg["size"] = sum_size;
-	cfg["modified"] = modified;
+	cfg["modified"] = chrono::serialize_timestamp(modified);
 }
 
 bool file_tree_checksum::operator==(const file_tree_checksum &rhs) const
@@ -246,25 +274,20 @@ bool file_tree_checksum::operator==(const file_tree_checksum &rhs) const
 		modified == rhs.modified;
 }
 
-bool ends_with(const std::string& str, const std::string& suffix)
-{
-	return str.size() >= suffix.size() && std::equal(suffix.begin(),suffix.end(),str.end()-suffix.size());
-}
-
 std::string read_map(const std::string& name)
 {
 	std::string res;
-	std::string map_location = get_wml_location(name);
-	if(map_location.empty()) {
+	auto map_location = get_wml_location(name);
+	if(!map_location) {
 		// Consult [binary_path] for maps as well.
 		map_location = get_binary_file_location("maps", name);
 	}
-	if(!map_location.empty()) {
-		res = read_file(map_location);
+	if(map_location) {
+		res = read_file(map_location.value());
 	}
 
 	if(res.empty()) {
-		res = read_file(get_user_data_dir() + "/editor/maps/" + name);
+		res = read_file(get_legacy_editor_dir() + "/maps/" + name);
 	}
 
 	return res;
@@ -273,17 +296,17 @@ std::string read_map(const std::string& name)
 std::string read_scenario(const std::string& name)
 {
 	std::string res;
-	std::string file_location = get_wml_location(name);
-	if(file_location.empty()) {
+	auto file_location = get_wml_location(name);
+	if(!file_location) {
 		// Consult [binary_path] for scenarios as well.
 		file_location = get_binary_file_location("scenarios", name);
 	}
-	if(!file_location.empty()) {
-		res = read_file(file_location);
+	if(file_location) {
+		res = read_file(file_location.value());
 	}
 
 	if(res.empty()) {
-		res = read_file(get_user_data_dir() + "/editor/scenarios/" + name);
+		res = read_file(get_legacy_editor_dir() + "/scenarios/" + name);
 	}
 
 	return res;
@@ -304,7 +327,7 @@ const file_tree_checksum& data_tree_checksum(bool reset)
 {
 	static file_tree_checksum checksum;
 	if (reset)
-		checksum.reset();
+		checksum = file_tree_checksum{};
 	if(checksum.nfiles == 0) {
 		get_file_tree_checksum_internal("data/",checksum);
 		get_file_tree_checksum_internal(get_user_data_dir() + "/data/",checksum);

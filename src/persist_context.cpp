@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2010 - 2024
+	Copyright (C) 2010 - 2025
 	by Jody Northup
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -17,7 +17,6 @@
 #include "lexical_cast.hpp"
 #include "log.hpp"
 #include "persist_context.hpp"
-#include "persist_manager.hpp"
 #include "serialization/binary_or_text.hpp"
 #include "serialization/parser.hpp"
 
@@ -29,7 +28,7 @@ config pack_scalar(const std::string &name, const t_string &val)
 }
 
 static std::string get_persist_cfg_name(const std::string &name_space) {
-	return (filesystem::get_dir(filesystem::get_user_data_dir() + "/persist/") + name_space + ".cfg");
+	return filesystem::get_wml_persist_dir() + "/" + name_space + filesystem::wml_extension;
 }
 
 void persist_file_context::load()
@@ -39,7 +38,7 @@ void persist_file_context::load()
 		filesystem::scoped_istream file_stream = filesystem::istream_file(cfg_name);
 		if (!(file_stream->fail())) {
 			try {
-				read(cfg_,*file_stream);
+				cfg_ = io::read(*file_stream);
 			} catch (const config::error &err) {
 				LOG_PERSIST << err.message;
 			}
@@ -169,7 +168,7 @@ config persist_file_context::get_var(const std::string &global) const
 			for (std::size_t i = 0; i < arrsize; i++)
 				ret.add_child(global, cfg.mandatory_child(global,i));
 		} else {
-			ret = pack_scalar(global,cfg[global]);
+			ret = pack_scalar(global, cfg[global].t_str());
 		}
 	} else {
 		ret = pack_scalar(global,"");

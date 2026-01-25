@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2013 - 2024
+	Copyright (C) 2013 - 2025
 	by Felix Bauer <fehlxb+wesnoth@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -22,11 +22,9 @@
 #include "units/unit.hpp"
 #include "units/map.hpp"    // for unit_map::const_iterator, etc
 
-#include <ostream>                      // for operator<<, basic_ostream, etc
 #include <string>                       // for string, char_traits, etc
 #include <vector>                       // for vector
 
-struct lua_State;
 
 
 static lg::log_domain log_ai_engine_lua("ai/engine/lua");

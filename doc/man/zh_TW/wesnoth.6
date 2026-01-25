@@ -36,14 +36,12 @@ Battle for \fBWesnoth\fP是一個回合制奇幻風格的策略遊戲。
 .SH 選項
 .
 .TP 
+\fB\-\-addon\-info\fP
+Shows a button on the add\-ons manager to query the add\-ons server for
+various information.
+.TP 
 \fB\-\-all\-translations\fP
 顯示所有在遊戲中的語言清單中的翻譯，即使它們被認為是不完整的。
-.TP 
-\fB\-\-bunzip2\fP\fI\ infile.bz2\fP
-解壓縮一個應該是 bzip2 格式的檔案，並儲存為名稱少了 .bz2 後綴的檔案。\fIinfile.bz2\fP 將被刪除。
-.TP 
-\fB\-\-bzip2\fP\fI\ infile\fP
-用 bzip2 格式壓縮一個檔案，儲存為 \fIinfile\fP.bz2，並刪除 \fIinfile\fP。
 .TP 
 \fB\-c[\fP\fIid_campaign\fP\fB],\ \-\-campaign[\fP\fI=id_campaign\fP\fB]\fP
 直接開啟 ID 為 \fIid_campaign\fP 的戰役。如果沒有指定 ID，將會出現選單。
@@ -58,19 +56,15 @@ Battle for \fBWesnoth\fP是一個回合制奇幻風格的策略遊戲。
 在 \fBstart\fP 事件最後跳過 [story] 畫面及對話框。
 .TP 
 \fB\-\-clock\fP
-增加一個顯示時鐘的選項用來當測試畫面繪製計時器。
-.TP 
-\fB\-\-config\-dir\fP\fI\ name\fP
-已廢棄，請使用 \fB\-\-userdata\-dir\fP。
-.TP 
-\fB\-\-config\-path\fP
-已廢棄，請使用 \fB\-\-config\-path\fP。
+Adds the option to show a clock for testing the drawing timer. Also adds the
+option for showing the GUI Test Dialog.
 .TP 
 \fB\-\-core\fP\fI\ id_core\fP
-以指定 ID 的核心來覆寫被讀取的核心。
+Overrides the loaded core with the one whose id is specified.
 .TP 
 \fB\-\-data\-dir\fP\fI\ directory\fP
-以指定的目錄來覆寫資料目錄
+Overrides the data directory with the one specified. The data directory is
+the one that contains subdirectories 'data', 'fonts', 'images' and others.
 .TP 
 \fB\-\-data\-path\fP
 印出資料目錄的路徑並退出。
@@ -85,7 +79,7 @@ http://www.wesnoth.org/wiki/CommandMode）。
 \fB\-\-strict\-lua\fP
 不允許廢棄的Lua API的呼叫
 .TP 
-\fB\-D,\-\-diff\fP\fI\ left\-file\fP\fB\ \fP\fIright\-file\fP
+\fB\-D,\ \-\-diff\fP\fI\ left\-file\fP\fB\ \fP\fIright\-file\fP
 比較兩個 WML 檔案的差異，但不會預處理它們（要處理的話，先透過 \fB\-p\fP 執行它們）。以 DiffWML 的格式輸出差異至標準輸出或者至
 \fI\-\-output\fP 所指定的檔案。
 .TP 
@@ -98,12 +92,6 @@ http://www.wesnoth.org/wiki/CommandMode）。
 \fB\-f, \-\-fullscreen\fP
 以全螢幕模式運行遊戲。
 .TP 
-\fB\-\-gunzip\fP\fI\ infile.gz\fP
-解壓縮一個應該是 gzip 格式的檔案，並儲存為名稱少了 .gz 後綴的檔案。\fIinfile.gz\fP 將被刪除。
-.TP 
-\fB\-\-gzip\fP\fI\ infile\fP
-用 gzip 格式壓縮一個檔案，儲存為 \fIinfile\fP.gz，並刪除 \fIinfile\fP。
-.TP 
 \fB\-h, \-\-help\fP
 顯示命令列選項的概要至標準輸出，然後退出。
 .TP 
@@ -115,24 +103,35 @@ http://www.wesnoth.org/wiki/CommandMode）。
 在這個階段使用語言 \fIlang\fP（符號）。例如：\fB\-\-language ang_GB@latin\fP
 .TP 
 \fB\-\-log\-\fP\fIlevel\fP\fB=\fP\fIdomain1\fP\fB,\fP\fIdomain2\fP\fB,\fP\fI...\fP
-設定日誌域的嚴重等級。\fBall\fP 可以用來匹配任何日誌域。可使用的等級有：\fBerror\fP,\ \fBwarning\fP,\ \fBinfo\fP,\ \fBdebug\fP,\ \fBnone\fP。預設的情況下，\fBwarning\fP 等級會被用於大部分的日誌域，但 \fBdeprecation\fP 預設是
-\fBnone\fP，除非和 \fB\-d\fP 選項一併使用。
+sets the severity level of the log domains. The wildcard \fB*\fP may be used to
+match a subset of domains, e.g. gui/* or conf* or * (the latter matches all
+domains).  Available levels: \fBerror\fP,\ \fBwarning\fP,\ \fBinfo\fP,\ \fBdebug\fP,\ \fBnone\fP.  By default, the \fBwarning\fP level is used for most domains, but
+\fBdeprecation\fP defaults to \fBnone\fP unless combined with the \fB\-d\fP option.
+This option can be specified multiple times.
 .TP 
 \fB\-\-log\-precise\fP
 以更精確的方式顯示日誌中的時間戳記。
 .TP 
-\fB\-\-log\-strict\fP
-設定日誌記錄器的嚴格等級。任何訊息傳送至此等級的日誌域或是高的等級將導致單元測試失敗，不管勝利的結果。只有在和 \fB\-u\fP 一同使用時才會有效。
+\fB\-\-log\-strict\fP\fI\ level\fP
+sets the strict \fIlevel\fP of the logger. Any messages sent to log domains of
+this \fIlevel\fP or more severe will cause the unit test to fail regardless of
+the victory result. Only relevant when used with \fB\-u\fP.
 .TP 
 \fB\-\-logdomains[\fP\fI=filter\fP\fB]\fP
 列出定義的日誌域（只列出包含 \fIfilter\fP 的日誌域，如果它有被使用的話）並退出
 .TP 
 \fB\-\-no\-log\-to\-file\fP
-禁止將記錄輸出成檔案。 log 檔案原是建立在 userdata 的日誌目錄資料夾下。
+prevents redirecting logged output to a file. The environment variable
+WESNOTH_NO_LOG_FILE can also be set as an alternative. Log files are created
+in the logs directory under the userdata folder.
 .TP 
 \fB\-\-log\-to\-file\fP
 log output is written to a file. Cancels the effect of \-\-no\-log\-to\-file
 whether implicit or explicit.
+.TP 
+\fB\-\-no\-log\-sanitize\fP
+disables the anonymization that's normally applied when logging, for example
+replacing usernames with USER.
 .TP 
 \fB\-\-wnoconsole\fP
 在 Windows 系統下，當使用 \-\-no\-log\-to\-file 時，會將輸出寫入 cerr/cout 而不是 CONOUT。否則，不會有任何作用。
@@ -149,9 +148,6 @@ whether implicit or explicit.
 \fB\-\-new\-widgets\fP
 有新的 WIP 物件工具，這個選項會啟用它。這個功能非常地具有實驗性，大部分的 Bug 是已知的，所以請勿回報任何
 Bug。部分函式庫被認為是穩定的，即使不開啟這個選項也會動作。
-.TP 
-\fB\-\-nodelay\fP
-為了進行圖形基準測試，以無延遲的方式來執行遊戲。啟用 \fB\-\-nogui\fP 選項時會自動啟用這個選項。
 .TP 
 \fB\-\-noaddons\fP
 停用使用者模組的載入。
@@ -181,10 +177,11 @@ Bug。部分函式庫被認為是穩定的，即使不開啟這個選項也會�
 當連線到一個伺服器時，使用 \fIpassword\fP，忽略其它偏好設定。不安全。
 .TP 
 \fB\-\-plugin\fP\fI\ script\fP
-（實驗性）載入一個定義韋諾插件的 \fIscript\fP。與 \fB\-\-script\fP 相似，但 Lua
-檔案應該傳回一個函數，該函數將運行且週期性地喚醒並更新。
+load a \fIscript\fP which defines a Wesnoth plugin. Lua file should return a
+function which will be run as a coroutine and periodically woken up with
+updates.
 .TP 
-\fB\-P,\-\-patch\fP\fI\ base\-file\fP\fB\ \fP\fIpatch\-file\fP
+\fB\-P,\ \-\-patch\fP\fI\ base\-file\fP\fB\ \fP\fIpatch\-file\fP
 將一個 DiffWML 的補丁用於一個 WML 檔案。不會預處理任何輸入的檔案。輸出被補過的 WML 至標準輸出或者至 \fI\-\-output\fP
 所指定的檔案。
 .TP 
@@ -192,17 +189,26 @@ Bug。部分函式庫被認為是穩定的，即使不開啟這個選項也會�
 預處理指定的檔案/目錄。每個檔案未處理及已處理的 .cfg
 檔將會被寫入至指定的目標目錄中。如果有指定目錄，將會遞迴地按照已知的預處理規則預先處理。「data/core/macros」目錄裡的共用巨集將在指定資源之前被預先處理。例如：\fB\-p ~/wesnoth/data/campaigns/tutorial ~/result.\fP。關於預先處理器的細節請參閱：https://wiki.wesnoth.org/PreprocessorRef#Command\-line_preprocessor。
 .TP 
+\fB\-\-preprocess\-string\fP\fI\ source\-string\fP
+preprocesses a given string and writes the output to stdout.
+.TP 
 \fB\-\-preprocess\-defines=\fP\fIDEFINE1\fP\fB,\fP\fIDEFINE2\fP\fB,\fP\fI...\fP
-以逗號分隔的清單，清單中是一連串用於 \fB\-\-preprocess\fP 指令的定義。如果 \fBSKIP_CORE\fP
-在定義清單中，「data/core」將不會被預處理。
+comma separated list of defines to be used by the \fB\-\-preprocess\fP or
+\fB\-\-preprocess\-string\fP command. If \fBSKIP_CORE\fP is in the define list the
+"data/core" directory won't be preprocessed.
 .TP 
 \fB\-\-preprocess\-input\-macros\fP\fI\ source\-file\fP
-只被 \fB\-\-preprocess\fP 指令用到。在預處理之前定義一個包含 \fB[preproc_define]\fP 的檔案。
+used only by the \fB\-\-preprocess\fP or \fB\-\-preprocess\-string\fP
+command. Specifies a file that contains \fB[preproc_define]\fPs to be included
+before preprocessing.
 .TP 
 \fB\-\-preprocess\-output\-macros[\fP\fI=target\-file\fP\fB]\fP
-只被 \fB\-\-preprocess\fP
-指令用到。將輸出所有預處理過的巨集至目標檔案。如果沒有指定檔案，輸出將會是預處理指令的目標目錄中的「_MACROS_.cfg」檔案。輸出的檔案可以被傳至
-\fB\-\-preprocess\-input\-macros\fP。這個選項應在 \fB\-\-preprocess\fP 指令之前被輸入。
+used only by the \fB\-\-preprocess\fP command (But not by the
+\fB\-\-preprocess\-string\fP command). Will output all preprocessed macros in the
+target file. If the file is not specified the output will be file
+\&'_MACROS_.cfg' in the target directory of preprocess's command. The output
+file can be passed to \fB\-\-preprocess\-input\-macros\fP.  This switch should be
+typed before the \fB\-\-preprocess\fP command.
 .TP 
 \fB\-r\ \fP\fIX\fP\fBx\fP\fIY\fP\fB,\ \-\-resolution\ \fP\fIX\fP\fBx\fP\fIY\fP
 設定螢幕解析度。例如：\fB\-r\fP \fB800x600\fP。
@@ -219,9 +225,6 @@ https://wiki.wesnoth.org/ImagePathFunctionWML。
 .TP 
 \fB\-\-screenshot\fP\fI\ map\fP\fB\ \fP\fIoutput\fP
 不初始化螢幕的情況下將 \fImap\fP 螢幕的截圖儲存至 \fIoutput\fP。
-.TP 
-\fB\-\-script\fP\fI\ file\fP
-（實驗性）\fIfile\fP 包含一個用來控制客戶端的 Lua 腳本。
 .TP 
 \fB\-s[\fP\fIhost\fP\fB],\ \-\-server[\fP\fI=host\fP\fB]\fP
 如果有指定任何主機的話，連接到指定的主機。否則，連接到偏好設定中的第一個伺服器。例如：\fB\-\-server\fP
@@ -247,16 +250,8 @@ https://wiki.wesnoth.org/ImagePathFunctionWML。
 讓 \fBpackage\fP 套件在 Lua
 腳本中可以使用，為的是讓它們可以載入任意套件。請不要對不信任的腳本使用這個！此動作會將韋諾的可執行檔的相同權限賦予 Lua。
 .TP 
-\fB\-S,\-\-use\-schema\fP\fI\ path\fP
-設定要與 \fB\-V,\-\-validate\fP 一同使用的 WML 格式。
-.TP 
-\fB\-\-userconfig\-dir\fP\fI\ name\fP
-在 $HOME 或「我的文件\我的遊戲」(Windows)底下設定使用者配置目錄為 \fIname\fP 。你也可以為配置目錄設定一個在 $HOME
-或「我的文件\我的遊戲」之外的絕對路徑。在 Windows 上，也可以使用 「.\e」或「..\e」作為前綴來指定相對於工作目錄的相對路徑。在 X11
-下，這會預設為 $XDG_CONFIG_HOME 或 $HOME/.config/wesnoth，在其它作業系統上則預設為使用者資料的路徑。
-.TP 
-\fB\-\-userconfig\-path\fP
-印出使用者配置目錄的路徑並退出。
+\fB\-S,\ \-\-use\-schema\fP\fI\ path\fP
+sets the WML schema for use with \fB\-V,\ \-\-validate\fP.
 .TP 
 \fB\-\-userdata\-dir\fP\fI\ name\fP
 在 $HOME 或「我的文件\我的遊戲」(Windows)底下設定使用者資料目錄為 \fIname\fP 。你也可以為使用者資料目錄設定一個在 $HOME
@@ -277,7 +272,7 @@ https://wiki.wesnoth.org/ImagePathFunctionWML。
 \fB\-\-validate\-core\fP
 驗證核心 WML，當你遊玩的時候。
 .TP 
-\fB\-\-validate\-schema \ path\fP
+\fB\-\-validate\-schema\fP\fI\ path\fP
 將一個檔案作為 WML 格式來驗證。
 .TP 
 \fB\-\-validcache\fP
@@ -361,7 +356,7 @@ and Soliton <soliton.de@gmail.com> 更動。
 .
 .SH 著作權
 .
-Copyright \(co 2003\-2024 David White <davidnwhite@verizon.net>
+Copyright \(co 2003\-2025 David White <davidnwhite@verizon.net>
 .br
 這是一個自由軟體，這個軟體採用由自由軟體協會(FSF)所發佈的GPLv2授權協議。沒有保證，甚至對「可銷售性」和「對某一特定目的的適用性」也沒有保證。本段翻譯文字不具法律效力，如有需要請參閱原文或者是
 GPLv2 授權條款。

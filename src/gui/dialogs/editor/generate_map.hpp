@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Mark de Wever <koraq@xs4all.nl>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -16,49 +16,30 @@
 #pragma once
 
 #include "gui/dialogs/modal_dialog.hpp"
-#include <optional>
+#include "utils/optional_fwd.hpp"
 
 #include <cstdint>
 #include <memory>
 
 class map_generator;
 
-namespace gui2
+namespace gui2::dialogs
 {
-
-namespace dialogs
-{
-
-/**
- * @ingroup GUIWindowDefinitionWML
- *
- * The dialog for selecting which random generator to use in the editor.
- * Key               |Type          |Mandatory|Description
- * ------------------|--------------|---------|-----------
- * generators_list   | @ref listbox |yes      |Listbox displaying known map generators.
- * settings          | @ref button  |yes      |When clicked this button opens the generator settings dialog.
- * seed_textbox      | text_box     |yes      |Allows entering a seed for the map generator.
- */
 class editor_generate_map : public modal_dialog
 {
 public:
-	explicit editor_generate_map(std::vector<std::unique_ptr<map_generator>>& mg);
-
-	std::vector<std::unique_ptr<map_generator>>& get_map_generators()
-	{
-		return map_generators_;
-	}
+	explicit editor_generate_map(const std::vector<std::unique_ptr<map_generator>>& mg);
 
 	map_generator* get_selected_map_generator();
 
 	void select_map_generator(map_generator* mg);
 
-	std::optional<uint32_t> get_seed();
+	utils::optional<uint32_t> get_seed();
 
 private:
 	virtual const std::string& window_id() const override;
 
-	virtual void pre_show(window& window) override;
+	virtual void pre_show() override;
 
 	/** Callback for generator list selection changes. */
 	void do_generator_selected();
@@ -67,7 +48,7 @@ private:
 	void do_settings();
 
 	/** Available map generators */
-	std::vector<std::unique_ptr<map_generator>>& map_generators_;
+	const std::vector<std::unique_ptr<map_generator>>& map_generators_;
 
 	/** Last used map generator, must be in map_generators_ */
 	map_generator* last_map_generator_;
@@ -79,5 +60,4 @@ private:
 	std::string random_seed_;
 };
 
-} // namespace dialogs
-} // namespace gui2
+} // namespace gui2::dialogs

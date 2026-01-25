@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: en@shaw\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
+"POT-Creation-Date: 2025-08-19 15:14 UTC\n"
 "PO-Revision-Date: 2009-10-13 02:35-0400\n"
 "Last-Translator: Arc Riley <arcriley@ubuntu.com>\n"
 "Language-Team: Shavian English <ubuntu-l10n-en-shaw@lists.launchpad.net>\n"
@@ -68,9 +68,15 @@ msgstr "𐑤𐑹𐑛"
 
 #. [campaign]: id=The_Rise_of_Wesnoth
 #: data/campaigns/The_Rise_Of_Wesnoth/_main.cfg:24
+#, fuzzy
+#| msgid ""
+#| "Lead Prince Haldric through the destruction of the Green Isle and across "
+#| "the Ocean to establish the very kingdom of Wesnoth itself. The "
+#| "confrontation with Lich-Lord Jevyan awaits...\n"
+#| "\n"
 msgid ""
 "Lead Prince Haldric through the destruction of the Green Isle and across the "
-"Ocean to establish the very kingdom of Wesnoth itself. The confrontation "
+"Ocean to establish the very Kingdom of Wesnoth itself. The confrontation "
 "with Lich-Lord Jevyan awaits...\n"
 "\n"
 msgstr ""
@@ -3851,7 +3857,7 @@ msgstr "𐑥𐑱𐑒 𐑣𐑱𐑕𐑑. 𐑢𐑰 𐑥𐑳𐑕𐑑 𐑕𐑦𐑒�
 #. [event]
 #. [unit_type]: id=Familiar, race=undead
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/12_A_Final_Spring.cfg:579
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:291
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:290
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/14_Rough_Landing.cfg:367
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/15_A_New_Land.cfg:461
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/20_Return_of_the_Fleet.cfg:259
@@ -4070,7 +4076,7 @@ msgid "Kegrid"
 msgstr "Kegrid"
 
 #. [side]: type=Drake Flameheart, id=Kegrid
-#. [side]: type=Drake Flameheart, id=Gerrick
+#. [side]: type=Drake Flameheart, id=Garash
 #. [side]: type=Drake Flameheart, id=Merkush
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:52
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:74
@@ -4078,10 +4084,10 @@ msgstr "Kegrid"
 msgid "Drakes"
 msgstr "𐑛𐑮𐑱𐑒𐑕"
 
-#. [side]: type=Drake Flameheart, id=Gerrick
+#. [side]: type=Drake Flameheart, id=Garash
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:68
-msgid "Gerrick"
-msgstr "𐑡𐑺𐑦𐑒"
+msgid "Garash"
+msgstr ""
 
 #. [side]: type=Drake Flameheart, id=Merkush
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:96
@@ -4123,36 +4129,36 @@ msgstr "𐑢𐑰 𐑒𐑳𐑥 𐑦𐑯 𐑐𐑰𐑕. 𐑢𐑰 𐑴𐑯𐑤𐑦 �
 msgid "I don’t think diplomacy is going to work."
 msgstr ""
 
-#. [message]: speaker=Gerrick
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:221
+#. [message]: speaker=Garash
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:220
 #, fuzzy
 msgid ""
-"Ssso humansss, you’ve come to trouble usss again. Prepare to die! For the "
-"glory of the Lords of Morogor!"
+"So, prey, you have come to trouble us again. Prepare to die! For the glory "
+"of Morogor!"
 msgstr ""
 "Ssso humansss, 𐑿'𐑝 𐑒𐑳𐑥 𐑑 𐑑𐑮𐑳𐑚𐑩𐑤 usss 𐑩𐑜𐑱𐑯. 𐑐𐑮𐑰𐑐𐑺 𐑑 𐑛𐑲! 𐑓𐑹 𐑞 𐑜𐑤𐑹𐑦 𐑝 𐑞 𐑤𐑹𐑛𐑟 𐑝 "
 "Morogor!"
 
 #. [message]: speaker=Lady Jessene
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:225
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:224
 #, fuzzy
 msgid "Do I need to say, <i>“I told you so”</i>?"
 msgstr "(𐑢𐑦𐑕𐑐𐑻𐑛) 𐑛𐑵 𐑲 𐑯𐑰𐑛 𐑑 𐑕𐑱, '𐑲 𐑑𐑴𐑤𐑛 𐑿 𐑕𐑴'?"
 
 #. [event]
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:243
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:242
 #, fuzzy
 msgid "Bitey the Serpent"
 msgstr "Bitey 𐑞 𐑕𐑻𐑐𐑩𐑯𐑑"
 
 #. [message]
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:251
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:250
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/14_Rough_Landing.cfg:334
 msgid "Look out, a serpent has emerged from the deep."
 msgstr "𐑤𐑫𐑒 𐑬𐑑, 𐑩 𐑕𐑻𐑐𐑩𐑯𐑑 𐑣𐑨𐑟 𐑦𐑥𐑻𐑡𐑛 𐑓𐑮𐑪𐑥 𐑞 𐑛𐑰𐑐."
 
 #. [message]: speaker=Prince Haldric
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:266
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:265
 msgid ""
 "Well, it looks like their warriors have given up the fight. We should be "
 "able to re-provision the ships now."
@@ -4161,7 +4167,7 @@ msgstr ""
 "𐑞 𐑖𐑦𐑐𐑕 𐑯𐑬."
 
 #. [message]: speaker=Lady Jessene
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:270
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:269
 msgid ""
 "The nice thing is, they’ll go back to guarding this island after we’re gone "
 "for a while. It’ll make a good way of preventing others from following us."
@@ -4170,7 +4176,7 @@ msgstr ""
 "𐑩 𐑜𐑫𐑛 𐑢𐑱 𐑝 𐑐𐑮𐑦𐑝𐑧𐑯𐑑𐑦𐑙 𐑳𐑞𐑼𐑟 𐑓𐑮𐑪𐑥 𐑓𐑪𐑤𐑴𐑦𐑙 𐑳𐑕."
 
 #. [message]: speaker=Prince Haldric
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:274
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:273
 msgid ""
 "This island is slowly sinking. Hmm, I wonder what they’ll do when it gets "
 "too small for them?"
@@ -4178,7 +4184,7 @@ msgstr ""
 "𐑞𐑦𐑕 𐑲𐑤𐑩𐑯𐑛 𐑦𐑟 𐑕𐑤𐑴𐑤𐑦 𐑕𐑦𐑙𐑒𐑦𐑙. 𐑣𐑥, 𐑲 𐑢𐑳𐑯𐑛𐑼 𐑢𐑪𐑑 𐑞𐑱𐑤 𐑛𐑵 𐑢𐑧𐑯 𐑦𐑑 𐑜𐑧𐑑𐑕 𐑑𐑵 𐑕𐑥𐑷𐑤 𐑓𐑹 𐑞𐑧𐑥?"
 
 #. [message]: speaker=Lady Jessene
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:278
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:277
 msgid ""
 "They seem rather intelligent. They’re certainly belligerent and numerous. "
 "I’m sure they’ll eventually evacuate. Just like us right now."
@@ -4187,12 +4193,12 @@ msgstr ""
 "𐑦𐑝𐑧𐑯𐑗𐑩𐑢𐑩𐑤𐑰 𐑦𐑝𐑨𐑒𐑘𐑩𐑱𐑑. 𐑡𐑳𐑕𐑑 𐑤𐑲𐑒 𐑳𐑕 𐑮𐑲𐑑 𐑯𐑬."
 
 #. [message]: speaker=Prince Haldric
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:282
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:281
 msgid "I don’t find that thought very comforting."
 msgstr "𐑲 𐑛𐑴𐑯𐑑 𐑓𐑲𐑯𐑛 𐑞𐑨𐑑 𐑔𐑷𐑑 𐑝𐑧𐑮𐑦 𐑒𐑳𐑥𐑓𐑼𐑑𐑦𐑙."
 
 #. [message]: speaker=Familiar
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:295
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:294
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/14_Rough_Landing.cfg:371
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/20_Return_of_the_Fleet.cfg:327
 #: data/campaigns/The_Rise_Of_Wesnoth/scenarios/22_The_Rise_of_Wesnoth.cfg:364
@@ -4201,7 +4207,7 @@ msgid "<i>Clack</i>! <i>Clack!</i>"
 msgstr ""
 
 #. [message]: speaker=Lady Jessene
-#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:320
+#: data/campaigns/The_Rise_Of_Wesnoth/scenarios/13_Peoples_in_Decline.cfg:319
 msgid ""
 "The fleet is starving, we’ll never pacify this island before we all die!"
 msgstr "𐑞 𐑓𐑤𐑰𐑑 𐑦𐑟 𐑕𐑑𐑸𐑝𐑦𐑙, 𐑢𐑰'𐑤 𐑯𐑧𐑝𐑼 𐑐𐑨𐑕𐑩𐑓𐑲 𐑞𐑦𐑕 𐑲𐑤𐑩𐑯𐑛 𐑚𐑦𐑓𐑹 𐑢𐑰 𐑷𐑤 𐑛𐑲!"
@@ -7209,7 +7215,7 @@ msgstr ""
 #. [unit_type]: id=Familiar, race=undead
 #: data/campaigns/The_Rise_Of_Wesnoth/units/Familiar.cfg:17
 msgid ""
-"Powerful magic users sometimes have familiars, creatures which have had a "
+"Powerful magic users sometimes have Familiars, creatures which have had a "
 "spirit or minor demon drawn into them. A familiar may act as a spy or "
 "messenger for its master."
 msgstr ""
@@ -7319,7 +7325,7 @@ msgid "female^Vampire Lady"
 msgstr "𐑝𐑨𐑥𐑐𐑲𐑮 𐑤𐑱𐑛𐑦"
 
 #. [unit_type]: id=Vampire Lady, gender=female, race=undead
-#: data/campaigns/The_Rise_Of_Wesnoth/units/Vampire_Lady.cfg:19
+#: data/campaigns/The_Rise_Of_Wesnoth/units/Vampire_Lady.cfg:20
 msgid ""
 "Cold and beautiful, she maintains her eternal youthful appearance drinking "
 "the blood of the living."
@@ -7327,7 +7333,7 @@ msgstr ""
 "𐑒𐑴𐑤𐑛 𐑯 𐑚𐑿𐑑𐑦𐑓𐑩𐑤, 𐑖𐑰 𐑥𐑱𐑯𐑑𐑱𐑯𐑟 𐑣𐑻 𐑰𐑑𐑻𐑯𐑩𐑤 𐑿𐑔𐑓𐑩𐑤 𐑩𐑐𐑽𐑩𐑯𐑕 𐑛𐑮𐑦𐑙𐑒𐑦𐑙 𐑞 𐑚𐑤𐑳𐑛 𐑝 𐑞 𐑤𐑦𐑝𐑦𐑙."
 
 #. [attack]: type=blade
-#: data/campaigns/The_Rise_Of_Wesnoth/units/Vampire_Lady.cfg:23
+#: data/campaigns/The_Rise_Of_Wesnoth/units/Vampire_Lady.cfg:24
 msgid "blood kiss"
 msgstr "𐑚𐑤𐑳𐑛 𐑒𐑦𐑕"
 
@@ -7435,18 +7441,9 @@ msgstr "𐑛𐑦𐑕𐑑𐑮𐑨𐑒𐑑"
 
 #. [skirmisher]: id=distract
 #: data/campaigns/The_Rise_Of_Wesnoth/utils/trow-abilities.cfg:7
-#, fuzzy
-#| msgid ""
-#| "Distract:\n"
-#| "This unit negates enemy Zones of Control around itself for allied units "
-#| "(but not for itself)."
 msgid ""
-"This unit negates enemy Zones of Control around itself for allied units (but "
-"not for itself)."
+"Allies adjacent to this unit are not affected by enemy Zones of Control."
 msgstr ""
-"𐑛𐑦𐑕𐑑𐑮𐑨𐑒𐑑:\n"
-"𐑞𐑦𐑕 𐑿𐑯𐑦𐑑 𐑯𐑦𐑜𐑱𐑑𐑕 𐑧𐑯𐑩𐑥𐑦 𐑟𐑴𐑯𐑟 𐑝 𐑒𐑩𐑯𐑑𐑮𐑴𐑤 𐑩𐑮𐑬𐑯𐑛 𐑦𐑑𐑕𐑧𐑤𐑓 𐑓𐑹 𐑨𐑤𐑲𐑛 𐑿𐑯𐑦𐑑𐑕 (𐑚𐑳𐑑 𐑯𐑪𐑑 𐑓𐑹 "
-"𐑦𐑑𐑕𐑧𐑤𐑓)."
 
 #. [skirmisher]: id=distract
 #: data/campaigns/The_Rise_Of_Wesnoth/utils/trow-abilities.cfg:8
@@ -7455,8 +7452,8 @@ msgstr ""
 #| "This unit is capable of distracting opponents, allowing allied units to "
 #| "trespass their Zones of Control and move unhindered around them."
 msgid ""
-"This unit is capable of distracting opponents, allowing allied units to "
-"trespass their Zones of Control and move unhindered around them."
+"This unit is capable of distracting opponents, allowing adjacent allies to "
+"ignore enemy Zones of Control."
 msgstr ""
 "𐑞𐑦𐑕 𐑿𐑯𐑦𐑑 𐑦𐑟 𐑒𐑱𐑐𐑩𐑚𐑩𐑤 𐑝 𐑛𐑦𐑕𐑑𐑮𐑨𐑒𐑑𐑦𐑙 𐑩𐑐𐑴𐑯𐑩𐑯𐑑𐑕, 𐑩𐑤𐑬𐑦𐑙 𐑨𐑤𐑲𐑛 𐑿𐑯𐑦𐑑𐑕 𐑑 𐑑𐑮𐑧𐑕𐑐𐑩𐑕 𐑞𐑺 "
 "𐑟𐑴𐑯𐑟 𐑝 𐑒𐑩𐑯𐑑𐑮𐑴𐑤 𐑯 𐑥𐑵𐑝 𐑩𐑯𐑣𐑦𐑯𐑛𐑻𐑛 𐑩𐑮𐑬𐑯𐑛 𐑞𐑧𐑥."
@@ -7591,6 +7588,22 @@ msgid ""
 "business at hand."
 msgstr ""
 "𐑞𐑨𐑑 𐑦𐑟 𐑧𐑒𐑕𐑩𐑤𐑩𐑯𐑑 𐑯𐑿𐑟 𐑦𐑯𐑛𐑰𐑛. 𐑬𐑼 𐑯𐑳𐑥𐑚𐑼𐑟 𐑣𐑨𐑝 𐑛𐑳𐑚𐑩𐑤𐑛. 𐑯𐑬 𐑪𐑯 𐑑 𐑞 𐑚𐑦𐑟𐑯𐑩𐑕 𐑨𐑑 𐑣𐑨𐑯𐑛."
+
+#, fuzzy
+#~| msgid ""
+#~| "Distract:\n"
+#~| "This unit negates enemy Zones of Control around itself for allied units "
+#~| "(but not for itself)."
+#~ msgid ""
+#~ "This unit negates enemy Zones of Control around itself for allied units "
+#~ "(but not for itself)."
+#~ msgstr ""
+#~ "𐑛𐑦𐑕𐑑𐑮𐑨𐑒𐑑:\n"
+#~ "𐑞𐑦𐑕 𐑿𐑯𐑦𐑑 𐑯𐑦𐑜𐑱𐑑𐑕 𐑧𐑯𐑩𐑥𐑦 𐑟𐑴𐑯𐑟 𐑝 𐑒𐑩𐑯𐑑𐑮𐑴𐑤 𐑩𐑮𐑬𐑯𐑛 𐑦𐑑𐑕𐑧𐑤𐑓 𐑓𐑹 𐑨𐑤𐑲𐑛 𐑿𐑯𐑦𐑑𐑕 (𐑚𐑳𐑑 𐑯𐑪𐑑 "
+#~ "𐑓𐑹 𐑦𐑑𐑕𐑧𐑤𐑓)."
+
+#~ msgid "Gerrick"
+#~ msgstr "𐑡𐑺𐑦𐑒"
 
 #~ msgid "Southbay Guard"
 #~ msgstr "·𐑕𐑬𐑔𐑚𐑱 𐑜𐑸𐑛"

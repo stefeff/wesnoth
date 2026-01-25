@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -16,14 +16,11 @@
 #include <cassert>
 #include <cmath>
 #include <cstring>
-#include <cassert>
-#include <cmath>
 #include <memory>
 #include <stack>
 
 #include "formatter.hpp"
 #include "formula/function.hpp"
-#include "utils/math.hpp"
 #include "log.hpp"
 
 static lg::log_domain log_scripting_formula("scripting/formula");
@@ -147,37 +144,46 @@ variant::variant()
 variant::variant(int n)
 	: value_(std::make_shared<variant_int>(n))
 {
-	assert(value_.get());
 }
 
 variant::variant(int n, variant::DECIMAL_VARIANT_TYPE)
 	: value_(std::make_shared<variant_decimal>(n))
 {
-	assert(value_.get());
 }
 
 variant::variant(double n, variant::DECIMAL_VARIANT_TYPE)
 	: value_(std::make_shared<variant_decimal>(n))
 {
-	assert(value_.get());
 }
 
 variant::variant(const std::vector<variant>& vec)
-	: value_((std::make_shared<variant_list>(vec)))
+	: value_(std::make_shared<variant_list>(vec))
 {
-	assert(value_.get());
+}
+
+variant::variant(std::vector<variant>&& vec)
+	: value_(std::make_shared<variant_list>(std::move(vec)))
+{
 }
 
 variant::variant(const std::string& str)
 	: value_(std::make_shared<variant_string>(str))
 {
-	assert(value_.get());
 }
 
-variant::variant(const std::map<variant,variant>& map)
-	: value_((std::make_shared<variant_map>(map)))
+variant::variant(std::string&& str)
+	: value_(std::make_shared<variant_string>(std::move(str)))
 {
-	assert(value_.get());
+}
+
+variant::variant(const std::map<variant, variant>& map)
+	: value_(std::make_shared<variant_map>(map))
+{
+}
+
+variant::variant(std::map<variant, variant>&& map)
+	: value_(std::make_shared<variant_map>(std::move(map)))
+{
 }
 
 variant variant::operator[](std::size_t n) const
@@ -217,7 +223,7 @@ variant variant::operator[](const variant& v) const
 				slice.push_back((*this)[v[i]]);
 			}
 
-			return variant(slice);
+			return variant(std::move(slice));
 		} else if(v.as_int() < 0) {
 			return operator[](num_elements() + v.as_int());
 		}
@@ -237,7 +243,7 @@ variant variant::get_keys() const
 		tmp.push_back(i.first);
 	}
 
-	return variant(tmp);
+	return variant(std::move(tmp));
 }
 
 variant variant::get_values() const
@@ -249,7 +255,7 @@ variant variant::get_values() const
 		tmp.push_back(i.second);
 	}
 
-	return variant(tmp);
+	return variant(std::move(tmp));
 }
 
 variant_iterator variant::begin() const
@@ -291,23 +297,23 @@ variant variant::get_member(const std::string& name) const
 	return variant();
 }
 
-int variant::as_int() const
+int variant::as_int(int fallback) const
 {
-	if(is_null())    { return 0; }
+	if(is_null())    { return fallback; }
 	if(is_decimal()) { return as_decimal() / 1000; }
 
 	must_be(formula_variant::type::integer);
 	return value_cast<variant_int>()->get_numeric_value();
 }
 
-int variant::as_decimal() const
+int variant::as_decimal(int fallback) const
 {
 	if(is_decimal()) {
 		return value_cast<variant_decimal>()->get_numeric_value();
 	} else if(is_int()) {
 		return value_cast<variant_int>()->get_numeric_value() * 1000;
 	} else if(is_null()) {
-		return 0;
+		return fallback;
 	}
 
 	throw type_error(was_expecting("an integer or a decimal", *this));
@@ -353,7 +359,7 @@ variant variant::operator+(const variant& v) const
 			res.push_back(member);
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	}
 
 	if(is_map() && v.is_map()) {
@@ -363,7 +369,7 @@ variant variant::operator+(const variant& v) const
 			res[member.first] = member.second;
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	}
 
 	if(is_decimal() || v.is_decimal()) {
@@ -536,28 +542,57 @@ bool variant::operator>(const variant& v) const
 	return v < *this;
 }
 
+namespace implementation
+{
+/**
+ * Applies the provided function to the corresponding variants in both lists.
+ *
+ * @todo Expose this to the public API.
+ */
+template<typename Func>
+variant zip_transform(const variant& v1, const variant& v2, const Func& op_func)
+{
+	const variant_vector& lhs = v1.as_list();
+	const variant_vector& rhs = v2.as_list();
+
+	if(lhs.size() != rhs.size()) {
+		throw type_error("zip_transform requires two lists of the same length");
+	}
+
+	std::vector<variant> res;
+	res.reserve(lhs.size());
+
+	for(std::size_t i = 0; i < lhs.size(); ++i) {
+		res.push_back(std::invoke(op_func, lhs[i], rhs[i]));
+	}
+
+	return variant(std::move(res));
+}
+
+} // namespace implementation
+
 variant variant::list_elements_add(const variant& v) const
 {
 	must_both_be(formula_variant::type::list, v);
-	return value_cast<variant_list>()->list_op(v.value_, std::plus<variant>());
+	return implementation::zip_transform(*this, v, std::plus<variant>{});
 }
 
 variant variant::list_elements_sub(const variant& v) const
 {
 	must_both_be(formula_variant::type::list, v);
-	return value_cast<variant_list>()->list_op(v.value_, std::minus<variant>());
+	return implementation::zip_transform(*this, v, std::minus<variant>{});
 }
 
 variant variant::list_elements_mul(const variant& v) const
 {
 	must_both_be(formula_variant::type::list, v);
-	return value_cast<variant_list>()->list_op(v.value_, std::multiplies<variant>());
+	return implementation::zip_transform(*this, v, std::multiplies<variant>{});
 }
 
 variant variant::list_elements_div(const variant& v) const
 {
 	must_both_be(formula_variant::type::list, v);
-	return value_cast<variant_list>()->list_op(v.value_, std::divides<variant>());
+	return implementation::zip_transform(*this, v, std::divides<variant>{});
 }
 
 variant variant::concatenate(const variant& v) const
@@ -576,7 +611,7 @@ variant variant::concatenate(const variant& v) const
 			res.push_back(v[i]);
 		}
 
-		return variant(res);
+		return variant(std::move(res));
 	} else if(is_string()) {
 		v.must_be(formula_variant::type::string);
 		std::string res = as_string() + v.as_string();
@@ -698,7 +733,7 @@ variant variant::execute_variant(const variant& var)
 		vars.pop();
 	}
 
-	return variant(made_moves);
+	return variant(std::move(made_moves));
 }
 
 }

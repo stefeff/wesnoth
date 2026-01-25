@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2011 - 2024
+	Copyright (C) 2011 - 2025
 	by Sytyi Nick <nsytyi@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -21,11 +21,22 @@
 #include "serialization/schema/tag.hpp"
 #include "serialization/string_utils.hpp"
 #include "formatter.hpp"
+#include "utils/general.hpp"
 
 namespace schema_validation
 {
 
 wml_tag any_tag("", 0, -1, "", true);
+
+wml_tag::wml_tag(const std::string& name, int min, int max, const std::string& super, bool any)
+	: name_(name)
+	, min_(min)
+	, max_(max)
+	, super_(super)
+	, fuzzy_(name.find_first_of("*?") != std::string::npos)
+	, any_tag_(any)
+{
+}
 
 wml_tag::wml_tag(const config& cfg)
 	: name_(cfg["name"].str())
@@ -43,10 +54,10 @@ wml_tag::wml_tag(const config& cfg)
 	, any_tag_(cfg["any_tag"].to_bool())
 {
 	if(max_ < 0) {
-		max_ = INT_MAX;
+		max_ = std::numeric_limits<int>::max();
 	}
 	if(max_children_ < 0) {
-		max_children_ = INT_MAX;
+		max_children_ = std::numeric_limits<int>::max();
 	}
 
 	if(cfg.has_attribute("super")) {
@@ -115,7 +126,7 @@ const wml_key* wml_tag::find_key(const std::string& name, const config& match, b
 const wml_key* wml_tag::find_key(const std::string& name, const config& match, bool ignore_super, std::vector<const wml_tag*>& visited) const
 {
 	// Returns nullptr if a super cycle is detected.
-	if(std::find(visited.begin(), visited.end(), this) != visited.end()) {
+	if(utils::contains(visited, this)) {
 		return nullptr;
 	}
 
@@ -185,7 +196,7 @@ const wml_tag* wml_tag::find_tag(const std::string& fullpath, const wml_tag& roo
 const wml_tag* wml_tag::find_tag(const std::string& fullpath, const wml_tag& root, const config& match, bool ignore_super, std::vector<const wml_tag*>& visited) const
 {
 	// Returns nullptr if a super cycle is detected.
-	if(std::find(visited.begin(), visited.end(), this) != visited.end()) {
+	if(utils::contains(visited, this)) {
 		return nullptr;
 	}
 

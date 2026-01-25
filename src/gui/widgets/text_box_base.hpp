@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Mark de Wever <koraq@xs4all.nl>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -25,10 +25,6 @@
 
 namespace gui2
 {
-namespace implementation
-{
-	struct builder_styled_widget;
-}
 
 /**
  * Abstract base class for text items.
@@ -66,8 +62,9 @@ public:
 	void set_maximum_length(const std::size_t maximum_length);
 
 	/**
-	 * Wrapper function, returns length of the text in pango column offsets.
-	 * See @ref font::pango_text::get_length.
+	 * Wrapper function, see @ref font::pango_text::get_length.
+	 *
+	 * @returns length of the text in pango column offsets.
 	 */
 	std::size_t get_length() const
 	{
@@ -75,8 +72,9 @@ public:
 	}
 
 	/**
-	 * Wrapper function, returns a vector with the lines.
-	 * See @ref font::pango_text::get_lines.
+	 * Wrapper function, see @ref font::pango_text::get_lines.
+	 *
+	 * @returns returns a vector with the lines.
 	 */
 	std::vector<std::string> get_lines()
 	{
@@ -84,8 +82,39 @@ public:
 	}
 
 	/**
-	 * Wrapper function, return number of lines.
-	 * See @ref font::pango_text::get_lines_count.
+	 * Wrapper function, see @ref font::pango_text::get_line.
+	 *
+	 * @returns the line corresponding to index.
+	 */
+	PangoLayoutLine* get_line(int index)
+	{
+		return text_.get_line(index);
+	}
+
+	/**
+	 * Wrapper function, see @ref font::pango_text::index_to_line_x.
+	 *
+	 * @returns the line number given the byte index.
+	 */
+	int get_line_number(const unsigned offset)
+	{
+		return text_.index_to_line_x(offset).first;
+	}
+
+	/**
+	 * Wrapper function, see @ref font::pango_text::get_cursor_pos_from_index.
+	 *
+	 * @returns the cursor position given the byte index.
+	 */
+	point get_cursor_pos_from_index(const unsigned offset) const
+	{
+		return text_.get_cursor_pos_from_index(offset);
+	}
+
+	/**
+	 * Wrapper function, see @ref font::pango_text::get_lines_count.
+	 *
+	 * @returns the number of lines.
 	 */
 	unsigned get_lines_count() const
 	{
@@ -93,23 +122,11 @@ public:
 	}
 
 	/**
-	 * Wrapper function, returns corrected column offset from pango.
-	 * See @ref font::pango_text::get_byte_offset.
-	 */
-	int get_byte_offset(const unsigned column) const
-	{
-		return text_.get_byte_offset(column);
-	}
-
-	/**
 	 * Wrapper function, sets the area between column start and end
 	 * offset to be highlighted in a specific color.
-	 * See @ref font::pango_text::set_highlight_area.
+	 * See @ref font::add_attribute_bg_color.
 	 */
-	void set_highlight_area(const unsigned start_offset, const unsigned end_offset, const color_t& color)
-	{
-		text_.set_highlight_area(start_offset, end_offset, color);
-	}
+	void set_highlight_area(const unsigned start_offset, const unsigned end_offset, const color_t& color);
 
 	/***** ***** ***** setters / getters for members ***** ****** *****/
 
@@ -130,11 +147,26 @@ public:
 		return text_.text();
 	}
 
-	/** Set the text_changed callback. */
-	void set_text_changed_callback(
-			std::function<void(text_box_base* textbox, const std::string text)> cb)
+	std::string plain_text()
 	{
-		text_changed_callback_ = cb;
+		char* plain_text = nullptr;
+		pango_parse_markup(text().c_str(), text().size(), 0, nullptr, &plain_text, nullptr, nullptr);
+		return plain_text ? std::string(plain_text) : std::string();
+	}
+
+	/**
+	 * Registers a NOTIFY_MODIFIED handler.
+	 *
+	 * For convenience, the handler is invoked with a text_box_base reference
+	 * as its first (and only) argument, rather than the usual widget reference.
+	 *
+	 * @todo Should we pass the other callback parameters to the handler?
+	 */
+	template<typename Func>
+	void on_modified(const Func& f)
+	{
+		connect_signal<event::NOTIFY_MODIFIED>(
+			[f](widget& w, auto&&...) { f(dynamic_cast<text_box_base&>(w)); });
 	}
 
 	/**
@@ -159,20 +191,27 @@ public:
 	 */
 	void set_selection(std::size_t start, int length);
 
+	/**
+	 * Set or unset whether text can be edited or not
+	 * Text can only be copied and scrolled through when editable is false.
+	 */
 	void set_editable(bool editable)
 	{
 		editable_ = editable;
 		update_canvas();
 	}
 
-	bool is_editable()
+	/**
+	 * Check whether text can be edited or not
+	 */
+	bool is_editable() const
 	{
 		return editable_;
 	}
 
 protected:
 	/** Get length of composition text by IME **/
-	size_t get_composition_length() const;
+	std::size_t get_composition_length() const;
 
 	/**
 	 * Moves the cursor to the end of the line.
@@ -253,10 +292,10 @@ protected:
 	virtual void delete_selection() = 0;
 
 	/** Copies the current selection. */
-	virtual void copy_selection(const bool mouse);
+	virtual void copy_selection();
 
 	/** Pastes the current selection. */
-	virtual void paste_selection(const bool mouse);
+	virtual void paste_selection();
 
 	/***** ***** ***** ***** expose some functions ***** ***** ***** *****/
 
@@ -271,15 +310,9 @@ protected:
 		return text_.get_column_line(position);
 	}
 
-	font::family_class get_font_family()
-	{
-		return font_family_;
-	}
-
 	void set_font_family(font::family_class fclass)
 	{
-		font_family_ = fclass;
-		text_.set_family_class(font_family_);
+		text_.set_family_class(fclass);
 	}
 
 	void set_font_size(const unsigned font_size)
@@ -366,9 +399,6 @@ private:
 	/** The text entered in the widget. */
 	font::pango_text text_;
 
-	/** font family */
-	font::family_class font_family_;
-
 	/** Cached version of the text without any pending IME modifications. */
 	std::string text_cached_;
 
@@ -394,7 +424,7 @@ private:
 	std::size_t cursor_timer_;
 
 	unsigned short cursor_alpha_;
-	unsigned short cursor_blink_rate_ms_;
+	std::chrono::milliseconds cursor_blink_rate_;
 
 	/****** handling of special keys first the pure virtuals *****/
 
@@ -574,17 +604,6 @@ protected:
 								int32_t length);
 
 private:
-	/**
-	 * Text changed callback.
-	 *
-	 * This callback is called in key_press after the key_press event has been
-	 * handled by the styled_widget. The parameters to the function are:
-	 * - The widget invoking the callback
-	 * - The new text of the textbox.
-	 */
-	std::function<void(text_box_base* textbox, const std::string text)>
-	text_changed_callback_;
-
 	/***** ***** ***** signal handlers ***** ****** *****/
 
 	void signal_handler_middle_button_click(const event::ui_event event,

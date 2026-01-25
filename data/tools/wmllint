@@ -177,7 +177,7 @@
 # code.
 #
 
-import sys, os, re, argparse, string, copy, difflib, time, gzip, codecs
+import sys, os, re, argparse, string, copy, difflib, time, gzip
 from wesnoth.wmltools3 import *
 from wesnoth.wmliterator3 import *
 from collections import defaultdict
@@ -1494,20 +1494,21 @@ def is_translatable(key):
 # This is a list of mainline campaigns, used to convert UMC from
 # "data/campaigns" to "data/add-ons" while not clobbering mainline.
 mainline = ("Dead_Water",
-            "Delfadors_Memoirs",
             "Descent_Into_Darkness",
+            "Dusk_of_Dawn",
             "Eastern_Invasion",
             "Heir_To_The_Throne",
+            "Heir_To_The_Throne_Classic",
             "Legend_of_Wesmere",
             "Liberty",
             "Northern_Rebirth",
             "Sceptre_of_Fire",
             "Secrets_of_the_Ancients",
             "Son_Of_The_Black_Eye",
+            "The_Deceivers_Gambit",
             "The_Hammer_of_Thursagan",
             "The_Rise_Of_Wesnoth",
             "The_South_Guard",
-            "tutorial",
             "Two_Brothers",
             "Under_the_Burning_Suns",
             "Winds_of_Fate",
@@ -3055,10 +3056,6 @@ must be converted manually".format(filename, baseline + y + 1, old, name))
 
 # Generic machinery starts here
 
-def is_map(filename):
-    "Is this file a map?"
-    return filename.endswith(".map") or filename.endswith(".mask")
-
 if 0: # Not used, as there are currently no defined map transforms
     class maptransform_error(BaseException):
         "Error object to be thrown by maptransform."
@@ -3101,14 +3098,14 @@ def translator(filename, mapxforms, textxform):
             unmodified = content.readlines()
     else:
         try:
-            with codecs.open(filename, "r", "utf8") as content:
+            with open(filename, "r", encoding="utf8") as content:
                 unmodified = content.readlines()
         except UnicodeDecodeError as e:
             print('wmllint: "{}" is not a valid UTF-8 file'.format(filename), file=sys.stderr)
             return
     # Pull file into an array of lines, CR-stripping as needed
     mfile = []
-    map_only = filename.endswith(".map")
+    map_only = filename.endswith(default_map_extension)
     terminator = "\n"
     UTF8_BOM = "\ufeff"
     for i, line in enumerate(unmodified):
@@ -3145,9 +3142,9 @@ def translator(filename, mapxforms, textxform):
             # Ignore all-caps macro arguments.
             if refname == refname.upper():
                 pass
-            elif 'mask=' in line and not (refname.endswith("}") or refname.endswith(".mask")):
-                print('"%s", line %d: mask file without .mask extension or not a mask file (%s)' \
-                      % (filename, lineno+1, refname))
+            elif 'mask=' in line and not (refname.endswith("}") or refname.endswith(default_mask_extension)):
+                print('"%s", line %d: mask file without %s extension or not a mask file (%s)' \
+                      % (filename, lineno+1, default_mask_extension, refname))
         # Exclude map_data= lines that are just 1 line without
         # continuation, or which contain {}.  The former are
         # pathological and the parse won't handle them, the latter
@@ -3163,7 +3160,7 @@ def translator(filename, mapxforms, textxform):
             maskwarn = False
             maptype = None
             if map_only:
-                if filename.endswith(".mask"):
+                if filename.endswith(default_mask_extension):
                     maptype = "mask"
                 else:
                     maptype = "map"
@@ -3239,8 +3236,8 @@ def translator(filename, mapxforms, textxform):
             refre = re.compile(r"\{@?([^A-Z].*)\}").search(line)
             if refre:
                 mapfile = refre.group(1)
-                if not mapfile.endswith(".map") and is_map(mapfile):
-                    newline = newline.replace(mapfile, mapfile + ".map")
+                if not mapfile.endswith(default_map_extension) and ismap(mapfile):
+                    newline = newline.replace(mapfile, mapfile + default_map_extension)
             newdata.append(newline + terminator)
             if newline != line:
                 if verbose > 0:
@@ -3505,8 +3502,8 @@ vctypes = (".svn", ".git", ".hg")
 
 def interesting(fn):
     "Is a file interesting for conversion purposes?"
-    return (fn.endswith(".cfg") and not fn.endswith("_info.cfg")) \
-           or is_map(fn) or issave(fn)
+    return (fn.endswith(default_wml_extension) and not fn.endswith("_info.cfg")) \
+           or ismap(fn) or issave(fn)
 
 def allcfgfiles(directory):
     "Get the names of all interesting files under directory."
@@ -3800,8 +3797,8 @@ In your case, your system interprets your arguments as:
                     if os.path.exists(backup):
                         fromdate = time.ctime(os.stat(backup).st_mtime)
                         todate = time.ctime(os.stat(fn).st_mtime)
-                        with codecs.open(backup, "r", "utf8") as fromlines, \
-                             codecs.open(fn, "r", "utf8") as tolines:
+                        with open(backup, "r", encoding="utf8") as fromlines, \
+                             open(fn, "r", encoding="utf8") as tolines:
                             diff = difflib.unified_diff(fromlines.readlines(),
                                                         tolines.readlines(),
                                                         backup, fn, fromdate, todate, n=3)
@@ -3823,7 +3820,7 @@ In your case, your system interprets your arguments as:
                                     with gzip.open(fn, "w") as ofp:
                                         ofp.write(changed)
                                 else:
-                                    with codecs.open(fn, "w", "utf8") as ofp:
+                                    with open(fn, "w", encoding="utf8") as ofp:
                                         ofp.write(changed)
                     #except maptransform_error, e:
                     #    print("wmllint: " + repr(e), file=sys.stderr)

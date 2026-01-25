@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
+"POT-Creation-Date: 2025-11-18 02:02 UTC\n"
 "PO-Revision-Date: 2024-04-05 15:00+0300\n"
 "Last-Translator: Oleksii Okhrimenko(lexa04) <e-mail: ohrimale@gmail.com "
 "discord: amakri>\n"
@@ -297,7 +297,6 @@ msgstr "Підібрати цей предмет"
 #. [button]: id=ok
 #: data/campaigns/World_Conquest/gui/invest_dialog.cfg:327
 #: data/campaigns/World_Conquest/gui/invest_tellunit.cfg:58
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:236
 msgid "OK"
 msgstr "Гаразд"
 
@@ -322,62 +321,87 @@ msgid "No"
 msgstr "Ні"
 
 #. [label]: id=title
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:29
-msgid "Map Settings"
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:48
+#, fuzzy
+#| msgid "Map Settings"
+msgid "Map Generator Settings"
 msgstr "Налаштування карти"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:50
-msgid " players: "
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:57
+#, fuzzy
+#| msgid " players: "
+msgid "Players:"
 msgstr " гравці: "
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:64
-msgid " scenario: "
-msgstr " сценарій: "
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:58
+#, fuzzy
+#| msgid "Scenario"
+msgid "Scenario:"
+msgstr "Сценарій"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:85
-msgid " map: "
-msgstr " мапа: "
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:59
+msgid "Map:"
+msgstr ""
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:112
-msgid "map size"
-msgstr "розмір мапи"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:60
+msgid "Map Size:"
+msgstr ""
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:128
-msgid "village density"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:61
+#, fuzzy
+#| msgid "village density"
+msgid "Village Density:"
 msgstr "густина сіл"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:144
-msgid "keep size"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:62
+#, fuzzy
+#| msgid "keep size"
+msgid "Keep Size:"
 msgstr "розмір замку"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:160
-msgid "iterations"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:63
+#, fuzzy
+#| msgid "iterations"
+msgid "Iterations:"
 msgstr "повторення"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:176
-msgid "terrain factor"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:64
+#, fuzzy
+#| msgid "terrain factor"
+msgid "Terrain Factor:"
 msgstr "коефіцієнт місцевості"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:192
-msgid "island factor"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:65
+#, fuzzy
+#| msgid "island factor"
+msgid "Island Factor:"
 msgstr "коефіцієнт острову"
 
-#. [label]
-#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:208
-msgid "number of keeps"
+#. [grid]
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:66
+#, fuzzy
+#| msgid "number of keeps"
+msgid "Number of Keeps:"
 msgstr "кількість замків"
 
+#. [button]: id=ok
+#: data/campaigns/World_Conquest/gui/settings_dialog.cfg:76
+msgid "Close"
+msgstr ""
+
 #: data/campaigns/World_Conquest/lua/campaign/enemy_themed.lua:5
-msgid "$name|'s pet"
+#, fuzzy
+#| msgid "$name|'s pet"
+msgid "$name|’s pet"
 msgstr "Улюбленець $name|"
 
 #: data/campaigns/World_Conquest/lua/campaign/objectives.lua:6
@@ -396,6 +420,11 @@ msgstr "Втратити вашого лідера та всіх команди�
 msgid "An in-game help is available: right-click on any empty hex."
 msgstr ""
 "У грі доступна довідка: натисніть правою клавішою та будь-яку пусту клітинку."
+
+#. [lua]: carryover.remaining_gold_message
+#: data/campaigns/World_Conquest/lua/campaign/scenario.lua:87
+msgid "Average remaining gold: "
+msgstr ""
 
 #: data/campaigns/World_Conquest/lua/era/era.lua:12
 msgid "Tell me how my recruit works"
@@ -1898,47 +1927,47 @@ msgstr ""
 "Зоруготh,Зорулеіве,Зоуhан,Зоурідга,Зубаyр,Зуhаyр,Зурее,Ззупде"
 
 #. [lua]: training.describe_training_level
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:111
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:114
 msgid "$name Training Maximum Level"
 msgstr "Тренування $name максимального рівню"
 
 #. [lua]: training.describe_training_level
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:115
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:118
 msgid "$name Training level $level"
 msgstr "Тренування $name рівню $level"
 
 #. [lua]: training.describe_training_level2
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:124
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:127
 msgid "Maximum Level"
 msgstr "Максимальний рівень"
 
 #. [lua]: training.describe_training_level2
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:126
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:129
 msgid "level $level"
 msgstr "$level рівень"
 
 #. [lua]: training.generate_message
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:143
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:146
 msgid "$chance| chance to $arrow $desc"
 msgstr "$chance| шанс $arrow $desc"
 
 #. [lua]: training.apply
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:219
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:216
 msgid "trained"
 msgstr "тренований"
 
 #. [lua]: training.apply
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:220
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:217
 msgid "female^trained"
 msgstr "тренована"
 
 #. [lua]: training.describe_bonus
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:272
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:268
 msgid "Nothing to learn here"
 msgstr "Тут нічого вивчати"
 
 #. [lua]: training.describe_bonus
-#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:274
+#: data/campaigns/World_Conquest/lua/game_mechanics/training.lua:270
 msgid "From $level_before to $level_after"
 msgstr "З $level_before до $level_after"
 
@@ -2614,18 +2643,20 @@ msgstr " (не доступно для гравців)"
 
 #. [lua]: wc_ii_generate_scenario
 #. [lua]: wct_store_possible_encampment_ford
-#: data/campaigns/World_Conquest/lua/map/main.lua:126
+#: data/campaigns/World_Conquest/lua/map/main.lua:125
 #: data/campaigns/World_Conquest/lua/map/postgeneration/1A_Start.lua:146
 msgid "Start"
 msgstr "Старт"
 
 #. [lua]: wc_ii_generate_scenario
-#: data/campaigns/World_Conquest/lua/map/main.lua:128
-msgid "Scenario"
+#: data/campaigns/World_Conquest/lua/map/main.lua:127
+#, fuzzy
+#| msgid "Scenario"
+msgid "Scenario "
 msgstr "Сценарій"
 
 #. [lua]: wc_ii_generate_scenario
-#: data/campaigns/World_Conquest/lua/map/main.lua:130
+#: data/campaigns/World_Conquest/lua/map/main.lua:129
 msgid "Final Battle"
 msgstr "Остання битва"
 
@@ -2918,7 +2949,7 @@ msgid "Enemies"
 msgstr "Вороги"
 
 #. [lua]: add_player_side
-#: data/campaigns/World_Conquest/lua/map/scenario_utils/side_definitions.lua:59
+#: data/campaigns/World_Conquest/lua/map/scenario_utils/side_definitions.lua:60
 msgid "Allies"
 msgstr "Союзники"
 
@@ -3588,13 +3619,13 @@ msgstr ""
 "шкоди навколишнім дружнім бійцям."
 
 #. [leadership]: id=banner
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:784
 #: data/campaigns/World_Conquest/resources/data/artifacts.cfg:785
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:786
 msgid "banner"
 msgstr "стяг"
 
 #. [leadership]: id=banner
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:787
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:786
 msgid ""
 "This unit can lead ~allied~ units that are next to it, making them fight "
 "better. Adjacent allied units will do 20% more damage. This is cumulative "
@@ -3605,12 +3636,12 @@ msgstr ""
 "лідерством."
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:798
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:797
 msgid "Winged scepter"
 msgstr "Крилатий скіпетр"
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:800
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:799
 msgid ""
 "Full movement and up to 50% defense in all terrains but cave or mushroom "
 "grove."
@@ -3619,7 +3650,7 @@ msgstr ""
 "та грибного гаю."
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:801
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:800
 msgid ""
 "This wondrous rod imparts the user the ability to soar through the skies, "
 "making it a breeze to move through most terrain. Units that can already fly "
@@ -3630,17 +3661,17 @@ msgstr ""
 "літати, отримують покращений захист."
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:841
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:840
 msgid "Winter’s bloom"
 msgstr "Зимовий цвіт"
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:843
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:842
 msgid "+15 HP, up to 20% resistance vs cold"
 msgstr "+15 ЗД, до 20% опору холоду"
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:844
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:843
 msgid ""
 "This delicate blossom rarely found in snowy peaks, is strongly appreciated "
 "for its beneficial effects on health."
@@ -3649,17 +3680,17 @@ msgstr ""
 "цінується за її корисний вплив на здоров'я."
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:859
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:858
 msgid "Zephyr cloak"
 msgstr "Накидка вітру"
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:861
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:860
 msgid "skirmisher, ambush, nightstalk, +2 moves"
 msgstr "невловимий, засідка, нишпорка, +2 до руху"
 
 #. [artifact]
-#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:862
+#: data/campaigns/World_Conquest/resources/data/artifacts.cfg:861
 msgid ""
 "This lightweight cloak renders its wearer almost invisible in the darkness "
 "and lets them move with fluid grace past enemies with ease."
@@ -3682,12 +3713,12 @@ msgstr ""
 "свою нудьгу, навчивши ваших людей деяким речам з темної магії."
 
 #. [trainer]: type=Duelist
-#: data/campaigns/World_Conquest/resources/data/training.cfg:59
+#: data/campaigns/World_Conquest/resources/data/training.cfg:60
 msgid "Movement"
 msgstr "Переміщення"
 
 #. [trainer]: type=Duelist
-#: data/campaigns/World_Conquest/resources/data/training.cfg:60
+#: data/campaigns/World_Conquest/resources/data/training.cfg:61
 msgid ""
 "What, you want me to join the fight? Quite out of the question, old boy! I’m "
 "afraid battlefields just aren’t my scene — no drama, no style, no romance! "
@@ -3702,12 +3733,12 @@ msgstr ""
 "пір'їнка!"
 
 #. [trainer]: type=Orcish Warrior
-#: data/campaigns/World_Conquest/resources/data/training.cfg:77
+#: data/campaigns/World_Conquest/resources/data/training.cfg:78
 msgid "Melee Combat"
 msgstr "Ближній бій"
 
 #. [trainer]: type=Orcish Warrior
-#: data/campaigns/World_Conquest/resources/data/training.cfg:78
+#: data/campaigns/World_Conquest/resources/data/training.cfg:79
 msgid ""
 "Looks like you could use some help. A grizzled old veteran like me won’t be "
 "much use on the field, but I bet I can teach your men a thing or two about "
@@ -3718,17 +3749,17 @@ msgstr ""
 "парі прийомів володіння мечем."
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:102
+#: data/campaigns/World_Conquest/resources/data/training.cfg:103
 msgid "melee: +1 strikes"
 msgstr "ближня: +1 удар"
 
 #. [trainer]: type=Elvish Ranger
-#: data/campaigns/World_Conquest/resources/data/training.cfg:120
+#: data/campaigns/World_Conquest/resources/data/training.cfg:121
 msgid "Ranger Tactics"
 msgstr "Тактика дальніх атак"
 
 #. [trainer]: type=Elvish Ranger
-#: data/campaigns/World_Conquest/resources/data/training.cfg:121
+#: data/campaigns/World_Conquest/resources/data/training.cfg:122
 msgid ""
 "I sympathize with your cause, but this is not my battle. I will not fight "
 "for you, but I will gladly instruct your recruits in the art of the ranger, "
@@ -3738,12 +3769,12 @@ msgstr ""
 "навчу ваших новобранців у стрілецькому мистецтві, щоб вони краще воювали."
 
 #. [trainer]: type=Drake Flare
-#: data/campaigns/World_Conquest/resources/data/training.cfg:159
+#: data/campaigns/World_Conquest/resources/data/training.cfg:160
 msgid "Combat Experience"
 msgstr "Бойовий досвід"
 
 #. [trainer]: type=Drake Flare
-#: data/campaigns/World_Conquest/resources/data/training.cfg:160
+#: data/campaigns/World_Conquest/resources/data/training.cfg:161
 msgid ""
 " Join the battle? Nay, lads, my talents would be wasted on the frontlines. "
 "Give me some raw recruits to work with, though, and I’ll whip ’em into shape "
@@ -3756,12 +3787,12 @@ msgstr ""
 "неї якесь уявлення."
 
 #. [trainer]: type=Dwarvish Runesmith
-#: data/campaigns/World_Conquest/resources/data/training.cfg:186
+#: data/campaigns/World_Conquest/resources/data/training.cfg:187
 msgid "Health"
 msgstr "Здоров'я"
 
 #. [trainer]: type=Dwarvish Runesmith
-#: data/campaigns/World_Conquest/resources/data/training.cfg:187
+#: data/campaigns/World_Conquest/resources/data/training.cfg:188
 msgid ""
 "Looks like a pretty grim fight you’ve got up ahead. I’ve got too many "
 "troubles of my own to join in, but stick about a while and I’ll put some "
@@ -3774,17 +3805,17 @@ msgstr ""
 "незважаючи ні на що!"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:220
+#: data/campaigns/World_Conquest/resources/data/training.cfg:221
 msgid "ranged: disengage"
 msgstr "дальня атака: відхід"
 
 #. [dummy]: id=wc2_disengage
-#: data/campaigns/World_Conquest/resources/data/training.cfg:234
+#: data/campaigns/World_Conquest/resources/data/training.cfg:235
 msgid "disengage"
 msgstr "відхід"
 
 #. [dummy]: id=wc2_disengage
-#: data/campaigns/World_Conquest/resources/data/training.cfg:235
+#: data/campaigns/World_Conquest/resources/data/training.cfg:236
 msgid ""
 "Attack with this weapon gives unit 1 moves at end of combat (unit doesn’t "
 "gain a new attack)."
@@ -3793,90 +3824,90 @@ msgstr ""
 "нової атаки)."
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:246
+#: data/campaigns/World_Conquest/resources/data/training.cfg:247
 msgid "Full movement on turn recruited or recalled"
 msgstr "Боєць може рухатися одразу після заклику чи призову"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:312
+#: data/campaigns/World_Conquest/resources/data/training.cfg:313
 msgid "$range|: $special|"
 msgstr "$range|: $special|"
 
 #. [chance]
 #. [skirmisher]: id=distract
-#: data/campaigns/World_Conquest/resources/data/training.cfg:377
-#: data/campaigns/World_Conquest/resources/data/training.cfg:402
+#: data/campaigns/World_Conquest/resources/data/training.cfg:378
 #: data/campaigns/World_Conquest/resources/data/training.cfg:403
+#: data/campaigns/World_Conquest/resources/data/training.cfg:404
 msgid "distract"
 msgstr "відволікає"
 
 #. [chance]
 #. [resistance]: id=tenacity
-#: data/campaigns/World_Conquest/resources/data/training.cfg:389
-#: data/campaigns/World_Conquest/resources/data/training.cfg:426
+#: data/campaigns/World_Conquest/resources/data/training.cfg:390
 #: data/campaigns/World_Conquest/resources/data/training.cfg:427
+#: data/campaigns/World_Conquest/resources/data/training.cfg:428
 msgid "tenacity"
 msgstr "чіпкість"
 
 #. [skirmisher]: id=distract
-#: data/campaigns/World_Conquest/resources/data/training.cfg:404
+#: data/campaigns/World_Conquest/resources/data/training.cfg:405
 msgid "Allied units ignore enemy zones of control adjacent to this unit."
 msgstr ""
 "Дружні бійці ігнорують зони контроля ворогів, що знаходяться поряд з цим "
 "бійцем."
 
 #. [resistance]: id=tenacity
-#: data/campaigns/World_Conquest/resources/data/training.cfg:428
+#: data/campaigns/World_Conquest/resources/data/training.cfg:429
 msgid "This unit’s vulnerabilities are halved when defending."
 msgstr "Вразливість цього бійця зменшена вдвічі, коли він в обороні."
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:468
+#: data/campaigns/World_Conquest/resources/data/training.cfg:469
 msgid "heals +4, cures"
 msgstr "лікує +4, зцілює"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:544
+#: data/campaigns/World_Conquest/resources/data/training.cfg:545
 msgid "+$boost| moves"
 msgstr "+$boost| до руху"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:558
+#: data/campaigns/World_Conquest/resources/data/training.cfg:559
 msgid "$range|: +$boost| damage"
 msgstr "$range|: +$boost| шкоди"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:574
+#: data/campaigns/World_Conquest/resources/data/training.cfg:575
 msgid "$range|: +1 damage per level"
 msgstr "$range|: +1 шкоди за рівень"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:590
+#: data/campaigns/World_Conquest/resources/data/training.cfg:591
 msgid "+$hitpoints| hitpoints"
 msgstr "+$hitpoints| очків здоров'я"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:605
+#: data/campaigns/World_Conquest/resources/data/training.cfg:606
 msgid "+$hitpoints| hitpoints per level"
 msgstr "+$hitpoints| очків здоров'я за рівень"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:621
+#: data/campaigns/World_Conquest/resources/data/training.cfg:622
 msgid "$value| XP to advance"
 msgstr "$value| досвіду до підвищення"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:635
+#: data/campaigns/World_Conquest/resources/data/training.cfg:636
 msgid "free upkeep"
 msgstr "нульове утримання"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:645
+#: data/campaigns/World_Conquest/resources/data/training.cfg:646
 msgid "Village/Castle: +5 defense"
 msgstr "Село/Замок: +5 захисту"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:677
+#: data/campaigns/World_Conquest/resources/data/training.cfg:678
 msgid ""
 "$terrain|: +$def| defense and full movement, +$res| resistance vs $dmg_type|"
 msgstr ""
@@ -3884,22 +3915,22 @@ msgstr ""
 "$dmg_type|"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:706
+#: data/campaigns/World_Conquest/resources/data/training.cfg:707
 msgid "$terrain|: +10 defense and full movement"
 msgstr "$terrain|: +10 захисту та необмежене переміщення"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:717
+#: data/campaigns/World_Conquest/resources/data/training.cfg:718
 msgid "+moves defense"
 msgstr "+переміщення захисту"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:727
+#: data/campaigns/World_Conquest/resources/data/training.cfg:728
 msgid "melee: optional charge"
 msgstr "ближня атака: виборний наскок"
 
 #. [chance]
-#: data/campaigns/World_Conquest/resources/data/training.cfg:752
+#: data/campaigns/World_Conquest/resources/data/training.cfg:753
 msgid "$range|: arcane and +25% damage"
 msgstr "$range|: містична та +25% шкоди"
 
@@ -3920,6 +3951,22 @@ msgid "World Conquest 4p"
 msgstr "Підкорення світу 4г"
 
 #: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:17
+msgid "WC1p"
+msgstr ""
+
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:20
+msgid "WC2p"
+msgstr ""
+
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:23
+msgid "WC3p"
+msgstr ""
+
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:26
+msgid "WC4p"
+msgstr ""
+
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:29
 msgid ""
 "A randomly generated campaign for 1 player. It has 6 levels of difficulty.\n"
 "(Expert level, 5 scenarios.)"
@@ -3927,7 +3974,7 @@ msgstr ""
 "Випадково згенерована кампанія для одного гравця, 6 рівнів складності.\n"
 "(Експертний рівень, 5 сценаріїв.)"
 
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:21
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:33
 msgid ""
 "A randomly generated cooperative campaign for 2 players. It has 6 levels of "
 "difficulty.\n"
@@ -3937,7 +3984,7 @@ msgstr ""
 "складності.\n"
 "(Експертний рівень, 5 сценаріїв.)"
 
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:25
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:37
 msgid ""
 "A randomly generated cooperative campaign for 3 players. It has 6 levels of "
 "difficulty.\n"
@@ -3947,102 +3994,123 @@ msgstr ""
 "складності.\n"
 "(Експертний рівень, 5 сценаріїв.)"
 
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:29
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:41
+#, fuzzy
+#| msgid ""
+#| "A randomly generated cooperative campaign for 2 players. It has 6 levels "
+#| "of difficulty.\n"
+#| "(Expert level, 5 scenarios.)"
 msgid ""
-"A randomly generated cooperative campaign for 4 players. It has 6 level of "
-"difficulties.\n"
+"A randomly generated cooperative campaign for 4 players. It has 6 levels of "
+"difficulty.\n"
 "(Expert level, 5 scenarios.)"
 msgstr ""
-"Випадково згенерована кооперативна кампанія для чотирьох гравців, 6 рівнів "
+"Випадково згенерована кооперативна кампанія для двох гравців, 6 рівнів "
 "складності.\n"
 "(Експертний рівень, 5 сценаріїв.)"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:104
-msgid "WC"
-msgstr "ПС"
-
-#. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:105
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:117
 msgid "Beginner"
 msgstr "Початківець"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:105
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:117
 msgid "Peasant"
 msgstr "Селянин"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:106
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:118
 msgid "Easy"
 msgstr "Легкий"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:106
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:118
 msgid "Sergeant"
 msgstr "Сержант"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:107
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:119
 msgid "Lieutenant"
 msgstr "Лейтенант"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:107
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:119
 msgid "Medium"
 msgstr "Середній"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:108
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:120
 msgid "General"
 msgstr "Генерал"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:108
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:120
 msgid "Hard"
 msgstr "Важкий"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:109
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:121
 msgid "Challenging"
 msgstr "Ускладнений"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:109
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:121
 msgid "Grand Marshal"
 msgstr "Високий маршал"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:110
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:122
 msgid "Expert"
 msgstr "Експертний"
 
 #. [campaign]: id=WC_II_{PLAYERS}p, description={WC_II_CAMPAIGN_DESC_{PLAYERS}P}, type=mp
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:110
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:122
 msgid "Nightmare"
 msgstr "Просто жах"
 
 #. [about]
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:113
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:125
 msgid "Campaign Design"
 msgstr "Разробка кампаній"
 
 #. [about]
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:120
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:132
 msgid "Prose, Grammatical and Text Assistance"
 msgstr "Проза, граматична та текстова допомога"
 
 #. [about]
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:136
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:148
 msgid "Minor Code Contributors"
 msgstr "Незначні покращення коду"
 
 #. [about]
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:146
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:158
 msgid "Playtesting"
 msgstr "Тестування"
 
 #. [about]
-#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:165
+#: data/campaigns/World_Conquest/scenarios/WC_II_scenario.cfg:177
 msgid "Campaign Maintenance"
 msgstr "Підтримка кампанії"
+
+#~ msgid " scenario: "
+#~ msgstr " сценарій: "
+
+#~ msgid " map: "
+#~ msgstr " мапа: "
+
+#~ msgid "map size"
+#~ msgstr "розмір мапи"
+
+#~ msgid "WC"
+#~ msgstr "ПС"
+
+#~ msgid ""
+#~ "A randomly generated cooperative campaign for 4 players. It has 6 level "
+#~ "of difficulties.\n"
+#~ "(Expert level, 5 scenarios.)"
+#~ msgstr ""
+#~ "Випадково згенерована кооперативна кампанія для чотирьох гравців, 6 "
+#~ "рівнів складності.\n"
+#~ "(Експертний рівень, 5 сценаріїв.)"

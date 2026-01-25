@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2018 - 2024
+	Copyright (C) 2018 - 2025
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
 	This program is free software; you can redistribute it and/or modify
@@ -13,21 +13,16 @@
 */
 
 #include "scripting/lua_terrainmap.hpp"
-#include "scripting/lua_terrainfilter.hpp"
 
-#include "formatter.hpp"
-#include "global.hpp"
 #include "log.hpp"
 #include "map/location.hpp"
 #include "map/map.hpp"
 #include "scripting/lua_common.hpp"
 #include "scripting/push_check.hpp"
-#include "scripting/game_lua_kernel.hpp"
 #include "resources.hpp"
 #include "game_board.hpp"
 #include "play_controller.hpp"
 
-#include "lua/wrapper_lauxlib.h"
 
 static lg::log_domain log_scripting_lua("scripting/lua");
 #define LOG_LUA LOG_STREAM(info, log_scripting_lua)
@@ -139,12 +134,13 @@ static void simplemerge(t_translation::terrain_code old_t, t_translation::terrai
 	}
 }
 
-void mapgen_gamemap::set_terrain(const map_location& loc, const terrain_code & terrain, const terrain_type_data::merge_mode mode, bool)
+gamemap_base::set_terrain_result mapgen_gamemap::set_terrain(const map_location& loc, const terrain_code & terrain, const terrain_type_data::merge_mode mode, bool)
 {
 	terrain_code old = get_terrain(loc);
 	terrain_code t = terrain;
 	simplemerge(old, t, mode);
 	tiles().get(loc.x + border_size(), loc.y + border_size()) = t;
+	return {t}; // We don't track village changes here
 }
 
 struct lua_map_ref {

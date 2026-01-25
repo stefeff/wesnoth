@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -18,20 +18,19 @@
 #include "editor/editor_main.hpp"    // for EXIT_STATUS
 #include "events.hpp"                // for event_context
 #include "font/font_config.hpp"      // for manager
+#include "game_config_manager.hpp"   // for game_config_manager
 #include "game_end_exceptions.hpp"   // for LEVEL_RESULT, etc
 #include "hotkey/hotkey_manager.hpp" // for manager
 #include "picture.hpp"               // for manager
-#include "preferences/game.hpp"      // for manager
 #include "saved_game.hpp"            // for saved_game
 #include "savegame.hpp"              // for clean_saves, etc
 #include "sound.hpp"                 // for music_thinker
-#include <optional>
+#include "utils/optional_fwd.hpp"
 
 #include <string>                       // for string
 #include <vector>                       // for vector
 
 class commandline_options;
-class config;
 
 struct jump_to_campaign_info
 {
@@ -91,7 +90,8 @@ public:
 	unit_test_result unit_test();
 
 	bool has_load_data() const;
-	bool load_game();
+	bool load_game_prompt();
+	bool load_prepared_game();
 	void set_test(const std::string& id);
 
 	/** Return the ID of the campaign to jump to (skipping the main menu). */
@@ -104,6 +104,7 @@ public:
 	void select_mp_server(const std::string& server) { multiplayer_server_ = server; }
 	bool play_multiplayer(mp_mode mode);
 	bool play_multiplayer_commandline();
+	bool play_campaign();
 	bool change_language();
 
 	void launch_game(reload_mode reload = reload_mode::RELOAD_DATA);
@@ -112,6 +113,7 @@ public:
 	editor::EXIT_STATUS start_editor() { return start_editor(""); }
 
 	const commandline_options & opts() const { return cmdline_opts_; }
+	game_config_manager& config_manager() { return config_manager_; };
 
 private:
 	game_launcher(const game_launcher&) = delete;
@@ -129,10 +131,17 @@ private:
 	 */
 	unit_test_result single_unit_test();
 
+	/**
+	 * Returns the load_game_metadata object stored in load_data_.
+	 * After this function returns, load_data_ will contain no value.
+	 */
+	savegame::load_game_metadata extract_load_data();
+
 	const commandline_options& cmdline_opts_;
 
+	game_config_manager config_manager_;
+
 	font::manager font_manager_;
-	const preferences::manager prefs_manager_;
 	const image::manager image_manager_;
 	const events::event_context main_event_context_;
 	const hotkey::manager hotkey_manager_;
@@ -150,6 +159,6 @@ private:
 	bool jump_to_multiplayer_;
 	jump_to_campaign_info jump_to_campaign_;
 
-	bool jump_to_editor_;
-	std::optional<savegame::load_game_metadata> load_data_;
+	utils::optional<std::string> jump_to_editor_;
+	utils::optional<savegame::load_game_metadata> load_data_;
 };

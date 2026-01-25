@@ -26,8 +26,7 @@ wesnothd \- \fBVesnot Savaşı\fP çok oyunculu ağ sunucusu
 .
 .SH KULLANIM
 .
-\fBwesnothd\fP [\|\fB\-dv\fP\|] [\|\fB\-c\fP \fIdosya\-yolu\fP\|] [\|\fB\-p\fP \fIport\fP\|]
-[\|\fB\-t\fP \fIsayı\fP\|] [\|\fB\-T\fP \fIsayı\fP\|]
+\fBwesnothd\fP [\|\fB\-dvw\fP\|] [\|\fB\-c\fP \fIpath\fP\|] [\|\fB\-p\fP \fIport\fP\|]
 .br
 \fBwesnothd\fP \fB\-V\fP
 .
@@ -59,14 +58,6 @@ alanı için \fBinfo\fP seviyesi kullanılır.
 \fB\-p\ \fP\fIport\fP\fB,\ \-\-port\fP\fI\ port\fP
 sunucunun belirtilen portu dinlemesini sağlar. Bir port belirtilmezse
 \fB15000\fP öntanımlıdır.
-.TP 
-\fB\-t\ \fP\fIsayı\fP\fB,\ \-\-threads\fP\fI\ sayı\fP
-ağa G/Ç için bekleyen iş evrelerinin azami sayısını belirler. (\fB5\fP
-öntanımlıdır. En çok \fB30\fP belirtilebilir.)
-.TP 
-\fB\-T\ \fP\fIsayı\fP\fB,\ \-\-max\-threads\fP\fI\ sayı\fP
-oluşturulacak iş evrelerinin azami sayısını belirler. \fB0\fP bir sınır
-olmadığını belirtir ve öntanımlıdır.
 .TP 
 \fB\-V, \-\-version\fP
 sürüm numarasını gösterir ve çıkar.
@@ -101,10 +92,6 @@ Sunucunun okuyup yazabildiği bir (gzip sıkıştırmalı) dosyanın göreli vey
 tam yolu. Sunucuya girişi yasaklanan oyuncular bu dosyaya kaydedilir ve
 sunucu başlatılırken okunur.
 .TP 
-\fBcompress_stored_rooms\fP
-rooms dosyasının sıkıştırılmış haliyle okunup yazılabillmesini
-belirler. Öntanımlı değer \fByes\fP'tir.
-.TP 
 \fBconnections_allowed\fP
 Aynı IP adresinden izin verilen bağlantı sayısı. \fB0\fP sonsuz anlamına
 gelir. (\fB5\fP öntanımlıdır)
@@ -114,15 +101,20 @@ Kullanılmakta olan \fBuser_handler\fP bölümünde kayıtlı olmayan kullanıc�
 oturum açmasının engellenip engellenmeyeceği (öntanımlı: false)
 .TP 
 \fBdisallow_names\fP
-Sunucu tarafından kabul edilmeyen isimler/rumuzlar. Dosya ismi kalıp
-karakterlerinden \fB*\fP ve \fB?\fP desteklenmektedir. Daha ayrıntılı bilgi için
-\fBglob\fP(7) sayfasına bakınız. Öntanımlı (bir şey belirtilmezse kullanılacak)
-değerler: \fB*admin*,*admln*,*server*,ai,ai?,computer,human,network,player\fP.
+Names/nicks that are not accepted by the server. \fB*\fP and \fB?\fP from wildcard
+patterns are supported. See \fBglob\fP(7)  for more details.  Default values
+(used if nothing is specified) are:
+\fB*admin*,*admln*,*moderator*,*server*,ai,ai?,computer,human,network,player\fP.
 .TP 
 \fBfifo_path\fP
 Sunucu komutlarının yansılandığı fifo yolu (oyun içinde /query ... ile aynı)
 Yol belirtilmezse derleme sırasında belirtilen yol
 (\fB/var/run/wesnothd/socket\fP) öntanımlıdır.
+.TP 
+\fBid\fP
+Oyun bilgilerini depolamak için veritabanı işlevselliği kullanılırken
+sunucunun kimliği. Genellikle kabul edilen istemcilerin ana.küçük sürümüdür,
+örneğin 1.16 veya 1.17.
 .TP 
 \fBmax_messages\fP
 \fBmessages_time_period\fP süresince izin verilen ileti sayısı. \fB4\fP
@@ -135,12 +127,6 @@ cinsinden). \fB10\fP saniye öntanımlıdır.
 \fBmotd\fP
 Günün sözü.
 .TP 
-\fBnew_room_policy\fP
-Sunucuda yeni odaları kimin oluşturacağını belirler. Kullanılabilir
-değerler, \fBeveryone\fP, \fBregistered\fP, \fBadmin\fP ve \fBnobody\fP olup bu yetki
-sırasıyla herkese, kayıtlı kullanıcılara, yöneticilere verilir veya hiç oda
-oluşturulmaz. Ötanımlı değer: \fBeveryone\fP.
-.TP 
 \fBpasswd\fP
 Yönetici yetkilerini kazanmak için kullanılacak parola. (kullanım: \fB/query admin \fP\fIparola\fP).
 .TP 
@@ -152,11 +138,6 @@ unutmayın!) wesnothd'nin başlatıldığı dizin anlamına gelen `' öntanıml�
 \fBrestart\fP komutu üzerinden yeni bir sunucu süreci başlatmak için sunucunun
 kullanacağı komut. (Sadece fifo üzerinden
 kullanılabilir. \fBallow_remote_shutdown\fP ayarına bakınız.)
-.TP 
-\fBroom_save_file\fP
-Oda bilgisinin saklanacağı dosyanın yolu. Bu dosya sunucu başlatılırken
-okunur ve sonrasında yazılır. Boşsa veya hiç yoksa hiçbir oda yüklenmez ve
-saklanmaz.
 .TP 
 \fBsave_replays\fP
 Sunucunun oyun tekrarlarını özdevinimli olarak kaydedip kaydetmeyeceğini
@@ -181,11 +162,6 @@ listesi. Dosya ismi kalıp karakterlerinden \fB*\fP ve \fB?\fP
 desteklenmektedir. (kurulu wesnoth sürümü öntanımlıdır.)
 .br
 Örnek: \fBversions_accepted="*"\fP her sürüm dizgesi kabul edilir.
-.TP 
-\fBid\fP
-Oyun bilgilerini depolamak için veritabanı işlevselliği kullanılırken
-sunucunun kimliği. Genellikle kabul edilen istemcilerin ana.küçük sürümüdür,
-örneğin 1.16 veya 1.17.
 .
 .SS "Genel etiketler:"
 .
@@ -262,14 +238,18 @@ tablonun adı.
 wesnothd uygulamasının bir oyundaki oyuncular hakkındaki kendi verilerini
 kaydedeceği tablonun adı.
 .TP 
-\fBdb_game_modification_info_table\fP
-wesnothd uygulamasının bir oyunda yapılan değişiklikler hakkında kendi
-verilerini kaydedeceği tablonun adı.
+\fBdb_game_content_info_table\fP
+The name of the table in which wesnothd will save its own data about game
+content (scenario/era/modifications) used in a game.
 .TP 
 \fBdb_user_group_table\fP
 phpbb forumlarınızdaki kullanıcıların grup verilerinin saklanacağı tablonun
 ismi. Bu tablo genellikle şöyle belirtilir:
 <tablo\-öneki>_users_group (örnek: phpbb3_users_group).
+.TP 
+\fBdb_tournament_query\fP
+The SQL query to find tournaments to announce on login. Should return
+tournament \fBtitle\fP, \fBstatus\fP and \fBurl\fP.
 .TP 
 \fBdb_connection_history_table\fP
 Oturum açma/oturum kapatma zamanlarının saklanacağı tablonun adı. Ayrıca
@@ -287,6 +267,14 @@ phpbb3_banlist).
 .TP 
 \fBmp_mod_group\fP
 Yönetme yetkisine sahip olduğu kabul edilecek forum grubunun kimliği.
+.TP 
+\fBforum_admin_group\fP
+The ID of one of the forum groups to be considered as having admin authority
+on the add\-ons server.
+.TP 
+\fBsite_admin_group\fP
+The ID of one of the forum groups to be considered as having admin authority
+on the add\-ons server.
 .RE
 .
 .SH "ÇIKIŞ DURUMU"
@@ -308,7 +296,7 @@ Oyunun ana sayfasını ziyaret etmeyi unutmayın: http://www.wesnoth.org/
 .
 .SH "TELİF HAKKI"
 .
-Copyright \(co 2003\-2024 David White <davidnwhite@verizon.net>
+Copyright \(co 2003\-2025 David White <davidnwhite@verizon.net>
 .br
 Bu bir özgür yazılımdır; GNU Genel Kamu Lisansının 2. sürümünün (GPLv2)
 koşullarına bağlı kalarak kopyalarını yeniden dağıtabilirsiniz. Yasaların

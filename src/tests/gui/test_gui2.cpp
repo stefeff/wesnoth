@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2009 - 2024
+	Copyright (C) 2009 - 2025
 	by Mark de Wever <koraq@xs4all.nl>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -34,6 +34,7 @@
 #include "gettext.hpp"
 #include "gui/core/layout_exception.hpp"
 #include "gui/dialogs/addon/addon_auth.hpp"
+#include "gui/dialogs/addon/addon_server_info.hpp"
 #include "gui/dialogs/addon/connect.hpp"
 #include "gui/dialogs/addon/install_dependencies.hpp"
 #include "gui/dialogs/addon/license_prompt.hpp"
@@ -42,7 +43,6 @@
 #include "gui/dialogs/attack_predictions.hpp"
 #include "gui/dialogs/campaign_difficulty.hpp"
 #include "gui/dialogs/campaign_selection.hpp"
-#include "gui/dialogs/community_dialog.hpp"
 #include "gui/dialogs/chat_log.hpp"
 #include "gui/dialogs/core_selection.hpp"
 #include "gui/dialogs/debug_clock.hpp"
@@ -57,6 +57,7 @@
 #include "gui/dialogs/editor/edit_pbl_translation.hpp"
 #include "gui/dialogs/editor/edit_scenario.hpp"
 #include "gui/dialogs/editor/edit_side.hpp"
+#include "gui/dialogs/editor/edit_unit.hpp"
 #include "gui/dialogs/editor/generate_map.hpp"
 #include "gui/dialogs/editor/generator_settings.hpp"
 #include "gui/dialogs/editor/new_map.hpp"
@@ -73,6 +74,7 @@
 #include "gui/dialogs/game_stats.hpp"
 #include "gui/dialogs/game_version_dialog.hpp"
 #include "gui/dialogs/gamestate_inspector.hpp"
+#include "gui/dialogs/gui_test_dialog.hpp"
 #include "gui/dialogs/help_browser.hpp"
 #include "gui/dialogs/hotkey_bind.hpp"
 #include "gui/dialogs/label_settings.hpp"
@@ -100,6 +102,7 @@
 #include "gui/dialogs/prompt.hpp"
 #include "gui/dialogs/screenshot_notification.hpp"
 #include "gui/dialogs/select_orb_colors.hpp"
+#include "gui/dialogs/reachmap_options.hpp"
 #include "gui/dialogs/simple_item_selector.hpp"
 #include "gui/dialogs/sp_options_configure.hpp"
 #include "gui/dialogs/statistics_dialog.hpp"
@@ -112,10 +115,7 @@
 #include "gui/dialogs/transient_message.hpp"
 #include "gui/dialogs/unit_advance.hpp"
 #include "gui/dialogs/unit_attack.hpp"
-#include "gui/dialogs/unit_create.hpp"
-#include "gui/dialogs/unit_list.hpp"
-#include "gui/dialogs/unit_recall.hpp"
-#include "gui/dialogs/unit_recruit.hpp"
+#include "gui/dialogs/units_dialog.hpp"
 #include "gui/dialogs/wml_error.hpp"
 #include "gui/dialogs/wml_message.hpp"
 #include "gui/widgets/settings.hpp"
@@ -144,16 +144,16 @@ struct test_gui2_fixture {
 	: config_manager()
 	, dummy_args({"wesnoth", "--noaddons"})
 	{
-		/** The main config, which contains the entire WML tree. */
-		game_config_view game_config_view_ = game_config_view::wrap(main_config);
 		config_manager.reset(new game_config_manager(dummy_args));
-
 		game_config::config_cache& cache = game_config::config_cache::instance();
 
 		cache.clear_defines();
 		cache.add_define("EDITOR");
 		cache.add_define("MULTIPLAYER");
-		cache.get_config(game_config::path +"/data", main_config);
+
+		/** The main config, which contains the entire WML tree. */
+		main_config = cache.get_config(game_config::path +"/data");
+		game_config_view game_config_view_ = game_config_view::wrap(main_config);
 
 		const filesystem::binary_paths_manager bin_paths_manager(game_config_view_);
 
@@ -209,7 +209,7 @@ namespace {
 	void test_resolutions(const resolution_list& resolutions)
 	{
 		for(const resolution& resolution : resolutions) {
-			test_utils::get_fake_display(resolution.first, resolution.second);
+			test_utils::set_test_resolution(resolution.first, resolution.second);
 
 			dialog_tester<T> ctor;
 			const std::unique_ptr<modal_dialog> dlg(ctor.create());
@@ -249,11 +249,7 @@ namespace {
 		bool interact = false;
 		for(int i = 0; i < 2; ++i) {
 			for(const resolution& resolution : resolutions) {
-				// debug clock doesn't work at 800x600
-				if(resolution.first == 800 && resolution.second == 600) {
-					continue;
-				}
-				test_utils::get_fake_display(resolution.first, resolution.second);
+				test_utils::set_test_resolution(resolution.first, resolution.second);
 
 				dialog_tester<T> ctor;
 				const std::unique_ptr<modeless_dialog> dlg(ctor.create());
@@ -301,7 +297,7 @@ namespace {
 			, const std::string& id)
 	{
 		for(const auto& resolution : resolutions) {
-			test_utils::get_fake_display(resolution.first, resolution.second);
+			test_utils::set_test_resolution(resolution.first, resolution.second);
 
 			filesystem::write_file(test_gui2_fixture::widgets_file, ","+id, std::ios_base::app);
 
@@ -340,7 +336,6 @@ namespace {
 const resolution_list& get_gui_resolutions()
 {
 	static resolution_list result {
-		{800,  600},
 		{1024, 768},
 		{1280, 1024},
 		{1680, 1050},
@@ -423,10 +418,6 @@ BOOST_AUTO_TEST_CASE(modal_dialog_test_prompt)
 BOOST_AUTO_TEST_CASE(modal_dialog_test_core_selection)
 {
 	test<core_selection>();
-}
-BOOST_AUTO_TEST_CASE(modal_dialog_test_custom_tod)
-{
-	test<custom_tod>();
 }
 BOOST_AUTO_TEST_CASE(modal_dialog_test_depcheck_confirm_change)
 {
@@ -520,6 +511,10 @@ BOOST_AUTO_TEST_CASE(modal_dialog_test_generator_settings)
 {
 	test<generator_settings>();
 }
+BOOST_AUTO_TEST_CASE(modal_dialog_test_gui_test_dialog)
+{
+	test<gui_test_dialog>();
+}
 BOOST_AUTO_TEST_CASE(modal_dialog_test_hotkey_bind)
 {
 	test<hotkey_bind>();
@@ -584,6 +579,10 @@ BOOST_AUTO_TEST_CASE(modal_dialog_test_select_orb_colors)
 {
 	test<select_orb_colors>();
 }
+BOOST_AUTO_TEST_CASE(modal_dialog_test_reachmap_options)
+{
+	test<reachmap_options>();
+}
 BOOST_AUTO_TEST_CASE(modal_dialog_test_statistics_dialog)
 {
 	test<statistics_dialog>();
@@ -599,10 +598,6 @@ BOOST_AUTO_TEST_CASE(modal_dialog_test_theme_list)
 BOOST_AUTO_TEST_CASE(modal_dialog_test_transient_message)
 {
 	test<transient_message>();
-}
-BOOST_AUTO_TEST_CASE(modal_dialog_test_unit_create)
-{
-	test<unit_create>();
 }
 BOOST_AUTO_TEST_CASE(modal_dialog_test_wml_error)
 {
@@ -624,9 +619,9 @@ BOOST_AUTO_TEST_CASE(modal_dialog_test_achievements_dialog)
 {
 	test<achievements_dialog>();
 }
-BOOST_AUTO_TEST_CASE(modal_dialog_test_community_dialog)
+BOOST_AUTO_TEST_CASE(modal_dialog_test_addon_server_info)
 {
-	test<community_dialog>();
+	test<addon_server_info>();
 }
 BOOST_AUTO_TEST_CASE(modal_dialog_test_mp_match_history_dialog)
 {
@@ -634,7 +629,7 @@ BOOST_AUTO_TEST_CASE(modal_dialog_test_mp_match_history_dialog)
 }
 BOOST_AUTO_TEST_CASE(modal_dialog_test_migrate_version_selection_dialog)
 {
-	test<migrate_version_selection>();
+	test<gui2::dialogs::migrate_version_selection>();
 }
 BOOST_AUTO_TEST_CASE(modeless_dialog_test_debug_clock)
 {
@@ -651,6 +646,11 @@ BOOST_AUTO_TEST_CASE(tooltip_test_tooltip)
 BOOST_AUTO_TEST_CASE(modal_dialog_test_tod_new_schedule)
 {
 	test<tod_new_schedule>();
+}
+
+BOOST_AUTO_TEST_CASE(modal_dialog_test_editor_edit_unit)
+{
+	test<editor_edit_unit>();
 }
 
 // execute last - checks that there aren't any unaccounted for GUIs
@@ -680,9 +680,7 @@ BOOST_AUTO_TEST_CASE(test_last)
 		"synched_choice_wait",
 		"drop_down_menu",
 		"preferences_dialog",
-		"unit_recruit",
-		"unit_recall",
-		"unit_list",
+		"units_dialog",
 		"unit_advance",
 		"mp_host_game_prompt",
 		"mp_create_game",
@@ -704,6 +702,8 @@ BOOST_AUTO_TEST_CASE(test_last)
 		"campaign_selection",// segfault with LTO
 		"game_load",// segfault after disabling the above tests
 		"file_progress",
+		"fps_report", // needs something to report...
+		"custom_tod", // needs to be adapted to handle a null display
 	};
 	filesystem::delete_file(test_gui2_fixture::widgets_file);
 
@@ -727,13 +727,13 @@ BOOST_AUTO_TEST_CASE(test_last)
 
 BOOST_AUTO_TEST_CASE(test_make_test_fake)
 {
-	test_utils::get_fake_display(10, 10);
+	test_utils::set_test_resolution(10, 10);
 
 	try {
 		message dlg("title", "message", true, false, false);
 		dlg.show(1);
 	} catch(const wml_exception& e) {
-		BOOST_CHECK(e.user_message == _("Failed to show a dialog, which doesn't fit on the screen."));
+		BOOST_CHECK(e.type == wml_exception::error_type::GUI_LAYOUT_FAILURE);
 		return;
 	} catch(...) {
 		BOOST_ERROR("Didn't catch the wanted exception, instead caught " << utils::get_unknown_exception_type() << ".");
@@ -744,6 +744,18 @@ BOOST_AUTO_TEST_CASE(test_make_test_fake)
 BOOST_AUTO_TEST_SUITE_END()
 
 namespace {
+
+template<>
+struct dialog_tester<addon_server_info>
+{
+	std::string s = "";
+	bool b = false;
+	addon_server_info* create()
+	{
+		addons_client client("localhost:15999");
+		return new addon_server_info(client, s, b);
+	}
+};
 
 template<>
 struct dialog_tester<addon_auth>
@@ -782,7 +794,7 @@ struct dialog_tester<addon_manager>
 {
 	dialog_tester()
 	{
-		test_utils::get_fake_display(10, 10);
+		test_utils::set_test_resolution(10, 10);
 	}
 	addon_manager* create()
 	{
@@ -974,7 +986,6 @@ template<>
 struct dialog_tester<game_load>
 {
 	config cfg;
-	game_config_view view;
 	// It would be good to have a test directory instead of using the same directory as the player,
 	// however this code will support that - default_saves_dir() will respect --userdata-dir.
 	savegame::load_game_metadata data{savegame::save_index_class::default_saves_dir()};
@@ -984,10 +995,8 @@ struct dialog_tester<game_load>
 	}
 	game_load* create()
 	{
-		view = game_config_view::wrap(cfg);
-		return new game_load(view, data);
+		return new game_load(data);
 	}
-
 };
 
 template<>
@@ -1080,16 +1089,16 @@ struct dialog_tester<mp_match_history>
 };
 
 template<>
-struct dialog_tester<migrate_version_selection>
+struct dialog_tester<gui2::dialogs::migrate_version_selection>
 {
-	migrate_version_selection* create()
+	gui2::dialogs::migrate_version_selection* create()
 	{
-		return new migrate_version_selection();
+		return new gui2::dialogs::migrate_version_selection();
 	}
 };
 
 class fake_chat_handler : public events::chat_handler {
-	void add_chat_message(const std::time_t&,
+	void add_chat_message(const std::chrono::system_clock::time_point&,
 		const std::string&, int, const std::string&,
 		MESSAGE_TYPE) {}
 	void send_chat_message(const std::string&, bool) {}
@@ -1363,11 +1372,12 @@ struct dialog_tester<faction_select>
 {
 	config era_cfg, side_cfg;
 	std::vector<const config*> eras;
+	ng::era_metadata era;
 	ng::flg_manager flg;
 	std::string color;
 	dialog_tester()
-		: era_cfg(), side_cfg(), eras(1, &era_cfg) // TODO: Add an actual era definition
-		, flg(eras, side_cfg, false, false, false)
+		: era_cfg(), side_cfg(), eras(1, &era_cfg), era(era_cfg) // TODO: Add an actual era definition
+		, flg(era, eras, side_cfg, false, false, false)
 		, color("teal")
 	{}
 	faction_select* create() {
@@ -1392,12 +1402,10 @@ struct dialog_tester<sp_options_configure>
 {
 	saved_game state;
 	ng::create_engine create_eng;
-	ng::configure_engine config_eng;
-	dialog_tester() : create_eng(state)
-		, config_eng(create_eng.get_state()) {}
+	dialog_tester() : create_eng(state) {}
 	sp_options_configure* create()
 	{
-		return new sp_options_configure(create_eng, config_eng);
+		return new sp_options_configure(create_eng);
 	}
 };
 
@@ -1428,11 +1436,42 @@ template<>
 struct dialog_tester<tod_new_schedule>
 {
 	std::string id = "id";
-	std::string name = "name";
+	t_string name = "name";
 	dialog_tester() {}
 	tod_new_schedule* create()
 	{
 		return new tod_new_schedule(id, name);
+	}
+};
+
+template<>
+struct dialog_tester<editor_edit_unit>
+{
+	config cfg;
+	game_config_view view;
+
+	dialog_tester() {}
+	editor_edit_unit* create()
+	{
+		config& units = cfg.add_child("units");
+		cfg.add_child("race");
+		config& movetype = units.add_child("movetype");
+		movetype["name"] = "Test Movetype";
+		movetype.add_child("defense");
+		movetype.add_child("resistance");
+		movetype.add_child("movement_costs");
+		view = game_config_view::wrap(cfg);
+		return new editor_edit_unit(view, "test_addon");
+	}
+};
+
+template<>
+struct dialog_tester<gui_test_dialog>
+{
+	dialog_tester() {}
+	gui_test_dialog* create()
+	{
+		return new gui_test_dialog();
 	}
 };
 

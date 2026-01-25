@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -35,16 +35,18 @@ public:
 	variant(int n, DECIMAL_VARIANT_TYPE /*type*/);
 	variant(double n, DECIMAL_VARIANT_TYPE /*type*/);
 	explicit variant(const std::vector<variant>& array);
+	explicit variant(std::vector<variant>&& array);
 	explicit variant(const std::string& str);
+	explicit variant(std::string&& str);
 	explicit variant(const std::map<variant, variant>& map);
+	explicit variant(std::map<variant, variant>&& map);
 	variant(const variant& v) = default;
 	variant(variant&& v) = default;
 
 	template<typename T>
-	variant(std::shared_ptr<T> callable)
+	explicit variant(std::shared_ptr<T> callable)
 		: value_(std::make_shared<variant_callable>(callable))
 	{
-		assert(value_.get());
 	}
 
 	variant& operator=(const variant& v) = default;
@@ -67,10 +69,17 @@ public:
 	bool is_string()   const { return type() == formula_variant::type::string; }
 	bool is_map()      const { return type() == formula_variant::type::map; }
 
-	int as_int() const;
+	/**
+	 * Returns the variant's value as an integer.
+	 * If @ref is_null() is true, returns @a fallback.
+	 */
+	int as_int(int fallback = 0) const;
 
-	/** Returns variant's internal representation of decimal number: ie, 1.234 is represented as 1234 */
-	int as_decimal() const;
+	/**
+	 * Returns the variant's internal representation of decimal number: ie, 1.234 is represented as 1234.
+	 * If @ref is_null() is true, returns @a fallback.
+	 */
+	int as_decimal(int fallback = 0) const;
 
 	/** Returns a boolean state of the variant value. The implementation is type-dependent. */
 	bool as_bool() const;

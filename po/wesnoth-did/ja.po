@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-02-20 02:52 UTC\n"
+"POT-Creation-Date: 2025-11-18 02:02 UTC\n"
 "PO-Revision-Date: 2023-12-03 03:44+0000\n"
 "Last-Translator: RatArmy, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/wesnoth-jp/teams/60513/"
@@ -5507,9 +5507,13 @@ msgstr "ワシの斧では切れん。魔法で守られとる！"
 #. [message]: role=speakinghero
 #. regular english: Yes, but the lich still seems to be hurt. Let's take it and retreat. Maybe the forge can destroy it.
 #: data/campaigns/Descent_Into_Darkness/scenarios/10_Endless_Night.cfg:1266
+#, fuzzy
+#| msgid ""
+#| "Aye, but the lich still seems ta be hurtin’. Let’s take it ’n retreat. "
+#| "Maybe tha forge ken destroy it."
 msgid ""
 "Aye, but the lich still seems ta be hurtin’. Let’s take it ’n retreat. Maybe "
-"tha forge ken destroy it."
+"tha forge can destroy it."
 msgstr ""
 "じゃが、リッチは苦しんどる。それを持って退却じゃ。職人ならば壊せるじゃろ。"
 
@@ -5929,7 +5933,9 @@ msgstr ""
 #. [message]: role=second
 #. regular english - I don't know. You think the lich's castle can be useful
 #: data/campaigns/Descent_Into_Darkness/scenarios/10_Endless_Night.cfg:1895
-msgid "I dinna know. Ye think tha lich’s castle ken be useful?"
+#, fuzzy
+#| msgid "I dinna know. Ye think tha lich’s castle ken be useful?"
+msgid "I dinna know. Ye think tha lich’s castle can be useful?"
 msgstr "知らん。リッチの城は役に立つじゃろうか？"
 
 #. [message]: role=speakinghero
@@ -6364,28 +6370,28 @@ msgstr "周囲の敵から HP を奪いますが、毎ターン HP を失いま�
 
 #. [attack]: type=arcane
 #: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:211
-#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:350
+#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:347
 #: data/campaigns/Descent_Into_Darkness/units/Spectral_Servant.cfg:357
 msgid "touch"
 msgstr "接触"
 
 #. [attack]: type=cold
 #: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:223
-#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:362
+#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:359
 msgid "chill tempest"
 msgstr "冷気の大嵐"
 
 #. [attack]: type=arcane
 #: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:235
-#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:374
+#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:371
 msgid "shadow wave"
 msgstr "影の波動"
 
-#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:326
+#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:323
 msgid "Ancient Lich"
 msgstr "古代リッチ"
 
-#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:342
+#: data/campaigns/Descent_Into_Darkness/units/Mal_Keshar.cfg:339
 msgid ""
 "A lich that accrues enough power over its newfound immortal lifespan becomes "
 "one who can stain souls with despair and sow ruin across the world. "
@@ -6578,27 +6584,27 @@ msgid "This unit increases the damage of nearby undead units by 40%."
 msgstr ""
 "このユニットは周囲のアンデッドユニットの与えるダメージを 40% 増加させます"
 
-#. [dummy]: id=did_shadow_veil
+#. [hides]: id=did_shadow_veil
 #: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:133
 #: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:134
 msgid "shadow veil"
 msgstr "影覆"
 
-#. [dummy]: id=did_shadow_veil
+#. [hides]: id=did_shadow_veil
 #: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:135
 #: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:136
 msgid "Allied undead units within a 5 hex radius are hidden."
 msgstr "5 ヘクス以内の友軍アンデッドユニットを隠れさせます"
 
 #. [dummy]: id=did_frost_nova
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:238
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:239
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:151
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:152
 msgid "frost nova"
 msgstr "冷気爆発"
 
 #. [dummy]: id=did_frost_nova
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:240
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:241
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:153
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:154
 msgid ""
 "On offense, this attack will additionally deal 70% of its damage in cold "
 "damage to all enemies adjacent to the target."
@@ -6607,14 +6613,14 @@ msgstr ""
 "与えます"
 
 #. [damage]: id=did_spellbind
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:307
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:308
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:222
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:223
 msgid "spell bind"
 msgstr "呪縛"
 
 #. [damage]: id=did_spellbind
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:309
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:310
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:224
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:225
 msgid ""
 "When this attack is used, the damage taken from fire, cold, and arcane "
 "attacks will be reduced by 60%."
@@ -6623,24 +6629,24 @@ msgstr ""
 "す。"
 
 #. [drains]: id=did_reap
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:325
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:240
 msgid "reap"
 msgstr "収穫"
 
 #. [drains]: id=did_reap
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:326
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:241
 msgid "This unit heals for 70% of the damage this attack deals."
 msgstr "この攻撃で与えたダメージの 70% だけ回復します。"
 
 #. [dummy]: id=did_soul_rend
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:333
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:334
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:248
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:249
 msgid "soul rend"
 msgstr "魂裂"
 
 #. [dummy]: id=did_soul_rend
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:335
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:336
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:250
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:251
 msgid ""
 "Every turn, this unit loses 3 hitpoints, but drains 6 hitpoints from each "
 "adjacent enemy."
@@ -6649,14 +6655,14 @@ msgstr ""
 "す。"
 
 #. [damage]: id=did_malevolence
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:432
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:433
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:349
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:350
 msgid "malevolence"
 msgstr "悪意"
 
 #. [damage]: id=did_malevolence
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:434
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:435
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:351
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:352
 msgid ""
 "This attack gains 50% damage on offense, but causes this unit to lose 1 hp "
 "per hit."
@@ -6665,72 +6671,72 @@ msgstr ""
 "す。"
 
 #. [swarm]: id=did_hysteria
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:449
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:366
 msgid "hysteria"
 msgstr "興奮"
 
 #. [swarm]: id=did_hysteria
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:450
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:367
 msgid "This attack gains up to 10 strikes when this unit is wounded."
 msgstr "このユニットが傷ついていくと、攻撃回数が最大 10 まで増加します。"
 
 #. [leadership]: id=sorrow
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:460
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:476
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:377
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:393
 msgid "sorrow"
 msgstr "悲哀"
 
 #. [leadership]: id=sorrow
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:461
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:378
 msgid "Adjacent enemy units do 20% less damage."
 msgstr "隣接敵ユニットの与えるダメージが 20% 減少します。"
 
 #. [leadership]: id=sorrow
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:477
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:394
 msgid "Adjacent enemy units do 40% less damage."
 msgstr "隣接敵ユニットの与えるダメージが 40% 減少します。"
 
 #. [teleport]: id=did_enlightened
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:492
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:409
 msgid "enlightened"
 msgstr "覚者"
 
 #. [teleport]: id=did_enlightened
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:493
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:410
 msgid "female^enlightened"
 msgstr "覚者"
 
 #. [teleport]: id=did_enlightened
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:494
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:411
 msgid "This unit can teleport between mushroom groves."
 msgstr "このユニットはキノコの森の間を瞬間移動できます。"
 
 #. [heal_on_hit]: id=did_vitalize1
 #. [heal_on_hit]: id=did_vitalize2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:518
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:527
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:435
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:444
 msgid "vitalize"
 msgstr "活性"
 
 #. [heal_on_hit]: id=did_vitalize1
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:519
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:436
 msgid "This unit heals 2 HP every time this attack hits."
 msgstr "この攻撃が当たるたびに、このユニットの HP が 2 回復します。"
 
 #. [heal_on_hit]: id=did_vitalize2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:528
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:445
 msgid "This unit heals 4 HP every time this attack hits."
 msgstr "この攻撃が当たるたびに、このユニットの HP が 4 回復します。"
 
 #. [attacks]: id=did_fervor
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:535
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:536
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:452
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:453
 msgid "fervor"
 msgstr "熱情"
 
 #. [attacks]: id=did_fervor
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:537
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:538
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:454
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:455
 msgid ""
 "This attack gains 2 attacks on offense, but causes this unit to lose 4 hp "
 "per hit."
@@ -6738,14 +6744,14 @@ msgstr ""
 "攻撃時に使うと攻撃回数が 2 増えますが、攻撃があたるたびに HP を 4 失います。"
 
 #. [attacks]: id=did_impetuity
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:552
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:553
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:469
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:470
 msgid "impetuity"
 msgstr "焦燥"
 
 #. [attacks]: id=did_impetuity
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:554
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:555
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:471
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:472
 msgid ""
 "This attack loses one strike on offense but deals three times the normal "
 "damage."
@@ -6753,12 +6759,12 @@ msgstr ""
 "攻撃時に使うと、攻撃回数を 1 失うかわりに、与えるダメージが 3 倍になります。"
 
 #. [attacks]: id=did_corpse_launcher
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:569
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:486
 msgid "corpse launcher"
 msgstr "死体発射"
 
 #. [attacks]: id=did_corpse_launcher
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:570
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:487
 msgid ""
 "On offense, enemies cannot retaliate against this attack. This attack "
 "consumes 3 HP from each nearby allied corpse to deal 15 impact damage (per "
@@ -6769,12 +6775,12 @@ msgstr ""
 "します。"
 
 #. [leadership]: id=did_consumption
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:696
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:613
 msgid "consumption"
 msgstr "消費"
 
 #. [leadership]: id=did_consumption
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:697
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:614
 msgid ""
 "At night, this unit and adjacent allied undead gain 25% damage. However, "
 "this unit loses 2 HP per turn."
@@ -6783,12 +6789,12 @@ msgstr ""
 "す。しかし、このユニットは毎ターン HP を 2 失います。"
 
 #. [heals]: id=did_corpse_master
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:761
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:678
 msgid "corpse master"
 msgstr "死体操者"
 
 #. [heals]: id=did_corpse_master
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:762
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:679
 msgid ""
 "Adjacent allied corpses heal 8 HP per turn and gain 30% resistance to blade, "
 "impact, and pierce."
@@ -6797,24 +6803,24 @@ msgstr ""
 "スを得ます。"
 
 #. [leadership]: id=did_zombie_frenzy
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:796
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:712
 msgid "zombie frenzy"
 msgstr "死体狂乱"
 
 #. [leadership]: id=did_zombie_frenzy
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:797
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:713
 msgid "Adjacent allied corpses gain 30% damage and are berserk."
 msgstr "隣接する友軍死体ユニットは 30% のダメージボーナスと狂戦を獲得します。"
 
 #. [regenerate]: id=did_cannibalize1
 #. [regenerate]: id=did_cannibalize2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:827
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:912
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:743
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:828
 msgid "cannibalize"
 msgstr "共食い"
 
 #. [regenerate]: id=did_cannibalize1
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:828
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:744
 msgid ""
 "On each turn, this unit regenerates 2 HP per adjacent allied ghoul-type "
 "unit, but consumes 1 HP from each ally in the process."
@@ -6823,7 +6829,7 @@ msgstr ""
 "ただし、隣接する友軍ユニットはそれぞれ 1 HP を失います。"
 
 #. [regenerate]: id=did_cannibalize2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:913
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:829
 msgid ""
 "On each turn, this unit regenerates 4 HP per adjacent allied ghoul-type "
 "unit, but consumes 2 HP from each ally in the process."
@@ -6832,86 +6838,86 @@ msgstr ""
 "ただし、隣接する友軍ユニットはそれぞれ 2 HP を失います。"
 
 #. [dummy]: id=did_death_cloud
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:995
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:911
 msgid "death cloud"
 msgstr "死の雲"
 
 #. [dummy]: id=did_death_cloud
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:996
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:912
 msgid ""
 "This unit poisons all nearby enemy units on the start of every new turn."
 msgstr "ターン開始時にこのユニットに隣接する敵ユニットは毒を受けます。"
 
 #. [plague]: id=ghoulfication, type=Ghoul
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1039
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:955
 msgid "ghoulfication"
 msgstr "グール化"
 
 #. [plague]: id=ghoulfication, type=Ghoul
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1040
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:956
 msgid "When a unit is killed by this attack, it turns into a ghoul."
 msgstr "この攻撃によって倒されたユニットはグールになります。"
 
 #. [dummy]: id=did_starving
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1048
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1049
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:964
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:965
 msgid "starving"
 msgstr "飢餓"
 
 #. [dummy]: id=did_starving
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1050
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1051
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:966
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:967
 msgid "This unit loses 1 hitpoint every turn."
 msgstr "このユニットは毎ターン 1 HP を失います。"
 
 #. [leadership]: id=masochism1
 #. [leadership]: id=masochism2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1094
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1106
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1010
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1022
 msgid "masochism"
 msgstr "マゾヒズム"
 
 #. [leadership]: id=masochism1
 #. [leadership]: id=masochism2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1095
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1107
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1011
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1023
 msgid "female^masochism"
 msgstr "マゾヒズム"
 
 #. [leadership]: id=masochism1
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1096
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1012
 msgid "This unit gains up to 50% damage as its hitpoints are reduced."
 msgstr ""
 "このユニットは自身の HP が低いほど与えるダメージが上昇します（最大 50%）。"
 
 #. [leadership]: id=masochism2
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1108
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1024
 msgid "This unit gains up to 100% damage as its hitpoints are reduced."
 msgstr ""
 "このユニットは自身の HP が低いほど与えるダメージが上昇します（最大 100%）。"
 
 #. [resistance]: id=did_drunk
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1120
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1036
 msgid "drunk"
 msgstr "泥酔"
 
 #. [resistance]: id=did_drunk
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1121
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1037
 msgid "female^drunk"
 msgstr "泥酔"
 
 #. [resistance]: id=did_drunk
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1122
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1038
 msgid "This unit is drunk and has 10% increased resistances."
 msgstr "このユニットは酔っ払っていて、耐性が 10 % 向上しています。"
 
 #. [berserk]: id=did_drunken_rage
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1130
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1046
 msgid "drunken rage"
 msgstr "酔乱"
 
 #. [berserk]: id=did_drunken_rage
-#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1131
+#: data/campaigns/Descent_Into_Darkness/utils/abilities.cfg:1047
 msgid "On offense, this attack presses the engagement for 4 rounds of attacks."
 msgstr "攻撃時、4 ラウンドの間戦闘が継続します。"
 

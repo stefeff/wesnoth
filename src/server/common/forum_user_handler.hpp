@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Thomas Baumhauer <thomas.baumhauer@NOSPAMgmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -18,9 +18,9 @@
 #include "server/common/user_handler.hpp"
 #include "server/common/dbconn.hpp"
 
+#include <chrono>
 #include <vector>
 #include <memory>
-#include <ctime>
 
 /**
  * A class to handle the non-SQL logic for connecting to the phpbb forum database.
@@ -310,10 +310,10 @@ public:
 	 *
 	 * @param instance_version Which major version this is for (1.16, 1.17, etc).
 	 * @param id The ID of the add-on.
-	 * @param primary_author The primary author of the add-on.
+	 * @param primary_authors The primary authors of the add-on.
 	 * @param secondary_authors The secondary authors of the add-on.
 	 */
-	void db_insert_addon_authors(const std::string& instance_version, const std::string& id, const std::string& primary_author, const std::vector<std::string>& secondary_authors);
+	void db_insert_addon_authors(const std::string& instance_version, const std::string& id, const std::vector<std::string>& primary_authors, const std::vector<std::string>& secondary_authors);
 
 	/**
 	 * Checks whether any author information exists for a particular addon and version, since if there's no author information then of course no primary or secondary authors will ever be found.
@@ -324,6 +324,32 @@ public:
 	 */
 	bool db_do_any_authors_exist(const std::string& instance_version, const std::string& id);
 
+	/**
+	 * Gets a list of download count by version for add-ons.
+	 *
+	 * @param instance_version Which major version this is for (1.16, 1.17, etc).
+	 * @param id The ID of the add-on.
+	 * @return The results of the query.
+	 */
+	config db_get_addon_downloads_info(const std::string& instance_version, const std::string& id);
+
+	/**
+	 * @param instance_version Which major version this is for (1.16, 1.17, etc).
+	 * @return The total count of add-ons amd the count of add-ons using forum_auth.
+	 */
+	config db_get_forum_auth_usage(const std::string& instance_version);
+
+	/**
+	 * @return the list of account names that have admin abilities, ie deleting or hiding add-ons
+	 */
+	config db_get_addon_admins();
+
+	/**
+	 * @param name The provided username.
+	 * @return Whether the username is in any groups specified as admins.
+	 */
+	bool user_is_addon_admin(const std::string& name);
+
 private:
 	/** An instance of the class responsible for executing the queries and handling the database connection. */
 	dbconn conn_;
@@ -333,6 +359,10 @@ private:
 	std::string db_extra_table_;
 	/** The group ID of the forums MP Moderators group */
 	int mp_mod_group_;
+	/** The group ID of the forums Site Administrators group */
+	int site_admin_group_;
+	/** The group ID of the forums Forum Administrators group */
+	int forum_admin_group_;
 
 	/**
 	 * @param user The player's username.
@@ -344,11 +374,11 @@ private:
 	 * @param user The player's username.
 	 * @return The player's last login time.
 	 */
-	std::time_t get_lastlogin(const std::string& user);
+	std::chrono::system_clock::time_point get_lastlogin(const std::string& user);
 
 	/**
 	 * @param user The player's username.
 	 * @return The player's forum registration date.
 	 */
-	std::time_t get_registrationdate(const std::string& user);
+	std::chrono::system_clock::time_point get_registrationdate(const std::string& user);
 };

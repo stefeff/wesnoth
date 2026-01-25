@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2017 - 2024
+	Copyright (C) 2017 - 2025
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
 	This program is free software; you can redistribute it and/or modify
@@ -20,8 +20,7 @@
 #include "gui/dialogs/multiplayer/mp_report.hpp"
 #include "gui/dialogs/preferences_dialog.hpp"
 #include "map_command_handler.hpp"
-#include "preferences/display.hpp"
-#include "preferences/game.hpp"
+#include "preferences/preferences.hpp"
 
 namespace events {
 
@@ -32,7 +31,7 @@ bool chat_command_handler::is_enabled(const map_command_handler<chat_command_han
 
 void chat_command_handler::print(const std::string& title, const std::string& message)
 {
-	chat_handler_.add_chat_message(std::time(nullptr), title, 0, message);
+	chat_handler_.add_chat_message(std::chrono::system_clock::now(), title, 0, message);
 }
 
 void chat_command_handler::do_emote()
@@ -78,7 +77,7 @@ void chat_command_handler::do_ignore()
 		utils::string_map symbols;
 		symbols["nick"] = get_arg(1);
 
-		if (preferences::add_acquaintance(get_arg(1), "ignore", get_data(2)).first) {
+		if (prefs::get().add_acquaintance(get_arg(1), "ignore", get_data(2)).first) {
 			print(_("ignores list"), VGETTEXT("Added to ignore list: $nick", symbols));
 			chat_handler_.user_relation_changed(get_arg(1));
 		}
@@ -97,7 +96,7 @@ void chat_command_handler::do_friend()
 		utils::string_map symbols;
 		symbols["nick"] = get_arg(1);
 
-		if (preferences::add_acquaintance(get_arg(1), "friend", get_data(2)).first) {
+		if (prefs::get().add_acquaintance(get_arg(1), "friend", get_data(2)).first) {
 			print(_("friends list"), VGETTEXT("Added to friends list: $nick", symbols));
 			chat_handler_.user_relation_changed(get_arg(1));
 		}
@@ -110,7 +109,7 @@ void chat_command_handler::do_friend()
 void chat_command_handler::do_remove()
 {
 	for (int i = 1;!get_arg(i).empty();i++) {
-		preferences::remove_acquaintance(get_arg(i));
+		prefs::get().remove_acquaintance(get_arg(i));
 		chat_handler_.user_relation_changed(get_arg(i));
 		utils::string_map symbols;
 		symbols["nick"] = get_arg(i);
@@ -120,7 +119,7 @@ void chat_command_handler::do_remove()
 
 void chat_command_handler::do_display()
 {
-	gui2::dialogs::preferences_dialog::display(preferences::VIEW_FRIENDS);
+	gui2::dialogs::preferences_dialog::display(pref_constants::VIEW_FRIENDS);
 }
 
 void chat_command_handler::do_version() {
@@ -130,15 +129,11 @@ void chat_command_handler::do_version() {
 void chat_command_handler::do_info() {
 	if (get_data(1).empty()) return command_failed_need_arg(1);
 
-	config data;
-	config& nickserv = data.add_child("nickserv");
-
-	nickserv.add_child("info")["name"] = get_data(1);
 	utils::string_map symbols;
 	symbols["nick"] = get_arg(1);
 	print(_("nick registration"), VGETTEXT("requesting information for user $nick", symbols));
 
-	chat_handler_.send_to_server(data);
+	chat_handler_.send_to_server(config{"nickserv", config{"info", config{"name", get_data(1)}}});
 }
 
 void chat_command_handler::do_clear_messages() {

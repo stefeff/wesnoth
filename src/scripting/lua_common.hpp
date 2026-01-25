@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2014 - 2024
+	Copyright (C) 2014 - 2025
 	by Chris Beck <render787@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -41,6 +41,28 @@ namespace lua_common {
 	std::string register_vconfig_metatable(lua_State *L);
 
 }
+
+/**
+ * Shallow wrapper around lua_geti which pops the top variable from the
+ * Lua stack when destroyed. This is meant to be used in local contexts
+ * for quick cleanup of the stack variable.
+ *
+ * @todo support different get* functions?
+ */
+class scoped_lua_argument
+{
+public:
+	scoped_lua_argument(lua_State* L, int arg_index);
+	scoped_lua_argument(lua_State* L, int value_index, int arg_index);
+
+	~scoped_lua_argument();
+
+	scoped_lua_argument(const scoped_lua_argument&) = delete;
+	scoped_lua_argument& operator=(const scoped_lua_argument&) = delete;
+
+private:
+	lua_State* const state_;
+};
 
 void* operator new(std::size_t sz, lua_State *L, int nuv = 0);
 void operator delete(void* p, lua_State *L, int nuv);
@@ -100,6 +122,12 @@ void luaW_filltable(lua_State *L, const config& cfg);
  * Once it's pushed, you can set the elements, eg with lua_rawseti.
  */
 void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names);
+
+/**
+ * Get the keys of a "named tuple" from the stack.
+ * Returns an empty array if the stack element is not a named tuple.
+ */
+std::vector<std::string> luaW_to_namedtuple(lua_State* L, int idx);
 
 /**
  * Converts a map location object to a Lua table pushed at the top of the stack.
@@ -224,6 +252,10 @@ int luaW_pcall_internal(lua_State *L, int nArgs, int nRets);
 
 int luaW_type_error(lua_State *L, int narg, const char *tname);
 int luaW_type_error(lua_State *L, int narg, const char* kpath, const char *tname);
+
+struct luaW_PrintStack { lua_State* L; };
+luaW_PrintStack luaW_debugstack(lua_State* L);
+std::ostream& operator<<(std::ostream& os, const luaW_PrintStack&);
 
 #define deprecate_attrib(name, prefix, level, version, msg) deprecated_message(prefix "." name, DEP_LEVEL::level, version, msg)
 

@@ -21,7 +21,7 @@
 .TH WESNOTH 6 2022 wesnoth "Battle for Wesnoth"
 .
 .SH NAME
-wesnoth \- Battle for Wesnoth, ein rundenbasiertes Strategiespiel
+wesnoth – Battle for Wesnoth, ein rundenbasiertes Strategiespiel
 .
 .SH ZUSAMMENFASSUNG
 .
@@ -46,19 +46,13 @@ teilt diese mit anderen.
 .SH KOMMANDOZEILENOPTIONEN
 .
 .TP 
+\fB\-\-addon\-info\fP
+Shows a button on the add\-ons manager to query the add\-ons server for
+various information.
+.TP 
 \fB\-\-all\-translations\fP
 Zeige alle Übersetzungen in der Auswahlliste im Spiel an, egal wie weit sie
 übersetzt sind.
-.TP 
-\fB\-\-bunzip2\fP\fI\ Dateiname.bz2\fP
-Entpackt einen Spielstand (\fIDateiname.bz2\fP), der bzip2\-komprimiert sein
-sollte, und speichert ihn ohne die Dateiendung .bz2. Dabei wird
-\fIDateiname.bz2\fP entfernt.
-.TP 
-\fB\-\-bzip2\fP\fI\ Dateiname\fP
-Komprimiert einen normalen textbasierten Spielstand (\fIDateiname\fP) als
-bzip2\-komprimierten Spielstand \fIDateiname\fP.bz2 und entfernt die alte Datei
-\fIDateiname\fP.
 .TP 
 \fB\-c[\fP\fIKampagnen\-ID\fP\fB],\ \-\-campaign[\fP\fI=Kampagnen\-ID\fP\fB]\fP
 Startet die Kampagne mit der ID \fIKampagnen\-ID\fP. Ein Auswahlmenü wird
@@ -77,20 +71,15 @@ angegeben ist, wird das erste Szenario gestartet.
 \fBstart\fP\-Ereignis.
 .TP 
 \fB\-\-clock\fP
-(Entwickleroption) Fügt dem Hauptmenü einen neuen Knopf hinzu, mit welchem
-man eine Uhr mit GUI2\-Elementen zum Testen aufrufen kann.
-.TP 
-\fB\-\-config\-dir\fP\fI\ Name\fP
-Veraltete Option, bitte \fB\-\-userdata\-dir\fP benutzen.
-.TP 
-\fB\-\-config\-path\fP
-Veraltete Option, bitte \fB\-\-userdata\-path\fP benutzen.
+Fügt die Option hinzu, eine Uhr anzuzeugen, um den Zeichentimer zu
+testen. Fügt außerdem die Option für die Anzeige des GUI\-Testdialogs an.
 .TP 
 \fB\-\-core\fP\fI\ Kern\-ID\fP
-Ersetzt den geladenen Kern mit dem angegebenen.
+Overrides the loaded core with the one whose id is specified.
 .TP 
 \fB\-\-data\-dir\fP\fI\ Verzeichnis\fP
-Das angegebene Verzeichnis als Daten\-Verzeichnis verwenden.
+Overrides the data directory with the one specified. The data directory is
+the one that contains subdirectories 'data', 'fonts', 'images' and others.
 .TP 
 \fB\-\-data\-path\fP
 Gibt den Pfad des Spieldateienverzeichnisses aus.
@@ -101,10 +90,10 @@ Wiki\-Seite https://www.wesnoth.org/wiki/CommandMode sind weitere
 Informationen hierzu verfügbar).
 .TP 
 \fB\-\-debug\-lua\fP
-Aktiviert einen Debugmechanismus für Lua.
+Aktiviert einige Lua\-Debugmechanismen
 .TP 
 \fB\-\-strict\-lua\fP
-Unterstützung für veraltete Lua\-Aufrufe deaktivieren.
+Veraltete Lua\-Aufrufe verbieten
 .TP 
 \fB\-D,\-\-diff\fP\fI\ Linke\-Datei\fP\fB\ \fP\fIRechte\-Datei\fP
 Zeigt die Unterschiede zwischen zwei WML\-Dateien an. Der Präprozessor wird
@@ -123,16 +112,6 @@ ebenfalls in einer Datei im Verzeichnis für Nutzerdaten.
 \fB\-f, \-\-fullscreen\fP
 Startet das Spiel im Vollbildmodus.
 .TP 
-\fB\-\-gunzip\fP\fI\ Dateiname.gz\fP
-Entpackt einen Spielstand (\fIDateiname.gz\fP), der gzip\-komprimiert sein
-sollte, und speichert ihn ohne die Dateiendung .gz. Dabei wird
-\fIDateiname.gz\fP entfernt.
-.TP 
-\fB\-\-gzip\fP\fI\ Dateiname\fP
-Komprimiert einen normalen textbasierten Spielstand (\fIDateiname\fP) als
-gzip\-komprimierten Spielstand \fIDateiname\fP.gz und entfernt die alte Datei
-\fIDateiname\fP.
-.TP 
 \fB\-h, \-\-help\fP
 Gibt die möglichen Kommandozeilenoptionen aus.
 .TP 
@@ -147,31 +126,38 @@ Verzeichnis gestartet.
 Benutzt für diese Sitzung die \fISprache\fP (Symbol). Beispiel: \fB\-\-language ang_GB@latin\fP.
 .TP 
 \fB\-\-log\-\fP\fIStufe\fP\fB=\fP\fIDomäne1\fP\fB,\fP\fIDomäne2\fP\fB,\fP\fI...\fP
-Setzt die \fIStufe\fP der Logausgabe. Verwenden Sie \fBall\fP, um sämtliche
-Domänen zu verwenden. Verfügbare \fIStufen\fP: \fBerror\fP,\ \fBwarning\fP,\ \fBinfo\fP,\ \fBdebug\fP,\ \fBnone\fP. Für die meisten Logdomänen wird standardmäßig
-wird die Stufe \fBwarning\fP verwendet, die \fBdeprecation\fP\-Domäne dagegen
-benutzt \fBnone\fP als Voreinstellung sofern nicht die \fB\-d\fP\-Option ebenfalls
-gesetzt ist.
+sets the severity level of the log domains. The wildcard \fB*\fP may be used to
+match a subset of domains, e.g. gui/* or conf* or * (the latter matches all
+domains).  Available levels: \fBerror\fP,\ \fBwarning\fP,\ \fBinfo\fP,\ \fBdebug\fP,\ \fBnone\fP.  By default, the \fBwarning\fP level is used for most domains, but
+\fBdeprecation\fP defaults to \fBnone\fP unless combined with the \fB\-d\fP option.
+This option can be specified multiple times.
 .TP 
 \fB\-\-log\-precise\fP
 Zeigt die Zeitstempel in der Log\-Ausgabe mit höherer Genauigkeit.
 .TP 
 \fB\-\-log\-strict\fP\fI\ Stufe\fP
-Sorgt dafür dass die Unit\-Tests scheitern, falls irgendeine Log\-Domäne eine
-Meldung auf der angegebenen oder einer schlimmeren \fIStufe\fP erhält. Wird nur
-zusammen mit \fB\-u\fP benutzt.
+Setzt die strikte \fIStufe\fP des Loggers. Jede Nachricht, die zu Log\-Domänen
+dieser \fIStufe\fP oder einer schlimmeren gesendet wird, wird für das Scheitern
+des Unit\-Tests führen, unabhängig vom Siegesergebnis. Nur relevant, wenn
+gemeinsam mit \fB\-u\fP benutzt.
 .TP 
 \fB\-\-logdomains[\fP\fI=Filter\fP\fB]\fP
 Gibt die definierten Log\-Domänen aus (nur jene, die \fIFilter\fP enthalten,
-falls angegeben).
+falls angegeben) und verlässt
 .TP 
 \fB\-\-no\-log\-to\-file\fP
-Verhindert Umleitung von gespeicherter Ausgabe in eine Datei. Log\-Dateien
-werden erstellt im "logs"\-Verzeichnis im Nutzerdatenverzeichnis.
+Verhindert Umleitung von gespeicherter Ausgabe in eine Datei. Die
+Umgebungsvariable WESNOTH_NO_LOG_FILE kann auch als eine Alternative gesetzt
+werden. Log\-Dateien werden im »logs«\-Verzeichnis unter dem
+Nutzerdatenverzeichnis erstellt.
 .TP 
 \fB\-\-log\-to\-file\fP
 Log\-Ausgabe wird in eine Datei geschrieben. Annulliert den Effekt von
 \-\-no\-log\-to\-file egal ob implizit und explizit.
+.TP 
+\fB\-\-no\-log\-sanitize\fP
+Deaktiviert die Anonymisierung, welche normalerweise beim Protokollieren
+angewendet wird, zum Beispiel dem Ersetzen von Benutzernamen mit »USER«.
 .TP 
 \fB\-\-wnoconsole\fP
 Für Windows, wenn mit \-\-no\-log\-to\-file genutzt, resultiert in Schreiben der
@@ -194,11 +180,6 @@ Startet die Multiplayer\-Test\-Szenarios.
 (Entwickleroption) Es gibt ein neues Dialog\-Toolkit, mit dieser Option wird
 der experimentelle Teil aktiviert. Bitte keine Bugs dafür melden, die
 meisten sind bekannt.
-.TP 
-\fB\-\-nodelay\fP
-Das Spiel wird ohne Verzögerungen ausgeführt. Wird zum Ausführen grafischer
-Benchmarks verwendet. Diese Option ist standardmäßig aktiviert, wenn die
-Option \fB\-\-nogui\fP gesetzt ist.
 .TP 
 \fB\-\-noaddons\fP
 Startet das Programm ohne Erweiterungen.
@@ -234,12 +215,11 @@ des Systems einsehbar ist und zum anderen ggf. in einer Datei wie
 ~/.bash_history geloggt wird.
 .TP 
 \fB\-\-plugin\fP\fI\ Skript\-Datei\fP
-(experimentell) lädt eine \fISkript\-Datei\fP welche ein Wesnoth\-Plugin
-definiert. Ähnlich zur Option \fB\-\-script\fP, aber die Lua\-Datei soll hierbei
-eine Funktion zurückliefern. Diese wird als Koroutine ausgeführt und
-regelmäßig aufgerufen.
+load a \fIscript\fP which defines a Wesnoth plugin. Lua file should return a
+function which will be run as a coroutine and periodically woken up with
+updates.
 .TP 
-\fB\-P,\-\-patch\fP\fI\ WML\-Datei\fP\fB\ \fP\fIPatch\-Datei\fP
+\fB\-P,\ \-\-patch\fP\fI\ Basis\-Datei\fP\fB\ \fP\fIPatch\-Datei\fP
 Wendet einen DiffWML\-Patch auf eine WML\-Datei an. Der Präprozessor wird
 dabei nicht verwendet. Das Ergebnis wird im Terminal ausgegeben, oder in die
 mit \fI\-\-output\fP angegebene Datei.
@@ -254,23 +234,29 @@ angegebenen Ressourcen vorverarbeitet. Beispiel: \fB\-p ~/wesnoth/data/campaigns
 https://wiki.wesnoth.org/PreprocessorRef#Command\-line_preprocessor für
 weitere Dokumentation.
 .TP 
+\fB\-\-preprocess\-string\fP\fI\ Quellzeichenkette\fP
+Lässt eine gegebene Zeichenkette durch den Präprozessor laufen und schreibt
+die Ausgabe in stdout.
+.TP 
 \fB\-\-preprocess\-defines=\fP\fIDEFINE1\fP\fB,\fP\fIDEFINE2\fP\fB,\fP\fI...\fP
-Durch Kommas getrennte Liste von Defines welche vom \fB\-\-preprocess\fP\-Kommando
-benutzt werden. Falls \fBSKIP_CORE\fP in der Liste der Defines ist, wird das
-"data/core"\-Verzeichnis ignoriert.
+Durch Kommas getrennte Liste von Defines, welche vom Befehl \fB\-\-preprocess\fP
+oder \fB\-\-preprocess\-string\fP benutzt werden. Falls \fBSKIP_CORE\fP in der Liste
+der Defines ist, wird das »data/core«\-Verzeichnis nicht durch den
+Präprozessor gejagt.
 .TP 
 \fB\-\-preprocess\-input\-macros\fP\fI\ Quelldatei\fP
-Wird nur vom \fB\-\-preprocess\fP\-Befehl verwendet. Gibt eine
-\fB[preproc_define]\fP\-enthaltende Datei an, die vor dem Vorbearbeiten
-eingelesen wird.
+Wird nur vom Befehl \fB\-\-preprocess\fP oder \fB\-\-preprocess\-string\fP
+verwendet. Gibt eine Datei an, die \fB[preproc_define]\fP enthält, einzubinden
+vor dem Preprocessing.
 .TP 
 \fB\-\-preprocess\-output\-macros [\fP\fI=Zieldatei\fP\fB]\fP
-Wird nur vom \fB\-\-preprocess\fP\-Befehl verwendet. Gibt alle vorverarbeiteten
-Makros in die Zieldatei aus. Falls keine Datei angegeben wird, wird die
-Ausgabe in die Datei »_MACROS_.cfg« im Zielverzeichnis des
-Vorverarbeitungs\-Befehls geschrieben. Die erzeugte Datei kann als Eingabe
-für \fB\-\-preprocess\-input\-macros\fP verwendet werden. Diese Option sollte vor
-dem \fB\-\-preprocess\fP\-Befehl angegeben werden.
+Wird nur vom \fB\-\-preprocess\fP\-Befehl verwendet (aber nict dem
+\fB\-\-preprocess\-string\fP\-Befehl). Gibt alle vorverarbeiteten Makros in die
+Zieldatei aus. Falls keine Datei angegeben wird, wird die Ausgabe in die
+Datei »_MACROS_.cfg« im Zielverzeichnis des Vorverarbeitungs\-Befehls
+geschrieben. Die erzeugte Datei kann als Eingabe für
+\fB\-\-preprocess\-input\-macros\fP verwendet werden. Diese Option sollte vor dem
+\fB\-\-preprocess\fP\-Befehl angegeben werden.
 .TP 
 \fB\-r\ \fP\fIX\fP\fBx\fP\fIY\fP\fB,\ \-\-resolution\ \fP\fIX\fP\fBx\fP\fIY\fP
 Ermöglicht es, die Auflösung zu bestimmen, in der das Programm gestartet
@@ -292,10 +278,6 @@ Füttert den Zufallszahlengenerator mit der angegebenen \fIZahl\fP. Beispiel:
 \fB\-\-screenshot\fP\fI\ Karte\fP\fB\ \fP\fIAusgabe\fP
 Erzeugt ein Bildschirmfoto der \fIKarte\fP und speichert ihn in einer Datei
 namens \fIAusgabe\fP ohne die grafische Oberfläche zu initialisieren.
-.TP 
-\fB\-\-script\fP\fI\ Dateiname\fP
-(experimentell) Eine \fIDatei\fP mit Lua\-Anweisungen, welche den Wesnoth\-Client
-steuern.
 .TP 
 \fB\-s[\fP\fIHost\fP\fB],\ \-\-server[\fP\fI=Host\fP\fB]\fP
 Verbindet sich, falls angegeben, mit dem entsprechenden Rechner, oder aber
@@ -328,22 +310,9 @@ wiederum beliebige Pakete geladen werden können. Nicht mit fremden Skripten
 verwenden! Dadurch wird die Sandbox aufgebrochen, Lua hat dann dieselben
 Zugriffsrechte wie Wesnoth.
 .TP 
-\fB\-S,\-\-use\-schema\fP\fI\ Pfad\fP
-Gibt den Pfad zu einem WML\-Schema an, welches für \fB\-V,\-\-validate\fP verwendet
-wird.
-.TP 
-\fB\-\-userconfig\-dir\fP\fI\ Name\fP
-Setzt das Konfigurationsverzeichnis des Benutzers auf \fIName\fP in $HOME oder
-»Eigene Dateien\eMy Games« auf Windows. Es kann auch ein absoluter Pfad zum
-Konfigurationsverzeichnis außerhalb von $HOME oder »Eigene Dateien\eMy
-Games« angegeben werden. Unter Windows ist es auch möglich ein Verzeichnis
-relativ zum Installationsverzeichnis mit ".\e" oder "..\e"
-anzugeben. Standard ist unter GNU/Linux und BSD $XDG_CONFIG_HOME
-bzw. $HOME/.config/wesnoth, auf anderen Betriebssystemen ist es das
-Nutzerdatenverzeichnis.
-.TP 
-\fB\-\-userconfig\-path\fP
-Zeigt an, wo sich das Verzeichnis für die Nutzereinstellungen befindet.
+\fB\-S,\ \-\-use\-schema\fP\fI\ Pfad\fP
+Gibt den Pfad zu einem WML\-Schema an, welches für \fB\-V,\ \-\-validate\fP
+verwendet wird.
 .TP 
 \fB\-\-userdata\-dir\fP\fI\ Name\fP
 Setzt das Verzeichnis für Nutzerdaten (Spielstände, Erweiterungen, ...) auf
@@ -370,7 +339,7 @@ Validiert das WML der angegebenen Erweiterung während des Spielens.
 \fB\-\-validate\-core\fP
 Validiert das WML des Hauptspiels des Spielens.
 .TP 
-\fB\-\-validate\-schema \ Pfad\fP
+\fB\-\-validate\-schema\fP\fI\ Pfad\fP
 Validiert, ob eine Datei ein korrektes WML\-Schema ist.
 .TP 
 \fB\-\-validcache\fP
@@ -485,7 +454,7 @@ Besuchen Sie auch die offizielle Webseite: https://www.wesnoth.org/
 .
 .SH COPYRIGHT
 .
-Copyright \(co 2003\-2024 David White <davidnwhite@verizon.net>
+Copyright \(co 2003\-2025 David White <davidnwhite@verizon.net>
 .br
 Dieses Programm ist freie Software. Sie können es unter den Bedingungen der
 GNU General Public License (GPL) Version 2, wie von der Free Software

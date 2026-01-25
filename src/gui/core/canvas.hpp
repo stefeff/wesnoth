@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2007 - 2024
+	Copyright (C) 2007 - 2025
 	by Mark de Wever <koraq@xs4all.nl>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -83,10 +83,13 @@ public:
 		bool immutable_;
 	};
 
-	canvas();
+	explicit canvas(const config& cfg);
+
 	canvas(const canvas&) = delete;
 	canvas& operator=(const canvas&) = delete;
-	canvas(canvas&& c) noexcept;
+
+	canvas(canvas&& c) noexcept = default;
+	canvas& operator=(canvas&&) noexcept = default;
 
 	/**
 	 * Update the background blur texture, if relevant and necessary.
@@ -118,7 +121,7 @@ public:
 	 * @param cfg                 The config object with the data to draw.
 	 * @param force               Whether to clear all shapes or not.
 	 */
-	void set_cfg(const config& cfg, const bool force = false)
+	void set_shapes(const config& cfg, const bool force = false)
 	{
 		clear_shapes(force);
 		parse_cfg(cfg);
@@ -129,7 +132,7 @@ public:
 	 *
 	 * @param cfg                 The config object with the data to draw.
 	 */
-	void append_cfg(const config& cfg)
+	void append_shapes(const config& cfg)
 	{
 		parse_cfg(cfg);
 	}
@@ -154,6 +157,11 @@ public:
 	void set_variable(const std::string& key, wfl::variant&& value)
 	{
 		variables_.add(key, std::move(value));
+	}
+
+	wfl::variant get_variable(const std::string& key)
+	{
+		return variables_.query_value(key);
 	}
 
 private:
@@ -198,7 +206,7 @@ private:
 	 * the config object is no longer required and thus not stored in the
 	 * object.
 	 *
-	 * @param cfg                 The config object with the data to draw, see @ref GUICanvasWML
+	 * @param cfg                 The config object with the data to draw
 	 */
 	void parse_cfg(const config& cfg);
 

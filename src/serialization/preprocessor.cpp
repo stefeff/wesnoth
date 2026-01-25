@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2005 - 2024
+	Copyright (C) 2005 - 2025
 	by Guillaume Melquiond <guillaume.melquiond@gmail.com>
 	Copyright (C) 2003 by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
@@ -51,8 +51,6 @@ static std::map<std::string, int> file_number_map;
 static bool encode_filename = true;
 
 static std::string preprocessor_error_detail_prefix = "\n    ";
-
-static const char OUTPUT_SEPARATOR = '\xFE';
 
 // get filename associated to this code
 static std::string get_filename(const std::string& file_code)
@@ -214,7 +212,7 @@ void preproc_define::read(const config& cfg)
 {
 	value = cfg["value"].str();
 	textdomain = cfg["textdomain"].str();
-	linenum = cfg["linenum"];
+	linenum = cfg["linenum"].to_int();
 	location = cfg["location"].str();
 
 	if(auto deprecated = cfg.optional_child("deprecated")) {
@@ -228,12 +226,9 @@ void preproc_define::read(const config& cfg)
 	}
 }
 
-preproc_map::value_type preproc_define::read_pair(const config& cfg)
+void preproc_define::insert(preproc_map& map, const config& cfg)
 {
-	preproc_define second;
-	second.read(cfg);
-
-	return preproc_map::value_type(cfg["name"], second);
+	map.try_emplace(cfg["name"], cfg);
 }
 
 std::ostream& operator<<(std::ostream& stream, const preproc_define& def)
@@ -313,13 +308,12 @@ private:
 class preprocessor_streambuf : public std::streambuf
 {
 public:
-	preprocessor_streambuf(preproc_map* def)
+	preprocessor_streambuf(preproc_map& def)
 		: std::streambuf()
 		, out_buffer_("")
 		, buffer_()
 		, preprocessor_queue_()
 		, defines_(def)
-		, default_defines_()
 		, textdomain_(PACKAGE)
 		, location_("")
 		, linenum_(0)
@@ -362,7 +356,6 @@ private:
 		, buffer_()
 		, preprocessor_queue_()
 		, defines_(t.defines_)
-		, default_defines_()
 		, textdomain_(PACKAGE)
 		, location_("")
 		, linenum_(0)
@@ -384,8 +377,7 @@ private:
 	/** Input preprocessor queue. */
 	std::deque<std::unique_ptr<preprocessor>> preprocessor_queue_;
 
-	preproc_map* defines_;
-	preproc_map default_defines_;
+	preproc_map& defines_;
 
 	std::string textdomain_;
 	std::string location_;
@@ -401,7 +393,7 @@ private:
 	friend class preprocessor;
 	friend class preprocessor_file;
 	friend class preprocessor_data;
-	friend struct preprocessor_scope_helper;
+	friend class preprocessor_istream;
 };
 
 /** Preprocessor constructor. */
@@ -482,11 +474,11 @@ void preprocessor_streambuf::restore_old_preprocessor()
 	preprocessor* current = this->current();
 
 	if(!current->old_location_.empty()) {
-		buffer_ << OUTPUT_SEPARATOR << "line " << current->old_linenum_ << ' ' << current->old_location_ << '\n';
+		buffer_ << INLINED_PREPROCESS_DIRECTIVE_CHAR << "line " << current->old_linenum_ << ' ' << current->old_location_ << '\n';
 	}
 
 	if(!current->old_textdomain_.empty() && textdomain_ != current->old_textdomain_) {
-		buffer_ << OUTPUT_SEPARATOR << "textdomain " << current->old_textdomain_ << '\n';
+		buffer_ << INLINED_PREPROCESS_DIRECTIVE_CHAR << "textdomain " << current->old_textdomain_ << '\n';
 	}
 
 	location_ = current->old_location_;
@@ -866,10 +858,10 @@ preprocessor_data::preprocessor_data(preprocessor_streambuf& t,
 	t.location_ = s.str();
 	t.linenum_ = linenum;
 
-	t.buffer_ << OUTPUT_SEPARATOR << "line " << linenum << ' ' << t.location_ << '\n';
+	t.buffer_ << INLINED_PREPROCESS_DIRECTIVE_CHAR << "line " << linenum << ' ' << t.location_ << '\n';
 
 	if(t.textdomain_ != domain) {
-		t.buffer_ << OUTPUT_SEPARATOR << "textdomain " << domain << '\n';
+		t.buffer_ << INLINED_PREPROCESS_DIRECTIVE_CHAR << "textdomain " << domain << '\n';
 		t.textdomain_ = domain;
 	}
 
@@ -899,8 +891,8 @@ void preprocessor_data::push_token(token_desc::token_type t)
 
 	std::ostringstream s;
 	if(!skipping_ && slowpath_) {
-		s << OUTPUT_SEPARATOR << "line " << linenum_ << ' ' << parent_.location_ << "\n"
-		  << OUTPUT_SEPARATOR << "textdomain " << parent_.textdomain_ << '\n';
+		s << INLINED_PREPROCESS_DIRECTIVE_CHAR << "line " << linenum_ << ' ' << parent_.location_ << "\n"
+		  << INLINED_PREPROCESS_DIRECTIVE_CHAR << "textdomain " << parent_.textdomain_ << '\n';
 	}
 
 	strings_.push_back(s.str());
@@ -1050,7 +1042,7 @@ void preprocessor_data::put(char c)
 		if(diff <= parent_.location_.size() + 11) {
 			parent_.buffer_ << std::string(diff, '\n');
 		} else {
-			parent_.buffer_ << OUTPUT_SEPARATOR << "line " << parent_.linenum_ << ' ' << parent_.location_ << '\n';
+			parent_.buffer_ << INLINED_PREPROCESS_DIRECTIVE_CHAR << "line " << parent_.linenum_ << ' ' << parent_.location_ << '\n';
 		}
 	}
 
@@ -1128,7 +1120,7 @@ bool preprocessor_data::get_chunk()
 		++linenum_;
 	}
 
-	if(c == OUTPUT_SEPARATOR) {
+	if(c == static_cast<char>(INLINED_PREPROCESS_DIRECTIVE_CHAR)) {
 		std::string buffer(1, c);
 
 		while(true) {
@@ -1190,7 +1182,7 @@ bool preprocessor_data::get_chunk()
 			std::string symbol = items.front();
 			items.erase(items.begin());
 			int found_arg = 0, found_enddef = 0, found_deprecate = 0;
-			std::optional<DEP_LEVEL> deprecation_level;
+			utils::optional<DEP_LEVEL> deprecation_level;
 			std::string buffer, deprecation_detail;
 			version_info deprecation_version = game_config::wesnoth_version;
 			while(true) {
@@ -1299,8 +1291,8 @@ bool preprocessor_data::get_chunk()
 			}
 
 			if(!skipping_) {
-				preproc_map::const_iterator old_i = parent_.defines_->find(symbol);
-				if(old_i != parent_.defines_->end()) {
+				preproc_map::const_iterator old_i = parent_.defines_.find(symbol);
+				if(old_i != parent_.defines_.end()) {
 					std::ostringstream new_pos, old_pos;
 					const preproc_define& old_d = old_i->second;
 
@@ -1313,9 +1305,9 @@ bool preprocessor_data::get_chunk()
 				}
 
 				buffer.erase(buffer.end() - 7, buffer.end());
-				(*parent_.defines_)[symbol]
-						= preproc_define(buffer, items, optargs, parent_.textdomain_, linenum, parent_.location_,
-						deprecation_detail, deprecation_level, deprecation_version);
+				parent_.defines_.insert_or_assign(symbol,
+						preproc_define(buffer, items, optargs, parent_.textdomain_, linenum, parent_.location_,
+						deprecation_detail, deprecation_level, deprecation_version));
 
 				LOG_PREPROC << "defining macro " << symbol << " (location " << get_location(parent_.location_) << ")";
 			}
@@ -1326,7 +1318,7 @@ bool preprocessor_data::get_chunk()
 			if(symbol.empty()) {
 				parent_.error("No macro argument found after #ifdef/#ifndef directive", linenum_);
 			}
-			bool found = parent_.defines_->count(symbol) != 0;
+			bool found = parent_.defines_.count(symbol) != 0;
 			DBG_PREPROC << "testing for macro " << symbol << ": " << (found ? "defined" : "not defined");
 			conditional_skip(negate ? found : !found);
 		} else if(command == "ifhave" || command == "ifnhave") {
@@ -1336,7 +1328,7 @@ bool preprocessor_data::get_chunk()
 			if(symbol.empty()) {
 				parent_.error("No path argument found after #ifhave/#ifnhave directive", linenum_);
 			}
-			bool found = !filesystem::get_wml_location(symbol, directory_).empty();
+			bool found = filesystem::get_wml_location(symbol, directory_).has_value();
 			DBG_PREPROC << "testing for file or directory " << symbol << ": " << (found ? "found" : "not found");
 			conditional_skip(negate ? found : !found);
 		} else if(command == "ifver" || command == "ifnver") {
@@ -1353,8 +1345,8 @@ bool preprocessor_data::get_chunk()
 
 			if(vop == OP_INVALID) {
 				parent_.error("Invalid #ifver/#ifnver operator", linenum_);
-			} else if(parent_.defines_->count(vsymstr) != 0) {
-				const preproc_define& sym = (*parent_.defines_)[vsymstr];
+			} else if(parent_.defines_.count(vsymstr) != 0) {
+				const preproc_define& sym = parent_.defines_[vsymstr];
 
 				if(!sym.arguments.empty()) {
 					parent_.error("First argument macro in #ifver/#ifnver should not require arguments", linenum_);
@@ -1413,7 +1405,7 @@ bool preprocessor_data::get_chunk()
 			skip_spaces();
 			const std::string& symbol = read_word();
 			if(!skipping_) {
-				parent_.defines_->erase(symbol);
+				parent_.defines_.erase(symbol);
 				LOG_PREPROC << "undefine macro " << symbol << " (location " << get_location(parent_.location_) << ")";
 			}
 		} else if(command == "error") {
@@ -1491,7 +1483,7 @@ bool preprocessor_data::get_chunk()
 
 			std::string symbol = strings_[token.stack_pos];
 			std::string::size_type pos;
-			while((pos = symbol.find(OUTPUT_SEPARATOR)) != std::string::npos) {
+			while((pos = symbol.find(INLINED_PREPROCESS_DIRECTIVE_CHAR)) != std::string::npos) {
 				std::string::iterator b = symbol.begin(); // invalidated at each iteration
 				symbol.erase(b + pos, b + symbol.find('\n', pos + 1) + 1);
 			}
@@ -1521,12 +1513,12 @@ bool preprocessor_data::get_chunk()
 				}
 
 				std::ostringstream v;
-				v << arg->second << OUTPUT_SEPARATOR << "line " << linenum_ << ' ' << parent_.location_ << "\n"
-				  << OUTPUT_SEPARATOR << "textdomain " << parent_.textdomain_ << '\n';
+				v << arg->second << INLINED_PREPROCESS_DIRECTIVE_CHAR << "line " << linenum_ << ' ' << parent_.location_ << "\n"
+				  << INLINED_PREPROCESS_DIRECTIVE_CHAR << "textdomain " << parent_.textdomain_ << '\n';
 
 				pop_token();
 				put(v.str());
-			} else if(parent_.depth() < 100 && (macro = parent_.defines_->find(symbol)) != parent_.defines_->end()) {
+			} else if(parent_.depth() < 100 && (macro = parent_.defines_.find(symbol)) != parent_.defines_.end()) {
 				const preproc_define& val = macro->second;
 				std::size_t nb_arg = strings_.size() - token.stack_pos - 1;
 				std::size_t optional_arg_num = 0;
@@ -1643,19 +1635,18 @@ bool preprocessor_data::get_chunk()
 				LOG_PREPROC << "Macro definition not found for " << symbol << ", attempting to open as file.";
 				pop_token();
 
-				std::string nfname = filesystem::get_wml_location(symbol, directory_);
-				if(!nfname.empty()) {
+				if(auto nfname = filesystem::get_wml_location(symbol, directory_)) {
 					if(!slowpath_)
 						// nfname.size() - symbol.size() gives you an index into nfname
 						// This does not necessarily match the symbol though, as it can start with ~ or ./
-						parent_.add_preprocessor<preprocessor_file>(nfname, nfname.size() - symbol.size());
+						parent_.add_preprocessor<preprocessor_file>(nfname.value(), nfname->size() - symbol.size());
 					else {
 						std::unique_ptr<preprocessor_streambuf> buf(new preprocessor_streambuf(parent_));
 
 						std::ostringstream res;
 						{
 							std::istream in(buf.get());
-							buf->add_preprocessor<preprocessor_file>(nfname, nfname.size() - symbol.size());
+							buf->add_preprocessor<preprocessor_file>(nfname.value(), nfname->size() - symbol.size());
 
 							res << in.rdbuf();
 						}
@@ -1673,8 +1664,8 @@ bool preprocessor_data::get_chunk()
 		} else if(!skipping_) {
 			if(token.type == token_desc::token_type::macro_space) {
 				std::ostringstream s;
-				s << OUTPUT_SEPARATOR << "line " << linenum_ << ' ' << parent_.location_ << "\n"
-				  << OUTPUT_SEPARATOR << "textdomain " << parent_.textdomain_ << '\n';
+				s << INLINED_PREPROCESS_DIRECTIVE_CHAR << "line " << linenum_ << ' ' << parent_.location_ << "\n"
+				  << INLINED_PREPROCESS_DIRECTIVE_CHAR << "textdomain " << parent_.textdomain_ << '\n';
 
 				strings_.push_back(s.str());
 				token.type = token_desc::token_type::macro_chunk;
@@ -1690,64 +1681,95 @@ bool preprocessor_data::get_chunk()
 
 
 // ==================================================================================
-// PREPROCESSOR SCOPE HELPER
+// PREPROCESSOR ISTREAM
 // ==================================================================================
 
-struct preprocessor_scope_helper : std::basic_istream<char>
+class preprocessor_istream : public std::istream
 {
-	preprocessor_scope_helper(const std::string& fname, preproc_map* defines)
-		: std::basic_istream<char>(nullptr)
-		, buf_(nullptr)
-		, local_defines_(nullptr)
+public:
+	preprocessor_istream()
+		: std::istream(nullptr)
+		, owned_defines_()
+		, buffer_(owned_defines_)
 	{
-		//
-		// If no defines were provided, we create a new local preproc_map and assign
-		// it to defines temporarily. In this case, the map will be deleted once this
-		// object is destroyed and defines will still be subsequently null.
-		//
-		if(!defines) {
-			local_defines_.reset(new preproc_map);
-			defines = local_defines_.get();
-		}
-
-		buf_.reset(new preprocessor_streambuf(defines));
-
-		// Begin processing.
-		buf_->add_preprocessor<preprocessor_file>(fname);
-
-		//
-		// TODO: not sure if this call is needed. Previously, this call was passed a
-		// preprocessor_streambuf pointer and the std::basic_istream constructor was
-		// called with its contents. However, at that point the preprocessing should
-		// already have completed, meaning this call might be redundant. Not sure.
-		//
-		// - vultraz, 2017-08-31
-		//
-		init(buf_.get());
 	}
 
-	~preprocessor_scope_helper()
+	preprocessor_istream(preproc_map& defines)
+		: std::istream(nullptr)
+		, owned_defines_()
+		, buffer_(defines)
+	{
+	}
+
+	~preprocessor_istream()
 	{
 		clear(std::ios_base::goodbit);
 		exceptions(std::ios_base::goodbit);
 		rdbuf(nullptr);
 	}
 
-	std::unique_ptr<preprocessor_streambuf> buf_;
-	std::unique_ptr<preproc_map> local_defines_;
-};
+	template<typename Preprocessor, typename... Args>
+	void process(Args&&... args)
+	{
+		// Take ownership of the processing buffer.
+		rdbuf(&buffer_);
 
+		// Begin processing.
+		buffer_.add_preprocessor<Preprocessor>(std::forward<Args>(args)...);
+	}
+
+private:
+	/** Defines map to be used if no external map is given. */
+	preproc_map owned_defines_;
+
+	/** The underlying processing buffer. */
+	preprocessor_streambuf buffer_;
+};
 
 // ==================================================================================
 // FREE-STANDING FUNCTIONS
 // ==================================================================================
 
-filesystem::scoped_istream preprocess_file(const std::string& fname, preproc_map* defines)
+filesystem::scoped_istream preprocess_file(const std::string& fname, preproc_map& defines)
 {
 	log_scope("preprocessing file " + fname + " ...");
 
-	// NOTE: the preprocessor_scope_helper does *not* take ownership of defines.
-	return filesystem::scoped_istream(new preprocessor_scope_helper(fname, defines));
+	auto stream = std::make_unique<preprocessor_istream>(defines);
+	stream->process<preprocessor_file>(fname);
+	return stream;
+}
+
+filesystem::scoped_istream preprocess_file(const std::string& fname)
+{
+	log_scope("preprocessing file " + fname + " ...");
+
+	auto stream = std::make_unique<preprocessor_istream>();
+	stream->process<preprocessor_file>(fname);
+	return stream;
+}
+
+filesystem::scoped_istream preprocess_string(
+	const std::string& contents, const std::string& textdomain)
+{
+	log_scope("preprocessing string " + contents.substr(0, 10) + " ...");
+
+	auto stream = std::make_unique<preprocessor_istream>();
+	stream->process<preprocessor_data>(
+		std::make_unique<std::istringstream>(contents), "<string>", "", 1, game_config::path, textdomain, nullptr);
+
+	return stream;
+}
+
+filesystem::scoped_istream preprocess_string(
+	const std::string& contents, const std::string& textdomain, preproc_map& defines)
+{
+	log_scope("preprocessing string " + contents.substr(0, 10) + " ...");
+
+	auto stream = std::make_unique<preprocessor_istream>(defines);
+	stream->process<preprocessor_data>(
+		std::make_unique<std::istringstream>(contents), "<string>", "", 1, game_config::path, textdomain, nullptr);
+
+	return stream;
 }
 
 void preprocess_resource(const std::string& res_name,
@@ -1770,7 +1792,7 @@ void preprocess_resource(const std::string& res_name,
 
 		// Files in current directory
 		for(const std::string& file : files) {
-			if(filesystem::ends_with(file, ".cfg")) {
+			if(filesystem::is_cfg(file)) {
 				preprocess_resource(file, defines_map, write_cfg, write_plain_cfg, parent_directory);
 			}
 		}
@@ -1783,7 +1805,9 @@ void preprocess_resource(const std::string& res_name,
 	// disable filename encoding to get clear #line in cfg.plain
 	encode_filename = false;
 
-	filesystem::scoped_istream stream = preprocess_file(res_name, defines_map);
+	filesystem::scoped_istream stream = defines_map
+		? preprocess_file(res_name, *defines_map)
+		: preprocess_file(res_name);
 
 	std::stringstream ss;
 
@@ -1798,10 +1822,8 @@ void preprocess_resource(const std::string& res_name,
 	LOG_PREPROC << "processing finished";
 
 	if(write_cfg || write_plain_cfg) {
-		config cfg;
 		std::string streamContent = ss.str();
-
-		read(cfg, streamContent);
+		config cfg = io::read(streamContent);
 
 		const std::string preproc_res_name = parent_directory + "/" + filesystem::base_name(res_name);
 
@@ -1810,9 +1832,7 @@ void preprocess_resource(const std::string& res_name,
 			LOG_PREPROC << "writing cfg file: " << preproc_res_name;
 
 			filesystem::create_directory_if_missing_recursive(filesystem::directory_name(preproc_res_name));
-			filesystem::scoped_ostream outStream(filesystem::ostream_file(preproc_res_name));
-
-			write(*outStream, cfg);
+			io::write(*filesystem::ostream_file(preproc_res_name), cfg);
 		}
 
 		// Write the plain cfg file

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Battle for Wesnoth 0.8.11+CVS\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-12-08 15:31 UTC\n"
+"POT-Creation-Date: 2025-10-21 01:10 UTC\n"
 "PO-Revision-Date: 2024-03-12 22:08+0100\n"
 "Last-Translator: Merijn de Vet\n"
 "Language-Team: Dutch <merijndevet@hotmail.com>\n"
@@ -34,12 +34,16 @@ msgstr "Vooruitziende Blik op de Overwinning"
 
 #. [achievement]: id=Wesnoth_MP_Dark_Forecast
 #: data/multiplayer/achievements.cfg:11
-msgid "Complete the survival scenario <i>2p - Dark Forecast</i>."
+#, fuzzy
+#| msgid "Complete the survival scenario <i>2p - Dark Forecast</i>."
+msgid "Complete the survival scenario <i>2p — Dark Forecast</i>."
 msgstr "Voltooi het overlevingsscenario <i>2s - Duistere Voorspelling</i>."
 
 #. [achievement]: id=Wesnoth_MP_Dark_Forecast
 #: data/multiplayer/achievements.cfg:12
-msgid "Completed the survival scenario <i>2p - Dark Forecast</i>."
+#, fuzzy
+#| msgid "Completed the survival scenario <i>2p - Dark Forecast</i>."
+msgid "Completed the survival scenario <i>2p — Dark Forecast</i>."
 msgstr "Overlevingsscenario <i>2s - Duistere Voorspelling</i> voltooid."
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
@@ -54,12 +58,16 @@ msgstr "Nevelen Verjaagd"
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
 #: data/multiplayer/achievements.cfg:22
-msgid "Complete the survival scenario <i>2p - Isle of Mists</i>."
+#, fuzzy
+#| msgid "Complete the survival scenario <i>2p - Isle of Mists</i>."
+msgid "Complete the survival scenario <i>2p — Isle of Mists</i>."
 msgstr "Voltooi het overlevingsscenario <i>2s - Eiland van Nevel</i>."
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
 #: data/multiplayer/achievements.cfg:23
-msgid "Completed the survival scenario <i>2p - Isle of Mists</i>."
+#, fuzzy
+#| msgid "Completed the survival scenario <i>2p - Isle of Mists</i>."
+msgid "Completed the survival scenario <i>2p — Isle of Mists</i>."
 msgstr "Overlevingsscenario <i>2s - Eiland van Nevel</i> voltooid."
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
@@ -69,12 +77,16 @@ msgstr "Perfecte Samenwerking"
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
 #: data/multiplayer/achievements.cfg:33
-msgid "Complete the survival scenario <i>6p - Team Survival</i>."
+#, fuzzy
+#| msgid "Complete the survival scenario <i>6p - Team Survival</i>."
+msgid "Complete the survival scenario <i>6p — Team Survival</i>."
 msgstr "Voltooi het overlevingsscenario <i>6s - Team Overleving</i>."
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
 #: data/multiplayer/achievements.cfg:34
-msgid "Completed the survival scenario <i>6p - Team Survival</i>."
+#, fuzzy
+#| msgid "Completed the survival scenario <i>6p - Team Survival</i>."
+msgid "Completed the survival scenario <i>6p — Team Survival</i>."
 msgstr "Overlevingsscenario <i>6s - Team Overleving</i> voltooid."
 
 #. [achievement]: id=Wesnoth_MP_ANL
@@ -84,12 +96,16 @@ msgstr "Terugkeren naar de Overwinning"
 
 #. [achievement]: id=Wesnoth_MP_ANL
 #: data/multiplayer/achievements.cfg:44
-msgid "Complete the survival scenario <i>4p - A New Land</i>."
+#, fuzzy
+#| msgid "Complete the survival scenario <i>4p - A New Land</i>."
+msgid "Complete the survival scenario <i>4p — A New Land</i>."
 msgstr "Voltooi het overlevingsscenario <i>4s - Een Nieuw Land</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL
 #: data/multiplayer/achievements.cfg:45
-msgid "Completed the survival scenario <i>4p - A New Land</i>."
+#, fuzzy
+#| msgid "Completed the survival scenario <i>4p - A New Land</i>."
+msgid "Completed the survival scenario <i>4p — A New Land</i>."
 msgstr "Overlevingsscenario <i>4s - Een Nieuw Land</i> voltooid."
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
@@ -99,13 +115,17 @@ msgstr "Economische Recessie"
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
 #: data/multiplayer/achievements.cfg:54
-msgid "Destroy all enemy mushroom mines in <i>4p - A New Land</i>."
+#, fuzzy
+#| msgid "Destroy all enemy mushroom mines in <i>4p - A New Land</i>."
+msgid "Destroy all enemy mushroom mines in <i>4p — A New Land</i>."
 msgstr ""
 "Vernietig alle vijandelijke paddenstoelmijnen in <i>4s - Een Nieuw Land</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
 #: data/multiplayer/achievements.cfg:55
-msgid "Destroyed all enemy mushroom mines in <i>4p - A New Land</i>."
+#, fuzzy
+#| msgid "Destroyed all enemy mushroom mines in <i>4p - A New Land</i>."
+msgid "Destroyed all enemy mushroom mines in <i>4p — A New Land</i>."
 msgstr ""
 "Alle vijandelijke paddenstoelmijnen in <i>4s - Een Nieuw Land</i> vernietigd."
 
@@ -116,12 +136,16 @@ msgstr "Bevrijding!"
 
 #. [achievement]: id=Wesnoth_MP_ANL_rescue_allies
 #: data/multiplayer/achievements.cfg:65
-msgid "Rescue the trapped units in <i>4p - A New Land</i>."
+#, fuzzy
+#| msgid "Rescue the trapped units in <i>4p - A New Land</i>."
+msgid "Rescue the trapped units in <i>4p — A New Land</i>."
 msgstr "Bevrijd de gevangen eenheden in <i>4s - Een Nieuw Land</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL_rescue_allies
 #: data/multiplayer/achievements.cfg:66
-msgid "Rescued the trapped units in <i>4p - A New Land</i>."
+#, fuzzy
+#| msgid "Rescued the trapped units in <i>4p - A New Land</i>."
+msgid "Rescued the trapped units in <i>4p — A New Land</i>."
 msgstr "Gevangen eenheden in <i>4s - Een Nieuw Land</i> bevrijd."
 
 #. [era]: id=era_default, type=hybrid
@@ -131,8 +155,12 @@ msgstr "Standaard"
 
 #. [era]: id=era_default, type=hybrid
 #: data/multiplayer/eras.cfg:6
+#, fuzzy
+#| msgid ""
+#| "The standard era for Wesnoth multiplayer. Consists of six factions and is "
+#| "generally balanced."
 msgid ""
-"The standard era for Wesnoth multiplayer. Consists of six factions and is "
+"The standard era for Wesnoth multiplayer. Consists of seven factions and is "
 "generally balanced."
 msgstr ""
 "Het standaard tijdperk voor Wesnoth multiplayer. Bestaat uit zes facties en "
@@ -145,58 +173,19 @@ msgstr "Tijd der Helden"
 
 #. [era]: id=era_heroes
 #: data/multiplayer/eras.cfg:15
+#, fuzzy
+#| msgid ""
+#| "An era with higher level units: level three leaders, with level one and "
+#| "two units available for recruit. Consists of six factions. Not considered "
+#| "balanced."
 msgid ""
 "An era with higher level units: level three leaders, with level one and two "
-"units available for recruit. Consists of six factions. Not considered "
+"units available for recruit. Consists of seven factions. Not considered "
 "balanced."
 msgstr ""
 "Een tijdperk met eenheden van een hogere rang: rang 3 leiders, met rang 1 en "
 "rang 2 eenheden beschikbaar om te rekruteren. Bestaat uit zes facties. Wordt "
 "niet gezien als gebalanceerd."
-
-#. [era]: id=era_dunefolk
-#: data/multiplayer/eras.cfg:22
-msgid "Default + Dunefolk"
-msgstr "Standaard + Duinvolk"
-
-#. [era]: id=era_dunefolk
-#: data/multiplayer/eras.cfg:23
-msgid ""
-"An era featuring an additional faction besides the six factions from Default "
-"Era. Dunefolk units rely on careful use of terrain and coordinated strikes "
-"around dusk or dawn.\n"
-"\n"
-"This era is still under development, so please be sure to report any "
-"problems that arise."
-msgstr ""
-"Een tijdperk met een extra factie naast de zes facties van het Standaard "
-"Tijdperk. Eenheden van het Duinvolk vertrouwen op het gebruik van het "
-"terrein en vallen het liefst aan tijdens zonsopkomst of zonsondergang.\n"
-"\n"
-"Dit tijdperk is nog in ontwikkeling, dus zorg ervoor dat er melding wordt "
-"gemaakt van elk probleem dat zich voordoet."
-
-#. [era]: id=era_dunefolk_heroes
-#: data/multiplayer/eras.cfg:33
-msgid "Age of Heroes + Dunefolk"
-msgstr "Tijd der Helden + Duinvolk"
-
-#. [era]: id=era_dunefolk_heroes
-#: data/multiplayer/eras.cfg:34
-msgid ""
-"An era featuring an additional faction besides the six factions from Age of "
-"Heroes Era. Dunefolk units rely on careful use of terrain and coordinated "
-"strikes around dusk or dawn.\n"
-"\n"
-"This era is still under development, so please be sure to report any "
-"problems that arise."
-msgstr ""
-"Een tijdperk met een extra factie naast de zes facties van het de Tijd der "
-"Helden. Eenheden van het Duinvolk vertrouwen op het gebruik van het terrein "
-"en vallen het liefst aan tijdens zonsopkomst of zonsondergang.\n"
-"\n"
-"Dit tijdperk is nog in ontwikkeling, dus zorg ervoor dat er melding wordt "
-"gemaakt van elk probleem dat zich voordoet."
 
 #. [lua]: res.show_turns_over_advantage
 #. In the end-of-match summary, a side which has no units left and therefore lost. In English the loss is shown by displaying it with the text struck through.
@@ -253,16 +242,24 @@ msgid "Drakes"
 msgstr "Draken"
 
 #. [multiplayer_side]: id=Drakes, type=random
-#: data/multiplayer/factions/drakes-aoh.cfg:14
-#: data/multiplayer/factions/drakes-default.cfg:14
+#: data/multiplayer/factions/drakes-aoh.cfg:13
+#: data/multiplayer/factions/drakes-default.cfg:13
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Drakes'</bold> are a faction of dragon-like "
+#| "<ref>text='Drakes' dst='..race_drake'</ref> and their lizard "
+#| "<ref>text='Saurian' dst='..race_lizard'</ref> allies. Drakes are "
+#| "descendants of dragons, but smaller in size. Saurians are considerably "
+#| "smaller than Drakes and from different ancestry. Together, the Drake "
+#| "faction has high mobility but low defense, leading to unusual tactics for "
+#| "a <ref>text='Default Era' dst='..era_era_default'</ref> faction."
 msgid ""
-"The <bold>text='Drakes'</bold> are a faction of dragon-like "
-"<ref>text='Drakes' dst='..race_drake'</ref> and their lizard "
-"<ref>text='Saurian' dst='..race_lizard'</ref> allies. Drakes are descendants "
-"of dragons, but smaller in size. Saurians are considerably smaller than "
-"Drakes and from different ancestry. Together, the Drake faction has high "
-"mobility but low defense, leading to unusual tactics for a "
-"<ref>text='Default Era' dst='..era_era_default'</ref> faction."
+"The <b>Drakes</b> are a faction of dragon-like <ref dst='.."
+"race_drake'>Drakes</ref> and their lizard <ref dst='..race_lizard'>Saurian</"
+"ref> allies. Drakes are descendants of dragons, but smaller in size. "
+"Saurians are considerably smaller than Drakes and from different ancestry. "
+"Together, the Drake faction has high mobility but low defense, leading to "
+"unusual tactics for a <ref dst='..era_era_default'>Default Era</ref> faction."
 msgstr ""
 "De <bold>text='Draken'</bold> zijn een factie van draak-achtige "
 "<ref>text='Draken' dst='..race_drake'</ref> en hun reptiel-achtige "
@@ -280,16 +277,25 @@ msgid "Dunefolk"
 msgstr "Duinvolk"
 
 #. [multiplayer_side]: id=Dunefolk, type=random
-#: data/multiplayer/factions/dunefolk-aoh.cfg:14
-#: data/multiplayer/factions/dunefolk-default.cfg:14
+#: data/multiplayer/factions/dunefolk-aoh.cfg:13
+#: data/multiplayer/factions/dunefolk-default.cfg:13
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Dunefolk'</bold> are a faction of humans from the deserts "
+#| "and hills of the southern lands. The Dunefolk specialize in using terrain "
+#| "features to coordinate attacks at dawn or dusk. Their ranks boast lawful "
+#| "and liminal units, healers, high-accuracy melee fighters, and fearsome "
+#| "horse-mounted archers. While Dunefolk units tend to be more expensive "
+#| "than those of the Loyalist faction, they make up for this with high "
+#| "mobility — especially on hilly terrains."
 msgid ""
-"The <bold>text='Dunefolk'</bold> are a faction of humans from the deserts "
-"and hills of the southern lands. The Dunefolk specialize in using terrain "
-"features to coordinate attacks at dawn or dusk. Their ranks boast lawful and "
-"liminal units, healers, high-accuracy melee fighters, and fearsome horse-"
-"mounted archers. While Dunefolk units tend to be more expensive than those "
-"of the Loyalist faction, they make up for this with high mobility — "
-"especially on hilly terrains."
+"The <b>Dunefolk</b> are a faction of humans from the deserts and hills of "
+"the southern lands. The Dunefolk specialize in using terrain features to "
+"coordinate attacks at dawn or dusk. Their ranks boast lawful and liminal "
+"units, healers, high-accuracy melee fighters, and fearsome horse-mounted "
+"archers. While Dunefolk units tend to be more expensive than those of the "
+"Loyalist faction, they make up for this with high mobility — especially on "
+"hilly terrains."
 msgstr ""
 "Het <bold>text='Duinvolk'</bold>is een factie van mensen uit de woestijnen "
 "en heuvels van het zuiden. Het Duinvolk is gespecialiseerd in het gebruiken "
@@ -307,17 +313,28 @@ msgid "Knalgan Alliance"
 msgstr "Knalga Verbond"
 
 #. [multiplayer_side]: id=Knalgan Alliance, type=random
-#: data/multiplayer/factions/knalgans-aoh.cfg:13
-#: data/multiplayer/factions/knalgans-default.cfg:13
+#: data/multiplayer/factions/knalgans-aoh.cfg:12
+#: data/multiplayer/factions/knalgans-default.cfg:12
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Knalgan Alliance'</bold> is a faction of "
+#| "<ref>text='Dwarves' dst='..race_dwarf'</ref> and their outlaw "
+#| "<ref>text='Human' dst='..race_human'</ref> allies. Dwarves are an old "
+#| "race who live underground and have tough, but short, warriors. The "
+#| "outlaws are humans who are not socially acceptable among others of their "
+#| "race, but have become allies of the dwarves due to common enemies. This "
+#| "leads to a combination of tough and defensive dwarves who are only good "
+#| "on certain terrain and humans who can cover ground that dwarves are not "
+#| "good at fighting in."
 msgid ""
-"The <bold>text='Knalgan Alliance'</bold> is a faction of <ref>text='Dwarves' "
-"dst='..race_dwarf'</ref> and their outlaw <ref>text='Human' dst='.."
-"race_human'</ref> allies. Dwarves are an old race who live underground and "
-"have tough, but short, warriors. The outlaws are humans who are not socially "
-"acceptable among others of their race, but have become allies of the dwarves "
-"due to common enemies. This leads to a combination of tough and defensive "
-"dwarves who are only good on certain terrain and humans who can cover ground "
-"that dwarves are not good at fighting in."
+"The <b>Knalgan Alliance</b> is a faction of <ref dst='..race_dwarf'>Dwarves</"
+"ref> and their outlaw <ref dst='..race_human'>Human</ref> allies. Dwarves "
+"are an old race who live underground and have tough, but short, warriors. "
+"The outlaws are humans who are not socially acceptable among others of their "
+"race, but have become allies of the dwarves due to common enemies. This "
+"leads to a combination of tough and defensive dwarves who are only good on "
+"certain terrain and humans who can cover ground that dwarves are not good at "
+"fighting in."
 msgstr ""
 "Het <bold>text='Knalga Verbond'</bold> is een factie van <ref>text='Dwergen' "
 "dst='..race_dwarf'</ref> en hun bondgenoten, de vogelvrije "
@@ -336,14 +353,21 @@ msgid "Loyalists"
 msgstr "Loyalisten"
 
 #. [multiplayer_side]: id=Loyalists, type=random
-#: data/multiplayer/factions/loyalists-aoh.cfg:14
-#: data/multiplayer/factions/loyalists-default.cfg:14
+#: data/multiplayer/factions/loyalists-aoh.cfg:13
+#: data/multiplayer/factions/loyalists-default.cfg:13
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Loyalists'</bold> are a faction of <ref>text='Humans' "
+#| "dst='..race_human'</ref> who are loyal to the throne of Wesnoth. Humans "
+#| "are a versatile race who specialize in many different areas. Similarly, "
+#| "the Loyalist faction is a very versatile melee-oriented faction with "
+#| "important ranged support from bowmen and mages."
 msgid ""
-"The <bold>text='Loyalists'</bold> are a faction of <ref>text='Humans' dst='.."
-"race_human'</ref> who are loyal to the throne of Wesnoth. Humans are a "
-"versatile race who specialize in many different areas. Similarly, the "
-"Loyalist faction is a very versatile melee-oriented faction with important "
-"ranged support from bowmen and mages."
+"The <b>Loyalists</b> are a faction of <ref dst='..race_human'>Humans</ref> "
+"who are loyal to the throne of Wesnoth. Humans are a versatile race who "
+"specialize in many different areas. Similarly, the Loyalist faction is a "
+"very versatile melee-oriented faction with important ranged support from "
+"bowmen and mages."
 msgstr ""
 "De <bold>text='Loyalisten'</bold> vormen een factie bestaande uit "
 "<ref>text='Mensen' dst='..race_human'</ref> die loyaal zijn aan het "
@@ -352,24 +376,33 @@ msgstr ""
 "veelzijdig met vechters voor korte afstand die ondersteund worden door "
 "boogschutters en magiërs."
 
-#. [multiplayer_side]: id=Northerners, type=random, description=<img>src='portraits/orcs/warlord.webp~BG()' align='middle'</img>
+#. [multiplayer_side]: id=Northerners, type=random
 #: data/multiplayer/factions/northerners-aoh.cfg:4
 #: data/multiplayer/factions/northerners-default.cfg:4
 msgid "Northerners"
 msgstr "Noorderlingen"
 
-#. [multiplayer_side]: id=Northerners, type=random, description=<img>src='portraits/orcs/warlord.webp~BG()' align='middle'</img>
-#: data/multiplayer/factions/northerners-aoh.cfg:16
-#: data/multiplayer/factions/northerners-default.cfg:15
+#. [multiplayer_side]: id=Northerners, type=random
+#: data/multiplayer/factions/northerners-aoh.cfg:13
+#: data/multiplayer/factions/northerners-default.cfg:12
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Northerners'</bold> are a faction of <ref>text='Orcs' "
+#| "dst='..race_orc'</ref> and their allies who live in the north of the "
+#| "Great Continent, thus their name. Northerners consist of the warrior orcs "
+#| "race, the enslaved <ref>text='goblins' dst='..race_goblin'</ref>, "
+#| "<ref>text='trolls' dst='..race_troll'</ref> who are tricked into combat "
+#| "by the orcs, and the serpentine <ref>text='naga' dst='..race_naga'</ref>. "
+#| "The Northerners play best by taking advantage of having many low-cost and "
+#| "high HP soldiers."
 msgid ""
-"The <bold>text='Northerners'</bold> are a faction of <ref>text='Orcs' dst='.."
-"race_orc'</ref> and their allies who live in the north of the Great "
-"Continent, thus their name. Northerners consist of the warrior orcs race, "
-"the enslaved <ref>text='goblins' dst='..race_goblin'</ref>, "
-"<ref>text='trolls' dst='..race_troll'</ref> who are tricked into combat by "
-"the orcs, and the serpentine <ref>text='naga' dst='..race_naga'</ref>. The "
-"Northerners play best by taking advantage of having many low-cost and high "
-"HP soldiers."
+"The <b>Northerners</b> are a faction of <ref dst='..race_orc'>Orcs</ref> and "
+"their allies who live in the north of the Great Continent, thus their name. "
+"Northerners consist of the warrior orcs race, the enslaved <ref dst='.."
+"race_goblin'>goblins</ref>, <ref dst='..race_troll'>trolls</ref> who are "
+"tricked into combat by the orcs, and the serpentine <ref dst='.."
+"race_naga'>naga</ref>. The Northerners play best by taking advantage of "
+"having many low-cost and high HP soldiers."
 msgstr ""
 "De <bold>text='Noorderlingen'</bold> zijn een factie van <ref>text='Orks' "
 "dst='..race_orc'</ref> en hun bondgenoten die in het noorden van het Grote "
@@ -387,18 +420,30 @@ msgid "Rebels"
 msgstr "Rebellen"
 
 #. [multiplayer_side]: id=Rebels, type=random
-#: data/multiplayer/factions/rebels-aoh.cfg:14
-#: data/multiplayer/factions/rebels-default.cfg:14
+#: data/multiplayer/factions/rebels-aoh.cfg:13
+#: data/multiplayer/factions/rebels-default.cfg:13
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Rebels'</bold> are a faction of <ref>text='Elves' dst='.."
+#| "race_elf'</ref> and their various forest-dwelling allies. They get their "
+#| "human name, Rebels, from the time of Heir to the Throne, when they "
+#| "started the rebellion against the evil Queen Asheviere. Elves are a "
+#| "magical race that are masters of the bow and are capable of living many "
+#| "years longer than humans. In harmony with nature, the elves find allies "
+#| "with the <ref>text='human' dst='..race_human'</ref> mages, certain "
+#| "<ref>text='merfolk' dst='..race_merman'</ref>, and tree creatures called "
+#| "<ref>text='Woses' dst='..race_wose'</ref>. Rebels are best played taking "
+#| "advantage of their high forest defense, mastery of ranged attacks, and "
+#| "the elves’ neutral alignment."
 msgid ""
-"The <bold>text='Rebels'</bold> are a faction of <ref>text='Elves' dst='.."
-"race_elf'</ref> and their various forest-dwelling allies. They get their "
-"human name, Rebels, from the time of Heir to the Throne, when they started "
-"the rebellion against the evil Queen Asheviere. Elves are a magical race "
-"that are masters of the bow and are capable of living many years longer than "
-"humans. In harmony with nature, the elves find allies with the "
-"<ref>text='human' dst='..race_human'</ref> mages, certain "
-"<ref>text='merfolk' dst='..race_merman'</ref>, and tree creatures called "
-"<ref>text='Woses' dst='..race_wose'</ref>. Rebels are best played taking "
+"The <b>Rebels</b> are a faction of <ref dst='..race_elf'>Elves</ref> and "
+"their various forest-dwelling allies. They get their human name, Rebels, "
+"from the time of Heir to the Throne, when they started the rebellion against "
+"the evil Queen Asheviere. Elves are a magical race that are masters of the "
+"bow and are capable of living many years longer than humans. In harmony with "
+"nature, the elves find allies with the <ref dst='..race_human'>human</ref> "
+"mages, certain <ref dst='..race_merman'>merfolk</ref>, and tree creatures "
+"called <ref dst='..race_wose'>Woses</ref>. Rebels are best played taking "
 "advantage of their high forest defense, mastery of ranged attacks, and the "
 "elves’ neutral alignment."
 msgstr ""
@@ -421,17 +466,28 @@ msgid "Undead"
 msgstr "Ondoden"
 
 #. [multiplayer_side]: id=Undead, type=random
-#: data/multiplayer/factions/undead-aoh.cfg:14
-#: data/multiplayer/factions/undead-default.cfg:14
+#: data/multiplayer/factions/undead-aoh.cfg:13
+#: data/multiplayer/factions/undead-default.cfg:13
+#, fuzzy
+#| msgid ""
+#| "The <bold>text='Undead'</bold> are a faction of <ref>text='undead' dst='.."
+#| "race_undead'</ref> creatures and <ref>text='human' dst='..race_human'</"
+#| "ref> practitioners of dark arts that usually accompany them. Often, these "
+#| "“Dark Adepts” are the units that do the most damage for the faction, but "
+#| "they have a major vulnerability — their practicing of this forbidden, "
+#| "evil magic has consumed all their energy and so they have no melee attack "
+#| "at all. The Undead are a very aggressive faction and the most powerful "
+#| "<ref>text='Default Era' dst='..era_era_default'</ref> faction at "
+#| "nighttime."
 msgid ""
-"The <bold>text='Undead'</bold> are a faction of <ref>text='undead' dst='.."
-"race_undead'</ref> creatures and <ref>text='human' dst='..race_human'</ref> "
-"practitioners of dark arts that usually accompany them. Often, these “Dark "
-"Adepts” are the units that do the most damage for the faction, but they have "
-"a major vulnerability — their practicing of this forbidden, evil magic has "
-"consumed all their energy and so they have no melee attack at all. The "
-"Undead are a very aggressive faction and the most powerful "
-"<ref>text='Default Era' dst='..era_era_default'</ref> faction at nighttime."
+"The <b>Undead</b> are a faction of <ref dst='..race_undead'>undead</ref> "
+"creatures and <ref dst='..race_human'>human</ref> practitioners of dark arts "
+"that usually accompany them. Often, these “Dark Adepts” are the units that "
+"do the most damage for the faction, but they have a major vulnerability — "
+"their practicing of this forbidden, evil magic has consumed all their energy "
+"and so they have no melee attack at all. The Undead are a very aggressive "
+"faction and the most powerful <ref dst='..era_era_default'>Default Era</ref> "
+"faction at nighttime."
 msgstr ""
 "De <bold>text='Ondoden'</bold> zijn een factie die naast <ref>text='Ondoden' "
 "dst='..race_undead'</ref> ook bestaat uit de <ref>text='Mensen' dst='.."
@@ -450,19 +506,34 @@ msgstr "2s — Aethermaw"
 
 #. [multiplayer]: id=multiplayer_Aethermaw
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:6
+#, fuzzy
+#| msgid ""
+#| "Long ago, the Great Mage Sulla was imprisoned in the Aethermaw, a nexus "
+#| "of mystical energy whose chaotic nature was able to prevent her escape. "
+#| "Over the centuries, however, Sulla gradually attuned her powers to the "
+#| "maelstrom of disorder that is the Aethermaw, and has now begun to project "
+#| "its influence onto the material plane, drawing in entire regions of land "
+#| "from hundreds of different worlds, realities and time-periods. She "
+#| "experiments with these disparate pieces of the cosmos, manipulating them, "
+#| "merging them and sending them back and forth between the Aethermaw and "
+#| "their place of origin. Perhaps, as her mastery over the Aethermaw grows, "
+#| "Sulla will one day break free of its bonds. Until that time comes, she "
+#| "will continue to amuse herself by arranging battles between the mortal "
+#| "beings unlucky enough to be drawn into its depths. Designed by Doc "
+#| "Paterson."
 msgid ""
-"Long ago, the Great Mage Sulla was imprisoned in the Aethermaw, a nexus of "
-"mystical energy whose chaotic nature was able to prevent her escape. Over "
-"the centuries, however, Sulla gradually attuned her powers to the maelstrom "
-"of disorder that is the Aethermaw, and has now begun to project its "
-"influence onto the material plane, drawing in entire regions of land from "
-"hundreds of different worlds, realities and time-periods. She experiments "
-"with these disparate pieces of the cosmos, manipulating them, merging them "
-"and sending them back and forth between the Aethermaw and their place of "
-"origin. Perhaps, as her mastery over the Aethermaw grows, Sulla will one day "
-"break free of its bonds. Until that time comes, she will continue to amuse "
-"herself by arranging battles between the mortal beings unlucky enough to be "
-"drawn into its depths. Designed by Doc Paterson."
+"Long ago, the Legendary Aether Mage, Sulla, was imprisoned in the Aethermaw, "
+"a nexus of mystical energy whose chaotic nature was able to prevent her "
+"escape. Over the centuries, however, Sulla gradually attuned her powers to "
+"the maelstrom of disorder that is the Aethermaw, and has now begun to "
+"project its influence onto the material plane, drawing in entire regions of "
+"land from hundreds of different worlds, realities and time-periods. She now "
+"experiments with these disparate pieces of the cosmos, manipulating them, "
+"merging them and sending them back and forth between the Aethermaw and their "
+"place of origin. Perhaps, as her mastery over the Aethermaw grows, Sulla "
+"will one day break free of its bonds. Until that time comes, she will "
+"continue to amuse herself by arranging battles between the mortal beings "
+"unlucky enough to be drawn into its depths. Designed by Doc Paterson."
 msgstr ""
 "Lang geleden is de Meester Magiër Sulla gevangen gezet in de Aethermaw, een "
 "verbinding van mysterieuze energie wiens chaotische achtergrond een "
@@ -560,8 +631,12 @@ msgstr "Versla de vijandelijke leider"
 
 #. [note]
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:312
+#, fuzzy
+#| msgid ""
+#| "The Great Mage Sulla has transported your armies to this bizarre nexus, "
+#| "and demands that you amuse her by doing battle."
 msgid ""
-"The Great Mage Sulla has transported your armies to this bizarre nexus, and "
+"The Aether Mage Sulla has transported your armies to this bizarre nexus, and "
 "demands that you amuse her by doing battle."
 msgstr ""
 "De Meester Magiër Sulla heeft je troepen getransporteerd naar deze bizarre "
@@ -578,9 +653,14 @@ msgstr ""
 
 #. [note]
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:318
+#, fuzzy
+#| msgid ""
+#| "Beginning on turn 4, the Great Mage Sulla will begin to unite the two "
+#| "halves of the battlefield. The process will be complete by the end of "
+#| "turn 6."
 msgid ""
-"Beginning on turn 4, the Great Mage Sulla will begin to unite the two halves "
-"of the battlefield. The process will be complete by the end of turn 6."
+"Beginning on turn 4, the Aether Mage Sulla will begin to unite the two "
+"halves of the battlefield. The process will be complete by the end of turn 6."
 msgstr ""
 "Startend op beurt 4 zal de Meester Magiër Sulla beginnen met het verenigen "
 "van de twee helften van het slagveld. Dit proces zal voltooid worden aan het "
@@ -1235,28 +1315,28 @@ msgstr ""
 "Je moet de kaartinstellingen gebruiken om dit scenario goed te laten werken."
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:21
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:33
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:22
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:34
 msgid "teamname^Revolt"
 msgstr "Opstand"
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:50
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:76
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:51
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:77
 msgid "teamname^Human"
 msgstr "Mensen"
 
 #. [then]
 #. [objective]: condition=lose
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:114
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:135
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:115
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:136
 #: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:278
 msgid "Death of your leader"
 msgstr "Dood van je leider"
 
 #. [then]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:115
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:136
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:116
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:137
 msgid ""
 "Since your team has only one leader, the enemy waves will not be at full "
 "strength."
@@ -1265,14 +1345,14 @@ msgstr ""
 "niet op volle kracht zijn."
 
 #. [else]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:118
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:143
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:119
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:144
 msgid "Death of both of your team’s leaders"
 msgstr "Dood van allebei de leiders van je team"
 
 #. [else]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:119
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:144
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:120
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:145
 msgid ""
 "Since your team has two leaders, the enemy waves will be at full strength."
 msgstr ""
@@ -1280,18 +1360,18 @@ msgstr ""
 "volle kracht zijn."
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:146
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:171
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:133
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:157
 msgid "Survive and defeat all enemy waves"
 msgstr "Overleef en versla alle vijandelijke aanvalsgolven"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:166
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:153
 msgid "Dark Forecast — a random survival scenario"
 msgstr "Duistere Voorspelling — een willekeurig overlevingsscenario"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:169
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:156
 msgid ""
 "Your aim is to survive the spawning waves of units and defeat the final "
 "archenemies.\n"
@@ -1339,12 +1419,12 @@ msgstr ""
 "- WML-implementatie"
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:188
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:175
 msgid "So this is the accursed valley — a land ours for the taking."
 msgstr "Dus dit is de vervloekte vallei - een land voor ons om te veroveren."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:192
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:179
 msgid ""
 "The inhabitants are rumored to be a strange alliance of man and beast, and "
 "our claim is not going to be unopposed. We must be prepared for the "
@@ -1355,7 +1435,7 @@ msgstr ""
 "voorbereid zijn op de vele verrassingen van dit land."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:196
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:183
 msgid ""
 "Then let us discover what lies in waiting and teach them not to oppose our "
 "claim."
@@ -1364,7 +1444,7 @@ msgstr ""
 "langer tegen onze eis kunnen verzetten."
 
 #. [message]: speaker=unit
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:215
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:202
 msgid ""
 "Ugh! How can this be? Defeated by mere barbarians! My gods have forsaken "
 "me..."
@@ -1373,7 +1453,7 @@ msgstr ""
 "verlaten..."
 
 #. [message]: speaker=second_unit
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:229
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:216
 msgid ""
 "Cheers of your enemy are the last thing you hear as you slip into death..."
 "their joy fills your last moments with pure hate."
@@ -1382,7 +1462,7 @@ msgstr ""
 "wegglijdt... hun vreugde vult je laatste momenten met pure haat."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:251
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:238
 msgid ""
 "The enemy cheers as a dark mist rises from the land, engulfing you. As "
 "ghostly wisps drain away your will, you realize that your time in this land "
@@ -1394,8 +1474,8 @@ msgstr ""
 
 #. [slider]: id=enemey_gold_factor
 #. [slider]: id=enemy_gold_factor
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:264
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:311
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:251
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:297
 msgid "Changes the gold worth of the enemy spawns by a certain percentage"
 msgstr ""
 "Verandert het goud dat de tegenstander aan eenheden oproept met een bepaald "
@@ -1711,31 +1791,31 @@ msgstr ""
 "te laten werken."
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:25
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:38
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:26
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:39
 msgid "teamname^Invaders"
 msgstr "Indringers"
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:56
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:83
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:107
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:57
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:84
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:108
 #: data/multiplayer/scenarios/Test_Elevation_Test.cfg:45
 msgid "teamname^Defenders"
 msgstr "Verdedigers"
 
 #. [label]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:189
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:175
 msgid "Healing Keep"
 msgstr "Genezende Donjon"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:213
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:199
 msgid "Isle of Mists — a random survival scenario"
 msgstr "Eiland van de Mist — een willekeurig overlevingsscenario"
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:220
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:206
 msgid ""
 "You arrive near a mystic shrine, where the apparitions of ancient armies are "
 "forever trapped and doomed to eternally cleanse the isle of all interlopers."
@@ -1745,7 +1825,7 @@ msgstr ""
 "te moeren zuiveren van alle indringers."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:224
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:210
 msgid ""
 "Phantom armies approach on the horizon. If we defeat them all, they may be "
 "released from this timeless prison."
@@ -1754,17 +1834,17 @@ msgstr ""
 "kunnen ze worden vrijgelaten uit deze tijdloze gevangenis."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:228
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:214
 msgid "Let us prepare ourselves for the coming battle."
 msgstr "Laten we ons voorbereiden op de komende strijd."
 
 #. [message]: speaker=unit
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:247
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:233
 msgid "How can this be? My gods have forsaken me..."
 msgstr "Hoe kan dit? Mijn goden laten me in de steek..."
 
 #. [message]: speaker=second_unit
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:261
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:247
 msgid ""
 "As the cold grasp of death draws nearer, you feel your spirit being "
 "separated from your body. You realize that you will soon be doomed to the "
@@ -1775,7 +1855,7 @@ msgstr ""
 "bent tot hetzelfde lot als de geestbewakers van het heiligdom."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:283
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:269
 msgid ""
 "A dark mist rises from the land, draining your senses and your will away. "
 "You dimly realize that you will soon join the other ghosts as another "
@@ -1927,8 +2007,13 @@ msgstr "Standbeeld van Sulla"
 
 #. [unit]: gender=female
 #: data/multiplayer/scenarios/2p_Sullas_Ruins.cfg:101
+#, fuzzy
+#| msgid ""
+#| "A stone-carved likeness of Sulla the Great, also known as Sulla the Just, "
+#| "Sulla the Tyrant, Empress of the Sinking Tower, Lady of the Walking "
+#| "Glacier, Sulla the Incinerator, Sulla the Proud and Sulla the Righteous."
 msgid ""
-"A stone-carved likeness of Sulla the Great, also known as Sulla the Just, "
+"A stone-carved likeness of Aether Mage Sulla, also known as Sulla the Just, "
 "Sulla the Tyrant, Empress of the Sinking Tower, Lady of the Walking Glacier, "
 "Sulla the Incinerator, Sulla the Proud and Sulla the Righteous."
 msgstr ""
@@ -2812,6 +2897,36 @@ msgstr ""
 "bossen en rivieren de geesten van duizenden dappere soldaten onzichtbaar "
 "rondzweven."
 
+#. [multiplayer]: id=multiplayer_Double_Siege
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:7
+msgid "6p — Double Siege"
+msgstr ""
+
+#. [multiplayer]: id=multiplayer_Double_Siege
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:8
+msgid ""
+"Two armies attacked a single city, both emerged victorious. Now, only one "
+"can claim the victory."
+msgstr ""
+
+#. [side]
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:25
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:61
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:73
+#, fuzzy
+#| msgid "teamname^North"
+msgid "teamname^Top"
+msgstr "Noord"
+
+#. [side]
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:37
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:49
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:85
+#, fuzzy
+#| msgid "teamname^North"
+msgid "teamname^Bottom"
+msgstr "Noord"
+
 #. [multiplayer]: id=multiplayer_Hexcake
 #: data/multiplayer/scenarios/6p_Hexcake.cfg:5
 msgid "6p — Hexcake"
@@ -3095,7 +3210,9 @@ msgstr ""
 
 #. [multiplayer]: id=multiplayer_test_Elevation_Demo
 #: data/multiplayer/scenarios/Test_Elevation_Test.cfg:5
-msgid "3p - Elevation Test"
+#, fuzzy
+#| msgid "3p - Elevation Test"
+msgid "3p — Elevation Test"
 msgstr "3s - Hoogte Test"
 
 #. [multiplayer]: id=multiplayer_test_Elevation_Demo
@@ -3107,6 +3224,42 @@ msgstr ""
 "Deze kaart is een voorbeeld van hoe de nieuwe (SoW v1.17) zwevende "
 "terreinweergaven zich gedragen. Houd er rekening mee dat deze kaart niet is "
 "bedoeld om op te spelen."
+
+#~ msgid "Default + Dunefolk"
+#~ msgstr "Standaard + Duinvolk"
+
+#~ msgid ""
+#~ "An era featuring an additional faction besides the six factions from "
+#~ "Default Era. Dunefolk units rely on careful use of terrain and "
+#~ "coordinated strikes around dusk or dawn.\n"
+#~ "\n"
+#~ "This era is still under development, so please be sure to report any "
+#~ "problems that arise."
+#~ msgstr ""
+#~ "Een tijdperk met een extra factie naast de zes facties van het Standaard "
+#~ "Tijdperk. Eenheden van het Duinvolk vertrouwen op het gebruik van het "
+#~ "terrein en vallen het liefst aan tijdens zonsopkomst of zonsondergang.\n"
+#~ "\n"
+#~ "Dit tijdperk is nog in ontwikkeling, dus zorg ervoor dat er melding wordt "
+#~ "gemaakt van elk probleem dat zich voordoet."
+
+#~ msgid "Age of Heroes + Dunefolk"
+#~ msgstr "Tijd der Helden + Duinvolk"
+
+#~ msgid ""
+#~ "An era featuring an additional faction besides the six factions from Age "
+#~ "of Heroes Era. Dunefolk units rely on careful use of terrain and "
+#~ "coordinated strikes around dusk or dawn.\n"
+#~ "\n"
+#~ "This era is still under development, so please be sure to report any "
+#~ "problems that arise."
+#~ msgstr ""
+#~ "Een tijdperk met een extra factie naast de zes facties van het de Tijd "
+#~ "der Helden. Eenheden van het Duinvolk vertrouwen op het gebruik van het "
+#~ "terrein en vallen het liefst aan tijdens zonsopkomst of zonsondergang.\n"
+#~ "\n"
+#~ "Dit tijdperk is nog in ontwikkeling, dus zorg ervoor dat er melding wordt "
+#~ "gemaakt van elk probleem dat zich voordoet."
 
 #~ msgid ""
 #~ "Controlling the area around the central keep is very lucrative in this 4 "

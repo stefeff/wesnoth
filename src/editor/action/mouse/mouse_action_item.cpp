@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Fabian Mueller <fabianmueller5@gmx.de>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -19,7 +19,6 @@
 #include "editor/action/action_item.hpp"
 
 #include "editor/editor_display.hpp"
-#include "tooltips.hpp"
 #include "gettext.hpp"
 
 #include "map/location.hpp"
@@ -51,8 +50,8 @@ std::unique_ptr<editor_action> mouse_action_item::click_left(editor_display& dis
 		return nullptr;
 	}
 
-	const overlay& item = item_palette_.selected_fg_item();
-	disp.add_overlay(start_hex_, item.image, item.halo, "", "", item.visible_in_fog, item.submerge);
+	overlay item = item_palette_.selected_fg_item();
+	disp.add_overlay(start_hex_, std::move(item));
 
 	click_ = true;
 	return nullptr;

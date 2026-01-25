@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
 	This program is free software; you can redistribute it and/or modify
@@ -22,27 +22,14 @@
 namespace gui2::dialogs
 {
 
-/**
- * @ingroup GUIWindowDefinitionWML
- *
- * This shows a dialog displaying achievements.
- *
- * Key                       |Type         |Mandatory|Description
- * --------------------------|-------------|---------|-----------
- * selected_achievements_list|menu_button  |yes      |Allows selecting achievements by what content they're for.
- * name                      |label        |yes      |The user displayed name of the achievement.
- * description               |label        |yes      |The achievement's longer description.
- * icon                      |image        |yes      |An icon to display to the left of the achievement.
- */
 class achievements_dialog : public modal_dialog
 {
 public:
-	DEFINE_SIMPLE_EXECUTE_WRAPPER(achievements_dialog)
+	DEFINE_SIMPLE_DISPLAY_WRAPPER(achievements_dialog)
 
 	achievements_dialog();
 
 private:
-	achievements achieve_;
 	std::string last_selected_;
 	listbox* achievements_box_;
 	menu_button* content_names_;
@@ -53,9 +40,9 @@ private:
 
 	virtual const std::string& window_id() const override;
 
-	virtual void pre_show(window& window) override;
+	virtual void pre_show() override;
 
-	virtual void post_show(window& window) override;
+	virtual void post_show() override;
 };
 
 } // namespace gui2::dialogs

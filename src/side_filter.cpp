@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2010 - 2024
+	Copyright (C) 2010 - 2025
 	by Yurii Chernyi <terraninfo@terraninfo.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -31,8 +31,6 @@
 #include "units/unit.hpp"
 #include "units/filter.hpp"
 #include "units/map.hpp"
-#include "variable.hpp"
-#include "filter_context.hpp"
 #include "formula/callable_objects.hpp"
 #include "formula/formula.hpp"
 #include "formula/function_gamestate.hpp"
@@ -73,16 +71,7 @@ std::vector<int> side_filter::get_teams() const
 
 static bool check_side_number(const team &t, const std::string &str)
 {
-		std::vector<std::pair<int,int>> ranges = utils::parse_ranges_unsigned(str);
-		int side_number = t.side();
-
-		std::vector<std::pair<int,int>>::const_iterator range, range_end = ranges.end();
-		for (range = ranges.begin(); range != range_end; ++range) {
-			if(side_number >= range->first && side_number <= range->second) {
-				return true;
-			}
-		}
-		return false;
+	return in_ranges(t.side(), utils::parse_ranges_unsigned(str));
 }
 
 bool side_filter::match_internal(const team &t) const
@@ -110,7 +99,7 @@ bool side_filter::match_internal(const team &t) const
 		const std::string& that_team_name = cfg_team_name;
 		const std::string& this_team_name = t.team_name();
 
-		if(std::find(this_team_name.begin(), this_team_name.end(), ',') == this_team_name.end()) {
+		if(!utils::contains(this_team_name, ',')) {
 			if(this_team_name != that_team_name) return false;
 		}
 		else {

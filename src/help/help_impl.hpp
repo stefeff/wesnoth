@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -35,36 +35,29 @@
 #include "color.hpp"
 #include "exceptions.hpp"               // for error
 #include "font/constants.hpp"
+#include "font/standard_colors.hpp"
 #include "gettext.hpp"
-#include <optional>
+#include "serialization/string_utils.hpp"
+#include "utils/optional_fwd.hpp"
+
 #include <cstring>
 #include <list>                         // for list
 #include <memory>
-#include <ostream>                      // for operator<<, stringstream, etc
 #include <sstream>
 #include <string>                       // for string, allocator, etc
 #include <utility>                      // for pair, make_pair
 #include <vector>                       // for vector, etc
-#include <boost/logic/tribool.hpp>
+#include "config.hpp"
 
 class game_config_view;
-class config;
 class unit_type;
-class terrain_type_data;
 
 namespace help {
-
-/**
- * Generate the help contents from the configurations given to the manager.
- */
-void generate_contents();
-
 
 /** Generate a topic text on the fly. */
 class topic_generator
 {
 public:
-	topic_generator() = default;
 	virtual std::string operator()() const = 0;
 	virtual ~topic_generator() {}
 };
@@ -81,54 +74,25 @@ public:
  */
 class topic_text
 {
-	mutable std::vector< std::string > parsed_text_;
+	mutable config parsed_text_;
 	mutable std::shared_ptr<topic_generator> generator_;
 public:
-	topic_text() = default;
-	~topic_text() = default;
-
-	topic_text(const std::string& t):
-		parsed_text_(),
-		generator_(std::make_shared<text_topic_generator>(t))
-	{
-	}
-
 	explicit topic_text(std::shared_ptr<topic_generator> g):
 		parsed_text_(),
 		generator_(g)
 	{
 	}
 
-	topic_text(const topic_text& t) = default;
-	topic_text(topic_text&& t) = default;
-	topic_text& operator=(topic_text&& t) = default;
-	topic_text& operator=(const topic_text& t) = default;
-	topic_text& operator=(std::shared_ptr<topic_generator> g);
-
-	const std::vector<std::string>& parsed_text() const;
+	const config& parsed_text() const;
 };
 
 /** A topic contains a title, an id and some text. */
 struct topic
 {
-	topic() :
-		title(),
-		id(),
-		text()
-	{
-	}
-
-	topic(const std::string &_title, const std::string &_id) :
-		title(_title),
-		id(_id),
-		text()
-	{
-	}
-
 	topic(const std::string &_title, const std::string &_id, const std::string &_text)
-		: title(_title), id(_id), text(_text) {}
+		: title(_title), id(_id), text(std::make_shared<text_topic_generator>(_text)) {}
 	topic(const std::string &_title, const std::string &_id, std::shared_ptr<topic_generator> g)
-		: title(_title), id(_id), text(g) {}
+		: title(_title), id(_id), text(std::move(g)) {}
 	/** Two topics are equal if their IDs are equal. */
 	bool operator==(const topic &) const;
 	bool operator!=(const topic &t) const { return !operator==(t); }
@@ -144,14 +108,6 @@ typedef std::list<topic> topic_list;
 
 /** A section contains topics and sections along with title and ID. */
 struct section {
-	section() :
-		title(""),
-		id(""),
-		topics(),
-		sections()
-	{
-	}
-
 	/** Two sections are equal if their IDs are equal. */
 	bool operator==(const section &) const;
 	/** Comparison on the ID. */
@@ -159,6 +115,7 @@ struct section {
 
 	/** Allocate memory for and add the section. */
 	void add_section(const section &s);
+	void add_section(section&& s);
 
 	void clear();
 	std::string title, id;
@@ -209,23 +166,22 @@ public:
 	}
 };
 
-/** Thrown when the help system fails to parse something. */
-struct parse_error : public game::error
-{
-	parse_error(const std::string& msg) : game::error(msg) {}
-};
-
 // Generator stuff below. Maybe move to a separate file? This one is
 // getting crowded. Dunno if much more is needed though so I'll wait and
 // see.
 
 /** Dispatch generators to their appropriate functions. */
-void generate_sections(const config *help_cfg, const std::string &generator, section &sec, int level);
+void generate_sections(const config& help_cfg, const std::string &generator, section &sec, int level);
 std::vector<topic> generate_topics(const bool sort_topics,const std::string &generator);
-std::string generate_topic_text(const std::string &generator, const config *help_cfg,
-const section &sec, const std::vector<topic>& generated_topics);
-std::string generate_contents_links(const std::string& section_name, const config *help_cfg);
-std::string generate_contents_links(const section &sec, const std::vector<topic>& topics);
+std::string generate_topic_text(const std::string &generator, const config& help_cfg, const section &sec);
+std::string generate_contents_links(const std::string& section_name, const config& help_cfg);
+std::string generate_contents_links(const section &sec);
+
+/** Thrown when the help system fails to parse something. */
+struct parse_error : public game::error
+{
+	parse_error(const std::string& msg) : game::error(msg) {}
+};
 
 /**
  * return a hyperlink with the unit's name and pointing to the unit page
@@ -236,10 +192,10 @@ std::string make_unit_link(const std::string& type_id);
 std::vector<std::string> make_unit_links_list(
 		const std::vector<std::string>& type_id_list, bool ordered = false);
 
-void generate_races_sections(const config *help_cfg, section &sec, int level);
+void generate_races_sections(const config& help_cfg, section &sec, int level);
 void generate_terrain_sections(section &sec, int level);
 std::vector<topic> generate_unit_topics(const bool, const std::string& race);
-void generate_unit_sections(const config *help_cfg, section &sec, int level, const bool, const std::string& race);
+void generate_unit_sections(const config& help_cfg, section &sec, int level, const bool, const std::string& race);
 enum UNIT_DESCRIPTION_TYPE {
 	FULL_DESCRIPTION,
 	/** Ignore this unit for documentation purposes. */
@@ -265,19 +221,25 @@ std::vector<topic> generate_ability_topics(const bool);
 std::vector<topic> generate_time_of_day_topics(const bool);
 std::vector<topic> generate_weapon_special_topics(const bool);
 
-void generate_era_sections(const config *help_cfg, section &sec, int level);
+void generate_era_sections(const config& help_cfg, section &sec, int level);
 std::vector<topic> generate_faction_topics(const config &, const bool);
 std::vector<topic> generate_era_topics(const bool, const std::string & era_id);
 std::vector<topic> generate_trait_topics(const bool);
 
 /**
+ * Generate the help contents from the configurations given to the manager.
+ * @returns A pair consisting of the toplevel section and any hidden sections.
+ */
+std::pair<section, section> generate_contents();
+
+/**
  * Parse a help config, return the top level section. Return an empty
  * section if cfg is nullptr.
  */
-section parse_config(const config *cfg);
+section parse_config(const config& cfg);
+
 /** Recursive function used by parse_config. */
-void parse_config_internal(const config *help_cfg, const config *section_cfg,
-						   section &sec, int level=0);
+section parse_config_internal(const config& help_cfg, const config& section_cfg, int level = 0);
 
 /**
  * Return true if the section with id section_id is referenced from
@@ -305,59 +267,7 @@ const topic *find_topic(const section &sec, const std::string &id);
 const section *find_section(const section &sec, const std::string &id);
 section *find_section(section &sec, const std::string &id);
 
-/**
- * Parse a text string. Return a vector with the different parts of the
- * text. Each markup item is a separate part while the text between
- * markups are separate parts.
- */
-std::vector<std::string> parse_text(const std::string &text);
-
-/**
- * Convert the contents to wml attributes, surrounded within
- * [element_name]...[/element_name]. Return the resulting WML.
- */
-std::string convert_to_wml(const std::string &element_name, const std::string &contents);
-
-/**
- * Return the color the string represents. Return font::NORMAL_COLOR if
- * the string is empty or can't be matched against any other color.
- */
-color_t string_to_color(const std::string &s);
-
-/** Make a best effort to word wrap s. All parts are less than width. */
-std::vector<std::string> split_in_width(const std::string &s, const int font_size, const unsigned width);
-
-std::string remove_first_space(const std::string& text);
-
-/** Prepend all chars with meaning inside attributes with a backslash. */
-std::string escape(const std::string &s);
-
-/** Return the first word in s, not removing any spaces in the start of it. */
-std::string get_first_word(const std::string &s);
-
-/** Load the appropriate terrain types data to use */
-std::shared_ptr<terrain_type_data> load_terrain_types_data();
-
-extern const game_config_view *game_cfg;
-// The default toplevel.
-extern help::section default_toplevel;
-// All sections and topics not referenced from the default toplevel.
-extern help::section hidden_sections;
-
-extern int last_num_encountered_units;
-extern int last_num_encountered_terrains;
-extern boost::tribool last_debug_state;
-
-extern std::vector<std::string> empty_string_vector;
 extern const int max_section_level;
-extern const int title_size;
-extern const int title2_size;
-extern const int box_width;
-extern const int normal_font_size;
-extern const unsigned max_history;
-extern const std::string topic_img;
-extern const std::string closed_section_img;
-extern const std::string open_section_img;
 // The topic to open by default when opening the help dialog.
 extern const std::string default_show_topic;
 extern const std::string unknown_unit_topic;
@@ -380,50 +290,5 @@ bool is_visible_id(const std::string &id);
  * be defined in the config.
  */
 bool is_valid_id(const std::string &id);
-
-	// Helpers for making generation of topics easier.
-
-inline std::string make_link(const std::string& text, const std::string& dst)
-	{
-		// some sorting done on list of links may rely on the fact that text is first
-		return "<ref>text='" + help::escape(text) + "' dst='" + help::escape(dst) + "'</ref>";
-	}
-
-inline std::string jump_to(const unsigned pos)
-	{
-		std::stringstream ss;
-		ss << "<jump>to=" << pos << "</jump>";
-		return ss.str();
-	}
-
-inline std::string jump(const unsigned amount)
-	{
-		std::stringstream ss;
-		ss << "<jump>amount=" << amount << "</jump>";
-		return ss.str();
-	}
-
-inline std::string bold(const std::string &s)
-	{
-		std::stringstream ss;
-		ss << "<bold>text='" << help::escape(s) << "'</bold>";
-		return ss.str();
-	}
-
-// A string to be displayed and its width.
-typedef std::pair< std::string, unsigned > item;
-
-typedef std::vector<std::vector<help::item>> table_spec;
-// Create a table using the table specs. Return markup with jumps
-// that create a table. The table spec contains a vector with
-// vectors with pairs. The pairs are the markup string that should
-// be in a cell, and the width of that cell.
-std::string generate_table(const table_spec &tab, const unsigned int spacing=font::relative_size(20));
-
-// Return the width for the image with filename.
-unsigned image_width(const std::string &filename);
-
-// Add to the vector v an help::item for the string s, preceded by the given image if any.
-void push_tab_pair(std::vector<help::item> &v, const std::string &s, const std::optional<std::string> &image = {}, unsigned padding = 0);
 
 } // end namespace help

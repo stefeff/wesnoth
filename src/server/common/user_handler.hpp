@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Thomas Baumhauer <thomas.baumhauer@NOSPAMgmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -19,7 +19,6 @@ class config;
 
 #include "exceptions.hpp"
 
-#include <ctime>
 #include <string>
 
 #include <boost/asio/io_context.hpp>
@@ -103,20 +102,8 @@ public:
 	/** Ban status description */
 	struct ban_info
 	{
-		BAN_TYPE type;			/**< Ban type */
-		std::time_t duration;	/**< Ban duration (0 if permanent) */
-
-		ban_info()
-			: type(BAN_NONE)
-			, duration(0)
-		{
-		}
-
-		ban_info(BAN_TYPE ptype, std::time_t pduration)
-			: type(ptype)
-			, duration(pduration)
-		{
-		}
+		BAN_TYPE type = BAN_NONE;			/**< Ban type */
+		std::chrono::seconds duration{0};	/**< Ban duration (0 if permanent) */
 	};
 
 	/**
@@ -156,6 +143,10 @@ public:
 	virtual bool db_is_user_primary_author(const std::string& instance_version, const std::string& id, const std::string& username) = 0;
 	virtual bool db_is_user_secondary_author(const std::string& instance_version, const std::string& id, const std::string& username) = 0;
 	virtual void db_delete_addon_authors(const std::string& instance_version, const std::string& id) = 0;
-	virtual void db_insert_addon_authors(const std::string& instance_version, const std::string& id, const std::string& primary_author, const std::vector<std::string>& secondary_authors) = 0;
+	virtual void db_insert_addon_authors(const std::string& instance_version, const std::string& id, const std::vector<std::string>& primary_authors, const std::vector<std::string>& secondary_authors) = 0;
 	virtual bool db_do_any_authors_exist(const std::string& instance_version, const std::string& id) = 0;
+	virtual config db_get_addon_downloads_info(const std::string& instance_version, const std::string& id) = 0;
+	virtual config db_get_forum_auth_usage(const std::string& instance_version) = 0;
+	virtual config db_get_addon_admins() = 0;
+	virtual bool user_is_addon_admin(const std::string& name) = 0;
 };

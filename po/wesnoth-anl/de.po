@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Battle for Wesnoth 1.12\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2024-03-18 00:07 UTC\n"
+"POT-Creation-Date: 2024-04-10 17:05 UTC\n"
 "PO-Revision-Date: 2022-08-22 22:39+0200\n"
 "Last-Translator: Severin Glöckner <severin.gloeckner@stud.htwk-leipzig.de>\n"
 "Language-Team: German <irc://irc.libera.chat/#wesnoth-de>\n"
@@ -555,7 +555,7 @@ msgstr "In diesem Szenario baut ihr eine Wirtschaft auf"
 msgid "Move any unit next to captives and they will join your side"
 msgstr ""
 "Wenn Ihr mit einer Einheit neben einen Gefangenen zieht, wird er sich Euch "
-"anschließen."
+"anschließen"
 
 #. Part of the scenario objectives
 #: data/multiplayer/scenarios/ANL_utils/ANL_objectives.cfg:13

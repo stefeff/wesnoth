@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2015 - 2024
+	Copyright (C) 2015 - 2025
 	by Iris Morelle <shadowm2006@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -19,6 +19,7 @@
 #include "filesystem.hpp"
 #include "game_config.hpp"
 #include "log.hpp"
+#include "utils/optional_reference.hpp"
 
 #if 0
 namespace {
@@ -42,7 +43,7 @@ BOOST_AUTO_TEST_CASE( test_fs_game_path_reverse_engineering )
 {
 	const std::string maincfg = "_main.cfg";
 
-	std::string gamedata_rev = get_wml_location("_main.cfg");
+	std::string gamedata_rev = get_wml_location("_main.cfg").value();
 
 	const std::size_t strip_len = (maincfg + "/data/").length();
 	BOOST_REQUIRE(gamedata_rev.length() > strip_len);
@@ -144,58 +145,77 @@ BOOST_AUTO_TEST_CASE( test_fs_enum )
 
 BOOST_AUTO_TEST_CASE( test_fs_binary_path )
 {
-	config main_config;
-	game_config_view game_config_view_ = game_config_view::wrap(main_config);
 	game_config::config_cache& cache = game_config::config_cache::instance();
 
 	cache.clear_defines();
 	cache.add_define("EDITOR");
 	cache.add_define("MULTIPLAYER");
-	cache.get_config(game_config::path +"/data", main_config);
+
+	config main_config = cache.get_config(game_config::path + "/data");
+	game_config_view game_config_view_ = game_config_view::wrap(main_config);
 
 	const filesystem::binary_paths_manager bin_paths_manager(game_config_view_);
 
 	//load_language_list();
 	game_config::load_config(main_config.mandatory_child("game_config"));
 
-	BOOST_CHECK_EQUAL( get_binary_dir_location("images", "."), gamedata + "/images/." );
+	BOOST_CHECK_EQUAL( get_binary_dir_location("images", ".").value(), gamedata + "/images/." );
 
-	BOOST_CHECK_EQUAL( get_binary_file_location("images", "wesnoth-icon.png"),
+	BOOST_CHECK_EQUAL( get_binary_file_location("images", "wesnoth-icon.png").value(),
 	                   gamedata + "/data/core/images/wesnoth-icon.png" );
 
-	BOOST_CHECK_EQUAL( get_binary_file_location("music", "silence.ogg"),
+	BOOST_CHECK_EQUAL( get_binary_file_location("music", "silence.ogg").value(),
 	                   gamedata + "/data/core/music/silence.ogg" );
 
-	BOOST_CHECK_EQUAL( get_binary_file_location("sounds", "explosion.ogg"),
+	BOOST_CHECK_EQUAL( get_binary_file_location("sounds", "explosion.ogg").value(),
 	                   gamedata + "/data/core/sounds/explosion.ogg" );
 
-	BOOST_CHECK_EQUAL( get_independent_binary_file_path("images", "wesnoth-icon.png"),
+	BOOST_CHECK_EQUAL( get_independent_binary_file_path("images", "wesnoth-icon.png").value(),
 	                   "data/core/images/wesnoth-icon.png" );
 
 	// Inexistent paths are resolved empty.
-	BOOST_CHECK( get_binary_dir_location("images", "").empty() );
-	BOOST_CHECK( get_binary_dir_location("inexistent_resource_type", "").empty() );
-	BOOST_CHECK( get_binary_file_location("image", "wesnoth-icon.png").empty() );
-	BOOST_CHECK( get_binary_file_location("images", "bunnies_and_ponies_and_rainbows_oh_em_gee.psd").empty() );
-	BOOST_CHECK( get_binary_file_location("music", "this_track_does_not_exist.aiff").empty() );
-	BOOST_CHECK( get_binary_file_location("sounds", "rude_noises.aiff").empty() );
-	BOOST_CHECK( get_independent_binary_file_path("images", "dopefish.txt").empty() );
+	BOOST_CHECK( !get_binary_dir_location("images", "").has_value() );
+	BOOST_CHECK( !get_binary_dir_location("inexistent_resource_type", "").has_value() );
+	BOOST_CHECK( !get_binary_file_location("image", "wesnoth-icon.png").has_value() );
+	BOOST_CHECK( !get_binary_file_location("images", "bunnies_and_ponies_and_rainbows_oh_em_gee.psd").has_value() );
+	BOOST_CHECK( !get_binary_file_location("music", "this_track_does_not_exist.aiff").has_value() );
+	BOOST_CHECK( !get_binary_file_location("sounds", "rude_noises.aiff").has_value() );
+	BOOST_CHECK( !get_independent_binary_file_path("images", "dopefish.txt").has_value() );
+
+	// to_asset_path checks
+	std::string path = gamedata + "/data/core/images/wesnoth-icon.png";
+	utils::optional<std::string> outpath = to_asset_path(path, "", "images");
+	BOOST_CHECK( outpath.has_value() );
+	BOOST_CHECK_EQUAL( outpath.value(), "wesnoth-icon.png" );
+
+	path = gamedata + "/images/icons/action/modern/language_25-active.png";
+	outpath = to_asset_path(path, "", "images");
+	BOOST_CHECK( outpath.has_value() );
+	BOOST_CHECK_EQUAL( outpath.value(), "icons/action/modern/language_25-active.png" );
+
+	path = gamedata + "/data/core/sounds/ambient/campfire.ogg";
+	outpath = to_asset_path(path, "", "sounds");
+	BOOST_CHECK( outpath.has_value() );
+	BOOST_CHECK_EQUAL( outpath.value(), "ambient/campfire.ogg" );
+
+	path = gamedata + "/images/this/path/doesn't/exist/campfire.ogg";
+	BOOST_CHECK( !to_asset_path(path, "", "images").has_value() );
 }
 
 BOOST_AUTO_TEST_CASE( test_fs_wml_path )
 {
 	const std::string& userdata = get_user_data_dir();
 
-	BOOST_CHECK_EQUAL( get_wml_location(""), "" );
+	BOOST_CHECK_EQUAL( get_wml_location("").value_or(""), "" );
 
-	BOOST_CHECK_EQUAL( get_wml_location("_main.cfg"), gamedata + "/data/_main.cfg" );
-	BOOST_CHECK_EQUAL( get_wml_location("core/_main.cfg"), gamedata + "/data/core/_main.cfg" );
-	BOOST_CHECK_EQUAL( get_wml_location("."), gamedata + "/data/." );
+	BOOST_CHECK_EQUAL( get_wml_location("_main.cfg").value_or(""), gamedata + "/data/_main.cfg" );
+	BOOST_CHECK_EQUAL( get_wml_location("core/_main.cfg").value_or(""), gamedata + "/data/core/_main.cfg" );
+	BOOST_CHECK_EQUAL( get_wml_location(".", std::string("")).value_or(""), "." );
 
-	BOOST_CHECK_EQUAL( get_wml_location("~/"), userdata + "/data/" );
+	BOOST_CHECK_EQUAL( get_wml_location("~/").value_or(""), userdata + "/data/" );
 
 	// Inexistent paths are resolved empty.
-	BOOST_CHECK( get_wml_location("why_would_anyone_ever_name_a_file_like_this").empty() );
+	BOOST_CHECK( !get_wml_location("why_would_anyone_ever_name_a_file_like_this").has_value() );
 }
 
 BOOST_AUTO_TEST_CASE( test_fs_search )
@@ -215,8 +235,6 @@ BOOST_AUTO_TEST_CASE( test_fs_search )
 
 BOOST_AUTO_TEST_CASE( test_fs_fluff )
 {
-	BOOST_CHECK( ends_with("foobarbazbat", "bazbat") );
-
 	BOOST_CHECK( looks_like_pbl("foo.pbl") );
 	BOOST_CHECK( looks_like_pbl("FOO.PBL") );
 	BOOST_CHECK( looks_like_pbl("Foo.Pbl") );
@@ -237,5 +255,57 @@ BOOST_AUTO_TEST_CASE( test_fs_fluff )
 	BOOST_CHECK( !is_compressed_file("foo.GZ") );
 	BOOST_CHECK( !is_compressed_file("foo.BZ2") );
 }
+
+BOOST_AUTO_TEST_CASE( test_blacklist_pattern_list )
+{
+	// Basic wildcard matching
+	blacklist_pattern_list blacklist({"*.exe", "potato*", "rutabaga"}, {});
+	BOOST_CHECK(blacklist.match_file("program.exe"));
+	BOOST_CHECK(blacklist.match_file("rutabaga"));
+	BOOST_CHECK(blacklist.match_file("potatoes"));
+	BOOST_CHECK(!blacklist.match_file("notapotato"));
+
+	// ? should match a single character
+	blacklist_pattern_list qmark({"file?.txt"}, {});
+	BOOST_CHECK(qmark.match_file("file1.txt"));
+	BOOST_CHECK(qmark.match_file("fileA.txt"));
+	BOOST_CHECK(!qmark.match_file("file12.txt"));
+
+	// Leading/trailing wildcards
+	blacklist_pattern_list leadtrail({"*secret*"}, {});
+	BOOST_CHECK(leadtrail.match_file("my_secret_file"));
+	BOOST_CHECK(leadtrail.match_file("secret"));
+	BOOST_CHECK(!leadtrail.match_file("public"));
+
+	// Pattern that should match everything
+	blacklist_pattern_list all({"*"}, {});
+	BOOST_CHECK(all.match_file("anything"));
+	BOOST_CHECK(all.match_file(""));
+
+	// Directory pattern matching (match_dir should behave the same)
+	blacklist_pattern_list dirpat({}, {"temp*", "__MACOSX"});
+	BOOST_CHECK(dirpat.match_dir("temp"));
+	BOOST_CHECK(dirpat.match_dir("temp123"));
+	BOOST_CHECK(dirpat.match_dir("__MACOSX"));
+	BOOST_CHECK(dirpat.match_dir("templates"));
+
+	// Matching is case-sensitive, though it probably shouldn't be on Windows
+	blacklist_pattern_list cs({"Readme.TXT"}, {});
+	BOOST_CHECK(cs.match_file("Readme.TXT"));
+	BOOST_CHECK(!cs.match_file("readme.txt"));
+
+	// Patterns with dots and special chars
+	blacklist_pattern_list specials({"*.tar.gz", "backup?.old", "*.cfg"}, {});
+	BOOST_CHECK(specials.match_file("archive.tar.gz"));
+	BOOST_CHECK(specials.match_file("backup1.old"));
+	BOOST_CHECK(!specials.match_file("backup10.old"));
+	BOOST_CHECK(specials.match_file("foo.cfg"));
+
+	// Sanity: nonexistent patterns should not match
+	blacklist_pattern_list none({}, {});
+	BOOST_CHECK(!none.match_file("something.exe"));
+	BOOST_CHECK(!none.match_dir("temp"));
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

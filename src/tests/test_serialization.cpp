@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2009 - 2024
+	Copyright (C) 2009 - 2025
 	by Karol Nowak <grywacz@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -426,13 +426,13 @@ BOOST_AUTO_TEST_CASE( utils_square_parenthetical_split )
 		BOOST_CHECK_EQUAL_COLLECTIONS(split.begin(), split.end(), expect.begin(), expect.end());
 	}
 	{
-		auto split = utils::square_parenthetical_split("q[1~5]");
-		std::array expect = {"q1", "q2", "q3", "q4", "q5"};
+		auto split = utils::square_parenthetical_split("q[0~5]");
+		std::array expect = {"q0", "q1", "q2", "q3", "q4", "q5"};
 		BOOST_CHECK_EQUAL_COLLECTIONS(split.begin(), split.end(), expect.begin(), expect.end());
 	}
 	{
-		auto split = utils::square_parenthetical_split("q[5~1]");
-		std::array expect = {"q5", "q4", "q3", "q2", "q1"};
+		auto split = utils::square_parenthetical_split("q[5~0]");
+		std::array expect = {"q5", "q4", "q3", "q2", "q1", "q0"};
 		BOOST_CHECK_EQUAL_COLLECTIONS(split.begin(), split.end(), expect.begin(), expect.end());
 	}
 	{
@@ -443,6 +443,16 @@ BOOST_AUTO_TEST_CASE( utils_square_parenthetical_split )
 	{
 		auto split = utils::square_parenthetical_split("q[007~012]");
 		std::array expect = {"q007", "q008", "q009", "q010", "q011", "q012"};
+		BOOST_CHECK_EQUAL_COLLECTIONS(split.begin(), split.end(), expect.begin(), expect.end());
+	}
+	{
+		auto split = utils::square_parenthetical_split("q[095~100]");
+		std::array expect = {"q095", "q096", "q097", "q098", "q099", "q100"};
+		BOOST_CHECK_EQUAL_COLLECTIONS(split.begin(), split.end(), expect.begin(), expect.end());
+	}
+	{
+		auto split = utils::square_parenthetical_split("q[095~098]");
+		std::array expect = {"q095", "q096", "q097", "q098"};
 		BOOST_CHECK_EQUAL_COLLECTIONS(split.begin(), split.end(), expect.begin(), expect.end());
 	}
 	{
@@ -506,9 +516,7 @@ BOOST_AUTO_TEST_CASE( utils_unicode_test )
 	std::u32string water_u4;
 	water_u4.push_back(0x6C34);
 	std::string water_u8 = unicode_cast<std::string>(water_u4);
-	std::u16string water_u16 = unicode_cast<std::u16string>(water_u4);
 
-	BOOST_CHECK_EQUAL(water_u4[0], static_cast<char32_t>(water_u16[0]));
 #if defined(_WIN32) || defined(_WIN64)
 	// Windows complains it can't be represented in the currentl code-page.
 	// So instead, check directly for its UTF-8 representation.
@@ -527,9 +535,6 @@ BOOST_AUTO_TEST_CASE( utils_unicode_test )
 	std::u16string nonbmp_u16 = unicode_cast<std::u16string>(nonbmp_u4);
 
 	BOOST_CHECK_EQUAL(nonbmp_u8.size(), 4u);
-	BOOST_CHECK_EQUAL(nonbmp_u4[0], 0x10000u);
-	BOOST_CHECK_EQUAL(nonbmp_u16[0], 0xD800);
-	BOOST_CHECK_EQUAL(nonbmp_u16[1], 0xDC00);
 	BOOST_CHECK_EQUAL(nonbmp_u8, unicode_cast<std::string>(nonbmp_u4));
 	BOOST_CHECK_EQUAL(nonbmp_u8, unicode_cast<std::string>(nonbmp_u16));
 	BOOST_CHECK(nonbmp_u16 == unicode_cast<std::u16string>(nonbmp_u4));
@@ -567,7 +572,7 @@ BOOST_AUTO_TEST_CASE( test_wildcard_string_match )
 
 	superfluous_mask = std::string(str.length(), '?');
 	BOOST_CHECK(utils::wildcard_string_match(str, superfluous_mask));
-	BOOST_CHECK(utils::wildcard_string_match(str, superfluous_mask + '?'));
+	BOOST_CHECK(!utils::wildcard_string_match(str, superfluous_mask + '?'));
 
 	superfluous_mask = std::string(str.length(), '*');
 	BOOST_CHECK(utils::wildcard_string_match(str, superfluous_mask));
@@ -588,6 +593,47 @@ BOOST_AUTO_TEST_CASE( test_wildcard_string_match )
 	BOOST_CHECK(!utils::wildcard_string_match("", "+++?++"));
 	BOOST_CHECK(!utils::wildcard_string_match("", "?"));
 	BOOST_CHECK(!utils::wildcard_string_match("", "???"));
+
+	BOOST_CHECK(utils::wildcard_string_match("hello.txt", "*.txt"));
+	BOOST_CHECK(utils::wildcard_string_match("hello.txt", "h*t"));
+	BOOST_CHECK(utils::wildcard_string_match("hello.txt", "?ello.*"));
+	BOOST_CHECK(!utils::wildcard_string_match("hello.txt", "*.doc"));
+	BOOST_CHECK(utils::wildcard_string_match("file123.tmp", "file?2*.tmp"));
+	BOOST_CHECK(utils::wildcard_string_match("test", "t*t"));
+	BOOST_CHECK(utils::wildcard_string_match("multiple.dots.file", "*.dots.*"));
+	BOOST_CHECK(!utils::wildcard_string_match("case.txt", "CASE.TXT"));
+	BOOST_CHECK(utils::wildcard_string_match("single", "?ingle"));
+	BOOST_CHECK(!utils::wildcard_string_match("different", "diff*txt"));
+
+	BOOST_CHECK(utils::wildcard_string_match("foo bar baz bar baz", "*bar baz"));
+	BOOST_CHECK(!utils::wildcard_string_match("abc", "ab*d"));
+	BOOST_CHECK(utils::wildcard_string_match("abcccd", "*ccd"));
+	BOOST_CHECK(utils::wildcard_string_match("mississipissippi", "*issip*ss*"));
+	BOOST_CHECK(!utils::wildcard_string_match("xxxx*zzzzzzzzy*f", "xxxx*zzy*fffff"));
+	BOOST_CHECK(utils::wildcard_string_match("xxxx*zzzzzzzzy*f", "xxx*zzy*f"));
+	BOOST_CHECK(!utils::wildcard_string_match("xxxxzzzzzzzzyf", "xxxx*zzy*fffff"));
+	BOOST_CHECK(utils::wildcard_string_match("xxxxzzzzzzzzyf", "xxxx*zzy*f"));
+	BOOST_CHECK(utils::wildcard_string_match("xyxyxyzyxyz", "xy*z*xyz"));
+	BOOST_CHECK(utils::wildcard_string_match("mississippi", "*sip*"));
+	BOOST_CHECK(utils::wildcard_string_match("xyxyxyxyz", "xy*xyz"));
+	BOOST_CHECK(utils::wildcard_string_match("mississippi", "mi*sip*"));
+	BOOST_CHECK(utils::wildcard_string_match("ababac", "*abac*"));
+	BOOST_CHECK(utils::wildcard_string_match("ababac", "*abac*"));
+	BOOST_CHECK(utils::wildcard_string_match("aaazz", "a*zz*"));
+	BOOST_CHECK(!utils::wildcard_string_match("a12b12", "*12*23"));
+	BOOST_CHECK(!utils::wildcard_string_match("a12b12", "a12b"));
+	BOOST_CHECK(utils::wildcard_string_match("a12b12", "*12*12*"));
+	BOOST_CHECK(utils::wildcard_string_match("caaab", "*a?b"));
+	BOOST_CHECK(utils::wildcard_string_match("*", "*"));
+	BOOST_CHECK(utils::wildcard_string_match("a*abab", "a*b"));
+	BOOST_CHECK(utils::wildcard_string_match("a*r", "a*"));
+	BOOST_CHECK(!utils::wildcard_string_match("a*ar", "a*aar"));
+	BOOST_CHECK(utils::wildcard_string_match("XYXYXYZYXYz", "XY*Z*XYz"));
+	BOOST_CHECK(utils::wildcard_string_match("missisSIPpi", "*SIP*"));
+	BOOST_CHECK(utils::wildcard_string_match("mississipPI", "*issip*PI"));
+	BOOST_CHECK(utils::wildcard_string_match("xyxyxyxyz", "xy*xyz"));
+	BOOST_CHECK(utils::wildcard_string_match("miSsissippi", "mi*sip*"));
+	BOOST_CHECK(utils::wildcard_string_match("c+od", "**c+d"));
 }
 
 BOOST_AUTO_TEST_CASE( test_base64_encodings )

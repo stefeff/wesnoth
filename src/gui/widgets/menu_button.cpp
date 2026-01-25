@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Mark de Wever <koraq@xs4all.nl>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -19,8 +19,6 @@
 
 #include "gui/core/log.hpp"
 #include "gui/core/widget_definition.hpp"
-#include "gui/core/window_builder.hpp"
-#include "gui/core/window_builder/helper.hpp"
 #include "gui/core/register_widget.hpp"
 #include "gui/widgets/settings.hpp"
 #include "gui/widgets/window.hpp"
@@ -196,7 +194,7 @@ void menu_button::set_values(const std::vector<::config>& values, unsigned selec
 	values_ = values;
 	selected_ = selected;
 
-	set_label(values_[selected_]["label"]);
+	set_label(values_[selected_]["label"].t_str());
 }
 
 void menu_button::set_selected(unsigned selected, bool fire_event)
@@ -210,7 +208,7 @@ void menu_button::set_selected(unsigned selected, bool fire_event)
 
 	selected_ = selected;
 
-	set_label(values_[selected_]["label"]);
+	set_label(values_[selected_]["label"].t_str());
 	if (fire_event) {
 		fire(event::NOTIFY_MODIFIED, *this, nullptr);
 	}

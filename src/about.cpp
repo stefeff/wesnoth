@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -20,6 +20,7 @@
 #include "game_config_view.hpp"
 #include "gettext.hpp"
 #include "serialization/string_utils.hpp"
+#include "utils/general.hpp"
 
 #include <map>
 
@@ -38,7 +39,7 @@ std::vector<std::string> images_general;
 
 void gather_images(const config& from, std::vector<std::string>& to)
 {
-	const auto& im = utils::parenthetical_split(from["images"], ',');
+	const auto& im = utils::parenthetical_split(from["images"].str(), ',');
 	to.insert(to.end(), im.begin(), im.end());
 }
 
@@ -96,11 +97,10 @@ const credits_data& get_credits_data()
 	return parsed_credits_data;
 }
 
-std::optional<credits_data::const_iterator> get_campaign_credits(const std::string& campaign)
+utils::optional<credits_data::const_iterator> get_campaign_credits(const std::string& campaign)
 {
-	const auto res = std::find_if(parsed_credits_data.begin(), parsed_credits_data.end(),
-		[&campaign](const credits_group& group) { return group.id == campaign; });
-	return res != parsed_credits_data.end() ? std::make_optional(res) : std::nullopt;
+	const auto res = utils::ranges::find(get_credits_data(), campaign, &credits_group::id);
+	return res != parsed_credits_data.end() ? utils::make_optional(res) : utils::nullopt;
 }
 
 std::vector<std::string> get_background_images(const std::string& campaign)

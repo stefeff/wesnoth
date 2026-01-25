@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-12-08 15:31 UTC\n"
+"POT-Creation-Date: 2025-10-21 01:10 UTC\n"
 "PO-Revision-Date: 2025-09-26 12:13+0200\n"
 "Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
 "Language-Team: z.banach@wsisiz.edu.pl\n"
@@ -38,16 +38,12 @@ msgstr "Przepowiednia zwycięstwa"
 
 #. [achievement]: id=Wesnoth_MP_Dark_Forecast
 #: data/multiplayer/achievements.cfg:11
-#, fuzzy
-#| msgid "Complete the survival scenario <i>2p — Dark Forecast</i>."
-msgid "Complete the survival scenario <i>2p - Dark Forecast</i>."
+msgid "Complete the survival scenario <i>2p — Dark Forecast</i>."
 msgstr "Ukończ scenariusz na przetrwanie <i>2g — Mroczna Przepowiednia</i>."
 
 #. [achievement]: id=Wesnoth_MP_Dark_Forecast
 #: data/multiplayer/achievements.cfg:12
-#, fuzzy
-#| msgid "Completed the survival scenario <i>2p — Dark Forecast</i>."
-msgid "Completed the survival scenario <i>2p - Dark Forecast</i>."
+msgid "Completed the survival scenario <i>2p — Dark Forecast</i>."
 msgstr "Ukończono scenariusz na przetrwanie <i>2g — Mroczna Przepowiednia</i>."
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
@@ -62,16 +58,12 @@ msgstr "Przegnano mgły"
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
 #: data/multiplayer/achievements.cfg:22
-#, fuzzy
-#| msgid "Complete the survival scenario <i>2p — Isle of Mists</i>."
-msgid "Complete the survival scenario <i>2p - Isle of Mists</i>."
+msgid "Complete the survival scenario <i>2p — Isle of Mists</i>."
 msgstr "Ukończ scenariusz na przetrwanie <i>2g — Wyspa Mgieł</i>."
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
 #: data/multiplayer/achievements.cfg:23
-#, fuzzy
-#| msgid "Completed the survival scenario <i>2p — Isle of Mists</i>."
-msgid "Completed the survival scenario <i>2p - Isle of Mists</i>."
+msgid "Completed the survival scenario <i>2p — Isle of Mists</i>."
 msgstr "Ukończono scenariusz na przetrwanie <i>2g — Wyspa Mgieł</i>."
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
@@ -81,16 +73,12 @@ msgstr "Bezbłędna współpraca"
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
 #: data/multiplayer/achievements.cfg:33
-#, fuzzy
-#| msgid "Complete the survival scenario <i>6p — Team Survival</i>."
-msgid "Complete the survival scenario <i>6p - Team Survival</i>."
+msgid "Complete the survival scenario <i>6p — Team Survival</i>."
 msgstr "Ukończ scenariusz na przetrwanie <i>6g — Przeżycie zespołowe</i>."
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
 #: data/multiplayer/achievements.cfg:34
-#, fuzzy
-#| msgid "Completed the survival scenario <i>6p — Team Survival</i>."
-msgid "Completed the survival scenario <i>6p - Team Survival</i>."
+msgid "Completed the survival scenario <i>6p — Team Survival</i>."
 msgstr "Ukończono scenariusz na przetrwanie <i>6g — Przeżycie zespołowe</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL
@@ -100,16 +88,12 @@ msgstr "Powrót do chwały"
 
 #. [achievement]: id=Wesnoth_MP_ANL
 #: data/multiplayer/achievements.cfg:44
-#, fuzzy
-#| msgid "Complete the survival scenario <i>4p — A New Land</i>."
-msgid "Complete the survival scenario <i>4p - A New Land</i>."
+msgid "Complete the survival scenario <i>4p — A New Land</i>."
 msgstr "Ukończ scenariusz na przetrwanie <i>4g - Nowa Ziemia</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL
 #: data/multiplayer/achievements.cfg:45
-#, fuzzy
-#| msgid "Completed the survival scenario <i>4p — A New Land</i>."
-msgid "Completed the survival scenario <i>4p - A New Land</i>."
+msgid "Completed the survival scenario <i>4p — A New Land</i>."
 msgstr "Ukończono scenariusz na przetrwanie <i>4g - Nowa Ziemia</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
@@ -119,18 +103,14 @@ msgstr "Recesja ekonomiczna"
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
 #: data/multiplayer/achievements.cfg:54
-#, fuzzy
-#| msgid "Destroy all enemy mushroom mines in <i>4p — A New Land</i>."
-msgid "Destroy all enemy mushroom mines in <i>4p - A New Land</i>."
+msgid "Destroy all enemy mushroom mines in <i>4p — A New Land</i>."
 msgstr ""
 "Zniszcz wszystkie wrogie kopalnie grzybów w scenariuszu <i>4g - Nowa Ziemia</"
 "i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
 #: data/multiplayer/achievements.cfg:55
-#, fuzzy
-#| msgid "Destroyed all enemy mushroom mines in <i>4p — A New Land</i>."
-msgid "Destroyed all enemy mushroom mines in <i>4p - A New Land</i>."
+msgid "Destroyed all enemy mushroom mines in <i>4p — A New Land</i>."
 msgstr ""
 "Zniszczono wszystkie wrogie kopalnie grzybów w scenariuszu <i>4g - Nowa "
 "Ziemia</i>."
@@ -142,16 +122,12 @@ msgstr "Ratunek!"
 
 #. [achievement]: id=Wesnoth_MP_ANL_rescue_allies
 #: data/multiplayer/achievements.cfg:65
-#, fuzzy
-#| msgid "Rescue the trapped units in <i>4p — A New Land</i>."
-msgid "Rescue the trapped units in <i>4p - A New Land</i>."
+msgid "Rescue the trapped units in <i>4p — A New Land</i>."
 msgstr "Uratuj uwięzione jednostki w scenariuszu <i>4g - Nowa Ziemia</i>."
 
 #. [achievement]: id=Wesnoth_MP_ANL_rescue_allies
 #: data/multiplayer/achievements.cfg:66
-#, fuzzy
-#| msgid "Rescued the trapped units in <i>4p — A New Land</i>."
-msgid "Rescued the trapped units in <i>4p - A New Land</i>."
+msgid "Rescued the trapped units in <i>4p — A New Land</i>."
 msgstr "Uratowano uwięzione jednostki w scenariuszu <i>4g - Nowa Ziemia</i>."
 
 #. [era]: id=era_default, type=hybrid
@@ -161,12 +137,8 @@ msgstr "Domyślna"
 
 #. [era]: id=era_default, type=hybrid
 #: data/multiplayer/eras.cfg:6
-#, fuzzy
-#| msgid ""
-#| "The standard era for Wesnoth multiplayer. Consists of seven factions and "
-#| "is generally balanced."
 msgid ""
-"The standard era for Wesnoth multiplayer. Consists of six factions and is "
+"The standard era for Wesnoth multiplayer. Consists of seven factions and is "
 "generally balanced."
 msgstr ""
 "Standardowa era gry wieloosobowej w Wesnoth. Zawiera siedem frakcji i jest "
@@ -179,63 +151,14 @@ msgstr "Wiek bohaterów"
 
 #. [era]: id=era_heroes
 #: data/multiplayer/eras.cfg:15
-#, fuzzy
-#| msgid ""
-#| "An era with higher level units: level three leaders, with level one and "
-#| "two units available for recruit. Consists of seven factions. Not "
-#| "considered balanced."
 msgid ""
 "An era with higher level units: level three leaders, with level one and two "
-"units available for recruit. Consists of six factions. Not considered "
+"units available for recruit. Consists of seven factions. Not considered "
 "balanced."
 msgstr ""
 "Era z jednostkami wyższego poziomu: liderzy mają trzeci poziom, a rekrutować "
 "można jednostki pierwszego i drugiego poziomu. Zawiera siedem frakcji. Nie "
 "jest uważana za zbalansowaną."
-
-#. [era]: id=era_dunefolk
-#: data/multiplayer/eras.cfg:22
-msgid "Default + Dunefolk"
-msgstr "Domyślna + Ludy pustyni"
-
-#. [era]: id=era_dunefolk
-#: data/multiplayer/eras.cfg:23
-msgid ""
-"An era featuring an additional faction besides the six factions from Default "
-"Era. Dunefolk units rely on careful use of terrain and coordinated strikes "
-"around dusk or dawn.\n"
-"\n"
-"This era is still under development, so please be sure to report any "
-"problems that arise."
-msgstr ""
-"Era dodająca dodatkową frakcję do sześciu podstawowych z ery Domyślnej. "
-"Jednostki Ludów pustyni polegają na uważnym wykorzystaniu terenu i "
-"skoordynowanych atakach o zmierzchu i świcie.\n"
-"\n"
-"Ta era jest ciągle w fazie rozwoju, więc prosimy o zgłaszanie wszelkich "
-"pojawiających się problemów."
-
-#. [era]: id=era_dunefolk_heroes
-#: data/multiplayer/eras.cfg:33
-msgid "Age of Heroes + Dunefolk"
-msgstr "Wiek bohaterów + Ludy pustyni"
-
-#. [era]: id=era_dunefolk_heroes
-#: data/multiplayer/eras.cfg:34
-msgid ""
-"An era featuring an additional faction besides the six factions from Age of "
-"Heroes Era. Dunefolk units rely on careful use of terrain and coordinated "
-"strikes around dusk or dawn.\n"
-"\n"
-"This era is still under development, so please be sure to report any "
-"problems that arise."
-msgstr ""
-"Era dodająca dodatkową frakcję do sześciu podstawowych z ery Wieku "
-"Bohaterów. Jednostki Ludów pustyni polegają na uważnym wykorzystaniu terenu "
-"i skoordynowanych atakach o zmierzchu i świcie.\n"
-"\n"
-"Ta era jest ciągle w fazie rozwoju, więc prosimy o zgłaszanie wszelkich "
-"pojawiających się problemów."
 
 #. [lua]: res.show_turns_over_advantage
 #. In the end-of-match summary, a side which has no units left and therefore lost. In English the loss is shown by displaying it with the text struck through.
@@ -292,31 +215,31 @@ msgid "Drakes"
 msgstr "Smoki"
 
 #. [multiplayer_side]: id=Drakes, type=random
-#: data/multiplayer/factions/drakes-aoh.cfg:14
-#: data/multiplayer/factions/drakes-default.cfg:14
+#: data/multiplayer/factions/drakes-aoh.cfg:13
+#: data/multiplayer/factions/drakes-default.cfg:13
 #, fuzzy
 #| msgid ""
 #| "\n"
-#| "The <b>Drakes</b> are a faction of dragon-like <ref dst='.."
-#| "race_drake'>Drakes</ref> and their lizard <ref dst='.."
-#| "race_lizard'>Saurian</ref> allies. Drakes are descendants of dragons, but "
-#| "smaller in size. Saurians are considerably smaller than Drakes and from "
-#| "different ancestry. Together, the Drake faction has high mobility but low "
-#| "defense, leading to unusual tactics for a <ref dst='.."
-#| "era_era_default'>Default Era</ref> faction."
+#| "The <b>Drakes</b> are a faction of dragon-like <ref "
+#| "dst='..race_drake'>Drakes</ref> and their lizard <ref "
+#| "dst='..race_lizard'>Saurian</ref> allies. Drakes are descendants of "
+#| "dragons, but smaller in size. Saurians are considerably smaller than "
+#| "Drakes and from different ancestry. Together, the Drake faction has high "
+#| "mobility but low defense, leading to unusual tactics for a <ref "
+#| "dst='..era_era_default'>Default Era</ref> faction."
 msgid ""
-"The <bold>text='Drakes'</bold> are a faction of dragon-like "
-"<ref>text='Drakes' dst='..race_drake'</ref> and their lizard "
-"<ref>text='Saurian' dst='..race_lizard'</ref> allies. Drakes are descendants "
-"of dragons, but smaller in size. Saurians are considerably smaller than "
-"Drakes and from different ancestry. Together, the Drake faction has high "
-"mobility but low defense, leading to unusual tactics for a "
-"<ref>text='Default Era' dst='..era_era_default'</ref> faction."
+"The <b>Drakes</b> are a faction of dragon-like <ref "
+"dst='..race_drake'>Drakes</ref> and their lizard <ref "
+"dst='..race_lizard'>Saurian</ref> allies. Drakes are descendants of dragons, "
+"but smaller in size. Saurians are considerably smaller than Drakes and from "
+"different ancestry. Together, the Drake faction has high mobility but low "
+"defense, leading to unusual tactics for a <ref "
+"dst='..era_era_default'>Default Era</ref> faction."
 msgstr ""
 "\n"
-"<b>Smoki</b> to frakcja podobnych do tych z legend <ref dst='.."
-"race_drake'>smoków</ref> i ich <ref dst='..race_lizard'>jaszczurzych</ref> "
-"sojuszników. Choć są potomkami dawnych smoków, to są mniejsze od nich. "
+"<b>Smoki</b> to frakcja podobnych do tych z legend <ref "
+"dst='..race_drake'>smoków</ref> i ich <ref dst='..race_lizard'>jaszczurzych</"
+"ref> sojuszników. Choć są potomkami dawnych smoków, to są mniejsze od nich. "
 "Jaszczury są znacznie mniejsze od smoków i zgoła innego pochodzenia. Frakcja "
 "smoków jest bardzo mobilna, ale ma niską obronę terenową, co wymaga taktyki "
 "odmiennej od pozostałych frakcji z <ref dst='..era_era_default'>ery "
@@ -329,8 +252,8 @@ msgid "Dunefolk"
 msgstr "Ludy pustyni"
 
 #. [multiplayer_side]: id=Dunefolk, type=random
-#: data/multiplayer/factions/dunefolk-aoh.cfg:14
-#: data/multiplayer/factions/dunefolk-default.cfg:14
+#: data/multiplayer/factions/dunefolk-aoh.cfg:13
+#: data/multiplayer/factions/dunefolk-default.cfg:13
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -342,13 +265,13 @@ msgstr "Ludy pustyni"
 #| "Loyalist faction, they make up for this with high mobility — especially "
 #| "on hilly terrains."
 msgid ""
-"The <bold>text='Dunefolk'</bold> are a faction of humans from the deserts "
-"and hills of the southern lands. The Dunefolk specialize in using terrain "
-"features to coordinate attacks at dawn or dusk. Their ranks boast lawful and "
-"liminal units, healers, high-accuracy melee fighters, and fearsome horse-"
-"mounted archers. While Dunefolk units tend to be more expensive than those "
-"of the Loyalist faction, they make up for this with high mobility — "
-"especially on hilly terrains."
+"The <b>Dunefolk</b> are a faction of humans from the deserts and hills of "
+"the southern lands. The Dunefolk specialize in using terrain features to "
+"coordinate attacks at dawn or dusk. Their ranks boast lawful and liminal "
+"units, healers, high-accuracy melee fighters, and fearsome horse-mounted "
+"archers. While Dunefolk units tend to be more expensive than those of the "
+"Loyalist faction, they make up for this with high mobility — especially on "
+"hilly terrains."
 msgstr ""
 "\n"
 "<b>Ludy pustyni</b> to frakcja ludzi wywodzących się z pustyń i wzgórz "
@@ -366,33 +289,34 @@ msgid "Knalgan Alliance"
 msgstr "Sojusz Knalgański"
 
 #. [multiplayer_side]: id=Knalgan Alliance, type=random
-#: data/multiplayer/factions/knalgans-aoh.cfg:13
-#: data/multiplayer/factions/knalgans-default.cfg:13
+#: data/multiplayer/factions/knalgans-aoh.cfg:12
+#: data/multiplayer/factions/knalgans-default.cfg:12
 #, fuzzy
 #| msgid ""
 #| "\n"
-#| "The <b>Knalgan Alliance</b> is a faction of <ref dst='.."
-#| "race_dwarf'>Dwarves</ref> and their outlaw <ref dst='..race_human'>Human</"
-#| "ref> allies. Dwarves are an old race who live underground and have tough, "
-#| "but short, warriors. The outlaws are humans who are not socially "
-#| "acceptable among others of their race, but have become allies of the "
-#| "dwarves due to common enemies. This leads to a combination of tough and "
-#| "defensive dwarves who are only good on certain terrain and humans who can "
-#| "cover ground that dwarves are not good at fighting in."
+#| "The <b>Knalgan Alliance</b> is a faction of <ref "
+#| "dst='..race_dwarf'>Dwarves</ref> and their outlaw <ref "
+#| "dst='..race_human'>Human</ref> allies. Dwarves are an old race who live "
+#| "underground and have tough, but short, warriors. The outlaws are humans "
+#| "who are not socially acceptable among others of their race, but have "
+#| "become allies of the dwarves due to common enemies. This leads to a "
+#| "combination of tough and defensive dwarves who are only good on certain "
+#| "terrain and humans who can cover ground that dwarves are not good at "
+#| "fighting in."
 msgid ""
-"The <bold>text='Knalgan Alliance'</bold> is a faction of <ref>text='Dwarves' "
-"dst='..race_dwarf'</ref> and their outlaw <ref>text='Human' dst='.."
-"race_human'</ref> allies. Dwarves are an old race who live underground and "
-"have tough, but short, warriors. The outlaws are humans who are not socially "
-"acceptable among others of their race, but have become allies of the dwarves "
-"due to common enemies. This leads to a combination of tough and defensive "
-"dwarves who are only good on certain terrain and humans who can cover ground "
-"that dwarves are not good at fighting in."
+"The <b>Knalgan Alliance</b> is a faction of <ref dst='..race_dwarf'>Dwarves</"
+"ref> and their outlaw <ref dst='..race_human'>Human</ref> allies. Dwarves "
+"are an old race who live underground and have tough, but short, warriors. "
+"The outlaws are humans who are not socially acceptable among others of their "
+"race, but have become allies of the dwarves due to common enemies. This "
+"leads to a combination of tough and defensive dwarves who are only good on "
+"certain terrain and humans who can cover ground that dwarves are not good at "
+"fighting in."
 msgstr ""
 "\n"
 "<b>Sojusz Knalgański</b> to frakcja <ref dst='..race_dwarf'>krasnoludów</"
-"ref> i sprzymierzonych z nimi wyjętych spod prawa <ref dst='.."
-"race_human'>ludzi</ref>. Krasnoludy to dawna rasa, która zamieszkuje "
+"ref> i sprzymierzonych z nimi wyjętych spod prawa <ref "
+"dst='..race_human'>ludzi</ref>. Krasnoludy to dawna rasa, która zamieszkuje "
 "podziemia i ma twardych, choć niskiego wzrostu, wojowników. Wyjęci spod "
 "prawa ludzie nie znajdują akceptacji w społeczeństwach, z których pochodzą, "
 "ale są sojusznikami krasnoludów, bo mają wspólnych wrogów. Daje to "
@@ -407,8 +331,8 @@ msgid "Loyalists"
 msgstr "Lojaliści"
 
 #. [multiplayer_side]: id=Loyalists, type=random
-#: data/multiplayer/factions/loyalists-aoh.cfg:14
-#: data/multiplayer/factions/loyalists-default.cfg:14
+#: data/multiplayer/factions/loyalists-aoh.cfg:13
+#: data/multiplayer/factions/loyalists-default.cfg:13
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -418,11 +342,11 @@ msgstr "Lojaliści"
 #| "is a very versatile melee-oriented faction with important ranged support "
 #| "from bowmen and mages."
 msgid ""
-"The <bold>text='Loyalists'</bold> are a faction of <ref>text='Humans' dst='.."
-"race_human'</ref> who are loyal to the throne of Wesnoth. Humans are a "
-"versatile race who specialize in many different areas. Similarly, the "
-"Loyalist faction is a very versatile melee-oriented faction with important "
-"ranged support from bowmen and mages."
+"The <b>Loyalists</b> are a faction of <ref dst='..race_human'>Humans</ref> "
+"who are loyal to the throne of Wesnoth. Humans are a versatile race who "
+"specialize in many different areas. Similarly, the Loyalist faction is a "
+"very versatile melee-oriented faction with important ranged support from "
+"bowmen and mages."
 msgstr ""
 "\n"
 "<b>Lojaliści</b> są frakcją <ref dst='..race_human'>ludzi</ref>, którzy są "
@@ -431,15 +355,15 @@ msgstr ""
 "jest bardzo wszechstronną frakcją walczącą wręcz, z ważnym wsparciem w walce "
 "na dystans ze strony łuczników i magów."
 
-#. [multiplayer_side]: id=Northerners, type=random, description=<img>src='portraits/orcs/warlord.webp~BG()' align='middle'</img>
+#. [multiplayer_side]: id=Northerners, type=random
 #: data/multiplayer/factions/northerners-aoh.cfg:4
 #: data/multiplayer/factions/northerners-default.cfg:4
 msgid "Northerners"
 msgstr "Ludy północy"
 
-#. [multiplayer_side]: id=Northerners, type=random, description=<img>src='portraits/orcs/warlord.webp~BG()' align='middle'</img>
-#: data/multiplayer/factions/northerners-aoh.cfg:16
-#: data/multiplayer/factions/northerners-default.cfg:15
+#. [multiplayer_side]: id=Northerners, type=random
+#: data/multiplayer/factions/northerners-aoh.cfg:13
+#: data/multiplayer/factions/northerners-default.cfg:12
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -447,27 +371,26 @@ msgstr "Ludy północy"
 #| "and their allies who live in the north of the Great Continent, thus their "
 #| "name. Northerners consist of the warrior orcs race, the enslaved <ref "
 #| "dst='..race_goblin'>goblins</ref>, <ref dst='..race_troll'>trolls</ref> "
-#| "who are tricked into combat by the orcs, and the serpentine <ref dst='.."
-#| "race_naga'>naga</ref>. The Northerners play best by taking advantage of "
-#| "having many low-cost and high HP soldiers."
+#| "who are tricked into combat by the orcs, and the serpentine <ref "
+#| "dst='..race_naga'>naga</ref>. The Northerners play best by taking "
+#| "advantage of having many low-cost and high HP soldiers."
 msgid ""
-"The <bold>text='Northerners'</bold> are a faction of <ref>text='Orcs' dst='.."
-"race_orc'</ref> and their allies who live in the north of the Great "
-"Continent, thus their name. Northerners consist of the warrior orcs race, "
-"the enslaved <ref>text='goblins' dst='..race_goblin'</ref>, "
-"<ref>text='trolls' dst='..race_troll'</ref> who are tricked into combat by "
-"the orcs, and the serpentine <ref>text='naga' dst='..race_naga'</ref>. The "
-"Northerners play best by taking advantage of having many low-cost and high "
-"HP soldiers."
+"The <b>Northerners</b> are a faction of <ref dst='..race_orc'>Orcs</ref> and "
+"their allies who live in the north of the Great Continent, thus their name. "
+"Northerners consist of the warrior orcs race, the enslaved <ref "
+"dst='..race_goblin'>goblins</ref>, <ref dst='..race_troll'>trolls</ref> who "
+"are tricked into combat by the orcs, and the serpentine <ref "
+"dst='..race_naga'>naga</ref>. The Northerners play best by taking advantage "
+"of having many low-cost and high HP soldiers."
 msgstr ""
 "\n"
 "<b>Ludy północy</b> to frakcja <ref dst='..race_orc'>orków</ref> i ich "
 "sojuszników, którzy mieszkają na północy Wielkiego Kontynentu, skąd bierze "
 "się ich nazwa. Ludy północy składają się z rasy orków wojowników, "
-"zniewolonych <ref dst='..race_goblin'>goblinów</ref>, <ref dst='.."
-"race_troll'>trolli</ref>, którzy są oszukiwani do walki przez orków, oraz "
-"wężowatych <ref dst='..race_naga'>nag</ref>. Ludy północy grają najlepiej, "
-"korzystając z wielu tanich żołnierzy z dużą ilością punktów życia."
+"zniewolonych <ref dst='..race_goblin'>goblinów</ref>, <ref "
+"dst='..race_troll'>trolli</ref>, którzy są oszukiwani do walki przez orków, "
+"oraz wężowatych <ref dst='..race_naga'>nag</ref>. Ludy północy grają "
+"najlepiej, korzystając z wielu tanich żołnierzy z dużą ilością punktów życia."
 
 #. [multiplayer_side]: id=Rebels, type=random
 #: data/multiplayer/factions/rebels-aoh.cfg:4
@@ -476,8 +399,8 @@ msgid "Rebels"
 msgstr "Buntownicy"
 
 #. [multiplayer_side]: id=Rebels, type=random
-#: data/multiplayer/factions/rebels-aoh.cfg:14
-#: data/multiplayer/factions/rebels-default.cfg:14
+#: data/multiplayer/factions/rebels-aoh.cfg:13
+#: data/multiplayer/factions/rebels-default.cfg:13
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -487,21 +410,20 @@ msgstr "Buntownicy"
 #| "against the evil Queen Asheviere. Elves are a magical race that are "
 #| "masters of the bow and are capable of living many years longer than "
 #| "humans. In harmony with nature, the elves find allies with the <ref "
-#| "dst='..race_human'>human</ref> mages, certain <ref dst='.."
-#| "race_merman'>merfolk</ref>, and tree creatures called <ref dst='.."
-#| "race_wose'>Woses</ref>. Rebels are best played taking advantage of their "
-#| "high forest defense, mastery of ranged attacks, and the elves’ neutral "
-#| "alignment."
+#| "dst='..race_human'>human</ref> mages, certain <ref "
+#| "dst='..race_merman'>merfolk</ref>, and tree creatures called <ref "
+#| "dst='..race_wose'>Woses</ref>. Rebels are best played taking advantage of "
+#| "their high forest defense, mastery of ranged attacks, and the elves’ "
+#| "neutral alignment."
 msgid ""
-"The <bold>text='Rebels'</bold> are a faction of <ref>text='Elves' dst='.."
-"race_elf'</ref> and their various forest-dwelling allies. They get their "
-"human name, Rebels, from the time of Heir to the Throne, when they started "
-"the rebellion against the evil Queen Asheviere. Elves are a magical race "
-"that are masters of the bow and are capable of living many years longer than "
-"humans. In harmony with nature, the elves find allies with the "
-"<ref>text='human' dst='..race_human'</ref> mages, certain "
-"<ref>text='merfolk' dst='..race_merman'</ref>, and tree creatures called "
-"<ref>text='Woses' dst='..race_wose'</ref>. Rebels are best played taking "
+"The <b>Rebels</b> are a faction of <ref dst='..race_elf'>Elves</ref> and "
+"their various forest-dwelling allies. They get their human name, Rebels, "
+"from the time of Heir to the Throne, when they started the rebellion against "
+"the evil Queen Asheviere. Elves are a magical race that are masters of the "
+"bow and are capable of living many years longer than humans. In harmony with "
+"nature, the elves find allies with the <ref dst='..race_human'>human</ref> "
+"mages, certain <ref dst='..race_merman'>merfolk</ref>, and tree creatures "
+"called <ref dst='..race_wose'>Woses</ref>. Rebels are best played taking "
 "advantage of their high forest defense, mastery of ranged attacks, and the "
 "elves’ neutral alignment."
 msgstr ""
@@ -510,11 +432,12 @@ msgstr ""
 "leśnych sojuszników. Ich ludzka nazwa, Buntownicy, pochodzi z czasów "
 "Następcy Trony, gdy rozpoczęli bunt przeciwko złowrogiej Królowej Asheviere. "
 "Elfy to magiczna rasa, mistrzowie łucznictwa, zdolni żyć wiele lat dłużej od "
-"ludzi. W harmonii z przyrodą, elfy zawierają sojusze z <ref dst='.."
-"race_human'>ludzkimi</ref> magami, pewnymi <ref dst='.."
-"race_merman'>mermenami</ref>, a także <ref dst='..race_wose'>drzewcami</"
-"ref>. Buntownikami najlepiej grać, wykorzystując wysoką obronę w lesie, "
-"biegłość w walce na dystans i neutralny charakter elfów."
+"ludzi. W harmonii z przyrodą, elfy zawierają sojusze z <ref "
+"dst='..race_human'>ludzkimi</ref> magami, pewnymi <ref "
+"dst='..race_merman'>mermenami</ref>, a także <ref "
+"dst='..race_wose'>drzewcami</ref>. Buntownikami najlepiej grać, "
+"wykorzystując wysoką obronę w lesie, biegłość w walce na dystans i neutralny "
+"charakter elfów."
 
 #. [multiplayer_side]: id=Undead, type=random
 #: data/multiplayer/factions/undead-aoh.cfg:4
@@ -523,8 +446,8 @@ msgid "Undead"
 msgstr "Nieumarli"
 
 #. [multiplayer_side]: id=Undead, type=random
-#: data/multiplayer/factions/undead-aoh.cfg:14
-#: data/multiplayer/factions/undead-default.cfg:14
+#: data/multiplayer/factions/undead-aoh.cfg:13
+#: data/multiplayer/factions/undead-default.cfg:13
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -534,17 +457,17 @@ msgstr "Nieumarli"
 #| "units that do the most damage for the faction, but they have a major "
 #| "vulnerability — their practicing of this forbidden, evil magic has "
 #| "consumed all their energy and so they have no melee attack at all. The "
-#| "Undead are a very aggressive faction and the most powerful <ref dst='.."
-#| "era_era_default'>Default Era</ref> faction at nighttime."
+#| "Undead are a very aggressive faction and the most powerful <ref "
+#| "dst='..era_era_default'>Default Era</ref> faction at nighttime."
 msgid ""
-"The <bold>text='Undead'</bold> are a faction of <ref>text='undead' dst='.."
-"race_undead'</ref> creatures and <ref>text='human' dst='..race_human'</ref> "
-"practitioners of dark arts that usually accompany them. Often, these “Dark "
-"Adepts” are the units that do the most damage for the faction, but they have "
-"a major vulnerability — their practicing of this forbidden, evil magic has "
-"consumed all their energy and so they have no melee attack at all. The "
-"Undead are a very aggressive faction and the most powerful "
-"<ref>text='Default Era' dst='..era_era_default'</ref> faction at nighttime."
+"The <b>Undead</b> are a faction of <ref dst='..race_undead'>undead</ref> "
+"creatures and <ref dst='..race_human'>human</ref> practitioners of dark arts "
+"that usually accompany them. Often, these “Dark Adepts” are the units that "
+"do the most damage for the faction, but they have a major vulnerability — "
+"their practicing of this forbidden, evil magic has consumed all their energy "
+"and so they have no melee attack at all. The Undead are a very aggressive "
+"faction and the most powerful <ref dst='..era_era_default'>Default Era</ref> "
+"faction at nighttime."
 msgstr ""
 "\n"
 "<b>Nieumarli</b> są frakcją <ref dst='..race_undead'>nieumarłych</ref> "
@@ -563,34 +486,19 @@ msgstr "2g — Aethermaw"
 
 #. [multiplayer]: id=multiplayer_Aethermaw
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:6
-#, fuzzy
-#| msgid ""
-#| "Long ago, the Legendary Aether Mage, Sulla, was imprisoned in the "
-#| "Aethermaw, a nexus of mystical energy whose chaotic nature was able to "
-#| "prevent her escape. Over the centuries, however, Sulla gradually attuned "
-#| "her powers to the maelstrom of disorder that is the Aethermaw, and has "
-#| "now begun to project its influence onto the material plane, drawing in "
-#| "entire regions of land from hundreds of different worlds, realities and "
-#| "time-periods. She now experiments with these disparate pieces of the "
-#| "cosmos, manipulating them, merging them and sending them back and forth "
-#| "between the Aethermaw and their place of origin. Perhaps, as her mastery "
-#| "over the Aethermaw grows, Sulla will one day break free of its bonds. "
-#| "Until that time comes, she will continue to amuse herself by arranging "
-#| "battles between the mortal beings unlucky enough to be drawn into its "
-#| "depths. Designed by Doc Paterson."
 msgid ""
-"Long ago, the Great Mage Sulla was imprisoned in the Aethermaw, a nexus of "
-"mystical energy whose chaotic nature was able to prevent her escape. Over "
-"the centuries, however, Sulla gradually attuned her powers to the maelstrom "
-"of disorder that is the Aethermaw, and has now begun to project its "
-"influence onto the material plane, drawing in entire regions of land from "
-"hundreds of different worlds, realities and time-periods. She experiments "
-"with these disparate pieces of the cosmos, manipulating them, merging them "
-"and sending them back and forth between the Aethermaw and their place of "
-"origin. Perhaps, as her mastery over the Aethermaw grows, Sulla will one day "
-"break free of its bonds. Until that time comes, she will continue to amuse "
-"herself by arranging battles between the mortal beings unlucky enough to be "
-"drawn into its depths. Designed by Doc Paterson."
+"Long ago, the Legendary Aether Mage, Sulla, was imprisoned in the Aethermaw, "
+"a nexus of mystical energy whose chaotic nature was able to prevent her "
+"escape. Over the centuries, however, Sulla gradually attuned her powers to "
+"the maelstrom of disorder that is the Aethermaw, and has now begun to "
+"project its influence onto the material plane, drawing in entire regions of "
+"land from hundreds of different worlds, realities and time-periods. She now "
+"experiments with these disparate pieces of the cosmos, manipulating them, "
+"merging them and sending them back and forth between the Aethermaw and their "
+"place of origin. Perhaps, as her mastery over the Aethermaw grows, Sulla "
+"will one day break free of its bonds. Until that time comes, she will "
+"continue to amuse herself by arranging battles between the mortal beings "
+"unlucky enough to be drawn into its depths. Designed by Doc Paterson."
 msgstr ""
 "Dawno, dawno temu Legendarna Magini Eteru Sulla została uwięziona w "
 "Aethermaw — wirze magicznej energii, którego chaotyczna natura miała jej "
@@ -687,12 +595,8 @@ msgstr "Pokonaj wrogiego przywódcę"
 
 #. [note]
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:312
-#, fuzzy
-#| msgid ""
-#| "The Aether Mage Sulla has transported your armies to this bizarre nexus, "
-#| "and demands that you amuse her by doing battle."
 msgid ""
-"The Great Mage Sulla has transported your armies to this bizarre nexus, and "
+"The Aether Mage Sulla has transported your armies to this bizarre nexus, and "
 "demands that you amuse her by doing battle."
 msgstr ""
 "Magini Eteru Sulla przetransportowała wasze armie do tego dziwnego wymiaru, "
@@ -709,14 +613,9 @@ msgstr ""
 
 #. [note]
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:318
-#, fuzzy
-#| msgid ""
-#| "Beginning on turn 4, the Aether Mage Sulla will begin to unite the two "
-#| "halves of the battlefield. The process will be complete by the end of "
-#| "turn 6."
 msgid ""
-"Beginning on turn 4, the Great Mage Sulla will begin to unite the two halves "
-"of the battlefield. The process will be complete by the end of turn 6."
+"Beginning on turn 4, the Aether Mage Sulla will begin to unite the two "
+"halves of the battlefield. The process will be complete by the end of turn 6."
 msgstr ""
 "Począwszy od tury 4, Magini Eteru Sulla zacznie łączyć w jedno dwie połowy "
 "pola walki. Proces ten potrwa do tury 6."
@@ -1391,60 +1290,60 @@ msgstr ""
 "mapy."
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:21
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:33
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:22
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:34
 msgid "teamname^Revolt"
 msgstr "Rewolta"
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:50
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:76
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:51
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:77
 msgid "teamname^Human"
 msgstr "Ludzie"
 
 #. [then]
 #. [objective]: condition=lose
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:114
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:135
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:115
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:136
 #: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:278
 msgid "Death of your leader"
 msgstr "Śmierć twojego przywódcy"
 
 #. [then]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:115
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:136
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:116
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:137
 msgid ""
 "Since your team has only one leader, the enemy waves will not be at full "
 "strength."
 msgstr "Ponieważ masz tylko jednego przywódcę, ataki wroga będą słabsze."
 
 #. [else]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:118
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:143
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:119
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:144
 msgid "Death of both of your team’s leaders"
 msgstr "Śmierć przywódców obu waszych drużyn"
 
 #. [else]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:119
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:144
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:120
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:145
 msgid ""
 "Since your team has two leaders, the enemy waves will be at full strength."
 msgstr "Ponieważ macie tylko dwóch przywódców, ataki wroga będą nieco słabsze."
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:146
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:171
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:133
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:157
 msgid "Survive and defeat all enemy waves"
 msgstr "Przetrwaj i pokonaj wszystkie ataki przeciwnika"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:166
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:153
 msgid "Dark Forecast — a random survival scenario"
 msgstr ""
 "Mroczna przepowiednia - scenariusz na przetrwanie z elementami losowymi"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:169
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:156
 msgid ""
 "Your aim is to survive the spawning waves of units and defeat the final "
 "archenemies.\n"
@@ -1489,12 +1388,12 @@ msgstr ""
 "• Implementacja WML"
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:188
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:175
 msgid "So this is the accursed valley — a land ours for the taking."
 msgstr "A więc to jest przeklęta dolina — czekająca na nas kraina."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:192
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:179
 msgid ""
 "The inhabitants are rumored to be a strange alliance of man and beast, and "
 "our claim is not going to be unopposed. We must be prepared for the "
@@ -1505,7 +1404,7 @@ msgstr ""
 "gotowi na wiele niespodzianek."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:196
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:183
 msgid ""
 "Then let us discover what lies in waiting and teach them not to oppose our "
 "claim."
@@ -1513,7 +1412,7 @@ msgstr ""
 "Przekonajmy się więc, co nas czeka i nauczmy miejscowych posłuszeństwa."
 
 #. [message]: speaker=unit
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:215
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:202
 msgid ""
 "Ugh! How can this be? Defeated by mere barbarians! My gods have forsaken "
 "me..."
@@ -1521,16 +1420,16 @@ msgstr ""
 "Uch! Jak to możliwe? Pokonany przez barbarzyńców! Bogowie mnie opuścili..."
 
 #. [message]: speaker=second_unit
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:229
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:216
 msgid ""
-"Cheers of your enemy are the last thing you hear as you slip into death..."
-"their joy fills your last moments with pure hate."
+"Cheers of your enemy are the last thing you hear as you slip into "
+"death...their joy fills your last moments with pure hate."
 msgstr ""
 "Ześlizgując się ku śmierci słyszysz już tylko triumfalne okrzyki wrogów... "
 "ich radość wypełnia twe ostatnie chwile czystą nienawiścią."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:251
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:238
 msgid ""
 "The enemy cheers as a dark mist rises from the land, engulfing you. As "
 "ghostly wisps drain away your will, you realize that your time in this land "
@@ -1542,8 +1441,8 @@ msgstr ""
 
 #. [slider]: id=enemey_gold_factor
 #. [slider]: id=enemy_gold_factor
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:264
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:311
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:251
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:297
 msgid "Changes the gold worth of the enemy spawns by a certain percentage"
 msgstr ""
 "Zmienia liczbę sztuk złota określającą liczbę pojawiających się przeciwników "
@@ -1858,31 +1757,31 @@ msgstr ""
 "ustawień mapy. Twórca: Lord-Knightmare."
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:25
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:38
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:26
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:39
 msgid "teamname^Invaders"
 msgstr "Najeźdźcy"
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:56
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:83
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:107
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:57
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:84
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:108
 #: data/multiplayer/scenarios/Test_Elevation_Test.cfg:45
 msgid "teamname^Defenders"
 msgstr "Obrońcy"
 
 #. [label]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:189
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:175
 msgid "Healing Keep"
 msgstr "Lecząca twierdza"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:213
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:199
 msgid "Isle of Mists — a random survival scenario"
 msgstr "Wyspa Mgieł - scenariusz na przetrwanie z elementami losowymi"
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:220
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:206
 msgid ""
 "You arrive near a mystic shrine, where the apparitions of ancient armies are "
 "forever trapped and doomed to eternally cleanse the isle of all interlopers."
@@ -1892,7 +1791,7 @@ msgstr ""
 "intruzów z tej wyspy."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:224
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:210
 msgid ""
 "Phantom armies approach on the horizon. If we defeat them all, they may be "
 "released from this timeless prison."
@@ -1901,17 +1800,17 @@ msgstr ""
 "uda nam się ich uwolnić z tego wiecznego więzienia."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:228
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:214
 msgid "Let us prepare ourselves for the coming battle."
 msgstr "Przygotujmy się na nadchodzącą bitwę."
 
 #. [message]: speaker=unit
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:247
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:233
 msgid "How can this be? My gods have forsaken me..."
 msgstr "Jak to możliwe? Bogowie mnie opuścili..."
 
 #. [message]: speaker=second_unit
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:261
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:247
 msgid ""
 "As the cold grasp of death draws nearer, you feel your spirit being "
 "separated from your body. You realize that you will soon be doomed to the "
@@ -1922,7 +1821,7 @@ msgstr ""
 "ten sam los, co widmowi strażnicy kapliczki."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:283
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:269
 msgid ""
 "A dark mist rises from the land, draining your senses and your will away. "
 "You dimly realize that you will soon join the other ghosts as another "
@@ -2072,8 +1971,13 @@ msgstr "Statua Sulli"
 
 #. [unit]: gender=female
 #: data/multiplayer/scenarios/2p_Sullas_Ruins.cfg:101
+#, fuzzy
+#| msgid ""
+#| "A stone-carved likeness of Sulla the Great, also known as Sulla the Just, "
+#| "Sulla the Tyrant, Empress of the Sinking Tower, Lady of the Walking "
+#| "Glacier, Sulla the Incinerator, Sulla the Proud and Sulla the Righteous."
 msgid ""
-"A stone-carved likeness of Sulla the Great, also known as Sulla the Just, "
+"A stone-carved likeness of Aether Mage Sulla, also known as Sulla the Just, "
 "Sulla the Tyrant, Empress of the Sinking Tower, Lady of the Walking Glacier, "
 "Sulla the Incinerator, Sulla the Proud and Sulla the Righteous."
 msgstr ""
@@ -2948,6 +2852,34 @@ msgstr ""
 "odważnych wojowników unoszą się niewidzialne nad górami, lasami i rzekami, "
 "tryby wojny znów poszły w ruch..."
 
+#. [multiplayer]: id=multiplayer_Double_Siege
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:7
+msgid "6p — Double Siege"
+msgstr "6g - Podwójne oblężenie"
+
+#. [multiplayer]: id=multiplayer_Double_Siege
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:8
+msgid ""
+"Two armies attacked a single city, both emerged victorious. Now, only one "
+"can claim the victory."
+msgstr ""
+"Dwie armie zaatakowały jedno miasto, obie zwyciężyły. Teraz tylko jedna z "
+"nich odniesie ostateczne zwycięstwo."
+
+#. [side]
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:25
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:61
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:73
+msgid "teamname^Top"
+msgstr "Góra"
+
+#. [side]
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:37
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:49
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:85
+msgid "teamname^Bottom"
+msgstr "Dół"
+
 #. [multiplayer]: id=multiplayer_Hexcake
 #: data/multiplayer/scenarios/6p_Hexcake.cfg:5
 msgid "6p — Hexcake"
@@ -3235,9 +3167,7 @@ msgstr ""
 
 #. [multiplayer]: id=multiplayer_test_Elevation_Demo
 #: data/multiplayer/scenarios/Test_Elevation_Test.cfg:5
-#, fuzzy
-#| msgid "3p — Elevation Test"
-msgid "3p - Elevation Test"
+msgid "3p — Elevation Test"
 msgstr "3g — Test wysokości"
 
 #. [multiplayer]: id=multiplayer_test_Elevation_Demo
@@ -3249,21 +3179,41 @@ msgstr ""
 "Ta mapa jest przykładem jak używać nowych (od wersji 1.17) grafik terenu z "
 "wysokością. Nie jest przeznaczony do rozgrywki."
 
-#~ msgid "6p — Double Siege"
-#~ msgstr "6g - Podwójne oblężenie"
+#~ msgid "Default + Dunefolk"
+#~ msgstr "Domyślna + Ludy pustyni"
 
 #~ msgid ""
-#~ "Two armies attacked a single city, both emerged victorious. Now, only one "
-#~ "can claim the victory."
+#~ "An era featuring an additional faction besides the six factions from "
+#~ "Default Era. Dunefolk units rely on careful use of terrain and "
+#~ "coordinated strikes around dusk or dawn.\n"
+#~ "\n"
+#~ "This era is still under development, so please be sure to report any "
+#~ "problems that arise."
 #~ msgstr ""
-#~ "Dwie armie zaatakowały jedno miasto, obie zwyciężyły. Teraz tylko jedna z "
-#~ "nich odniesie ostateczne zwycięstwo."
+#~ "Era dodająca dodatkową frakcję do sześciu podstawowych z ery Domyślnej. "
+#~ "Jednostki Ludów pustyni polegają na uważnym wykorzystaniu terenu i "
+#~ "skoordynowanych atakach o zmierzchu i świcie.\n"
+#~ "\n"
+#~ "Ta era jest ciągle w fazie rozwoju, więc prosimy o zgłaszanie wszelkich "
+#~ "pojawiających się problemów."
 
-#~ msgid "teamname^Top"
-#~ msgstr "Góra"
+#~ msgid "Age of Heroes + Dunefolk"
+#~ msgstr "Wiek bohaterów + Ludy pustyni"
 
-#~ msgid "teamname^Bottom"
-#~ msgstr "Dół"
+#~ msgid ""
+#~ "An era featuring an additional faction besides the six factions from Age "
+#~ "of Heroes Era. Dunefolk units rely on careful use of terrain and "
+#~ "coordinated strikes around dusk or dawn.\n"
+#~ "\n"
+#~ "This era is still under development, so please be sure to report any "
+#~ "problems that arise."
+#~ msgstr ""
+#~ "Era dodająca dodatkową frakcję do sześciu podstawowych z ery Wieku "
+#~ "Bohaterów. Jednostki Ludów pustyni polegają na uważnym wykorzystaniu "
+#~ "terenu i skoordynowanych atakach o zmierzchu i świcie.\n"
+#~ "\n"
+#~ "Ta era jest ciągle w fazie rozwoju, więc prosimy o zgłaszanie wszelkich "
+#~ "pojawiających się problemów."
 
 #~ msgid ""
 #~ "Controlling the area around the central keep is very lucrative in this 4 "

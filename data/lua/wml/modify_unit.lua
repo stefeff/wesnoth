@@ -72,6 +72,10 @@ function wml_actions.modify_unit(cfg)
 				local unit = wesnoth.units.create(wml.variables[unit_path])
 				wesnoth.wml_actions.set_variable(current_table[2], unit.variables)
 				wml.variables[unit_path] = unit.__cfg
+			elseif current_tag == "set_variables" then
+				local unit = wesnoth.units.create(wml.variables[unit_path])
+				wesnoth.wml_actions.set_variables(current_table[2], unit.variables)
+				wml.variables[unit_path] = unit.__cfg
 			elseif current_tag == "clear_variable" then
 				local unit = wesnoth.units.create(wml.variables[unit_path])
 				wesnoth.wml_actions.clear_variable(current_table[2], unit.variables)
@@ -96,7 +100,7 @@ function wml_actions.modify_unit(cfg)
 		wml_actions.unstore_unit { variable = unit_path }
 	end
 
-	wml_actions.store_unit { {"filter", filter}, variable = unit_variable }
+	wml_actions.store_unit { wml.tag.filter(filter), variable = unit_variable }
 	local max_index = wml.variables[unit_variable .. ".length"] - 1
 
 	local this_unit <close> = utils.scoped_var("this_unit")

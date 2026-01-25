@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -22,7 +22,6 @@
 
 #include "replay.hpp"
 
-#include "actions/undo.hpp"
 #include "display_chat_manager.hpp"
 #include "game_display.hpp"
 #include "game_data.hpp"
@@ -32,11 +31,13 @@
 #include "map/label.hpp"
 #include "map/location.hpp"
 #include "play_controller.hpp"
-#include "preferences/game.hpp"
+#include "preferences/preferences.hpp"
 #include "replay_recorder_base.hpp"
 #include "resources.hpp"
+#include "serialization/chrono.hpp"
 #include "synced_context.hpp"
 #include "units/unit.hpp"
+#include "utils/general.hpp"
 #include "whiteboard/manager.hpp"
 #include "wml_exception.hpp"
 
@@ -129,26 +130,21 @@ static void verify(const unit_map& units, const config& cfg) {
 	LOG_REPLAY << "verification passed";
 }
 
-static std::time_t get_time(const config &speak)
+static std::chrono::system_clock::time_point get_time(const config& speak)
 {
-	std::time_t time;
-	if (!speak["time"].empty())
-	{
-		std::stringstream ss(speak["time"].str());
-		ss >> time;
+	if(!speak["time"].empty()) {
+		return chrono::parse_timestamp(speak["time"]);
+	} else {
+		// fallback in case sender uses wesnoth that doesn't send timestamps
+		return std::chrono::system_clock::now();
 	}
-	else
-	{
-		//fallback in case sender uses wesnoth that doesn't send timestamps
-		time = std::time(nullptr);
-	}
-	return time;
 }
 
 chat_msg::chat_msg(const config &cfg)
-	: color_()
+	: color_() // use default white for observers
 	, nick_()
 	, text_(cfg["message"].str())
+	, time_(get_time(cfg))
 {
 	if(cfg["team_name"].empty() && cfg["to_sides"].empty())
 	{
@@ -158,22 +154,9 @@ chat_msg::chat_msg(const config &cfg)
 	}
 	int side = cfg["side"].to_int(0);
 	LOG_REPLAY << "side in message: " << side;
-	if (side==0) {
-		color_ = "white";//observers
-	} else {
-		color_ = team::get_side_highlight_pango(side);
+	if(side != 0) {
+		color_ = team::get_side_color(side);
 	}
-	time_ = get_time(cfg);
-	/*
-	} else if (side==1) {
-		color_ = "red";
-	} else if (side==2) {
-		color_ = "blue";
-	} else if (side==3) {
-		color_ = "green";
-	} else if (side==4) {
-		color_ = "purple";
-		}*/
 }
 
 chat_msg::~chat_msg()
@@ -182,6 +165,7 @@ chat_msg::~chat_msg()
 
 replay::replay(replay_recorder_base& base)
 	: base_(&base)
+	, sent_upto_(base.size())
 	, message_locations()
 {}
 
@@ -339,7 +323,7 @@ bool replay::add_chat_message_location()
 bool replay::add_chat_message_location(int pos)
 {
 	assert(base_->get_command_at(pos).has_child("speak"));
-	if(std::find(message_locations.begin(), message_locations.end(), pos) == message_locations.end()) {
+	if(!utils::contains(message_locations, pos)) {
 		message_locations.push_back(pos);
 		return true;
 	}
@@ -358,8 +342,8 @@ void replay::speak(const config& cfg)
 void replay::add_chat_log_entry(const config &cfg, std::back_insert_iterator<std::vector<chat_msg>> &i) const
 {
 
-	if (!preferences::parse_should_show_lobby_join(cfg["id"], cfg["message"])) return;
-	if (preferences::is_ignored(cfg["id"])) return;
+	if (!prefs::get().parse_should_show_lobby_join(cfg["id"], cfg["message"])) return;
+	if (prefs::get().is_ignored(cfg["id"])) return;
 	*i = chat_msg(cfg);
 }
 
@@ -394,11 +378,10 @@ const std::vector<chat_msg>& replay::build_chat_log() const
 	return message_log;
 }
 
-config replay::get_data_range(int cmd_start, int cmd_end, DATA_TYPE data_type) const
+config replay::get_unsent_commands(DATA_TYPE data_type)
 {
 	config res;
-
-	for (int cmd = cmd_start; cmd < cmd_end; ++cmd)
+	for (int cmd = sent_upto_; cmd < ncommands(); ++cmd)
 	{
 		config &c = command(cmd);
 		//prevent creating 'blank' attribute values during checks
@@ -406,10 +389,12 @@ config replay::get_data_range(int cmd_start, int cmd_end, DATA_TYPE data_type) c
 		if ((data_type == ALL_DATA || !cc["undo"].to_bool(true)) && !cc["sent"].to_bool(false))
 		{
 			res.add_child("command", c);
-			if (data_type == NON_UNDO_DATA) c["sent"] = true;
+			c["sent"] = true;
 		}
 	}
-
+	if(data_type == ALL_DATA) {
+		sent_upto_ = ncommands();
+	}
 	return res;
 }
 
@@ -463,8 +448,8 @@ static bool fix_rename_command(const config& c, config& async_child)
 		std::vector<map_location> steps;
 
 		try {
-			read_locations(child.value(), steps);
-		} catch(const bad_lexical_cast &) {
+			steps = read_locations(child.value());
+		} catch(const std::invalid_argument&) {
 			WRN_REPLAY << "Warning: Path data contained something which could not be parsed to a sequence of locations:" << "\n config = " << child->debug();
 		}
 
@@ -629,6 +614,17 @@ config* replay::get_next_action()
 	return retv;
 }
 
+config* replay::peek_next_action()
+{
+	if (at_end())
+		return nullptr;
+
+	LOG_REPLAY << "up to replay action " << base_->get_pos() + 1 << '/' << ncommands();
+
+	config* retv = &command(base_->get_pos());
+	return retv;
+}
+
 
 bool replay::at_end() const
 {
@@ -676,9 +672,19 @@ bool replay::add_start_if_not_there_yet()
 	}
 }
 
-static void show_oos_error_error_function(const std::string& message)
+REPLAY_ACTION_TYPE get_replay_action_type(const config& command)
 {
-	replay::process_error(message);
+	if(command.all_children_count() != 1) {
+		return REPLAY_ACTION_TYPE::INVALID;
+	}
+	auto [key, _] = command.all_children_view().front();
+	if(key == "speak" || key == "label" || key == "surrender" || key == "clear_labels" || key == "rename" || key == "countdown_update") {
+		return REPLAY_ACTION_TYPE::UNSYNCED;
+	}
+	if(command["dependent"].to_bool(false)) {
+		return REPLAY_ACTION_TYPE::DEPENDENT;
+	}
+	return REPLAY_ACTION_TYPE::SYNCED;
 }
 
 REPLAY_RETURN do_replay(bool one_move)
@@ -723,7 +729,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 		}
 
 
-		const config::const_all_children_itors ch_itors = cfg->all_children_range();
+		const auto ch_itors = cfg->all_children_view();
 		//if there is an empty command tag or a start tag
 		if (ch_itors.empty() || cfg->has_child("start"))
 		{
@@ -737,16 +743,16 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 			const std::string &team_name = speak["to_sides"];
 			const std::string &speaker_name = speak["id"];
 			const std::string &message = speak["message"];
-			//if (!preferences::parse_should_show_lobby_join(speaker_name, message)) return;
+
 			bool is_whisper = (speaker_name.find("whisper: ") == 0);
 			if(resources::recorder->add_chat_message_location()) {
 				DBG_REPLAY << "tried to add a chat message twice.";
 				if (!resources::controller->is_skipping_replay() || is_whisper) {
-					int side = speak["side"];
+					int side = speak["side"].to_int();
 					game_display::get_singleton()->get_chat_manager().add_chat_message(get_time(*speak), speaker_name, side, message,
 						(team_name.empty() ? events::chat_handler::MESSAGE_PUBLIC
 						: events::chat_handler::MESSAGE_PRIVATE),
-						preferences::message_bell());
+						prefs::get().message_bell());
 				}
 			}
 		}
@@ -829,13 +835,13 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 		}
 		else if (auto countdown_update = cfg->optional_child("countdown_update"))
 		{
-			int val = countdown_update["value"];
-			int tval = countdown_update["team"];
+			auto val = chrono::parse_duration<std::chrono::milliseconds>(countdown_update["value"]);
+			int tval = countdown_update["team"].to_int();
 			if (tval <= 0  || tval > static_cast<int>(resources::gameboard->teams().size())) {
 				std::stringstream errbuf;
 				errbuf << "Illegal countdown update \n"
 					<< "Received update for :" << tval << " Current user :"
-					<< side_num << "\n" << " Updated value :" << val;
+					<< side_num << "\n" << " Updated value :" << val.count();
 
 				replay::process_error(errbuf.str());
 			} else {
@@ -855,7 +861,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 			// but we are called from
 			// the only other option for "dependent" command is checksum which is already checked.
 			assert(cfg->all_children_count() == 1);
-			std::string child_name = cfg->all_children_range().front().key;
+			auto [child_name, _] = cfg->all_children_view().front();
 			DBG_REPLAY << "got an dependent action name = " << child_name;
 			resources::recorder->revert_action();
 			return REPLAY_FOUND_DEPENDENT;
@@ -863,8 +869,7 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 		else
 		{
 			//we checked for empty commands at the beginning.
-			const std::string & commandname = cfg->ordered_begin()->key;
-			config data = cfg->ordered_begin()->cfg;
+			const auto [commandname, data] = cfg->all_children_view().front();
 
 			if(!is_unsynced)
 			{
@@ -885,7 +890,8 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 				/*
 					we need to use the undo stack during replays in order to make delayed shroud updated work.
 				*/
-				synced_context::run(commandname, data, true, !resources::controller->is_skipping_replay(), show_oos_error_error_function);
+				auto spectator = action_spectator([](const std::string& message) { replay::process_error(message); });
+				synced_context::run(commandname, data, spectator);
 				if(resources::controller->is_regular_game_end()) {
 					return REPLAY_FOUND_END_LEVEL;
 				}
@@ -898,45 +904,5 @@ REPLAY_RETURN do_replay_handle(bool one_move)
 		if (auto child = cfg->optional_child("verify")) {
 			verify(resources::gameboard->units(), *child);
 		}
-	}
-}
-
-replay_network_sender::replay_network_sender(replay& obj) : obj_(obj), upto_(obj_.ncommands())
-{
-}
-
-replay_network_sender::~replay_network_sender()
-{
-	try {
-	commit_and_sync();
-	} catch (...) {}
-}
-
-void replay_network_sender::sync_non_undoable()
-{
-	if(resources::controller->is_networked_mp()) {
-		resources::whiteboard->send_network_data();
-
-		config cfg;
-		const config& data = cfg.add_child("turn",obj_.get_data_range(upto_,obj_.ncommands(),replay::NON_UNDO_DATA));
-		if(data.empty() == false) {
-			resources::controller->send_to_wesnothd(cfg);
-		}
-	}
-}
-
-void replay_network_sender::commit_and_sync()
-{
-	if(resources::controller->is_networked_mp()) {
-		resources::whiteboard->send_network_data();
-
-		config cfg;
-		const config& data = cfg.add_child("turn",obj_.get_data_range(upto_,obj_.ncommands()));
-
-		if(data.empty() == false) {
-			resources::controller->send_to_wesnothd(cfg);
-		}
-
-		upto_ = obj_.ncommands();
 	}
 }

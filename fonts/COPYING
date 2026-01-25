@@ -16,6 +16,7 @@ Available under the GNU GPLv2 with the font exception:
     version of the font, but you are not obligated to do so. If you do not
     wish to do so, delete this exception statement from your version.
 
+
 ## Lohit-Bengali
 
 Copyright 2011-12 Lohit Fonts Project contributors
@@ -25,7 +26,6 @@ with Reserved Font Name Lohit.
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 http://scripts.sil.org/OFL
-
 
 -----------------------------------------------------------
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
@@ -281,6 +281,25 @@ Copyright © Arkandis Digital Foundry under the GNU General Public License V2 an
     version of the font, but you are not obligated to do so. If you do not
     wish to do so, delete this exception statement from your version.
 
+## WesScript Regular
+A modified version of Oldania ADF Std featuring a custom "A" glyph.
+
+Based on Oldania ADF Std which is Copyright © Arkandis Digital Foundry under the GNU General Public License V2 and later, with font exception.
+Modifications to the "A" glyph © Subhraman Sarkar under the GNU General Public License Version 2 or later, with font exception.
+
+    As a special exception, if you create a document which uses this font, and
+    embed this font or unaltered portions of this font into the document, this
+    font does not by itself cause the resulting document to be covered by the
+    GNU General Public License. This exception does not however invalidate any
+    other reasons why the document might be covered by the GNU General Public
+    License.  If you modify this font, you may extend this exception to your
+    version of the font, but you are not obligated to do so. If you do not
+    wish to do so, delete this exception statement from your version.
+
+## Akademie Alte
+
+Copyright © 2017 Marath Salychow under CC BY 3.0(https://creativecommons.org/licenses/by/3.0/)
+
 ## Noto Sans Japanese
 
 Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'
@@ -375,3 +394,4 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
+

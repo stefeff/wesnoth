@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	by Mark de Wever <koraq@xs4all.nl>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -24,16 +24,6 @@ struct language_def;
 namespace gui2::dialogs
 {
 
-/**
- * @ingroup GUIWindowDefinitionWML
- *
- * This shows the dialog to select the language to use.
- * When the dialog is closed with the OK button it also updates the selected language in the preferences.
- * Key               |Type          |Mandatory|Description
- * ------------------|--------------|---------|-----------
- * language_list     | @ref listbox |yes      |This listbox contains the list with available languages.
- * free to choose    | control      |no       |Show the name of the language in the current row.
- */
 class language_selection : public modal_dialog
 {
 public:
@@ -45,9 +35,9 @@ public:
 private:
 	virtual const std::string& window_id() const override;
 
-	virtual void pre_show(window& window) override;
+	virtual void pre_show() override;
 
-	virtual void post_show(window& window) override;
+	virtual void post_show() override;
 
 	void shown_filter_callback();
 

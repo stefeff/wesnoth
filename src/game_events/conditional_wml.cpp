@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -24,7 +24,6 @@
 #include "game_board.hpp"
 #include "game_data.hpp"
 #include "log.hpp"
-#include "preferences/general.hpp"
 #include "recall_list_manager.hpp"
 #include "resources.hpp"
 #include "scripting/game_lua_kernel.hpp"
@@ -34,6 +33,7 @@
 #include "units/unit.hpp"
 #include "units/filter.hpp"
 #include "units/map.hpp"
+#include "utils/general.hpp"
 #include "variable.hpp"
 
 static lg::log_domain log_engine("engine");
@@ -175,7 +175,7 @@ namespace { // Support functions
 			{"then", "else", "elseif", "not", "and", "or", "do"};
 
 		for(const auto& [key, filter] : cond.all_ordered()) {
-			if(std::find(skip.begin(), skip.end(), key) == skip.end()) {
+			if(!utils::contains(skip, key)) {
 				assert(resources::lua_kernel);
 				if(!resources::lua_kernel->run_wml_conditional(key, filter)) {
 					return false;

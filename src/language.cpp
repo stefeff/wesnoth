@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -17,12 +17,11 @@
 #include "gettext.hpp"
 #include "language.hpp"
 #include "log.hpp"
-#include "preferences/general.hpp"
+#include "preferences/preferences.hpp"
 #include "serialization/parser.hpp"
 #include "serialization/preprocessor.hpp"
 #include "game_config_manager.hpp"
 
-#include <stdexcept>
 #include <clocale>
 
 #ifdef _WIN32
@@ -43,26 +42,18 @@ extern "C" int _putenv(const char*);
 
 namespace {
 	language_def current_language;
-	std::vector<config> languages_;
+	std::vector<config> languages;
+	std::vector<language_def> known_languages;
 	utils::string_map strings_;
 	int min_translation_percent = 80;
 }
 
-static language_list known_languages;
-
 bool load_strings(bool complain);
-
-bool current_language_rtl()
-{
-	return get_language().rtl;
-}
 
 bool language_def::operator== (const language_def& a) const
 {
 	return ((language == a.language) /* && (localename == a.localename) */ );
 }
-
-symbol_table string_table;
 
 bool& time_locale_correct()
 {
@@ -101,30 +92,42 @@ utils::string_map::const_iterator symbol_table::end() const
 	return strings_.end();
 }
 
-bool load_language_list()
+language_def::language_def()
+	: language(t_string(N_("System default language"), "wesnoth"))
+	, sort_name("A")
 {
-	config cfg;
-	try {
-		filesystem::scoped_istream stream = preprocess_file(filesystem::get_wml_location("hardwired/language.cfg"));
-		read(cfg, *stream);
-	} catch(const config::error &) {
-		return false;
-	}
+}
+
+language_def::language_def(const config& cfg)
+	: localename(cfg["locale"])
+	, alternates(utils::split(cfg["alternates"]))
+	, language(cfg["name"].t_str())
+	, sort_name(cfg["sort_name"].str(language))
+	, rtl(cfg["dir"] == "rtl")
+	, percent(cfg["percent"].to_int())
+{
+}
+
+bool load_language_list()
+try {
+	config cfg = io::read(*preprocess_file(filesystem::get_wml_location("hardwired/language.cfg").value()));
 
 	known_languages.clear();
-	known_languages.emplace_back("", t_string(N_("System default language"), "wesnoth"), "ltr", "", "A", "100");
+	known_languages.emplace_back(); // System default language
 
-	for (const config &lang : cfg.child_range("locale"))
-	{
-		known_languages.emplace_back(
-			lang["locale"], lang["name"], lang["dir"],
-			lang["alternates"], lang["sort_name"], lang["percent"]);
+	for(const config& lang : cfg.child_range("locale")) {
+		known_languages.emplace_back(lang);
 	}
 
 	return true;
+
+} catch(const utils::bad_optional_access&) {
+	return false;
+} catch(const config::error&) {
+	return false;
 }
 
-language_list get_languages(bool all)
+std::vector<language_def> get_languages(bool all)
 {
 	// We sort every time, the local might have changed which can modify the
 	// sort order.
@@ -134,7 +137,7 @@ language_list get_languages(bool all)
 		return known_languages;
 	}
 
-	language_list result;
+	std::vector<language_def> result;
 	std::copy_if(known_languages.begin(), known_languages.end(), std::back_inserter(result),
 		[](const language_def& lang) { return lang.percent >= min_translation_percent; });
 
@@ -295,7 +298,7 @@ void set_language(const language_def& locale)
 
 	std::string locale_lc;
 	locale_lc.resize(locale.localename.size());
-	std::transform(locale.localename.begin(),locale.localename.end(),locale_lc.begin(),tolower);
+	std::transform(locale.localename.begin(), locale.localename.end(), locale_lc.begin(), tolower);
 
 	current_language = locale;
 	time_locale_correct() = true;
@@ -308,23 +311,15 @@ void set_language(const language_def& locale)
 
 bool load_strings(bool complain)
 {
-	DBG_G << "Loading strings";
-	config cfg;
-
-	LOG_G << "There are " << languages_.size() << " [language] blocks";
-	if (complain && languages_.empty()) {
+	if(complain && languages.empty()) {
 		PLAIN_LOG << "No [language] block found";
 		return false;
 	}
-	for (const config &lang : languages_) {
-		DBG_G << "[language]";
-		for (const config::attribute &j : lang.attribute_range()) {
-			DBG_G << j.first << "=\"" << j.second << "\"";
-			strings_[j.first] = j.second;
+	for(const config& lang : languages) {
+		for(const auto& [key, value] : lang.attribute_range()) {
+			strings_[key] = value.t_str();
 		}
-		DBG_G << "[/language]";
 	}
-	DBG_G << "done";
 
 	return true;
 }
@@ -337,13 +332,13 @@ const language_def& get_locale()
 
 	assert(!known_languages.empty());
 
-	const std::string& prefs_locale = preferences::language();
+	const std::string& prefs_locale = prefs::get().locale();
 	if(prefs_locale.empty() == false) {
 		translation::set_language(prefs_locale, nullptr);
-		for(language_list::const_iterator i = known_languages.begin();
-				i != known_languages.end(); ++i) {
-			if (prefs_locale == i->localename)
-				return *i;
+		for(const language_def& def : known_languages) {
+			if(prefs_locale == def.localename) {
+				return def;
+			}
 		}
 		LOG_G << "'" << prefs_locale << "' locale not found in known array; defaulting to system locale";
 		return known_languages[0];
@@ -378,25 +373,20 @@ void init_textdomains(const game_config_view& cfg)
 
 		if(path.empty()) {
 			t_string::add_textdomain(name, filesystem::get_intl_dir());
+		} else if(auto location = filesystem::get_binary_dir_location("", path)) {
+			t_string::add_textdomain(name, location.value());
 		} else {
-			std::string location = filesystem::get_binary_dir_location("", path);
-
-			if (location.empty()) {
-				//if location is empty, this causes a crash on Windows, so we
-				//disallow adding empty domains
-				WRN_G << "no location found for '" << path << "', skipping textdomain";
-			} else {
-				t_string::add_textdomain(name, location);
-			}
+			// If location is empty, this causes a crash on Windows, so we disallow adding empty domains
+			WRN_G << "no location found for '" << path << "', skipping textdomain";
 		}
 	}
 }
 
 bool init_strings(const game_config_view& cfg)
 {
-	languages_.clear();
+	languages.clear();
 	for (const config &l : cfg.child_range("language")) {
-		languages_.push_back(l);
+		languages.push_back(l);
 	}
 	return load_strings(true);
 }

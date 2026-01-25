@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2009 - 2024
+	Copyright (C) 2009 - 2025
 	by Yurii Chernyi <terraninfo@terraninfo.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -28,7 +28,6 @@
 #include "generic_event.hpp"         // for observer
 #include "units/ptr.hpp"              // for unit_ptr
 #include "map/location.hpp"       // for map_location
-#include "utils/variant.hpp"
 
 #include <map>                          // for map, map<>::value_compare
 #include <set>                          // for set
@@ -41,12 +40,8 @@ class team;
 class terrain_filter;  // lines 43-43
 class unit_map;
 class unit_type;  // lines 46-46
-namespace wfl { class variant; }
 namespace ai { class ai_context; }  // lines 51-51
 namespace ai { class unit_advancements_aspect; }
-namespace ai { template <typename T> class typesafe_aspect; }
-namespace boost { template <class T> class shared_ptr; }
-namespace pathfind { struct paths; }
 struct battle_context_unit_stats;  // lines 39-39
 
 namespace ai {
@@ -120,7 +115,6 @@ private:
 
 // side context
 
-class side_context;
 
 class side_context{
 public:
@@ -162,7 +156,6 @@ public:
 
 };
 
-class readonly_context;
 class readonly_context : public virtual side_context {
 public:
 	readonly_context(){}
@@ -211,8 +204,6 @@ public:
 	virtual void add_aspects(std::vector< aspect_ptr > &aspects ) = 0;
 
 	virtual const attacks_vector& get_attacks() const = 0;
-
-	virtual const wfl::variant& get_attacks_as_variant() const = 0;
 
 	virtual const terrain_filter& get_avoid() const = 0;
 
@@ -350,7 +341,6 @@ public:
 
 };
 
-class readwrite_context;
 class readwrite_context : public virtual readonly_context {
 public:
 	readwrite_context(){}
@@ -583,11 +573,6 @@ public:
 	virtual const attacks_vector& get_attacks() const override
 	{
 		return target_->get_attacks();
-	}
-
-	virtual const wfl::variant& get_attacks_as_variant() const override
-	{
-		return target_->get_attacks_as_variant();
 	}
 
 	virtual const terrain_filter& get_avoid() const override
@@ -1151,8 +1136,6 @@ public:
 	virtual aspect_map& get_aspects() override;
 
 	virtual const attacks_vector& get_attacks() const override;
-
-	virtual const wfl::variant& get_attacks_as_variant() const override;
 
 	virtual const terrain_filter& get_avoid() const override;
 

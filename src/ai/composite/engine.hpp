@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2009 - 2024
+	Copyright (C) 2009 - 2025
 	by Yurii Chernyi <terraninfo@terraninfo.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -23,7 +23,6 @@
 #include "ai/composite/component.hpp"
 #include "ai/contexts.hpp"
 
-#include <algorithm>
 #include <iterator>
 
 //============================================================================
@@ -31,8 +30,6 @@
 namespace ai {
 
 class rca_context;
-class ai_context;
-class component;
 
 class engine : public component {
 public:
@@ -67,9 +64,6 @@ public:
 	//do not override that method in subclasses which cannot create stages
 	virtual void do_parse_stage_from_config( ai_context &context, const config &cfg, std::back_insert_iterator<std::vector< stage_ptr >> b );
 
-	//do not override that method in subclasses which cannot evaluate formulas
-	virtual std::string evaluate(const std::string& str);
-
 	readonly_context& get_readonly_context();
 
 	/**
@@ -102,7 +96,6 @@ protected:
 	std::string name_;
 };
 
-class engine_factory;
 
 class engine_factory{
 	bool is_duplicate(const std::string &name);

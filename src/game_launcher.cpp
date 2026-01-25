@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -21,11 +21,9 @@
 #include "config.hpp"              // for config, etc
 #include "cursor.hpp"              // for set, CURSOR_TYPE::NORMAL
 #include "exceptions.hpp"          // for error
-#include "filesystem.hpp"          // for get_user_config_dir, etc
+#include "filesystem.hpp"          // for get_user_data_dir, etc
 #include "game_classification.hpp" // for game_classification, etc
-#include "game_config.hpp"         // for path, no_delay, revision, etc
-#include "game_config_manager.hpp" // for game_config_manager
-#include "game_initialization/create_engine.hpp"
+#include "game_config.hpp"         // for path, etc
 #include "game_initialization/multiplayer.hpp"  // for start_client, etc
 #include "game_initialization/playcampaign.hpp" // for play_game, etc
 #include "game_initialization/singleplayer.hpp" // for sp_create_mode
@@ -35,55 +33,61 @@
 #include "gui/dialogs/loading_screen.hpp"
 #include "gui/dialogs/message.hpp" // for show error message
 #include "gui/dialogs/multiplayer/mp_connect.hpp"
-#include "gui/dialogs/multiplayer/mp_host_game_prompt.hpp" // for host game prompt
-#include "gui/dialogs/multiplayer/mp_method_selection.hpp"
 #include "gui/dialogs/title_screen.hpp"      // for show_debug_clock_button
 #include "gui/dialogs/transient_message.hpp" // for show_transient_message
-#include "gui/widgets/retval.hpp"            // for window, etc
 #include "gui/widgets/settings.hpp"          // for new_widgets
 #include "language.hpp"                      // for language_def, etc
 #include "log.hpp"                           // for LOG_STREAM, logger, general, etc
 #include "map/exception.hpp"
-#include "preferences/credentials.hpp"
-#include "preferences/display.hpp"
-#include "preferences/general.hpp" // for disable_preferences_save, etc
+#include "preferences/preferences.hpp"
 #include "save_index.hpp"
 #include "scripting/application_lua_kernel.hpp"
 #include "sdl/surface.hpp"                // for surface
 #include "serialization/compression.hpp"  // for format::NONE
-#include "serialization/string_utils.hpp" // for split
 #include "tstring.hpp"       // for operator==, operator!=
 #include "video.hpp"
 #include "wesnothd_connection_error.hpp"
 #include "wml_exception.hpp" // for wml_exception
 
-#if BOOST_VERSION >= 108800 // v2 is now default
-#  define BOOST_PROCESS_VERSION 1
-#  include <boost/process/v1/child.hpp>
-#else
-#  include <boost/process.hpp>
-#endif
+#ifdef __APPLE__
 
-#ifdef _WIN32
-#if BOOST_VERSION >= 108800
-#  include <boost/process/v1/windows.hpp>
-#else
-#  include <boost/process/windows.hpp>
+//
+// HACK: MacCompileStuff is currently on 1.86, so it could use the v2 API,
+// but we need to update the libs manually to link against boost::process.
+//
+// -- vultraz, 2025-05-12
+//
+#if BOOST_VERSION > 108600
+#error MacCompileStuff has been updated. Remove this block and the accompanying __APPLE__ checks below.
 #endif
+#include <boost/process/v1/child.hpp>
+
+#elif BOOST_VERSION >= 108600
+
+// boost::asio (via boost::process) complains about winsock.h otherwise
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <boost/process/v2/process.hpp>
+
+#else
+
+// process::v1 only. The v1 folders do not exist until 1.86
+#ifdef _WIN32
+#include <boost/process/windows.hpp>
+#endif
+#include <boost/process/child.hpp>
+
 #endif
 
 #include <algorithm> // for copy, max, min, stable_sort
-#include <cstdlib>   // for system
 #include <new>
+#include <thread>
 #include <utility> // for pair
-
-#include <SDL2/SDL.h> // for SDL_INIT_JOYSTICK, etc
 
 #ifdef DEBUG_WINDOW_LAYOUT_GRAPHS
 #include "gui/widgets/debug.hpp"
 #endif
-
-struct incorrect_map_format_error;
 
 static lg::log_domain log_config("config");
 #define ERR_CONFIG LOG_STREAM(err, log_config)
@@ -106,12 +110,10 @@ static lg::log_domain log_network("network");
 static lg::log_domain log_enginerefac("enginerefac");
 #define LOG_RG LOG_STREAM(info, log_enginerefac)
 
-namespace bp = boost::process;
-
 game_launcher::game_launcher(const commandline_options& cmdline_opts)
 	: cmdline_opts_(cmdline_opts)
+	, config_manager_(cmdline_opts)
 	, font_manager_()
-	, prefs_manager_()
 	, image_manager_()
 	, main_event_context_()
 	, hotkey_manager_()
@@ -125,31 +127,14 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 	, multiplayer_server_()
 	, jump_to_multiplayer_(false)
 	, jump_to_campaign_{}
-	, jump_to_editor_(false)
+	, jump_to_editor_()
 	, load_data_()
 {
 	bool no_music = false;
 	bool no_sound = false;
 
-	// The path can be hardcoded and it might be a relative path.
-	if(!game_config::path.empty() &&
-#ifdef _WIN32
-		// use c_str to ensure that index 1 points to valid element since c_str() returns null-terminated string
-		game_config::path.c_str()[1] != ':'
-#else
-		game_config::path[0] != '/'
-#endif
-	)
-	{
-		game_config::path = filesystem::get_cwd() + '/' + game_config::path;
-		// font_manager_.update_font_path()
-		// To update the font path, destroy and recreate the manager
-		font_manager_.~manager();
-		new (&font_manager_) font::manager();
-	}
-
 	if(cmdline_opts_.core_id) {
-		preferences::set_core_id(*cmdline_opts_.core_id);
+		prefs::get().set_core(*cmdline_opts_.core_id);
 	}
 	if(cmdline_opts_.campaign) {
 		jump_to_campaign_.jump = true;
@@ -184,37 +169,35 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 	if(cmdline_opts_.debug_dot_level)
 		gui2::debug_layout_graph::set_level(*cmdline_opts_.debug_dot_level);
 #endif
-	if(cmdline_opts_.editor) {
-		jump_to_editor_ = true;
-		if(!cmdline_opts_.editor->empty()) {
-			load_data_ = savegame::load_game_metadata{
-				savegame::save_index_class::default_saves_dir(), *cmdline_opts_.editor};
-		}
-	}
+	if(cmdline_opts_.editor)
+		jump_to_editor_ = cmdline_opts_.editor;
 	if(cmdline_opts_.fps)
-		preferences::set_show_fps(true);
+		prefs::get().set_show_fps(true);
 	if(cmdline_opts_.fullscreen)
-		preferences::_set_fullscreen(true);
-	if(cmdline_opts_.load)
+		prefs::get().set_fullscreen(true);
+	if(cmdline_opts_.load) {
+#ifdef __cpp_aggregate_paren_init
+		load_data_.emplace(
+			savegame::save_index_class::default_saves_dir(), *cmdline_opts_.load);
+#else
 		load_data_ = savegame::load_game_metadata{
 			savegame::save_index_class::default_saves_dir(), *cmdline_opts_.load};
-	if(cmdline_opts_.max_fps) {
-		int fps = std::clamp(*cmdline_opts_.max_fps, 1, 1000);
-		fps = 1000 / fps;
-		// increase the delay to avoid going above the maximum
-		if(1000 % fps != 0) {
-			++fps;
+#endif
+		try {
+			load_data_->read_file();
+		} catch(const game::load_game_failed&) {
+			load_data_.reset();
 		}
-		preferences::set_draw_delay(fps);
+	}
+	if(cmdline_opts_.max_fps) {
+		prefs::get().set_refresh_rate(std::clamp(*cmdline_opts_.max_fps, 1, 1000));
 	}
 	if(cmdline_opts_.nogui || cmdline_opts_.headless_unit_test) {
 		no_sound = true;
-		preferences::disable_preferences_save();
+		prefs::disable_preferences_save();
 	}
 	if(cmdline_opts_.new_widgets)
 		gui2::new_widgets = true;
-	if(cmdline_opts_.nodelay)
-		game_config::no_delay = true;
 	if(cmdline_opts_.nomusic)
 		no_music = true;
 	if(cmdline_opts_.nosound)
@@ -223,8 +206,8 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 		const int xres = std::get<0>(*cmdline_opts_.resolution);
 		const int yres = std::get<1>(*cmdline_opts_.resolution);
 		if(xres > 0 && yres > 0) {
-			preferences::_set_resolution(point(xres, yres));
-			preferences::_set_maximized(false);
+			prefs::get().set_resolution(point(xres, yres));
+			prefs::get().set_maximized(false);
 		}
 	}
 	if(cmdline_opts_.screenshot) {
@@ -232,7 +215,7 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 		screenshot_map_ = *cmdline_opts_.screenshot_map_file;
 		screenshot_filename_ = *cmdline_opts_.screenshot_output_file;
 		no_sound = true;
-		preferences::disable_preferences_save();
+		prefs::disable_preferences_save();
 	}
 	if (cmdline_opts_.server){
 		jump_to_multiplayer_ = true;
@@ -242,17 +225,17 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 		} else {
 			// Pick the first server in config
 			if(game_config::server_list.size() > 0) {
-				multiplayer_server_ = preferences::network_host();
+				multiplayer_server_ = prefs::get().network_host();
 			} else {
 				multiplayer_server_ = "";
 			}
 		}
 		if(cmdline_opts_.username) {
-			preferences::disable_preferences_save();
-			preferences::set_login(*cmdline_opts_.username);
+			prefs::disable_preferences_save();
+			prefs::get().set_login(*cmdline_opts_.username);
 			if(cmdline_opts_.password) {
-				preferences::disable_preferences_save();
-				preferences::set_password(*cmdline_opts.server, *cmdline_opts.username, *cmdline_opts_.password);
+				prefs::disable_preferences_save();
+				prefs::get().set_password(*cmdline_opts.server, *cmdline_opts.username, *cmdline_opts_.password);
 			}
 		}
 	}
@@ -265,7 +248,7 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 		test_scenarios_ = cmdline_opts_.unit_test;
 	}
 	if(cmdline_opts_.windowed)
-		preferences::_set_fullscreen(false);
+		prefs::get().set_fullscreen(false);
 	if(cmdline_opts_.with_replay && load_data_)
 		load_data_->show_replay = true;
 	if(cmdline_opts_.translation_percent)
@@ -273,23 +256,22 @@ game_launcher::game_launcher(const commandline_options& cmdline_opts)
 
 	if(!cmdline_opts.nobanner) {
 		PLAIN_LOG
-			<< "\nData directory:               " << game_config::path
-			<< "\nUser configuration directory: " << filesystem::get_user_config_dir()
-			<< "\nUser data directory:          " << filesystem::get_user_data_dir()
-			<< "\nCache directory:              " << filesystem::get_cache_dir()
-			<< "\n\n";
+			<< "\nGame data:    " << game_config::path
+			<< "\nUser data:    " << filesystem::get_user_data_dir()
+			<< "\nCache:        " << filesystem::get_cache_dir()
+			<< "\n";
 	}
 
 	// disable sound in nosound mode, or when sound engine failed to initialize
-	if(no_sound || ((preferences::sound_on() || preferences::music_on() ||
-	                  preferences::turn_bell() || preferences::UI_sound_on()) &&
+	if(no_sound || ((prefs::get().sound() || prefs::get().music_on() ||
+	                  prefs::get().turn_bell() || prefs::get().ui_sound_on()) &&
 	                 !sound::init_sound())) {
-		preferences::set_sound(false);
-		preferences::set_music(false);
-		preferences::set_turn_bell(false);
-		preferences::set_UI_sound(false);
+		prefs::get().set_sound(false);
+		prefs::get().set_music(false);
+		prefs::get().set_turn_bell(false);
+		prefs::get().set_ui_sound(false);
 	} else if(no_music) { // else disable the music in nomusic mode
-		preferences::set_music(false);
+		prefs::get().set_music(false);
 	}
 }
 
@@ -345,7 +327,6 @@ bool game_launcher::init_video()
 			// Other functions don't require a window at all.
 			video::init(video::fake::no_window);
 		}
-		game_config::no_delay = true;
 		return true;
 	}
 
@@ -377,27 +358,6 @@ bool game_launcher::init_lua_script()
 		plugins_manager::get()->get_kernel_base()->load_package();
 	}
 
-	// get the application lua kernel, load and execute script file, if script file is present
-	if(cmdline_opts_.script_file) {
-		filesystem::scoped_istream sf = filesystem::istream_file(*cmdline_opts_.script_file);
-
-		if(!sf->fail()) {
-			/* Cancel all "jumps" to editor / campaign / multiplayer */
-			jump_to_multiplayer_ = false;
-			jump_to_editor_ = false;
-			jump_to_campaign_.jump = false;
-
-			std::string full_script((std::istreambuf_iterator<char>(*sf)), std::istreambuf_iterator<char>());
-
-			PLAIN_LOG << "\nRunning lua script: " << *cmdline_opts_.script_file;
-
-			plugins_manager::get()->get_kernel_base()->run(full_script.c_str(), *cmdline_opts_.script_file);
-		} else {
-			PLAIN_LOG << "Encountered failure when opening script '" << *cmdline_opts_.script_file << '\'';
-			error = true;
-		}
-	}
-
 	if(cmdline_opts_.plugin_file) {
 		std::string filename = *cmdline_opts_.plugin_file;
 
@@ -412,7 +372,7 @@ bool game_launcher::init_lua_script()
 
 			/* Cancel all "jumps" to editor / campaign / multiplayer */
 			jump_to_multiplayer_ = false;
-			jump_to_editor_ = false;
+			jump_to_editor_ = utils::nullopt;
 			jump_to_campaign_.jump = false;
 
 			std::string full_plugin((std::istreambuf_iterator<char>(*sf)), std::istreambuf_iterator<char>());
@@ -496,7 +456,7 @@ bool game_launcher::play_test()
 
 	set_test(test_scenarios_.at(0));
 
-	game_config_manager::get()->load_game_config_for_game(state_.classification(), state_.get_scenario_id());
+	config_manager_.load_game_config_for_game(state_.classification(), state_.get_scenario_id());
 
 	try {
 		campaign_controller ccontroller(state_);
@@ -577,7 +537,7 @@ game_launcher::unit_test_result game_launcher::unit_test()
 
 game_launcher::unit_test_result game_launcher::single_unit_test()
 {
-	game_config_manager::get()->load_game_config_for_game(state_.classification(), state_.get_scenario_id());
+	config_manager_.load_game_config_for_game(state_.classification(), state_.get_scenario_id());
 
 	level_result::type game_res = level_result::type::fail;
 	try {
@@ -604,10 +564,16 @@ game_launcher::unit_test_result game_launcher::single_unit_test()
 	savegame::replay_savegame save(state_, compression::format::none);
 	save.save_game_automatic(false, "unit_test_replay");
 
+#ifdef __cpp_aggregate_paren_init
+	load_data_.emplace(
+		savegame::save_index_class::default_saves_dir(), save.filename(), "", true, true, false);
+#else
 	load_data_ = savegame::load_game_metadata{
 		savegame::save_index_class::default_saves_dir(), save.filename(), "", true, true, false};
+#endif
+	load_data_->read_file();
 
-	if(!load_game()) {
+	if(!load_prepared_game()) {
 		PLAIN_LOG << "Failed to load the replay!";
 		return unit_test_result::TEST_FAIL_LOADING_REPLAY; // failed to load replay
 	}
@@ -657,9 +623,9 @@ bool game_launcher::play_screenshot_mode()
 		return true;
 	}
 
-	game_config_manager::get()->load_game_config_for_editor();
+	config_manager_.load_game_config_for_editor();
 
-	::init_textdomains(game_config_manager::get()->game_config());
+	::init_textdomains(config_manager_.game_config());
 
 	editor::start(false, screenshot_map_, true, screenshot_filename_);
 	return false;
@@ -675,7 +641,7 @@ bool game_launcher::play_render_image_mode()
 	DBG_GENERAL << "Current campaign type: " << campaign_type::get_string(state_.classification().type);
 
 	try {
-		game_config_manager::get()->load_game_config_for_game(state_.classification(), state_.get_scenario_id());
+		config_manager_.load_game_config_for_game(state_.classification(), state_.get_scenario_id());
 	} catch(const config::error& e) {
 		PLAIN_LOG << "Error loading game config: " << e.what();
 		return false;
@@ -701,29 +667,19 @@ bool game_launcher::has_load_data() const
 	return load_data_.has_value();
 }
 
-bool game_launcher::load_game()
+savegame::load_game_metadata game_launcher::extract_load_data()
 {
-	assert(game_config_manager::get());
+	return std::exchange(load_data_, utils::nullopt).value();
+}
 
+bool game_launcher::load_game_prompt()
+{
 	DBG_GENERAL << "Current campaign type: " << campaign_type::get_string(state_.classification().type);
+	assert(!load_data_);
 
-	savegame::loadgame load(savegame::save_index_class::default_saves_dir(), state_);
-	if(load_data_) {
-		load.data() = std::move(*load_data_);
-		clear_loaded_game();
-	}
-
+	// FIXME: evaluate which of these damn catch blocks are still necessary
 	try {
-		if(!load.load_game()) {
-			return false;
-		}
-
-		load.set_gamestate();
-		try {
-			game_config_manager::get()->load_game_config_for_game(state_.classification(), state_.get_scenario_id());
-		} catch(const config::error&) {
-			return false;
-		}
+		load_data_ = savegame::load_interactive();
 
 	} catch(const config::error& e) {
 		if(e.message.empty()) {
@@ -754,23 +710,32 @@ bool game_launcher::load_game()
 		return false;
 	}
 
-	play_replay_ = load.data().show_replay;
-	LOG_CONFIG << "is middle game savefile: " << (state_.is_mid_game_save() ? "yes" : "no");
-	LOG_CONFIG << "show replay: " << (play_replay_ ? "yes" : "no");
-	// in case load.data().show_replay && state_.is_start_of_scenario
+	// If the player canceled loading, we won't have any load data at this point
+	return has_load_data();
+}
+
+bool game_launcher::load_prepared_game()
+{
+	auto load_data = extract_load_data();
+	savegame::set_gamestate(state_, load_data);
+
+	play_replay_ = load_data.show_replay;
+
+	// in case show_replay && is_start_of_scenario
 	// there won't be any turns to replay, but the
 	// user gets to watch the intro sequence again ...
-
-	if(!state_.is_start_of_scenario() && load.data().show_replay) {
+	if(load_data.show_replay && !state_.is_start_of_scenario()) {
 		state_.statistics().clear_current_scenario();
 	}
 
-	if(state_.classification().is_multiplayer()) {
-		state_.unify_controllers();
+	if(load_data.cancel_orders) {
+		state_.cancel_orders();
 	}
 
-	if(load.data().cancel_orders) {
-		state_.cancel_orders();
+	try {
+		config_manager_.load_game_config_for_game(state_.classification(), state_.get_scenario_id());
+	} catch(const config::error&) {
+		return false;
 	}
 
 	return true;
@@ -790,17 +755,20 @@ std::string game_launcher::jump_to_campaign_id() const
 	return jump_to_campaign_.campaign_id;
 }
 
+bool game_launcher::play_campaign() {
+	jump_to_campaign_.jump = false;
+	if(new_campaign()) {
+		state_.set_skip_story(jump_to_campaign_.skip_story);
+		launch_game(reload_mode::NO_RELOAD_DATA);
+		return true;
+	}
+	return false;
+}
+
 bool game_launcher::goto_campaign()
 {
 	if(jump_to_campaign_.jump) {
-		if(new_campaign()) {
-			state_.set_skip_story(jump_to_campaign_.skip_story);
-			jump_to_campaign_.jump = false;
-			launch_game(reload_mode::NO_RELOAD_DATA);
-		} else {
-			jump_to_campaign_.jump = false;
-			return false;
-		}
+		return play_campaign();
 	}
 
 	return true;
@@ -808,27 +776,21 @@ bool game_launcher::goto_campaign()
 
 bool game_launcher::goto_multiplayer()
 {
-	if(jump_to_multiplayer_) {
-		jump_to_multiplayer_ = false;
-		if(play_multiplayer(mp_mode::CONNECT)) {
-			;
-		} else {
-			return false;
-		}
+	if(!jump_to_multiplayer_) {
+		return true;
 	}
 
-	return true;
+	jump_to_multiplayer_ = false;
+	return play_multiplayer(mp_mode::CONNECT);
 }
 
 bool game_launcher::goto_editor()
 {
 	if(jump_to_editor_) {
-		jump_to_editor_ = false;
+		// If no filename was specified, this will be an empty string.
+		const std::string to_open = std::exchange(jump_to_editor_, utils::nullopt).value();
 
-		const std::string to_open = load_data_ ? filesystem::normalize_path(load_data_->filename) : "";
-		clear_loaded_game();
-
-		if(start_editor(to_open) == editor::EXIT_QUIT_TO_DESKTOP) {
+		if(start_editor(filesystem::normalize_path(to_open)) == editor::EXIT_QUIT_TO_DESKTOP) {
 			return false;
 		}
 	}
@@ -838,32 +800,45 @@ bool game_launcher::goto_editor()
 
 void game_launcher::start_wesnothd()
 {
-	std::string wesnothd_program = preferences::get_mp_server_program_name().empty()
-		? filesystem::get_exe_dir() + "/" + filesystem::get_program_invocation("wesnothd")
-		: preferences::get_mp_server_program_name();
+	std::string wesnothd_program = "";
+	if(!prefs::get().get_mp_server_program_name().empty()) {
+		wesnothd_program = prefs::get().get_mp_server_program_name();
+	} else {
+		wesnothd_program = filesystem::get_wesnothd_name();
+	}
 
-	std::string config = filesystem::get_user_config_dir() + "/lan_server.cfg";
+	std::string config = filesystem::get_user_data_dir() + "/lan_server.cfg";
 	if (!filesystem::file_exists(config)) {
 		// copy file if it isn't created yet
-		filesystem::write_file(config, filesystem::read_file(filesystem::get_wml_location("lan_server.cfg")));
+		filesystem::write_file(config, filesystem::read_file(filesystem::get_wml_location("lan_server.cfg").value()));
 	}
 
 	LOG_GENERAL << "Starting wesnothd";
 	try
 	{
-#ifndef _WIN32
-		bp::child c(wesnothd_program, "-c", config);
+#if !defined(__APPLE__) && BOOST_VERSION >= 108600
+		boost::asio::io_context io_context;
+		auto c = boost::process::v2::process{io_context, wesnothd_program, { "-c", config }};
 #else
-		bp::child c(wesnothd_program, "-c", config, bp::windows::create_no_window);
+#ifndef _WIN32
+		boost::process::child c(wesnothd_program, "-c", config);
+#else
+		boost::process::child c(wesnothd_program, "-c", config, boost::process::windows::create_no_window);
+#endif
 #endif
 		c.detach();
 		// Give server a moment to start up
-		SDL_Delay(50);
+		using namespace std::chrono_literals;
+		std::this_thread::sleep_for(50ms);
 		return;
 	}
-	catch(const bp::process_error& e)
+#if defined(__APPLE__) || BOOST_VERSION < 108600
+	catch(const boost::process::process_error& e)
+#else
+	catch(const std::exception& e)
+#endif
 	{
-		preferences::set_mp_server_program_name("");
+		prefs::get().set_mp_server_program_name("");
 
 		// Couldn't start server so throw error
 		WRN_GENERAL << "Failed to start server " << wesnothd_program << ":\n" << e.what();
@@ -873,12 +848,13 @@ void game_launcher::start_wesnothd()
 
 bool game_launcher::play_multiplayer(mp_mode mode)
 {
+	game_config::set_debug(game_config::mp_debug);
 	try {
 		if(mode == mp_mode::HOST) {
 			try {
 				start_wesnothd();
 			} catch(const game::mp_server_error&) {
-				preferences::show_wesnothd_server_search();
+				prefs::get().show_wesnothd_server_search();
 
 				try {
 					start_wesnothd();
@@ -895,16 +871,16 @@ bool game_launcher::play_multiplayer(mp_mode mode)
 			}
 
 			// The prompt saves its input to preferences.
-			multiplayer_server_ = preferences::network_host();
+			multiplayer_server_ = prefs::get().network_host();
 
-			if(multiplayer_server_ != preferences::builtin_servers_list().front().address) {
-				preferences::set_network_host(multiplayer_server_);
+			if(multiplayer_server_ != prefs::get().builtin_servers_list().front().address) {
+				prefs::get().set_network_host(multiplayer_server_);
 			}
 		}
 
-		// create_engine already calls game_config_manager::get()->load_config but maybe its better to have MULTIPLAYER
+		// create_engine already calls config_manager_.load_config but maybe its better to have MULTIPLAYER
 		// defined while we are in the lobby.
-		game_config_manager::get()->load_game_config_for_create(true);
+		config_manager_.load_game_config_for_create(true);
 
 		events::discard_input(); // prevent the "keylogger" effect
 		cursor::set(cursor::NORMAL);
@@ -982,7 +958,7 @@ bool game_launcher::play_multiplayer_commandline()
 
 	DBG_MP << "starting multiplayer game from the commandline";
 
-	game_config_manager::get()->load_game_config_for_create(true);
+	config_manager_.load_game_config_for_create(true);
 
 	events::discard_input(); // prevent the "keylogger" effect
 	cursor::set(cursor::NORMAL);
@@ -1028,7 +1004,7 @@ void game_launcher::launch_game(reload_mode reload)
 
 		if(reload == reload_mode::RELOAD_DATA) {
 			try {
-				game_config_manager::get()->load_game_config_for_game(
+				config_manager_.load_game_config_for_game(
 					state_.classification(), state_.get_scenario_id());
 			} catch(const config::error&) {
 				return;
@@ -1068,9 +1044,9 @@ editor::EXIT_STATUS game_launcher::start_editor(const std::string& filename)
 {
 	editor::EXIT_STATUS res = editor::EXIT_STATUS::EXIT_NORMAL;
 	while(true) {
-		game_config_manager::get()->load_game_config_for_editor();
+		config_manager_.load_game_config_for_editor();
 
-		::init_textdomains(game_config_manager::get()->game_config());
+		::init_textdomains(config_manager_.game_config());
 
 		res = editor::start(res != editor::EXIT_RELOAD_DATA, filename);
 
@@ -1078,7 +1054,7 @@ editor::EXIT_STATUS game_launcher::start_editor(const std::string& filename)
 			return res;
 		}
 
-		game_config_manager::get()->reload_changed_game_config();
+		config_manager_.reload_changed_game_config();
 	}
 
 	return editor::EXIT_ERROR; // not supposed to happen

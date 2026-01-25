@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2010 - 2024
+	Copyright (C) 2010 - 2025
 	by Yurii Chernyi <terraninfo@terraninfo.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -19,24 +19,18 @@
  *
  */
 
-#include <cassert>
 #include <cstring>
 
 #include "ai/lua/core.hpp"
 #include "ai/composite/aspect.hpp"
-#include "scripting/game_lua_kernel.hpp"
 #include "scripting/lua_unit.hpp"
 #include "scripting/push_check.hpp"
 #include "ai/lua/lua_object.hpp" // (Nephro)
 
-#include "attack_prediction.hpp"
-#include "game_display.hpp"
 #include "log.hpp"
-#include "map/map.hpp"
 #include "pathfind/pathfind.hpp"
 #include "play_controller.hpp"
 #include "resources.hpp"
-#include "terrain/translation.hpp"
 #include "terrain/filter.hpp"
 #include "units/unit.hpp"
 #include "ai/actions.hpp"
@@ -44,7 +38,6 @@
 #include "ai/composite/contexts.hpp"
 #include "ai/default/aspect_attacks.hpp"
 
-#include "lua/wrapper_lauxlib.h"
 
 static lg::log_domain log_ai_engine_lua("ai/engine/lua");
 #define LOG_LUA LOG_STREAM(info, log_ai_engine_lua)
@@ -132,7 +125,7 @@ void lua_ai_context::push_ai_table()
 	lua_ai_load ctx(*this, false);
 }
 
-static int transform_ai_action(lua_State *L, ai::action_result_ptr action_result)
+static int transform_ai_action(lua_State *L, const ai::action_result_ptr& action_result)
 {
 	lua_newtable(L);
 	lua_pushboolean(L,action_result->is_ok());
@@ -165,8 +158,8 @@ static int cfun_ai_get_suitable_keep(lua_State *L)
 		return 0;
 	}
 	else {
-		lua_pushnumber(L, res.wml_x());
-		lua_pushnumber(L, res.wml_y());
+		lua_pushinteger(L, res.wml_x());
+		lua_pushinteger(L, res.wml_y());
 		return 2;
 	}
 }
@@ -746,7 +739,7 @@ static int cfun_ai_recalculate_move_maps_enemy(lua_State *L)
 }
 
 template<typename T>
-typesafe_aspect<T>* try_aspect_as(aspect_ptr p)
+typesafe_aspect<T>* try_aspect_as(const aspect_ptr& p)
 {
 	return std::dynamic_pointer_cast<typesafe_aspect<T> >(p).get();
 }
@@ -783,13 +776,13 @@ static int impl_ai_aspect_get(lua_State* L)
 		}
 		lua_createtable(L, 0, 2);
 		lua_createtable(L, attackers.size(), 0);
-		for(size_t i = 0; i < attackers.size(); i++) {
+		for(std::size_t i = 0; i < attackers.size(); i++) {
 			luaW_pushunit(L, attackers[i]->underlying_id());
 			lua_rawseti(L, -2, i + 1);
 		}
 		lua_setfield(L, -2, "own");
 		lua_createtable(L, enemies.size(), 0);
-		for(size_t i = 0; i < enemies.size(); i++) {
+		for(std::size_t i = 0; i < enemies.size(); i++) {
 			luaW_pushunit(L, enemies[i]->underlying_id());
 			lua_rawseti(L, -2, i + 1);
 		}
@@ -961,11 +954,11 @@ static void generate_and_push_ai_table(lua_State* L, ai::engine_lua* engine) {
 	lua_setmetatable(L, -2); // [-1: ai table]
 }
 
-static size_t generate_and_push_ai_state(lua_State* L, ai::engine_lua* engine)
+static std::size_t generate_and_push_ai_state(lua_State* L, ai::engine_lua* engine)
 {
 	// Retrieve the ai elements table from the registry.
 	lua_getfield(L, LUA_REGISTRYINDEX, aisKey); // [-1: AIs registry table]
-	size_t length_ai = lua_rawlen(L, -1); // length of table
+	std::size_t length_ai = lua_rawlen(L, -1); // length of table
 	lua_newtable(L); // [-1: AI state table  -2: AIs registry table]
 	generate_and_push_ai_table(L, engine); // [-1: AI routines  -2: AI state  -3: AIs registry]
 	lua_setfield(L, -2, "ai"); // [-1: AI state  -2: AIs registry]
@@ -994,7 +987,7 @@ lua_ai_context* lua_ai_context::create(lua_State *L, char const *code, ai::engin
 		return nullptr;
 	}
 	//push data table here
-	size_t idx = generate_and_push_ai_state(L, engine); // [-1: AI state  -2: AI code]
+	std::size_t idx = generate_and_push_ai_state(L, engine); // [-1: AI state  -2: AI code]
 	lua_pushvalue(L, -2); // [-1: AI code  -2: AI state  -3: AI code]
 	lua_setfield(L, -2, "update_self"); // [-1: AI state  -2: AI code]
 	lua_pushlightuserdata(L, engine);
@@ -1038,7 +1031,7 @@ lua_ai_action_handler* lua_ai_action_handler::create(lua_State *L, char const *c
 	// Retrieve the ai elements table from the registry.
 	lua_getfield(L, LUA_REGISTRYINDEX, aisKey);   //stack size is now 2  [-1: ais_table -2: f]
 	// Push the function in the table so that it is not collected.
-	size_t length = lua_rawlen(L, -1);//length of ais_table
+	std::size_t length = lua_rawlen(L, -1);//length of ais_table
 	lua_pushvalue(L, -2); //stack size is now 3: [-1: f  -2: ais_table  -3: f]
 	lua_rawseti(L, -2, length + 1);// ais_table[length+1]=f.  stack size is now 2 [-1: ais_table  -2: f]
 	lua_remove(L, -1);//stack size is now 1 [-1: f]
@@ -1105,7 +1098,7 @@ lua_ai_context::~lua_ai_context()
 	lua_pop(L, 1);
 }
 
-void lua_ai_action_handler::handle(const config &cfg, const config &filter_own, bool read_only, lua_object_ptr l_obj)
+void lua_ai_action_handler::handle(const config &cfg, const config &filter_own, bool read_only, const lua_object_ptr& l_obj)
 {
 	int initial_top = lua_gettop(L);//get the old stack size
 

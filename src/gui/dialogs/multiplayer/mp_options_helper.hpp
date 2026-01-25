@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2008 - 2024
+	Copyright (C) 2008 - 2025
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
 	This program is free software; you can redistribute it and/or modify
@@ -17,7 +17,6 @@
 #include "game_initialization/create_engine.hpp"
 #include "gui/widgets/generator.hpp"
 
-class config;
 
 namespace gui2
 {
@@ -44,6 +43,8 @@ public:
 	void update_mod_options();
 
 	config get_options_config();
+
+	void set_options(const config& new_options);
 
 private:
 	struct option_source

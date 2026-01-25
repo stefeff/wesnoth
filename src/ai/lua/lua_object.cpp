@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2011 - 2024
+	Copyright (C) 2011 - 2025
 	by Dmitry Kovalenko <nephro.wes@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -19,10 +19,8 @@
  */
 
 #include "ai/lua/lua_object.hpp"
-#include "ai/lua/engine_lua.hpp"
 #include "ai/default/aspect_attacks.hpp"
 #include "scripting/lua_common.hpp"
-#include "resources.hpp"
 
 #include "lua/wrapper_lauxlib.h"
 

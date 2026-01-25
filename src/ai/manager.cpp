@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2009 - 2024
+	Copyright (C) 2009 - 2025
 	by Yurii Chernyi <terraninfo@terraninfo.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -35,7 +35,6 @@
 #include "ai/configuration.hpp"            // for configuration
 #include "ai/contexts.hpp"                 // for readonly_context, etc
 #include "ai/default/contexts.hpp"  // for default_ai_context, etc
-#include "game_end_exceptions.hpp" // for ai_end_turn_exception
 #include "ai/game_info.hpp"             // for side_number, engine_ptr, etc
 #include "game_config.hpp"              // for debug
 #include "ai/lua/aspect_advancements.hpp"
@@ -46,7 +45,6 @@
 #include <cassert>                     // for assert
 #include <iterator>                     // for reverse_iterator, etc
 #include <map>                          // for _Rb_tree_iterator, etc
-#include <ostream>                      // for operator<<, basic_ostream, etc
 #include <set>                          // for set
 #include <stack>                        // for stack
 #include <utility>                      // for pair, make_pair
@@ -96,11 +94,11 @@ void holder::init( side_number side )
 	if (default_ai_context_ == nullptr){
 		default_ai_context_.reset(new default_ai_context_impl(*readwrite_context_,cfg_));
 	}
-	if (!this->ai_){
+	if (!ai_){
 		ai_.reset(new ai_composite(*default_ai_context_,cfg_));
 	}
 
-	if (this->ai_) {
+	if (ai_) {
 		ai_->on_create();
 		for (config &mod_ai : cfg_.child_range("modify_ai")) {
 			if (!mod_ai.has_attribute("side")) {
@@ -130,7 +128,7 @@ void holder::init( side_number side )
 holder::~holder()
 {
 	try {
-	if (this->ai_) {
+	if (ai_) {
 		LOG_AI_MANAGER << describe_ai() << "Managed AI will be deleted";
 	}
 	} catch (...) {}
@@ -138,22 +136,22 @@ holder::~holder()
 
 ai_composite& holder::get_ai_ref()
 {
-	if (!this->ai_) {
-		this->init(this->side_);
+	if (!ai_) {
+		init(side_);
 	}
-	assert(this->ai_);
+	assert(ai_);
 
-	return *this->ai_;
+	return *ai_;
 }
 
 void holder::micro_ai(const config& cfg)
 {
-	if (!this->ai_) {
-		this->init(this->side_);
+	if (!ai_) {
+		init(side_);
 	}
-	assert(this->ai_);
+	assert(ai_);
 
-	auto engine = this->ai_->get_engine_by_cfg(config{"engine", "lua"});
+	auto engine = ai_->get_engine_by_cfg(config{"engine", "lua"});
 	if(auto lua = std::dynamic_pointer_cast<engine_lua>(engine)) {
 		lua->apply_micro_ai(cfg);
 	}
@@ -161,7 +159,7 @@ void holder::micro_ai(const config& cfg)
 
 void holder::modify_ai(const config &cfg)
 {
-	if (!this->ai_) {
+	if (!ai_) {
 		// if not initialized, initialize now.
 		get_ai_ref();
 	}
@@ -171,11 +169,11 @@ void holder::modify_ai(const config &cfg)
 	DBG_AI_MOD << "side "<< side_ << " before "<<act<<"_ai_component"<<std::endl << to_config();
 	bool res = false;
 	if (act == "add") {
-		res = component_manager::add_component(&*this->ai_,cfg["path"],cfg);
+		res = component_manager::add_component(&*ai_,cfg["path"],cfg);
 	} else if (act == "change") {
-		res = component_manager::change_component(&*this->ai_,cfg["path"],cfg);
+		res = component_manager::change_component(&*ai_,cfg["path"],cfg);
 	} else if (act == "delete") {
-		res = component_manager::delete_component(&*this->ai_,cfg["path"]);
+		res = component_manager::delete_component(&*ai_,cfg["path"]);
 	} else {
 		ERR_AI_MOD << "modify_ai tag has invalid 'action' attribute " << act;
 	}
@@ -190,7 +188,7 @@ void holder::modify_ai(const config &cfg)
 
 void holder::append_ai(const config& cfg)
 {
-	if(!this->ai_) {
+	if(!ai_) {
 		get_ai_ref();
 	}
 	for(const config& aspect : cfg.child_range("aspect")) {
@@ -222,91 +220,89 @@ void holder::append_ai(const config& cfg)
 
 config holder::to_config() const
 {
-	if (!this->ai_) {
+	if (!ai_) {
 		return cfg_;
 	} else {
 		config cfg = ai_->to_config();
-		if (this->side_context_!=nullptr) {
-			cfg.merge_with(this->side_context_->to_side_context_config());
+		if (side_context_!=nullptr) {
+			cfg.merge_with(side_context_->to_side_context_config());
 		}
-		if (this->readonly_context_!=nullptr) {
-			cfg.merge_with(this->readonly_context_->to_readonly_context_config());
+		if (readonly_context_!=nullptr) {
+			cfg.merge_with(readonly_context_->to_readonly_context_config());
 		}
-		if (this->readwrite_context_!=nullptr) {
-			cfg.merge_with(this->readwrite_context_->to_readwrite_context_config());
+		if (readwrite_context_!=nullptr) {
+			cfg.merge_with(readwrite_context_->to_readwrite_context_config());
 		}
-		if (this->default_ai_context_!=nullptr) {
-			cfg.merge_with(this->default_ai_context_->to_default_ai_context_config());
+		if (default_ai_context_!=nullptr) {
+			cfg.merge_with(default_ai_context_->to_default_ai_context_config());
 		}
 
 		return cfg;
 	}
 }
 
-const std::string holder::describe_ai()
+std::string holder::describe_ai() const
 {
-	std::string sidestr = std::to_string(this->side_);
-
-	if (this->ai_!=nullptr) {
-		return this->ai_->describe_self()+std::string(" for side ")+sidestr+std::string(" : ");
+	if(ai_) {
+		return formatter() << ai_->describe_self() << " for side " << side_ << " : ";
 	} else {
-		return std::string("not initialized ai with id=[")+cfg_["id"]+std::string("] for side ")+sidestr+std::string(" : ");
+		return formatter() << "not initialized ai with id=[" << cfg_["id"] << "] for side " << side_ << " : ";
 	}
 }
 
-const std::string holder::get_ai_overview()
+std::string holder::get_ai_overview()
 {
-	if (!this->ai_) {
+	if (!ai_) {
 		get_ai_ref();
 	}
 	// These assignments are necessary because the code will otherwise not compile on some platforms with an lvalue/rvalue mismatch error
-	auto lik = this->ai_->get_leader_ignores_keep();
-	auto pl = this->ai_->get_passive_leader();
-	auto plsk = this->ai_->get_passive_leader_shares_keep();
+	auto lik = ai_->get_leader_ignores_keep();
+	auto pl = ai_->get_passive_leader();
+	auto plsk = ai_->get_passive_leader_shares_keep();
 	// In order to display booleans as yes/no rather than 1/0 or true/false
 	config cfg;
-	cfg["allow_ally_villages"] = this->ai_->get_allow_ally_villages();
-	cfg["simple_targeting"] = this->ai_->get_simple_targeting();
-	cfg["support_villages"] = this->ai_->get_support_villages();
+	cfg["allow_ally_villages"] = ai_->get_allow_ally_villages();
+	cfg["simple_targeting"] = ai_->get_simple_targeting();
+	cfg["support_villages"] = ai_->get_support_villages();
 	std::stringstream s;
-	s << "advancements:  " << this->ai_->get_advancements().get_value() << std::endl;
-	s << "aggression:  " << this->ai_->get_aggression() << std::endl;
+	s << "advancements:  " << ai_->get_advancements().get_value() << std::endl;
+	s << "aggression:  " << ai_->get_aggression() << std::endl;
 	s << "allow_ally_villages:  " << cfg["allow_ally_villages"] << std::endl;
-	s << "caution:  " << this->ai_->get_caution() << std::endl;
-	s << "grouping:  " << this->ai_->get_grouping() << std::endl;
-	s << "leader_aggression:  " << this->ai_->get_leader_aggression() << std::endl;
+	s << "caution:  " << ai_->get_caution() << std::endl;
+	s << "grouping:  " << ai_->get_grouping() << std::endl;
+	s << "leader_aggression:  " << ai_->get_leader_aggression() << std::endl;
 	s << "leader_ignores_keep:  " << utils::visit(leader_aspects_visitor(), lik) << std::endl;
-	s << "leader_value:  " << this->ai_->get_leader_value() << std::endl;
+	s << "leader_value:  " << ai_->get_leader_value() << std::endl;
 	s << "passive_leader:  " << utils::visit(leader_aspects_visitor(), pl) << std::endl;
 	s << "passive_leader_shares_keep:  " << utils::visit(leader_aspects_visitor(), plsk) << std::endl;
-	s << "recruitment_diversity:  " << this->ai_->get_recruitment_diversity() << std::endl;
+	s << "recruitment_diversity:  " << ai_->get_recruitment_diversity() << std::endl;
 	s << "recruitment_instructions:  " << std::endl << "----config begin----" << std::endl;
-	s << this->ai_->get_recruitment_instructions() << "-----config end-----" << std::endl;
-	s << "recruitment_more:  " << utils::join(this->ai_->get_recruitment_more()) << std::endl;
-	s << "recruitment_pattern:  " << utils::join(this->ai_->get_recruitment_pattern()) << std::endl;
-	s << "recruitment_randomness:  " << this->ai_->get_recruitment_randomness() << std::endl;
+	s << ai_->get_recruitment_instructions() << "-----config end-----" << std::endl;
+	s << "recruitment_more:  " << utils::join(ai_->get_recruitment_more()) << std::endl;
+	s << "recruitment_pattern:  " << utils::join(ai_->get_recruitment_pattern()) << std::endl;
+	s << "recruitment_randomness:  " << ai_->get_recruitment_randomness() << std::endl;
 	s << "recruitment_save_gold:  " << std::endl << "----config begin----" << std::endl;
-	s << this->ai_->get_recruitment_save_gold() << "-----config end-----" << std::endl;
-	s << "retreat_enemy_weight:  " << this->ai_->get_retreat_enemy_weight() << std::endl;
-	s << "retreat_factor:  " << this->ai_->get_retreat_factor() << std::endl;
-	s << "scout_village_targeting:  " << this->ai_->get_scout_village_targeting() << std::endl;
+	s << ai_->get_recruitment_save_gold() << "-----config end-----" << std::endl;
+	s << "retreat_enemy_weight:  " << ai_->get_retreat_enemy_weight() << std::endl;
+	s << "retreat_factor:  " << ai_->get_retreat_factor() << std::endl;
+	s << "scout_village_targeting:  " << ai_->get_scout_village_targeting() << std::endl;
 	s << "simple_targeting:  " << cfg["simple_targeting"] << std::endl;
 	s << "support_villages:  " << cfg["support_villages"] << std::endl;
-	s << "village_value:  " << this->ai_->get_village_value() << std::endl;
-	s << "villages_per_scout:  " << this->ai_->get_villages_per_scout() << std::endl;
+	s << "village_value:  " << ai_->get_village_value() << std::endl;
+	s << "villages_per_scout:  " << ai_->get_villages_per_scout() << std::endl;
 
 	return s.str();
 }
 
-const std::string holder::get_ai_structure()
+std::string holder::get_ai_structure()
 {
-	if (!this->ai_) {
+	if (!ai_) {
 		get_ai_ref();
 	}
-	return component_manager::print_component_tree(&*this->ai_,"");
+	return component_manager::print_component_tree(&*ai_,"");
 }
 
-const std::string holder::get_ai_identifier() const
+std::string holder::get_ai_identifier() const
 {
 	return cfg_["id"];
 }
@@ -319,12 +315,12 @@ component* holder::get_component(component *root, const std::string &path) {
 
 	if (root == nullptr) // Return root component(ai_)
 	{
-		if (!this->ai_) {
-			this->init(this->side_);
+		if (!ai_) {
+			init(side_);
 		}
-		assert(this->ai_);
+		assert(ai_);
 
-		return &*this->ai_;
+		return &*ai_;
 	}
 
 	return component_manager::get_component(root, path);
@@ -345,11 +341,18 @@ manager::manager()
 	, tod_changed_("ai_tod_changed")
 	, gamestate_changed_("ai_gamestate_changed")
 	, turn_started_("ai_turn_started")
-	, last_interact_(0)
+	, last_interact_()
 	, num_interact_(0)
 {
 	registry::init();
 	singleton_ = this;
+}
+
+manager::~manager() {
+	ai_map_.clear();
+	if(singleton_ == this) {
+		singleton_ = nullptr;
+	}
 }
 
 manager* manager::singleton_ = nullptr;
@@ -419,12 +422,15 @@ void manager::remove_turn_started_observer( events::observer* event_observer )
 }
 
 void manager::raise_user_interact() {
-	if(resources::simulation_){
+	if(resources::simulation){
 		return;
 	}
 
-	const int interact_time = 30;
-	const int time_since_interact = SDL_GetTicks() - last_interact_;
+	using namespace std::chrono_literals;
+	constexpr auto interact_time = 30ms;
+
+	const auto now = std::chrono::steady_clock::now();
+	const auto time_since_interact = now - last_interact_;
 	if(time_since_interact < interact_time) {
 		return;
 	}
@@ -432,8 +438,7 @@ void manager::raise_user_interact() {
 	++num_interact_;
 	user_interact_.notify_observers();
 
-	last_interact_ = SDL_GetTicks();
-
+	last_interact_ = now;
 }
 
 void manager::raise_sync_network() {
@@ -458,156 +463,6 @@ void manager::raise_recruit_list_changed() {
 
 void manager::raise_map_changed() {
 	map_changed_.notify_observers();
-}
-
-// =======================================================================
-// EVALUATION
-// =======================================================================
-
-const std::string manager::evaluate_command( side_number side, const std::string& str )
-{
-	//insert new command into history
-	history_.emplace_back(history_item_counter_++,str);
-
-	//prune history - erase 1/2 of it if it grows too large
-	if (history_.size()>MAX_HISTORY_SIZE){
-		history_.erase(history_.begin(),history_.begin()+MAX_HISTORY_SIZE/2);
-		LOG_AI_MANAGER << "AI MANAGER: pruned history";
-	}
-
-	if (!should_intercept(str)){
-		ai_composite& ai = get_active_ai_for_side(side);
-		raise_gamestate_changed();
-		return ai.evaluate(str);
-	}
-
-	return internal_evaluate_command(side,str);
-}
-
-bool manager::should_intercept( const std::string& str ) const
-{
-	if (str.length()<1) {
-		return false;
-	}
-	if (str.at(0)=='!'){
-		return true;
-	}
-	if (str.at(0)=='?'){
-		return true;
-	}
-	return false;
-
-}
-
-// this is stub code to allow testing of basic 'history', 'repeat-last-command', 'add/remove/replace ai' capabilities.
-// yes, it doesn't look nice. but it is usable.
-// to be refactored at earliest opportunity
-// TODO: extract to separate class which will use fai or lua parser
-const std::string manager::internal_evaluate_command( side_number side, const std::string& str ){
-	const int MAX_HISTORY_VISIBLE = 30;
-
-	//repeat last command
-	if (str=="!") {
-			//this command should not be recorded in history
-			if (!history_.empty()){
-				history_.pop_back();
-				history_item_counter_--;
-			}
-
-			if (history_.empty()){
-				return "AI MANAGER: empty history";
-			}
-			return evaluate_command(side, history_.back().get_command());//no infinite loop since '!' commands are not present in history
-	};
-	//show last command
-	if (str=="?") {
-		//this command should not be recorded in history
-		if (!history_.empty()){
-			history_.pop_back();
-			history_item_counter_--;
-		}
-
-		if (history_.empty()){
-			return "AI MANAGER: History is empty";
-		}
-
-		int n = std::min<int>( MAX_HISTORY_VISIBLE, history_.size() );
-		std::stringstream strstream;
-		strstream << "AI MANAGER: History - last "<< n <<" commands:\n";
-		std::deque< command_history_item >::reverse_iterator j = history_.rbegin();
-
-		for (int cmd_id=n; cmd_id>0; --cmd_id){
-			strstream << j->get_number() << "    :" << j->get_command() << '\n';
-			++j;//this is *reverse* iterator
-		}
-
-		return strstream.str();
-	};
-
-	std::vector< std::string > cmd = utils::parenthetical_split(str, ' ',"'","'");
-
-	if (cmd.size()==3){
-		// add_ai side file
-		if (cmd.at(0)=="!add_ai"){
-			side = std::stoi(cmd.at(1));
-			std::string file = cmd.at(2);
-			if (add_ai_for_side_from_file(side,file,false)){
-				return std::string("AI MANAGER: added [")+manager::get_active_ai_identifier_for_side(side)+std::string("] AI for side ")+std::to_string(side)+std::string(" from file ")+file;
-			} else {
-				return std::string("AI MANAGER: failed attempt to add AI for side ")+std::to_string(side)+std::string(" from file ")+file;
-			}
-		}
-		// replace_ai side file
-		if (cmd.at(0)=="!replace_ai"){
-			side = std::stoi(cmd.at(1));
-			std::string file = cmd.at(2);
-			if (add_ai_for_side_from_file(side,file,true)){
-					return std::string("AI MANAGER: added [")+manager::get_active_ai_identifier_for_side(side)+std::string("] AI for side ")+std::to_string(side)+std::string(" from file ")+file;
-			} else {
-					return std::string("AI MANAGER: failed attempt to add AI for side ")+std::to_string(side)+std::string(" from file ")+file;
-			}
-		}
-
-	} else if (cmd.size()==2){
-		// remove_ai side
-		if (cmd.at(0)=="!remove_ai"){
-			side = std::stoi(cmd.at(1));
-			remove_ai_for_side(side);
-			return std::string("AI MANAGER: made an attempt to remove AI for side ")+std::to_string(side);
-		}
-		if (cmd.at(0)=="!"){
-			//this command should not be recorded in history
-			if (!history_.empty()){
-				history_.pop_back();
-				history_item_counter_--;
-			}
-
-			int command = std::stoi(cmd.at(1));
-			std::deque< command_history_item >::reverse_iterator j = history_.rbegin();
-			//yes, the iterator could be precisely positioned (since command numbers go 1,2,3,4,..). will do it later.
-			while ( (j!=history_.rend()) && (j->get_number()!=command) ){
-				++j;// this is *reverse* iterator
-			}
-			if (j!=history_.rend()){
-				return evaluate_command(side,j->get_command());//no infinite loop since '!' commands are not present in history
-			}
-			return "AI MANAGER: no command with requested number found";
-		}
-	} else if (cmd.size()==1){
-		if (cmd.at(0)=="!help") {
-			return
-				"known commands:\n"
-				"!    - repeat last command (? and ! do not count)\n"
-				"! NUMBER    - repeat numbered command\n"
-				"?    - show a history list\n"
-				"!add_ai TEAM FILE    - add a AI to side (0 - command AI, N - AI for side #N) from file\n"
-				"!remove_ai TEAM    - remove AI from side (0 - command AI, N - AI for side #N)\n"
-				"!replace_ai TEAM FILE    - replace AI of side (0 - command AI, N - AI for side #N) from file\n"
-				"!help    - show this help message";
-		}
-	}
-
-	return "AI MANAGER: nothing to do";
 }
 
 // =======================================================================
@@ -724,9 +579,9 @@ const ai::unit_advancements_aspect& manager::get_advancement_aspect_for_side(sid
 // =======================================================================
 
 void manager::play_turn( side_number side ){
-	last_interact_ = 0;
+	last_interact_ = {};
 	num_interact_ = 0;
-	const int turn_start_time = SDL_GetTicks();
+	const auto turn_start_time = std::chrono::steady_clock::now();
 	get_ai_info().recent_attacks.clear();
 	ai_composite& ai_obj = get_active_ai_for_side(side);
 	resources::game_events->pump().fire("ai_turn");
@@ -736,9 +591,9 @@ void manager::play_turn( side_number side ){
 	}
 	ai_obj.new_turn();
 	ai_obj.play_turn();
-	const int turn_end_time= SDL_GetTicks();
+	const auto turn_end_time = std::chrono::steady_clock::now();
 	DBG_AI_MANAGER << "side " << side << ": number of user interactions: "<<num_interact_;
-	DBG_AI_MANAGER << "side " << side << ": total turn time: "<<turn_end_time - turn_start_time << " ms ";
+	DBG_AI_MANAGER << "side " << side << ": total turn time: " << (turn_end_time - turn_start_time).count() << " ms ";
 }
 
 // =======================================================================

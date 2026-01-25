@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2009 - 2024
+	Copyright (C) 2009 - 2025
 	by Yurii Chernyi <terraninfo@terraninfo.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -34,14 +34,11 @@
 class game_launcher;
 namespace ai { class unit_advancements_aspect; }  // lines 45-45
 namespace ai { class ai_composite; }  // lines 45-45
-namespace ai { class ai_context; }  // lines 42-42
 namespace ai { class component; }  // lines 43-43
 namespace ai { class default_ai_context; }  // lines 41-41
 namespace ai { class readonly_context; }  // lines 39-39
 namespace ai { class readwrite_context; }  // lines 40-40
 namespace ai { class side_context; }  // lines 38-38
-namespace events { class generic_event; }
-namespace events { class observer; }
 
 namespace ai
 {
@@ -58,7 +55,7 @@ public:
 
 	ai_composite& get_ai_ref();
 
-	const std::string describe_ai();
+	std::string describe_ai() const;
 
 	config to_config() const;
 
@@ -67,11 +64,11 @@ public:
 
 	void append_ai(const config& cfg);
 
-	const std::string get_ai_overview();
+	std::string get_ai_overview();
 
-	const std::string get_ai_structure();
+	std::string get_ai_structure();
 
-	const std::string get_ai_identifier() const;
+	std::string get_ai_identifier() const;
 
 	component* get_component(component *root, const std::string &path); // Ai debug method
 
@@ -134,9 +131,7 @@ public:
 
 	manager();
 
-	/* The singleton can't be set to null in the destructor because member objects
-	(which access the singleton) are destroyed *after* the destructor has been run. */
-	~manager() = default;
+	~manager();
 
 	// =======================================================================
 	// ACCESS TO MANAGER
@@ -261,21 +256,6 @@ public:
 	void remove_tod_changed_observer( events::observer* event_observer );
 
 public:
-
-	// =======================================================================
-	// EVALUATION
-	// =======================================================================
-
-	/**
-	 * Evaluates a string command using command AI.
-	 * @note Running this command may invalidate references previously returned
-	 *       by manager. Will intercept those commands which start with '!'
-	 *       and '?', and will try to evaluate them as internal commands.
-	 * @param side side number (1-based).
-	 * @param str string to evaluate.
-	 * @return string result of evaluation.
-	 */
-	const std::string evaluate_command( side_number side, const std::string& str );
 
 	// =======================================================================
 	// ADD, CREATE AIs, OR LIST AI TYPES
@@ -434,32 +414,12 @@ private:
 	events::generic_event tod_changed_;
 	events::generic_event gamestate_changed_;
 	events::generic_event turn_started_;
-	int last_interact_;
+	std::chrono::steady_clock::time_point last_interact_;
 	int num_interact_;
 
 	AI_map_of_stacks ai_map_;
 
 	static manager* singleton_;
-
-	// =======================================================================
-	// EVALUATION
-	// =======================================================================
-
-	/**
-	 * Evaluates an internal manager command.
-	 * @param side side number (1-based).
-	 * @param str string to evaluate.
-	 * @return string result of evaluation.
-	 * TODO: rewrite this function to use a fai or lua parser.
-	 */
-	const std::string internal_evaluate_command( side_number side, const std::string& str );
-
-	/**
-	 * Determines if the command should be intercepted and evaluated as internal command.
-	 * @param str command string to check.
-	 * @return true if the command should be intercepted and evaluated.
-	 */
-	bool should_intercept( const std::string& str ) const;
 
 	// =======================================================================
 	// AI STACKS

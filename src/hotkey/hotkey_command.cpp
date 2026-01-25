@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -81,7 +81,7 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 	{ HOTKEY_DESELECT_HEX, "deselecthex", N_("Deselect Hex"), false, scope_game, HKCAT_MAP, "" },
 	{ HOTKEY_MOVE_ACTION, "moveaction", N_("Move/Attack"), false, scope_game, HKCAT_UNITS, "" },
 	{ HOTKEY_SELECT_AND_ACTION, "selectmoveaction", N_("Select/Move/Attack"), false, scope_game, HKCAT_UNITS, "" },
-	{ HOTKEY_TOUCH_HEX, "touchhex", N_("Touch"), false, scope_game, HKCAT_UNITS, "" },
+	{ HOTKEY_TOUCH_HEX, "touchhex", N_("Touch Hex"), false, scope_game, HKCAT_UNITS, "" },
 	{ HOTKEY_ANIMATE_MAP, "animatemap", N_("Animate Map"), false, scope_game | scope_editor, HKCAT_MAP, "" },
 	{ HOTKEY_CYCLE_UNITS, "cycle", N_("Next Unit"), false, scope_game, HKCAT_UNITS, "" },
 	{ HOTKEY_CYCLE_BACK_UNITS, "cycleback", N_("Previous Unit"), false, scope_game, HKCAT_UNITS, "" },
@@ -99,7 +99,7 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 	{ HOTKEY_MAP_SCREENSHOT, "mapscreenshot", N_("Map Screenshot"), false, scope_game | scope_editor, HKCAT_GENERAL, "" },
 	{ HOTKEY_ACCELERATED, "accelerated", N_("Toggle Accelerated Speed"), false, scope_game, HKCAT_GENERAL, "" },
 	{ HOTKEY_TERRAIN_DESCRIPTION, "describeterrain", N_("Terrain Description"), false, scope_game | scope_editor, HKCAT_MAP, "" },
-	{ HOTKEY_UNIT_DESCRIPTION, "describeunit", N_("Unit Description"), false, scope_game | scope_editor, HKCAT_UNITS, "" },
+	{ HOTKEY_UNIT_DESCRIPTION, "describeunit", N_("Unit Type Description"), false, scope_game | scope_editor, HKCAT_UNITS, "" },
 	{ HOTKEY_RENAME_UNIT, "renameunit", N_("Rename Unit"), false, scope_game | scope_editor, HKCAT_UNITS, "" },
 	{ HOTKEY_DELETE_UNIT, "editor-deleteunit", N_("Delete Unit"), false, scope_game | scope_editor, HKCAT_TOOLS, "" },
 
@@ -107,6 +107,7 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 	{ HOTKEY_SAVE_REPLAY, "savereplay", N_("Save Replay"), false, scope_game, HKCAT_SAVING, "" },
 	{ HOTKEY_SAVE_MAP, "savemap", N_("Save Map"), false, scope_game, HKCAT_SAVING, "" },
 	{ HOTKEY_LOAD_GAME, "load", N_("Load Game"), false, scope_game | scope_main, HKCAT_SAVING, "" },
+	{ HOTKEY_LOAD_AUTOSAVES, "menu-autosaves", N_("Load Turn..."), true, scope_game, HKCAT_PLACEHOLDER, "" }, // Menu placeholder
 	{ HOTKEY_RECRUIT, "recruit", N_("Recruit"), false, scope_game, HKCAT_UNITS, "" },
 	{ HOTKEY_REPEAT_RECRUIT, "repeatrecruit", N_("Repeat Recruit"), false, scope_game, HKCAT_UNITS, "" },
 	{ HOTKEY_RECALL, "recall", N_("Recall"), false, scope_game, HKCAT_UNITS, "" },
@@ -122,6 +123,7 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 	{ HOTKEY_CREATE_UNIT, "createunit", N_("Create Unit (Debug!)"), false, scope_game, HKCAT_DEBUG, "" },
 	{ HOTKEY_CHANGE_SIDE, "changeside", N_("Change Side (Debug!)"), false, scope_game, HKCAT_DEBUG, "" },
 	{ HOTKEY_KILL_UNIT, "killunit", N_("Kill Unit (Debug!)"), false, scope_game, HKCAT_DEBUG, "" },
+	{ HOTKEY_TELEPORT_UNIT, "teleportunit", N_("Teleport Unit (Debug!)"), false, scope_game, HKCAT_DEBUG, "" },
 	{ HOTKEY_PREFERENCES, "preferences", N_("Preferences"), false, scope_game | scope_editor | scope_main, HKCAT_GENERAL, "" },
 	{ HOTKEY_OBJECTIVES, "objectives", N_("Objectives"), false, scope_game, HKCAT_MAP, "" },
 	{ HOTKEY_UNIT_LIST, "unitlist", N_("Unit List"), false, scope_game | scope_editor, HKCAT_UNITS, "" },
@@ -173,13 +175,16 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 	{ HOTKEY_EDITOR_MAP_SWITCH, "editor-switch-map", N_("Switch Map"), true, scope_editor, HKCAT_PLACEHOLDER, "" },
 	{ HOTKEY_EDITOR_LOCAL_TIME, "menu-editor-local-time", N_("Assign Local Time"), true, scope_editor, HKCAT_PLACEHOLDER, "" },
 
+	{ HOTKEY_EDITOR_EDIT_UNIT, "editor-edit-unit", N_("New Unit Type"), true, scope_editor, HKCAT_PLACEHOLDER, "" },
+
 	{ HOTKEY_EDITOR_CUSTOM_TODS, "editor-custom-tods", N_("Time Schedule Editor"), false, scope_editor, HKCAT_SCENARIO, "" },
 	{ HOTKEY_EDITOR_PARTIAL_UNDO, "editor-partial-undo", N_("Partial Undo"), false, scope_editor, HKCAT_SCENARIO, "" },
 	{ HOTKEY_EDITOR_MAP_NEW, "editor-map-new", N_("New Map"), false, scope_editor, HKCAT_SCENARIO, "" },
 	{ HOTKEY_EDITOR_SCENARIO_NEW, "editor-scenario-new", N_("New Scenario"), false, scope_editor, HKCAT_SCENARIO, "" },
-	{ HOTKEY_EDITOR_MAP_LOAD, "editor-map-load", N_("Load Map"), false, scope_editor, HKCAT_MAP, "" },
-	{ HOTKEY_EDITOR_MAP_SAVE, "editor-map-save", N_("Save Map"), false, scope_editor, HKCAT_MAP, "" },
+	{ HOTKEY_EDITOR_MAP_LOAD, "editor-map-load", N_("Load Map/Scenario"), false, scope_editor, HKCAT_MAP, "" },
+	{ HOTKEY_EDITOR_MAP_SAVE, "editor-map-save", N_("Save"), false, scope_editor, HKCAT_MAP, "" },
 	{ HOTKEY_EDITOR_MAP_SAVE_AS, "editor-map-save-as", N_("Save Map As"), false, scope_editor, HKCAT_MAP, "" },
+	{ HOTKEY_EDITOR_MAP_TO_SCENARIO, "editor-to-scenario", N_("Convert To Scenario"), false, scope_editor, HKCAT_MAP, "" },
 	{ HOTKEY_EDITOR_SCENARIO_SAVE_AS, "editor-scenario-save-as", N_("Save Scenario As"), false, scope_editor, HKCAT_SCENARIO, "" },
 	{ HOTKEY_EDITOR_MAP_SAVE_ALL, "editor-map-save-all", N_("Save All Maps"), false, scope_editor, HKCAT_MAP, "" },
 	{ HOTKEY_EDITOR_MAP_REVERT, "editor-map-revert", N_("Revert All Changes"), false, scope_editor, HKCAT_MAP, "" },
@@ -271,8 +276,10 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 
 	{ HOTKEY_EDITOR_PBL,             "editor-pbl",      N_("Add-on Publishing Editor"),   false, scope_editor, HKCAT_GENERAL, "" },
 	{ HOTKEY_EDITOR_CHANGE_ADDON_ID, "editor-addon-id", N_("Change Add-on ID"),           false, scope_editor, HKCAT_GENERAL, "" },
+	{ HOTKEY_EDITOR_SELECT_ADDON, "editor-addon-select", N_("Select active Add-on"),           false, scope_editor, HKCAT_GENERAL, "" },
+	{ HOTKEY_EDITOR_OPEN_ADDON, "editor-addon-open", N_("Open Add-on folder"),           false, scope_editor, HKCAT_GENERAL, "" },
 
-	{ HOTKEY_EDITOR_SCENARIO_EDIT, "editor-scenario-edit", N_("Edit Scenario"), false, scope_editor, HKCAT_SCENARIO, "" },
+	{ HOTKEY_EDITOR_SCENARIO_EDIT, "editor-scenario-edit", N_("Edit Scenario Settings"), false, scope_editor, HKCAT_SCENARIO, "" },
 	{ HOTKEY_EDITOR_SIDE_EDIT, "editor-side-edit", N_("Edit Side"), false, scope_editor, HKCAT_SCENARIO, "" },
 	{ HOTKEY_EDITOR_SIDE_REMOVE, "editor-side-remove", N_("Remove Side"), false, scope_editor, HKCAT_SCENARIO, "" },
 
@@ -291,6 +298,7 @@ constexpr std::array<hotkey_command_temp, HOTKEY_NULL - 1> master_hotkey_list {{
 	{ HOTKEY_CLEAR_MSG, "clearmessages", N_("Clear Chat"), false, scope_game, HKCAT_CHAT, "" },
 
 	{ HOTKEY_LANGUAGE, "changelanguage", N_("Change Language"), false, scope_main, HKCAT_GENERAL, "" },
+	{ HOTKEY_MP_START_GAME, "mp_startgame", N_("Start Game (MP)"), false, scope_main, HKCAT_GENERAL, "" },
 	{ TITLE_SCREEN__RELOAD_WML, "title_screen__reload_wml", N_("Refresh WML"), true , scope_editor | scope_main, HKCAT_PLACEHOLDER, "" },
 	{ TITLE_SCREEN__NEXT_TIP, "title_screen__next_tip", N_("Next Tip of the Day"), false, scope_main, HKCAT_GENERAL, "" },
 	{ TITLE_SCREEN__PREVIOUS_TIP, "title_screen__previous_tip", N_("Previous Tip of the Day"), false, scope_main, HKCAT_GENERAL, "" },
@@ -357,7 +365,7 @@ bool is_scope_active(hk_scopes s)
 	return s.any();
 }
 
-const hotkey_command& get_hotkey_command(const std::string& command)
+const hotkey_command& get_hotkey_command(std::string_view command)
 {
 	try {
 		return registered_hotkeys.at(command);
@@ -366,12 +374,24 @@ const hotkey_command& get_hotkey_command(const std::string& command)
 	}
 }
 
+const hotkey_command& get_hotkey_command(hotkey::HOTKEY_COMMAND command)
+{
+	for(const auto& [id, cmd] : registered_hotkeys) {
+		if(cmd.command == command) {
+			return cmd;
+		}
+	}
+
+	ERR_G << "No hotkey with requested command '" << command << "' found. Returning null hotkey.";
+	return hotkey_command::null_command();
+}
+
 const std::map<std::string_view, hotkey::hotkey_command>& get_hotkey_commands()
 {
 	return registered_hotkeys;
 }
 
-bool has_hotkey_command(const std::string& id)
+bool has_hotkey_command(std::string_view id)
 {
 	return get_hotkey_command(id).command != hotkey::HOTKEY_NULL;
 }
@@ -468,18 +488,6 @@ bool hotkey_command::null() const
 	}
 
 	return false;
-}
-
-const hotkey_command& hotkey_command::get_command_by_command(hotkey::HOTKEY_COMMAND command)
-{
-	for(auto& [id, cmd] : registered_hotkeys) {
-		if(cmd.command == command) {
-			return cmd;
-		}
-	}
-
-	ERR_G << "No hotkey with requested command '" << command << "' found. Returning null hotkey.";
-	return hotkey_command::null_command();
 }
 
 void init_hotkey_commands()

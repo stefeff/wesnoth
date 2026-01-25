@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2003 - 2024
+	Copyright (C) 2003 - 2025
 	by David White <dave@whitevine.net>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -18,11 +18,9 @@
 #include "editor/palette/editor_palettes.hpp"
 
 #include "gettext.hpp"
-#include "font/text_formatting.hpp"
-#include "tooltips.hpp"
+#include "serialization/markup.hpp"
 #include "overlay.hpp"
 #include "filesystem.hpp"
-#include "units/types.hpp"
 
 #include "editor/toolkit/editor_toolkit.hpp"
 
@@ -39,11 +37,8 @@ sdl_handler_vector editor_palette<Item>::handler_members()
 }
 
 template<class Item>
-void editor_palette<Item>::expand_palette_groups_menu(std::vector<config>& items, int i)
+void editor_palette<Item>::expand_palette_groups_menu(std::vector<config>& items)
 {
-	auto pos = items.erase(items.begin() + i);
-
-	std::vector<config> groups;
 	const std::vector<item_group>& item_groups = get_groups();
 
 	for (std::size_t mci = 0; mci < item_groups.size(); ++mci) {
@@ -54,7 +49,7 @@ void editor_palette<Item>::expand_palette_groups_menu(std::vector<config>& items
 		std::string img = item_groups[mci].icon + "_30";
 		if (mci == active_group_index()) {
 			std::string pressed_img = img + "-pressed.png";
-			if(!filesystem::get_binary_file_location("images", pressed_img).empty()) {
+			if(filesystem::get_binary_file_location("images", pressed_img).has_value()) {
 				img = pressed_img;
 			} else {
 				img += ".png~CS(70,70,0)";
@@ -63,13 +58,8 @@ void editor_palette<Item>::expand_palette_groups_menu(std::vector<config>& items
 			img += ".png";
 		}
 
-		groups.emplace_back(
-			"label", groupname,
-			"icon", img
-		);
+		items.emplace_back("label", groupname, "icon", img);
 	}
-
-	items.insert(pos, groups.begin(), groups.end());
 }
 
 template<class Item>
@@ -159,7 +149,7 @@ std::size_t editor_palette<Item>::active_group_index()
 }
 
 template<class Item>
-void editor_palette<Item>::adjust_size(const SDL_Rect& target)
+void editor_palette<Item>::adjust_size(const rect& target)
 {
 	// The number of columns is passed to the constructor, and isn't changed afterwards. It's likely to be
 	// exactly 4, but will always be a small number which makes the next cast reasonable.
@@ -181,7 +171,7 @@ void editor_palette<Item>::adjust_size(const SDL_Rect& target)
 
 	// Update button locations and sizes. Needs to be done even if the number of buttons hasn't changed,
 	// because adjust_size() also handles moving left and right when the window's width is changed.
-	SDL_Rect dstrect;
+	rect dstrect;
 	dstrect.w = item_size_ + 2;
 	dstrect.h = item_size_ + 2;
 	for(std::size_t i = 0; i < buttons_.size(); ++i) {
@@ -307,13 +297,13 @@ void editor_palette<Item>::layout()
 		bool is_core = non_core_items_.find(get_id((*item).second)) == non_core_items_.end();
 		if (!is_core) {
 			tooltip_text << " "
-					<< font::span_color(font::BAD_COLOR)
 			<< _("(non-core)") << "\n"
-			<< _("Will not work in game without extra care.")
-			<< "</span>";
+			<< _("Will not work in game without extra care.");
+			tile.set_tooltip_string(markup::span_color(font::BAD_COLOR, tooltip_text.str()));
+		} else {
+			tile.set_tooltip_string(tooltip_text.str());
 		}
 
-		tile.set_tooltip_string(tooltip_text.str());
 		tile.set_item_image(item_base, item_overlay);
 		tile.set_item_id(item_id);
 

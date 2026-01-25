@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2016 - 2024
+	Copyright (C) 2016 - 2025
 	by Sergey Popov <loonycyborg@gmail.com>
 	Part of the Battle for Wesnoth Project https://www.wesnoth.org/
 
@@ -17,11 +17,9 @@
 
 #include "server/wesnothd/player.hpp"
 #include "server/common/server_base.hpp"
-#include "server/common/simple_wml.hpp"
 
 #include <boost/multi_index/hashed_index.hpp>
 #include <boost/multi_index/mem_fun.hpp>
-#include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index_container.hpp>
 
@@ -32,11 +30,11 @@ class game;
 class player_record
 {
 public:
-	template<class SocketPtr>
-	player_record(const SocketPtr socket, const player& player)
-		: login_time(std::chrono::steady_clock::now())
+	template<typename SocketPtr, typename... Args>
+	player_record(const SocketPtr socket, Args&&... args)
+		: login_time_(std::chrono::steady_clock::now())
 		, socket_(socket)
-		, player_(player)
+		, player_(std::forward<Args>(args)...)
 		, game_()
 		, ip_address(client_address(socket))
 	{
@@ -72,9 +70,13 @@ public:
 
 	void enter_lobby();
 
-	const std::chrono::time_point<std::chrono::steady_clock> login_time;
+	std::chrono::steady_clock::duration time_logged_on() const
+	{
+		return std::chrono::steady_clock::now() - login_time_;
+	}
 
 private:
+	std::chrono::steady_clock::time_point login_time_;
 	const any_socket_ptr socket_;
 	mutable player player_;
 	std::shared_ptr<game> game_;

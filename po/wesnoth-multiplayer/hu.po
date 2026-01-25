@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu-multiplayer\n"
 "Report-Msgid-Bugs-To: https://bugs.wesnoth.org/\n"
-"POT-Creation-Date: 2025-12-08 15:31 UTC\n"
-"PO-Revision-Date: 2025-07-17 20:54+0200\n"
+"POT-Creation-Date: 2025-10-21 01:10 UTC\n"
+"PO-Revision-Date: 2025-12-16 01:35+0100\n"
 "Last-Translator: Berda Jenő <big4billy@gmail.com>\n"
 "Language-Team: Hungarian <>\n"
 "Language: hu\n"
@@ -40,16 +40,12 @@ msgstr "A diadal előrelátása"
 
 #. [achievement]: id=Wesnoth_MP_Dark_Forecast
 #: data/multiplayer/achievements.cfg:11
-#, fuzzy
-#| msgid "Complete the survival scenario <i>2p — Dark Forecast</i>."
-msgid "Complete the survival scenario <i>2p - Dark Forecast</i>."
+msgid "Complete the survival scenario <i>2p — Dark Forecast</i>."
 msgstr "Teljesítsd a <i>2j — Sötét jóslat</i> túlélő küldetést."
 
 #. [achievement]: id=Wesnoth_MP_Dark_Forecast
 #: data/multiplayer/achievements.cfg:12
-#, fuzzy
-#| msgid "Completed the survival scenario <i>2p — Dark Forecast</i>."
-msgid "Completed the survival scenario <i>2p - Dark Forecast</i>."
+msgid "Completed the survival scenario <i>2p — Dark Forecast</i>."
 msgstr "Teljesítetted a <i>2j — Sötét jóslat</i> túlélő küldetést."
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
@@ -64,16 +60,12 @@ msgstr "Eloszlattad a ködöt"
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
 #: data/multiplayer/achievements.cfg:22
-#, fuzzy
-#| msgid "Complete the survival scenario <i>2p — Isle of Mists</i>."
-msgid "Complete the survival scenario <i>2p - Isle of Mists</i>."
+msgid "Complete the survival scenario <i>2p — Isle of Mists</i>."
 msgstr "Teljesítsd a túlélő küldetést <i>2j – Ködsziget</i>."
 
 #. [achievement]: id=Wesnoth_MP_Isle_of_Mists
 #: data/multiplayer/achievements.cfg:23
-#, fuzzy
-#| msgid "Completed the survival scenario <i>2p — Isle of Mists</i>."
-msgid "Completed the survival scenario <i>2p - Isle of Mists</i>."
+msgid "Completed the survival scenario <i>2p — Isle of Mists</i>."
 msgstr "Teljesítetted a túlélő küldetést <i>2j – Ködsziget</i>."
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
@@ -83,16 +75,12 @@ msgstr "Hibátlan csapatmunka"
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
 #: data/multiplayer/achievements.cfg:33
-#, fuzzy
-#| msgid "Complete the survival scenario <i>6p — Team Survival</i>."
-msgid "Complete the survival scenario <i>6p - Team Survival</i>."
+msgid "Complete the survival scenario <i>6p — Team Survival</i>."
 msgstr "Teljesítsd a <i>6j — Csapat túlélése</i> túlélő küldetést."
 
 #. [achievement]: id=Wesnoth_MP_Team_Survival
 #: data/multiplayer/achievements.cfg:34
-#, fuzzy
-#| msgid "Completed the survival scenario <i>6p — Team Survival</i>."
-msgid "Completed the survival scenario <i>6p - Team Survival</i>."
+msgid "Completed the survival scenario <i>6p — Team Survival</i>."
 msgstr "Teljesítetted a <i>6j — Csapat túlélése</i> túlélő küldetést."
 
 #. [achievement]: id=Wesnoth_MP_ANL
@@ -102,16 +90,12 @@ msgstr "Visszatérés a dicsőségbe"
 
 #. [achievement]: id=Wesnoth_MP_ANL
 #: data/multiplayer/achievements.cfg:44
-#, fuzzy
-#| msgid "Complete the survival scenario <i>4p — A New Land</i>."
-msgid "Complete the survival scenario <i>4p - A New Land</i>."
+msgid "Complete the survival scenario <i>4p — A New Land</i>."
 msgstr "Teljesítsd a <i>4j — Egy új föld</i> túlélő küldetést."
 
 #. [achievement]: id=Wesnoth_MP_ANL
 #: data/multiplayer/achievements.cfg:45
-#, fuzzy
-#| msgid "Completed the survival scenario <i>4p — A New Land</i>."
-msgid "Completed the survival scenario <i>4p - A New Land</i>."
+msgid "Completed the survival scenario <i>4p — A New Land</i>."
 msgstr "Teljesítetted a <i>4j — Egy új föld</i> túlélő küldetést."
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
@@ -121,18 +105,14 @@ msgstr "Gazdasági recesszió"
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
 #: data/multiplayer/achievements.cfg:54
-#, fuzzy
-#| msgid "Destroy all enemy mushroom mines in <i>4p — A New Land</i>."
-msgid "Destroy all enemy mushroom mines in <i>4p - A New Land</i>."
+msgid "Destroy all enemy mushroom mines in <i>4p — A New Land</i>."
 msgstr ""
 "Pusztítsd el az összes ellenséges gombatelepet a <i>4j – Egy új föld</i> "
 "küldetésben."
 
 #. [achievement]: id=Wesnoth_MP_ANL_mines
 #: data/multiplayer/achievements.cfg:55
-#, fuzzy
-#| msgid "Destroyed all enemy mushroom mines in <i>4p — A New Land</i>."
-msgid "Destroyed all enemy mushroom mines in <i>4p - A New Land</i>."
+msgid "Destroyed all enemy mushroom mines in <i>4p — A New Land</i>."
 msgstr ""
 "Elpusztítottad az összes ellenséges gombatelepet a <i>4j – Egy új föld</i> "
 "küldetésben."
@@ -144,17 +124,13 @@ msgstr "Kimenekítés!"
 
 #. [achievement]: id=Wesnoth_MP_ANL_rescue_allies
 #: data/multiplayer/achievements.cfg:65
-#, fuzzy
-#| msgid "Rescue the trapped units in <i>4p — A New Land</i>."
-msgid "Rescue the trapped units in <i>4p - A New Land</i>."
+msgid "Rescue the trapped units in <i>4p — A New Land</i>."
 msgstr ""
 "Mentsd meg a csapdába esett egységeket a <i>4j – Egy új föld</i> küldetésben."
 
 #. [achievement]: id=Wesnoth_MP_ANL_rescue_allies
 #: data/multiplayer/achievements.cfg:66
-#, fuzzy
-#| msgid "Rescued the trapped units in <i>4p — A New Land</i>."
-msgid "Rescued the trapped units in <i>4p - A New Land</i>."
+msgid "Rescued the trapped units in <i>4p — A New Land</i>."
 msgstr ""
 "Megmentetted a csapdába esett egységeket a <i>4j – Egy új föld</i> "
 "küldetésben."
@@ -166,12 +142,8 @@ msgstr "Alapértelmezett"
 
 #. [era]: id=era_default, type=hybrid
 #: data/multiplayer/eras.cfg:6
-#, fuzzy
-#| msgid ""
-#| "The standard era for Wesnoth multiplayer. Consists of seven factions and "
-#| "is generally balanced."
 msgid ""
-"The standard era for Wesnoth multiplayer. Consists of six factions and is "
+"The standard era for Wesnoth multiplayer. Consists of seven factions and is "
 "generally balanced."
 msgstr ""
 "A többjátékos mérkőzésekhez szabványos korszaka. Hat szövetségből áll, és "
@@ -184,63 +156,14 @@ msgstr "Hősök kora"
 
 #. [era]: id=era_heroes
 #: data/multiplayer/eras.cfg:15
-#, fuzzy
-#| msgid ""
-#| "An era with higher level units: level three leaders, with level one and "
-#| "two units available for recruit. Consists of seven factions. Not "
-#| "considered balanced."
 msgid ""
 "An era with higher level units: level three leaders, with level one and two "
-"units available for recruit. Consists of six factions. Not considered "
+"units available for recruit. Consists of seven factions. Not considered "
 "balanced."
 msgstr ""
 "Egy korszak, amelyben magasabb szintű egységek is elérhetők: a vezérek "
 "hármas szintűek, toborozni egyes és kettes szintű egységeket lehet. Hét "
 "szövetségből áll. Nem kellően kiegyensúlyozott."
-
-#. [era]: id=era_dunefolk
-#: data/multiplayer/eras.cfg:22
-msgid "Default + Dunefolk"
-msgstr "Alapértelmezett + Dűnenép"
-
-#. [era]: id=era_dunefolk
-#: data/multiplayer/eras.cfg:23
-msgid ""
-"An era featuring an additional faction besides the six factions from Default "
-"Era. Dunefolk units rely on careful use of terrain and coordinated strikes "
-"around dusk or dawn.\n"
-"\n"
-"This era is still under development, so please be sure to report any "
-"problems that arise."
-msgstr ""
-"Egy korszak, amelyben az alapértelmezett kor hat szövetsége mellett egy "
-"további is megtalálható. A Dűnenép egységei a terep, valamint a hajnali és "
-"alkonyati hadműveletek aprólékos megválasztására támaszkodnak.\n"
-"\n"
-"Ez a korszak még mindig fejlesztés alatt áll, ezért kérünk, jelents minden "
-"felmerülő problémát."
-
-#. [era]: id=era_dunefolk_heroes
-#: data/multiplayer/eras.cfg:33
-msgid "Age of Heroes + Dunefolk"
-msgstr "Hősök kora + Dűnenép"
-
-#. [era]: id=era_dunefolk_heroes
-#: data/multiplayer/eras.cfg:34
-msgid ""
-"An era featuring an additional faction besides the six factions from Age of "
-"Heroes Era. Dunefolk units rely on careful use of terrain and coordinated "
-"strikes around dusk or dawn.\n"
-"\n"
-"This era is still under development, so please be sure to report any "
-"problems that arise."
-msgstr ""
-"Egy korszak, amelyben a hősök korának hat szövetsége mellett egy további is "
-"megtalálható. A Dűnenép egységei a terep, valamint a hajnali és alkonyati "
-"hadműveletek aprólékos megválasztására támaszkodnak.\n"
-"\n"
-"Ez a korszak még mindig fejlesztés alatt áll, ezért kérünk, jelents minden "
-"felmerülő problémát."
 
 #. [lua]: res.show_turns_over_advantage
 #. In the end-of-match summary, a side which has no units left and therefore lost. In English the loss is shown by displaying it with the text struck through.
@@ -298,29 +221,18 @@ msgid "Drakes"
 msgstr "Perzsekények"
 
 #. [multiplayer_side]: id=Drakes, type=random
-#: data/multiplayer/factions/drakes-aoh.cfg:14
-#: data/multiplayer/factions/drakes-default.cfg:14
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Drakes</b> are a faction of dragon-like <ref "
-#| "dst='..race_drake'>Drakes</ref> and their lizard <ref "
-#| "dst='..race_lizard'>Saurian</ref> allies. Drakes are descendants of "
-#| "dragons, but smaller in size. Saurians are considerably smaller than "
-#| "Drakes and from different ancestry. Together, the Drake faction has high "
-#| "mobility but low defense, leading to unusual tactics for a <ref "
-#| "dst='..era_era_default'>Default Era</ref> faction."
+#: data/multiplayer/factions/drakes-aoh.cfg:13
+#: data/multiplayer/factions/drakes-default.cfg:13
 msgid ""
-"The <bold>text='Drakes'</bold> are a faction of dragon-like "
-"<ref>text='Drakes' dst='..race_drake'</ref> and their lizard "
-"<ref>text='Saurian' dst='..race_lizard'</ref> allies. Drakes are descendants "
-"of dragons, but smaller in size. Saurians are considerably smaller than "
-"Drakes and from different ancestry. Together, the Drake faction has high "
-"mobility but low defense, leading to unusual tactics for a "
-"<ref>text='Default Era' dst='..era_era_default'</ref> faction."
+"The <b>Drakes</b> are a faction of dragon-like <ref "
+"dst='..race_drake'>Drakes</ref> and their lizard <ref "
+"dst='..race_lizard'>Saurian</ref> allies. Drakes are descendants of dragons, "
+"but smaller in size. Saurians are considerably smaller than Drakes and from "
+"different ancestry. Together, the Drake faction has high mobility but low "
+"defense, leading to unusual tactics for a <ref "
+"dst='..era_era_default'>Default Era</ref> faction."
 msgstr ""
-"\n"
-"A <b>Perzsekények</b> szövetség a sárkányszerű <ref "
+"A <b>Perzsekények</b> szövetsége a sárkányszerű <ref "
 "dst='..race_drake'>perzsekényekből</ref> és <ref dst='..race_lizard'>gyík</"
 "ref> szövetségeseikből áll. A perzsekények a sárkányok kisebb termetű "
 "leszármazottai. A gyíkok határozottan kisebbek mint a perzsekények és "
@@ -336,34 +248,23 @@ msgid "Dunefolk"
 msgstr "Dűnenép"
 
 #. [multiplayer_side]: id=Dunefolk, type=random
-#: data/multiplayer/factions/dunefolk-aoh.cfg:14
-#: data/multiplayer/factions/dunefolk-default.cfg:14
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Dunefolk</b> are a faction of humans from the deserts and hills of "
-#| "the southern lands. The Dunefolk specialize in using terrain features to "
-#| "coordinate attacks at dawn or dusk. Their ranks boast lawful and liminal "
-#| "units, healers, high-accuracy melee fighters, and fearsome horse-mounted "
-#| "archers. While Dunefolk units tend to be more expensive than those of the "
-#| "Loyalist faction, they make up for this with high mobility — especially "
-#| "on hilly terrains."
+#: data/multiplayer/factions/dunefolk-aoh.cfg:13
+#: data/multiplayer/factions/dunefolk-default.cfg:13
 msgid ""
-"The <bold>text='Dunefolk'</bold> are a faction of humans from the deserts "
-"and hills of the southern lands. The Dunefolk specialize in using terrain "
-"features to coordinate attacks at dawn or dusk. Their ranks boast lawful and "
-"liminal units, healers, high-accuracy melee fighters, and fearsome horse-"
-"mounted archers. While Dunefolk units tend to be more expensive than those "
-"of the Loyalist faction, they make up for this with high mobility — "
-"especially on hilly terrains."
+"The <b>Dunefolk</b> are a faction of humans from the deserts and hills of "
+"the southern lands. The Dunefolk specialize in using terrain features to "
+"coordinate attacks at dawn or dusk. Their ranks boast lawful and liminal "
+"units, healers, high-accuracy melee fighters, and fearsome horse-mounted "
+"archers. While Dunefolk units tend to be more expensive than those of the "
+"Loyalist faction, they make up for this with high mobility — especially on "
+"hilly terrains."
 msgstr ""
-"\n"
-"A <b>Dűnenép</b> a déli földek sivatagjainak és dombságainak embereiből álló "
-"szövetség. A Dűnenép erőssége a terep sajátosságait kihasználó, összehangolt "
-"hajnali vagy alkonyati támadás. Soraikban találhatóak igazságos és ingatag "
-"egységek, gyógyítók, nagy pontosságú közelharcosok, és félelmetes "
-"lovasíjászok is. Ugyan a Dűnenép egységei többnyire drágábbak mint a "
-"Hűségesek szövetségéi, azonban ezért kárpótol nagy mozgékonyságuk — "
+"A <b>Dűnelakók</b> a déli földek sivatagjainak és dombságainak embereiből "
+"álló szövetség. A dűnelakók erőssége a terep sajátosságait kihasználó, "
+"összehangolt hajnali vagy alkonyati támadás. Soraikban találhatóak igazságos "
+"és ingatag egységek, gyógyítók, nagy pontosságú közelharcosok, és félelmetes "
+"lovasíjászok is. Ugyan a dűnelakók egységei többnyire drágábbak mint a "
+"hűségesek szövetségéi, azonban ezért kárpótol nagy mozgékonyságuk — "
 "különösen a dombos terepeken."
 
 #. [multiplayer_side]: id=Knalgan Alliance, type=random
@@ -373,31 +274,18 @@ msgid "Knalgan Alliance"
 msgstr "Knalgai szövetség"
 
 #. [multiplayer_side]: id=Knalgan Alliance, type=random
-#: data/multiplayer/factions/knalgans-aoh.cfg:13
-#: data/multiplayer/factions/knalgans-default.cfg:13
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Knalgan Alliance</b> is a faction of <ref "
-#| "dst='..race_dwarf'>Dwarves</ref> and their outlaw <ref "
-#| "dst='..race_human'>Human</ref> allies. Dwarves are an old race who live "
-#| "underground and have tough, but short, warriors. The outlaws are humans "
-#| "who are not socially acceptable among others of their race, but have "
-#| "become allies of the dwarves due to common enemies. This leads to a "
-#| "combination of tough and defensive dwarves who are only good on certain "
-#| "terrain and humans who can cover ground that dwarves are not good at "
-#| "fighting in."
+#: data/multiplayer/factions/knalgans-aoh.cfg:12
+#: data/multiplayer/factions/knalgans-default.cfg:12
 msgid ""
-"The <bold>text='Knalgan Alliance'</bold> is a faction of <ref>text='Dwarves' "
-"dst='..race_dwarf'</ref> and their outlaw <ref>text='Human' "
-"dst='..race_human'</ref> allies. Dwarves are an old race who live "
-"underground and have tough, but short, warriors. The outlaws are humans who "
-"are not socially acceptable among others of their race, but have become "
-"allies of the dwarves due to common enemies. This leads to a combination of "
-"tough and defensive dwarves who are only good on certain terrain and humans "
-"who can cover ground that dwarves are not good at fighting in."
+"The <b>Knalgan Alliance</b> is a faction of <ref dst='..race_dwarf'>Dwarves</"
+"ref> and their outlaw <ref dst='..race_human'>Human</ref> allies. Dwarves "
+"are an old race who live underground and have tough, but short, warriors. "
+"The outlaws are humans who are not socially acceptable among others of their "
+"race, but have become allies of the dwarves due to common enemies. This "
+"leads to a combination of tough and defensive dwarves who are only good on "
+"certain terrain and humans who can cover ground that dwarves are not good at "
+"fighting in."
 msgstr ""
-"\n"
 "A <b>Knalgai szövetség</b> <ref dst='..race_dwarf'>törpök</ref>ből és "
 "törvényen kívüli <ref dst='..race_human'>ember</ref> szövetségeseikből áll. "
 "A törpök egy ősi faj, akik a föld alatt élnek, harcosaik pedig alacsonyak, "
@@ -414,66 +302,45 @@ msgid "Loyalists"
 msgstr "Hűségesek"
 
 #. [multiplayer_side]: id=Loyalists, type=random
-#: data/multiplayer/factions/loyalists-aoh.cfg:14
-#: data/multiplayer/factions/loyalists-default.cfg:14
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Loyalists</b> are a faction of <ref dst='..race_human'>Humans</"
-#| "ref> who are loyal to the throne of Wesnoth. Humans are a versatile race "
-#| "who specialize in many different areas. Similarly, the Loyalist faction "
-#| "is a very versatile melee-oriented faction with important ranged support "
-#| "from bowmen and mages."
+#: data/multiplayer/factions/loyalists-aoh.cfg:13
+#: data/multiplayer/factions/loyalists-default.cfg:13
 msgid ""
-"The <bold>text='Loyalists'</bold> are a faction of <ref>text='Humans' "
-"dst='..race_human'</ref> who are loyal to the throne of Wesnoth. Humans are "
-"a versatile race who specialize in many different areas. Similarly, the "
-"Loyalist faction is a very versatile melee-oriented faction with important "
-"ranged support from bowmen and mages."
+"The <b>Loyalists</b> are a faction of <ref dst='..race_human'>Humans</ref> "
+"who are loyal to the throne of Wesnoth. Humans are a versatile race who "
+"specialize in many different areas. Similarly, the Loyalist faction is a "
+"very versatile melee-oriented faction with important ranged support from "
+"bowmen and mages."
 msgstr ""
-"\n"
 "A <b>Hűségesek</b> egy <ref dst='..race_human'>emberek</ref>ből álló "
 "szövetség, akik lojálisak Wesnoth trónjához. Az emberek sokoldalú faja sok "
-"különböző területre specializálódott. Hasonlóan, a Hűségesek egy sokoldalú, "
+"különböző területre specializálódott. Eképpen, a Hűségesek egy sokoldalú, "
 "közelharc-központú szövetség, fontos távolsági támogatást adó mágusokkal és "
 "íjászokkal."
 
-#. [multiplayer_side]: id=Northerners, type=random, description=<img>src='portraits/orcs/warlord.webp~BG()' align='middle'</img>
+#. [multiplayer_side]: id=Northerners, type=random
 #: data/multiplayer/factions/northerners-aoh.cfg:4
 #: data/multiplayer/factions/northerners-default.cfg:4
 msgid "Northerners"
 msgstr "Északiak"
 
-#. [multiplayer_side]: id=Northerners, type=random, description=<img>src='portraits/orcs/warlord.webp~BG()' align='middle'</img>
-#: data/multiplayer/factions/northerners-aoh.cfg:16
-#: data/multiplayer/factions/northerners-default.cfg:15
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Northerners</b> are a faction of <ref dst='..race_orc'>Orcs</ref> "
-#| "and their allies who live in the north of the Great Continent, thus their "
-#| "name. Northerners consist of the warrior orcs race, the enslaved <ref "
-#| "dst='..race_goblin'>goblins</ref>, <ref dst='..race_troll'>trolls</ref> "
-#| "who are tricked into combat by the orcs, and the serpentine <ref "
-#| "dst='..race_naga'>naga</ref>. The Northerners play best by taking "
-#| "advantage of having many low-cost and high HP soldiers."
+#. [multiplayer_side]: id=Northerners, type=random
+#: data/multiplayer/factions/northerners-aoh.cfg:13
+#: data/multiplayer/factions/northerners-default.cfg:12
 msgid ""
-"The <bold>text='Northerners'</bold> are a faction of <ref>text='Orcs' "
-"dst='..race_orc'</ref> and their allies who live in the north of the Great "
-"Continent, thus their name. Northerners consist of the warrior orcs race, "
-"the enslaved <ref>text='goblins' dst='..race_goblin'</ref>, "
-"<ref>text='trolls' dst='..race_troll'</ref> who are tricked into combat by "
-"the orcs, and the serpentine <ref>text='naga' dst='..race_naga'</ref>. The "
-"Northerners play best by taking advantage of having many low-cost and high "
-"HP soldiers."
+"The <b>Northerners</b> are a faction of <ref dst='..race_orc'>Orcs</ref> and "
+"their allies who live in the north of the Great Continent, thus their name. "
+"Northerners consist of the warrior orcs race, the enslaved <ref "
+"dst='..race_goblin'>goblins</ref>, <ref dst='..race_troll'>trolls</ref> who "
+"are tricked into combat by the orcs, and the serpentine <ref "
+"dst='..race_naga'>naga</ref>. The Northerners play best by taking advantage "
+"of having many low-cost and high HP soldiers."
 msgstr ""
-"\n"
 "Az <b>Északiak</b> egy <ref dst='..race_orc'>orkok</ref>ból és "
 "szövetségeseikből álló szövetség, akik a Nagy Kontinens északi részén élnek "
 "— nevük is erre utal. Az Északiak szövetsége a harcos ork, a rabszolgasorba "
 "hajtott <ref dst='..race_goblin'>kobold</ref>, az orkok által harcba csalt "
 "<ref dst='..race_troll'>troll</ref> és a kígyószerű <ref "
-"dst='..race_naga'>naga</ref> fajokból áll. Az Északiakat leginkább olcsó, "
+"dst='..race_naga'>nága</ref> fajokból áll. Az Északiakat leginkább olcsó, "
 "sok életerőponttal rendelkező egységeiket kihasználva érdemes játszani."
 
 #. [multiplayer_side]: id=Rebels, type=random
@@ -483,36 +350,20 @@ msgid "Rebels"
 msgstr "Lázadók"
 
 #. [multiplayer_side]: id=Rebels, type=random
-#: data/multiplayer/factions/rebels-aoh.cfg:14
-#: data/multiplayer/factions/rebels-default.cfg:14
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Rebels</b> are a faction of <ref dst='..race_elf'>Elves</ref> and "
-#| "their various forest-dwelling allies. They get their human name, Rebels, "
-#| "from the time of Heir to the Throne, when they started the rebellion "
-#| "against the evil Queen Asheviere. Elves are a magical race that are "
-#| "masters of the bow and are capable of living many years longer than "
-#| "humans. In harmony with nature, the elves find allies with the <ref "
-#| "dst='..race_human'>human</ref> mages, certain <ref "
-#| "dst='..race_merman'>merfolk</ref>, and tree creatures called <ref "
-#| "dst='..race_wose'>Woses</ref>. Rebels are best played taking advantage of "
-#| "their high forest defense, mastery of ranged attacks, and the elves’ "
-#| "neutral alignment."
+#: data/multiplayer/factions/rebels-aoh.cfg:13
+#: data/multiplayer/factions/rebels-default.cfg:13
 msgid ""
-"The <bold>text='Rebels'</bold> are a faction of <ref>text='Elves' "
-"dst='..race_elf'</ref> and their various forest-dwelling allies. They get "
-"their human name, Rebels, from the time of Heir to the Throne, when they "
-"started the rebellion against the evil Queen Asheviere. Elves are a magical "
-"race that are masters of the bow and are capable of living many years longer "
-"than humans. In harmony with nature, the elves find allies with the "
-"<ref>text='human' dst='..race_human'</ref> mages, certain "
-"<ref>text='merfolk' dst='..race_merman'</ref>, and tree creatures called "
-"<ref>text='Woses' dst='..race_wose'</ref>. Rebels are best played taking "
+"The <b>Rebels</b> are a faction of <ref dst='..race_elf'>Elves</ref> and "
+"their various forest-dwelling allies. They get their human name, Rebels, "
+"from the time of Heir to the Throne, when they started the rebellion against "
+"the evil Queen Asheviere. Elves are a magical race that are masters of the "
+"bow and are capable of living many years longer than humans. In harmony with "
+"nature, the elves find allies with the <ref dst='..race_human'>human</ref> "
+"mages, certain <ref dst='..race_merman'>merfolk</ref>, and tree creatures "
+"called <ref dst='..race_wose'>Woses</ref>. Rebels are best played taking "
 "advantage of their high forest defense, mastery of ranged attacks, and the "
 "elves’ neutral alignment."
 msgstr ""
-"\n"
 "A <b>Lázadók</b> egy <ref dst='..race_elf'>tündékből</ref> és különféle "
 "erdőlakó szövetségeseikből álló szövetség. Az emberek által használt "
 "elnevezésük a Trónörökös idejéből származik, amikor ők robbantották ki a "
@@ -521,9 +372,9 @@ msgstr ""
 "természettel, a tündék az <ref dst='..race_human'>ember</ref> mágusokban, "
 "bizonyos <ref dst='..race_merman'>sellők</ref>ben, és a <ref "
 "dst='..race_wose'>fapásztorok</ref>nak nevezett fa lényekben leltek "
-"szövetségesekre. A Lázadókat legérdemesebb a magas erdei védekezésüket, "
-"mesteri távolsági támadásaikat és semleges beállítottságukat kihasználva "
-"játszani."
+"szövetségesekre. A Lázadókat legérdemesebb a magas szintű erdei "
+"védekezésüket, mesteri távolsági támadásaikat és semleges beállítottságukat "
+"kihasználva játszani."
 
 #. [multiplayer_side]: id=Undead, type=random
 #: data/multiplayer/factions/undead-aoh.cfg:4
@@ -532,31 +383,18 @@ msgid "Undead"
 msgstr "Élőholtak"
 
 #. [multiplayer_side]: id=Undead, type=random
-#: data/multiplayer/factions/undead-aoh.cfg:14
-#: data/multiplayer/factions/undead-default.cfg:14
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "The <b>Undead</b> are a faction of <ref dst='..race_undead'>undead</ref> "
-#| "creatures and <ref dst='..race_human'>human</ref> practitioners of dark "
-#| "arts that usually accompany them. Often, these “Dark Adepts” are the "
-#| "units that do the most damage for the faction, but they have a major "
-#| "vulnerability — their practicing of this forbidden, evil magic has "
-#| "consumed all their energy and so they have no melee attack at all. The "
-#| "Undead are a very aggressive faction and the most powerful <ref "
-#| "dst='..era_era_default'>Default Era</ref> faction at nighttime."
+#: data/multiplayer/factions/undead-aoh.cfg:13
+#: data/multiplayer/factions/undead-default.cfg:13
 msgid ""
-"The <bold>text='Undead'</bold> are a faction of <ref>text='undead' "
-"dst='..race_undead'</ref> creatures and <ref>text='human' "
-"dst='..race_human'</ref> practitioners of dark arts that usually accompany "
-"them. Often, these “Dark Adepts” are the units that do the most damage for "
-"the faction, but they have a major vulnerability — their practicing of this "
-"forbidden, evil magic has consumed all their energy and so they have no "
-"melee attack at all. The Undead are a very aggressive faction and the most "
-"powerful <ref>text='Default Era' dst='..era_era_default'</ref> faction at "
-"nighttime."
+"The <b>Undead</b> are a faction of <ref dst='..race_undead'>undead</ref> "
+"creatures and <ref dst='..race_human'>human</ref> practitioners of dark arts "
+"that usually accompany them. Often, these “Dark Adepts” are the units that "
+"do the most damage for the faction, but they have a major vulnerability — "
+"their practicing of this forbidden, evil magic has consumed all their energy "
+"and so they have no melee attack at all. The Undead are a very aggressive "
+"faction and the most powerful <ref dst='..era_era_default'>Default Era</ref> "
+"faction at nighttime."
 msgstr ""
-"\n"
 "Az <b>Élőholtak</b> egy <ref dst='..race_undead'>élőholt</ref> lényekből és "
 "az általában őket kísérő, sötét mágiát gyakorló <ref "
 "dst='..race_human'>ember</ref>ekből áll. Gyakran ezek az „árnyak "
@@ -574,34 +412,19 @@ msgstr "2j — Étercsapda"
 
 #. [multiplayer]: id=multiplayer_Aethermaw
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:6
-#, fuzzy
-#| msgid ""
-#| "Long ago, the Legendary Aether Mage, Sulla, was imprisoned in the "
-#| "Aethermaw, a nexus of mystical energy whose chaotic nature was able to "
-#| "prevent her escape. Over the centuries, however, Sulla gradually attuned "
-#| "her powers to the maelstrom of disorder that is the Aethermaw, and has "
-#| "now begun to project its influence onto the material plane, drawing in "
-#| "entire regions of land from hundreds of different worlds, realities and "
-#| "time-periods. She now experiments with these disparate pieces of the "
-#| "cosmos, manipulating them, merging them and sending them back and forth "
-#| "between the Aethermaw and their place of origin. Perhaps, as her mastery "
-#| "over the Aethermaw grows, Sulla will one day break free of its bonds. "
-#| "Until that time comes, she will continue to amuse herself by arranging "
-#| "battles between the mortal beings unlucky enough to be drawn into its "
-#| "depths. Designed by Doc Paterson."
 msgid ""
-"Long ago, the Great Mage Sulla was imprisoned in the Aethermaw, a nexus of "
-"mystical energy whose chaotic nature was able to prevent her escape. Over "
-"the centuries, however, Sulla gradually attuned her powers to the maelstrom "
-"of disorder that is the Aethermaw, and has now begun to project its "
-"influence onto the material plane, drawing in entire regions of land from "
-"hundreds of different worlds, realities and time-periods. She experiments "
-"with these disparate pieces of the cosmos, manipulating them, merging them "
-"and sending them back and forth between the Aethermaw and their place of "
-"origin. Perhaps, as her mastery over the Aethermaw grows, Sulla will one day "
-"break free of its bonds. Until that time comes, she will continue to amuse "
-"herself by arranging battles between the mortal beings unlucky enough to be "
-"drawn into its depths. Designed by Doc Paterson."
+"Long ago, the Legendary Aether Mage, Sulla, was imprisoned in the Aethermaw, "
+"a nexus of mystical energy whose chaotic nature was able to prevent her "
+"escape. Over the centuries, however, Sulla gradually attuned her powers to "
+"the maelstrom of disorder that is the Aethermaw, and has now begun to "
+"project its influence onto the material plane, drawing in entire regions of "
+"land from hundreds of different worlds, realities and time-periods. She now "
+"experiments with these disparate pieces of the cosmos, manipulating them, "
+"merging them and sending them back and forth between the Aethermaw and their "
+"place of origin. Perhaps, as her mastery over the Aethermaw grows, Sulla "
+"will one day break free of its bonds. Until that time comes, she will "
+"continue to amuse herself by arranging battles between the mortal beings "
+"unlucky enough to be drawn into its depths. Designed by Doc Paterson."
 msgstr ""
 "Réges-régen Sullát, a legendás éteri mágusnőt, fogságba ejtették az "
 "étercsapdában, egy titokzatos energiák csomópontjában lévő helyen, amelynek "
@@ -699,12 +522,8 @@ msgstr "Legyőzöd az (összes) ellenfél vezérét"
 
 #. [note]
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:312
-#, fuzzy
-#| msgid ""
-#| "The Aether Mage Sulla has transported your armies to this bizarre nexus, "
-#| "and demands that you amuse her by doing battle."
 msgid ""
-"The Great Mage Sulla has transported your armies to this bizarre nexus, and "
+"The Aether Mage Sulla has transported your armies to this bizarre nexus, and "
 "demands that you amuse her by doing battle."
 msgstr ""
 "Sulla, a nagy éteri mágusnő ezen bizarr síkra ragadta seregeidet, és azt "
@@ -721,14 +540,9 @@ msgstr ""
 
 #. [note]
 #: data/multiplayer/scenarios/2p_Aethermaw.cfg:318
-#, fuzzy
-#| msgid ""
-#| "Beginning on turn 4, the Aether Mage Sulla will begin to unite the two "
-#| "halves of the battlefield. The process will be complete by the end of "
-#| "turn 6."
 msgid ""
-"Beginning on turn 4, the Great Mage Sulla will begin to unite the two halves "
-"of the battlefield. The process will be complete by the end of turn 6."
+"Beginning on turn 4, the Aether Mage Sulla will begin to unite the two "
+"halves of the battlefield. The process will be complete by the end of turn 6."
 msgstr ""
 "A 4. körtől kezdve Sulla, az éteri mágusnő elkezdi egyesíteni a csatatér két "
 "felét. A folyamat a 6. kör végén fejeződik be."
@@ -1408,28 +1222,28 @@ msgstr ""
 "Megjegyzés: a megfelelő működéshez használd a térkép beállításait."
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:21
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:33
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:22
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:34
 msgid "teamname^Revolt"
 msgstr "Lázadók"
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:50
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:76
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:51
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:77
 msgid "teamname^Human"
 msgstr "Játékos(ok)"
 
 #. [then]
 #. [objective]: condition=lose
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:114
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:135
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:115
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:136
 #: data/multiplayer/scenarios/5p_The_Wilderlands.cfg:278
 msgid "Death of your leader"
 msgstr "A vezéred elesik"
 
 #. [then]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:115
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:136
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:116
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:137
 msgid ""
 "Since your team has only one leader, the enemy waves will not be at full "
 "strength."
@@ -1438,32 +1252,32 @@ msgstr ""
 "teljes erejűek."
 
 #. [else]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:118
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:143
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:119
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:144
 msgid "Death of both of your team’s leaders"
 msgstr "Csapatod mindkét vezetője elesik"
 
 #. [else]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:119
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:144
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:120
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:145
 msgid ""
 "Since your team has two leaders, the enemy waves will be at full strength."
 msgstr ""
 "Mivel csapatodnak két vezére van, a támadáshullámok teljes erejűek lesznek."
 
 #. [objective]: condition=win
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:146
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:171
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:133
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:157
 msgid "Survive and defeat all enemy waves"
 msgstr "Túléled és legyőzöd az összes támadást"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:166
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:153
 msgid "Dark Forecast — a random survival scenario"
 msgstr "Sötét jóslat — egy véletlenszerű túlélőpálya"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:169
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:156
 msgid ""
 "Your aim is to survive the spawning waves of units and defeat the final "
 "archenemies.\n"
@@ -1509,12 +1323,12 @@ msgstr ""
 "• WML kód megvalósítása"
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:188
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:175
 msgid "So this is the accursed valley — a land ours for the taking."
 msgstr "Tehát ez az elátkozott völgy – a föld, amely a miénk lehet."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:192
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:179
 msgid ""
 "The inhabitants are rumored to be a strange alliance of man and beast, and "
 "our claim is not going to be unopposed. We must be prepared for the "
@@ -1525,7 +1339,7 @@ msgstr ""
 "készülnünk bármilyen meglepetésre."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:196
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:183
 msgid ""
 "Then let us discover what lies in waiting and teach them not to oppose our "
 "claim."
@@ -1534,7 +1348,7 @@ msgstr ""
 "eszébe, hogy ne merjen szembeszállni a követelésünkkel."
 
 #. [message]: speaker=unit
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:215
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:202
 msgid ""
 "Ugh! How can this be? Defeated by mere barbarians! My gods have forsaken "
 "me..."
@@ -1543,7 +1357,7 @@ msgstr ""
 "engem..."
 
 #. [message]: speaker=second_unit
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:229
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:216
 msgid ""
 "Cheers of your enemy are the last thing you hear as you slip into "
 "death...their joy fills your last moments with pure hate."
@@ -1552,7 +1366,7 @@ msgstr ""
 "hallasz... örömük nyers gyűlölettel tölti meg utolsó pillanatod."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:251
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:238
 msgid ""
 "The enemy cheers as a dark mist rises from the land, engulfing you. As "
 "ghostly wisps drain away your will, you realize that your time in this land "
@@ -1564,8 +1378,8 @@ msgstr ""
 
 #. [slider]: id=enemey_gold_factor
 #. [slider]: id=enemy_gold_factor
-#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:264
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:311
+#: data/multiplayer/scenarios/2p_Dark_Forecast.cfg:251
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:297
 msgid "Changes the gold worth of the enemy spawns by a certain percentage"
 msgstr ""
 "Egy bizonyos százalékkal megváltoztatja az ellenség szaporodóhelyeinek "
@@ -1883,31 +1697,31 @@ msgstr ""
 "küldetés megfelelő működéséhez. Írta: Lord-Knightmare."
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:25
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:38
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:26
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:39
 msgid "teamname^Invaders"
 msgstr "Megszállók"
 
 #. [side]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:56
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:83
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:107
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:57
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:84
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:108
 #: data/multiplayer/scenarios/Test_Elevation_Test.cfg:45
 msgid "teamname^Defenders"
 msgstr "Védők"
 
 #. [label]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:189
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:175
 msgid "Healing Keep"
 msgstr "Gyógyító torony"
 
 #. [message]: speaker=narrator
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:213
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:199
 msgid "Isle of Mists — a random survival scenario"
 msgstr "Ködsziget — egy véletlenszerű túlélőpálya"
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:220
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:206
 msgid ""
 "You arrive near a mystic shrine, where the apparitions of ancient armies are "
 "forever trapped and doomed to eternally cleanse the isle of all interlopers."
@@ -1917,7 +1731,7 @@ msgstr ""
 "a szigetet minden betolakodótól."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:224
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:210
 msgid ""
 "Phantom armies approach on the horizon. If we defeat them all, they may be "
 "released from this timeless prison."
@@ -1926,17 +1740,17 @@ msgstr ""
 "kiszabadulhatnak ebből az időtlen börtönből."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:228
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:214
 msgid "Let us prepare ourselves for the coming battle."
 msgstr "Készüljünk fel az eljövendő csatára."
 
 #. [message]: speaker=unit
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:247
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:233
 msgid "How can this be? My gods have forsaken me..."
 msgstr "Hogyan történhet ez meg? Az istenek elhagytak engem..."
 
 #. [message]: speaker=second_unit
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:261
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:247
 msgid ""
 "As the cold grasp of death draws nearer, you feel your spirit being "
 "separated from your body. You realize that you will soon be doomed to the "
@@ -1947,7 +1761,7 @@ msgstr ""
 "szentély kísértet-őrzői."
 
 #. [message]
-#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:283
+#: data/multiplayer/scenarios/2p_Isle_of_Mists.cfg:269
 msgid ""
 "A dark mist rises from the land, draining your senses and your will away. "
 "You dimly realize that you will soon join the other ghosts as another "
@@ -2098,12 +1912,12 @@ msgstr "Sulla szobra"
 #. [unit]: gender=female
 #: data/multiplayer/scenarios/2p_Sullas_Ruins.cfg:101
 msgid ""
-"A stone-carved likeness of Sulla the Great, also known as Sulla the Just, "
+"A stone-carved likeness of Aether Mage Sulla, also known as Sulla the Just, "
 "Sulla the Tyrant, Empress of the Sinking Tower, Lady of the Walking Glacier, "
 "Sulla the Incinerator, Sulla the Proud and Sulla the Righteous."
 msgstr ""
-"Ez Nagy Sullának a kőből faragott képmása, akit úgy is szoktak emlegetni, "
-"mint Sulla a Becsületes, vagy Sulla a Zsarnok, a Süllyedő Torony "
+"Ez Sullának, az éteri mágusnőnek kőből faragott képmása, akit úgy is szoktak "
+"emlegetni, mint Sulla a Becsületes, Sulla a Zsarnok, vagy a Süllyedő Torony "
 "Császárnéja, a Gyalogló Gleccser Úrnője, Sulla a Hamuhozó, Sulla a Büszke és "
 "Sulla az Igazságos."
 
@@ -2983,6 +2797,34 @@ msgstr ""
 "csatamezőn, ahol bátor harcosok ezreinek szelleme lebeg láthatatlanul a "
 "hegyek, fák és folyók felett."
 
+#. [multiplayer]: id=multiplayer_Double_Siege
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:7
+msgid "6p — Double Siege"
+msgstr "6p — Kettős ostrom"
+
+#. [multiplayer]: id=multiplayer_Double_Siege
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:8
+msgid ""
+"Two armies attacked a single city, both emerged victorious. Now, only one "
+"can claim the victory."
+msgstr ""
+"Két hadsereg támadott meg egyetlen várost és mindkettő győzelmet hirdetett. "
+"Csak egyikük formálhat igényt a győzelemre."
+
+#. [side]
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:25
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:61
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:73
+msgid "teamname^Top"
+msgstr "Fent"
+
+#. [side]
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:37
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:49
+#: data/multiplayer/scenarios/6p_Double_Siege.cfg:85
+msgid "teamname^Bottom"
+msgstr "Alul"
+
 #. [multiplayer]: id=multiplayer_Hexcake
 #: data/multiplayer/scenarios/6p_Hexcake.cfg:5
 msgid "6p — Hexcake"
@@ -3275,9 +3117,7 @@ msgstr ""
 
 #. [multiplayer]: id=multiplayer_test_Elevation_Demo
 #: data/multiplayer/scenarios/Test_Elevation_Test.cfg:5
-#, fuzzy
-#| msgid "3p — Elevation Test"
-msgid "3p - Elevation Test"
+msgid "3p — Elevation Test"
 msgstr "2j — Magassági próba"
 
 #. [multiplayer]: id=multiplayer_test_Elevation_Demo
@@ -3288,6 +3128,42 @@ msgid ""
 msgstr ""
 "Ez a térkép egy példa az új (BfW v1.17) magasított terep grafika "
 "használatára. Felhívjuk a figyelmet, hogy nem játék céljára készült."
+
+#~ msgid "Default + Dunefolk"
+#~ msgstr "Alapértelmezett + Dűnenép"
+
+#~ msgid ""
+#~ "An era featuring an additional faction besides the six factions from "
+#~ "Default Era. Dunefolk units rely on careful use of terrain and "
+#~ "coordinated strikes around dusk or dawn.\n"
+#~ "\n"
+#~ "This era is still under development, so please be sure to report any "
+#~ "problems that arise."
+#~ msgstr ""
+#~ "Egy korszak, amelyben az alapértelmezett kor hat szövetsége mellett egy "
+#~ "további is megtalálható. A Dűnenép egységei a terep, valamint a hajnali "
+#~ "és alkonyati hadműveletek aprólékos megválasztására támaszkodnak.\n"
+#~ "\n"
+#~ "Ez a korszak még mindig fejlesztés alatt áll, ezért kérünk, jelents "
+#~ "minden felmerülő problémát."
+
+#~ msgid "Age of Heroes + Dunefolk"
+#~ msgstr "Hősök kora + Dűnenép"
+
+#~ msgid ""
+#~ "An era featuring an additional faction besides the six factions from Age "
+#~ "of Heroes Era. Dunefolk units rely on careful use of terrain and "
+#~ "coordinated strikes around dusk or dawn.\n"
+#~ "\n"
+#~ "This era is still under development, so please be sure to report any "
+#~ "problems that arise."
+#~ msgstr ""
+#~ "Egy korszak, amelyben a hősök korának hat szövetsége mellett egy további "
+#~ "is megtalálható. A Dűnenép egységei a terep, valamint a hajnali és "
+#~ "alkonyati hadműveletek aprólékos megválasztására támaszkodnak.\n"
+#~ "\n"
+#~ "Ez a korszak még mindig fejlesztés alatt áll, ezért kérünk, jelents "
+#~ "minden felmerülő problémát."
 
 #, fuzzy
 #~| msgid ""
