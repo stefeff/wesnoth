@@ -38,9 +38,9 @@ double heuristic(const map_location& src, const map_location& dst)
 	// based on how the path looks on the screen.
 
 	// 0.75 comes from the horizontal hex imbrication
-	double xdiff = (src.x - dst.x) * 0.75;
+	unsigned long xdiff = (src.x - dst.x) * 3;
 	// we must add 0.5 to the y coordinate when x is odd
-	double ydiff = (src.y - dst.y) + ((src.x & 1) - (dst.x & 1)) * 0.5;
+	unsigned long ydiff = (src.y - dst.y) * 4 + ((src.x & 1) - (dst.x & 1)) * 2;
 
 	// we assume a map with a maximum diagonal of 300 (bigger than a 200x200)
 	// and we divide by 90000 * 10000 to avoid interfering with the defense subcost
@@ -49,7 +49,7 @@ double heuristic(const map_location& src, const map_location& dst)
 	// But not a problem for our current A* (we use heuristic only for speed)
 	// Plus, the euclidean fraction stay below the 1MP minimum and is also
 	// a good heuristic, so we still find the shortest path efficiently.
-	return distance_between(src, dst) + (xdiff*xdiff + ydiff*ydiff) / 900000000.0;
+	return distance_between(src, dst) + (xdiff*xdiff + ydiff*ydiff) / (4ull * 900000000);
 
 	// TODO: move the heuristic function into the cost_calculator
 	// so we can use case-specific heuristic
@@ -162,6 +162,10 @@ plain_route a_star_search(const map_location& src, const map_location& dst,
 		return locRoute;
 	}
 
+	if (teleports && teleports->empty()) {
+		teleports = nullptr;
+	}
+
 	// increment search_counter but skip the range equivalent to uninitialized
 	search_counter += 2;
 	if (search_counter - bad_search_counter <= 1u)
@@ -174,7 +178,9 @@ plain_route a_star_search(const map_location& src, const map_location& dst,
 	comp node_comp(nodes);
 
 	nodes[index(dst)].g = stop_at + 1;
-	nodes[index(src)] = node(0, src, map_location::null_location(), dst, true, teleports);
+	nodes[index(src)] = node(0, src, map_location::null_location(), dst, teleports);
+
+	std::vector<map_location> locs;
 
 	std::vector<int> pq;
 	pq.push_back(index(src));
@@ -189,10 +195,10 @@ plain_route a_star_search(const map_location& src, const map_location& dst,
 
 		if (n.t >= nodes[index(dst)].g) break;
 
-		std::vector<map_location> locs(6);
+		locs.resize(6);
 		get_adjacent_tiles(n.curr, locs.data());
 
-		if (teleports && !teleports->empty()) {
+		if (teleports) [[unlikely]] {
 			auto allowed_teleports = teleports->get_adjacents(n.curr);
 			locs.insert(locs.end(), allowed_teleports.begin(), allowed_teleports.end());
 		}
@@ -202,7 +208,8 @@ plain_route a_star_search(const map_location& src, const map_location& dst,
 
 			if (!loc.valid(width, height, border)) continue;
 			if (loc == n.curr) continue;
-			node& next = nodes[index(loc)];
+			auto idx = index(loc);
+			node& next = nodes[idx];
 
 			double thresh = (next.in - search_counter <= 1u) ? next.g : stop_at + 1;
 			// cost() is always >= 1  (assumed and needed by the heuristic)
@@ -212,12 +219,12 @@ plain_route a_star_search(const map_location& src, const map_location& dst,
 
 			bool in_list = next.in == search_counter + 1;
 
-			next = node(cost, loc, n.curr, dst, true, teleports);
+			next = node(cost, loc, n.curr, dst, teleports);
 
 			if (in_list) {
-				std::push_heap(pq.begin(), std::find(pq.begin(), pq.end(), static_cast<int>(index(loc))) + 1, node_comp);
+				std::push_heap(pq.begin(), std::find(pq.begin(), pq.end(), static_cast<int>(idx)) + 1, node_comp);
 			} else {
-				pq.push_back(index(loc));
+				pq.push_back(idx);
 				std::push_heap(pq.begin(), pq.end(), node_comp);
 			}
 		}
