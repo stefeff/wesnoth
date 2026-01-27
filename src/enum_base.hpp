@@ -54,7 +54,7 @@ struct enum_base : public Definition
 	 * @param value      The string value to convert.
 	 * @return           The equivalent enum or utils::nullopt.
 	 */
-	static constexpr utils::optional<enum_type> get_enum(const std::string_view value)
+	static utils::optional<enum_type> get_enum(const std::string_view value)
 	{
 		for(unsigned int i = 0; i < size(); i++) {
 			if(value == Definition::values[i]) {
@@ -95,7 +95,8 @@ struct enum_base : public Definition
 #ifndef __MINGW64__
 #define ENUM_AND_ARRAY(...)                                                                                            \
 	enum class type { __VA_ARGS__ };                                                                                   \
-	static constexpr std::array values{__VA_ARGS__};
+	static constexpr std::array<std::string_view, std::tuple_size_v<decltype(std::make_tuple(__VA_ARGS__))>>           \
+		values{#__VA_ARGS__};
 #else
 #define ENUM_AND_ARRAY(...)                                                                                            \
 	enum class type { __VA_ARGS__ };                                                                                   \

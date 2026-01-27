@@ -18,9 +18,9 @@
 
 struct sort_order_defines
 {
-	static constexpr const char* const none = "none";
-	static constexpr const char* const ascending = "ascending";
-	static constexpr const char* const descending = "descending";
+	static constexpr const utils::interned_string& none = str_none;
+	static constexpr const utils::interned_string& ascending = str_ascending;
+	static constexpr const utils::interned_string& descending = str_descending;
 
 	ENUM_AND_ARRAY(none, ascending, descending)
 };

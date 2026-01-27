@@ -15,8 +15,9 @@
 #pragma once
 
 #include "enum_base.hpp"
+#include "config_strings.hpp"
 
-#define ADDPREF(pref) static constexpr const char* const pref = #pref;
+#define ADDPREF(pref) static constexpr const utils::interned_string& pref = str_ ## pref;
 
 /**
  * Contains all valid preferences attributes.
