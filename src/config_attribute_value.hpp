@@ -189,7 +189,9 @@ public:
 	bool operator==(const StringLike auto& comp) const
 	{
 		return apply_visitor([this, &comp]<typename V>(const V& value) {
-			if constexpr(StringLike<V>) {
+			if constexpr(std::is_same_v<const utils::interned_string, const V>)) {
+				return value.str() == comp;
+			} else if constexpr(StringLike<V>) {
 				return value == comp;
 			} else {
 				return *this == create(comp);
@@ -205,7 +207,7 @@ public:
 	}
 
 	template<typename T>
-	std::enable_if_t<std::is_constructible_v<std::string, T>, bool>
+	std::enable_if_t<std::is_constructible_v<std::string, T>  && !std::is_same_v<const utils::interned_string, std::add_const_t<T>>, bool>
 	friend operator==(const config_attribute_value& attribute, const T& comp)
 	{
 		return attribute.apply_visitor([&](const auto& value) {
