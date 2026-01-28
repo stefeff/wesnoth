@@ -90,7 +90,7 @@ public:
 	/**
 	 * Returns @a true if the locator does not correspond to an actual image.
 	 */
-	bool is_void() const { return type_ == NONE; }
+	bool is_void() const { return val_.type == NONE; }
 
 private:
 	struct value

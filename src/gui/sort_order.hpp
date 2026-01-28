@@ -15,6 +15,7 @@
 #pragma once
 
 #include "enum_base.hpp"
+#include "config_strings.hpp"
 
 struct sort_order_defines
 {

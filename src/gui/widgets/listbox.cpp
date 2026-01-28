@@ -700,7 +700,7 @@ static std::vector<widget_data> parse_list_data(const config& data, const unsign
 			list_data.emplace_back();
 
 			for(const auto& [key, value] : c.attribute_range()) {
-				list_data.back()[str_][key] = value.t_str();
+				list_data.back()[{}][key] = value.t_str();
 			}
 
 			for(const auto& w : c.child_range(str_widget)) {

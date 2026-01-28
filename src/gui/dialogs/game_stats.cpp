@@ -201,7 +201,10 @@ void game_stats::pre_show()
 		},
 		[this](const std::size_t i) { return board_.teams()[i].user_team_name(); },
 		[this](const std::size_t i) { return board_.teams()[i].gold(); },
-		[this](const std::size_t i) { return board_.teams()[i].villages(); },
+		[this](const std::size_t i) {
+			auto& locations = board_.teams()[i].villages();
+			return std::set<map_location>(locations.begin(), locations.end());
+	    },
 		[this](const std::size_t i) { return team_data_[i].units; },
 		[this](const std::size_t i) { return team_data_[i].upkeep; },
 		[this](const std::size_t i) { return team_data_[i].net_income; }
