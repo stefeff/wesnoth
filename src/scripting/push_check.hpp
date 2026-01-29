@@ -128,6 +128,26 @@ namespace lua_check_impl
 		lua_pushlstring(L, val.data(), val.size());
 	}
 
+	//utils::interned_string
+	template<typename T>
+	std::enable_if_t<std::is_same_v<T, utils::interned_string>, utils::interned_string>
+	lua_check(lua_State *L, int n)
+	{
+		return luaW_tostring(L, n);
+	}
+	template<typename T>
+	std::enable_if_t<std::is_same_v<T, utils::interned_string>, utils::interned_string>
+	lua_to_or_default(lua_State *L, int n, const T& def)
+	{
+		return luaW_tostring_or_default(L, n, def);
+	}
+	template<typename T>
+	std::enable_if_t<std::is_same_v<T, utils::interned_string>, void>
+	lua_push(lua_State *L, const T& val)
+	{
+		lua_pushlstring(L, val.data(), val.size());
+	}
+
 	//config
 	template<typename T>
 	std::enable_if_t<std::is_same_v<T, config>, config>

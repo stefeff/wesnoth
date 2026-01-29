@@ -1720,6 +1720,11 @@ extern const utils::interned_string str_favorite;
 extern const utils::interned_string str_dismissable;
 extern const utils::interned_string str_block_dismiss_message;
 
+extern const utils::interned_string str_name_affected;
+extern const utils::interned_string str_description_affected;
+extern const utils::interned_string str_reach_map_prefix;
+extern const utils::interned_string str_unique_id;
+
 extern const utils::interned_string str_none;
 extern const utils::interned_string str_ascending;
 extern const utils::interned_string str_descending;

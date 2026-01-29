@@ -19,6 +19,8 @@
 #include <functional>
 #include <string>
 
+#include "utils/interned_string.hpp"
+
 namespace utils
 {
 /**
@@ -70,6 +72,24 @@ struct contains_impl<Container, typename Container::key_type>
 	static bool eval(const Container& container, const typename Container::key_type& value)
 	{
 		return container.find(value) != container.end();
+	}
+};
+
+template<typename Container>
+struct contains_impl<Container,
+ 					 std::conditional_t<
+ 						 std::is_pointer_v<typename Container::value_type>,
+ 						 std::remove_const_t<std::remove_pointer_t<typename Container::value_type>>,
+ 						 void > >
+{
+	static bool eval(const Container& container, const std::remove_pointer_t<typename Container::value_type>& value)
+	{
+		for (auto& item : container) {
+			if (*item == value) {
+				return true;
+			}
+		}
+		return false;
 	}
 };
 

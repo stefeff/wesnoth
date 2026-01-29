@@ -769,10 +769,10 @@ void server::login_client(boost::asio::yield_context yield, SocketPtr socket)
 
 	std::string client_version, client_source;
 	if(const simple_wml::node* const version = doc->child("version")) {
-		const simple_wml::string_span& version_str_span = (*version)[str_version];
+		const simple_wml::string_span& version_str_span = (*version)["version"];
 		client_version = std::string { version_str_span.begin(), version_str_span.end() };
 
-		const simple_wml::string_span& source_str_span = (*version)[str_client_source];
+		const simple_wml::string_span& source_str_span = (*version)["client_source"];
 		client_source = std::string { source_str_span.begin(), source_str_span.end() };
 
 		// Check if it is an accepted version.
@@ -827,7 +827,7 @@ void server::login_client(boost::asio::yield_context yield, SocketPtr socket)
 		if(!login_response) return;
 
 		if(const simple_wml::node* const login = login_response->child("login")) {
-			username = (*login)[str_username].to_string();
+			username = (*login)["username"].to_string();
 
 			if(is_login_allowed(yield, socket, login, username, registered, is_moderator)) {
 				break;
@@ -942,7 +942,7 @@ template<class SocketPtr> bool server::is_login_allowed(boost::asio::yield_conte
 
 	// Check for password
 
-	if(!authenticate(socket, username, (*login)[str_password].to_string(), name_taken, registered))
+	if(!authenticate(socket, username, (*login)["password"].to_string(), name_taken, registered))
 		return false;
 
 	// If we disallow unregistered users and this user is not registered send an error
@@ -1279,7 +1279,7 @@ void server::handle_player_in_lobby(player_iterator player, simple_wml::document
 
 void server::handle_whisper(player_iterator player, simple_wml::node& whisper)
 {
-	if((whisper[str_receiver].empty()) || (whisper[str_message].empty())) {
+	if((whisper["receiver"].empty()) || (whisper["message"].empty())) {
 		static simple_wml::document data(
 			"[message]\n"
 			"message=\"Invalid number of arguments\"\n"
@@ -1294,9 +1294,9 @@ void server::handle_whisper(player_iterator player, simple_wml::node& whisper)
 
 	whisper.set_attr_dup("sender", player->name().c_str());
 
-	auto receiver_iter = player_connections_.get<name_t>().find(whisper[str_receiver].to_string());
+	auto receiver_iter = player_connections_.get<name_t>().find(whisper["receiver"].to_string());
 	if(receiver_iter == player_connections_.get<name_t>().end()) {
-		send_server_message(player, "Can't find '" + whisper[str_receiver].to_string() + "'.", "error");
+		send_server_message(player, "Can't find '" + whisper["receiver"].to_string() + "'.", "error");
 		return;
 	}
 
@@ -1311,7 +1311,7 @@ void server::handle_whisper(player_iterator player, simple_wml::node& whisper)
 	simple_wml::node& trunc_whisper = cwhisper.root().add_child("whisper");
 	whisper.copy_into(trunc_whisper);
 
-	const simple_wml::string_span& msg = trunc_whisper[str_message];
+	const simple_wml::string_span& msg = trunc_whisper["message"];
 	chat_message::truncate_message(msg, trunc_whisper);
 
 	send_to_player(player_connections_.project<0>(receiver_iter), cwhisper);
@@ -1321,7 +1321,7 @@ void server::handle_query(player_iterator iter, simple_wml::node& query)
 {
 	wesnothd::player& player = iter->info();
 
-	const std::string command(query[str_type].to_string());
+	const std::string command(query["type"].to_string());
 	std::ostringstream response;
 
 	const std::string& query_help_msg =
@@ -1406,12 +1406,12 @@ void server::handle_nickserv(player_iterator player, simple_wml::node& nickserv)
 	// A user requested a list of which details can be set
 	if(nickserv.child("info")) {
 		try {
-			std::string res = user_handler_->user_info((*nickserv.child("info"))[str_name].to_string());
+			std::string res = user_handler_->user_info((*nickserv.child("info"))["name"].to_string());
 			send_server_message(player, res, "info");
 		} catch(const user_handler::error& e) {
 			send_server_message(player,
 				"There was an error looking up the details of the user '"
-				+ (*nickserv.child("info"))[str_name].to_string() + "'. "
+				+ (*nickserv.child("info"))["name"].to_string() + "'. "
 				+ " The error message was: " + e.message, "error"
 			);
 		}
@@ -1423,7 +1423,7 @@ void server::handle_nickserv(player_iterator player, simple_wml::node& nickserv)
 void server::handle_ping(player_iterator player, simple_wml::node& data)
 {
 	// IMPORTANT: the time resolution is undefined. It will vary based on client
-	const simple_wml::string_span& time = data[str_requested_at];
+	const simple_wml::string_span& time = data["requested_at"];
 
 	if(time.empty()) {
 		send_server_message(player, "Ping request time unspecified", "error");
@@ -1452,7 +1452,7 @@ void server::handle_message(player_iterator user, simple_wml::node& message)
 	simple_wml::node& trunc_message = relay_message.root().add_child("message");
 	message.copy_into(trunc_message);
 
-	const simple_wml::string_span& msg = trunc_message[str_message];
+	const simple_wml::string_span& msg = trunc_message["message"];
 	chat_message::truncate_message(msg, trunc_message);
 
 	if(msg.size() >= 3 && simple_wml::string_span(msg.begin(), 4) == "/me ") {
@@ -1490,11 +1490,11 @@ void server::handle_create_game(player_iterator player, simple_wml::node& create
 		return;
 	}
 
-	const std::string game_name = create_game[str_name].to_string();
-	const std::string game_password = create_game[str_password].to_string();
-	const std::string initial_bans = create_game[str_ignored].to_string();
-	const queue_type::type queue_type = queue_type::get_enum(create_game[str_queue_type].to_string()).value_or(queue_type::type::normal);
-	int queue_id = create_game[str_queue_id].to_int();
+	const std::string game_name = create_game["name"].to_string();
+	const std::string game_password = create_game["password"].to_string();
+	const std::string initial_bans = create_game["ignored"].to_string();
+	const queue_type::type queue_type = queue_type::get_enum(create_game["queue_type"].to_string()).value_or(queue_type::type::normal);
+	int queue_id = create_game["queue_id"].to_int();
 
 	DBG_SERVER << player->client_ip() << "\t" << player->info().name()
 			   << "\tcreates a new game: \"" << game_name << "\".";
@@ -1567,10 +1567,10 @@ void server::cleanup_game(game* game_ptr)
 
 void server::handle_join_game(player_iterator player, simple_wml::node& join)
 {
-	int game_id = join[str_id].to_int();
+	int game_id = join["id"].to_int();
 
 	const bool observer = join.attr("observe").to_bool();
-	const std::string& password = join[str_password].to_string();
+	const std::string& password = join["password"].to_string();
 
 	auto g_iter = player_connections_.get<game_t>().find(game_id);
 
@@ -1801,8 +1801,8 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 		const simple_wml::node& s = *wesnothd::game::starting_pos(data.root());
 		// fixme: the hanlder of [store_next_scenario] below searches for 'mp_shroud' in [scenario]
 		//        at least of the these cosed is likely wrong.
-		if(!data[str_mp_shroud].to_bool()) {
-			desc.set_attr_dup("map_data", s[str_map_data]);
+		if(!data["mp_shroud"].to_bool()) {
+			desc.set_attr_dup("map_data", s["map_data"]);
 		}
 
 		if(const simple_wml::node* e = data.child("era")) {
@@ -1811,7 +1811,7 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 			}
 		}
 
-		if(s[str_require_scenario].to_bool(false)) {
+		if(s["require_scenario"].to_bool(false)) {
 			desc.set_attr("require_scenario", "yes");
 		}
 
@@ -1942,7 +1942,7 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 		// If there is no shroud, then tell players in the lobby
 		// what the map looks like.
 		const simple_wml::node& s = *wesnothd::game::starting_pos(g.level().root());
-		desc.set_attr_dup("map_data", s[str_mp_shroud].to_bool() ? "" : s[str_map_data]);
+		desc.set_attr_dup("map_data", s["mp_shroud"].to_bool() ? "" : s["map_data"]);
 
 		if(const simple_wml::node* e = data.child("era")) {
 			if(!e->attr("require_era").to_bool(true)) {
@@ -1950,7 +1950,7 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 			}
 		}
 
-		if(s[str_require_scenario].to_bool(false)) {
+		if(s["require_scenario"].to_bool(false)) {
 			desc.set_attr("require_scenario", "yes");
 		}
 
@@ -2001,12 +2001,12 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 				WRN_SERVER << "Game content info missing for game with uuid '" << uuid_ << "', game ID '" << g.db_id() << "', named '" << g.name() << "'";
 			}
 
-			user_handler_->db_insert_game_info(uuid_, g.db_id(), server_id_, g.name(), g.is_reload(), m[str_observer].to_bool(), !m[str_private_replay].to_bool(), g.has_password());
+			user_handler_->db_insert_game_info(uuid_, g.db_id(), server_id_, g.name(), g.is_reload(), m["observer"].to_bool(), !m["private_replay"].to_bool(), g.has_password());
 
 			const simple_wml::node::child_list& sides = g.get_sides_list();
 			for(unsigned side_index = 0; side_index < sides.size(); ++side_index) {
 				const simple_wml::node& side = *sides[side_index];
-				const auto player = player_connections_.get<name_t>().find(side[str_player_id].to_string());
+				const auto player = player_connections_.get<name_t>().find(side["player_id"].to_string());
 				std::string version;
 				std::string source;
 
@@ -2042,7 +2042,7 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 					leaders.emplace_back(leader->attr("type").to_string());
 				}
 
-				user_handler_->db_insert_game_player_info(uuid_, g.db_id(), side[str_player_id].to_string(), side[str_side].to_int(), side[str_is_host].to_bool(), side[str_faction].to_string(), version, source, side[str_current_player].to_string(), utils::join(leaders));
+				user_handler_->db_insert_game_player_info(uuid_, g.db_id(), side["player_id"].to_string(), side["side"].to_int(), side["is_host"].to_bool(), side["faction"].to_string(), version, source, side["current_player"].to_string(), utils::join(leaders));
 			}
 		}
 
@@ -2169,9 +2169,9 @@ void server::handle_player_in_game(player_iterator p, simple_wml::document& data
 			return;
 		}
 
-		if((*info)[str_type] == "termination") {
-			g.set_termination_reason((*info)[str_condition].to_string());
-			if((*info)[str_condition].to_string() == "out of sync") {
+		if((*info)["type"] == "termination") {
+			g.set_termination_reason((*info)["condition"].to_string());
+			if((*info)["condition"].to_string() == "out of sync") {
 				g.send_and_record_server_message(player.name() + " reports out of sync errors.");
 				if(user_handler_){
 					user_handler_->db_set_oos_flag(uuid_, g.db_id());

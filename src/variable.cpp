@@ -224,17 +224,17 @@ config vconfig::get_parsed_config() const
 	return res;
 }
 
-vconfig::child_list vconfig::get_children(const config_key_type& key) const
+vconfig::child_list vconfig::get_children(const config_key_type& key_to_get) const
 {
 	vconfig::child_list res;
 
 	for(const auto [key, cfg] : cfg_->all_children_view())
 	{
-		if (key == key) {
+		if (key == key_to_get) {
 			res.push_back(vconfig(cfg, cache_, *variables_));
 		} else if (key == str_insert_tag) {
 			vconfig insert_cfg(cfg, *variables_);
-			if(insert_cfg[str_name] == key)
+			if(insert_cfg[str_name] == key_to_get)
 			{
 				try
 				{
@@ -254,7 +254,7 @@ vconfig::child_list vconfig::get_children(const config_key_type& key) const
 	return res;
 }
 
-std::size_t vconfig::count_children(const config_key_type& key) const
+std::size_t vconfig::count_children(const config_key_type& key_to_count) const
 {
 	std::size_t n = 0;
 
@@ -264,7 +264,7 @@ std::size_t vconfig::count_children(const config_key_type& key) const
 			n++;
 		} else if (key == str_insert_tag) {
 			vconfig insert_cfg(cfg, *variables_);
-			if(insert_cfg[str_name] == key)
+			if(insert_cfg[str_name] == key_to_count)
 			{
 				try
 				{

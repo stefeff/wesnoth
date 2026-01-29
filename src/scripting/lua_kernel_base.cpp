@@ -1124,7 +1124,7 @@ config luaW_serialize_function(lua_State* L, int func)
 	lua_pop(L, 1);
 	config upvalues;
 	for(int i = 1; i <= info.nups; i++, lua_pop(L, 1)) {
-		std::string_view name = lua_getupvalue(L, func, i);
+		utils::interned_string name = lua_getupvalue(L, func, i);
 		if(name == "_ENV") {
 			upvalues.add_child(name)["upvalue_type"] = "_ENV";
 			continue;
@@ -1202,7 +1202,7 @@ bool lua_kernel_base::load_binary(const config& cfg, const error_handler& eh)
 		lua_getinfo(mState, ">u", &info);
 		int funcindex = lua_absindex(mState, -1);
 		for(int i = 1; i <= info.nups; i++) {
-			std::string_view name = lua_getupvalue(mState, funcindex, i);
+			utils::interned_string name = lua_getupvalue(mState, funcindex, i);
 			lua_pop(mState, 1); // we only want the upvalue's name, not its value
 			if(name == "_ENV") {
 				lua_pushglobaltable(mState);
@@ -1416,7 +1416,7 @@ static void push_color_palette(lua_State* L, const std::vector<color_t>& palette
 	lua_rotate(L, -2, 1); // swap new table with previous element on stack
 	lua_setfield(L, -2, "name");
 	for(std::size_t i = 0; i < palette.size(); i++) {
-		luaW_push_namedtuple(L, {"r", "g", "b", "a"});
+		luaW_push_namedtuple(L, {"r", "g", "b", "a"}, "rgba_color");
 		lua_pushinteger(L, palette[i].r);
 		lua_rawseti(L, -2, 1);
 		lua_pushinteger(L, palette[i].g);

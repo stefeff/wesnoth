@@ -33,6 +33,7 @@ public:
     operator const std::string&() const { return str(); }
     operator std::string_view() const { return str(); }
     const char* c_str() const { return str().c_str(); }
+    const char* data() const { return str().data(); }
 
     const char& operator[](std::size_t index) const { return str()[index]; }
 
@@ -40,6 +41,9 @@ public:
     std::size_t length() const { return size(); }
 
     std::string_view substr(std::size_t pos = 0, std::size_t count = std::string::npos) const;
+    std::size_t find(char c, std::size_t pos = 0) const { return str().find(c, pos); }
+    bool starts_with(const interned_string& s) const { return substr(0, s.size()) == s; }
+
     int compare(std::size_t pos, std::size_t count, const char* s) const { return str().compare(pos, count, s); }
 
     std::string::const_iterator begin() const { return str().begin(); }

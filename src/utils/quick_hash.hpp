@@ -16,6 +16,7 @@ public:
     using key_type = Key;
     using pointer = value_type*;
     using reference = value_type&;
+    using size_type = std::size_t;
 
     class const_iterator;
 
@@ -731,6 +732,7 @@ class hash_map : public hash_container<std::pair<K, V>, K, get_first<K,V>, Hash,
 private:
 
     using Base_ = hash_container<std::pair<K, V>, K, get_first<K,V>, Hash, KeyEqual, Allocator>;
+	using mapped_type = V;
 
 public:
 

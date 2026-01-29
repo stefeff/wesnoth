@@ -65,9 +65,18 @@ public:
 	locator(locator&&) noexcept = default;
 	locator(const locator&) = default;
 
-	locator(const std::string& filename);
-	locator(const std::string& filename, const std::string& modifications);
-	locator(const std::string& filename, const map_location& loc, int center_x, int center_y, const std::string& modifications = "");
+	locator(const char* filename)
+		: val_{utils::interned_string{filename}} {};
+	locator(const std::string& filename)
+		: val_{utils::interned_string{filename}} {};
+	locator(const t_string& filename)
+		: val_{utils::interned_string{static_cast<std::string_view>(filename)}} {};
+	locator(const utils::interned_string& filename)
+		: val_{filename} {};
+	locator(const utils::interned_string& filename, const std::string& modifications)
+		: val_{filename, modifications} {};
+	locator(const utils::interned_string& filename, const map_location& loc, int center_x, int center_y, const std::string& modifications = {})
+		: val_{filename, loc, center_x, center_y, modifications} {};
 
 	locator& operator=(const locator& a) = default;
 	locator& operator=(locator&&) noexcept = default;
@@ -77,6 +86,8 @@ public:
 
 	bool operator==(const locator& a) const;
 	bool operator!=(const locator& a) const { return !operator==(a); }
+
+	bool operator<(const locator& a) const;
 
 	const utils::interned_string& get_filename() const { return val_.filename; }
 	bool is_data_uri() const { return val_.is_data_uri; }
@@ -92,7 +103,6 @@ public:
 	 */
 	bool is_void() const { return val_.type == NONE; }
 
-private:
 	struct value
 	{
 		value() = default;
@@ -117,6 +127,8 @@ private:
 		int center_y = 0;
 		std::size_t hash_value;
 	};
+
+private:
 
 	value val_;
 

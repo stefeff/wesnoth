@@ -970,14 +970,14 @@ namespace lua_units {
 		lua_pushstring(L, "unit");
 		lua_setfield(L, -2, "__metatable");
 
-		// Create the unit config metatable.
-		cmd_out << "Adding unit configuration metatable...\n";
+		// // Create the unit config metatable.
+		// cmd_out << "Adding unit configuration metatable...\n";
 
-		luaL_newmetatable(L, uconfigKey);
-		lua_pushcfunction(L, impl_unit_config_get);
-		lua_setfield(L, -2, "__index");
-		lua_pushstring(L, "unit config");
-		lua_setfield(L, -2, "__metatable");
+		// luaL_newmetatable(L, uconfigKey);
+		// lua_pushcfunction(L, impl_unit_config_get);
+		// lua_setfield(L, -2, "__index");
+		// lua_pushstring(L, "unit config");
+		// lua_setfield(L, -2, "__metatable");
 
 		// Create the unit status metatable.
 		cmd_out << "Adding unit status metatable...\n";

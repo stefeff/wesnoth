@@ -82,7 +82,7 @@ struct node {
 		g(s), h(heuristic(c, dst)), t(g + h), srch(srch_arg), curr(c), prev(p), in(search_counter + 1)
 	{
 		if (teleports) [[unlikely]] {
-			process_teleports(dst, teleports, dsth);
+			process_teleports(c, teleports, dsth);
 		}
 	}
 
@@ -92,7 +92,7 @@ struct node {
 
 private:
 
-	void process_teleports(const map_location &dst, const teleport_map* teleports, double dsth)
+	void process_teleports(const map_location &c, const teleport_map* teleports, double dsth)
 	{
 		if(srch < 0) {
 			srch = 1.0;

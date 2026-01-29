@@ -214,7 +214,7 @@ static int impl_vconfig_get(lua_State *L)
 		if (pos >= len) return 0;
 		std::advance(i, pos);
 
-		luaW_push_namedtuple(L, {"tag", "contents"});
+		luaW_push_namedtuple(L, {"tag", "contents"}, nullptr);
 		lua_pushstring(L, i.get_key().c_str());
 		lua_rawseti(L, -2, 1);
 		luaW_pushvconfig(L, i.get_child());
@@ -555,7 +555,6 @@ bool luaW_toscalar(lua_State *L, int index, config::attribute_value& v)
 		case LUA_TSTRING:
 			v = luaW_tostring(L, -1);
 			break;
-		}
 		case LUA_TUSERDATA:
 		{
 			if (t_string * tptr = static_cast<t_string *>(luaL_testudata(L, -1, tstringKey))) {
@@ -626,7 +625,7 @@ void luaW_filltable(lua_State *L, const config& cfg)
 	for(const auto [child_key, child_cfg] : cfg.all_children_view())
 	{
 		luaW_push_namedtuple(L, table_config, "mt_config");
-		lua_pushstring(L, ch.child_key.c_str());
+		lua_pushstring(L, child_key.c_str());
 		lua_rawseti(L, -2, 1);
 		lua_newtable(L);
 		luaW_filltable(L, child_cfg);
@@ -740,6 +739,7 @@ void luaW_push_namedtuple(lua_State* L, const std::vector<std::string>& names, c
 	if (needs_init) {
 		static luaL_Reg callbacks[] = {
 			{ "__index", &impl_namedtuple_get },
+			{ "__newindex", &impl_namedtuple_set },
 			{ "__dir", &impl_namedtuple_dir },
 			{ "__eq", &impl_namedtuple_compare },
 			{ "__tostring", &impl_namedtuple_tostring },

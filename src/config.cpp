@@ -107,7 +107,7 @@ config& config::operator=(const config& cfg)
 	return *this;
 }
 
-config::config(config&& cfg)
+config::config(config&& cfg) noexcept
 	: arena_(std::move(cfg.arena_))
 	, config_allocator_{arena_}
 	, values_(std::move(cfg.values_))
@@ -515,10 +515,10 @@ config& config::add_child_at(config_key_type key, const config& val, std::size_t
 
 	bool inserted = false;
 
+	auto iter = children_.find(key);
 	const child_pos value(iter, index);
 
-	auto ord = ordered_children_.begin();
-	for(; ord != ordered_children_.end(); ++ord) {
+	for(auto ord = ordered_children_.begin(); ord != ordered_children_.end(); ++ord) {
 		if(ord->pos != value.pos)
 			continue;
 		if(!inserted && ord->index == index) {
@@ -760,12 +760,12 @@ void config::merge_attributes(const config& cfg)
 	for(const auto& [key, value] : cfg.values_) {
 		if(key.substr(0, 7) == "add_to_") {
 			config_key_type add_to {key.substr(7)};
-			values_[add_to] = values_[add_to].to_double() + v.second.to_double();
+			values_[add_to] = values_[add_to].to_double() + value.to_double();
 		} else if(key.substr(0, 10) == "concat_to_") {
 			config_key_type concat_to {key.substr(10)};
 			// TODO: Only use t_string if one or both are actually translatable?
 			// That probably requires using a visitor though.
-			values_[concat_to] = values_[config_key_type{concat_to}].t_str() + v.second.t_str();
+			values_[concat_to] = values_[config_key_type{concat_to}].t_str() + value.t_str();
 		} else {
 			values_[key] = value;
 		}
@@ -938,7 +938,7 @@ void config::get_diff(const config& c, config& res) const
 				inserts = &res.add_child(str_insert);
 			}
 
-			inserts->values_.insert(value);
+			inserts->values_.insert({ key, value });
 		}
 	}
 

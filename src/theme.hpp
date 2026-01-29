@@ -65,7 +65,7 @@ private:
 public:
 
 	area_lookup(const std::vector<Object>& objects)
-		: objects_{ objects }
+		: objects_{ &objects }
 		, valid_{ false }
 	{}
 
@@ -226,7 +226,7 @@ private:
 			small_by_y_.clear();
 			large_.clear();
 
-			for (auto& object : objects_) {
+			for (auto& object : *objects_) {
 				auto& area = object.location(game_canvas);
 				if (area.w <= SMALL_THRESHOLD) {
 					small_by_x_.push_back({ &area, &object, area.x });
@@ -247,7 +247,7 @@ private:
 		}
 	}
 
-	const std::vector<Object>& objects_;
+	const std::vector<Object>* objects_;
 	mutable rect game_canvas_;
 	mutable bool valid_;
 
@@ -293,6 +293,7 @@ class theme
 		enum ANCHORING { FIXED, TOP_ANCHORED, PROPORTIONAL, BOTTOM_ANCHORED };
 
 	private:
+		bool location_modified_;
 		std::string id_;
 		rect loc_;
 		mutable rect relative_loc_;
@@ -459,7 +460,7 @@ public:
 	explicit theme(const config& cfg, const rect& screen);
 	theme(const theme&) = delete;
 	theme& operator=(const theme&) = delete;
-	theme& operator=(theme&&) noexcept = default;
+	theme& operator=(theme&&) noexcept;
 
 	bool set_resolution(const rect& screen);
 	void modify(const config &cfg);

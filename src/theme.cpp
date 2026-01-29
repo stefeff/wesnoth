@@ -612,7 +612,7 @@ theme::theme(const config& cfg, const rect& screen)
 	set_resolution(screen);
 }
 
-theme& theme::operator=(theme&& other)
+theme& theme::operator=(theme&& other) noexcept
 {
 	theme_reset_event_ = std::move(other.theme_reset_event_);
 

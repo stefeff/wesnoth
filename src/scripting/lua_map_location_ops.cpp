@@ -56,7 +56,7 @@ static cubic_location luaW_checkcubeloc(lua_State* L, int idx) {
 }
 
 static void luaW_pushcubeloc(lua_State* L, cubic_location loc) {
-	luaW_push_namedtuple(L, {"q", "r", "s"});
+	luaW_push_namedtuple(L, {"q", "r", "s"}, "cube_loc");
 	lua_pushinteger(L, loc.q);
 	lua_rawseti(L, -2, 1);
 	lua_pushinteger(L, loc.r);

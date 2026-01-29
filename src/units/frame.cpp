@@ -226,6 +226,10 @@ frame_builder& frame_builder::drawing_layer(const std::string& drawing_layer)
 }
 
 frame_parsed_parameters::frame_parsed_parameters(const frame_builder& builder, const std::chrono::milliseconds& duration)
+	: data_{std::make_shared<data>(builder, duration)}
+{}
+
+frame_parsed_parameters::data::data(const frame_builder& builder, const std::chrono::milliseconds& duration)
 	: duration_(duration > std::chrono::milliseconds{0} ? duration : builder.duration_)
 	, image_(builder.image_,duration_)
 	, image_diagonal_(builder.image_diagonal_,duration_)
@@ -270,12 +274,12 @@ bool frame_parsed_parameters::data::does_not_change() const
 		drawing_layer_.does_not_change();
 }
 
-bool frame_parsed_parameters::need_update() const
+bool frame_parsed_parameters::data::need_update() const
 {
 	return !this->does_not_change();
 }
 
-frame_parameters frame_parsed_parameters::parameters(const std::chrono::milliseconds& current_time) const
+frame_parameters frame_parsed_parameters::data::parameters(const std::chrono::milliseconds& current_time) const
 {
 #ifdef __cpp_designated_initializers
 	return {
@@ -334,7 +338,7 @@ frame_parameters frame_parsed_parameters::parameters(const std::chrono::millisec
 #endif
 }
 
-void frame_parsed_parameters::override(const std::chrono::milliseconds& duration,
+void frame_parsed_parameters::data::override(const std::chrono::milliseconds& duration,
 		const std::string& highlight,
 		const std::string& blend_ratio,
 		color_t blend_color,

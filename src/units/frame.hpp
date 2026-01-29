@@ -156,23 +156,24 @@ public:
 		color_t blend_color = {0,0,0},
 		const std::string& offset = {},
 		const std::string& layer = {},
-		const std::string& modifiers = {});
+		const std::string& modifiers = {})
+		{ return data_->override(duration, highlight, blend_ratio, blend_color, offset, layer, modifiers); }
 
 	/** Getters for the different parameters */
-	frame_parameters parameters(const std::chrono::milliseconds& current_time) const;
+	frame_parameters parameters(const std::chrono::milliseconds& current_time) const
+		{ return data_->parameters(current_time); }
 
-	const std::chrono::milliseconds& duration() const { return duration_; }
-	bool does_not_change() const;
-	bool need_update() const;
+	const std::chrono::milliseconds& duration() const { return data_->duration_; }
+	bool does_not_change() const { return data_->does_not_change(); }
+	bool need_update() const { return data_->need_update(); }
 
 	/** Contents of frame in strings */
 	std::vector<std::string> debug_strings() const { return data_->debug_strings(); }
 
 private:
-	std::chrono::milliseconds duration_;
 
 	struct data {
-		int duration_;
+		std::chrono::milliseconds duration_;
 
 		progressive_image image_;
 		progressive_image image_diagonal_;
@@ -182,7 +183,10 @@ private:
 		progressive_string halo_;
 		progressive_int halo_x_;
 		progressive_int halo_y_;
+		std::string halo_mod_;
+		std::string sound_;
 
+		std::string text_;
 		utils::optional<color_t> text_color_;
 		utils::optional<color_t> blend_with_;
 
@@ -201,9 +205,11 @@ private:
 
 		progressive_int drawing_layer_;
 
+		data(const frame_builder& builder, const std::chrono::milliseconds& override_duration);
+
 		data(const frame_builder& builder, int override_duration);
 
-		void override(int duration,
+		void override(const std::chrono::milliseconds& duration,
 			const std::string& highlight,
 			const std::string& blend_ratio,
 			color_t blend_color,
@@ -212,7 +218,7 @@ private:
 			const std::string& modifiers);
 
 		/** Getters for the different parameters */
-		const frame_parameters parameters(int current_time) const;
+		frame_parameters parameters(const std::chrono::milliseconds& current_time) const;
 
 		bool does_not_change() const;
 		bool need_update() const;

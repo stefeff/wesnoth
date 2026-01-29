@@ -149,9 +149,9 @@ void mouse_action::set_terrain_mouse_overlay(
 	const t_translation::terrain_code & fg,
 	const t_translation::terrain_code & bg)
 {
-	const std::string fg_path = disp.get_map().get_terrain_info(fg).editor_image();
-	const std::string bg_path = disp.get_map().get_terrain_info(bg).editor_image();
-	const std::string blank_hex = "misc/blank-hex.png";
+	const utils::interned_string fg_path = disp.get_map().get_terrain_info(fg).editor_image();
+	const utils::interned_string bg_path = disp.get_map().get_terrain_info(bg).editor_image();
+	const utils::interned_string blank_hex = "misc/blank-hex.png";
 
 	if (!image::exists(fg_path) || !image::exists(bg_path)) {
 		ERR_ED << "Missing terrain icon";
@@ -181,7 +181,7 @@ void mouse_action::set_terrain_mouse_overlay(
 		<< ")," << half_size << "," << quarter_size << ")";
 
 	// Set as mouseover overlay.
-	disp.set_mouseover_hex_overlay(image::get_texture(path.str()));
+	disp.set_mouseover_hex_overlay(image::get_texture(utils::interned_string{path.str()}));
 }
 
 location_set brush_drag_mouse_action::affected_hexes(

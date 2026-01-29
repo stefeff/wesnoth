@@ -46,7 +46,7 @@ private:
 	std::string errormessage_;
 };
 
-using knows_sets_t = std::map<std::string, location_set>;
+using known_sets_t = std::map<std::string, location_set>;
 using offset_list_t = std::vector<std::pair<int, int>>;
 using dynamic_bitset  = boost::dynamic_bitset<>;
 

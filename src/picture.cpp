@@ -77,18 +77,18 @@ namespace image
 /** Hash function overload for boost::hash. Must be in the image namespace to satisfy ADL. */
 std::size_t hash_value(const image::locator& val)
 {
-	std::size_t hash = std::hash<unsigned>{}(val.type_);
+	std::size_t hash = std::hash<unsigned>{}(val.val_.type);
 
-	if(val.type_ == image::locator::FILE || val.type_ == image::locator::SUB_FILE) {
-		boost::hash_combine(hash, val.filename_);
+	if(val.val_.type == image::locator::FILE || val.val_.type == image::locator::SUB_FILE) {
+		boost::hash_combine(hash, val.val_.filename);
 	}
 
-	if(val.type_ == image::locator::SUB_FILE) {
-		boost::hash_combine(hash, val.loc_.x);
-		boost::hash_combine(hash, val.loc_.y);
-		boost::hash_combine(hash, val.center_x_);
-		boost::hash_combine(hash, val.center_y_);
-		boost::hash_combine(hash, val.modifications_);
+	if(val.val_.type == image::locator::SUB_FILE) {
+		boost::hash_combine(hash, val.val_.loc.x);
+		boost::hash_combine(hash, val.val_.loc.y);
+		boost::hash_combine(hash, val.val_.center_x);
+		boost::hash_combine(hash, val.val_.center_y);
+		boost::hash_combine(hash, val.val_.modifications);
 	}
 
 	return hash;
@@ -190,7 +190,7 @@ std::set<std::string> precached_dirs;
 
 int red_adjust = 0, green_adjust = 0, blue_adjust = 0;
 
-const std::string data_uri_prefix = "data:";
+const utils::interned_string data_uri_prefix = "data:";
 struct parsed_data_URI{
 	explicit parsed_data_URI(std::string_view data_URI);
 	std::string_view scheme;
@@ -272,24 +272,24 @@ locator::value::value(const utils::interned_string& fn)
 	: type(FILE)
 	, filename(fn)
 {
-	if(filename_.empty()) {
+	if(filename.empty()) {
 		return;
 	}
 
-	if(boost::algorithm::starts_with(filename_, data_uri_prefix)) {
-		if(parsed_data_URI parsed{ filename_ }; !parsed.good) {
-			std::string_view view{ filename_ };
+	if(filename.starts_with(data_uri_prefix)) {
+		if(parsed_data_URI parsed{ filename }; !parsed.good) {
+			std::string_view view{ filename };
 			std::string_view stripped = view.substr(0, view.find(","));
 			ERR_IMG << "Invalid data URI: " << stripped;
 		}
 
-		is_data_uri_ = true;
+		is_data_uri = true;
 	}
 
-	if(const std::size_t markup_field = temp.find('~'); markup_field != std::string::npos) {
+	if(const std::size_t markup_field = filename.find('~'); markup_field != std::string::npos) {
 		type = SUB_FILE;
-		modifications = temp.substr(markup_field, temp.size() - markup_field);
-		filename = temp.substr(0, markup_field);
+		modifications = utils::interned_string{ filename.substr(markup_field, filename.size() - markup_field) };
+		filename = utils::interned_string{ filename.substr(0, markup_field) };
 	}
 
 	update_precalc();
@@ -321,13 +321,13 @@ locator::value::value(
 
 bool locator::operator==(const locator& a) const
 {
-	if (type == SUB_FILE) [[likely]] {
+	if (val_.type == SUB_FILE) [[likely]] {
 		return memcmp(this, &a, sizeof(*this)) == 0;
 	}
-	else if(a.type != type) {
+	else if(a.val_.type != val_.type) {
 		return false;
-	} else if(type == FILE) {
-		return filename == a.filename;
+	} else if(val_.type == FILE) {
+		return val_.filename == a.val_.filename;
 	}
 
 	return false;
@@ -335,13 +335,13 @@ bool locator::operator==(const locator& a) const
 
 bool locator::operator<(const locator& a) const
 {
-	if(type_ != a.type_) {
-		return type_ < a.type_;
-	} else if(type_ == FILE) {
-		return filename_ < a.filename_;
-	} else if(type_ == SUB_FILE) {
-		return std::tie(filename_, loc_, modifications_, center_x_, center_y_) <
-			std::tie(a.filename_, a.loc_, a.modifications_, a.center_x_, a.center_y_);
+	if(val_.type != a.val_.type) {
+		return val_.type < a.val_.type;
+	} else if(val_.type == FILE) {
+		return val_.filename < a.val_.filename;
+	} else if(val_.type == SUB_FILE) {
+		return std::tie(val_.filename, val_.loc, val_.modifications, val_.center_x, val_.center_y) <
+			std::tie(a.val_.filename, a.val_.loc, a.val_.modifications, a.val_.center_x, a.val_.center_y);
 	}
 
 	return false;
@@ -1010,7 +1010,7 @@ texture get_texture_hexed(const image::locator& i_locator)
 
 		auto& cache = map[static_cast<size_t>(scale_quality::nearest)];
 
-		if(auto cached_item = i_locator.copy_from_cache(cache)) {
+		if(auto cached_item = cache.locate_in_cache(i_locator)) {
 			return *cached_item;
 		}
 	}

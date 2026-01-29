@@ -448,7 +448,7 @@ bool luaW_copy_upvalues(lua_State* L, const config& cfg)
 		lua_getinfo(L, ">u", &info);
 		int funcindex = lua_absindex(L, -1);
 		for(int i = 1; i <= info.nups; i++, lua_pop(L, 1)) {
-			std::string_view name = lua_getupvalue(L, funcindex, i);
+			utils::interned_string name = lua_getupvalue(L, funcindex, i);
 			if(name == "_ENV") {
 				lua_pushglobaltable(L);
 			} else if(upvalues->has_attribute(name)) {
@@ -468,7 +468,7 @@ bool luaW_copy_upvalues(lua_State* L, const config& cfg)
 					for(const auto& cfg : children) {
 						names.push_back(cfg["name"]);
 					}
-					luaW_push_namedtuple(L, names);
+					luaW_push_namedtuple(L, names, nullptr);
 					for(const auto& cfg : children) {
 						luaW_pushscalar(L, cfg["value"]);
 						lua_rawseti(L, -2, lua_rawlen(L, -2) + 1);

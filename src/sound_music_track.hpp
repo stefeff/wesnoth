@@ -71,11 +71,12 @@ private:
 std::shared_ptr<music_track> get_track(unsigned int i);
 void set_track(unsigned int i, const std::shared_ptr<music_track>& to);
 
-} /* end namespace sound */
-
-inline bool operator==(const sound::music_track& a, const sound::music_track& b) {
+inline bool operator==(const music_track& a, const music_track& b) {
 	return a.file_path() == b.file_path();
 }
-inline bool operator!=(const sound::music_track& a, const sound::music_track& b) {
+inline bool operator!=(const music_track& a, const music_track& b) {
 	return !operator==(a, b);
 }
+
+} /* end namespace sound */
+

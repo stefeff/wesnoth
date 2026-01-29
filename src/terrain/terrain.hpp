@@ -41,10 +41,10 @@ public:
 	 */
 	explicit terrain_type(const terrain_type& base, const terrain_type& overlay);
 
-	const std::string& icon_image() const { return icon_image_; }
-	const std::string& minimap_image() const { return minimap_image_; }
-	const std::string& minimap_image_overlay() const { return minimap_image_overlay_; }
-	const std::string& editor_image() const { return editor_image_; }
+	const utils::interned_string& icon_image() const { return icon_image_; }
+	const utils::interned_string& minimap_image() const { return minimap_image_; }
+	const utils::interned_string& minimap_image_overlay() const { return minimap_image_overlay_; }
+	const utils::interned_string& editor_image() const { return editor_image_; }
 	const t_string& name() const { return name_; }
 	const t_string& editor_name() const { return editor_name_.empty() ? description() : editor_name_; }
 	const t_string& description() const { return description_.empty() ? name_ : description_; }
@@ -217,18 +217,18 @@ public:
 private:
 
 	/** The image used as symbol icon */
-	std::string icon_image_;
+	utils::interned_string icon_image_;
 
 	/** The image used in the minimap */
-	std::string minimap_image_;
-	std::string minimap_image_overlay_;
+	utils::interned_string minimap_image_;
+	utils::interned_string minimap_image_overlay_;
 
 	/**
 	 *  The image used in the editor palette if not defined in WML it will be
 	 *  initialized with the value of minimap_image_
 	 */
-	std::string editor_image_;
-	std::string id_;
+	utils::interned_string editor_image_;
+	utils::interned_string id_;
 	t_string name_;
 	t_string editor_name_;
 	t_string description_;

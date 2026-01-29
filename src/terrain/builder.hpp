@@ -23,6 +23,7 @@
 #include "animated.hpp"
 #include "map/location.hpp"
 #include "terrain/translation.hpp"
+#include "utils/interned_string.hpp"
 
 #include <set>
 

@@ -337,7 +337,14 @@ std::string unit_ability_t::substitute_variables(const std::string& str) const {
 
 
 namespace {
-	const config_attribute_value& get_attr_four_fallback(const config& cfg, bool b1, bool b2, std::string_view s_yes_yes, std::string_view s_yes_no, std::string_view s_no_yes, std::string_view s_no_no)
+	const config_attribute_value& get_attr_four_fallback(
+		const config& cfg,
+		bool b1,
+		bool b2,
+		utils::interned_string s_yes_yes,
+		utils::interned_string s_yes_no,
+		utils::interned_string s_no_yes,
+		utils::interned_string s_no_no)
 	{
 		if (b1 && b2) {
 			if (auto* attr = cfg.get(s_yes_yes)) { return *attr; }

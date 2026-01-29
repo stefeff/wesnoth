@@ -346,25 +346,25 @@ void prefs::write_preferences()
 	config synced;
 	config unsynced;
 
-	for(const char* attr : synced_attributes_) {
-		if(preferences_.has_attribute(attr)) {
-			synced[attr] = preferences_[attr];
+	for(const auto& attr : synced_attributes_) {
+		if(preferences_.has_attribute(*attr)) {
+			synced[*attr] = preferences_[*attr];
 		}
 	}
-	for(const char* attr : synced_children_) {
-		for(const auto& child : preferences_.child_range(attr)) {
-			synced.add_child(attr, child);
+	for(const auto& attr : synced_children_) {
+		for(const auto& child : preferences_.child_range(*attr)) {
+			synced.add_child(*attr, child);
 		}
 	}
 
-	for(const char* attr : unsynced_attributes_) {
-		if(preferences_.has_attribute(attr)) {
-			unsynced[attr] = preferences_[attr];
+	for(const auto& attr : unsynced_attributes_) {
+		if(preferences_.has_attribute(*attr)) {
+			unsynced[*attr] = preferences_[*attr];
 		}
 	}
-	for(const char* attr : unsynced_children_) {
-		for(const auto& child : preferences_.child_range(attr)) {
-			unsynced.add_child(attr, child);
+	for(const auto& attr : unsynced_children_) {
+		for(const auto& child : preferences_.child_range(*attr)) {
+			unsynced.add_child(*attr, child);
 		}
 	}
 
