@@ -102,6 +102,10 @@ aclocal.m4
 autom4te.cache
 stamp-h1
 
+# Ninja
+.ninja_*
+build.ninja
+
 # build directories
 /wesnoth*
 /wesnothd*
@@ -227,7 +231,6 @@ revision*
 config.h
 6not
 .kdev*
-callgrind.out.*
 data/dist
 clean.sh
 widgets_tested.log
@@ -237,3 +240,7 @@ widgets_tested.log
 
 # fontfig cache directory
 LOCAL_APPDATA_FONTCONFIG_CACHE
+
+# profiling
+callgrind.out.*
+perf.data*
