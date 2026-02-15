@@ -454,6 +454,14 @@ if(NOT MSVC)
 		add_compile_definitions(_GLIBCXX_DEBUG_PEDANTIC)
 	endif()
 
+# Integrate ccache for max build speed
+	find_program(CCACHE_FOUND ccache)
+	if(CCACHE_FOUND)
+	    message("Ccache found and enabled.")
+		set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+		set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+	endif(CCACHE_FOUND)
+
 # #
 # Setup profiler build options
 # #
