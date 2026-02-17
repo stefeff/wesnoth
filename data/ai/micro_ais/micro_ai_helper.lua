@@ -121,7 +121,8 @@ function micro_ai_helper.add_CAs(side, ca_id_core, CA_parms, CA_cfg)
     while id_found do -- This is really just a precaution
         id_found = false
 
-        for ai_tag in wml.child_range(wesnoth.sides[side].__cfg, 'ai') do
+        local cfg = wesnoth.sides[side].__cfg
+        for ai_tag in wml.child_range(cfg, 'ai') do
             for stage in wml.child_range(ai_tag, 'stage') do
                 for ca in wml.child_range(stage, 'candidate_action') do
                     if string.find(ca.name, ai_id .. '_') then
@@ -136,7 +137,7 @@ function micro_ai_helper.add_CAs(side, ca_id_core, CA_parms, CA_cfg)
         -- AI's data variable. However, the MAI can be changed while it is not
         -- the AI's turn, when this is not possible. So instead, we check for the
         -- existence of such tags and make sure we are using a different ai_id.
-        for ai_tag in wml.child_range(wesnoth.sides[side].__cfg, 'ai') do
+        for ai_tag in wml.child_range(cfg, 'ai') do
             for engine in wml.child_range(ai_tag, 'engine') do
                 for data in wml.child_range(engine, 'data') do
                     for mai in wml.child_range(data, 'micro_ai') do

@@ -424,8 +424,9 @@ local function get_test_units()
     local test_units, num_recruits = {}, 0
     local movetypes = {}
     for id in pairs(recruit_data.recruit_types) do
-        local custom_movement = wml.get_child(wesnoth.unit_types[id].__cfg, "movement_costs")
-        local movetype = wesnoth.unit_types[id].__cfg.movement_type
+        local cfg = wesnoth.unit_types[id].__cfg
+        local custom_movement = wml.get_child(cfg, "movement_costs")
+        local movetype = cfg.movement_type
         if custom_movement
         or (not movetypes[movetype])
         or (movetypes[movetype] < wesnoth.unit_types[id].max_moves)
