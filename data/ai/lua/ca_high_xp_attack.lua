@@ -54,7 +54,7 @@ function ca_attack_highxp:evaluation(cfg, data, filter_own)
     local target_infos = {}
     for i_t,enemy in ipairs(attacks_aspect.enemy) do
         local enemy_can_advance = true
-        if (not enemy.advances_to[1]) and (not wml.get_child(enemy.__cfg, 'advancement')) then
+        if (not enemy.advances_to[1]) and (#enemy.advancements == 0) then
             enemy_can_advance = false
         end
 

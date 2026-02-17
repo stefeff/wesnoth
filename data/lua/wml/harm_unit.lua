@@ -102,7 +102,7 @@ function wml_actions.harm_unit(cfg)
 			unit_to_harm.hitpoints = unit_to_harm.hitpoints - damage
 			local text = string.format("%d%s", damage, "\n")
 			local add_tab = false
-			local gender = unit_to_harm.__cfg.gender
+			local gender = unit_to_harm.gender
 
 			local function set_status(name, male_string, female_string, sound)
 				if not cfg[name] or unit_to_harm.status[name] then return end
