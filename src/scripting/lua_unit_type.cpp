@@ -108,7 +108,7 @@ UNIT_TYPE_GETTER("advances_from", std::vector<std::string>) {
 	return ut.advances_from();
 }
 
-UNIT_TYPE_GETTER("__cfg", config) {
+UNIT_TYPE_GETTER("__cfg", const config&) {
 	return ut.get_cfg();
 }
 
