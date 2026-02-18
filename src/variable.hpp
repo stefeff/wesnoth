@@ -76,10 +76,21 @@ public:
 	config get_parsed_config() const;
 
 	typedef std::vector<vconfig> child_list;
-	child_list get_children(const std::string& key) const;
-	std::size_t count_children(const std::string& key) const;
-	vconfig child(const std::string& key) const;
-	bool has_child(const std::string& key) const;
+	child_list get_children(const std::string_view& key) const;
+	child_list get_children(const std::string& key) const { return get_children(std::string_view{ key }); }
+	child_list get_children(const char* key) const { return get_children(std::string_view{ key }); }
+
+	std::size_t count_children(const std::string_view& key) const;
+	std::size_t count_children(const std::string& key) const { return count_children(std::string_view{ key }); }
+	std::size_t count_children(const char* key) const { return count_children(std::string_view{ key }); }
+
+	vconfig child(const std::string_view& key) const;
+	vconfig child(const std::string& key) const { return child(std::string_view{ key }); }
+	vconfig child(const char* key) const { return child(std::string_view{ key }); }
+
+	bool has_child(const std::string_view& key) const;
+	bool has_child(const std::string& key) const { return has_child(std::string_view{ key }); }
+	bool has_child(const char* key) const { return has_child(std::string_view{ key }); }
 
 	/**
 	 * Note: vconfig::operator[] returns const, and this should not be changed
@@ -95,8 +106,15 @@ public:
 	 */
 	const config::attribute_value operator[](const std::string &key) const
 	{ return expand(key); }
+	const config::attribute_value operator[](const std::string_view &key) const
+	{ return expand(key); }
+	const config::attribute_value operator[](const char *key) const
+	{ return expand(std::string_view{key}); }
 	config::attribute_value expand(const std::string&) const; /** < Synonym for operator[] */
+	config::attribute_value expand(const std::string_view&) const; /** < Synonym for operator[] */
 	bool has_attribute(const std::string& key) const { return cfg_->has_attribute(key); }
+	bool has_attribute(const std::string_view& key) const { return cfg_->has_attribute(key); }
+	bool has_attribute(const char* key) const { return cfg_->has_attribute(std::string_view{key}); }
 	bool empty() const { return (null() || cfg_->empty()); }
 
 	struct attribute_iterator

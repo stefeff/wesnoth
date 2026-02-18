@@ -224,7 +224,7 @@ config vconfig::get_parsed_config() const
 	return res;
 }
 
-vconfig::child_list vconfig::get_children(const std::string& key_to_get) const
+vconfig::child_list vconfig::get_children(const std::string_view& key_to_get) const
 {
 	vconfig::child_list res;
 
@@ -254,7 +254,7 @@ vconfig::child_list vconfig::get_children(const std::string& key_to_get) const
 	return res;
 }
 
-std::size_t vconfig::count_children(const std::string& key_to_count) const
+std::size_t vconfig::count_children(const std::string_view& key_to_count) const
 {
 	std::size_t n = 0;
 
@@ -286,7 +286,7 @@ std::size_t vconfig::count_children(const std::string& key_to_count) const
  * If no such child exists, returns an unconstructed vconfig (use null() to test
  * for this).
  */
-vconfig vconfig::child(const std::string& key) const
+vconfig vconfig::child(const std::string_view& key) const
 {
 	if (auto natural = cfg_->optional_child(key)) {
 		return vconfig(*natural, cache_, *variables_);
@@ -313,7 +313,7 @@ vconfig vconfig::child(const std::string& key) const
 /**
  * Returns whether or not *this has a child whose key is @a key.
  */
-bool vconfig::has_child(const std::string& key) const
+bool vconfig::has_child(const std::string_view& key) const
 {
 	if (cfg_->has_child(key)) {
 		return true;
@@ -351,6 +351,13 @@ namespace {
 }//unnamed namespace
 
 config::attribute_value vconfig::expand(const std::string &key) const
+{
+	config::attribute_value val = (*cfg_)[key];
+	val.apply_visitor(vconfig_expand_visitor(val, *variables_));
+	return val;
+}
+
+config::attribute_value vconfig::expand(const std::string_view &key) const
 {
 	config::attribute_value val = (*cfg_)[key];
 	val.apply_visitor(vconfig_expand_visitor(val, *variables_));
