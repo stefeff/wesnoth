@@ -641,14 +641,21 @@ void luaW_filltable(lua_State *L, const config& cfg)
 int lua_named_tuple_builder::impl_get(lua_State* L)
 {
 	if(lua_type(L, 2) == LUA_TSTRING) {
-		std::string k = lua_tostring(L, 2);
+		size_t len;
+		const char* m = lua_tolstring(L, 2, &len);
+		std::string_view k{ m, len };
 		luaL_getmetafield(L, 1, "__names");
-		auto names = lua_check<std::vector<std::string>>(L, -1);
-		auto iter = std::find(names.begin(), names.end(), k);
-		if(iter != names.end()) {
-			int i = std::distance(names.begin(), iter) + 1;
-			lua_rawgeti(L, 1, i);
-			return 1;
+		luaL_checktype(L, -1, LUA_TTABLE);
+		for (int i = 1, i_end = lua_rawlen(L, -1); i <= i_end; ++i)
+		{
+			lua_rawgeti(L, -1, i);
+			auto item = lua_check<std::string_view>(L, -1);
+			bool match = item == k;
+			lua_pop(L, 1);
+			if (match) {
+				lua_rawgeti(L, 1, i);
+				return 1;
+			}
 		}
 	}
 	return 0;
@@ -945,10 +952,13 @@ bool luaW_toconfig(lua_State *L, int index, config &cfg)
 		lua_rawgeti(L, index, i);
 		if (!lua_istable(L, -1)) return_misformed();
 		lua_rawgeti(L, -1, 1);
-		char const *m = lua_tostring(L, -1);
-		if (!m || !config::valid_tag(m)) return_misformed();
+		size_t len;
+		char const *m = lua_tolstring(L, -1, &len);
+		if (!m) return_misformed();
+		std::string_view key{m, len};
+		if (!config::valid_tag(key)) return_misformed();
 		lua_rawgeti(L, -2, 2);
-		if (!luaW_toconfig(L, -1, cfg.add_child(m)))
+		if (!luaW_toconfig(L, -1, cfg.add_child(key)))
 			return_misformed();
 		lua_pop(L, 3);
 	}
@@ -959,9 +969,12 @@ bool luaW_toconfig(lua_State *L, int index, config &cfg)
 		int indextype = lua_type(L, -2);
 		if (indextype == LUA_TNUMBER) continue;
 		if (indextype != LUA_TSTRING) return_misformed();
-		const char* m = lua_tostring(L, -2);
-		if(!m || !config::valid_attribute(m)) return_misformed();
-		config::attribute_value &v = cfg[m];
+		size_t len;
+		char const *m = lua_tolstring(L, -2, &len);
+		if (!m) return_misformed();
+		std::string_view key{m, len};
+		if (!config::valid_tag(key)) return_misformed();
+		config::attribute_value &v = cfg[key];
 		if (lua_istable(L, -1)) {
 			int subindex = lua_absindex(L, -1);
 			std::ostringstream str;
